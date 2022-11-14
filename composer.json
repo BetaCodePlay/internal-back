@@ -40,7 +40,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://packages.dotworkers.net"
+            "url": "https://packages.24live.bet"
         }
     ],
     "require": {
