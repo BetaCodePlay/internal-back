@@ -1,0 +1,32 @@
+{
+    "es_ES": {
+        "translation": {
+            "loading": "Cargando..."
+        }
+    },
+    "en_US": {
+        "translation": {
+            "loading": "Loading..."
+        }
+    },
+    "pt_BR": {
+        "translation": {
+            "loading": "Carregando..."
+        }
+    },
+    "he_IL": {
+        "translation": {
+            "loading": "טעינה"
+        }
+    },
+    "tr_TR": {
+        "translation": {
+            "loading": "Yükleniyor..."
+        }
+    },
+    "fr_FR": {
+        "translation": {
+            "loading": "Chargement..."
+        }
+    }
+}

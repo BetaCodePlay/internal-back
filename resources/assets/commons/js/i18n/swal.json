@@ -1,0 +1,38 @@
+{
+    "es_ES": {
+        "translation": {
+            "confirm": "Confirmar",
+            "cancel": "Cancelar",
+            "are_you_sure": "¿Estás seguro?",
+            "action_cannot_be_undone": "¡La acción no se puede deshacer!",
+            "close": "Cerrar"
+        }
+    },
+    "en_US": {
+        "translation": {
+            "confirm": "Confirm",
+            "cancel": "Cancel",
+            "are_you_sure": "Are you sure?",
+            "action_cannot_be_undone": "The action cannot be undone!",
+            "close": "Close"
+        }
+    },
+    "pt_BR": {
+        "translation": {
+            "confirm": "Confirme",
+            "cancel": "Cancelar",
+            "are_you_sure": "Tem certeza?",
+            "action_cannot_be_undone": "A ação não pode ser desfeita!",
+            "close": "Fechar"
+        }
+    },
+    "he_IL": {
+        "translation": {
+            "confirm": "לְאַשֵׁר",
+            "cancel": "לְבַטֵל",
+            "are_you_sure": "האם אתה בטוח?",
+            "action_cannot_be_undone": "לא ניתן לבטל את הפעולה!",
+            "close": "לסגור"
+        }
+    }
+}

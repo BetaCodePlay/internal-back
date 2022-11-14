@@ -1,0 +1,62 @@
+{
+    "es_ES": {
+        "translation": {
+            "title": "El campo título es obligatorio",
+            "content": "El campo descripción es obligatorio",
+            "validation_title": "La información proporcionada es inválida",
+            "close": "Cerrar",
+            "added_translation": "Traducción agregada",
+            "add_translation": "Debe agregar al menos una traducción"
+        }
+    },
+    "en_US": {
+        "translation": {
+            "title": "The title field is required",
+            "content": "The description field is required",
+            "validation_title": "The given data was invalid",
+            "close": "Close",
+            "added_translation": "Added translation",
+            "add_translation": "You must add at least one translation"
+        }
+    },
+    "pt_BR": {
+        "translation": {
+            "title": "O campo do título é obrigatório",
+            "content": "O campo de descrição é obrigatório",
+            "validation_title": "Os dados fornecidos eram inválidos",
+            "close": "Fechar",
+            "added_translation": "Tradução adicionada",
+            "add_translation": "Você deve adicionar pelo menos uma tradução"
+        }
+    },
+    "he_IL": {
+        "translation": {
+            "title": "שדה הכותרת חובה",
+            "content": "שדה התיאור חובה",
+            "validation_title": "הנתונים שניתנו לא היו חוקיים",
+            "close": "לסגור",
+            "added_translation": "נוסף תרגום",
+            "add_translation": "עליך להוסיף לפחות תרגום אחד"
+        }
+    },
+    "tr_TR": {
+        "translation": {
+            "title": "Başlık alanı zorunludur",
+            "content": "Açıklama alanı zorunludur",
+            "validation_title": "Verilen veriler geçersizdi",
+            "close": "Kapat",
+            "added_translation": "Çeviri eklendi",
+            "add_translation": "En az bir çeviri eklemelisiniz"
+        }
+    },
+    "fr_FR": {
+        "translation": {
+            "title": "Le champ titre est obligatoire",
+            "content": "Le champ de description est obligatoire",
+            "validation_title": "Les données fournies étaient invalides",
+            "close": "Fermer",
+            "added_translation": "Traduction ajoutée",
+            "add_translation": "Vous devez ajouter au moins une traduction"
+        }
+    }
+}

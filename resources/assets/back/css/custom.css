@@ -1,0 +1,380 @@
+/*------------------------------------
+  Globals
+------------------------------------*/
+[aria-labelledby] {
+    opacity: 1;
+}
+
+/*------------------------------------
+  Inputs
+------------------------------------*/
+.disabled {
+    cursor: not-allowed;
+}
+
+/*------------------------------------
+  Colors
+------------------------------------*/
+.u-sidebar-navigation--dark .has-active > a.active,
+.u-sidebar-navigation--dark .has-active > a.active i {
+    color: #e62154;
+}
+
+/*------------------------------------
+  Pills
+------------------------------------*/
+.nav-pills > li > a:hover {
+    text-decoration: none;
+}
+
+/*------------------------------------
+  Sweetalert
+------------------------------------*/
+#swal2-content ul {
+    text-align: left;
+}
+
+/*------------------------------------
+  Tables
+------------------------------------*/
+.table-responsive {
+    overflow-x: auto !important;
+}
+
+/*------------------------------------
+  Datatables
+------------------------------------*/
+.dataTable tr:last-of-type td {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.dataTable tbody .details-control::before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f0fe";
+    color: #2bc42b;
+}
+
+.dataTable tbody .details-control {
+    text-align: center;
+}
+
+.languages-menu-pro {
+    box-shadow: 0 0 5px #3e4551;
+    background-color: #fff !important;
+    padding: .5rem 0 !important;
+    min-width: 160px;
+}
+
+.languages-menu-pro li {
+    padding: 3px 8px;
+    border: 0;
+}
+
+.languages-menu-pro li a {
+    color: #555 !important;
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-block;
+    width: 100%;
+    padding: 0 !important;
+    position: relative;
+}
+
+.languages-menu-pro li:hover, .languages-menu-pro li:focus {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.languages-menu-pro li a:hover, .languages-menu-pro li a:focus {
+    color: #555 !important;
+}
+
+.currency-menu-pro {
+    box-shadow: 0 0 5px #3e4551;
+    background-color: #fff !important;
+    padding: .5rem 0 !important;
+    min-width: 160px;
+}
+
+.currency-menu-pro li {
+    padding: 3px 8px;
+    border: 0;
+}
+
+.currency-menu-pro li a {
+    color: #555 !important;
+    font-size: 16px;
+    font-weight: 600;
+    display: inline-block;
+    width: 100%;
+    padding: 0 5px 0 20px !important;
+    position: relative;
+}
+
+.currency-menu-pro li a::before {
+    content: '';
+    position: absolute;
+    background: #555;
+    height: 8px;
+    width: 8px;
+    left: 5px;
+    border-radius: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+.currency-menu-pro li a::after {
+    content: '';
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    border: 1px solid #555;
+    border-radius: 100%;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.currency-menu-pro li:hover, .currency-menu-pro li:focus {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.currency-menu-pro li a:hover, .currency-menu-pro li a:focus {
+    color: #555 !important;
+}
+
+.currency-menu-pro li:hover a::before, .currency-menu-pro li:focus a::before {
+    opacity: 1;
+}
+
+.currency-menu-pro li a.active::before {
+    opacity: 1 !important;
+    background: #FF9B00 !important;
+}
+
+.currency-menu-pro li a.active::after {
+    border: 1px solid #FF9B00 !important;
+}
+
+.u-header__section--admin-dark [data-dropdown-target] i, .u-header__section--admin-dark [data-dropdown-target].active i {
+    color: #fff !important;
+}
+
+.u-header__nav-toggler i {
+    opacity: 0.7 !important;
+}
+
+.currency-theme-MXN .u-sidebar-navigation--dark, .currency-theme-MXN .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #5e2129 !important;
+}
+
+.currency-theme-MXN .u-header__section--admin-dark, .currency-theme-MXN .u-sidebar-navigation--dark .has-active, .currency-theme-MXN .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-MXN .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #48191f !important;
+}
+
+.currency-theme-MXN .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-MXN .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-MXN .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-MXN .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-MXN .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #ddd !important;
+}
+
+
+.currency-theme-ILS .u-sidebar-navigation--dark, .currency-theme-ILS .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #e57d20 !important;
+}
+
+.currency-theme-ILS .u-header__section--admin-dark, .currency-theme-ILS .u-sidebar-navigation--dark .has-active, .currency-theme-ILS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-ILS .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #bb681e !important;
+}
+
+.currency-theme-ILS .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-ILS .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-ILS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-ILS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-ILS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #ddd !important;
+}
+
+
+.currency-theme-UYU .u-sidebar-navigation--dark, .currency-theme-UYU .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #00bed6 !important;
+}
+
+.currency-theme-UYU .u-header__section--admin-dark, .currency-theme-UYU .u-sidebar-navigation--dark .has-active, .currency-theme-UYU .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-UYU .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #009fb3 !important;
+}
+
+.currency-theme-UYU .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-UYU .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-UYU .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-UYU .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-UYU .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #fff !important;
+}
+
+
+.currency-theme-PYG .u-sidebar-navigation--dark, .currency-theme-PYG .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #f00 !important;
+}
+
+.currency-theme-PYG .u-header__section--admin-dark, .currency-theme-PYG .u-sidebar-navigation--dark .has-active, .currency-theme-PYG .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-PYG .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #d70000 !important;
+}
+
+.currency-theme-PYG .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-PYG .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-PYG .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-PYG .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-PYG .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #fff !important;
+}
+
+
+.currency-theme-BRL .u-sidebar-navigation--dark, .currency-theme-BRL .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #18ba9b !important;
+}
+
+.currency-theme-BRL .u-header__section--admin-dark, .currency-theme-BRL .u-sidebar-navigation--dark .has-active, .currency-theme-BRL .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-BRL .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #149b81 !important;
+}
+
+.currency-theme-BRL .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-BRL .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-BRL .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-BRL .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-BRL .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #fff !important;
+}
+
+
+.currency-theme-ARS .u-sidebar-navigation--dark, .currency-theme-ARS .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #6639b6 !important;
+}
+
+.currency-theme-ARS .u-header__section--admin-dark, .currency-theme-ARS .u-sidebar-navigation--dark .has-active, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #4f2d8c !important;
+}
+
+.currency-theme-ARS .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-ARS .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #fff !important;
+}
+
+
+.currency-theme-COP .u-sidebar-navigation--dark, .currency-theme-COP .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #ebc71d !important;
+}
+
+.currency-theme-COP .u-header__section--admin-dark, .currency-theme-COP .u-sidebar-navigation--dark .has-active, .currency-theme-COP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-COP .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #ceaf19 !important;
+}
+
+.currency-theme-COP .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-COP .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-COP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-COP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-COP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #fff !important;
+}
+
+
+.currency-theme-CLP .u-sidebar-navigation--dark, .currency-theme-CLP .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #0037a1 !important;
+}
+
+.currency-theme-CLP .u-header__section--admin-dark, .currency-theme-CLP .u-sidebar-navigation--dark .has-active, .currency-theme-CLP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-CLP .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #00256d !important;
+}
+
+.currency-theme-CLP .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-CLP .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-CLP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-CLP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-CLP .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #ddd !important;
+}
+
+
+.currency-theme-USD .u-sidebar-navigation--dark, .currency-theme-USD .u-header__section--admin-dark .u-header-logo-toggler {
+    background-color: #008f39 !important;
+}
+
+.currency-theme-USD .u-header__section--admin-dark, .currency-theme-USD .u-sidebar-navigation--dark .has-active, .currency-theme-USD .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-USD .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
+    background-color: #006f2c !important;
+}
+
+.currency-theme-USD .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-USD .u-sidebar-navigation--dark .has-active > a.active i {
+    color: #fff !important;
+}
+
+.currency-theme-USD .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
+    color: #fff !important;
+}
+
+.currency-theme-USD .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-USD .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
+    color: #ddd !important;
+}
+
+/*------------------------------------
+  Media queries
+------------------------------------*/
+@media (min-width: 576px) {
+    .u-header__section--admin-dark .u-header-icon-v1.active {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+}
+
+@media (min-width: 768px) {
+    /*------------------------------------
+       Datepicker
+    ------------------------------------*/
+    .u-datepicker-right {
+        min-width: 300px;
+    }
+}
+
+@media (min-width: 992px) {
+    /*------------------------------------
+       Modal extra large
+    ------------------------------------*/
+    .modal-xl {
+        max-width: 1400px;
+    }
+}

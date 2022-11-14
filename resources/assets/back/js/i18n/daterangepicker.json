@@ -1,0 +1,134 @@
+{
+    "es_ES": {
+        "translation": {
+            "today": "Hoy",
+            "yesterday": "Ayer",
+            "tomorrow": "Mañana",
+            "last_7_days": "Últimos 7 días",
+            "last_30_days": "Últimos 30 días",
+            "this_month": "Este mes",
+            "last_month": "Último mes",
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "applyLabel": "Aceptar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "Desde",
+                "toLabel": "Hasta",
+                "customRangeLabel": "Rango personalizado",
+                "daysOfWeek": ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                "monthNames": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                "firstDay": 1
+            }
+        }
+    },
+    "en_US": {
+        "translation": {
+            "today": "Today",
+            "yesterday": "Yesterday",
+            "tomorrow": "Tomorrow",
+            "last_7_days": "Last 7 days",
+            "last_30_days": "Last 30 days",
+            "this_month": "This month",
+            "last_month": "Last month",
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "applyLabel": "Accept",
+                "cancelLabel": "Cancel",
+                "fromLabel": "From",
+                "toLabel": "To",
+                "customRangeLabel": "Custom range",
+                "daysOfWeek": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                "monthNames": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                "firstDay": 1
+            }
+        }
+    },
+    "pt_BR": {
+        "translation": {
+            "today": "Hoje",
+            "yesterday": "Ontem",
+            "tomorrow": "Manhã",
+            "last_7_days": "Últimos 7 dias",
+            "last_30_days": "Últimos 30 dias",
+            "this_month": "Este mês",
+            "last_month": "Último mês",
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "applyLabel": "Aceitar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "Desde",
+                "toLabel": "Até",
+                "customRangeLabel": "Gama personalizada",
+                "daysOfWeek": ["Do", "Se", "Te", "Qu", "Qu", "Se", "Sa"],
+                "monthNames": ["Janeiro", "Fevereiro", "Março", "Abril", "Posso", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+                "firstDay": 1
+            }
+        }
+    },
+    "he_IL": {
+        "translation": {
+            "today": "היום",
+            "yesterday": "אתמול",
+            "tomorrow": "בוקר",
+            "last_7_days": "7 הימים האחרונים",
+            "last_30_days": "30 הימים האחרונים",
+            "this_month": "החודש",
+            "last_month": "חודש שעבר",
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "applyLabel": "לקבל",
+                "cancelLabel": "לְבַטֵל",
+                "fromLabel": "מאז",
+                "toLabel": "עד",
+                "customRangeLabel": "טווח מותאם אישית",
+                "daysOfWeek": ["א", "ב", "ג", "ד", "ה", "ו", "ש"],
+                "monthNames": ["יָנוּאָר", "פברואר", "מרץ", "אַפּרִיל", "מאי", "יוני", "יולי", "אוגוסט", "סֶפּטֶמבֶּר", "אוֹקְטוֹבֶּר", "נוֹבֶמבֶּר", "דֵצֶמבֶּר"],
+                "firstDay": 1
+            }
+        }
+    },
+    "tr_TR": {
+        "translation": {
+            "today": "Bugün",
+            "yesterday": "Dün",
+            "tomorrow": "Yarın",
+            "last_7_days": "Son 7 gün",
+            "last_30_days": "Son 30 gün",
+            "this_month": "Bu ay",
+            "last_month": "Geçen ay",
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "applyLabel": "Kabul et",
+                "cancelLabel": "İptal",
+                "fromLabel": "Kimden",
+                "toLabel": "Kime",
+                "customRangeLabel": "Özel aralık",
+                "daysOfWeek": ["Pz", "Pzt", "Sal", "Çrş", "Prş", "Cu", "Cts"],
+                "monthNames": ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralik Ayi"],
+                "firstDay": 1
+            }
+        }
+    },
+    "fr_FR": {
+        "translation": {
+            "today": "Aujourd'hui",
+            "yesterday": "Hier",
+            "tomorrow": "Demain",
+            "last_7_days": "7 derniers jours",
+            "last_30_days": "30 derniers jours",
+            "this_month": "Ce mois-ci",
+            "last_month": "Le mois dernier",
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "applyLabel": "Accepter",
+                "cancelLabel": "Annuler",
+                "fromLabel": "De",
+                "toLabel": "À",
+                "customRangeLabel": "Plage personnalisée",
+                "daysOfWeek": ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+                "monthNames": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+                "firstDay": 1
+            }
+        }
+    }
+}
