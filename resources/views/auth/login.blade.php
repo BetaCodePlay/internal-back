@@ -19,27 +19,6 @@
 <body>
 
 <div class="limiter">
-    <div class="languages-menu" id="languages-menu">
-        <a class="languages-menu-selected">
-            <img class="lang-flag" src="{{ $selected_language['flag'] }}"
-                 alt="{{ $selected_language['name'] }}">
-            <span class="title-lang">
-            {{ $selected_language['name'] }}
-            <i class="fa fa-caret-down" aria-hidden="true"></i>
-        </span>
-        </a>
-        <ul class="languages-submenu">
-            @foreach ($languages as $language)
-                <li>
-                    <a href="{{ route('core.change-language', [$language['iso']]) }}"
-                       class="change-language" data-locale="{{ $language['iso'] }}">
-                        <img class="lang-flag" src="{{ $language['flag'] }}" alt="{{ $language['name'] }}">
-                        <span>{{ $language['name'] }}</span>
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </div>
     <div class="container-login100">
         <div class="wrap-login100">
             <form class="login100-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
@@ -72,15 +51,44 @@
 
             </form>
         </div>
-        <p class="text-center copyright-text">
-            {{ $whitelabel_info->copyright ? _i('Developed by Betsweet. Operated by') : '' }} {{ $whitelabel_description }}
-            © {{ _i('Copyright') }} - {{ date('Y') }}. {{ _i('All rights reserved') }}
-        </p>
     </div>
 </div>
 
+<footer>
 
-<div id="dropDownSelect1"></div>
+    <div class="dropdown text-center p-b-20">
+        <div class="languages-menu" id="languages-menu">
+            <a class="languages-menu-selected">
+                <img class="lang-flag" src="{{ $selected_language['flag'] }}"
+                     alt="{{ $selected_language['name'] }}">
+                <span class="title-lang">
+            {{ $selected_language['name'] }}
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </span>
+            </a>
+            <ul class="languages-submenu">
+                @foreach ($languages as $language)
+                    <li>
+                        <a href="{{ route('core.change-language', [$language['iso']]) }}"
+                           class="change-language" data-locale="{{ $language['iso'] }}">
+                            <img class="lang-flag" src="{{ $language['flag'] }}" alt="{{ $language['name'] }}">
+                            <span>{{ $language['name'] }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div id="dropDownSelect1"></div>
+
+    </div>
+    <p class="text-center copyright-text">
+        {{ $whitelabel_info->copyright ? _i('Developed by Betsweet. Operated by') : '' }} {{ $whitelabel_description }}
+        © {{ _i('Copyright') }} - {{ date('Y') }}. {{ _i('All rights reserved') }}
+    </p>
+
+
+</footer>
+
 <script src="{{ mix('js/manifest.js', 'auth') }}"></script>
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'auth') }}"></script>
