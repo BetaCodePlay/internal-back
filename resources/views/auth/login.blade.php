@@ -81,6 +81,8 @@
 
 
 <div id="dropDownSelect1"></div>
+<script src="{{ mix('js/manifest.js', 'auth') }}"></script>
+<script src="{{ mix('js/vendor.js', 'auth') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'auth') }}"></script>
 <script>
     $(function () {
