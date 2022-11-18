@@ -8,7 +8,6 @@ require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
 require('animsition');
 require('moment');
 require('daterangepicker');
-require('countdowntimer');
 
 
 // Change language
