@@ -4,7 +4,7 @@
             <div class="col-auto d-flex flex-nowrap u-header-logo-toggler g-py-12">
                 <a href="{{ route('core.dashboard') }}"
                    class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-0">
-                    @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)
+                   <!--  @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)
                     <img src="{{ asset('commons/img/bloko-light.png') }}" alt="Bloko" width="180" height="37">
                     @elseif(\Dotworkers\Configurations\Configurations::getWhitelabel() == 125)
                         <img src="{{ asset('commons/img/lat-soft-demo.png') }}" alt="LatSoft" width="180" height="37">
@@ -12,7 +12,7 @@
                         <img src="{{ asset('commons/img/lat-soft-logo.jpeg') }}" alt="LatSoft" width="180" height="37">
                     @else
                         <img src="{{ asset('commons/img/dotpanel-light.png') }}" width="180" height="37" alt="Dotpanel">
-                    @endif
+                    @endif -->
                 </a>
                 <a class="js-side-nav u-header__nav-toggler d-flex align-self-center ml-auto" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
