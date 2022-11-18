@@ -5,6 +5,11 @@ window.Popper = require('popper.js').default;
 require('bootstrap');
 require('jquery.easing');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
+require('animsition');
+require('moment');
+require('daterangepicker');
+require('countdowntimer');
+
 
 // Change language
 $('.change-language').click(function () {

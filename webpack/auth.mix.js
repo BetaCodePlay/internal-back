@@ -18,10 +18,10 @@ mix.sass(
 |--------------------------------------------------------------------------
 */
 mix.styles([
-        'resources/assets/auth/css/languages.css',
-        'resources/assets/auth/css/style.css',
-        'resources/assets/auth/css/orange.css',
-        'resources/assets/auth/css/custom.css',
+        'node_modules/animsition/dist/css/animsition.css',
+        'node_modules/animate/animate.css',
+        'resources/assets/auth/css/main.css',
+        'resources/assets/auth/css/util.ccs'
     ],
     'public/auth/css/custom.min.css')
     .version();
@@ -37,7 +37,7 @@ mix.autoload({
     'popper.js/dist/umd/popper.js': ['Popper']
 }).js([
         'resources/assets/auth/js/bootstrap.js',
-        'resources/assets/auth/js/custom.js',
+        'resources/assets/auth/js/main.js',
         'resources/assets/auth/js/auth.js',
     ],
     'public/auth/js/custom.min.js')
