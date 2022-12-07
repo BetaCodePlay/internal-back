@@ -146,7 +146,7 @@
                                                     {{ $item->name }}
                                                 </option>
                                             @endforeach
-                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 124 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 44)
+                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 2 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 124 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 44)
                                                 <option
                                                     value="core.index" {{ 'core.index' == $slider->route ? 'selected' : '' }}>
                                                     {{ _i('Home') }}

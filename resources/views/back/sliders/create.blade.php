@@ -127,7 +127,7 @@
                                     <div class="form-group">
                                         <label for="route">{{ _i('Menu where it will be shown') }}</label>
                                         <select name="route[]" id="route" class="form-control" multiple>
-                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76)
+                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 2 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76)
                                                 <option value="core.index">
                                                     {{ _i('Home') }}
                                                 </option>
