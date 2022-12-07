@@ -127,11 +127,9 @@
                                     <div class="form-group">
                                         <label for="route">{{ _i('Menu where it will be shown') }}</label>
                                         <select name="route[]" id="route" class="form-control" multiple>
-                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76)
                                                 <option value="core.index">
                                                     {{ _i('Home') }}
                                                 </option>
-                                            @endif
                                             @foreach ($menu as $item)
                                                 <option value="{{ $item->route }}">
                                                     {{ $item->name }}
