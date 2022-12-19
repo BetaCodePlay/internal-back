@@ -4315,6 +4315,55 @@ if (!function_exists('menu')) {
                                 ],
                             ],
 
+                            'LVSlots' => [
+                                'text' => _i('LV SLots'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$products_reports_menu,
+                                'provider' => Providers::$lv_sLots,
+                                'submenu' => [
+
+                                    'Users' => [
+                                        'text' => _i('Users totals'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.users-totals',
+                                        'params' => [Providers::$lv_sLots],
+                                        'icon' => 'hs-admin-user',
+                                        'submenu' => []
+                                    ],
+
+                                    //'Games' => [
+                                    //    'text' => _i('Games totals'),
+                                    //    'level_class' => 'fourth',
+                                    //    'route' => 'reports.games-totals',
+                                    //    'params' => [Providers::$branka_originals],
+                                    //    'icon' => 'hs-admin-game',
+                                    //    'submenu' => []
+                                    //],
+
+                                    'MostPlayedGames' => [
+                                        'text' => _i('Most played games'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.most-played-games',
+                                        'params' => [Providers::$lv_sLots],
+                                        'icon' => 'hs-admin-stats-up',
+                                        'submenu' => []
+                                    ],
+
+                                    'GamesPlayedByUser' => [
+                                        'text' => _i('Games played by user'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.games-played-by-user',
+                                        'params' => [Providers::$lv_sLots],
+                                        'icon' => 'hs-admin-stats-up',
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+
+
                             'MascotGaming' => [
                                 'text' => _i('Mascot Gaming'),
                                 'level_class' => 'third',
