@@ -349,11 +349,11 @@ class AgentsCollection
             );
             $providersTitles .= sprintf(
                 '<td class="text-right"><strong>%s</strong></td>',
-                _i('bet')
+                _i('Bet')
             );
             $providersTitles .= sprintf(
                 '<td class="text-right"><strong>%s</strong></td>',
-                _i('livestock')
+                _i('Livestock')
             );
         }
 
@@ -370,16 +370,16 @@ class AgentsCollection
         );
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('bet')
+            _i('Bet')
         );
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('livestock')
+            _i('Livestock')
         );
         $html .= '<td class="text-right"><strong>%</strong></td>';
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('Collect')
+            _i('Commission')
         );
         $html .= '</tr></thead><tbody>';
 
