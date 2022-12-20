@@ -345,15 +345,15 @@ class AgentsCollection
             $html .= "<th colspan='3' class='text-center'>" . Providers::getName($provider->id) . "</th>";
             $providersTitles .= sprintf(
                 '<td class="text-right"><strong>%s</strong></td>',
-                _i('Credit')
+                _i('Bets')
             );
             $providersTitles .= sprintf(
                 '<td class="text-right"><strong>%s</strong></td>',
-                _i('Debit')
+                _i('bet')
             );
             $providersTitles .= sprintf(
                 '<td class="text-right"><strong>%s</strong></td>',
-                _i('Profit')
+                _i('livestock')
             );
         }
 
@@ -366,15 +366,15 @@ class AgentsCollection
 
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('Credit')
+            _i('Bets')
         );
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('Debit')
+            _i('bet')
         );
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('Profit')
+            _i('livestock')
         );
         $html .= '<td class="text-right"><strong>%</strong></td>';
         $html .= sprintf(
