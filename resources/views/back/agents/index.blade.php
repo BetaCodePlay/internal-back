@@ -1,5 +1,21 @@
 @extends('back.template')
 
+@section('styles')
+    <style>
+        #financial-state-table .bg-warning {
+            background-color: rgba(255, 193, 7, 0.4) !important;
+        }
+
+        #financial-state-table .bg-primary {
+            background-color: rgba(0, 123, 255,.4) !important;
+        }
+
+        #financial-state-table .bg-success {
+            background-color: rgba(40, 167, 69,.4) !important
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-3 col-xl-4">
