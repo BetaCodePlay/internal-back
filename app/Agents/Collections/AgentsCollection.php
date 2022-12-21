@@ -506,10 +506,11 @@ class AgentsCollection
                 if ($agent->percentage > 0) {
                     $percentage = number_format($agent->percentage, 2);
                     $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
-
+                    $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
                 } else {
                     $percentage = '-';
                     $agentTotalCollect = $agentTotalProfit;
+                    $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
                 }
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
@@ -531,7 +532,6 @@ class AgentsCollection
                     '<td class="text-right">%s</td></tr>',
                     number_format($agentTotalCollect, 2)
                 );
-                $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
                 $html .= sprintf(
                     '<td class="text-right"><strong>%s</strong></td>',
                     number_format($agentTotalPutOut, 2)
