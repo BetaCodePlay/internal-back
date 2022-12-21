@@ -1,8 +1,6 @@
 <?php
 
-
 return [
-
     /**
      * Translation handlers, options are:
      *
@@ -28,14 +26,14 @@ return [
      * Supported locales: An array containing all allowed languages
      */
     'supported-locales' => [
-        'en_US',
-        'es_ES',
-        'pt_BR',
-        'he_IL',
-        'tr_TR',
-        'fr_FR',
-        'en_GB',
-        'es_CL'
+    'en_US',
+    'es_ES',
+    'pt_BR',
+    /*'he_IL',
+    'tr_TR',
+    'fr_FR',*/
+    'en_GB',
+    'es_CL'
 
     ],
 
@@ -55,8 +53,8 @@ return [
      * Locale categories to set
      */
     'categories' => [
-        'LC_ALL',
-    ],
+    'LC_ALL',
+],
 
     /**
      * Base translation directory path (don't use trailing slash)
@@ -66,7 +64,7 @@ return [
     /**
      * Relative path to the app folder: is used on .po header files
      */
-    'relative-path' => '../../../../../app',
+    'relative-path' => '../../../../app',
 
     /**
      * Fallback locale: When default locale is not available
@@ -86,7 +84,7 @@ return [
     /**
      * Translator contact data (used on .po headers too)
      */
-    'translator' => 'Miguel Sira <miguel@dotworkers.com>',
+    'translator' => 'Miguel Sira <miguel.sira@dotworkers.com>',
 
     /**
      * Paths where Poedit will search recursively for strings to translate.
@@ -95,11 +93,11 @@ return [
      * Remember to call artisan gettext:update after change this.
      */
     'source-paths' => [
-        '../resources/views',
-        '../app',
-        '../vendor/dotworkers',
-        '../resources/lang',
-    ],
+    '../resources/views',
+    '../app',
+    '../vendor/dotworkers',
+    '../lang',
+],
 
     /**
      * Multi-domain directory paths. If you want the translations in
