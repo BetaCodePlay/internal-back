@@ -13,6 +13,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsCollection
@@ -506,11 +507,17 @@ class AgentsCollection
                 if ($agent->percentage > 0) {
                     $percentage = number_format($agent->percentage, 2);
                     $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
-                    $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
                 } else {
                     $percentage = '-';
                     $agentTotalCollect = $agentTotalProfit;
+                }
+                if ($agentTotalProfit > 0 || $agentTotalCollect > 0) {
                     $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
+                    Log::notice(__METHOD__, ['total' => $agentTotalProfit,  $agentTotalCollect, $agentTotalCollect]);
+                } else {
+                    $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
+                    Log::info(__METHOD__, ['total' => $agentTotalProfit,  $agentTotalCollect, $agentTotalCollect]);
+
                 }
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
