@@ -13,6 +13,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsCollection
@@ -329,7 +330,7 @@ class AgentsCollection
         $totalWon = 0;
         $totalProfit = 0;
         $totalCollect = 0;
-        $totalPutOut = 0;
+        $totalToPay = 0;
         $providersTotalPlayed = [];
         $providersTotalWon = [];
         $providersTotalProfit = [];
@@ -385,7 +386,7 @@ class AgentsCollection
         );
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('Put out')
+            _i('To pay')
         );
         $html .= '</tr></thead><tbody>';
 
@@ -396,7 +397,7 @@ class AgentsCollection
             $agentTotalWon = 0;
             $agentTotalProfit = 0;
             $agentTotalCollect = 0;
-            $agentTotalPutOut = 0;
+            $agentTotalToPay = 0;
             $providerPlayed = [];
             $providerWon = [];
             $providerProfit = [];
@@ -506,10 +507,14 @@ class AgentsCollection
                 if ($agent->percentage > 0) {
                     $percentage = number_format($agent->percentage, 2);
                     $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
-
                 } else {
                     $percentage = '-';
                     $agentTotalCollect = $agentTotalProfit;
+                }
+                if ($agentTotalProfit > 0 || $agentTotalCollect > 0) {
+                    $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
+                } else {
+                    $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
                 }
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
@@ -520,7 +525,7 @@ class AgentsCollection
                     number_format($agentTotalWon, 2)
                 );
                 $html .= sprintf(
-                    '<td class="text-right">%s</td>',
+                    '<td class="text-right bg-warning">%s</td>',
                     number_format($agentTotalProfit, 2)
                 );
                 $html .= sprintf(
@@ -528,20 +533,19 @@ class AgentsCollection
                     $percentage
                 );
                 $html .= sprintf(
-                    '<td class="text-right">%s</td></tr>',
+                    '<td class="text-right bg-primary">%s</td></tr>',
                     number_format($agentTotalCollect, 2)
                 );
-                $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
                 $html .= sprintf(
-                    '<td class="text-right"><strong>%s</strong></td>',
-                    number_format($agentTotalPutOut, 2)
+                    '<td class="text-right bg-success"><strong>%s</strong></td>',
+                    number_format($agentTotalToPay, 2)
                 );
             }
             $totalPlayed += $agentTotalPlayed;
             $totalWon += $agentTotalWon;
             $totalProfit += $agentTotalProfit;
             $totalCollect += $agentTotalCollect;
-            $totalPutOut += $agentTotalPutOut;
+            $totalToPay += $agentTotalToPay;
         }
 
         $usersIds = [];
@@ -687,19 +691,18 @@ class AgentsCollection
             number_format($totalWon, 2)
         );
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
+            '<td class="text-right bg-warning"><strong>%s</strong></td>',
             number_format($totalProfit, 2)
         );
         $html .= '<td class="text-right"><strong>-</strong></td>';
 
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
+            '<td class="text-right bg-primary"><strong>%s</strong></td>',
             number_format($totalCollect, 2)
         );
-        $totalPutOut = $totalProfit - $totalCollect;
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
-            number_format($totalPutOut, 2)
+            '<td class="text-right bg-success"><strong>%s</strong></td>',
+            number_format($totalToPay, 2)
         );
         $html .= '<td class="text-right"><strong>-</strong></td>';
         $html .= '</tr></tbody></table>';

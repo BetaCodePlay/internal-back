@@ -330,7 +330,7 @@ class AgentsCollection
         $totalWon = 0;
         $totalProfit = 0;
         $totalCollect = 0;
-        $totalPutOut = 0;
+        $totalToPay = 0;
         $providersTotalPlayed = [];
         $providersTotalWon = [];
         $providersTotalProfit = [];
@@ -386,7 +386,7 @@ class AgentsCollection
         );
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',
-            _i('Put out')
+            _i('To pay')
         );
         $html .= '</tr></thead><tbody>';
 
@@ -397,7 +397,7 @@ class AgentsCollection
             $agentTotalWon = 0;
             $agentTotalProfit = 0;
             $agentTotalCollect = 0;
-            $agentTotalPutOut = 0;
+            $agentTotalToPay = 0;
             $providerPlayed = [];
             $providerWon = [];
             $providerProfit = [];
@@ -512,9 +512,9 @@ class AgentsCollection
                     $agentTotalCollect = $agentTotalProfit;
                 }
                 if ($agentTotalProfit > 0 || $agentTotalCollect > 0) {
-                    $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
+                    $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
                 } else {
-                    $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
+                    $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
                 }
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
@@ -538,14 +538,14 @@ class AgentsCollection
                 );
                 $html .= sprintf(
                     '<td class="text-right bg-success"><strong>%s</strong></td>',
-                    number_format($agentTotalPutOut, 2)
+                    number_format($agentTotalToPay, 2)
                 );
             }
             $totalPlayed += $agentTotalPlayed;
             $totalWon += $agentTotalWon;
             $totalProfit += $agentTotalProfit;
             $totalCollect += $agentTotalCollect;
-            $totalPutOut += $agentTotalPutOut;
+            $totalToPay += $agentTotalToPay;
         }
 
         $usersIds = [];
@@ -700,10 +700,9 @@ class AgentsCollection
             '<td class="text-right bg-primary"><strong>%s</strong></td>',
             number_format($totalCollect, 2)
         );
-        $totalPutOut = $totalProfit - $totalCollect;
         $html .= sprintf(
             '<td class="text-right bg-success"><strong>%s</strong></td>',
-            number_format($totalPutOut, 2)
+            number_format($totalToPay, 2)
         );
         $html .= '<td class="text-right"><strong>-</strong></td>';
         $html .= '</tr></tbody></table>';
