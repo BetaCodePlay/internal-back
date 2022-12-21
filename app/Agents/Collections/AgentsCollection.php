@@ -513,11 +513,8 @@ class AgentsCollection
                 }
                 if ($agentTotalProfit > 0 || $agentTotalCollect > 0) {
                     $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
-                    Log::notice(__METHOD__, ['total' => $agentTotalProfit,  $agentTotalCollect, $agentTotalCollect]);
                 } else {
                     $agentTotalPutOut = $agentTotalProfit - $agentTotalCollect;
-                    Log::info(__METHOD__, ['total' => $agentTotalProfit,  $agentTotalCollect, $agentTotalCollect]);
-
                 }
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
@@ -528,7 +525,7 @@ class AgentsCollection
                     number_format($agentTotalWon, 2)
                 );
                 $html .= sprintf(
-                    '<td class="text-right">%s</td>',
+                    '<td class="text-right bg-warning">%s</td>',
                     number_format($agentTotalProfit, 2)
                 );
                 $html .= sprintf(
@@ -536,11 +533,11 @@ class AgentsCollection
                     $percentage
                 );
                 $html .= sprintf(
-                    '<td class="text-right">%s</td></tr>',
+                    '<td class="text-right bg-primary">%s</td></tr>',
                     number_format($agentTotalCollect, 2)
                 );
                 $html .= sprintf(
-                    '<td class="text-right"><strong>%s</strong></td>',
+                    '<td class="text-right bg-success"><strong>%s</strong></td>',
                     number_format($agentTotalPutOut, 2)
                 );
             }
@@ -694,18 +691,18 @@ class AgentsCollection
             number_format($totalWon, 2)
         );
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
+            '<td class="text-right bg-warning"><strong>%s</strong></td>',
             number_format($totalProfit, 2)
         );
         $html .= '<td class="text-right"><strong>-</strong></td>';
 
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
+            '<td class="text-right bg-primary"><strong>%s</strong></td>',
             number_format($totalCollect, 2)
         );
         $totalPutOut = $totalProfit - $totalCollect;
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
+            '<td class="text-right bg-success"><strong>%s</strong></td>',
             number_format($totalPutOut, 2)
         );
         $html .= '<td class="text-right"><strong>-</strong></td>';
