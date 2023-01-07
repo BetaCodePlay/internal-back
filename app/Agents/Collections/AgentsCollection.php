@@ -934,7 +934,7 @@ class AgentsCollection
                 //TODO COMMISSION
                 $html .= "<td class='text-center'>5% EJEMPLO</td>";
                 //TODO DETAILS
-                $html .= "<td class='text-center' data-users='[]' data-agents='".(isset($arrayAgents[$provider->id])?json_encode($arrayAgents[$provider->id]):[])."'><i class='hs-admin-plus'>+</i></td>
+                $html .= "<td class='text-center' data-users='[]' data-agents='".(isset($arrayAgents[$provider->id])?json_encode($arrayAgents[$provider->id]):json_encode([]))."'><i class='hs-admin-plus'>+</i></td>
                           </tr>";
 
             }
