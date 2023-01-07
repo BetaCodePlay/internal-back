@@ -733,6 +733,7 @@ class AgentsCollection
                                 <th class="text-center">%s</th>
                                 <th class="text-center">%s</th>
                                 <th class="text-center">%s</th>
+                                <th class="text-center">%s</th>
                             </tr>
                      </thead>',
             _i('Categories'),
@@ -740,11 +741,12 @@ class AgentsCollection
             _i('Bets'),
             _i('Netwin'),
             _i('Commission'),
+            _i('Details'),
         );
 
-        if(count($providers)>0){
-
-            foreach ($agents as $agent) {
+        if (count($providers) > 0) {
+            $arrayAgents = [];
+            foreach ($agents as $index => $agent) {
                 $auxHTML = '';
                 $agentsUsersIds = [];
                 $agentTotalPlayed = 0;
@@ -766,7 +768,10 @@ class AgentsCollection
 //                    $agent->username,
 //                    _i('(Agent)')
 //                );
-
+                $arrayAgents[$index] = [
+                    'username' => $agent->username,
+                    'provider' => [],
+                ];
                 if (count($dependency) > 0) {
                     $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
 
@@ -834,7 +839,13 @@ class AgentsCollection
                                 'total' => $item->profit
                             ];
                         }
+
                     }
+                    $arrayAgents[$index]['provider'] = [
+                        'played' => $providerPlayed,
+                        'won' => $providerWon,
+                        'profit' => $providerProfit,
+                    ];
                 }
 
 //                foreach ($providerIds as $provider) {
@@ -912,13 +923,15 @@ class AgentsCollection
                 $html .= "<tr>
                           <td class='text-center'>" . Providers::getName($provider->id) . "</td>";
                 //TODO BET
-                $html .= "<td class='text-center'>".(isset($providerPlayed[$provider->id]) ? $providerPlayed[$provider->id]['total'] : 0)."</td>";
+                $html .= "<td class='text-center'>" . (isset($providerPlayed[$provider->id]) ? $providerPlayed[$provider->id]['total'] : 0) . "</td>";
                 //TODO BETS
-                $html .= "<td class='text-center'>".(isset($providerWon[$provider->id]) ? $providerWon[$provider->id]['total'] : 0)."</td>";
+                $html .= "<td class='text-center'>" . (isset($providerWon[$provider->id]) ? $providerWon[$provider->id]['total'] : 0) . "</td>";
                 //TODO NETWIN
-                $html .= "<td class='text-center'>".(isset($providerProfit[$provider->id]) ? $providerProfit[$provider->id]['total'] : 0)."</td>";
+                $html .= "<td class='text-center'>" . (isset($providerProfit[$provider->id]) ? $providerProfit[$provider->id]['total'] : 0) . "</td>";
                 //TODO COMMISSION
-                $html .= "<td class='text-center'>5% EJEMPLO</td>
+                $html .= "<td class='text-center'>5% EJEMPLO</td>";
+                //TODO DETAILS
+                $html .= "<td class='text-center' data-users='[]' data-agents='.$arrayAgents.' data-provider='.$provider->id.'><i class='hs-admin-plus'></i></td>
                           </tr>";
 
             }
