@@ -768,10 +768,7 @@ class AgentsCollection
 //                    $agent->username,
 //                    _i('(Agent)')
 //                );
-                $arrayAgents[$index] = [
-                    'username' => $agent->username,
-                    'provider' => [],
-                ];
+
                 if (count($dependency) > 0) {
                     $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
 
@@ -840,12 +837,18 @@ class AgentsCollection
                             ];
                         }
 
+                        $arrayAgents[$item->provider_id]['username'] =  $agent->username;
+                        $arrayAgents[$item->provider_id]['provider'] = [
+                            [
+                                'played' => $providerPlayed,
+                                'won' => $providerWon,
+                                'profit' => $providerProfit,
+                            ],
+                        ];
+
                     }
-                    $arrayAgents[$index]['provider'] = [
-                        'played' => $providerPlayed,
-                        'won' => $providerWon,
-                        'profit' => $providerProfit,
-                    ];
+
+
                 }
 
 //                foreach ($providerIds as $provider) {
@@ -931,7 +934,7 @@ class AgentsCollection
                 //TODO COMMISSION
                 $html .= "<td class='text-center'>5% EJEMPLO</td>";
                 //TODO DETAILS
-                $html .= "<td class='text-center' data-users='[]' data-agents='".json_encode($arrayAgents)."' data-provider='".$provider->id."'><i class='hs-admin-plus'></i></td>
+                $html .= "<td class='text-center' data-users='[]' data-agents='".(isset($arrayAgents[$provider->id])?json_encode($arrayAgents[$provider->id]):[])."'><i class='hs-admin-plus'>+</i></td>
                           </tr>";
 
             }
