@@ -911,11 +911,11 @@ class AgentsCollection
                 //TODO CATEGORY
                 $html .= "<td class='text-center'>" . Providers::getName($provider->id) . "</td>";
                 //TODO BET
-                $html .= "<td class='text-center'>".(isset($providerPlayed[$provider]) ? $providerPlayed[$provider]['total'] : 0)."</td>";
+                $html .= "<td class='text-center'>".(isset($providerPlayed[$provider->id]) ? $providerPlayed[$provider->id]['total'] : 0)."</td>";
                 //TODO BETS
-                $html .= "<td class='text-center'>".(isset($providerWon[$provider]) ? $providerWon[$provider]['total'] : 0)."</td>";
+                $html .= "<td class='text-center'>".(isset($providerWon[$provider->id]) ? $providerWon[$provider->id]['total'] : 0)."</td>";
                 //TODO NETWIN
-                $html .= "<td class='text-center'>".(isset($providerProfit[$provider]) ? $providerProfit[$provider]['total'] : 0)."</td>";
+                $html .= "<td class='text-center'>".(isset($providerProfit[$provider->id]) ? $providerProfit[$provider->id]['total'] : 0)."</td>";
                 //TODO COMMISSION
                 $html .= "<td class='text-center'>5% EJEMPLO</td>";
 
