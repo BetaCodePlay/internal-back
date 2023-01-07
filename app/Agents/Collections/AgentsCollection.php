@@ -903,13 +903,14 @@ class AgentsCollection
             }
 
             $html .= sprintf(
-                '<tbody><tr>',
+                '<tbody>',
             );
 
             foreach ($providers as $provider) {
                 $providerIds[] = $provider->id;
                 //TODO CATEGORY
-                $html .= "<td class='text-center'>" . Providers::getName($provider->id) . "</td>";
+                $html .= "<tr>
+                          <td class='text-center'>" . Providers::getName($provider->id) . "</td>";
                 //TODO BET
                 $html .= "<td class='text-center'>".(isset($providerPlayed[$provider->id]) ? $providerPlayed[$provider->id]['total'] : 0)."</td>";
                 //TODO BETS
@@ -917,11 +918,12 @@ class AgentsCollection
                 //TODO NETWIN
                 $html .= "<td class='text-center'>".(isset($providerProfit[$provider->id]) ? $providerProfit[$provider->id]['total'] : 0)."</td>";
                 //TODO COMMISSION
-                $html .= "<td class='text-center'>5% EJEMPLO</td>";
+                $html .= "<td class='text-center'>5% EJEMPLO</td>
+                          </tr>";
 
             }
             $html .= sprintf(
-                '</tr></tbody></table>',
+                '</tbody></table>',
             );
         }
         //TODO => TEST
