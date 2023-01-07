@@ -837,9 +837,9 @@ class AgentsCollection
                             ];
                         }
 
-                        $arrayAgents[$item->provider_id][]['username'] =  $agent->username;
-                        $arrayAgents[$item->provider_id][]['provider'] = [
-                            [
+                        $arrayAgents[$item->provider_id][]=[
+                            'username'=>$agent->username,
+                            'provider'=>[
                                 'played' => isset($providerPlayed[$item->provider_id])?$providerPlayed[$item->provider_id]['total']:0,
                                 'won' => isset($providerWon[$item->provider_id])?$providerWon[$item->provider_id]['total']:0,
                                 'profit' => isset($providerProfit[$item->provider_id])?$providerProfit[$item->provider_id]['total']:0,
