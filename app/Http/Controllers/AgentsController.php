@@ -9,6 +9,7 @@ use App\Core\Collections\TransactionsCollection;
 use App\Core\Repositories\CountriesRepo;
 use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
+use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
@@ -674,7 +675,7 @@ class AgentsController extends Controller
         $data['title'] = _i('Financial state report').' (-View1-)';
         return view('back.agents.reports.financial-state_view1', $data);
     }
-    public function financialStateData_view1(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateData_view1(ProvidersRepo $providersRepo,ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
         //try {
             $timezone = session('timezone');
@@ -685,11 +686,12 @@ class AgentsController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providerTypesName = $providersTypesRepo->getByIds($providerTypes);
             $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialState($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
+            $table = $this->agentsCollection->financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
 //            $data = [
 //                'table' => $table
 //            ];
@@ -700,6 +702,7 @@ class AgentsController extends Controller
                 '$currency'=>$currency,
                 '$whitelabel'=>$whitelabel,
                 '$providerTypes'=>$providerTypes,
+                '$providerTypesName'=>$providerTypesName,
                 '$providers'=>$providers,
                 '$agent'=>$agent,
                 '$agents'=>$agents,

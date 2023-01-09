@@ -710,6 +710,408 @@ class AgentsCollection
     }
 
 
+    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate)
+    {
+        $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
+        $totalPlayed = 0;
+        $totalWon = 0;
+        $totalProfit = 0;
+        $totalCollect = 0;
+        $totalToPay = 0;
+        $providersTotalPlayed = [];
+        $providersTotalWon = [];
+        $providersTotalProfit = [];
+        $providerIds = [];
+        $providersTitles = null;
+
+        $html = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">%s</th>
+                            <th scope="col">%s</th>
+                            <th scope="col">%s</th>
+                            <th scope="col">%s</th>
+                            <th scope="col">%s</th>
+                            <th scope="col">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Categories'),
+            _i('Bet'),
+            _i('Bets'),
+            _i('win'),
+            _i('Netwin'),
+            _i('Commission'),
+        );
+
+        foreach ($providers as $provider) {
+            $providerIds[] = $provider->id;
+            $html .= "<th colspan='3' class='text-center'>" . Providers::getName($provider->id) . "</th>";
+            $providersTitles .= sprintf(
+                '<td class="text-right"><strong>%s</strong></td>',
+                _i('Bet')
+            );
+            $providersTitles .= sprintf(
+                '<td class="text-right"><strong>%s</strong></td>',
+                _i('Bets')
+            );
+            $providersTitles .= sprintf(
+                '<td class="text-right"><strong>%s</strong></td>',
+                _i('Netwin')
+            );
+        }
+
+        $html .= sprintf(
+            '<th colspan="5" class="text-center">%s</th>',
+            _i('Totals')
+        );
+        $html .= '</tr><tr><td></td>';
+        $html .= $providersTitles;
+
+        $html .= sprintf(
+            '<td class="text-right"><strong>%s</strong></td>',
+            _i('Bet')
+        );
+        $html .= sprintf(
+            '<td class="text-right"><strong>%s</strong></td>',
+            _i('Bets')
+        );
+        $html .= sprintf(
+            '<td class="text-right"><strong>%s</strong></td>',
+            _i('Netwin')
+        );
+
+        $html .= '<td class="text-right"><strong>%</strong></td>';
+        $html .= sprintf(
+            '<td class="text-right"><strong>%s</strong></td>',
+            _i('Commission')
+        );
+        $html .= sprintf(
+            '<td class="text-right"><strong>%s</strong></td>',
+            _i('To pay')
+        );
+        $html .= '</tr></thead><tbody>';
+
+        foreach ($agents as $agent) {
+            $auxHTML = '';
+            $agentsUsersIds = [];
+            $agentTotalPlayed = 0;
+            $agentTotalWon = 0;
+            $agentTotalProfit = 0;
+            $agentTotalCollect = 0;
+            $agentTotalToPay = 0;
+            $providerPlayed = [];
+            $providerWon = [];
+            $providerProfit = [];
+            $dependency = $this->dependency($agent, $currency);
+
+            foreach ($dependency as $dependencyItem) {
+                $agentsUsersIds[] = $dependencyItem['id'];
+            }
+
+            $auxHTML .= sprintf(
+                '<tr><td>%s <strong>%s</strong></td>',
+                $agent->username,
+                _i('(Agent)')
+            );
+
+            if (count($dependency) > 0) {
+                $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
+
+                foreach ($financial as $item) {
+                    $agentTotalPlayed += $item->played;
+                    $agentTotalWon += $item->won;
+                    $agentTotalProfit += $item->profit;
+
+                    if (isset($providersTotalPlayed[$item->provider_id])) {
+                        $providersTotalPlayed[$item->provider_id] = [
+                            'total' => $providersTotalPlayed[$item->provider_id]['total'] + $item->played
+                        ];
+                    } else {
+                        $providersTotalPlayed[$item->provider_id] = [
+                            'total' => $item->played
+                        ];
+                    }
+
+                    if (isset($providersTotalWon[$item->provider_id])) {
+                        $providersTotalWon[$item->provider_id] = [
+                            'total' => $providersTotalWon[$item->provider_id]['total'] + $item->won
+                        ];
+                    } else {
+                        $providersTotalWon[$item->provider_id] = [
+                            'total' => $item->won
+                        ];
+                    }
+
+                    if (isset($providersTotalProfit[$item->provider_id])) {
+                        $providersTotalProfit[$item->provider_id] = [
+                            'total' => $providersTotalProfit[$item->provider_id]['total'] + $item->profit
+                        ];
+                    } else {
+                        $providersTotalProfit[$item->provider_id] = [
+                            'total' => $item->profit
+                        ];
+                    }
+
+                    if (isset($providerPlayed[$item->provider_id])) {
+                        $providerPlayed[$item->provider_id] = [
+                            'total' => $providerPlayed[$item->provider_id]['total'] + $item->played
+                        ];
+                    } else {
+                        $providerPlayed[$item->provider_id] = [
+                            'total' => $item->played
+                        ];
+                    }
+
+                    if (isset($providerWon[$item->provider_id])) {
+                        $providerWon[$item->provider_id] = [
+                            'total' => $providerWon[$item->provider_id]['total'] + $item->won
+                        ];
+                    } else {
+                        $providerWon[$item->provider_id] = [
+                            'total' => $item->won
+                        ];
+                    }
+
+                    if (isset($providerProfit[$item->provider_id])) {
+                        $providerProfit[$item->provider_id] = [
+                            'total' => $providerProfit[$item->provider_id]['total'] + $item->profit
+                        ];
+                    } else {
+                        $providerProfit[$item->provider_id] = [
+                            'total' => $item->profit
+                        ];
+                    }
+                }
+            }
+
+            foreach ($providerIds as $provider) {
+                $played = isset($providerPlayed[$provider]) ? $providerPlayed[$provider]['total'] : 0;
+                $won = isset($providerWon[$provider]) ? $providerWon[$provider]['total'] : 0;
+                $profit = isset($providerProfit[$provider]) ? $providerProfit[$provider]['total'] : 0;
+
+                $auxHTML .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($played, 2)
+                );
+                $auxHTML .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($won, 2)
+                );
+                $auxHTML .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($profit, 2)
+                );
+            }
+
+            if ($agentTotalPlayed > 0 || $agentTotalWon > 0) {
+                $html .= $auxHTML;
+                if ($agent->percentage > 0) {
+                    $percentage = number_format($agent->percentage, 2);
+                    $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
+                } else {
+                    $percentage = '-';
+                    $agentTotalCollect = $agentTotalProfit;
+                }
+                if ($agentTotalProfit > 0 || $agentTotalCollect > 0) {
+                    $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
+                } else {
+                    $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
+                }
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalPlayed, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalWon, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right bg-warning">%s</td>',
+                    number_format($agentTotalProfit, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    $percentage
+                );
+                $html .= sprintf(
+                    '<td class="text-right bg-primary">%s</td></tr>',
+                    number_format($agentTotalCollect, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right bg-success"><strong>%s</strong></td>',
+                    number_format($agentTotalToPay, 2)
+                );
+            }
+            $totalPlayed += $agentTotalPlayed;
+            $totalWon += $agentTotalWon;
+            $totalProfit += $agentTotalProfit;
+            $totalCollect += $agentTotalCollect;
+            $totalToPay += $agentTotalToPay;
+        }
+
+        $usersIds = [];
+        foreach ($users as $user) {
+            $usersIds[] = $user->id;
+        }
+        if (count($usersIds) > 0) {
+            $usersTotals = $closuresUsersTotalsRepo->getUsersTotalsByIdsGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $usersIds);
+
+            foreach ($users as $user) {
+                $userTotal = [];
+                foreach ($usersTotals as $total) {
+                    if ($user->id == $total->id) {
+                        $userTotal[] = $total;
+                    }
+                }
+                $userTotalPlayed = 0;
+                $userTotalWon = 0;
+                $userTotalProfit = 0;
+
+                if (count($userTotal) > 0) {
+                    $html .= sprintf(
+                        '<tr><td>%s <strong>%s</strong></td>',
+                        $user->username,
+                        _i('(Player)')
+                    );
+
+                    foreach ($providers as $provider) {
+                        if (!is_null($provider->tickets_table)) {
+                            $played = 0;
+                            $won = 0;
+                            $profit = 0;
+
+                            foreach ($userTotal as $total) {
+                                if ($total->provider_id == $provider->id) {
+                                    $played += $total->played;
+                                    $won += $total->won;
+                                    $profit += $total->profit;
+                                    break;
+                                }
+                            }
+
+                            $html .= sprintf(
+                                '<td class="text-right">%s</td>',
+                                number_format($played, 2)
+                            );
+                            $html .= sprintf(
+                                '<td class="text-right">%s</td>',
+                                number_format($won, 2)
+                            );
+                            $html .= sprintf(
+                                '<td class="text-right">%s</td>',
+                                number_format($profit, 2)
+                            );
+
+                            $userTotalPlayed += $played;
+                            $userTotalWon += $won;
+                            $userTotalProfit += $profit;
+
+                            if (isset($providersTotalPlayed[$provider->id])) {
+                                $providersTotalPlayed[$provider->id] = [
+                                    'total' => $providersTotalPlayed[$provider->id]['total'] + $played
+                                ];
+                            } else {
+                                $providersTotalPlayed[$provider->id] = [
+                                    'total' => $played
+                                ];
+                            }
+
+                            if (isset($providersTotalWon[$provider->id])) {
+                                $providersTotalWon[$provider->id] = [
+                                    'total' => $providersTotalWon[$provider->id]['total'] + $won
+                                ];
+                            } else {
+                                $providersTotalWon[$provider->id] = [
+                                    'total' => $won
+                                ];
+                            }
+
+                            if (isset($providersTotalProfit[$provider->id])) {
+                                $providersTotalProfit[$provider->id] = [
+                                    'total' => $providersTotalProfit[$provider->id]['total'] + $profit
+                                ];
+                            } else {
+                                $providersTotalProfit[$provider->id] = [
+                                    'total' => $profit
+                                ];
+                            }
+                        }
+                    }
+
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($userTotalPlayed, 2)
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($userTotalWon, 2)
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($userTotalProfit, 2)
+                    );
+                    $html .= '<td class="text-right">-</td>';
+                    $html .= '<td class="text-right">-</td></tr>';
+
+                    $totalPlayed += $userTotalPlayed;
+                    $totalWon += $userTotalWon;
+                    $totalProfit += $userTotalProfit;
+                }
+            }
+        }
+
+        $html .= sprintf(
+            '<tr><td><strong>%s</strong></td>',
+            _i('Totals')
+        );
+
+        foreach ($providerIds as $provider) {
+            $playedProvider = $providersTotalPlayed[$provider]['total'] ?? 0;
+            $wonProvider = $providersTotalWon[$provider]['total'] ?? 0;
+            $profitProvider = $providersTotalProfit[$provider]['total'] ?? 0;
+            $html .= sprintf(
+                '<td class="text-right"><strong>%s</strong></td>',
+                number_format($playedProvider, 2)
+            );
+            $html .= sprintf(
+                '<td class="text-right"><strong>%s</strong></td>',
+                number_format($wonProvider, 2)
+            );
+            $html .= sprintf(
+                '<td class="text-right"><strong>%s</strong></td>',
+                number_format($profitProvider, 2)
+            );
+        }
+
+        $html .= sprintf(
+            '<td class="text-right"><strong>%s</strong></td>',
+            number_format($totalPlayed, 2)
+        );
+        $html .= sprintf(
+            '<td class="text-right"><strong>%s</strong></td>',
+            number_format($totalWon, 2)
+        );
+        $html .= sprintf(
+            '<td class="text-right bg-warning"><strong>%s</strong></td>',
+            number_format($totalProfit, 2)
+        );
+        $html .= '<td class="text-right"><strong>-</strong></td>';
+
+        $html .= sprintf(
+            '<td class="text-right bg-primary"><strong>%s</strong></td>',
+            number_format($totalCollect, 2)
+        );
+        $html .= sprintf(
+            '<td class="text-right bg-success"><strong>%s</strong></td>',
+            number_format($totalToPay, 2)
+        );
+        $html .= '<td class="text-right"><strong>-</strong></td>';
+        $html .= '</tr></tbody></table>';
+        return $html;
+    }
+
+
     public function financialStateRow($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
@@ -831,12 +1233,12 @@ class AgentsCollection
                             ];
                         }
 
-                        $arrayAgents[$item->provider_id][]=[
-                            'username'=>$agent->username,
-                            'provider'=>[
-                                'played' => isset($providerPlayed[$item->provider_id])?$providerPlayed[$item->provider_id]['total']:0,
-                                'won' => isset($providerWon[$item->provider_id])?$providerWon[$item->provider_id]['total']:0,
-                                'profit' => isset($providerProfit[$item->provider_id])?$providerProfit[$item->provider_id]['total']:0,
+                        $arrayAgents[$item->provider_id][] = [
+                            'username' => $agent->username,
+                            'provider' => [
+                                'played' => isset($providerPlayed[$item->provider_id]) ? $providerPlayed[$item->provider_id]['total'] : 0,
+                                'won' => isset($providerWon[$item->provider_id]) ? $providerWon[$item->provider_id]['total'] : 0,
+                                'profit' => isset($providerProfit[$item->provider_id]) ? $providerProfit[$item->provider_id]['total'] : 0,
                             ],
                         ];
 
@@ -908,7 +1310,7 @@ class AgentsCollection
                 //TODO COMMISSION
                 $html .= "<td class='text-center'>5% EJEMPLO</td>";
                 //TODO DETAILS
-                $html .= "<td class='text-center' data-users='[]' data-agents='".(isset($arrayAgents[$provider->id])?json_encode($arrayAgents[$provider->id]):json_encode([]))."'><i class='hs-admin-plus'>+</i></td>
+                $html .= "<td class='text-center' data-users='[]' data-agents='" . (isset($arrayAgents[$provider->id]) ? json_encode($arrayAgents[$provider->id]) : json_encode([])) . "'><i class='hs-admin-plus'>+</i></td>
                           </tr>";
 
             }
