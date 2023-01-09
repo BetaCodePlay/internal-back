@@ -38,7 +38,7 @@
                     <th scope="col">Apuestas</th>
                     <th scope="col">Apostado</th>
                     <th scope="col">Ganado</th>
-                    <th scope="col">netWin</th>
+                    <th scope="col">NetWin</th>
                     <th scope="col">Comision</th>
                 </tr>
                 </thead>
