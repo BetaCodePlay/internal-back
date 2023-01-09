@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                 <tr class="table-primary">
-                    <th>Casino *</th>
+                    <th><strong>Casino *</strong></th>
                     <td>4.000</td>
                     <td>3.500</td>
                     <td>100</td>
