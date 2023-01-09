@@ -38,9 +38,10 @@
 @section('scripts')
     <script>
         $(function () {
-            {{--let agents = new Agents();--}}
-            {{--agents.financialStateDetails({{ $user }});--}}
+            let agents = new Agents();
+            agents.financialStateDetails({{ $user }});
         });
+
         $(function (user = null) {
             let picker = initLitepickerEndToday();
             let $table = $('#financial-state-table');
