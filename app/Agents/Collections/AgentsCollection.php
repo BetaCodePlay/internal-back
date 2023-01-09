@@ -763,12 +763,6 @@ class AgentsCollection
                     $agentsUsersIds[] = $dependencyItem['id'];
                 }
 
-//                $auxHTML .= sprintf(
-//                    '<tr><td>%s <strong>%s</strong></td>',
-//                    $agent->username,
-//                    _i('(Agent)')
-//                );
-
                 if (count($dependency) > 0) {
                     $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
 
@@ -848,27 +842,7 @@ class AgentsCollection
 
                     }
 
-
                 }
-
-//                foreach ($providerIds as $provider) {
-//                    $played = isset($providerPlayed[$provider]) ? $providerPlayed[$provider]['total'] : 0;
-//                    $won = isset($providerWon[$provider]) ? $providerWon[$provider]['total'] : 0;
-//                    $profit = isset($providerProfit[$provider]) ? $providerProfit[$provider]['total'] : 0;
-//
-//                    $auxHTML .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($played, 2)
-//                    );
-//                    $auxHTML .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($won, 2)
-//                    );
-//                    $auxHTML .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($profit, 2)
-//                    );
-//                }
 
 //                if ($agentTotalPlayed > 0 || $agentTotalWon > 0) {
 //                    $html .= $auxHTML;

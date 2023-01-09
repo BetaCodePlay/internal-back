@@ -662,6 +662,57 @@ class AgentsController extends Controller
         return view('back.agents.reports.financial-state', $data);
     }
 
+    public function financialState_view1(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+//        $currency = session('currency');
+//        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['title'] = _i('Financial state report').' (-View1-)';
+        return view('back.agents.reports.financial-state_view1', $data);
+    }
+    public function financialStateData_view1(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    {
+        //try {
+            $timezone = session('timezone');
+            $today = Carbon::now()->setTimezone($timezone);
+            $endDateOriginal = $endDate;
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            //$table = $this->agentsCollection->financialState($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
+//            $data = [
+//                'table' => $table
+//            ];
+            return [
+                '$today'=>$today,
+                '$endDate'=>$endDate,
+                '$startDate'=>$startDate,
+                '$currency'=>$currency,
+                '$whitelabel'=>$whitelabel,
+                '$providerTypes'=>$providerTypes,
+                '$providers'=>$providers,
+                '$agent'=>$agent,
+                '$agents'=>$agents,
+                '$users'=>$users,
+            ];
+//            return Utils::successResponse($data);
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+//            return Utils::failedResponse();
+//        }
+    }
+
+
     /**
      * Financial state data
      *
@@ -687,32 +738,6 @@ class AgentsController extends Controller
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $table = $this->agentsCollection->financialState($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
-            $data = [
-                'table' => $table
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
-    }
-
-    public function financialStateDataRow(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
-    {
-        try {
-            $timezone = session('timezone');
-            $today = Carbon::now()->setTimezone($timezone);
-            $endDateOriginal = $endDate;
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialStateRow($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
             $data = [
                 'table' => $table
             ];
