@@ -710,7 +710,7 @@ class AgentsCollection
     }
 
 
-    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate)
+    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate,$providerTypesName)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
         $totalPlayed = 0;
@@ -743,6 +743,34 @@ class AgentsCollection
             _i('Netwin'),
             _i('Commission'),
         );
+
+        if(count($providerTypesName)>0){
+            $html .= "<tbody>";
+
+            $totalBet = 0;
+            $totalBets = 0;
+            $totalWin = 0;
+            $totalNetWin = 0;
+            $totalCommission = 0;
+
+            foreach ($providerTypesName as $item => $value){
+
+
+                //TODO TOTAL DEL PROVIDER
+                $html .= "<tr>";
+                    $html .= "<td class='text-center'>" . $value->name. "</td>";
+                    $html .= "<td class='text-center'>".number_format($totalBet,2)."</td>";
+                    $html .= "<td class='text-center'>".number_format($totalBets,2)."</td>";
+                    $html .= "<td class='text-center'>".number_format($totalWin,2)."</td>";
+                    $html .= "<td class='text-center'>".number_format($totalNetWin,2)."</td>";
+                    $html .= "<td class='text-center'>".number_format($totalCommission,2)."</td>";
+                $html .= "</tr>";
+            }
+
+            $html .= "<tbody></table>";
+        }
+
+        return $html;
 
         foreach ($providers as $provider) {
             $providerIds[] = $provider->id;

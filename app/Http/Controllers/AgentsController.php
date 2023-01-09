@@ -691,7 +691,7 @@ class AgentsController extends Controller
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
+            $table = $this->agentsCollection->financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today,$providerTypesName);
 //            $data = [
 //                'table' => $table
 //            ];
