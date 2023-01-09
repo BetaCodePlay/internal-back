@@ -43,7 +43,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr class="table-primary">
                     <th>Casino *</th>
                     <td>4.000</td>
                     <td>3.500</td>
@@ -51,7 +51,7 @@
                     <td>200.000</td>
                     <td>4.000</td>
                 </tr>
-                <tr>
+                <tr class="table-secondary">
                     <th>SG -</th>
                     <td>4.000</td>
                     <td>3.500</td>
@@ -59,7 +59,7 @@
                     <td>200.000</td>
                     <td>4.000</td>
                 </tr>
-                <tr>
+                <tr class="table-success">
                     <th>Evo Play /</th>
                     <td>4.000</td>
                     <td>3.500</td>
@@ -67,7 +67,7 @@
                     <td>200.000</td>
                     <td>4.000</td>
                 </tr>
-                <tr>
+                <tr class="table-success">
                     <th>Habanero /</th>
                     <td>4.000</td>
                     <td>3.500</td>
@@ -75,7 +75,7 @@
                     <td>200.000</td>
                     <td>4.000</td>
                 </tr>
-                <tr>
+                <tr class="table-secondary">
                     <th>VG -</th>
                     <td>4.000</td>
                     <td>3.500</td>
