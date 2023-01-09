@@ -707,6 +707,7 @@ class AgentsController extends Controller
                 '$agent'=>$agent,
                 '$agents'=>$agents,
                 '$users'=>$users,
+                '$table'=>$table,
             ];
 //            return Utils::successResponse($data);
 //        } catch (\Exception $ex) {
