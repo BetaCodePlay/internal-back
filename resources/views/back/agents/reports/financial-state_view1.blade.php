@@ -31,6 +31,60 @@
             <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">
 
             </div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Apuestas</th>
+                    <th scope="col">Apostado</th>
+                    <th scope="col">Ganado</th>
+                    <th scope="col">netWin</th>
+                    <th scope="col">Comision</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>Casino *</th>
+                    <td>4.000</td>
+                    <td>3.500</td>
+                    <td>100</td>
+                    <td>200.000</td>
+                    <td>4.000</td>
+                </tr>
+                <tr>
+                    <th>SG -</th>
+                    <td>4.000</td>
+                    <td>3.500</td>
+                    <td>100</td>
+                    <td>200.000</td>
+                    <td>4.000</td>
+                </tr>
+                <tr>
+                    <th>Evo Play /</th>
+                    <td>4.000</td>
+                    <td>3.500</td>
+                    <td>100</td>
+                    <td>200.000</td>
+                    <td>4.000</td>
+                </tr>
+                <tr>
+                    <th>Habanero /</th>
+                    <td>4.000</td>
+                    <td>3.500</td>
+                    <td>100</td>
+                    <td>200.000</td>
+                    <td>4.000</td>
+                </tr>
+                <tr>
+                    <th>VG -</th>
+                    <td>4.000</td>
+                    <td>3.500</td>
+                    <td>100</td>
+                    <td>200.000</td>
+                    <td>4.000</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection
