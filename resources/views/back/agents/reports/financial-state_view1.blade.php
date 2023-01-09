@@ -39,7 +39,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.financialStateDetails({{ $user }});
+            agents.financialState({{ $user }});
         });
 
         $(function (user = null) {
