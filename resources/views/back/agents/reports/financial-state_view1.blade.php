@@ -59,7 +59,7 @@
                     <td>200.000</td>
                     <td>4.000</td>
                 </tr>
-                <tr class="table-success">
+                <tr class="table-light">
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evo Play /</th>
                     <td>4.000</td>
                     <td>3.500</td>
@@ -67,7 +67,7 @@
                     <td>200.000</td>
                     <td>4.000</td>
                 </tr>
-                <tr class="table-success">
+                <tr class="table-light">
                     <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Habanero /</th>
                     <td>4.000</td>
                     <td>3.500</td>
