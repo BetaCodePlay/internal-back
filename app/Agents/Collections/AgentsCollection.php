@@ -813,7 +813,7 @@ class AgentsCollection
                     $nameTmp = Providers::getName($valor->id);
 
                     if (!is_null($nameTmp)) {
-                        $totalProviderBet = $providersTotalPlayed[$valor->id]['total'];
+                        $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
                         $htmlProvider .= "<tr class='table-secondary set_2'>";
                             $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                             $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
