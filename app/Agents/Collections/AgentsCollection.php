@@ -815,12 +815,12 @@ class AgentsCollection
                     if (!is_null($nameTmp)) {
                         $totalProviderBet = $providersTotalPlayed[$valor->id]['total'];
                         $htmlProvider .= "<tr class='table-secondary set_2'>";
-                        $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
-                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
-                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
-                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
-                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
-                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 2) . "</td>";
+                            $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
+                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
+                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
+                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
+                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
+                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 2) . "</td>";
                         $htmlProvider .= "</tr>";
                     }
 
@@ -831,12 +831,12 @@ class AgentsCollection
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
                 $html .= "<tr class='table-primary set_1'>";
-                $html .= "<td>" . $value->name . "</td>";
-                $html .= "<td class='text-center'>" . number_format($totalBet, 2) . "</td>";
-                $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>";
-                $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
-                $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>";
-                $html .= "<td class='text-center'>" . number_format($totalCommission, 2) . "</td>";
+                    $html .= "<td>" . $value->name . "</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalBet, 2) . "</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalCommission, 2) . "</td>";
                 $html .= "</tr>" . $htmlProvider;
 
             }
