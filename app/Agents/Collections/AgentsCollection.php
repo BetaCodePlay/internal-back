@@ -798,7 +798,6 @@ class AgentsCollection
 
             foreach ($providerTypesName as $item => $value) {
                 $totalBet = 0;
-                $totalBet = 0;
                 $totalBets = 0;
                 $totalWin = 0;
                 $totalNetWin = 0;
@@ -820,12 +819,12 @@ class AgentsCollection
                             $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
                             $totalProviderWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $htmlProvider .= "<tr class='table-secondary set_2'>";
-                            $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
-                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
-                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
-                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
-                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
-                            $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 2) . "</td>";
+                                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
+                                $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
+                                $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
+                                $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
+                                $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
+                                $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 2) . "</td>";
                             $htmlProvider .= "</tr>";
                         }
                     }
@@ -833,6 +832,10 @@ class AgentsCollection
 
                     //TODO TOTAL PARA CATEGORIES
                     $totalBet = $totalBet + $totalProviderBet;
+                    $totalBets = $totalBets + $totalProviderBets;
+                    $totalWin = $totalWin + $totalProviderWin;
+                    $totalNetWin = $totalNetWin + $totalProviderNetWin;
+                    $totalCommission = $totalCommission + $totalProviderCommission;
                 }
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
