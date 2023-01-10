@@ -729,11 +729,11 @@ class AgentsCollection
                     <thead>
                         <tr>
                             <th scope="col">%s</th>
-                            <th scope="col">%s</th>
-                            <th scope="col">%s</th>
-                            <th scope="col">%s</th>
-                            <th scope="col">%s</th>
-                            <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
                         </tr>
                     </thead>',
             _i('Categories'),
@@ -766,7 +766,7 @@ class AgentsCollection
                     $nameTmp = Providers::getName($valor->id);
                     if(!is_null($nameTmp)){
                         $htmlProvider .= "<tr class='table-secondary set_2'>";
-                            $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;" .$nameTmp. "</td>";
+                            $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .$nameTmp. "</td>";
                             $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBet,2)."</td>";
                             $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBets,2)."</td>";
                             $htmlProvider .= "<td class='text-center'>".number_format($totalProviderWin,2)."</td>";
