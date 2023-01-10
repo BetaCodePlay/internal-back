@@ -802,26 +802,28 @@ class AgentsCollection
             //TODO FINISH TOTAL IN AGENTS
 
             foreach ($providerTypesName as $item => $value) {
-                $totalProviderBet = 0;
+
                 $totalProviderBets = 0;
                 $totalProviderWin = 0;
                 $totalProviderNetWin = 0;
                 $totalProviderCommission = 0;
                 $htmlProvider = "";
                 foreach ($providers as $index => $valor) {
+                    $totalProviderBet = 0;
+                    if($value->id === $valor->provider_type_id){
+                        $nameTmp = Providers::getName($valor->id);
 
-                    $nameTmp = Providers::getName($valor->id);
-
-                    if (!is_null($nameTmp)) {
-                        //$totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
-                        $htmlProvider .= "<tr class='table-secondary set_2'>";
+                        if (!is_null($nameTmp)) {
+                            $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
+                            $htmlProvider .= "<tr class='table-secondary set_2'>";
                             $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                             $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
                             $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
                             $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
                             $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
                             $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 2) . "</td>";
-                        $htmlProvider .= "</tr>";
+                            $htmlProvider .= "</tr>";
+                        }
                     }
 
 
