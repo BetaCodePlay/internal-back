@@ -763,19 +763,23 @@ class AgentsCollection
                 $htmlProvider = "";
                 foreach ($providers as $index => $valor){
 
-                    $htmlProvider .= "<tr class='table-secondary set_2'>";
-                        $htmlProvider .= "<td class='text-center'>" .Providers::getName($valor->id). "</td>";
-                        $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBet,2)."</td>";
-                        $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBets,2)."</td>";
-                        $htmlProvider .= "<td class='text-center'>".number_format($totalProviderWin,2)."</td>";
-                        $htmlProvider .= "<td class='text-center'>".number_format($totalProviderNetWin,2)."</td>";
-                        $htmlProvider .= "<td class='text-center'>".number_format($totalProviderCommission,2)."</td>";
-                    $htmlProvider .= "</tr>";
+                    $nameTmp = Providers::getName($valor->id);
+                    if(!is_null($nameTmp)){
+                        $htmlProvider .= "<tr class='table-secondary set_2'>";
+                            $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;" .$nameTmp. "</td>";
+                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBet,2)."</td>";
+                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBets,2)."</td>";
+                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderWin,2)."</td>";
+                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderNetWin,2)."</td>";
+                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderCommission,2)."</td>";
+                        $htmlProvider .= "</tr>";
+                    }
+
                 }
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
                 $html .= "<tr class='table-primary set_1'>";
-                    $html .= "<td class='text-center'>" . $value->name. "</td>";
+                    $html .= "<td>" . $value->name. "</td>";
                     $html .= "<td class='text-center'>".number_format($totalBet,2)."</td>";
                     $html .= "<td class='text-center'>".number_format($totalBets,2)."</td>";
                     $html .= "<td class='text-center'>".number_format($totalWin,2)."</td>";
