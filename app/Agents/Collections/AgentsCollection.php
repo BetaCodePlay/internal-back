@@ -343,20 +343,24 @@ class AgentsCollection
         );
 
         foreach ($providers as $provider) {
-            $providerIds[] = $provider->id;
-            $html .= "<th colspan='3' class='text-center'>" . Providers::getName($provider->id) . "</th>";
-            $providersTitles .= sprintf(
-                '<td class="text-right"><strong>%s</strong></td>',
-                _i('Bet')
-            );
-            $providersTitles .= sprintf(
-                '<td class="text-right"><strong>%s</strong></td>',
-                _i('Bets')
-            );
-            $providersTitles .= sprintf(
-                '<td class="text-right"><strong>%s</strong></td>',
-                _i('Netwin')
-            );
+            $nameTmp = Providers::getName($provider->id);
+            if(!is_null($nameTmp)){
+                $providerIds[] = $provider->id;
+                $html .= "<th colspan='3' class='text-center'>" . Providers::getName($provider->id) . "</th>";
+                $providersTitles .= sprintf(
+                    '<td class="text-right"><strong>%s</strong></td>',
+                    _i('Bet')
+                );
+                $providersTitles .= sprintf(
+                    '<td class="text-right"><strong>%s</strong></td>',
+                    _i('Bets')
+                );
+                $providersTitles .= sprintf(
+                    '<td class="text-right"><strong>%s</strong></td>',
+                    _i('Netwin')
+                );
+            }
+
         }
 
         $html .= sprintf(
@@ -1022,6 +1026,7 @@ class AgentsCollection
                     $percentage = '-';
                     $agentTotalCollect = $agentTotalProfit;
                 }
+
                 if ($agentTotalProfit > 0 || $agentTotalCollect > 0) {
                     $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
                 } else {
