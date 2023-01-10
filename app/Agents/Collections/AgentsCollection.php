@@ -752,7 +752,54 @@ class AgentsCollection
             $totalWin = 0;
             $totalNetWin = 0;
             $totalCommission = 0;
+            //TODO TOTAL IN AGENTS
+                foreach ($agents as $agent) {
+                    $agentsUsersIds = [];
+                    $dependency = $this->dependency($agent, $currency);
 
+                    foreach ($dependency as $dependencyItem) {
+                        $agentsUsersIds[] = $dependencyItem['id'];
+                    }
+
+                    if (count($dependency) > 0) {
+                        $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
+
+                        foreach ($financial as $item) {
+                            if (isset($providersTotalPlayed[$item->provider_id])) {
+                                $providersTotalPlayed[$item->provider_id] = [
+                                    'total' => $providersTotalPlayed[$item->provider_id]['total'] + $item->played
+                                ];
+                            } else {
+                                $providersTotalPlayed[$item->provider_id] = [
+                                    'total' => $item->played
+                                ];
+                            }
+
+                            if (isset($providersTotalWon[$item->provider_id])) {
+                                $providersTotalWon[$item->provider_id] = [
+                                    'total' => $providersTotalWon[$item->provider_id]['total'] + $item->won
+                                ];
+                            } else {
+                                $providersTotalWon[$item->provider_id] = [
+                                    'total' => $item->won
+                                ];
+                            }
+
+                            if (isset($providersTotalProfit[$item->provider_id])) {
+                                $providersTotalProfit[$item->provider_id] = [
+                                    'total' => $providersTotalProfit[$item->provider_id]['total'] + $item->profit
+                                ];
+                            } else {
+                                $providersTotalProfit[$item->provider_id] = [
+                                    'total' => $item->profit
+                                ];
+                            }
+
+                        }
+                    }
+
+                }
+            //TODO FINISH TOTAL IN AGENTS
 
             foreach ($providerTypesName as $item => $value) {
                 $totalProviderBet = 0;
@@ -764,7 +811,9 @@ class AgentsCollection
                 foreach ($providers as $index => $valor) {
 
                     $nameTmp = Providers::getName($valor->id);
+
                     if (!is_null($nameTmp)) {
+                        $totalProviderBet = $providersTotalPlayed[$valor->id]['total'];
                         $htmlProvider .= "<tr class='table-secondary set_2'>";
                         $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                         $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
@@ -915,7 +964,6 @@ class AgentsCollection
                             'total' => $item->played
                         ];
                     }
-
                     if (isset($providerWon[$item->provider_id])) {
                         $providerWon[$item->provider_id] = [
                             'total' => $providerWon[$item->provider_id]['total'] + $item->won
@@ -925,7 +973,6 @@ class AgentsCollection
                             'total' => $item->won
                         ];
                     }
-
                     if (isset($providerProfit[$item->provider_id])) {
                         $providerProfit[$item->provider_id] = [
                             'total' => $providerProfit[$item->provider_id]['total'] + $item->profit
