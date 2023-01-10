@@ -710,7 +710,7 @@ class AgentsCollection
     }
 
 
-    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate,$endDateOriginal, $today,$providerTypesName)
+    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
         $totalPlayed = 0;
@@ -744,7 +744,7 @@ class AgentsCollection
             _i('Commission'),
         );
 
-        if(count($providerTypesName)>0){
+        if (count($providerTypesName) > 0) {
             $html .= "<tbody>";
 
             $totalBet = 0;
@@ -754,38 +754,41 @@ class AgentsCollection
             $totalCommission = 0;
 
 
-            foreach ($providerTypesName as $item => $value){
+            foreach ($providerTypesName as $item => $value) {
                 $totalProviderBet = 0;
                 $totalProviderBets = 0;
                 $totalProviderWin = 0;
                 $totalProviderNetWin = 0;
                 $totalProviderCommission = 0;
                 $htmlProvider = "";
-                foreach ($providers as $index => $valor){
+                foreach ($providers as $index => $valor) {
 
                     $nameTmp = Providers::getName($valor->id);
-                    if(!is_null($nameTmp)){
+                    if (!is_null($nameTmp)) {
                         $htmlProvider .= "<tr class='table-secondary set_2'>";
-                            $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" .$nameTmp. "</td>";
-                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBet,2)."</td>";
-                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderBets,2)."</td>";
-                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderWin,2)."</td>";
-                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderNetWin,2)."</td>";
-                            $htmlProvider .= "<td class='text-center'>".number_format($totalProviderCommission,2)."</td>";
+                        $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
+                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
+                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
+                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
+                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
+                        $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 2) . "</td>";
                         $htmlProvider .= "</tr>";
                     }
 
+
+                    //TODO TOTAL PARA CATEGORIES
+                    $totalBet = $totalBet + $totalProviderBet;
                 }
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
                 $html .= "<tr class='table-primary set_1'>";
-                    $html .= "<td>" . $value->name. "</td>";
-                    $html .= "<td class='text-center'>".number_format($totalBet,2)."</td>";
-                    $html .= "<td class='text-center'>".number_format($totalBets,2)."</td>";
-                    $html .= "<td class='text-center'>".number_format($totalWin,2)."</td>";
-                    $html .= "<td class='text-center'>".number_format($totalNetWin,2)."</td>";
-                    $html .= "<td class='text-center'>".number_format($totalCommission,2)."</td>";
-                $html .= "</tr>".$htmlProvider;
+                $html .= "<td>" . $value->name . "</td>";
+                $html .= "<td class='text-center'>" . number_format($totalBet, 2) . "</td>";
+                $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>";
+                $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
+                $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>";
+                $html .= "<td class='text-center'>" . number_format($totalCommission, 2) . "</td>";
+                $html .= "</tr>" . $htmlProvider;
 
             }
 
