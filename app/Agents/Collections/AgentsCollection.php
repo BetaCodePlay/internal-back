@@ -747,11 +747,6 @@ class AgentsCollection
         if (count($providerTypesName) > 0) {
             $html .= "<tbody>";
 
-            $totalBet = 0;
-            $totalBets = 0;
-            $totalWin = 0;
-            $totalNetWin = 0;
-            $totalCommission = 0;
             //TODO TOTAL IN AGENTS
                 foreach ($agents as $agent) {
                     $agentsUsersIds = [];
@@ -802,19 +797,28 @@ class AgentsCollection
             //TODO FINISH TOTAL IN AGENTS
 
             foreach ($providerTypesName as $item => $value) {
+                $totalBet = 0;
+                $totalBet = 0;
+                $totalBets = 0;
+                $totalWin = 0;
+                $totalNetWin = 0;
+                $totalCommission = 0;
 
-                $totalProviderBets = 0;
-                $totalProviderWin = 0;
-                $totalProviderNetWin = 0;
-                $totalProviderCommission = 0;
                 $htmlProvider = "";
                 foreach ($providers as $index => $valor) {
                     $totalProviderBet = 0;
+                    $totalProviderBets = 0;
+                    $totalProviderWin = 0;
+                    $totalProviderNetWin = 0;
+                    $totalProviderCommission = 0;
+
                     if($value->id === $valor->provider_type_id){
                         $nameTmp = Providers::getName($valor->id);
 
                         if (!is_null($nameTmp)) {
                             $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
+                            $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
+                            $totalProviderWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $htmlProvider .= "<tr class='table-secondary set_2'>";
                             $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                             $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
