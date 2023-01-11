@@ -904,7 +904,7 @@ class AgentsCollection
                     $html .= "<td class='text-center'>" . number_format($totalBet, 2) . "</td>";
                     $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>";
                     $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
-                    $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . " por definir</td>";
                     $html .= "<td class='text-center'>" . number_format($totalCommission, 2) . "</td>";
                 $html .= "</tr>" . $htmlProvider;
 
