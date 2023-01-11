@@ -344,6 +344,7 @@ class AgentsCollection
 
         foreach ($providers as $provider) {
             $nameTmp = Providers::getName($provider->id);
+            //TODO VALIDANDO PROVEEDOR !NULL
             if(!is_null($nameTmp)){
                 $providerIds[] = $provider->id;
                 $html .= "<th colspan='3' class='text-center'>" . Providers::getName($provider->id) . "</th>";
@@ -359,6 +360,8 @@ class AgentsCollection
                     '<td class="text-right"><strong>%s</strong></td>',
                     _i('Netwin')
                 );
+            }else{
+                Log::info('provider null',[$provider]);
             }
 
         }
@@ -722,9 +725,12 @@ class AgentsCollection
         $totalProfit = 0;
         $totalCollect = 0;
         $totalToPay = 0;
+        $agentTotalProfit = 0;
         $providersTotalPlayed = [];
         $providersTotalWon = [];
         $providersTotalProfit = [];
+        $providersTotalPercentage = [];
+        $providersTotalCommissions = [];
         $providerIds = [];
         $providersTitles = null;
 
@@ -764,6 +770,7 @@ class AgentsCollection
                         $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
 
                         foreach ($financial as $item) {
+                            $agentTotalProfit += $item->profit;
                             if (isset($providersTotalPlayed[$item->provider_id])) {
                                 $providersTotalPlayed[$item->provider_id] = [
                                     'total' => $providersTotalPlayed[$item->provider_id]['total'] + $item->played
@@ -794,8 +801,56 @@ class AgentsCollection
                                 ];
                             }
 
+                            if (isset($providersTotalCommissions[$item->provider_id])) {
+
+                                $percentageTmp =0;
+                                if (isset($agent->percentage) && $agent->percentage > 0) {
+                                    $percentage = number_format($agent->percentage, 2);
+                                    $percentageTmp = ($providersTotalCommissions[$item->provider_id]['total'] + $item->profit) * ($percentage / 100);
+                                } else {
+                                    $percentage = '-';
+                                    $percentageTmp = $agentTotalProfit;
+                                }
+
+                                $providersTotalCommissions[$item->provider_id] = [
+                                    'total' => $percentageTmp
+                                ];
+                            } else {
+                                $percentageTmp =0;
+                                if (isset($agent->percentage) && $agent->percentage > 0) {
+                                    $percentage = number_format($agent->percentage, 2);
+                                    $percentageTmp = $item->profit * ($percentage / 100);
+                                } else {
+                                    $percentage = '-';
+                                    $percentageTmp = $agentTotalProfit;
+                                }
+
+                                $providersTotalCommissions[$item->provider_id] = [
+                                    'total' => $percentageTmp
+                                ];
+                            }
                         }
                     }
+
+
+//                        if (isset($agent->percentage) && $agent->percentage > 0) {
+//                            $percentage = number_format($agent->percentage, 2);
+//                            $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
+//                        } else {
+//                            $percentage = '-';
+//                            $agentTotalCollect = $agentTotalProfit;
+//                        }
+//
+//                        //TODO PERCENTAGE
+//                        $html .= sprintf(
+//                            '<td class="text-right">%s</td>',
+//                            $percentage
+//                        );
+//                        //TODO COMMISSION
+//                        $html .= sprintf(
+//                            '<td class="text-right bg-primary">%s</td></tr>',
+//                            number_format($agentTotalCollect, 2)
+//                        );
 
                 }
             //TODO FINISH TOTAL IN AGENTS
@@ -822,6 +877,8 @@ class AgentsCollection
                             $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
                             $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
                             $totalProviderWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderNetWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderCommission = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $htmlProvider .= "<tr class='table-secondary set_2'>";
                                 $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                                 $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
@@ -859,53 +916,6 @@ class AgentsCollection
 
         return $html;
 
-        foreach ($providers as $provider) {
-            $providerIds[] = $provider->id;
-            $html .= "<th colspan='3' class='text-center'>" . Providers::getName($provider->id) . "</th>";
-            $providersTitles .= sprintf(
-                '<td class="text-right"><strong>%s</strong></td>',
-                _i('Bet')
-            );
-            $providersTitles .= sprintf(
-                '<td class="text-right"><strong>%s</strong></td>',
-                _i('Bets')
-            );
-            $providersTitles .= sprintf(
-                '<td class="text-right"><strong>%s</strong></td>',
-                _i('Netwin')
-            );
-        }
-
-        $html .= sprintf(
-            '<th colspan="5" class="text-center">%s</th>',
-            _i('Totals')
-        );
-        $html .= '</tr><tr><td></td>';
-        $html .= $providersTitles;
-
-        $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
-            _i('Bet')
-        );
-        $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
-            _i('Bets')
-        );
-        $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
-            _i('Netwin')
-        );
-
-        $html .= '<td class="text-right"><strong>%</strong></td>';
-        $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
-            _i('Commission')
-        );
-        $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',
-            _i('To pay')
-        );
-        $html .= '</tr></thead><tbody>';
 
         foreach ($agents as $agent) {
             $auxHTML = '';
@@ -1018,7 +1028,7 @@ class AgentsCollection
             }
 
             if ($agentTotalPlayed > 0 || $agentTotalWon > 0) {
-                $html .= $auxHTML;
+
                 if ($agent->percentage > 0) {
                     $percentage = number_format($agent->percentage, 2);
                     $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
@@ -1032,29 +1042,26 @@ class AgentsCollection
                 } else {
                     $agentTotalToPay = $agentTotalProfit - $agentTotalCollect;
                 }
+                //TODO BET
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
                     number_format($agentTotalPlayed, 2)
                 );
+                //TODO BETS
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
                     number_format($agentTotalWon, 2)
                 );
-                $html .= sprintf(
-                    '<td class="text-right bg-warning">%s</td>',
-                    number_format($agentTotalProfit, 2)
-                );
+
+                //TODO PERCENTAGE
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
                     $percentage
                 );
+                //TODO COMMISSION
                 $html .= sprintf(
                     '<td class="text-right bg-primary">%s</td></tr>',
                     number_format($agentTotalCollect, 2)
-                );
-                $html .= sprintf(
-                    '<td class="text-right bg-success"><strong>%s</strong></td>',
-                    number_format($agentTotalToPay, 2)
                 );
             }
             $totalPlayed += $agentTotalPlayed;
