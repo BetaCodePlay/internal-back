@@ -826,26 +826,6 @@ class AgentsCollection
                         }
                     }
 
-
-//                        if (isset($agent->percentage) && $agent->percentage > 0) {
-//                            $percentage = number_format($agent->percentage, 2);
-//                            $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
-//                        } else {
-//                            $percentage = '-';
-//                            $agentTotalCollect = $agentTotalProfit;
-//                        }
-//
-//                        //TODO PERCENTAGE
-//                        $html .= sprintf(
-//                            '<td class="text-right">%s</td>',
-//                            $percentage
-//                        );
-//                        //TODO COMMISSION
-//                        $html .= sprintf(
-//                            '<td class="text-right bg-primary">%s</td></tr>',
-//                            number_format($agentTotalCollect, 2)
-//                        );
-
                 }
             //TODO FINISH TOTAL IN AGENTS
 
@@ -870,12 +850,12 @@ class AgentsCollection
                         if (!is_null($nameTmp)) {
                             $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
                             $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
-                            $totalProviderWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
-                            $totalProviderNetWin = 1;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderWin = 1;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderNetWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $totalProviderCommission = isset($providersTotalCommissions[$valor->id])?$providersTotalCommissions[$valor->id]['total']:0;
 
                             if($totalProviderBet > 0 && $totalProviderBets > 0 && $totalProviderWin> 0 && $totalProviderNetWin> 0 && $totalProviderCommission> 0){
-                                $commissionTmp = $totalProviderWin * ($totalProviderCommission / 100);
+                                $commissionTmp = $totalProviderNetWin * ($totalProviderCommission / 100);
                                 $htmlProvider .= "<tr class='table-secondary set_2'>";
                                     $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
@@ -895,7 +875,7 @@ class AgentsCollection
                     $totalBets = $totalBets + $totalProviderBets;
                     $totalWin = $totalWin + $totalProviderWin;
                     $totalNetWin = $totalNetWin + $totalProviderNetWin;
-                    $totalCommission = $totalCommission + ( $totalProviderWin * ($totalProviderCommission / 100));
+                    $totalCommission = $totalCommission + ( $totalProviderNetWin * ($totalProviderCommission / 100));
                 }
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
