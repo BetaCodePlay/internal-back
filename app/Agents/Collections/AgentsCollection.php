@@ -895,7 +895,7 @@ class AgentsCollection
                     $totalBets = $totalBets + $totalProviderBets;
                     $totalWin = $totalWin + $totalProviderWin;
                     $totalNetWin = $totalNetWin + $totalProviderNetWin;
-                    $totalCommission = $totalCommission + ( $commissionTmp = $totalProviderWin * ($totalProviderCommission / 100));
+                    $totalCommission = $totalCommission + ( $totalProviderWin * ($totalProviderCommission / 100));
                 }
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
