@@ -871,16 +871,18 @@ class AgentsCollection
                             $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
                             $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
                             $totalProviderWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
-                            $totalProviderNetWin = 0;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderNetWin = 1;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $totalProviderCommission = isset($providersTotalCommissions[$valor->id])?$providersTotalCommissions[$valor->id]['total']:0;
+
                             if($totalProviderBet > 0 && $totalProviderBets > 0 && $totalProviderWin> 0 && $totalProviderNetWin> 0 && $totalProviderCommission> 0){
+                                $commissionTmp = $totalProviderWin * ($totalProviderCommission / 100);
                                 $htmlProvider .= "<tr class='table-secondary set_2'>";
                                     $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 2) . "</td>";
+                                    $htmlProvider .= "<td class='text-center'>" . number_format($commissionTmp, 2) . "</td>";
                                 $htmlProvider .= "</tr>";
                             }
 
@@ -893,7 +895,7 @@ class AgentsCollection
                     $totalBets = $totalBets + $totalProviderBets;
                     $totalWin = $totalWin + $totalProviderWin;
                     $totalNetWin = $totalNetWin + $totalProviderNetWin;
-                    $totalCommission = $totalCommission + $totalProviderCommission;
+                    $totalCommission = $totalCommission + ( $commissionTmp = $totalProviderWin * ($totalProviderCommission / 100));
                 }
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
