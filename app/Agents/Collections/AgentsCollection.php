@@ -803,31 +803,25 @@ class AgentsCollection
 
                             if (isset($providersTotalCommissions[$item->provider_id])) {
 
-                                $percentageTmp =0;
                                 if (isset($agent->percentage) && $agent->percentage > 0) {
-                                    $percentage = number_format($agent->percentage, 2);
-                                    $percentageTmp = ($providersTotalCommissions[$item->provider_id]['total'] + $item->profit) * ($percentage / 100);
-                                } else {
-                                    $percentage = '-';
-                                    $percentageTmp = $agentTotalProfit;
+                                    $providersTotalCommissions[$item->provider_id] = [
+                                        'total' => $providersTotalCommissions[$item->provider_id]['total'] + $agent->percentage
+                                    ];
                                 }
 
-                                $providersTotalCommissions[$item->provider_id] = [
-                                    'total' => $percentageTmp
-                                ];
                             } else {
-                                $percentageTmp =0;
+
                                 if (isset($agent->percentage) && $agent->percentage > 0) {
-                                    $percentage = number_format($agent->percentage, 2);
-                                    $percentageTmp = $item->profit * ($percentage / 100);
-                                } else {
-                                    $percentage = '-';
-                                    $percentageTmp = $agentTotalProfit;
+                                    $providersTotalCommissions[$item->provider_id] = [
+                                        'total' => $agent->percentage
+                                    ];
+                                }else{
+                                    $providersTotalCommissions[$item->provider_id] = [
+                                        'total' => 0
+                                    ];
                                 }
 
-                                $providersTotalCommissions[$item->provider_id] = [
-                                    'total' => $percentageTmp
-                                ];
+
                             }
                         }
                     }
@@ -877,8 +871,8 @@ class AgentsCollection
                             $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
                             $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
                             $totalProviderWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
-                            $totalProviderNetWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
-                            $totalProviderCommission = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderNetWin = '**test**';//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderCommission = isset($providersTotalCommissions[$valor->id])?$providersTotalCommissions[$valor->id]['total']:0;
                             if($totalProviderBet > 0 && $totalProviderBets > 0 && $totalProviderWin> 0 && $totalProviderNetWin> 0 && $totalProviderCommission> 0){
                                 $htmlProvider .= "<tr class='table-secondary set_2'>";
                                     $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
