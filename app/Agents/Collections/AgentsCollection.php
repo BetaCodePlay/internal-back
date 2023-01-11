@@ -883,8 +883,8 @@ class AgentsCollection
                     $html .= "<td>" . $value->name . "</td>";
                     $html .= "<td class='text-center'>" . number_format($totalBet, 2) . "</td>"; //played
                     $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>"; //won
-                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>"; //profit
-                    $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . " por definir</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . " por definir</td>";
+                    $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>"; //profit
                     $html .= "<td class='text-center'>" . number_format($totalCommission, 2) . "</td>"; //% de agente
                 $html .= "</tr>" . $htmlProvider;
 
