@@ -492,6 +492,18 @@ class ClosuresUsersTotalsRepo
             GROUP BY user_id, username, provider_id", [$startDate, $endDate, $whitelabel, $currency]);
     }
 
+    public function getUsersTotalsByIds_ByProvider($whitelabel, $startDate, $endDate, $currency, $users,$provider)
+    {
+        return DB::select("SELECT user_id AS id, username, sum(bets) AS bets, sum(played) AS played, sum(won) AS won, sum(profit) AS profit
+            FROM closures_users_totals
+            WHERE start_date >= ? AND end_date <= ?
+            AND whitelabel_id = ?
+            AND currency_iso = ?
+            AND provider_id = ?
+            AND user_id IN (" . implode(',', $users) . ")
+            GROUP BY user_id, username, provider_id", [$startDate, $endDate, $whitelabel, $currency,$provider]);
+    }
+
     /**
      * Get users totals by whitelabel
      *
