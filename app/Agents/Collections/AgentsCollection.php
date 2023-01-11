@@ -871,7 +871,7 @@ class AgentsCollection
                             $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
                             $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
                             $totalProviderWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
-                            $totalProviderNetWin = '**test**';//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderNetWin = 0;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $totalProviderCommission = isset($providersTotalCommissions[$valor->id])?$providersTotalCommissions[$valor->id]['total']:0;
                             if($totalProviderBet > 0 && $totalProviderBets > 0 && $totalProviderWin> 0 && $totalProviderNetWin> 0 && $totalProviderCommission> 0){
                                 $htmlProvider .= "<tr class='table-secondary set_2'>";
