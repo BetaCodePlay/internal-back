@@ -675,6 +675,7 @@ class AgentsController extends Controller
         $data['title'] = _i('Financial state report').' (-View1-)';
         return view('back.agents.reports.financial-state_view1', $data);
     }
+
     public function financialStateData_view1(ProvidersRepo $providersRepo,ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
         //try {
@@ -701,9 +702,9 @@ class AgentsController extends Controller
                 '$startDate'=>$startDate,
                 '$currency'=>$currency,
                 '$whitelabel'=>$whitelabel,
-                '$providerTypes'=>$providerTypes,
-                '$providerTypesName'=>$providerTypesName,
-                '$providers'=>$providers,
+//                '$providerTypes'=>$providerTypes,
+//                '$providerTypesName'=>$providerTypesName,
+//                '$providers'=>$providers,
                 '$agent'=>$agent,
                 '$agents'=>$agents,
                 '$users'=>$users,
