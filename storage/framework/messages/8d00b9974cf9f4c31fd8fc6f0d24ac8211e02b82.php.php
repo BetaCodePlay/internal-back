@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
-"POT-Creation-Date: 2022-12-21 03:11+0000\n"
-"PO-Revision-Date: 2022-12-21 03:11+0000\n"
+"POT-Creation-Date: 2023-01-11 22:18+0000\n"
+"PO-Revision-Date: 2023-01-11 22:18+0000\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_ES\n"
@@ -19,28 +19,28 @@ msgstr ""
 "X-Poedit-SearchPath-3: ../lang\n"
 "X-Poedit-SearchPath-4: ../storage/framework/messages/\n"
 
-#: ../app/Agents/Collections/AgentsCollection.php:341
-#: ../app/Agents/Collections/AgentsCollection.php:730
-#: ../app/Agents/Collections/AgentsCollection.php:924
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:341
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:730
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:924
+#: ../app/Agents/Collections/AgentsCollection.php:342
+#: ../app/Agents/Collections/AgentsCollection.php:733
+#: ../app/Agents/Collections/AgentsCollection.php:927
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:342
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:733
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:927
 msgid "Agents / Players"
 msgstr "Agentes / Jugadores"
 
-#: ../app/Agents/Collections/AgentsCollection.php:349
-#: ../app/Agents/Collections/AgentsCollection.php:370
+#: ../app/Agents/Collections/AgentsCollection.php:350
+#: ../app/Agents/Collections/AgentsCollection.php:371
 #: ../app/Store/Enums/Actions.php:37
 #: ../storage/framework/messages/09d2d7cae9fc8b7d66166a59a3605a8fc97078c8.php.php:72
 #: ../storage/framework/messages/7699ff7af8ce9f21291e7452b10f236af7b3255f.php.php:37
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:349
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:370
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:350
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:371
 #: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:72
 msgid "Bet"
 msgstr "Apostado"
 
-#: ../app/Agents/Collections/AgentsCollection.php:353
-#: ../app/Agents/Collections/AgentsCollection.php:374
+#: ../app/Agents/Collections/AgentsCollection.php:354
+#: ../app/Agents/Collections/AgentsCollection.php:375
 #: ../storage/framework/messages/0077bfaf794a5fa9be9425d2d73a674a9bf80201.php.php:132
 #: ../storage/framework/messages/02d93fc90c584a6ffc9939ca73bf2258d7c7f7b4.php.php:38
 #: ../storage/framework/messages/2912055a4d99a0d0cf845c83748c6c32613acbb5.php.php:183
@@ -48,27 +48,27 @@ msgstr "Apostado"
 #: ../storage/framework/messages/6620b52dce3120c3ab11e7ad0361218088abc9ad.php.php:139
 #: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1006
 #: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:207
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:353
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:374
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:354
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:375
 #: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:89
 msgid "Bets"
 msgstr "Apuestas"
 
-#: ../app/Agents/Collections/AgentsCollection.php:357
-#: ../app/Agents/Collections/AgentsCollection.php:378
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:357
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:378
+#: ../app/Agents/Collections/AgentsCollection.php:358
+#: ../app/Agents/Collections/AgentsCollection.php:379
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:358
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:379
 #, fuzzy
 #| msgid "Network"
 msgid "Netwin"
 msgstr "Red"
 
-#: ../app/Agents/Collections/AgentsCollection.php:363
-#: ../app/Agents/Collections/AgentsCollection.php:660
-#: ../app/Agents/Collections/AgentsCollection.php:735
-#: ../app/Agents/Collections/AgentsCollection.php:876
-#: ../app/Agents/Collections/AgentsCollection.php:929
-#: ../app/Agents/Collections/AgentsCollection.php:1115
+#: ../app/Agents/Collections/AgentsCollection.php:364
+#: ../app/Agents/Collections/AgentsCollection.php:664
+#: ../app/Agents/Collections/AgentsCollection.php:738
+#: ../app/Agents/Collections/AgentsCollection.php:879
+#: ../app/Agents/Collections/AgentsCollection.php:932
+#: ../app/Agents/Collections/AgentsCollection.php:1118
 #: ../app/Core/helpers.php:365
 #: ../app/Http/Controllers/InvoicesController.php:80
 #: ../app/Http/Controllers/ReportsController.php:1365
@@ -76,50 +76,50 @@ msgstr "Red"
 #: ../storage/framework/messages/0a8577c6c994716603abfa055b5e2b1ebc23b6bd.php.php:80
 #: ../storage/framework/messages/81795d0154b6636f54ab75cf31b33d0a890ac708.php.php:210
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:365
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:363
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:660
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:735
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:876
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:929
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1115
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:364
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:664
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:738
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:879
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:932
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1118
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:210
 msgid "Totals"
 msgstr "Totales"
 
-#: ../app/Agents/Collections/AgentsCollection.php:384
+#: ../app/Agents/Collections/AgentsCollection.php:385
 #: ../app/BetPay/Collections/TransactionsCollection.php:429
 #: ../storage/framework/messages/11adc6f4668ac4d22779da34272424bacdcb594c.php.php:429
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:384
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:385
 #: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:48
 msgid "Commission"
 msgstr "Comisión"
 
-#: ../app/Agents/Collections/AgentsCollection.php:388
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:388
-msgid "Put out"
-msgstr "Apagar"
+#: ../app/Agents/Collections/AgentsCollection.php:389
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:389
+msgid "To pay"
+msgstr "A pagar"
 
-#: ../app/Agents/Collections/AgentsCollection.php:412
-#: ../app/Agents/Collections/AgentsCollection.php:774
-#: ../app/Agents/Collections/AgentsCollection.php:978
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:412
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:774
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:978
+#: ../app/Agents/Collections/AgentsCollection.php:413
+#: ../app/Agents/Collections/AgentsCollection.php:777
+#: ../app/Agents/Collections/AgentsCollection.php:981
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:413
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:777
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:981
 msgid "(Agent)"
 msgstr "(Agente)"
 
-#: ../app/Agents/Collections/AgentsCollection.php:569
-#: ../app/Agents/Collections/AgentsCollection.php:841
-#: ../app/Agents/Collections/AgentsCollection.php:1065
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:569
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:841
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1065
+#: ../app/Agents/Collections/AgentsCollection.php:573
+#: ../app/Agents/Collections/AgentsCollection.php:844
+#: ../app/Agents/Collections/AgentsCollection.php:1068
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:573
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:844
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1068
 msgid "(Player)"
 msgstr "(Jugador)"
 
-#: ../app/Agents/Collections/AgentsCollection.php:741
-#: ../app/Agents/Collections/AgentsCollection.php:935
-#: ../app/Agents/Collections/AgentsCollection.php:1758
+#: ../app/Agents/Collections/AgentsCollection.php:744
+#: ../app/Agents/Collections/AgentsCollection.php:938
+#: ../app/Agents/Collections/AgentsCollection.php:1761
 #: ../app/Core/Collections/TransactionsCollection.php:629
 #: ../app/Core/helpers.php:578 ../app/Core/helpers.php:600
 #: ../app/Core/helpers.php:632 ../app/Core/helpers.php:664
@@ -216,9 +216,9 @@ msgstr "(Jugador)"
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:874
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:930
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1019
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:741
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:935
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1758
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:744
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:938
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1761
 #: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:49
 #: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:50
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:181
@@ -230,9 +230,9 @@ msgstr "(Jugador)"
 msgid "Credit"
 msgstr "Ingreso"
 
-#: ../app/Agents/Collections/AgentsCollection.php:745
-#: ../app/Agents/Collections/AgentsCollection.php:939
-#: ../app/Agents/Collections/AgentsCollection.php:1758
+#: ../app/Agents/Collections/AgentsCollection.php:748
+#: ../app/Agents/Collections/AgentsCollection.php:942
+#: ../app/Agents/Collections/AgentsCollection.php:1761
 #: ../app/Core/Collections/TransactionsCollection.php:629
 #: ../app/Core/helpers.php:610 ../app/Core/helpers.php:642
 #: ../app/Core/helpers.php:674 ../app/Core/helpers.php:705
@@ -327,9 +327,9 @@ msgstr "Ingreso"
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:876
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:932
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1021
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:745
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:939
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1758
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:748
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:942
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1761
 #: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:51
 #: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:61
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:185
@@ -341,8 +341,8 @@ msgstr "Ingreso"
 msgid "Debit"
 msgstr "Egreso"
 
-#: ../app/Agents/Collections/AgentsCollection.php:749
-#: ../app/Agents/Collections/AgentsCollection.php:951
+#: ../app/Agents/Collections/AgentsCollection.php:752
+#: ../app/Agents/Collections/AgentsCollection.php:954
 #: ../app/Core/Collections/TransactionsCollection.php:496
 #: ../storage/framework/messages/0077bfaf794a5fa9be9425d2d73a674a9bf80201.php.php:148
 #: ../storage/framework/messages/1a2c179c891e703d420e01a68d101c2f50bf04b5.php.php:54
@@ -359,21 +359,21 @@ msgstr "Egreso"
 #: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:970
 #: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1018
 #: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:219
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:749
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:951
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:752
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:954
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:159
 #: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:496
 msgid "Profit"
 msgstr "Profit"
 
-#: ../app/Agents/Collections/AgentsCollection.php:754
-#: ../app/Agents/Collections/AgentsCollection.php:956
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:754
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:956
+#: ../app/Agents/Collections/AgentsCollection.php:757
+#: ../app/Agents/Collections/AgentsCollection.php:959
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:757
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:959
 msgid "Collect"
 msgstr "Cobro"
 
-#: ../app/Agents/Collections/AgentsCollection.php:943
+#: ../app/Agents/Collections/AgentsCollection.php:946
 #: ../app/Http/Controllers/InvoicesController.php:79
 #: ../storage/framework/messages/079df07b6e8c1782cbe22ae09f8f176d12626d66.php.php:20
 #: ../storage/framework/messages/0a8577c6c994716603abfa055b5e2b1ebc23b6bd.php.php:79
@@ -387,17 +387,17 @@ msgstr "Cobro"
 #: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:20
 #: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:42
 #: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:20
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:943
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:946
 #: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:20
 msgid "Total"
 msgstr "Total"
 
-#: ../app/Agents/Collections/AgentsCollection.php:947
+#: ../app/Agents/Collections/AgentsCollection.php:950
 #: ../storage/framework/messages/1baf6b445ea3ae9e42041ed9ae05aaa8c5a60e5e.php.php:425
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:3354
 #: ../storage/framework/messages/843edbe1d033fdc1f1e11e0c969cafdd5414f9cf.php.php:425
 #: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:811
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:947
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:950
 #: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:415
 #: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:157
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:157
@@ -405,7 +405,7 @@ msgstr "Total"
 msgid "Bonus"
 msgstr "Bono"
 
-#: ../app/Agents/Collections/AgentsCollection.php:1155
+#: ../app/Agents/Collections/AgentsCollection.php:1158
 #: ../app/BonusSystem/Collections/CampaignsCollection.php:77
 #: ../app/BonusSystem/Collections/CampaignsCollection.php:274
 #: ../app/BonusSystem/Collections/CampaignsCollection.php:503
@@ -444,7 +444,7 @@ msgstr "Bono"
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:385
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:436
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1155
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1155
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1158
 #: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:502
 #: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:86
 #: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:353
@@ -457,7 +457,7 @@ msgstr "Bono"
 msgid "Active"
 msgstr "Activo"
 
-#: ../app/Agents/Collections/AgentsCollection.php:1155
+#: ../app/Agents/Collections/AgentsCollection.php:1158
 #: ../app/Reports/Collections/ReportsCollection.php:672
 #: ../app/Users/Collections/UsersCollection.php:385
 #: ../app/Users/Collections/UsersCollection.php:436
@@ -466,7 +466,7 @@ msgstr "Activo"
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:385
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:436
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1155
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1155
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1158
 #: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:506
 #: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:354
 #: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:46
@@ -474,28 +474,28 @@ msgstr "Activo"
 msgid "Blocked"
 msgstr "Bloqueado"
 
-#: ../app/Agents/Collections/AgentsCollection.php:1168
-#: ../app/Agents/Collections/AgentsCollection.php:1206
-#: ../app/Agents/Collections/AgentsCollection.php:1247
+#: ../app/Agents/Collections/AgentsCollection.php:1171
+#: ../app/Agents/Collections/AgentsCollection.php:1209
+#: ../app/Agents/Collections/AgentsCollection.php:1250
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:49
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1168
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1206
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1247
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1171
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1209
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1250
 msgid "Master agent"
 msgstr "Agente maestro"
 
-#: ../app/Agents/Collections/AgentsCollection.php:1168
-#: ../app/Agents/Collections/AgentsCollection.php:1206
-#: ../app/Agents/Collections/AgentsCollection.php:1247
+#: ../app/Agents/Collections/AgentsCollection.php:1171
+#: ../app/Agents/Collections/AgentsCollection.php:1209
+#: ../app/Agents/Collections/AgentsCollection.php:1250
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:53
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1168
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1206
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1247
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1171
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1209
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1250
 msgid "Cashier"
 msgstr "Cajero"
 
-#: ../app/Agents/Collections/AgentsCollection.php:1187
-#: ../app/Agents/Collections/AgentsCollection.php:1225
+#: ../app/Agents/Collections/AgentsCollection.php:1190
+#: ../app/Agents/Collections/AgentsCollection.php:1228
 #: ../storage/framework/messages/0d284b9b9f960a8d195d8b6c865d6e11b2e737c1.php.php:27
 #: ../storage/framework/messages/0d336862fad1454b55a186ae4a141aec87a5713d.php.php:20
 #: ../storage/framework/messages/0f4096b615ffe585310d2005ee04183dc4679266.php.php:33
@@ -513,8 +513,8 @@ msgstr "Cajero"
 #: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:20
 #: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:73
 #: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:117
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1187
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1225
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1190
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1228
 #: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:19
 #: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:71
 #: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:48
@@ -524,7 +524,7 @@ msgstr "Cajero"
 msgid "User"
 msgstr "Usuario"
 
-#: ../app/Agents/Collections/AgentsCollection.php:1252
+#: ../app/Agents/Collections/AgentsCollection.php:1255
 #: ../app/BetPay/Collections/AccountsCollection.php:127
 #: ../app/BetPay/Collections/AccountsCollection.php:175
 #: ../app/BetPay/Collections/AccountsCollection.php:206
@@ -583,7 +583,7 @@ msgstr "Usuario"
 #: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:95
 #: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:63
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:245
-#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1252
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1255
 #: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:45
 #: ../storage/framework/messages/c2d570d41b9902f657fbd0a7502504170ffbc4d4.php.php:29
 #: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:65
@@ -18392,6 +18392,9 @@ msgstr "Balance"
 #| msgid "Balance"
 msgid "Binance Phone"
 msgstr "Balance"
+
+#~ msgid "Put out"
+#~ msgstr "Apagar"
 
 #~ msgid "Registration bonus"
 #~ msgstr "Bono de registro"

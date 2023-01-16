@@ -1179,6 +1179,35 @@ class Providers
      * @var int
      */
     public static $lv_sLots = 166;
+
+    /**
+     * Sport Bet
+     *
+     * @var int
+     */
+    public static $sport_bet = 167;
+
+    /**
+     * Ezugi Live
+     *
+     * @var int
+     */
+    public static $ezugi_live = 168;
+
+    /**
+     * Vivo Live
+     *
+     * @var int
+     */
+    public static $vivo_live = 169;
+
+    /**
+     * Lucky Roulette
+     *
+     * @var int
+     */
+    public static $lucky_roulette = 170;
+
     /**
      * Get transaction description
      *
@@ -4033,6 +4062,26 @@ class Providers
             case self::$lv_sLots:
             {
                 $name = _i('LV Slots');
+                break;
+            }
+            case self::$sport_bet:
+            {
+                $name = _i('Sport bet');
+                break;
+            }
+            case self::$ezugi_live:
+            {
+                $name = _i('Ezugi Live');
+                break;
+            }
+            case self::$vivo_live:
+            {
+                $name = _i('Vivo Live');
+                break;
+            }
+            case self::$lucky_roulette:
+            {
+                $name = _i('Lucky Roulette');
                 break;
             }
             default:
