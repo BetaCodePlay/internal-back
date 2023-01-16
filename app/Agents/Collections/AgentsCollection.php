@@ -768,7 +768,7 @@ class AgentsCollection
 
                     if (count($dependency) > 0) {
                         $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
-
+                        $financial2 = $financial;
                         foreach ($financial as $item) {
                             $agentTotalProfit += $item->profit;
                             if (isset($providersTotalPlayed[$item->provider_id])) {
@@ -893,7 +893,10 @@ class AgentsCollection
             $html .= "<tbody></table>";
         }
 
-        return $html;
+        return [
+            'html'=>$html,
+            'financial2'=>$financial2,
+        ];
 
     }
 
