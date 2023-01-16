@@ -1066,8 +1066,8 @@ class AgentsCollection
         }
         //TODO => TEST
         return [
-            $html,
-            '$financial2'=>$financial2,
+            'html'=>$html,
+            'financial2'=>$financial2,
             ];
 
 
