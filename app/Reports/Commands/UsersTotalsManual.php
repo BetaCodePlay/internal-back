@@ -44,7 +44,9 @@ class UsersTotalsManual extends Command
                     $providers = $providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
 
                     foreach ($providers as $provider) {
-                        if (in_array($provider->id)) {
+                        if (in_array($provider->id, [
+                            Providers::$lv_sLots
+                        ])) {
                             if (!is_null($provider->tickets_table) && !empty($provider->tickets_table) && $provider->id != Providers::$dot_suite) {
                                 try {
                                     $providerID = null;
