@@ -32,7 +32,7 @@ class UsersTotalsManual extends Command
     public function handle(WhitelabelsRepo $whitelabelsRepo, ProvidersRepo $providersRepo, CoreRepo $coreRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo)
     {
         $whitelabels = $whitelabelsRepo->getByStatus([Status::$active, Status::$whitelabel_maintenance, Status::$whitelabel_dotpanel_maintenance]);
-        $dates = CarbonPeriod::create('2022-10-27 00:00:00', 5);
+        $dates = CarbonPeriod::create('2023-01-01 00:00:00', '2023-01-16 23:59:59');
         foreach ($dates as $date) {
             for ($hours = 0; $hours <= 23; $hours++) {
                 $startDate = $date->copy()->addHours($hours)->startOfHour();
@@ -91,6 +91,12 @@ class UsersTotalsManual extends Command
                                         Providers::$tgg_interactive,
                                         Providers::$vibra,
                                         Providers::$one_touch,
+                                        Providers::$one_touch,
+                                        Providers::$belatra,
+                                        Providers::$play_son,
+                                        Providers::$urgent_games,
+                                        Providers::$fbm_gaming,
+                                        Providers::$inbet,
                                         Providers::$patagonia,
                                         Providers::$pg_soft,
                                         Providers::$booongo,
