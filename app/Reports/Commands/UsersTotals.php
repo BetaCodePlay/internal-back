@@ -86,7 +86,6 @@ class UsersTotals extends Command
                             Providers::$tgg_interactive,
                             Providers::$vibra,
                             Providers::$one_touch,
-                            Providers::$one_touch,
                             Providers::$belatra,
                             Providers::$play_son,
                             Providers::$urgent_games,
