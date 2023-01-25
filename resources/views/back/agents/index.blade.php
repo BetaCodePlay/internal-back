@@ -577,7 +577,8 @@
                                 </div>
                             </div>
                             @include('back.layout.litepicker')
-                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}">
+{{--                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}">--}}
+                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">
 
                             </div>
                         </div>

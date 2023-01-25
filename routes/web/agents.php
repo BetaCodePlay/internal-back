@@ -204,7 +204,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 
         //TODO VIEW OF EXAMPLE
         Route::get('financial-state/view1', [
-            'as' => 'agents.reports.financial-state.view1',
+            'as' => 'agents.reports.financial-state.new',
             'uses' => 'AgentsController@financialState_view1'
         ]);
         Route::get('financial-state-data/view1/{user?}/{startDate?}/{endDate?}', [

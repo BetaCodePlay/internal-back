@@ -42,6 +42,10 @@ class DotpanelServiceProvider extends ServiceProvider
                 die;
             }
 
+            if($domain == 'back-office-v1.co' || $domain == 'back-office.co'){
+                $domain = 'back-office-v1.co';
+            }
+
             $configurations = Configurations::getConfigurationsByURL($domain);
 
             if (count($configurations) == 0) {

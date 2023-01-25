@@ -696,7 +696,7 @@ class AgentsController extends Controller
             $data = [
                 'table' => $table
             ];
-            return [
+            $ret =  [
                 '$today'=>$today,
                 '$endDate'=>$endDate,
                 '$startDate'=>$startDate,
@@ -710,7 +710,8 @@ class AgentsController extends Controller
                 '$users'=>$users,
                 '$table'=>$data,
             ];
-//            return Utils::successResponse($data);
+            //return $ret;
+            return Utils::successResponse($data);
 //        } catch (\Exception $ex) {
 //            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
 //            return Utils::failedResponse();
@@ -975,6 +976,7 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            //return [$agent,$user,$currency];
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);

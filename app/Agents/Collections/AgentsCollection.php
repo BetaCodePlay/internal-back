@@ -741,7 +741,7 @@ class AgentsCollection
                             <th scope="col">%s</th>
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
-                            <th scope="col" class="text-center">%s</th>
+
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
                         </tr>
@@ -749,10 +749,13 @@ class AgentsCollection
             _i('Categories'),
             _i('Bet'),
             _i('Bets'),
-            _i('win'),
             _i('Netwin'),
             _i('Commission'),
         );
+
+//        <th scope="col" class="text-center">%s</th>
+//
+//    _i('win'),
 
         if (count($providerTypesName) > 0) {
             $html .= "<tbody>";
@@ -821,7 +824,6 @@ class AgentsCollection
                                     ];
                                 }
 
-
                             }
                         }
                     }
@@ -850,7 +852,7 @@ class AgentsCollection
                         if (!is_null($nameTmp)) {
                             $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
                             $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
-                            $totalProviderWin = 1;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
+                            $totalProviderWin = 0;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $totalProviderNetWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
                             $totalProviderCommission = isset($providersTotalCommissions[$valor->id])?$providersTotalCommissions[$valor->id]['total']:0;
 
@@ -860,9 +862,10 @@ class AgentsCollection
                                     $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
+//                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($commissionTmp, 2) . "</td>";
+                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 0) . "%</td>";
+//                                    $htmlProvider .= "<td class='text-center'>" . number_format($commissionTmp, 2) . "</td>";
                                 $htmlProvider .= "</tr>";
                             }
 
@@ -875,7 +878,7 @@ class AgentsCollection
                     $totalBets = $totalBets + $totalProviderBets;
                     $totalWin = $totalWin + $totalProviderWin;
                     $totalNetWin = $totalNetWin + $totalProviderNetWin;
-                    $totalCommission = $totalCommission + ( $totalProviderNetWin * ($totalProviderCommission / 100));
+                    $totalCommission = $totalCommission + $totalProviderCommission;//( $totalProviderNetWin * ($totalProviderCommission / 100));
                 }
 
                 //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
@@ -883,7 +886,7 @@ class AgentsCollection
                     $html .= "<td>" . $value->name . "</td>";
                     $html .= "<td class='text-center'>" . number_format($totalBet, 2) . "</td>"; //played
                     $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>"; //won
-                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . " por definir</td>";
+//                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
                     $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>"; //profit
                     $html .= "<td class='text-center'>" . number_format($totalCommission, 2) . "</td>"; //% de agente
                 $html .= "</tr>" . $htmlProvider;
@@ -893,9 +896,11 @@ class AgentsCollection
             $html .= "<tbody></table>";
         }
 
+        return $html;
+
         return [
             'html'=>$html,
-            'financial2'=>$financial2,
+            //'financial2'=>$financial2,
         ];
 
     }
