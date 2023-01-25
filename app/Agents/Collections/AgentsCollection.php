@@ -880,7 +880,7 @@ class AgentsCollection
                     $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>"; //won
 //                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
                     $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>"; //profit
-                    $html .= "<td class='text-center'>" . $totalCommission . "</td>"; //% de agente
+                    $html .= "<td class='text-center'>" . number_format($totalCommission,2) . "%</td>"; //% de agente
                 $html .= "</tr>" . $htmlProvider;
 
             }
