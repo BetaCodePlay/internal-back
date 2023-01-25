@@ -41,26 +41,9 @@ class UsersTotals extends Command
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel->id);
 
             foreach ($providers as $provider) {
-                if (!is_null($provider->tickets_table) && !empty($provider->tickets_table) && $provider->id != Providers::$salsa_gaming && $provider->id != Providers::$dot_suite) {
+                if (!is_null($provider->tickets_table) && !empty($provider->tickets_table) && $provider->id != Providers::$dot_suite) {
                     try {
                         $providerID = null;
-                        $salsaGamingProviders = [
-                            Providers::$patagonia,
-                            Providers::$pg_soft,
-                            Providers::$booongo,
-                            Providers::$game_art,
-                            Providers::$booming_games,
-                            Providers::$kiron_interactive,
-                            Providers::$hacksaw_gaming,
-                            Providers::$triple_cherry,
-                            Providers::$espresso_games,
-                            Providers::$betsoft
-                        ];
-                        $pragmaticPlayProviders = [
-                            Providers::$pragmatic_play,
-                            Providers::$pragmatic_play_live_casino,
-                            Providers::$pragmatic_play_virtual
-                        ];
                         $dotsuiteProviders = [
                             Providers::$wnet_games,
                             Providers::$gamzix,
@@ -102,14 +85,27 @@ class UsersTotals extends Command
                             Providers::$five_men_gaming,
                             Providers::$tgg_interactive,
                             Providers::$vibra,
-                            Providers::$one_touch
+                            Providers::$one_touch,
+                            Providers::$belatra,
+                            Providers::$play_son,
+                            Providers::$urgent_games,
+                            Providers::$fbm_gaming,
+                            Providers::$inbet,
+                            Providers::$patagonia,
+                            Providers::$pg_soft,
+                            Providers::$booongo,
+                            Providers::$game_art,
+                            Providers::$booming_games,
+                            Providers::$kiron_interactive,
+                            Providers::$hacksaw_gaming,
+                            Providers::$triple_cherry,
+                            Providers::$espresso_games,
+                            Providers::$betsoft,
+                            Providers::$pragmatic_play,
+                            Providers::$pragmatic_play_live_casino,
+                            Providers::$pragmatic_play_virtual
                         ];
-                        if (in_array($provider->id, $salsaGamingProviders)) {
-                            $providerID = $provider->id;
-                        }
-                        if (in_array($provider->id, $pragmaticPlayProviders)) {
-                            $providerID = $provider->id;
-                        }
+
                         if (in_array($provider->id, $dotsuiteProviders)) {
                             $providerID = $provider->id;
                         }
