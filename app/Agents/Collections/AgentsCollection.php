@@ -720,19 +720,11 @@ class AgentsCollection
     public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
-        $totalPlayed = 0;
-        $totalWon = 0;
-        $totalProfit = 0;
-        $totalCollect = 0;
-        $totalToPay = 0;
         $agentTotalProfit = 0;
         $providersTotalPlayed = [];
         $providersTotalWon = [];
         $providersTotalProfit = [];
-        $providersTotalPercentage = [];
         $providersTotalCommissions = [];
-        $providerIds = [];
-        $providersTitles = null;
 
         $html = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
@@ -864,7 +856,7 @@ class AgentsCollection
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
 //                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission, 0) . "%</td>";
+                                    $htmlProvider .= "<td class='text-center'>" . $totalProviderCommission . "%</td>";
 //                                    $htmlProvider .= "<td class='text-center'>" . number_format($commissionTmp, 2) . "</td>";
                                 $htmlProvider .= "</tr>";
                             }
@@ -888,7 +880,7 @@ class AgentsCollection
                     $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>"; //won
 //                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
                     $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>"; //profit
-                    $html .= "<td class='text-center'>" . number_format($totalCommission, 2) . "</td>"; //% de agente
+                    $html .= "<td class='text-center'>" . $totalCommission . "</td>"; //% de agente
                 $html .= "</tr>" . $htmlProvider;
 
             }
