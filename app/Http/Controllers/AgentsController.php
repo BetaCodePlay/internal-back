@@ -693,7 +693,7 @@ class AgentsController extends Controller
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $table = $this->agentsCollection->financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today,$providerTypesName);
-          return  $data = [
+            $data = [
                 'table' => $table
             ];
             $ret =  [

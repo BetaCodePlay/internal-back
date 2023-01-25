@@ -798,7 +798,7 @@ class AgentsCollection
 
                             if (isset($providersTotalCommissions[$item->provider_id])) {
 
-                                if (isset($agent->percentage) && $agent->percentage > 0) {
+                                if (isset($agent->percentage)) {
                                     $providersTotalCommissions[$item->provider_id] = [
                                         'total' => $providersTotalCommissions[$item->provider_id]['total'] + $agent->percentage
                                     ];
@@ -806,7 +806,7 @@ class AgentsCollection
 
                             } else {
 
-                                if (isset($agent->percentage) && $agent->percentage > 0) {
+                                if (isset($agent->percentage)) {
                                     $providersTotalCommissions[$item->provider_id] = [
                                         'total' => $agent->percentage
                                     ];
@@ -856,7 +856,7 @@ class AgentsCollection
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
 //                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
                                     $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . $totalProviderCommission . "%</td>";
+                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission ,2) . "%</td>";
 //                                    $htmlProvider .= "<td class='text-center'>" . number_format($commissionTmp, 2) . "</td>";
                                 $htmlProvider .= "</tr>";
                             }
