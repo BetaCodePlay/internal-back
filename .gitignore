@@ -3,7 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
-public/auth/fonts
+public/auth
 .env
 .env.backup
 .phpunit.result.cache
