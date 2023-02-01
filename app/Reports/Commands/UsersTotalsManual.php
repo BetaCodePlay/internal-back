@@ -150,7 +150,6 @@ class UsersTotalsManual extends Command
                                                                 ];
 
                                                                 $test1 = $closuresUsersTotalsRepo->store($closureData);
-                                                                $this->info("Dotsuite 1 $test1");
                                                                 unset($usersTotals['debit'][$debitKey]);
                                                                 unset($usersTotals['credit'][$creditKey]);
                                                             }
@@ -175,7 +174,6 @@ class UsersTotalsManual extends Command
                                                                 ];
 
                                                                 $test2 = $closuresUsersTotalsRepo->store($closureData);
-                                                                $this->info("Dotsuite 2 $test2");
                                                                 unset($usersTotals['debit'][$debitKey]);
                                                                 unset($usersTotals['credit'][$creditKey]);
                                                             }
