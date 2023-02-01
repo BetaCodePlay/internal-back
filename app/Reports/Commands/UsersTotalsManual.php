@@ -149,7 +149,8 @@ class UsersTotalsManual extends Command
                                                                     'provider_id' => $ticketProvider
                                                                 ];
 
-                                                                $closuresUsersTotalsRepo->store($closureData);
+                                                                $test1 = $closuresUsersTotalsRepo->store($closureData);
+                                                                $this->info("Dotsuite 1 $test1");
                                                                 unset($usersTotals['debit'][$debitKey]);
                                                                 unset($usersTotals['credit'][$creditKey]);
                                                             }
@@ -173,7 +174,8 @@ class UsersTotalsManual extends Command
                                                                     'provider_id' => $ticketProvider
                                                                 ];
 
-                                                                $closuresUsersTotalsRepo->store($closureData);
+                                                                $test2 = $closuresUsersTotalsRepo->store($closureData);
+                                                                $this->info("Dotsuite 2 $test2");
                                                                 unset($usersTotals['debit'][$debitKey]);
                                                                 unset($usersTotals['credit'][$creditKey]);
                                                             }
