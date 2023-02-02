@@ -11,6 +11,7 @@ use Carbon\CarbonPeriod;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
+use Dotworkers\Configurations\Enums\TransactionTypes;
 use Illuminate\Console\Command;
 
 class UsersTotalsManual extends Command
@@ -92,6 +93,8 @@ class UsersTotalsManual extends Command
             Providers::$pragmatic_play_live_casino,
             Providers::$pragmatic_play_virtual
         ];
+
+        $dotsuiteProviders = \DB::select("select id from providers where dotsuite_provider_id IS NOT NULL")->get();
 
         $whitelabels = $whitelabelsRepo->getByStatus([Status::$active, Status::$whitelabel_maintenance, Status::$whitelabel_dotpanel_maintenance]);
         $dates = CarbonPeriod::create('2023-01-01 00:00:00', '2023-01-31 23:59:59');

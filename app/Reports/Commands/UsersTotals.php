@@ -31,6 +31,9 @@ class UsersTotals extends Command
 
     public function handle(WhitelabelsRepo $whitelabelsRepo, ProvidersRepo $providersRepo, CoreRepo $coreRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo)
     {
+
+        $dotsuiteProviders = \DB::select("select id from providers where dotsuite_provider_id IS NOT NULL")->get();
+
         $whitelabels = $whitelabelsRepo->getByStatus([Status::$active, Status::$whitelabel_maintenance, Status::$whitelabel_dotpanel_maintenance]);
         $providers = $providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
         $today = Carbon::now();
