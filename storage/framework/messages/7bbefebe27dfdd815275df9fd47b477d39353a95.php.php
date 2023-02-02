@@ -3218,6 +3218,7 @@ class Providers
                 break;
             }
             case self::$cockfight:
+            case self::$lv_sLots:
             {
                 if (isset($data->type)) {
                     switch ($data->type) {
