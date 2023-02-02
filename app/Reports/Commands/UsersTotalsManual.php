@@ -94,7 +94,9 @@ class UsersTotalsManual extends Command
 //            Providers::$pragmatic_play_virtual
 //        ];
         $dotsuiteProviders=[];
-        $dotsuiteProviders = \DB::select("select id from providers")->where("dotsuite_provider_id", "!= ",null)->get();
+        //\DB::select("select * from providers ")->where("dotsuite_provider_id", "!= ",null)->get();
+
+        $dotsuiteProviders = $providersRepo->allIds();
 
         $whitelabels = $whitelabelsRepo->getByStatus([Status::$active, Status::$whitelabel_maintenance, Status::$whitelabel_dotpanel_maintenance]);
         $dates = CarbonPeriod::create('2023-01-01 00:00:00', '2023-01-31 23:59:59');

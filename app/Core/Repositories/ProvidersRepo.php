@@ -29,6 +29,11 @@ class ProvidersRepo
             ->first();
         return $providers;
     }
+    public function allIds()
+    {
+        $providers = Provider::select('providers.id')->whereNotNull('dotsuite_provider_id')->get();
+        return $providers;
+    }
 
     /**
      * Get by types
