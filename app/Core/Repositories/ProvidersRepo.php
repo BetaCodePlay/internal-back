@@ -33,6 +33,7 @@ class ProvidersRepo
     public function allIds()
     {
         $providers = Provider::select('providers.id')->whereNotNull('dotsuite_provider_id')->get(['id']);
+        \Log::notice(__METHOD__, [' $providers' => $providers]);
         return $providers;
     }
 
