@@ -31,6 +31,68 @@ class UsersTotalsManual extends Command
 
     public function handle(WhitelabelsRepo $whitelabelsRepo, ProvidersRepo $providersRepo, CoreRepo $coreRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo)
     {
+        $dotsuiteProviders = [
+            Providers::$wnet_games,
+            Providers::$gamzix,
+            Providers::$smart_soft,
+            Providers::$swintt,
+            Providers::$sky_wind,
+            Providers::$rgs_gaming,
+            Providers::$booming_games_origin,
+            Providers::$net_ent,
+            Providers::$skillzz_gaming,
+            Providers::$dragon_gaming,
+            Providers::$eurasian_gaming,
+            Providers::$tangente,
+            Providers::$bet_by,
+            Providers::$fresh_deck,
+            Providers::$plexasoft,
+            Providers::$ruby_play,
+            Providers::$ezugi_games,
+            Providers::$betsoft_vg,
+            Providers::$tom_horn_vg,
+            Providers::$platipus_vg,
+            Providers::$booongo_vg,
+            Providers::$playson_vg,
+            Providers::$leap_vg,
+            Providers::$arrows_edge_vg,
+            Providers::$red_rake_vg,
+            Providers::$geet_bet,
+            Providers::$triple_cherry_original,
+            Providers::$evo_play,
+            Providers::$caleta_gaming,
+            Providers::$bgaming,
+            Providers::$event_bet,
+            Providers::$vivo_gaming_bingo,
+            Providers::$barbara_bang,
+            Providers::$beter,
+            Providers::$endorphina,
+            Providers::$pari_play,
+            Providers::$ainsworth,
+            Providers::$five_men_gaming,
+            Providers::$tgg_interactive,
+            Providers::$vibra,
+            Providers::$one_touch,
+            Providers::$belatra,
+            Providers::$play_son,
+            Providers::$urgent_games,
+            Providers::$fbm_gaming,
+            Providers::$inbet,
+            Providers::$patagonia,
+            Providers::$pg_soft,
+            Providers::$booongo,
+            Providers::$game_art,
+            Providers::$booming_games,
+            Providers::$kiron_interactive,
+            Providers::$hacksaw_gaming,
+            Providers::$triple_cherry,
+            Providers::$espresso_games,
+            Providers::$betsoft,
+            Providers::$pragmatic_play,
+            Providers::$pragmatic_play_live_casino,
+            Providers::$pragmatic_play_virtual
+        ];
+
         $whitelabels = $whitelabelsRepo->getByStatus([Status::$active, Status::$whitelabel_maintenance, Status::$whitelabel_dotpanel_maintenance]);
         $dates = CarbonPeriod::create('2023-01-01 00:00:00', '2023-01-31 23:59:59');
         foreach ($dates as $date) {
@@ -44,74 +106,14 @@ class UsersTotalsManual extends Command
                     $providers = $providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
 
                     foreach ($providers as $provider) {
-                        if (in_array($provider->id, [
-                            Providers::$lv_sLots
-                        ])) {
+//                        if (in_array($provider->id, [
+//                            Providers::$lv_sLots
+//                        ])) {
                             if (!is_null($provider->tickets_table) && !empty($provider->tickets_table) && $provider->id != Providers::$dot_suite) {
                                 try {
                                     $providerID = null;
 
-                                    $dotsuiteProviders = [
-                                        Providers::$wnet_games,
-                                        Providers::$gamzix,
-                                        Providers::$smart_soft,
-                                        Providers::$swintt,
-                                        Providers::$sky_wind,
-                                        Providers::$rgs_gaming,
-                                        Providers::$booming_games_origin,
-                                        Providers::$net_ent,
-                                        Providers::$skillzz_gaming,
-                                        Providers::$dragon_gaming,
-                                        Providers::$eurasian_gaming,
-                                        Providers::$tangente,
-                                        Providers::$bet_by,
-                                        Providers::$fresh_deck,
-                                        Providers::$plexasoft,
-                                        Providers::$ruby_play,
-                                        Providers::$ezugi_games,
-                                        Providers::$betsoft_vg,
-                                        Providers::$tom_horn_vg,
-                                        Providers::$platipus_vg,
-                                        Providers::$booongo_vg,
-                                        Providers::$playson_vg,
-                                        Providers::$leap_vg,
-                                        Providers::$arrows_edge_vg,
-                                        Providers::$red_rake_vg,
-                                        Providers::$geet_bet,
-                                        Providers::$triple_cherry_original,
-                                        Providers::$evo_play,
-                                        Providers::$caleta_gaming,
-                                        Providers::$bgaming,
-                                        Providers::$event_bet,
-                                        Providers::$vivo_gaming_bingo,
-                                        Providers::$barbara_bang,
-                                        Providers::$beter,
-                                        Providers::$endorphina,
-                                        Providers::$pari_play,
-                                        Providers::$ainsworth,
-                                        Providers::$five_men_gaming,
-                                        Providers::$tgg_interactive,
-                                        Providers::$vibra,
-                                        Providers::$one_touch,
-                                        Providers::$belatra,
-                                        Providers::$play_son,
-                                        Providers::$urgent_games,
-                                        Providers::$fbm_gaming,
-                                        Providers::$inbet,
-                                        Providers::$patagonia,
-                                        Providers::$pg_soft,
-                                        Providers::$booongo,
-                                        Providers::$game_art,
-                                        Providers::$booming_games,
-                                        Providers::$kiron_interactive,
-                                        Providers::$hacksaw_gaming,
-                                        Providers::$triple_cherry,
-                                        Providers::$espresso_games,
-                                        Providers::$betsoft,
-                                        Providers::$pragmatic_play,
-                                        Providers::$pragmatic_play_live_casino,
-                                        Providers::$pragmatic_play_virtual
-                                    ];
+                                  //TODO SAQUE EL ARRAY
 
                                     if (in_array($provider->id, $dotsuiteProviders)) {
                                         $providerID = $provider->id;
@@ -293,7 +295,7 @@ class UsersTotalsManual extends Command
                                     continue;
                                 }
                             }
-                        }
+//                        }
                     }
                     /*}*/
                 }
