@@ -3412,6 +3412,54 @@ if (!function_exists('menu')) {
                                 ]
                             ],
 
+                            'BetConnections' => [
+                                'text' => _i('Bet Connections'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$products_reports_menu,
+                                'provider' => Providers::$bet_connections,
+                                'submenu' => [
+
+                                    'Users' => [
+                                        'text' => _i('Users totals'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.users-totals',
+                                        'params' => [Providers::$bet_connections],
+                                        'icon' => 'hs-admin-user',
+                                        'submenu' => []
+                                    ],
+
+                                    //'Games' => [
+                                    //    'text' => _i('Games totals'),
+                                    //    'level_class' => 'fourth',
+                                    //    'route' => 'reports.games-totals',
+                                    //    'params' => [Providers::$belatra],
+                                    //    'icon' => 'hs-admin-game',
+                                    //    'submenu' => []
+                                    //],
+
+                                    'MostPlayedGames' => [
+                                        'text' => _i('Most played games'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.most-played-games',
+                                        'params' => [Providers::$bet_connections],
+                                        'icon' => 'hs-admin-stats-up',
+                                        'submenu' => []
+                                    ],
+
+                                    'GamesPlayedByUser' => [
+                                        'text' => _i('Games played by user'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.games-played-by-user',
+                                        'params' => [Providers::$bet_connections],
+                                        'icon' => 'hs-admin-stats-up',
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+
                             'BoomingGames' => [
                                 'text' => _i('Booming Games'),
                                 'level_class' => 'third',
