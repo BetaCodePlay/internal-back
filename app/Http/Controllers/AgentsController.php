@@ -1156,8 +1156,10 @@ class AgentsController extends Controller
                 if (!in_array($user, $users)) {
                     $users[] = $user;
                 }
+                \Log::info(__METHOD__, [ 'start_date 0' => $startDate, 'end_date 0' => $endDate]);
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
+                \Log::info(__METHOD__, [ 'start_date 1' => $startDate, 'end_date 1' => $endDate]);
                 $providers = [Providers::$agents, Providers::$agents_users];
                 $whitelabel = Configurations::getWhitelabel();
                 $transactions = $this->transactionsRepo->getManualTransactionsFromAgents($users, $startDate, $endDate, $providers, $currency, $whitelabel);
