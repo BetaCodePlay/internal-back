@@ -42,8 +42,8 @@ class LobbyGames {
             let provider = $('#provider').val();
             let menu = $('#menu').val();
             let filter = $('#filter').val();
+            console.log('paso', image, provider, menu, filter);
             let route = `${$table.data('route')}?provider=${provider}&route=${menu}&game=${filter}&image=${image}`;
-            console.log('route', route);
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
