@@ -117,8 +117,8 @@ class LobbyGamesController extends Controller
     {
         \Log::notice(__METHOD__, ['request' => $request]);
         try {
-            if (!is_null($request->change_provider)) {
-                $provider = $request->change_provider;
+            if (!is_null($request->provider)) {
+                $provider = $request->provider;
             }
             if (!is_null($request->route)) {
                 $route = $request->route;
@@ -126,7 +126,7 @@ class LobbyGamesController extends Controller
             if (!is_null($request->games)) {
                 $game = $request->games;
             }
-            $provider = $request->change_provider;
+            $provider = $request->provider;
             $route = $request->route;
             $game = $request->games;
             $order = $request->order;

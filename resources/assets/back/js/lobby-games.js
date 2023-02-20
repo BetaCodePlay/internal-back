@@ -39,11 +39,11 @@ class LobbyGames {
         $button.click(function () {
             $button.button('loading');
             let image = $('#image').val();
-            let provider = $('#change_provider').val();
+            let provider = $('#provider').val();
             let menu = $('#menu').val();
-            let filter = $('#games').val();
+            let game = $('#games').val();
             console.log('paso', image, provider, menu, filter);
-            let route = `${$table.data('route')}?provider=${provider}&route=${menu}&game=${filter}&image=${image}`;
+            let route = `${$table.data('route')}?provider=${provider}&route=${menu}&game=${game}&image=${image}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');

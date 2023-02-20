@@ -16,8 +16,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="change_provider">{{ _i('Provider') }}</label>
-                                    <select name="change_provider" id="change_provider" data-route="{{ route('lobby-games.game') }}" class="form-control">
+                                    <label for="provider">{{ _i('Provider') }}</label>
+                                    <select name="provider" id="provider" data-route="{{ route('lobby-games.game') }}" class="form-control">
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($providers as $provider)
                                             <option value="{{ $provider->provider_id }}">
