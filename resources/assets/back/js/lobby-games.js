@@ -1,5 +1,5 @@
-import {getCookie, initDatepickerStartToday, initFileInput, initSelect2} from "./commons";
-import {swalConfirm, swalError, swalSuccessWithButton} from "../../commons/js/core";
+import {clearForm, initFileInput, initSelect2} from "./commons";
+import {swalConfirm, swalError, swalSuccessNoButton, swalSuccessWithButton} from "../../commons/js/core";
 
 class LobbyGames {
 
