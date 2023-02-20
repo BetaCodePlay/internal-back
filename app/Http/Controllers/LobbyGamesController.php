@@ -117,16 +117,16 @@ class LobbyGamesController extends Controller
     {
         \Log::info(__METHOD__, ['request' => $request]);
         try {
-            if (!is_null($request->provider)) {
-                $provider = $request->provider;
+            if (!is_null($request->change_provider)) {
+                $provider = $request->change_provider;
                 \Log::info(__METHOD__, ['provider' => $provider]);
             }
             if (!is_null($request->route)) {
                 $route = $request->route;
                 \Log::info(__METHOD__, ['route' => $route]);
             }
-            if (!is_null($request->game)) {
-                $game = $request->game;
+            if (!is_null($request->games)) {
+                $game = $request->games;
                 \Log::info(__METHOD__, ['game' => $game]);
             }
             $provider = $request->provider;
