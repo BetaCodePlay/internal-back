@@ -11,7 +11,7 @@
                         </h3>
                     </div>
                 </header>
-                <div class="card-block g-pa-15">
+                {{--<div class="card-block g-pa-15">
                     <form action="{{ route('lobby-games.store') }}" id="store-form" method="post">
                         <div class="row">
                             <div class="col-md-6">
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </div>--}}
             </div>
         </div>
         <div class="col-md-12">
