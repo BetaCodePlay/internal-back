@@ -152,7 +152,7 @@ class GamesRepo
     public function getGames($whitelabel, $currency, $provider)
     {
         $games = Game::select('games.id', 'games.name', 'games.slug', 'games.image', 'games.maker',
-            'games.category', 'games.provider_id', 'games.provider_game_id')
+            'games.category', 'games.provider_id')
             ->join('providers', 'games.provider_id', '=', 'providers.id')
             ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
             ->where('credentials.client_id', $whitelabel)
@@ -179,7 +179,7 @@ class GamesRepo
      */
     public function getDotSuiteGamesByProvider($provider)
     {
-        $games = Game::where('provider_game_id', $provider)
+        $games = Game::where('provider_id', $provider)
             ->get();
         return $games;
     }

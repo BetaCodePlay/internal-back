@@ -48,7 +48,7 @@ class LobbyGamesRepo
             ->where('lobby_games.whitelabel_id',$whitelabel);
 
         if (!is_null($provider)) {
-            $games->where('games.provider_game_id', $provider);
+            $games->where('games.provider_id', $provider);
         }
 
         if (!is_null($route)) {
