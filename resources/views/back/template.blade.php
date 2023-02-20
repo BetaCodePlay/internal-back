@@ -63,6 +63,29 @@
         });
         @endif
     </script>
+    <script type="text/javascript">
+        (function (d, src, c) {
+            var t = d.scripts[d.scripts.length - 1], s = d.createElement('script');
+            s.id = 'la_x2s6df8d';
+            s.defer = true;
+            s.src = src;
+            s.onload = s.onreadystatechange = function () {
+                var rs = this.readyState;
+                if (rs && (rs != 'complete') && (rs != 'loaded')) {
+                    return;
+                }
+                c(this);
+            };
+            t.parentElement.insertBefore(s, t.nextSibling);
+        })(document, 'https://betsweet.ladesk.com/scripts/track.js', function (e) {
+            LiveAgent.createButton('h7a6t7m8', e);
+        });
+
+        $(document).on('click', '.btn-header-chat', function () {
+            $('.livechat_button a img').click()
+        })
+    </script>
+    <div data-id="PVqhpQUxHPl" class="livechat_button d-none"><a href="https://www.livechat.com/?utm_source=chat_button&utm_medium=referral&utm_campaign=lc_14932659"></a></div>
     </body>
 </html>
 
