@@ -130,12 +130,13 @@ class LobbyGamesController extends Controller
             $route = $request->route;
             $game = $request->game;
             $order = $request->order;
+            \Log::info(__METHOD__, ['order' => $order]);
             $image = $request->image;
+            \Log::info(__METHOD__, ['image' => $image]);
             $items = Configurations::getMenu();
             $category = 1;
             $whitelabel = Configurations::getWhitelabel();
             $games = $this->lobbyGamesRepo->getGamesWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
-            \Log::info(__METHOD__, ['games' => $games]);
             $this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);
             $data = [
                 'games' => $games
