@@ -190,7 +190,7 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <table class="table table-bordered table-responsive-sm w-100" id="games-table" data-route="{{ route('lobby-games.all') }}">
+                    <table class="table table-bordered table-responsive-sm w-100" id="games-table" data-route="{{ route('games.all') }}">
                         <thead>
                         <tr>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

@@ -46,7 +46,7 @@ class LobbyGamesRepo
             ->join('games', 'lobby_games.game_id', 'games.id')
             ->join('providers', 'games.provider_id', '=', 'providers.id')
             ->where('lobby_games.whitelabel_id',$whitelabel);
-        \Log::notice(__METHOD__, ['games' => $games]);
+
         if (!is_null($provider)) {
             $games->where('games.provider_game_id', $provider);
         }

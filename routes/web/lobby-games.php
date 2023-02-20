@@ -7,7 +7,7 @@ Route::group(['prefix' => 'lobby-games', 'middleware' => ['auth']], function () 
 
 // Get all lobby games
     Route::get('all/{provider?}/{route?}/{game?}', [
-        'as' => 'lobby-games.all',
+        'as' => 'games.all',
         'uses' => 'LobbyGamesController@allGames'
     ]);
 
