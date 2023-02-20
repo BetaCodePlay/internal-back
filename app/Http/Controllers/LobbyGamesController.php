@@ -115,6 +115,7 @@ class LobbyGamesController extends Controller
      */
     public function allGames(Request $request)
     {
+        \Log::info(__METHOD__, ['request' => $request]);
         try {
             if (!is_null($request->provider)) {
                 $provider = $request->provider;
