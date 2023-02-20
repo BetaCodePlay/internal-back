@@ -9,57 +9,90 @@ namespace App\Core\Collections;
  * This class allows to format lobby games data
  *
  * @package App\Core\Collections
- * @author  Derluin Gonzalez
+ * @author  Genesis Perez
  */
 class LobbyGamesCollection
 {
     /**
-     * Format all LobbyGames
+     * Format all Lobby Dotsuite Games
      *
-     * @param array $games Sliders data
+     * @param array $games Games data
      */
-    public function formatAll($games)
+    public function formatAll($games, $items, $order, $image)
     {
-        $timezone = session('timezone');
         foreach ($games as $game) {
+            $game->game = $game->name;
+            $game->provider = $game->provider_name;
+            $game->actions = sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('lobby-games.delete', [$game->game_id]),
+                _i('Delete game')
+            );
+            $game->actions .= sprintf(
+                '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
+                route('lobby-games.edit', [$game->game_id]),
+                _i('Edit')
+            );
+            $order = $game->order;
+            if ($order == 0) {
+                $game->order = _i('Has no order');
+            }
+            $image = $game->image;
+            if (!is_null($image)) {
+                $url = s3_asset("lobby/{$game->image}");
+                $game->image = "<img src='$url' class='img-responsive'>";
+            }else{
+                $game->image = _i('Not image');
+            }
+            foreach ($items as $item) {
+                $locale = LaravelGettext::getLocale();
+                if ($item->route == $game->route) {
+                    if ($item->route == 'core.index') {
+                        $game->route = _i('Home');
 
-            switch ($game->mobile) {
-                case true:
-                {
-                    $game->descriptions = $game->name . ' ' . _i('Mobile');
-                    break;
-                }
-                case false:
-                {
-                    $game->descriptions = $game->name . ' ' . _i('PC');
+                    } else {
+                        $game->route = $item->metas->$locale->name;
+                    }
                     break;
                 }
             }
-            $start = !is_null($game->created_at) ? $game->created_at->setTimezone($timezone)->format('d-m-Y') : null;
-            $game->start = $start;
-            $game->actions .= sprintf(
-                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
-                route('lobby-games.delete', [$game->game_id, $game->whitelabel_id]),
-                _i('Delete')
-            );
-
         }
     }
 
     /**
-     * Format details
+     * Format lobby dotsuite games name
      *
-     * @param $games
+     * @param array $games Games data
      */
-    public function formatDetails($games)
+    public function formatDotsuiteGames($games)
     {
-        $timezone = session('timezone');
-        $url = s3_asset("sliders/static/{$games->image}");
-        $games->file = $games->image;
-        $games->image = "<img src='$url' class='img-responsive' width='600'>";
-        $start = !is_null($games->start_date) ? $games->start_date->setTimezone($timezone)->format('d-m-Y') : null;
-        $end = !is_null($games->start_date) ? $games->end_date->setTimezone($timezone)->format('d-m-Y') : null;
-        $games->start = $start;
-        $games->end = $end;
+        foreach ($games as $game) {
+            $game->description = $game->name;
+        }
     }
+
+    /**
+     * Format lobby dotsuite games image
+     *
+     * @param array $image Image data
+     *
+     */
+    public function formatByImage($image)
+    {
+        if (!is_null($image)) {
+            if (!is_null($image->image)) {
+                $url = s3_asset("lobby/{$image->image}");
+                $image->file = $image->image;
+                $image->image = "<img src='$url' class='img-responsive'>";
+            } else {
+                $image->image = '';
+            }
+        } else {
+            $image = new \stdClass();
+            $image->image = null;
+            $image->file = null;
+        }
+        return $image;
+    }
+
 }
