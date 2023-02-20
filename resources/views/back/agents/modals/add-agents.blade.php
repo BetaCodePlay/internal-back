@@ -60,26 +60,26 @@
                                 </small>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="form-check-inline u-check g-pl-25">
-                                    <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="show_data_agent"
-                                           id="show_data_agent" type="checkbox">
-                                    <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
-                                        <i class="fa" data-check-icon="&#xf00c"></i>
-                                    </div>
-                                    {{ _i('Show additional data') }}
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 option_data_agent d-none">
+{{--                        <div class="col-12 col-sm-12">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label class="form-check-inline u-check g-pl-25">--}}
+{{--                                    <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="show_data_agent"--}}
+{{--                                           id="show_data_agent" type="checkbox">--}}
+{{--                                    <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">--}}
+{{--                                        <i class="fa" data-check-icon="&#xf00c"></i>--}}
+{{--                                    </div>--}}
+{{--                                    {{ _i('Show additional data') }}--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <div class="col-12 col-sm-6 option_data_agent">
                             <div class="form-group">
                                 <label for="percentage">{{ _i('Percentage') }}</label>
                                 <input type="number" name="percentage" class="form-control"
                                        placeholder="{{ _i('Optional') }}" autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 option_data_agent d-none">
+                        <div class="col-12 col-sm-6 option_data_agent">
                             <div class="form-group">
                                 <label for="timezone">{{ _i('Timezone') }}</label>
                                 <select name="timezone" class="form-control" style="width: 100%">
@@ -92,7 +92,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 option_data_agent d-none">
+                        <div class="col-12 col-sm-6 option_data_agent">
                             <div class="form-group">
                                 <label for="currencies">{{ _i('Currencies') }}</label>
                                 <select name="currencies[]" class="form-control" multiple style="width: 100%">

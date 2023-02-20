@@ -98,7 +98,8 @@ class AuthController extends Controller
                        $route = route('agents.index');
                     }
 
-                    if (in_array(Roles::$agents, $roles)) {
+                    //TODO ROL 19 Nuevo rol
+                    if (in_array(Roles::$agents, $roles) || in_array(19, $roles)) {
                         $route = route('agents.index');
                     }
 

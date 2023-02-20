@@ -11,7 +11,7 @@ if (!function_exists('menu')) {
     {
         $menu = [
             'Dashboard' => [
-                'text' => _i('Dashboard'),
+                'text' => _i('Statistics'),
                 'level_class' => 'top',
                 'route' => 'core.dashboard',
                 'params' => [],
@@ -21,7 +21,7 @@ if (!function_exists('menu')) {
             ],
 
             'Users' => [
-                'text' => _i('Users'),
+                'text' => _i('See users'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
@@ -211,7 +211,7 @@ if (!function_exists('menu')) {
             ],
 
             'Agents' => [
-                'text' => _i('Agents'),
+                'text' => _i('See agents'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
@@ -220,7 +220,7 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Dashboard'),
+                        'text' => _i('Statistics'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
                         'params' => [],

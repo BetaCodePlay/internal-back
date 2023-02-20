@@ -750,12 +750,13 @@ class UsersRepo
      * @param string $username User username
      * @return mixed
      */
-    public function search(string $username)
+    public function search(string $username,$arrayUsers = [])
     {
-        return User::join('profiles', 'users.id', '=', 'profiles.user_id')
+        return  User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
             ->where('username', 'like', "$username%")
             ->orderBy('username', 'ASC')
+            ->whereIn('id',$arrayUsers)
             ->get();
     }
 

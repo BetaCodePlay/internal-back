@@ -1526,6 +1526,7 @@ class AgentsController extends Controller
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
             'balance' => 'required',
+            'percentage' => 'required',
             'timezone' => 'required'
         ]);
 
@@ -1686,7 +1687,8 @@ class AgentsController extends Controller
                 $ownerBalance = $ownerAgent->balance;
             }
 
-            Security::assignRole($user->id, 3);
+            //Security::assignRole($user->id, 3); //TODO ROL AGENTS DEFAULT
+            Security::assignRole($user->id, 19); //TODO NUEVO ROL OF AGENT
 
             $data = [
                 'title' => _i('Agent created'),

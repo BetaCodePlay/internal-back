@@ -40,12 +40,14 @@ use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Security\Security;
 use Dotworkers\Sessions\Sessions;
 use Dotworkers\Store\Store;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -1615,8 +1617,18 @@ class UsersController extends Controller
     public function search(Request $request)
     {
         try {
+            //TODO VALIDAR LISTA DE USUARIOS, SEGUN EL INPUT BUSCAR EN EL HEADER
+            if(!Security::checkPermissions(Permissions::$users_search,session()->get('permissions'))){
+              return redirect()->back();
+            }
             $username = strtolower($request->username);
-            $users = $this->usersRepo->search($username);
+            //TODO REPLICA DE TREE
+            $tree = $this->treeSql(auth()->user()->id,session('currency'),Configurations::getWhitelabel());
+            $arrayUsers = [];
+            foreach ($tree as $myId) {
+                $arrayUsers[$myId->user_id] = $myId->user_id;
+            }
+            $users = $this->usersRepo->search($username,$arrayUsers);
             $this->usersCollection->formatSearch($users);
             $data['username'] = $username;
             $data['users'] = $users;
@@ -1627,6 +1639,32 @@ class UsersController extends Controller
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             abort(500);
         }
+    }
+
+    public function treeSql(int $user, string $currency, int $whitelabel)
+    {
+        return DB::select('(SELECT a.user_id, u.username
+                    FROM site.agents a
+                    INNER JOIN site.users u ON a.user_id=u.id
+                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
+                    WHERE a.owner_id= ?
+                     and u.whitelabel_id = ?
+                     and uc.currency_iso = ?
+                    )
+                    UNION
+                    (SELECT au.user_id, u.username
+                    FROM site.agent_user au
+                    INNER JOIN site.users u ON au.user_id=u.id
+                    WHERE au.agent_id =
+                    (
+                        SELECT a.id FROM site.agents a
+                        INNER JOIN site.agent_currencies ac ON ac.agent_id=a.id
+                        WHERE a.user_id = ? and ac.currency_iso = ?
+                    )
+                     and u.whitelabel_id = ?
+                    )
+                    ORDER BY username ASC', [$user,$whitelabel, $currency,$user,$currency,$whitelabel]);
+
     }
 
     /**
