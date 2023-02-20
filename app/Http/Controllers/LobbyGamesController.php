@@ -133,7 +133,8 @@ class LobbyGamesController extends Controller
             $items = Configurations::getMenu();
             $category = 1;
             $whitelabel = Configurations::getWhitelabel();
-            $games = $this->lobbyGamesRepo->getGamesDotsuiteWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
+            $games = $this->lobbyGamesRepo->getGamesWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
+            \Log::info(__METHOD__, ['games' => $games]);
             $this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);
             $data = [
                 'games' => $games

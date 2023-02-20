@@ -38,7 +38,7 @@ class LobbyGamesRepo
      * @param int $category Category ID
      * @return static
      */
-    public function getGamesDotsuiteWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image)
+    public function getGamesWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image)
     {
         $games = LobbyGames::select('games.name','lobby_games.whitelabel_id', 'lobby_games.game_id',
             'lobby_games.route','lobby_games.order','lobby_games.created_at', 'lobby_games.image', 'providers.name as provider_name')
