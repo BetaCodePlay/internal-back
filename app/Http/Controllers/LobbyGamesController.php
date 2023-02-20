@@ -100,7 +100,7 @@ class LobbyGamesController extends Controller
     {
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->lobbyGamesRepo = $lobbyGamesRepo;
-        $this->lobbygamesCollection = $lobbyGamesCollection;
+        $this->lobbyGamesCollection = $lobbyGamesCollection;
         $this->coreCollection = $coreCollection;
         $this->gamesRepo = $gamesRepo;
         $this->gamesCollection = $gamesCollection;
@@ -115,6 +115,7 @@ class LobbyGamesController extends Controller
      */
     public function allGames(Request $request)
     {
+        \Log::notice(__METHOD__, ['request' => $request]);
         try {
             if (!is_null($request->provider)) {
                 $provider = $request->provider;
@@ -134,7 +135,7 @@ class LobbyGamesController extends Controller
             $category = 1;
             $whitelabel = Configurations::getWhitelabel();
             $games = $this->lobbyGamesRepo->getGamesWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
-            $this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);
+            /*$this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);*/
             $data = [
                 'games' => $games
             ];
@@ -231,6 +232,7 @@ class LobbyGamesController extends Controller
      */
     public function gameDotsuite(Request $request)
     {
+        \Log::notice(__METHOD__, ['request2' => $request]);
         try {
             $provider = $request->change_provider;
             $games = [];
