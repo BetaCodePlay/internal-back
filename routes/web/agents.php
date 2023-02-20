@@ -202,6 +202,20 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@financialState'
         ]);
 
+        //TODO VIEW OF EXAMPLE
+        Route::get('financial-state/view1', [
+            'as' => 'agents.reports.financial-state.new',
+            'uses' => 'AgentsController@financialState_view1'
+        ]);
+        Route::get('financial-state-data/view1/{user?}/{startDate?}/{endDate?}', [
+            'as' => 'agents.reports.financial-state-data.view1',
+            'uses' => 'AgentsController@financialStateData_view1'
+        ]);
+//        Route::get('financial-state/view2', [
+//            'as' => 'agents.reports.financial-state.view2',
+//            'uses' => 'AgentsController@financialState_view2'
+//        ]);
+
         // Get financial state data
         Route::get('financial-state-data/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data',

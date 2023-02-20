@@ -43,6 +43,14 @@ class ProvidersTypesRepo
         return $providers;
     }
 
+    public function getByIdsOrderId($ids,$order = 'ASC')
+    {
+        $providers = ProviderType::whereIn('id', $ids)
+            ->orderBy('id', $order)
+            ->get();
+        return $providers;
+    }
+
     /**
      * Get by whitelabel
      *
