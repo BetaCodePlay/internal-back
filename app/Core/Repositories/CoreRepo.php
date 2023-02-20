@@ -162,6 +162,7 @@ class CoreRepo
                 ->where("$ticketsTable.whitelabel_id", $whitelabel)
                 ->where('transaction_type_id', TransactionTypes::$debit)
                 ->where("$ticketsTable.currency_iso", $currency)
+                ->where("$ticketsTable.wallet_transaction", '>', 0)
                 ->where("$ticketsTable.provider", $provider)
                 ->whereBetween("$ticketsTable.created_at", [$startDate, $endDate])
                 ->groupBy("$ticketsTable.dotsuite_game_id", "$ticketsTable.user_id", 'users.username')
@@ -174,6 +175,7 @@ class CoreRepo
                 ->where("$ticketsTable.whitelabel_id", $whitelabel)
                 ->where('transaction_type_id', TransactionTypes::$credit)
                 ->where("$ticketsTable.currency_iso", $currency)
+                ->where("$ticketsTable.wallet_transaction", '>', 0)
                 ->where("$ticketsTable.provider", $provider)
                 ->whereBetween("$ticketsTable.created_at", [$startDate, $endDate])
                 ->groupBy("$ticketsTable.dotsuite_game_id", "$ticketsTable.user_id", 'users.username')
@@ -187,6 +189,7 @@ class CoreRepo
                 ->where("$ticketsTable.whitelabel_id", $whitelabel)
                 ->where('transaction_type_id', TransactionTypes::$debit)
                 ->where("$ticketsTable.currency_iso", $currency)
+                ->where("$ticketsTable.wallet_transaction", '>', 0)
                 ->where("$ticketsTable.provider", $provider)
                 ->whereBetween("$ticketsTable.created_at", [$startDate, $endDate])
                 ->groupBy("$ticketsTable.user_id", 'users.username')
@@ -199,6 +202,7 @@ class CoreRepo
                 ->where("$ticketsTable.whitelabel_id", $whitelabel)
                 ->where('transaction_type_id', TransactionTypes::$credit)
                 ->where("$ticketsTable.currency_iso", $currency)
+                ->where("$ticketsTable.wallet_transaction", '>', 0)
                 ->where("$ticketsTable.provider", $provider)
                 ->whereBetween("$ticketsTable.created_at", [$startDate, $endDate])
                 ->groupBy("$ticketsTable.user_id", 'users.username')
@@ -209,6 +213,8 @@ class CoreRepo
             'debit' => $debit,
             'credit' => $credit
         ];
+
+
     }
 
     /**

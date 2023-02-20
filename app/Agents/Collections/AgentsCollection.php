@@ -763,9 +763,10 @@ class AgentsCollection
 
                     if (count($dependency) > 0) {
                         $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
-                        $financial2 = $financial;
+
                         foreach ($financial as $item) {
                             $agentTotalProfit += $item->profit;
+                            //todo debit
                             if (isset($providersTotalPlayed[$item->provider_id])) {
                                 $providersTotalPlayed[$item->provider_id] = [
                                     'total' => $providersTotalPlayed[$item->provider_id]['total'] + $item->played
@@ -775,7 +776,7 @@ class AgentsCollection
                                     'total' => $item->played
                                 ];
                             }
-
+                            //todo credit
                             if (isset($providersTotalWon[$item->provider_id])) {
                                 $providersTotalWon[$item->provider_id] = [
                                     'total' => $providersTotalWon[$item->provider_id]['total'] + $item->won
@@ -785,7 +786,7 @@ class AgentsCollection
                                     'total' => $item->won
                                 ];
                             }
-
+                            //todo debit - credit
                             if (isset($providersTotalProfit[$item->provider_id])) {
                                 $providersTotalProfit[$item->provider_id] = [
                                     'total' => $providersTotalProfit[$item->provider_id]['total'] + $item->profit
@@ -796,6 +797,7 @@ class AgentsCollection
                                 ];
                             }
 
+                            //todo commission
                             if (isset($providersTotalCommissions[$item->provider_id])) {
 
                                 if (isset($agent->percentage)) {
