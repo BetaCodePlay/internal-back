@@ -103,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        {{--<div class="col-md-12">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
                 <form action="{{ route('lobby-games.store') }}" id="filter-form" method="post">
                     <header
@@ -174,7 +174,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div>--}}
         <div class="col-md-12">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
                 <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
