@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Codes;
 use App\Core\Repositories\GamesRepo;
+use App\Core\Collections\CoreCollection;
 use App\Core\Repositories\LobbyGamesRepo;
 use App\Core\Collections\GamesCollection;
 use App\Core\Collections\LobbyGamesCollection;
@@ -28,6 +29,13 @@ use Dotworkers\Audits\Audits;
  */
 class LobbyGamesController extends Controller
 {
+    /**
+     * CoreCollection
+     *
+     * @var CoreCollection
+     */
+    private $coreCollection;
+
     /**
      * WhitelabelsRepo
      *
@@ -83,13 +91,15 @@ class LobbyGamesController extends Controller
      * @param LobbyGamesCollection $LobbyGamesCollection
      * @param GamesRepo $gamesRepo
      * @param GamesCollection $gamesCollection
+     * @param CoreCollection $coreCollection
      * @param CredentialsRepo $credentialsRepo
      */
-    public function __construct(WhitelabelsRepo $whitelabelsRepo, LobbyGamesRepo $lobbyGamesRepo, LobbyGamesCollection $lobbyGamesCollection, GamesRepo $gamesRepo, GamesCollection $gamesCollection, CredentialsRepo $credentialsRepo, AuditsRepo $auditsRepo)
+    public function __construct(CoreCollection $coreCollection, WhitelabelsRepo $whitelabelsRepo, LobbyGamesRepo $lobbyGamesRepo, LobbyGamesCollection $lobbyGamesCollection, GamesRepo $gamesRepo, GamesCollection $gamesCollection, CredentialsRepo $credentialsRepo, AuditsRepo $auditsRepo)
     {
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->lobbyGamesRepo = $lobbyGamesRepo;
         $this->lobbygamesCollection = $lobbyGamesCollection;
+        $this->coreCollection = $coreCollection;
         $this->gamesRepo = $gamesRepo;
         $this->gamesCollection = $gamesCollection;
         $this->credentialsRepo = $credentialsRepo;
@@ -122,7 +132,7 @@ class LobbyGamesController extends Controller
             $category = 1;
             $whitelabel = Configurations::getWhitelabel();
             $games = $this->lobbyGamesRepo->getGamesDotsuiteWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
-            $this->lobbyDotSuiteGamesCollection->formatAll($games, $items, $order, $request->image);
+            $this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);
             $data = [
                 'games' => $games
             ];
@@ -196,7 +206,7 @@ class LobbyGamesController extends Controller
         if (!is_null($image)) {
             try {
                 $route = Configurations::getMenu();
-                $imageData = $this->lobbyDotSuiteGamesCollection->formatByImage($image);
+                $imageData = $this->lobbyGamesCollection->formatByImage($image);
                 $data['title'] = _i('Edit games');
                 $data['route'] = $this->coreCollection->formatWhitelabelMenu($route);
                 $data['image'] = $imageData;
@@ -226,7 +236,7 @@ class LobbyGamesController extends Controller
                 $currency = session('currency');
                 $whitelabel = Configurations::getWhitelabel();
                 $games = $this->gamesRepo->getGames($whitelabel, $currency, $provider);
-                $this->lobbyDotSuiteGamesCollection->formatDotsuiteGames($games);
+                $this->lobbyGamesCollection->formatDotsuiteGames($games);
             }
             $data = [
                 'games' => $games
