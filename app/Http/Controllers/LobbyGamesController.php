@@ -18,6 +18,8 @@ use App\Core\Repositories\CredentialsRepo;
 use App\Audits\Repositories\AuditsRepo;
 use App\Audits\Enums\AuditTypes;
 use Dotworkers\Audits\Audits;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * Class LobbyGamesController
@@ -156,7 +158,7 @@ class LobbyGamesController extends Controller
             $image = new \stdClass();
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $provider = $this->credentialsRepo->searchByWhitelabelDotsuite($whitelabel, $currency);
+            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $games = $this->lobbyGamesRepo->searchGamesByWhitelabel($whitelabel);
             $data['image'] = $image;
             $data['providers'] = $provider;
