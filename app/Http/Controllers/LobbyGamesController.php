@@ -126,10 +126,11 @@ class LobbyGamesController extends Controller
             if (!is_null($request->game)) {
                 $game = $request->game;
             }
-            $provider = $request->change_provider;
+            $provider = $request->provider;
             \Log::info(__METHOD__, ['provider' => $provider]);
             $route = $request->route;
-            $game = $request->games;
+            $game = $request->filter;
+            \Log::info(__METHOD__, ['game' => $game]);
             $order = $request->order;
             $image = $request->image;
             $items = Configurations::getMenu();
