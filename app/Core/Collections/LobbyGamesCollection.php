@@ -1,5 +1,8 @@
 <?php
 
+
+namespace App\Core\Collections;
+
 use Xinax\LaravelGettext\Facades\LaravelGettext;
 
 /**
