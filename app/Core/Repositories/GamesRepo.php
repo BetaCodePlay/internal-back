@@ -161,11 +161,10 @@ class GamesRepo
             ->where('credentials.status', true)
             ->where(function($query) use ($whitelabel) {
                 $query->where(function($query) use($whitelabel) {
-                    $query->whereNotIn('games.id', [\DB::raw("SELECT action_games.game_id FROM action_games WHERE action_games.whitelabel_id = '$whitelabel' AND action_games.type = '2' ")])
-                        ->where('games.status', GamesStatus::$active)
-                        ->where('providers.status', true);
+                    $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
+                        ->where('games.status', GamesStatus::$active);
                 })
-                    ->orWhereIn('games.id', [\DB::raw("SELECT action_games.game_id FROM action_games WHERE action_games.whitelabel_id = '$whitelabel' AND action_games.type = '1' ")]);
+                    ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
             })
             ->get();
         return $games;
