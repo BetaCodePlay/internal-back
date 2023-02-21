@@ -25,12 +25,12 @@ class LobbyGamesCollection
             $game->provider = $game->provider_name;
             $game->actions = sprintf(
                 '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
-                route('lobby-games.delete', [$game->game_id]),
+                route('games.delete', [$game->game_id]),
                 _i('Delete game')
             );
             $game->actions .= sprintf(
                 '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                route('lobby-games.edit', [$game->game_id]),
+                route('games.edit', [$game->game_id]),
                 _i('Edit')
             );
             $order = $game->order;
