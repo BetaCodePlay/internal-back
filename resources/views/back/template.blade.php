@@ -52,9 +52,9 @@
     <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
     <script src="{{ asset('back/js/scripts.min.js') }}?v=21"></script>
     @yield('scripts')
-    @can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
+    {{--@can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
         @include('back.layout.tawk')
-    @endif
+    @endif--}}
     <script>
         @if (env('APP_ENV') == 'testing')
         $(function () {
