@@ -117,28 +117,26 @@ class LobbyGamesController extends Controller
     {
         \Log::notice(__METHOD__, ['request' => $request]);
         try {
-            if (!is_null($request->change_provider)) {
+            if (!is_null($request->change_provider) && !is_null($request->route) && !is_null($request->games)) {
                 $provider = $request->change_provider;
-            }
-            if (!is_null($request->route)) {
                 $route = $request->route;
-            }
-            if (!is_null($request->games)) {
                 $game = $request->games;
+                $order = $request->order;
+                $image = $request->image;
+                $items = Configurations::getMenu();
+                $category = 1;
+                $whitelabel = Configurations::getWhitelabel();
+                $games = $this->lobbyGamesRepo->getGamesWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
+                $this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);
+                $data = [
+                    'games' => $games
+                ];
+            } else {
+                $data = [
+                    'games' => []
+                ];
             }
-            $provider = $request->change_provider;
-            $route = $request->route;
-            $game = $request->games;
-            $order = $request->order;
-            $image = $request->image;
-            $items = Configurations::getMenu();
-            $category = 1;
-            $whitelabel = Configurations::getWhitelabel();
-            $games = $this->lobbyGamesRepo->getGamesWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
-           /*$this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);*/
-            $data = [
-                'games' => $games
-            ];
+
             return Utils::successResponse($data);
 
         } catch (\Exception $ex) {
@@ -164,6 +162,7 @@ class LobbyGamesController extends Controller
             $data['image'] = $image;
             $data['providers'] = $provider;
             $data['games'] = $games;
+            \Log::info(__METHOD__, ['$data' => $data['games']]);
             $data['title'] = _i('Create lobby');
             return view('back.lobby-games.games.create', $data);
         } catch (\Exception $ex) {
