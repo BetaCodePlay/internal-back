@@ -12,12 +12,12 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <form action="{{ route('lobby-games.store') }}" id="store-form" method="post">
+                    <form action="{{ route('games.store') }}" id="store-form" method="post">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="change_provider">{{ _i('Provider') }}</label>
-                                    <select name="change_provider" id="change_provider" data-route="{{ route('lobby-games.game') }}" class="form-control">
+                                    <select name="change_provider" id="change_provider" data-route="{{ route('games.game') }}" class="form-control">
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($providers as $provider)
                                             <option value="{{ $provider->provider_id }}">
@@ -53,11 +53,6 @@
                                                     {{ $item->name }}
                                                 </option>
                                             @endforeach
-                                            @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 2 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 6 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 7 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 8 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 9 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 20 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 27 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 42 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 47 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 50 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 68 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 73 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 74 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 75 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 79 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 81 )
-                                                <option value="pragmatic-play.live">
-                                                    {{ _i('Pragmatic Live Casino') }}
-                                                </option>
-                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -105,7 +100,7 @@
         </div>
         {{--<div class="col-md-12">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-                <form action="{{ route('lobby-games.store') }}" id="filter-form" method="post">
+                <form action="{{ route('games.store') }}" id="filter-form" method="post">
                     <header
                         class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
                         <div class="media">
@@ -120,7 +115,7 @@
                                 <div class="form-group">
                                     <label for="provider">{{ _i('Provider') }}</label>
                                     <select name="provider" id="provider"
-                                            data-route="{{ route('lobby-games.game') }}" class="form-control">
+                                            data-route="{{ route('games.game') }}" class="form-control">
                                         <option value="">{{ _i('All') }}</option>
                                         @foreach ($providers as $provider)
                                             <option value="{{ $provider->provider_id}}">

@@ -13,38 +13,38 @@ Route::group(['prefix' => 'lobby-games', 'middleware' => ['auth']], function () 
 
     // Update lobby games images
     Route::post('update-images', [
-        'as' => 'lobby-games.update-images',
+        'as' => 'games.update-images',
         'uses' => 'LobbyGamesController@updateGames'
     ]);
 
     // Delete lobby games
     Route::get('delete/{game}', [
-        'as' => 'lobby-games.delete',
+        'as' => 'games.delete',
         'uses' => 'LobbyGamesController@deleteGames'
     ]);
 
     // Edit lobby games
     Route::get('edit/{id}', [
-        'as' => 'lobby-games.edit',
+        'as' => 'games.edit',
         'uses' => 'LobbyGamesController@editLobbyGames'
     ]);
 
     // Create Lobby Games
     Route::get('create', [
-        'as' => 'lobby-games.create',
+        'as' => 'games.create',
         'uses' => 'LobbyGamesController@createLobbyGames'
     ]);
 
 
     //  all games
     Route::get('games/provider', [
-        'as' => 'lobby-games.game',
+        'as' => 'games.game',
         'uses' => 'LobbyGamesController@gameDotsuite'
     ]);
 
     // Store games
     Route::post('store', [
-        'as' => 'lobby-games.store',
+        'as' => 'games.store',
         'uses' => 'LobbyGamesController@storeGames'
     ]);
 

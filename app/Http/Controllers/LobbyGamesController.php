@@ -165,7 +165,7 @@ class LobbyGamesController extends Controller
             $data['providers'] = $provider;
             $data['games'] = $games;
             $data['title'] = _i('Create lobby');
-            return view('back.lobby-games.create', $data);
+            return view('back.lobby-games.games.create', $data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
@@ -213,7 +213,7 @@ class LobbyGamesController extends Controller
                 $data['title'] = _i('Edit games');
                 $data['route'] = $this->coreCollection->formatWhitelabelMenu($route);
                 $data['image'] = $imageData;
-                return view('back.lobby-games.edit', $data);
+                return view('back.lobby-games.games.edit', $data);
 
             } catch (\Exception $ex) {
                 \Log::error(__METHOD__, ['exception' => $ex, 'slider' => $id]);
@@ -232,7 +232,6 @@ class LobbyGamesController extends Controller
      */
     public function gameDotsuite(Request $request)
     {
-        \Log::notice(__METHOD__, ['request2' => $request]);
         try {
             $provider = $request->change_provider;
             $games = [];
@@ -317,7 +316,7 @@ class LobbyGamesController extends Controller
                                     'title' => _i('Updated game'),
                                     'message' => _i('The game was updated successfully'),
                                     'close' => _i('Close'),
-                                    'route' => route('dot-suite.lobby-games.create')
+                                    'route' => route('dot-suite.lobby-games.games.create')
                                 ];
                                 return Utils::successResponse($data);
                             }
@@ -360,7 +359,7 @@ class LobbyGamesController extends Controller
                                     'title' => _i('Updated game'),
                                     'message' => _i('The game was updated successfully'),
                                     'close' => _i('Close'),
-                                    'route' => route('dot-suite.lobby-games.create')
+                                    'route' => route('dot-suite.lobby-games.games.create')
                                 ];
                                 return Utils::successResponse($data);
                             }
@@ -382,7 +381,7 @@ class LobbyGamesController extends Controller
                 'title' => _i('Saved game'),
                 'message' => _i('The game was saved successfully'),
                 'close' => _i('Close'),
-                'route' => route('lobby-games.create')
+                'route' => route('lobby-games.games.create')
             ];
             return Utils::successResponse($data);
 

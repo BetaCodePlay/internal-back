@@ -1,7 +1,7 @@
 @extends('back.template')
 
 @section('content')
-    <form action="{{ route('lobby-games.update-images') }}" id="store-form" method="post" enctype="multipart/form-data">
+    <form action="{{ route('games.update-images') }}" id="store-form" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-6">
                 <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
