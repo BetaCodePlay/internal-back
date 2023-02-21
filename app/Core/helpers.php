@@ -2625,7 +2625,7 @@ if (!function_exists('menu')) {
                     'CreateLobby' => [
                         'text' => _i('Create Lobby'),
                         'level_class' => 'second',
-                        'route' => 'lobby-games.create',
+                        'route' => 'games.create',
                         'params' => [],
                         'icon' => 'hs-admin-plus',
                         'submenu' => []
