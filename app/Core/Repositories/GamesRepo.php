@@ -157,7 +157,7 @@ class GamesRepo
             ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
             ->where('credentials.client_id', $whitelabel)
             ->where('credentials.currency_iso', $currency)
-            ->where('providers.provider_id', $provider)
+            ->where('providers.id', $provider)
             ->where('credentials.status', true)
             ->where(function($query) use ($whitelabel) {
                 $query->where(function($query) use($whitelabel) {
