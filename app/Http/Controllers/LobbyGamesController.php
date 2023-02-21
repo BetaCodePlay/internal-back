@@ -316,7 +316,7 @@ class LobbyGamesController extends Controller
                                     'title' => _i('Updated game'),
                                     'message' => _i('The game was updated successfully'),
                                     'close' => _i('Close'),
-                                    'route' => route('lobby-games.games.create')
+                                    'route' => route('games.create')
                                 ];
                                 return Utils::successResponse($data);
                             }
@@ -359,7 +359,7 @@ class LobbyGamesController extends Controller
                                     'title' => _i('Updated game'),
                                     'message' => _i('The game was updated successfully'),
                                     'close' => _i('Close'),
-                                    'route' => route('lobby-games.games.create')
+                                    'route' => route('games.create')
                                 ];
                                 return Utils::successResponse($data);
                             }
@@ -381,7 +381,7 @@ class LobbyGamesController extends Controller
                 'title' => _i('Saved game'),
                 'message' => _i('The game was saved successfully'),
                 'close' => _i('Close'),
-                'route' => route('lobby-games.games.create')
+                'route' => route('games.create')
             ];
             return Utils::successResponse($data);
 
