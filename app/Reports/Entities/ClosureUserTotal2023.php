@@ -22,6 +22,7 @@ class ClosureUserTotal2023 extends Model
     protected $table = 'closures_users_totals_2023';
 
     protected $fillable = [
+        'id',
         'user_id',
         'username',
         'played',
@@ -29,12 +30,12 @@ class ClosureUserTotal2023 extends Model
         'profit',
         'rtp',
         'bets',
-        'start_date',
-        'end_date',
         'game_id',
         'currency_iso',
         'whitelabel_id',
-        'provider_id'
+        'provider_id',
+        'start_date',
+        'end_date',
     ];
 
     protected $dates = ['start_date', 'end_date'];

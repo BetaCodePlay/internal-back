@@ -27,15 +27,19 @@ class ClosuresUsersTotals2023Repo
     * @param int $whitelabel Whitelabel ID
     * @return array
     */
-    public function getClosureUserTotals($startDate, $endDate, $whitelabel)
+    public function getClosureUserTotals($startDate, $endDate, $whitelabel,$currency_iso,$arrayUsers)
     {
         $closure =  ClosureUserTotal2023::select('*')
             ->where('start_date', '>=', $startDate)
             ->where('end_date', '<=', $endDate)
             ->where('whitelabel_id', $whitelabel)
+            ->where('currency_iso', $currency_iso)
+            ->whereIn('user_id', $arrayUsers)
             ->orderBy('end_date', 'DESC')
             ->get();
+
         return $closure;
+
     }
 
     public function closuresTotalsByProviders($whitelabel, $startDate, $endDate, $currency)
