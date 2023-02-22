@@ -719,10 +719,10 @@ class AgentsCollection
         return $html;
     }
 
-    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName)
+    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName,$treeUers)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
-        return $getClosureUserTotals = $closuresUsersTotalsRepo->getClosureUserTotals($startDate, $endDate,$whitelabel);
+        return $getClosureUserTotals = $closuresUsersTotalsRepo->getClosureUserTotals($startDate, $endDate,$whitelabel,$currency,$treeUers);
 
 
         $agentTotalProfit = 0;
