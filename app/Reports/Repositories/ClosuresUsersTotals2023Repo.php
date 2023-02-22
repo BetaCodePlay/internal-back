@@ -29,6 +29,10 @@ class ClosuresUsersTotals2023Repo
     */
     public function getClosureByGroupTotals($startDate, $endDate, $whitelabel,$currency_iso,$arrayUsers,$fieldGroup)
     {
+        $usersTmp = [];
+        foreach ($arrayUsers as $value){
+$usersTmp[]=$value;
+        }
         $closure =  DB::select("SELECT
                 site.closures_users_totals_2023.{$fieldGroup},
                 SUM (site.closures_users_totals_2023.played) as total_played,
@@ -42,7 +46,7 @@ class ClosuresUsersTotals2023Repo
             AND site.closures_users_totals_2023.user_id IN ?
             AND site.closures_users_totals_2023.start_date BETWEEN ? AND ?
             AND site.closures_users_totals_2023.end_date BETWEEN ? AND ?
-            GROUP BY site.closures_users_totals_2023.{$fieldGroup}",[$whitelabel,$currency_iso,$arrayUsers,$startDate,$endDate,$startDate,$endDate]);
+            GROUP BY site.closures_users_totals_2023.{$fieldGroup}",[$whitelabel,$currency_iso,$usersTmp,$startDate,$endDate,$startDate,$endDate]);
 
         return $closure;
 
