@@ -46,7 +46,7 @@ class ClosuresUsersTotals2023Repo
             AND site.closures_users_totals_2023.user_id IN (?)
             AND site.closures_users_totals_2023.start_date BETWEEN ? AND ?
             AND site.closures_users_totals_2023.end_date BETWEEN ? AND ?
-            GROUP BY site.closures_users_totals_2023.{$fieldGroup}",[$whitelabel,$currency_iso,$usersTmp,$startDate,$endDate,$startDate,$endDate]);
+            GROUP BY site.closures_users_totals_2023.{$fieldGroup}",[$whitelabel,$currency_iso,json_encode($usersTmp),$startDate,$endDate,$startDate,$endDate]);
 
         return $closure;
 
