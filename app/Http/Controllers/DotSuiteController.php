@@ -703,7 +703,6 @@ class DotSuiteController extends Controller
                 ->withData($requestData)
                 ->post();
             $response = json_decode($curl);
-            \Log::debug(__METHOD__,[$response, 'request' => $requestData, 'response' => $response]);
             if($response->status == Status::$ok){
                 $dataFreeSpins = [
                     'status' => FreeSpinsStatus::$disable
@@ -851,7 +850,6 @@ class DotSuiteController extends Controller
                 ->post();
 
             $response = json_decode($curl);
-            \Log::debug(__METHOD__, ['url' => $url, 'requestData' => $requestData, 'response' => $response]);
             if ($response->status == Status::$ok) {
                 foreach ($response->data as $data) {
                     foreach ($usersWallet as $userWallet) {
@@ -977,7 +975,6 @@ class DotSuiteController extends Controller
                 ->post();
 
             $response = json_decode($curl);
-            \Log::debug(__METHOD__, ['url' => $url, 'requestData' => $requestData, 'response' => $response]);
             if ($response->status == Status::$ok) {
                 foreach ($response->data as $data) {
                     foreach ($usersWallet as $userWallet) {
@@ -1103,7 +1100,6 @@ class DotSuiteController extends Controller
                 ->post();
 
             $response = json_decode($curl);
-            \Log::debug(__METHOD__, ['url' => $url, 'requestData' => $requestData, 'response' => $response]);
             if ($response->status == Status::$ok) {
                 foreach ($response->data as $freeSpinsData) {
                     foreach ($usersWallet as $wallet) {

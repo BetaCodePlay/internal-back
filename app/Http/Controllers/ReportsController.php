@@ -1548,8 +1548,7 @@ class ReportsController extends Controller
                 $length = $request->length;
                 $search = $request''->search['value'];
                 $orderColumn = $columns[$order[0]['column']]['data'];
-                \Log::info('fi', [$columns]);*/
-                /*
+
                 $wallets = Wallet::getUsersBalancesByIds($usersId, $currency)->data->wallets;
                 $wallets = Wallet::getByCurrency($whitelabel, $currency)->data->wallets;*/
 //                $users = $this->usersRepo->getUsersByCurrency($currency);
