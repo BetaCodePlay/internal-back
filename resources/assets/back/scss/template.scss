@@ -3,7 +3,7 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 */
 
 .warning-general-template {
-    background: #090909;
+    background: #eee;
     padding: 10px 0;
 
     .warning-container {
@@ -11,14 +11,14 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 
     .warning-title {
-        color: #ffcd0b;
+        color: #4f2d8c;
         font-weight: 600;
     }
 
     .warning-general-template-ex {
         white-space: nowrap;
         font-size: 16px;
-        color: #f7f0d4;
+        color: #666;
 
         .msg {
             display: inline-block;
