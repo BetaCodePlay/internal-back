@@ -44,7 +44,7 @@
                                 {{ _i('Image details') }}
                             </h3>
                             <div class="media-body d-flex justify-content-end">
-                                <a href="{{ route('lobby-games.create') }}"
+                                <a href="{{ route('games.create') }}"
                                    class="btn u-btn-3d u-btn-primary float-right">
                                     <i class="hs-admin-layout-list-thumb"></i>
                                     {{ _i('Go to list') }}
