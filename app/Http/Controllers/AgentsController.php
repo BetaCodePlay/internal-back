@@ -729,8 +729,15 @@ class AgentsController extends Controller
             $timezone = session('timezone');
             $today = Carbon::now()->setTimezone($timezone);
             $endDateOriginal = $endDate;
+//            $startDate = Utils::startOfDayUtc($startDate);
+//            $endDate = Utils::endOfDayUtc($endDate);
+
+            \Log::info(__METHOD__, [ 'start_date 0' => $startDate, 'end_date 0' => $endDate]);
             $startDate = Utils::startOfDayUtc($startDate);
             $endDate = Utils::endOfDayUtc($endDate);
+            \Log::info(__METHOD__, [ 'start_date 1' => $startDate, 'end_date 1' => $endDate]);
+
+
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
