@@ -17,52 +17,54 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('Dotpanel') }}</title>
+    <link rel="stylesheet" href="{{ asset('back/css/template.min.css') }}?v=9">
     @yield('styles')
-        </head>
-        <body class=" currency-theme-{{ session('currency') }}">
-    @include('back.layout.header')
-    <main class="container-fluid px-0 g-pt-65">
-        <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
-            @include('back.layout.sidebar')
-            <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
-                <div class="g-pt-20 g-pr-20">
-                    <div class="row">
-                        <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
-                            <div class="form-group">
-                                <select name="timezone" class="form-control change-timezone" data-route="{{ route('core.change-timezone') }}">
-                                    @foreach ($global_timezones as $global_timezone)
-                                        <option value="{{ $global_timezone['timezone'] }}" {{ $global_timezone['timezone'] == session()->get('timezone') ? 'selected' : '' }}>
-                                            {{ $global_timezone['text'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+</head>
+<body class=" currency-theme-{{ session('currency') }}">
+@include('back.layout.header')
+<main class="container-fluid px-0 g-pt-65">
+    <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
+        @include('back.layout.sidebar')
+        <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
+            @include('back.layout.warning')
+            <div class="g-pt-20 g-pr-20">
+                <div class="row">
+                    <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <select name="timezone" class="form-control change-timezone" data-route="{{ route('core.change-timezone') }}">
+                                @foreach ($global_timezones as $global_timezone)
+                                    <option value="{{ $global_timezone['timezone'] }}" {{ $global_timezone['timezone'] == session()->get('timezone') ? 'selected' : '' }}>
+                                        {{ $global_timezone['text'] }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="g-pa-20">
-                    @yield('content')
-                </div>
-                @include('back.layout.footer')
             </div>
+            <div class="g-pa-20">
+                @yield('content')
+            </div>
+            @include('back.layout.footer')
         </div>
-    </main>
-    <script src="{{ mix('js/manifest.js', 'back') }}"></script>
-    <script src="{{ mix('js/vendor.js', 'back') }}"></script>
-    <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
-    <script src="{{ asset('back/js/scripts.min.js') }}?v=21"></script>
-    @yield('scripts')
-    @can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
-        @include('back.layout.tawk')
+    </div>
+</main>
+<script src="{{ mix('js/manifest.js', 'back') }}"></script>
+<script src="{{ mix('js/vendor.js', 'back') }}"></script>
+<script src="{{ mix('js/custom.min.js', 'back') }}"></script>
+<script src="{{ asset('back/js/scripts.min.js') }}?v=21"></script>
+@yield('scripts')
+@can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
+    @include('back.layout.tawk')
+@endif
+<script>
+    @if (env('APP_ENV') == 'testing')
+    $(function () {
+        //let socket = new Socket();
+        //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
+    });
     @endif
-    <script>
-        @if (env('APP_ENV') == 'testing')
-        $(function () {
-            //let socket = new Socket();
-            //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
-        });
-        @endif
-    </script>
-    </body>
+</script>
+</body>
 </html>
 
