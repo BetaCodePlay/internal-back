@@ -42,7 +42,16 @@
                 <i class="hs-admin-search g-absolute-centered"></i>
             </a>
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pl-20--sm">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
+                    <div class="g-pos-rel">
+                        <a class="btn btn-info text-white btn-header-chat btn-header-auth g-pl-10 g-pr-10" href="javascript:void(0)" style="border-radius: 50px">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto d-flex g-py-12 ml-auto">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
                     <div class="g-pos-rel">
                         <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
                            data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
@@ -66,7 +75,7 @@
                 </div>
             </div>
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pl-20--sm">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
                     <div class="g-pos-rel">
                         <a id="languages-menu-invoker" class="d-block" href="#!" aria-controls="languages-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#languages-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
                            data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
