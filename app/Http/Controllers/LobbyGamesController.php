@@ -403,7 +403,7 @@ class LobbyGamesController extends Controller
     {
 
         try {
-            $id = $request->dotsuite_id;
+            $id = $request->id;
             $file = $request->file;
             $image = $request->file('image');
             $s3Directory = Configurations::getS3Directory();
