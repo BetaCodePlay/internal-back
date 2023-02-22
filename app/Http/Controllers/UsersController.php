@@ -41,12 +41,14 @@ use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Security\Enums\Permissions;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Security\Security;
 use Dotworkers\Sessions\Sessions;
 use Dotworkers\Store\Store;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -217,22 +219,22 @@ class UsersController extends Controller
      * @param AutoLockUsersRepo $autoLockUsersRepo
      */
     public function __construct(
-        UsersRepo $usersRepo,
-        UsersCollection $usersCollection,
-        ProfilesRepo $profilesRepo,
-        CountriesRepo $countriesRepo,
-        UsersTempRepo $usersTempRepo,
+        UsersRepo               $usersRepo,
+        UsersCollection         $usersCollection,
+        ProfilesRepo            $profilesRepo,
+        CountriesRepo           $countriesRepo,
+        UsersTempRepo           $usersTempRepo,
         ClosuresUsersTotalsRepo $closuresUsersTotalsRepo,
-        AgentsRepo $agentsRepo,
-        AuditsRepo $auditsRepo,
-        WhitelabelsRepo $whitelabelsRepo,
-        CurrenciesRepo $currenciesRepo,
-        ProvidersRepo $providersRepo,
-        ReportsCollection $reportsCollection,
-        UserDocumentsRepo $userDocumentsRepo,
-        SegmentsRepo $segmentsRepo,
-        SegmentsCollection $segmentsCollection,
-        AutoLockUsersRepo $autoLockUsersRepo
+        AgentsRepo              $agentsRepo,
+        AuditsRepo              $auditsRepo,
+        WhitelabelsRepo         $whitelabelsRepo,
+        CurrenciesRepo          $currenciesRepo,
+        ProvidersRepo           $providersRepo,
+        ReportsCollection       $reportsCollection,
+        UserDocumentsRepo       $userDocumentsRepo,
+        SegmentsRepo            $segmentsRepo,
+        SegmentsCollection      $segmentsCollection,
+        AutoLockUsersRepo       $autoLockUsersRepo
     )
     {
         $this->usersRepo = $usersRepo;
@@ -296,24 +298,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Show advanced search
-     *
-     * @return Factory|View
-     */
-    public function advancedSearch()
-    {
-        try {
-            $levels = Configurations::getLevels();
-            $data['levels'] = $levels;
-            $data['title'] = _i('Advanced user search');
-            return view('back.users.advanced-search', $data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
      * Advanced search data
      *
      * @param Request $request
@@ -352,7 +336,14 @@ class UsersController extends Controller
                     'users' => []
                 ];
             } else {
-                $users = $this->usersRepo->advancedSearch($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode);
+                if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+                    //TODO REPLICA DE TREE
+                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(), session('currency'), Configurations::getWhitelabel());
+                    $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $tree);
+                } else {
+                    $users = $this->usersRepo->advancedSearch($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode);
+                }
+
                 $this->usersCollection->formatSearch($users);
 
                 if (count($users) > 0) {
@@ -373,6 +364,23 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Show advanced search
+     *
+     * @return Factory|View
+     */
+    public function advancedSearch()
+    {
+        try {
+            $levels = Configurations::getLevels();
+            $data['levels'] = $levels;
+            $data['title'] = _i('Advanced user search');
+            return view('back.users.advanced-search', $data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
 
     /**
      * Audit Users
@@ -403,6 +411,156 @@ class UsersController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Store user
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
+    {
+        $rules = [
+            'username' => ['required', new Username()],
+            'password' => ['required', new Password()],
+            'email' => ['required', new Email()],
+            'country' => 'required',
+            'timezone' => 'required',
+            'currency' => 'required'
+        ];
+        $this->validate($request, $rules);
+
+        try {
+            $uuid = Str::uuid()->toString();
+            $username = strtolower($request->username);
+            $email = strtolower($request->email);
+            $currency = $request->currency;
+            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+            $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
+            $uniqueTempEmail = $usersTempRepo->uniqueEmail($email);
+
+            if ($request->tester) {
+                $tester = true;
+            } else {
+                $tester = false;
+            }
+
+            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
+                $data = [
+                    'title' => _i('Username in use'),
+                    'message' => _i('The indicated username is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+            if (!is_null($uniqueEmail) || !is_null($uniqueTempEmail)) {
+                $data = [
+                    'title' => _i('Email in use'),
+                    'message' => _i('The indicated email is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+            $ip = Utils::userIp($request);
+
+            $whitelabel = Configurations::getWhitelabel();
+            $userData = [
+                'username' => $username,
+                'email' => $email,
+                'password' => $request->password,
+                'tester' => $tester,
+                'uuid' => $uuid,
+                'ip' => $ip,
+                'status' => true,
+                'whitelabel_id' => $whitelabel,
+                'web_register' => false,
+                'register_currency' => $currency
+            ];
+            $profileData = [
+                'country_iso' => $request->country,
+                'timezone' => $request->timezone,
+                'level' => 1
+            ];
+            $user = $this->usersRepo->store($userData, $profileData);
+            $auditData = [
+                'ip' => $ip,
+                'user_id' => auth()->user()->id,
+                'username' => auth()->user()->username,
+                'currency_iso' => $currency,
+                'user_data' => $userData,
+                'profile_data' => $profileData
+            ];
+            //Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
+
+            $wallet = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'));
+            Configurations::generateReferenceCode($user->id);
+            $userData = [
+                'user_id' => $user->id,
+                'currency_iso' => $currency
+            ];
+            $walletData = [
+                'wallet_id' => $wallet->data->wallet->id,
+                'default' => true
+            ];
+            $userCurrenciesRepo->store($userData, $walletData);
+            if (Configurations::getStore()->active) {
+                Store::storeWallet($user->id, $currency);
+            }
+
+            $data = [
+                'title' => _i('User created'),
+                'message' => _i('User created successfully'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Get autoLocked users data
+     *
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+    public function autoLockedUsersData(Request $request, $startDate = null, $endDate = null)
+    {
+        try {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $month = $request->month;
+                $whitelabel = Configurations::getWhitelabel();
+                $users = $this->autoLockUsersRepo->autoLockedUsersTotals($whitelabel, $startDate, $endDate, $month);
+            } else {
+                $users = [];
+            }
+            $data = $this->usersCollection->autoLockedUsers($users);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /***
+     * Show view autoLocked users
+     *
+     * @return Factory|View
+     */
+    public function autoLockedUsers()
+    {
+        $data['title'] = _i('Autolocked users');
+        return view('back.users.autolocked-users', $data);
     }
 
     /**
@@ -604,6 +762,26 @@ class UsersController extends Controller
     }
 
     /**
+     * Dashboard graphic
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dashboardGraphic()
+    {
+        $months = 6;
+        $timezone = session('timezone');
+        $endDate = Carbon::now()->setTimezone($timezone);
+        $startDate = Carbon::now()->setTimezone($timezone)->subMonth($months);
+        $newStartDate = $startDate->copy()->format('Y-m-d');
+        $newEndDate = $endDate->copy()->format('Y-m-d');
+        $period = CarbonPeriod::create($newStartDate, $newEndDate);
+        $whitelabel = Configurations::getWhitelabel();
+        $usersData = $this->usersRepo->getTotalRegisteredUsers($whitelabel, $startDate, $endDate);
+        $users = $this->usersCollection->formatRegisteredGraphic($period, $usersData);
+        return response()->json($users);
+    }
+
+    /**
      * Create users
      *
      * @return Factory|View
@@ -622,26 +800,6 @@ class UsersController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
-    }
-
-    /**
-     * Dashboard graphic
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function dashboardGraphic()
-    {
-        $months = 6;
-        $timezone = session('timezone');
-        $endDate = Carbon::now()->setTimezone($timezone);
-        $startDate = Carbon::now()->setTimezone($timezone)->subMonth($months);
-        $newStartDate = $startDate->copy()->format('Y-m-d');
-        $newEndDate = $endDate->copy()->format('Y-m-d');
-        $period = CarbonPeriod::create($newStartDate, $newEndDate);
-        $whitelabel = Configurations::getWhitelabel();
-        $usersData = $this->usersRepo->getTotalRegisteredUsers($whitelabel, $startDate, $endDate);
-        $users = $this->usersCollection->formatRegisteredGraphic($period, $usersData);
-        return response()->json($users);
     }
 
     /**
@@ -713,12 +871,12 @@ class UsersController extends Controller
      * @return mixed
      */
     public function details(
-        WalletsCollection       $walletsCollection,
-        TransactionsRepo        $transactionsRepo,
-        ReportsCollection       $reportsCollection,
-        CampaignsRepo           $campaignsRepo,
-                                $id,
-                                $currency = null
+        WalletsCollection $walletsCollection,
+        TransactionsRepo  $transactionsRepo,
+        ReportsCollection $reportsCollection,
+        CampaignsRepo     $campaignsRepo,
+                          $id,
+                          $currency = null
     )
     {
         $user = $this->usersRepo->find($id);
@@ -813,6 +971,58 @@ class UsersController extends Controller
             }
         } else {
             abort(404);
+        }
+    }
+
+    /**
+     * Get user accounts
+     *
+     * @param int $user User ID
+     * @return array
+     */
+    private function userAccounts(int $user): array
+    {
+        try {
+            $payments = Configurations::getPayments();
+            $requestData = null;
+            $curl = null;
+
+            if ($payments) {
+                $accountsCollection = new AccountsCollection();
+                $betPayToken = session('betpay_client_access_token');
+                $url = "{$this->betPayURL}/users/accounts/client";
+
+                if (!is_null($betPayToken)) {
+                    $requestData = [
+                        'currency' => session('currency'),
+                        'user' => $user
+                    ];
+                    $curl = Curl::to($url)
+                        ->withData($requestData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->get();
+                    $response = json_decode($curl);
+
+                    if ($response->status == Status::$ok) {
+                        $accountsCollection->formatUserAccounts($response->data->accounts);
+                        $accounts = $response->data->accounts;
+
+                    } else {
+                        \Log::error(__METHOD__, ['curl' => $curl, 'curl_request' => $requestData]);
+                        $accounts = [];
+                    }
+                } else {
+                    $accounts = [];
+                }
+            } else {
+                $accounts = [];
+            }
+            return $accounts;
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
+            return [];
         }
     }
 
@@ -981,6 +1191,59 @@ class UsersController extends Controller
         }
     }
 
+    /**
+     * Get exclude provider user delete
+     *
+     * @param int $user User
+     * @param int $provider Provider
+     * @param string $currency Currency ISO
+     * @return Factory|View
+     */
+    public function excludeProviderUserDelete($user, $provider, $currency)
+    {
+        try {
+            $provider = (int)$provider;
+            $user = (int)$user;
+            $this->usersRepo->deleteExcludeProviderUser($provider, $user, $currency);
+            $data = [
+                'title' => _i('User activated'),
+                'message' => _i('User was activated correctly'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Get exclude provider user list
+     *
+     * @param int $whitelabel Whitelabel
+     * @return Factory|View
+     */
+    public function excludeProviderUserList()
+    {
+        try {
+            $whitelabel = Configurations::getWhitelabel();
+            $users = $this->usersRepo->getExcludeProviderUser($whitelabel);
+            if (!is_null($users)) {
+                $this->usersCollection->formatExcludeProviderUser($users);
+                $data = [
+                    'users' => $users
+                ];
+            } else {
+                $data = [
+                    'users' => []
+                ];
+            }
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
 
     /**
      * Show exclude providers users
@@ -1076,60 +1339,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Get exclude provider user delete
-     *
-     * @param int $user User
-     * @param int $provider Provider
-     * @param string $currency Currency ISO
-     * @return Factory|View
-     */
-    public function excludeProviderUserDelete($user, $provider, $currency)
-    {
-        try {
-            $provider = (int)$provider;
-            $user = (int)$user;
-            $this->usersRepo->deleteExcludeProviderUser($provider, $user, $currency);
-            $data = [
-                'title' => _i('User activated'),
-                'message' => _i('User was activated correctly'),
-                'close' => _i('Close')
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
-     * Get exclude provider user list
-     *
-     * @param int $whitelabel Whitelabel
-     * @return Factory|View
-     */
-    public function excludeProviderUserList()
-    {
-        try {
-            $whitelabel = Configurations::getWhitelabel();
-            $users = $this->usersRepo->getExcludeProviderUser($whitelabel);
-            if (!is_null($users)) {
-                $this->usersCollection->formatExcludeProviderUser($users);
-                $data = [
-                    'users' => $users
-                ];
-            } else {
-                $data = [
-                    'users' => []
-                ];
-            }
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
      * Get users by username
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -1147,6 +1356,36 @@ class UsersController extends Controller
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Search users
+     *
+     * @param Request $request
+     * @return Factory|View
+     */
+    public function search(Request $request)
+    {
+        try {
+            $username = strtolower($request->username);
+            if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+                //TODO REPLICA DE TREE
+                $tree = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+                $users = $this->usersRepo->searchTree($username, $tree);
+            } else {
+                $users = $this->usersRepo->search($username);
+            }
+
+            $this->usersCollection->formatSearch($users);
+            $data['username'] = $username;
+            $data['users'] = $users;
+            $data['title'] = _i('Users search');
+            return view('back.users.search', $data);
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            abort(500);
         }
     }
 
@@ -1566,108 +1805,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Reset password
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function resetPassword(Request $request)
-    {
-        $this->validate($request, [
-            'password' => 'required|confirmed',
-            'password_confirmation' => 'required'
-        ]);
-
-        try {
-            $user = $request->user;
-            $password = $request->password;
-            $userData = [
-                'password' => $password
-            ];
-            $this->usersRepo->update($user, $userData);
-
-            $auditData = [
-                'ip' => Utils::userIp($request),
-                'user_id' => auth()->user()->id,
-                'username' => auth()->user()->username,
-                'password' => $password
-            ];
-            Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
-
-            $data = [
-                'title' => _i('Password reset'),
-                'message' => _i('Password was successfully reset'),
-                'close' => _i('Close')
-            ];
-            return Utils::successResponse($data);
-
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Search users
-     *
-     * @param Request $request
-     * @return Factory|View
-     */
-    public function search(Request $request)
-    {
-        try {
-            //TODO VALIDAR LISTA DE USUARIOS, SEGUN EL INPUT BUSCAR EN EL HEADER
-            if(!Security::checkPermissions(Permissions::$users_search,session()->get('permissions'))){
-              return redirect()->back();
-            }
-            $username = strtolower($request->username);
-            //TODO REPLICA DE TREE
-            $tree = $this->treeSql(auth()->user()->id,session('currency'),Configurations::getWhitelabel());
-            $arrayUsers = [];
-            foreach ($tree as $myId) {
-                $arrayUsers[$myId->user_id] = $myId->user_id;
-            }
-            $users = $this->usersRepo->search($username,$arrayUsers);
-            $this->usersCollection->formatSearch($users);
-            $data['username'] = $username;
-            $data['users'] = $users;
-            $data['title'] = _i('Users search');
-            return view('back.users.search', $data);
-
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            abort(500);
-        }
-    }
-
-    public function treeSql(int $user, string $currency, int $whitelabel)
-    {
-        return DB::select('(SELECT a.user_id, u.username
-                    FROM site.agents a
-                    INNER JOIN site.users u ON a.user_id=u.id
-                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
-                    WHERE a.owner_id= ?
-                     and u.whitelabel_id = ?
-                     and uc.currency_iso = ?
-                    )
-                    UNION
-                    (SELECT au.user_id, u.username
-                    FROM site.agent_user au
-                    INNER JOIN site.users u ON au.user_id=u.id
-                    WHERE au.agent_id =
-                    (
-                        SELECT a.id FROM site.agents a
-                        INNER JOIN site.agent_currencies ac ON ac.agent_id=a.id
-                        WHERE a.user_id = ? and ac.currency_iso = ?
-                    )
-                     and u.whitelabel_id = ?
-                    )
-                    ORDER BY username ASC', [$user,$whitelabel, $currency,$user,$currency,$whitelabel]);
-
-    }
-
-    /**
      * Resend activation email
      *
      * @param Request $request
@@ -1703,107 +1840,38 @@ class UsersController extends Controller
     }
 
     /**
-     * Store user
+     * Reset password
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
+    public function resetPassword(Request $request)
     {
-        $rules = [
-            'username' => ['required', new Username()],
-            'password' => ['required', new Password()],
-            'email' => ['required', new Email()],
-            'country' => 'required',
-            'timezone' => 'required',
-            'currency' => 'required'
-        ];
-        $this->validate($request, $rules);
+        $this->validate($request, [
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required'
+        ]);
 
         try {
-            $uuid = Str::uuid()->toString();
-            $username = strtolower($request->username);
-            $email = strtolower($request->email);
-            $currency = $request->currency;
-            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
-            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-            $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $uniqueTempEmail = $usersTempRepo->uniqueEmail($email);
-
-            if ($request->tester) {
-                $tester = true;
-            } else {
-                $tester = false;
-            }
-
-            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
-                $data = [
-                    'title' => _i('Username in use'),
-                    'message' => _i('The indicated username is already in use'),
-                    'close' => _i('Close'),
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-
-            if (!is_null($uniqueEmail) || !is_null($uniqueTempEmail)) {
-                $data = [
-                    'title' => _i('Email in use'),
-                    'message' => _i('The indicated email is already in use'),
-                    'close' => _i('Close'),
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-
-            $ip = Utils::userIp($request);
-
-            $whitelabel = Configurations::getWhitelabel();
+            $user = $request->user;
+            $password = $request->password;
             $userData = [
-                'username' => $username,
-                'email' => $email,
-                'password' => $request->password,
-                'tester' => $tester,
-                'uuid' => $uuid,
-                'ip' => $ip,
-                'status' => true,
-                'whitelabel_id' => $whitelabel,
-                'web_register' => false,
-                'register_currency' => $currency
+                'password' => $password
             ];
-            $profileData = [
-                'country_iso' => $request->country,
-                'timezone' => $request->timezone,
-                'level' => 1
-            ];
-            $user = $this->usersRepo->store($userData, $profileData);
+            $this->usersRepo->update($user, $userData);
+
             $auditData = [
-                'ip' => $ip,
+                'ip' => Utils::userIp($request),
                 'user_id' => auth()->user()->id,
                 'username' => auth()->user()->username,
-                'currency_iso' => $currency,
-                'user_data' => $userData,
-                'profile_data' => $profileData
+                'password' => $password
             ];
-            //Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
-
-            $wallet = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'));
-            Configurations::generateReferenceCode($user->id);
-            $userData = [
-                'user_id' => $user->id,
-                'currency_iso' => $currency
-            ];
-            $walletData = [
-                'wallet_id' => $wallet->data->wallet->id,
-                'default' => true
-            ];
-            $userCurrenciesRepo->store($userData, $walletData);
-            if (Configurations::getStore()->active) {
-                Store::storeWallet($user->id, $currency);
-            }
+            Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
 
             $data = [
-                'title' => _i('User created'),
-                'message' => _i('User created successfully'),
+                'title' => _i('Password reset'),
+                'message' => _i('Password was successfully reset'),
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
@@ -2176,54 +2244,32 @@ class UsersController extends Controller
     }
 
     /**
-     * Get user accounts
+     * User list for credit charging point
      *
-     * @param int $user User ID
-     * @return array
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function userAccounts(int $user): array
+    public function userListCreditChargingPoint(Request $request)
     {
         try {
-            $payments = Configurations::getPayments();
-            $requestData = null;
-            $curl = null;
+            $user = $request->user;
+            if (!is_null($user)) {
+                $currency = session('currency');
+                $listUser = $this->usersRepo->userChargingPointFind($user, $currency);
+                $usersData = $this->usersCollection->userListChargingPoint($listUser);
 
-            if ($payments) {
-                $accountsCollection = new AccountsCollection();
-                $betPayToken = session('betpay_client_access_token');
-                $url = "{$this->betPayURL}/users/accounts/client";
-
-                if (!is_null($betPayToken)) {
-                    $requestData = [
-                        'currency' => session('currency'),
-                        'user' => $user
-                    ];
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->get();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $accountsCollection->formatUserAccounts($response->data->accounts);
-                        $accounts = $response->data->accounts;
-
-                    } else {
-                        \Log::error(__METHOD__, ['curl' => $curl, 'curl_request' => $requestData]);
-                        $accounts = [];
-                    }
-                } else {
-                    $accounts = [];
-                }
+                $data = [
+                    'user' => $usersData,
+                ];
             } else {
-                $accounts = [];
+                $data = [
+                    'user' => []
+                ];
             }
-            return $accounts;
-
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return [];
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
         }
     }
 
@@ -2302,7 +2348,15 @@ class UsersController extends Controller
     {
         try {
             if (!is_null($whitelabel) && !is_null($status)) {
-                $users = $this->usersRepo->statusUsers($whitelabel, $status);
+
+                if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+                    //TODO REPLICA DE TREE
+                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(), session('currency'), $whitelabel);
+                    $users = $this->usersRepo->statusUsersTree($whitelabel, $status, $tree);
+                } else {
+                    $users = $this->usersRepo->statusUsers($whitelabel, $status);
+                }
+
                 $this->usersCollection->formatStatusUsers($users);
                 $data = [
                     'users' => $users
@@ -2350,74 +2404,6 @@ class UsersController extends Controller
 
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * User list for credit charging point
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function userListCreditChargingPoint(Request $request)
-    {
-        try {
-            $user = $request->user;
-            if (!is_null($user)) {
-                $currency = session('currency');
-                $listUser = $this->usersRepo->userChargingPointFind($user, $currency);
-                $usersData = $this->usersCollection->userListChargingPoint($listUser);
-
-                $data = [
-                    'user' => $usersData,
-                ];
-            } else {
-                $data = [
-                    'user' => []
-                ];
-            }
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /***
-     * Show view autoLocked users
-     *
-     * @return Factory|View
-     */
-    public function autoLockedUsers()
-    {
-        $data['title'] = _i('Autolocked users');
-        return view('back.users.autolocked-users', $data);
-    }
-
-    /**
-     * Get autoLocked users data
-     *
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-
-    public function autoLockedUsersData(Request $request, $startDate = null, $endDate = null)
-    {
-        try {
-            if (!is_null($startDate) && !is_null($endDate)) {
-                $startDate = Utils::startOfDayUtc($startDate);
-                $endDate = Utils::endOfDayUtc($endDate);
-                $month = $request->month;
-                $whitelabel = Configurations::getWhitelabel();
-                $users = $this->autoLockUsersRepo->autoLockedUsersTotals($whitelabel, $startDate, $endDate, $month);
-            } else {
-                $users = [];
-            }
-            $data = $this->usersCollection->autoLockedUsers($users);
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
     }

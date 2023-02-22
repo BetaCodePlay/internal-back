@@ -34,6 +34,19 @@ class AuditsRepo
             ->get();
         return $audit;
     }
+
+    public function getLoginsTree($whitelabel, $startDate, $endDate,$arrayUsers)
+    {
+        $audit = Audit::select(\DB::raw('count(*) AS logins'), 'user_id', 'users.username')
+            ->join('users', 'users.id', '=', 'audits.user_id')
+            ->where('audit_type_id', AuditTypes::$login)
+            ->where('users.whitelabel_id', $whitelabel)
+            ->whereBetween('audits.created_at', [$startDate, $endDate])
+            ->whereIn('users.id', $arrayUsers)
+            ->groupBy('user_id', 'username')
+            ->get();
+        return $audit;
+    }
     /**
      * Get last user login
      *

@@ -59,6 +59,17 @@ class UsersRepo
             ->orderBy('username', 'ASC')
             ->get();
     }
+    public function advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode,$arrayUsers)
+    {
+        return User::on('replica')
+            ->select('users.id', 'profiles.gender', 'users.status', 'users.username', 'users.email', 'users.referral_code', 'profiles.last_name', 'profiles.first_name')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->whereIn('users.id', $arrayUsers)
+            ->whitelabel()
+            ->conditions($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $referralCode, $wallet)
+            ->orderBy('username', 'ASC')
+            ->get();
+    }
 
     /**
      * Delete exclude provider user
@@ -201,6 +212,19 @@ class UsersRepo
             ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
             ->where('whitelabel_id', $whitelabel)
             ->where('currency_iso', $currency)
+            ->where('status', true)
+            ->get();
+    }
+
+    public function getByWhitelabelAndCurrencyTree(int $whitelabel, string $currency, array $arrayUsers)
+    {
+        return User::on('replica')
+            ->select('user_currencies.wallet_id', 'user_currencies.user_id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->where('whitelabel_id', $whitelabel)
+            ->where('currency_iso', $currency)
+            ->whereIn('users.id', $arrayUsers)
             ->where('status', true)
             ->get();
     }
@@ -511,6 +535,53 @@ class UsersRepo
         return $data;
     }
 
+    public function getRegisteredUsersReportTree($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level,$arrayUsers)
+    {
+
+        $users = User::select('users.id', 'users.username', 'users.email', 'users.created_at', 'users.promo_code', 'users.status', 'countries.iso',
+            'countries.name as country', 'profiles.first_name', 'profiles.last_name', 'profiles.phone', 'profiles.data->meet_us AS meet_us', 'referral.referral_code',
+            'referral.id AS referral_id', 'users.register_currency as registration_currency', 'profiles.level', 'profiles.dni',
+            \DB::raw("(
+                SELECT COUNT (*)
+                FROM transactions
+                    INNER JOIN providers ON providers.id = transactions.provider_id
+                WHERE
+                    transactions.user_id = users.id
+                    AND transactions.currency_iso = '$currency'
+                    AND transactions.transaction_status_id = " . TransactionStatus::$approved . "
+                    AND transactions.transaction_type_id = " . TransactionTypes::$credit . "
+                    AND transactions.created_at BETWEEN '$startDate' AND '$endDate'
+                    AND providers.provider_type_id IN  (" . ProviderTypes::$dotworkers . "," . ProviderTypes::$payment . ")
+                ) AS deposits"),
+        )
+            ->join('profiles', 'profiles.user_id', '=', 'users.id')
+            ->join('countries', 'profiles.country_iso', '=', 'countries.iso')
+            ->leftJoin('referrals', 'users.id', '=', 'referrals.user_id')
+            ->leftJoin('users AS referral', 'referrals.referral_id', '=', 'referral.id')
+            ->whereBetween('users.created_at', [$startDate, $endDate])
+            ->where('users.whitelabel_id', $whitelabel)
+            ->whereIn('users.id', $arrayUsers);
+
+        if (!empty($webRegister)) {
+            $users->where('users.web_register', $webRegister);
+        }
+
+        if (!empty($country)) {
+            $users->where('countries.iso', $country);
+        }
+
+        if (!empty($status)) {
+            $users->where('users.status', $status);
+        }
+
+        if (!empty($level)) {
+            $users->where('profiles.level', $level);
+        }
+
+        $data = $users->get();
+        return $data;
+    }
+
     /**
      * get total desktop or mobile login
      *
@@ -750,13 +821,22 @@ class UsersRepo
      * @param string $username User username
      * @return mixed
      */
-    public function search(string $username,$arrayUsers = [])
+    public function search(string $username)
     {
         return  User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
             ->where('username', 'like', "$username%")
             ->orderBy('username', 'ASC')
-            ->whereIn('id',$arrayUsers)
+            ->get();
+    }
+
+    public function searchTree(string $username, $arrayUsers = [])
+    {
+        return User::join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->whitelabel()
+            ->where('username', 'like', "$username%")
+            ->orderBy('username', 'ASC')
+            ->whereIn('id', $arrayUsers)
             ->get();
     }
 
@@ -773,6 +853,18 @@ class UsersRepo
             ->join('whitelabels', 'users.whitelabel_id', '=', 'whitelabels.id')
             ->where('users.whitelabel_id', $whitelabel)
             ->where('users.status', $status)
+            ->orderBy('id', 'ASC')
+            ->get();
+        return $users;
+    }
+
+    public function statusUsersTree($whitelabel, $status, $arrayUsers)
+    {
+        $users = User::select('users.id', 'users.email', 'users.username', 'users.status', 'whitelabels.description')
+            ->join('whitelabels', 'users.whitelabel_id', '=', 'whitelabels.id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('users.status', $status)
+            ->whereIn('users.id', $arrayUsers)
             ->orderBy('id', 'ASC')
             ->get();
         return $users;
@@ -900,7 +992,7 @@ class UsersRepo
      *
      * @return mixed
      */
-    public function usersWithRoles($whitelabel,$currency)
+    public function usersWithRoles($whitelabel, $currency)
     {
         $users = User::select('users.*')
             ->join('user_currencies', 'user_currencies.user_id', '=', 'users.id')
@@ -943,4 +1035,61 @@ class UsersRepo
             ->first();
         return $user;
     }
+
+
+    public function treeSqlByUser(int $user, string $currency, int $whitelabel)
+    {
+        $tree = DB::select('(SELECT a.user_id, u.username
+                    FROM site.agents a
+                    INNER JOIN site.users u ON a.user_id=u.id
+                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
+                    WHERE a.owner_id= ?
+                     and u.whitelabel_id = ?
+                     and uc.currency_iso = ?
+                    )
+                    UNION
+                    (SELECT au.user_id, u.username
+                    FROM site.agent_user au
+                    INNER JOIN site.users u ON au.user_id=u.id
+                    WHERE au.agent_id =
+                    (
+                        SELECT a.id FROM site.agents a
+                        INNER JOIN site.agent_currencies ac ON ac.agent_id=a.id
+                        WHERE a.user_id = ? and ac.currency_iso = ?
+                    )
+                     and u.whitelabel_id = ?
+                    )
+                    ORDER BY username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
+
+        $arrayUsers = [];
+        foreach ($tree as $myId) {
+            $arrayUsers[$myId->user_id] = $myId->user_id;
+        }
+
+        return $arrayUsers;
+
+    }
+
+    public function sqlShareTmp($type, $id = null, $typeUser = null)
+    {
+        if ($type === 'users') {
+            //limit 1000
+            // order by asc
+            //where type_user = null
+            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
+        }
+        if ($type === 'agent') {
+            return DB::select('select master from agents where user_id = ?', [$id]);
+        }
+        if ($type === 'agent_user') {
+            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+        }
+
+        if ($type === 'update') {
+            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+        }
+        return [];
+    }
+
+
 }

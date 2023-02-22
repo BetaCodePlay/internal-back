@@ -5,6 +5,7 @@ namespace App\Agents\Collections;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Collections\ReportsCollection;
+use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Repositories\UsersRepo;
 use Carbon\Carbon;
@@ -70,7 +71,8 @@ class AgentsCollection
                 'status' => $agent->status,
                 'icon' => "fa fa-{$icon}",
                 'li_attr' => [
-                    'data_type' => 'agent'
+                    'data_type' => 'agent',
+                    'class'=>'init_agent'
                 ]
             ];
 
@@ -220,7 +222,8 @@ class AgentsCollection
                 'selected' => true,
             ],
             'li_attr' => [
-                'data_type' => 'agent'
+                'data_type' => 'agent',
+                'class'=>'init_tree'
             ]
         ];
         $agentsChildren = $this->agentsTree($agents);
@@ -716,10 +719,16 @@ class AgentsCollection
         return $html;
     }
 
-
     public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName)
     {
-        $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
+        $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
+        $getClosureUserTotals = $closuresUsersTotalsRepo->getClosureUserTotals($startDate, $endDate,$whitelabel);
+        $closuresTotalsByProviders = $closuresUsersTotalsRepo->closuresTotalsByProviders($whitelabel,$startDate, $endDate,$currency);
+        return [
+            'getClosureUserTotals'=>$getClosureUserTotals,
+            'closuresTotalsByProviders'=>$closuresTotalsByProviders
+        ];
+
         $agentTotalProfit = 0;
         $providersTotalPlayed = [];
         $providersTotalWon = [];
@@ -898,7 +907,6 @@ class AgentsCollection
         ];
 
     }
-
 
     public function financialStateRow($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate)
     {
@@ -2170,7 +2178,8 @@ class AgentsCollection
                 'status' => $user->status,
                 'icon' => 'fa fa-user',
                 'li_attr' => [
-                    'data_type' => 'user'
+                    'data_type' => 'user',
+                    'class'=>'init_user'
                 ]
             ];
         }

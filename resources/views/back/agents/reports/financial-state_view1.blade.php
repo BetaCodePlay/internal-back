@@ -31,6 +31,7 @@
             <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">
 
             </div>
+            {{--TODO TABLA DE EJEMPLO--}}
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -92,8 +93,43 @@
 @section('scripts')
     <script>
         $(function () {
-            //let agents = new Agents();
-            //agents.financialStateDetails({{ $user }});
+            let agents = new Agents();
+            agents.financialState({{ $user }});
+
+            // financialStateDetails(user = null) {
+            //     let picker = initLitepickerEndToday();
+            //     let $table = $('#financial-state-table');
+            //     let $button = $('#update');
+            //     let api;
+            //     if (user == null) {
+            //         $('#financial-state-tab').on('show.bs.tab', function () {
+            //             $table.children().remove();
+            //             user = $('.user').val();
+            //         });
+            //     }
+            //
+            //     $button.click(function () {
+            //         $button.button('loading');
+            //         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            //         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            //
+            //         $.ajax({
+            //             url: `${$table.data('route')}/${user}/${startDate}/${endDate}`,
+            //             type: 'get',
+            //             dataType: 'json'
+            //
+            //         }).done(function (json) {
+            //             $table.html(json.data.table);
+            //
+            //         }).fail(function (json) {
+            //             swalError(json);
+            //
+            //         }).always(function () {
+            //             $button.button('reset');
+            //         });
+            //     });
+            // }
+
         });
     </script>
 @endsection

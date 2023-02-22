@@ -145,6 +145,13 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updatePercentage'
     ]);
 
+    //TODO Change Type user in users where type_user in null
+    Route::get('change/type/user/in_null/temp', [
+        'as' => 'agents.change.type.user.in_null.temp',
+        'uses' => 'AgentsController@changeTypeUser'
+    ]);
+
+
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
 
@@ -287,5 +294,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'reports.users.users-balances-data',
             'uses' => 'AgentsController@usersBalancesData'
         ]);
+
     });
 });

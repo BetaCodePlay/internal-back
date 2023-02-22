@@ -30,9 +30,12 @@ use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
@@ -1298,7 +1301,15 @@ class ReportsController extends Controller
                 $level = $request->level;
                 $currency = session('currency');
                 $whitelabel = Configurations::getWhitelabel();
-                $usersData = $this->usersRepo->getRegisteredUsersReport($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level);
+
+                if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                    //TODO REPLICA DE TREE
+                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(), $currency, $whitelabel);
+                    $usersData = $this->usersRepo->getRegisteredUsersReportTree($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level,$tree);
+                }else{
+                    $usersData = $this->usersRepo->getRegisteredUsersReport($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level);
+                }
+
             } else {
                 $usersData = [];
             }
@@ -1338,7 +1349,15 @@ class ReportsController extends Controller
                 $whitelabel = Configurations::getWhitelabel();
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
-                $logins = $auditsRepo->getLogins($whitelabel, $startDate, $endDate);
+
+                if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                    //TODO REPLICA DE TREE
+                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(),session('currency'),$whitelabel);
+                    $logins = $auditsRepo->getLoginsTree($whitelabel, $startDate, $endDate,$tree);
+                }else{
+                    $logins = $auditsRepo->getLogins($whitelabel, $startDate, $endDate);
+                }
+
             } else {
                 $logins = [];
             }
@@ -1537,8 +1556,17 @@ class ReportsController extends Controller
 //                foreach ($users as $user) {
 //                    $usersId[] = $user->id;
 //                }
+
                 $whitelabel = Configurations::getWhitelabel();
-                $users = $this->usersRepo->getByWhitelabelAndCurrency($whitelabel, $currency);
+
+                if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                    //TODO REPLICA DE TREE
+                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(),$currency,$whitelabel);
+                    $users = $this->usersRepo->getByWhitelabelAndCurrencyTree($whitelabel, $currency,$tree);
+                }else{
+                    $users = $this->usersRepo->getByWhitelabelAndCurrency($whitelabel, $currency);
+                }
+
                 $usersWallets = collect();
                 $walletsData = collect();
 

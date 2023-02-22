@@ -41,6 +41,13 @@
                                 </small>
                             </div>
                         </div>
+                        <div class="col-12 col-sm-6 option_data_agent">
+                            <div class="form-group">
+                                <label for="percentage">{{ _i('Percentage') }}</label>
+                                <input type="number" name="percentage" class="form-control"
+                                       placeholder="{{ _i('Optional') }}" autocomplete="off">
+                            </div>
+                        </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label for="master">{{ _i('Agent type') }}</label><br>
@@ -72,13 +79,7 @@
 {{--                                </label>--}}
 {{--                            </div>--}}
 {{--                        </div>--}}
-                        <div class="col-12 col-sm-6 option_data_agent">
-                            <div class="form-group">
-                                <label for="percentage">{{ _i('Percentage') }}</label>
-                                <input type="number" name="percentage" class="form-control"
-                                       placeholder="{{ _i('Optional') }}" autocomplete="off">
-                            </div>
-                        </div>
+
                         <div class="col-12 col-sm-6 option_data_agent">
                             <div class="form-group">
                                 <label for="timezone">{{ _i('Timezone') }}</label>
