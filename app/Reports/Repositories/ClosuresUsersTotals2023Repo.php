@@ -29,9 +29,9 @@ class ClosuresUsersTotals2023Repo
     */
     public function getClosureByGroupTotals($startDate, $endDate, $whitelabel,$currency_iso,$arrayUsers,$fieldGroup)
     {
-        $usersTmp = [];
+        $usersTmp = collect();
         foreach ($arrayUsers as $value){
-$usersTmp[]=$value;
+            $usersTmp->push($value);
         }
         $closure =  DB::select("SELECT
                 site.closures_users_totals_2023.{$fieldGroup},
