@@ -99,7 +99,7 @@ class UsersTotalsManual extends Command
         $dotsuiteProviders = $providersRepo->allIds();
 
         $whitelabels = $whitelabelsRepo->getByStatus([Status::$active, Status::$whitelabel_maintenance, Status::$whitelabel_dotpanel_maintenance]);
-        $dates = CarbonPeriod::create('2022-01-01 00:00:00', '2023-02-31 23:59:59');
+        $dates = CarbonPeriod::create('2022-12-01 00:00:00', '2023-02-31 23:59:59');
         foreach ($dates as $date) {
             for ($hours = 0; $hours <= 23; $hours++) {
                 $startDate = $date->copy()->addHours($hours)->startOfHour();
