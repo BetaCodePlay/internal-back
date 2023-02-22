@@ -230,7 +230,7 @@ class LobbyGamesController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function gameDotsuite(Request $request)
+    public function game(Request $request)
     {
         try {
             $provider = $request->change_provider;

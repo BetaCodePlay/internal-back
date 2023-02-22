@@ -39,7 +39,7 @@ Route::group(['prefix' => 'lobby-games', 'middleware' => ['auth']], function () 
     //  all games
     Route::get('games/provider', [
         'as' => 'games.game',
-        'uses' => 'LobbyGamesController@gameDotsuite'
+        'uses' => 'LobbyGamesController@game'
     ]);
 
     // Store games
