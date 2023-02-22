@@ -791,6 +791,12 @@ class AgentsController extends Controller
         // 171:Bet Connections Slots
 
         $treeUers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+//        $usersTmp = null;
+//        foreach ($treeUers as $value){
+//            $usersTmp = is_null($usersTmp) ? $value: $usersTmp.','.$value;
+//        }
+//        return $usersTmp;
+//        return json_encode($usersTmp);
         $providerArrayTmp = [171];
         $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
         $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
