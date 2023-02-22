@@ -1454,7 +1454,7 @@ class AgentsController extends Controller
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
             'balance' => 'required',
-            'percentage' => 'required',
+            'percentage' => 'required|numeric|between:1,99',
             'timezone' => 'required'
         ]);
 

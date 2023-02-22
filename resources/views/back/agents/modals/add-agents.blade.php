@@ -45,28 +45,34 @@
                             <div class="form-group">
                                 <label for="percentage">{{ _i('Percentage') }}</label>
                                 <input type="number" name="percentage" class="form-control"
-                                       placeholder="{{ _i('Optional') }}" autocomplete="off">
+                                       placeholder="{{ _i('Rango disponible de 1 - 99') }}" autocomplete="off">
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6">
-                            <div class="form-group">
-                                <label for="master">{{ _i('Agent type') }}</label><br>
-                                <select name="master" id="master" class="form-control agent_type" style="width: 100%">
-                                    <option value="true">
-                                        {{ _i('Master agent') }}
-                                    </option>
-                                    <option value="false">
-                                        {{ _i('Cashier') }}
-                                    </option>
-                                </select>
-                                <small class="form-text text-muted">
-                                    {{ _i('Master agents can have subagents and players dependent on them') }}
-                                </small>
-                                <small class="form-text text-muted">
-                                    {{ _i('Cashiers can only have players dependent on them.') }}
-                                </small>
+                        {{-- //TODO CAMBIOS SOLO PRA EL ROL: Admin beet sweet--}}
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="master">{{ _i('Agent type') }}</label><br>
+                                    <select name="master" id="master" class="form-control agent_type" style="width: 100%">
+                                        <option value="true">
+                                            {{ _i('Master agent') }}
+                                        </option>
+                                        <option value="false">
+                                            {{ _i('Cashier') }}
+                                        </option>
+                                    </select>
+                                    <small class="form-text text-muted">
+                                        {{ _i('Master agents can have subagents and players dependent on them') }}
+                                    </small>
+                                    <small class="form-text text-muted">
+                                        {{ _i('Cashiers can only have players dependent on them.') }}
+                                    </small>
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <input name="master" value="true" type="hidden">
+                        @endif
+
 {{--                        <div class="col-12 col-sm-12">--}}
 {{--                            <div class="form-group">--}}
 {{--                                <label class="form-check-inline u-check g-pl-25">--}}
@@ -93,19 +99,24 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 option_data_agent">
-                            <div class="form-group">
-                                <label for="currencies">{{ _i('Currencies') }}</label>
-                                <select name="currencies[]" class="form-control" multiple style="width: 100%">
-                                    <option value="">{{ _i('Select...') }}</option>
-                                    @foreach ($whitelabel_currencies as $currency)
-                                        <option value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
-                                            {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                        {{-- //TODO CAMBIOS SOLO PRA EL ROL: Admin beet sweet--}}
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            <div class="col-12 col-sm-6 option_data_agent">
+                                <div class="form-group">
+                                    <label for="currencies">{{ _i('Currencies') }}</label>
+                                    <select name="currencies[]" class="form-control" multiple style="width: 100%">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($whitelabel_currencies as $currency)
+                                            <option value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
+                                                {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <input name="currencies[]" value="{{session('currency')}}" type="hidden">
+                        @endif
                     </div>
                 </form>
             </div>

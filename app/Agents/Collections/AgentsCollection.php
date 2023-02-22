@@ -722,12 +722,8 @@ class AgentsCollection
     public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
-        $getClosureUserTotals = $closuresUsersTotalsRepo->getClosureUserTotals($startDate, $endDate,$whitelabel);
-        //$closuresTotalsByProviders = $closuresUsersTotalsRepo->closuresTotalsByProviders($whitelabel,$startDate, $endDate,$currency);
-        return [
-            'getClosureUserTotals'=>$getClosureUserTotals,
-            'closuresTotalsByProviders'=>[]
-        ];
+        return $getClosureUserTotals = $closuresUsersTotalsRepo->getClosureUserTotals($startDate, $endDate,$whitelabel);
+
 
         $agentTotalProfit = 0;
         $providersTotalPlayed = [];
