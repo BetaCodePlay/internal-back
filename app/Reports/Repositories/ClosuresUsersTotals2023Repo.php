@@ -27,6 +27,27 @@ class ClosuresUsersTotals2023Repo
     * @param int $whitelabel Whitelabel ID
     * @return array
     */
+    public function getClosureByGroupTotals($startDate, $endDate, $whitelabel,$currency_iso,$arrayUsers,$fieldGroup)
+    {
+        $closure =  DB::select("SELECT
+                site.closures_users_totals_2023.{$fieldGroup},
+                SUM (site.closures_users_totals_2023.played) as total_played,
+                SUM (site.closures_users_totals_2023.won) as total_won,
+                SUM (site.closures_users_totals_2023.bets) as total_bet,
+                SUM (site.closures_users_totals_2023.profit) as total_profit,
+                SUM (site.closures_users_totals_2023.rtp) as total_rtp
+            FROM site.closures_users_totals_2023
+            WHERE site.closures_users_totals_2023.whitelabel_id = ?
+            AND site.closures_users_totals_2023.currency_iso = ?
+            AND site.closures_users_totals_2023.user_id IN ?
+            AND site.closures_users_totals_2023.start_date BETWEEN ? AND ?
+            AND site.closures_users_totals_2023.end_date BETWEEN ? AND ?
+            GROUP BY site.closures_users_totals_2023.{$fieldGroup}",[$whitelabel,$currency_iso,$arrayUsers,$startDate,$endDate,$startDate,$endDate]);
+
+        return $closure;
+
+    }
+
     public function getClosureUserTotals($startDate, $endDate, $whitelabel,$currency_iso,$arrayUsers)
     {
         $closure =  ClosureUserTotal2023::select('*')
