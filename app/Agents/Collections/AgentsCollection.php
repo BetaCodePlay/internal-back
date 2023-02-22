@@ -723,10 +723,10 @@ class AgentsCollection
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
         $getClosureUserTotals = $closuresUsersTotalsRepo->getClosureUserTotals($startDate, $endDate,$whitelabel);
-        $closuresTotalsByProviders = $closuresUsersTotalsRepo->closuresTotalsByProviders($whitelabel,$startDate, $endDate,$currency);
+        //$closuresTotalsByProviders = $closuresUsersTotalsRepo->closuresTotalsByProviders($whitelabel,$startDate, $endDate,$currency);
         return [
             'getClosureUserTotals'=>$getClosureUserTotals,
-            'closuresTotalsByProviders'=>$closuresTotalsByProviders
+            'closuresTotalsByProviders'=>[]
         ];
 
         $agentTotalProfit = 0;
