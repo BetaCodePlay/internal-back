@@ -777,63 +777,23 @@ class AgentsController extends Controller
     {
         //try {
         $timezone = session('timezone');
-        $today = Carbon::now()->setTimezone($timezone);
+       // $today = Carbon::now()->setTimezone($timezone);
         $startDateOriginal = $startDate;
         $endDateOriginal = $endDate;
         $startDate = Utils::startOfDayUtc($startDate);
         $endDate = Utils::endOfDayUtc($endDate);
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
-        $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-        $providerTypesName = $providersTypesRepo->getByIdsOrderId($providerTypes);
-        $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+
         //TODO Providers
         // 171:Bet Connections Slots
-
-        $treeUers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
-//        $usersTmp = null;
-//        foreach ($treeUers as $value){
-//            $usersTmp = is_null($usersTmp) ? $value: $usersTmp.','.$value;
-//        }
-//        return $usersTmp;
-//        return json_encode($usersTmp);
         $providerArrayTmp = [171];
-        $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-        $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-        $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-        //return [$whitelabel, $currency, $providerArrayTmp,$treeUers,$startDate, $endDate, $endDateOriginal, $startDateOriginal,$today];
-        $table = $this->agentsCollection->financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName,$treeUers);
-        return [
-            $whitelabel,
-            $currency,
-            $providerArrayTmp,
-            $treeUers,
-            $startDate,
-            $endDate,
-            $endDateOriginal,
-            $startDateOriginal,
-            $table
-        ];
 
-        $data = [
-            'table' => $table
-        ];
-        $ret = [
-            '$today' => $today,
-            '$endDate' => $endDate,
-            '$startDate' => $startDate,
-            '$currency' => $currency,
-            '$whitelabel' => $whitelabel,
-//                '$providerTypes'=>$providerTypes,
-//                '$providerTypesName'=>$providerTypesName,
-//                '$providers'=>$providers,
-            '$agent' => $agent,
-            '$agents' => $agents,
-            '$users' => $users,
-            '$table' => $data,
-        ];
-        //return $ret;
-        return Utils::successResponse($data);
+        $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+
+        $table = $this->agentsCollection->financialState_view1($whitelabel, $currency, $startDate, $endDate, $treeUsers);
+
+        return Utils::successResponse($table);
 //        } catch (\Exception $ex) {
 //            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
 //            return Utils::failedResponse();

@@ -19,14 +19,6 @@ use Illuminate\Support\Facades\DB;
 class ClosuresUsersTotals2023Repo
 {
 
-    /**
-    * Get Closure User Totals 2023
-    *
-    * @param string $startDate Start date to filter
-    * @param string $endDate End date to filter
-    * @param int $whitelabel Whitelabel ID
-    * @return array
-    */
     public function getClosureByGroupTotals($startDate, $endDate, $whitelabel,$currency_iso,$arrayUsers,$fieldGroup)
     {
         $usersTmp = null;
