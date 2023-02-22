@@ -854,8 +854,10 @@ class AgentsController extends Controller
     public function financialStateSummaryBonusData($user = null, $startDate = null, $endDate = null)
     {
         try {
+            \Log::info(__METHOD__, [ 'start_date 0' => $startDate, 'end_date 0' => $endDate]);
             $startDate = Utils::startOfDayUtc($startDate);
             $endDate = Utils::endOfDayUtc($endDate);
+            \Log::info(__METHOD__, [ 'start_date 1' => $startDate, 'end_date 1' => $endDate]);
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
