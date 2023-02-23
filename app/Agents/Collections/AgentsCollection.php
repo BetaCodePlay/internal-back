@@ -724,7 +724,7 @@ class AgentsCollection
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
         $providerId = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'provider_id');
         $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
-return [$username[0]];
+
         $htmlUsername = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
                     <thead>
@@ -781,7 +781,7 @@ return [$username[0]];
             $htmlProvider .= "<tbody>";
             foreach ($providerId as $item => $value){
                 $htmlProvider .= "<tr class='table-secondary set_2'>";
-                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . "</td>";
+                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->provider_id . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
