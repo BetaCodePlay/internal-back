@@ -2085,7 +2085,7 @@ class AgentsCollection
     public function formatRelocationAgents($agent, $agents, $currency, $agentMoveId)
     {
         $data = collect();
-        if (!is_null($agent)) {
+        if(!is_null($agent)){
             $itemObject = new \stdClass();
             $itemObject->id = $agent['id'];
             $itemObject->username = $agent['username'];
@@ -2115,7 +2115,7 @@ class AgentsCollection
         $dataAgents = [];
 
         foreach ($agents as $agent) {
-            if ($agent->user_id != $agentMoveId) {
+            if ($agent->user_id != $agentMoveId){
                 $dataChildren = null;
                 $subAgents = $agentsRepo->getAgentsByOwner($agent->user_id, $currency);
                 if (count($subAgents) > 0) {
@@ -2126,7 +2126,7 @@ class AgentsCollection
                     $dataChildren = $agentsChildren;
                 }
                 if ($agent->user_id != $agentMoveId || $agent->owner_id != $agentMoveId) {
-                    if ($agent->master == true) {
+                    if($agent->master == true){
                         $dataAgents[] = [
                             'id' => $agent->user_id,
                             'username' => $agent->username,

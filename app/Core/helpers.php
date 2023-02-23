@@ -2616,6 +2616,25 @@ if (!function_exists('menu')) {
                 ]
             ],
 
+            'LobbyGames' => [
+                'text' => _i('Lobby Games'),
+                'level_class' => 'top',
+                'route' => null,
+                'params' => [],
+                'icon' => 'hs-admin-user',
+                'submenu' => [
+                    'CreateLobby' => [
+                        'text' => _i('Create Lobby'),
+                        'level_class' => 'second',
+                        'route' => 'games.create',
+                        'params' => [],
+                        'icon' => 'hs-admin-plus',
+                        'submenu' => []
+                    ]
+                ],
+            ],
+
+
             /*'Games' => [
                 'text' => _i('Games section'),
                 'level_class' => 'top',
