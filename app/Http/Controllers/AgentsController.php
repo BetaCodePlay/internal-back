@@ -821,7 +821,7 @@ class AgentsController extends Controller
             //TODO Providers
             // 171:Bet Connections Slots
             $providerArrayTmp = [171];
-          return  $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+            $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
 
             $data = [
                 'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers)
