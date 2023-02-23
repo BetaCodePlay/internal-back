@@ -28,7 +28,11 @@
 
                 </div>
             </div>
-            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">
+            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.username') }}">
+
+            </div>
+            <br><br>
+            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.provider') }}">
 
             </div>
             {{--TODO TABLA DE EJEMPLO--}}
