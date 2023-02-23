@@ -2621,6 +2621,7 @@ if (!function_exists('menu')) {
                 'route' => null,
                 'params' => [],
                 'icon' => 'hs-admin-user',
+                'permission' => Permissions::$section_games_menu,
                 'submenu' => [
                     'CreateLobby' => [
                         'text' => _i('Create Lobby'),
@@ -2628,6 +2629,7 @@ if (!function_exists('menu')) {
                         'route' => 'games.create',
                         'params' => [],
                         'icon' => 'hs-admin-plus',
+                        'permission' => Permissions::$manage_lobby_games_menu,
                         'submenu' => []
                     ]
                 ],
