@@ -797,7 +797,7 @@ class AgentsCollection
                 $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . $value->total_bet . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
                 $htmlUsername .= "</tr>";
