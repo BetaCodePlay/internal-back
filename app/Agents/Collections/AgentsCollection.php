@@ -763,7 +763,7 @@ class AgentsCollection
             _i('Profit'),
             _i('Rtp'),
         );
-        if(count($username)){
+        if(!empty($username)){
             $htmlUsername .= "<tbody>";
             foreach ($username as $item => $value){
                 $htmlUsername .= "<tr class='table-secondary set_2'>";
@@ -777,7 +777,7 @@ class AgentsCollection
             }
             $htmlUsername .= "</tbody>";
         }
-        if(count($htmlProvider)){
+        if(!empty($htmlProvider)){
             $htmlProvider .= "<tbody>";
             foreach ($providerId as $item => $value){
                 $htmlProvider .= "<tr class='table-secondary set_2'>";
