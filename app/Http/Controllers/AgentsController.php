@@ -819,7 +819,7 @@ class AgentsController extends Controller
 
         $table = $this->agentsCollection->financialState_view1($whitelabel, $currency, $startDate, $endDate, $treeUsers);
         $data = [
-            'table' => $table
+            'table' => $table[0]
         ];
         return Utils::successResponse($data);
 //        } catch (\Exception $ex) {
