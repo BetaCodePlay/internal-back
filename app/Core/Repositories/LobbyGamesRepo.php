@@ -3,6 +3,7 @@
 namespace App\Core\Repositories;
 
 use App\Core\Entities\LobbyGames;
+use Dotworkers\Configurations\Enums\GamesStatus;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -45,6 +46,7 @@ class LobbyGamesRepo
             ->join('whitelabels', 'lobby_games.whitelabel_id', 'whitelabels.id')
             ->join('games', 'lobby_games.game_id', 'games.id')
             ->join('providers', 'games.provider_id', '=', 'providers.id')
+            ->where('games.status', GamesStatus::$active)
             ->where('lobby_games.whitelabel_id',$whitelabel);
 
         if (!is_null($provider)) {
