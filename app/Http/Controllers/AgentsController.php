@@ -793,7 +793,7 @@ class AgentsController extends Controller
 
         $table = $this->agentsCollection->financialState_view1($whitelabel, $currency, $startDate, $endDate, $treeUsers);
 
-        return Utils::successResponse($table[0]);
+        return Utils::successResponse($table);
 //        } catch (\Exception $ex) {
 //            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
 //            return Utils::failedResponse();

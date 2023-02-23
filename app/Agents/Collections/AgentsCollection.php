@@ -724,6 +724,10 @@ class AgentsCollection
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
         $providerId = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'provider_id');
         $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
+//        return [
+//            $providerId,
+//            $username
+//        ];
 
         $htmlUsername = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
@@ -763,6 +767,7 @@ class AgentsCollection
             _i('Profit'),
             _i('Rtp'),
         );
+
         if(!empty($username)){
             $htmlUsername .= "<tbody>";
             foreach ($username as $item => $value){
@@ -793,7 +798,7 @@ class AgentsCollection
         }
 
         return [
-            $providerId,
+            $htmlProvider,
             $htmlUsername
         ];
         $agentTotalProfit = 0;
