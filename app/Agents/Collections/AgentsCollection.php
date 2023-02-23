@@ -719,35 +719,11 @@ class AgentsCollection
         return $html;
     }
 
-    public function financialState_view1($whitelabel, $currency,  $startDate, $endDate, $treeUsers)
+    public function financialStateProvider($whitelabel, $currency,  $startDate, $endDate, $treeUsers)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
         $providerId = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'provider_id');
-        $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
-//        return [
-//            $providerId,
-//            $username
-//        ];
 
-        $htmlUsername = sprintf(
-            '<table class="table table-bordered table-sm table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">%s</th>
-                            <th scope="col" class="text-center">%s</th>
-                            <th scope="col" class="text-center">%s</th>
-                            <th scope="col" class="text-center">%s</th>
-                            <th scope="col" class="text-center">%s</th>
-                            <th scope="col" class="text-center">%s</th>
-                        </tr>
-                    </thead>',
-            _i('Usuario'),
-            _i('Jugado'),
-            _i('Ganado'),
-            _i('Apuestas'),
-            _i('Profit'),
-            _i('Rtp'),
-        );
         $htmlProvider = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
                     <thead>
@@ -768,20 +744,6 @@ class AgentsCollection
             _i('Rtp (rtp)'),
         );
 
-        if(!empty($username)){
-            $htmlUsername .= "<tbody>";
-            foreach ($username as $item => $value){
-                $htmlUsername .= "<tr class='table-secondary set_2'>";
-                $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . "</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
-                $htmlUsername .= "</tr>";
-            }
-            $htmlUsername .= "</tbody>";
-        }
         if(!empty($htmlProvider)){
             $htmlProvider .= "<tbody>";
             foreach ($providerId as $item => $value){
@@ -795,188 +757,56 @@ class AgentsCollection
                 $htmlProvider .= "</tr>";
             }
             $htmlProvider .= "</tbody>";
+        }else{
+            $htmlProvider .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='6'>Sin registros</td></tr></tbody>";
         }
 
-        return [
-            $htmlProvider,
-            $htmlUsername
-        ];
-        $agentTotalProfit = 0;
-        $providersTotalPlayed = [];
-        $providersTotalWon = [];
-        $providersTotalProfit = [];
-        $providersTotalCommissions = [];
+        return  $htmlProvider;
 
-        $html = sprintf(
+    }
+
+    public function financialStateUsername($whitelabel, $currency,  $startDate, $endDate, $treeUsers)
+    {
+        $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
+        $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
+
+        $htmlUsername = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">%s</th>
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
-
+                            <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
                         </tr>
                     </thead>',
-            _i('Categories'),
-            _i('Bet'),
-            _i('Bets'),
-            _i('Netwin'),
-            _i('Commission'),
+            _i('Usuario'),
+            _i('Jugado'),
+            _i('Ganado'),
+            _i('Apuestas'),
+            _i('Profit'),
+            _i('Rtp'),
         );
 
-//        <th scope="col" class="text-center">%s</th>
-//
-//    _i('win'),
-
-        if (count($providerTypesName) > 0) {
-            $html .= "<tbody>";
-
-            //TODO TOTAL IN AGENTS
-                foreach ($agents as $agent) {
-                    $agentsUsersIds = [];
-                    $dependency = $this->dependency($agent, $currency);
-
-                    foreach ($dependency as $dependencyItem) {
-                        $agentsUsersIds[] = $dependencyItem['id'];
-                    }
-
-                    if (count($dependency) > 0) {
-                        $financial = $closuresUsersTotalsRepo->getUsersTotalsByIdsAndProvidersGroupedByProvider($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
-
-                        foreach ($financial as $item) {
-                            $agentTotalProfit += $item->profit;
-                            //todo debit
-                            if (isset($providersTotalPlayed[$item->provider_id])) {
-                                $providersTotalPlayed[$item->provider_id] = [
-                                    'total' => $providersTotalPlayed[$item->provider_id]['total'] + $item->played
-                                ];
-                            } else {
-                                $providersTotalPlayed[$item->provider_id] = [
-                                    'total' => $item->played
-                                ];
-                            }
-                            //todo credit
-                            if (isset($providersTotalWon[$item->provider_id])) {
-                                $providersTotalWon[$item->provider_id] = [
-                                    'total' => $providersTotalWon[$item->provider_id]['total'] + $item->won
-                                ];
-                            } else {
-                                $providersTotalWon[$item->provider_id] = [
-                                    'total' => $item->won
-                                ];
-                            }
-                            //todo debit - credit
-                            if (isset($providersTotalProfit[$item->provider_id])) {
-                                $providersTotalProfit[$item->provider_id] = [
-                                    'total' => $providersTotalProfit[$item->provider_id]['total'] + $item->profit
-                                ];
-                            } else {
-                                $providersTotalProfit[$item->provider_id] = [
-                                    'total' => $item->profit
-                                ];
-                            }
-
-                            //todo commission
-                            if (isset($providersTotalCommissions[$item->provider_id])) {
-
-                                if (isset($agent->percentage)) {
-                                    $providersTotalCommissions[$item->provider_id] = [
-                                        'total' => $providersTotalCommissions[$item->provider_id]['total'] + $agent->percentage
-                                    ];
-                                }
-
-                            } else {
-
-                                if (isset($agent->percentage)) {
-                                    $providersTotalCommissions[$item->provider_id] = [
-                                        'total' => $agent->percentage
-                                    ];
-                                }else{
-                                    $providersTotalCommissions[$item->provider_id] = [
-                                        'total' => 0
-                                    ];
-                                }
-
-                            }
-                        }
-                    }
-
-                }
-            //TODO FINISH TOTAL IN AGENTS
-
-            foreach ($providerTypesName as $item => $value) {
-                $totalBet = 0;
-                $totalBets = 0;
-                $totalWin = 0;
-                $totalNetWin = 0;
-                $totalCommission = 0;
-
-                $htmlProvider = "";
-                foreach ($providers as $index => $valor) {
-                    $totalProviderBet = 0;
-                    $totalProviderBets = 0;
-                    $totalProviderWin = 0;
-                    $totalProviderNetWin = 0;
-                    $totalProviderCommission = 0;
-
-                    if($value->id === $valor->provider_type_id){
-                        $nameTmp = Providers::getName($valor->id);
-
-                        if (!is_null($nameTmp)) {
-                            $totalProviderBet = isset($providersTotalPlayed[$valor->id])?$providersTotalPlayed[$valor->id]['total']:0;
-                            $totalProviderBets = isset($providersTotalWon[$valor->id])?$providersTotalWon[$valor->id]['total']:0;
-                            $totalProviderWin = 0;//isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
-                            $totalProviderNetWin = isset($providersTotalProfit[$valor->id])?$providersTotalProfit[$valor->id]['total']:0;
-                            $totalProviderCommission = isset($providersTotalCommissions[$valor->id])?$providersTotalCommissions[$valor->id]['total']:0;
-
-                            if($totalProviderBet > 0 && $totalProviderBets > 0 && $totalProviderWin> 0 && $totalProviderNetWin> 0 && $totalProviderCommission> 0){
-                                $commissionTmp = $totalProviderNetWin * ($totalProviderCommission / 100);
-                                $htmlProvider .= "<tr class='table-secondary set_2'>";
-                                    $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $nameTmp . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBet, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderBets, 2) . "</td>";
-//                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderWin, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderNetWin, 2) . "</td>";
-                                    $htmlProvider .= "<td class='text-center'>" . number_format($totalProviderCommission ,2) . "%</td>";
-//                                    $htmlProvider .= "<td class='text-center'>" . number_format($commissionTmp, 2) . "</td>";
-                                $htmlProvider .= "</tr>";
-                            }
-
-                        }
-                    }
-
-
-                    //TODO TOTAL PARA CATEGORIES
-                    $totalBet = $totalBet + $totalProviderBet;
-                    $totalBets = $totalBets + $totalProviderBets;
-                    $totalWin = $totalWin + $totalProviderWin;
-                    $totalNetWin = $totalNetWin + $totalProviderNetWin;
-                    $totalCommission = $totalCommission + $totalProviderCommission;//( $totalProviderNetWin * ($totalProviderCommission / 100));
-                }
-
-                //TODO TOTAL DEL CATEGORIES (TYPE_PROVIDER)
-                $html .= "<tr class='table-primary set_1'>";
-                    $html .= "<td>" . $value->name . "</td>";
-                    $html .= "<td class='text-center'>" . number_format($totalBet, 2) . "</td>"; //played
-                    $html .= "<td class='text-center'>" . number_format($totalBets, 2) . "</td>"; //won
-//                    $html .= "<td class='text-center'>" . number_format($totalWin, 2) . "</td>";
-                    $html .= "<td class='text-center'>" . number_format($totalNetWin, 2) . "</td>"; //profit
-                    $html .= "<td class='text-center'>" . number_format($totalCommission,2) . "%</td>"; //% de agente
-                $html .= "</tr>" . $htmlProvider;
-
+        if(!empty($username)){
+            $htmlUsername .= "<tbody>";
+            foreach ($username as $item => $value){
+                $htmlUsername .= "<tr class='table-secondary set_2'>";
+                $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
+                $htmlUsername .= "</tr>";
             }
-
-            $html .= "<tbody></table>";
+            $htmlUsername .= "</tbody>";
+        }else{
+            $htmlUsername .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='6'>Sin registros</td></tr></tbody>";
         }
-
-        return $html;
-
-        return [
-            'html'=>$html,
-            //'financial2'=>$financial2,
-        ];
+        return  $htmlUsername;
 
     }
 
