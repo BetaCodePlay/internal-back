@@ -724,10 +724,82 @@ class AgentsCollection
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
         $providerId = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'provider_id');
         $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
+//        return [
+//            $providerId,
+//            $username
+//        ];
+
+        $htmlUsername = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Usuario'),
+            _i('Jugado'),
+            _i('Ganado'),
+            _i('Apuestas'),
+            _i('Profit'),
+            _i('Rtp'),
+        );
+        $htmlProvider = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Proveedor'),
+            _i('Jugado'),
+            _i('Ganado'),
+            _i('Apuestas'),
+            _i('Profit'),
+            _i('Rtp'),
+        );
+
+        if(!empty($username)){
+            $htmlUsername .= "<tbody>";
+            foreach ($username as $item => $value){
+                $htmlUsername .= "<tr class='table-secondary set_2'>";
+                $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
+                $htmlUsername .= "</tr>";
+            }
+            $htmlUsername .= "</tbody>";
+        }
+        if(!empty($htmlProvider)){
+            $htmlProvider .= "<tbody>";
+            foreach ($providerId as $item => $value){
+                $htmlProvider .= "<tr class='table-secondary set_2'>";
+                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->provider_id . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
+                $htmlProvider .= "</tr>";
+            }
+            $htmlProvider .= "</tbody>";
+        }
 
         return [
-            $providerId,
-            $username
+            $htmlProvider,
+            $htmlUsername
         ];
         $agentTotalProfit = 0;
         $providersTotalPlayed = [];
