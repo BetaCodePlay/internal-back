@@ -651,26 +651,33 @@ class AgentsController extends Controller
     {
         $users = $this->usersRepo->sqlShareTmp('users');
         foreach ($users as $value) {
-            $value->type_user = null;
-            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
-            if (!is_null($agentTmp)) {
-                $value->type_user = TypeUser::$agentCajero;
-                if (isset($agentTmp->master) && $agentTmp->master) {
-                    $value->type_user = TypeUser::$agentMater;
-                }
-            }
+            $this->usersRepo->sqlShareTmp('update_rol', $value->id, $value->type_user);
 
-            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
-            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
-                $value->type_user = TypeUser::$player;
-            }
-            //TODO UPDATE
-            if (!is_null($value->type_user)) {
-                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
-            }
         }
 
         return $users;
+//        $users = $this->usersRepo->sqlShareTmp('users');
+//        foreach ($users as $value) {
+//            $value->type_user = null;
+//            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
+//            if (!is_null($agentTmp)) {
+//                $value->type_user = TypeUser::$agentCajero;
+//                if (isset($agentTmp->master) && $agentTmp->master) {
+//                    $value->type_user = TypeUser::$agentMater;
+//                }
+//            }
+//
+//            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
+//            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
+//                $value->type_user = TypeUser::$player;
+//            }
+//            //TODO UPDATE
+//            if (!is_null($value->type_user)) {
+//                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
+//            }
+//        }
+//
+//        return $users;
     }
 
     /**
@@ -753,6 +760,26 @@ class AgentsController extends Controller
         }
     }
 
+    /**
+     * Financial state
+     *
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|View
+     */
+    public function financialState(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['title'] = _i('Financial state report');
+        return view('back.agents.reports.financial-state', $data);
+    }
+
     public function financialStateDataRow2(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
         try {
@@ -779,53 +806,59 @@ class AgentsController extends Controller
         }
     }
 
-    /**
-     * Financial state
-     *
-     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
-     * @param ReportsCollection $reportsCollection
-     * @return Application|Factory|View
-     */
-    public function financialState(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    public function financialStateData_username(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
-        $currency = session('currency');
-        $whitelabel = Configurations::getWhitelabel();
-        if (session('admin_id')) {
-            $data['user'] = session('admin_id');
-        } else {
-            $data['user'] = auth()->user()->id;
+        try {
+            $timezone = session('timezone');
+            // $today = Carbon::now()->setTimezone($timezone);
+            $startDateOriginal = $startDate;
+            $endDateOriginal = $endDate;
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+
+            //TODO Providers
+            // 171:Bet Connections Slots
+            $providerArrayTmp = [171];
+            $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+
+            $data = [
+                'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers)
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
         }
-        $data['title'] = _i('Financial state report');
-        return view('back.agents.reports.financial-state', $data);
     }
 
-    public function financialStateData_view1(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateData_provider(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
-        //try {
-        $timezone = session('timezone');
-       // $today = Carbon::now()->setTimezone($timezone);
-        $startDateOriginal = $startDate;
-        $endDateOriginal = $endDate;
-        $startDate = Utils::startOfDayUtc($startDate);
-        $endDate = Utils::endOfDayUtc($endDate);
-        $currency = session('currency');
-        $whitelabel = Configurations::getWhitelabel();
+        try {
+            $timezone = session('timezone');
+            // $today = Carbon::now()->setTimezone($timezone);
+            $startDateOriginal = $startDate;
+            $endDateOriginal = $endDate;
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
 
-        //TODO Providers
-        // 171:Bet Connections Slots
-        $providerArrayTmp = [171];
+            //TODO Providers
+            // 171:Bet Connections Slots
+            $providerArrayTmp = [171];
+            $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
 
-        $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
-
-        $table = $this->agentsCollection->financialState_view1($whitelabel, $currency, $startDate, $endDate, $treeUsers);
-        $data = [
-            'table' => $table[0]
-        ];
-        return Utils::successResponse($data);
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-//            return Utils::failedResponse();
-//        }
+            $data = [
+                'table' => $this->agentsCollection->financialStateProvider($whitelabel, $currency, $startDate, $endDate, $treeUsers)
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
     }
 
     public function financialState_view1(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)

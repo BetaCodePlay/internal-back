@@ -1072,6 +1072,17 @@ class UsersRepo
 
     public function sqlShareTmp($type, $id = null, $typeUser = null)
     {
+        if ($type === 'users_agent') {
+            //limit 1000
+            // order by asc
+            //where type_user = null
+            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
+        }
+
+        if ($type === 'update_rol') {
+            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+        }
+
         if ($type === 'users') {
             //limit 1000
             // order by asc
@@ -1088,6 +1099,7 @@ class UsersRepo
         if ($type === 'update') {
             return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
         }
+
         return [];
     }
 
