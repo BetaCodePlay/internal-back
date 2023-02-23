@@ -364,7 +364,7 @@ class AgentsCollection
                     _i('Netwin')
                 );
             }else{
-                Log::info('provider null',[$provider]);
+               // Log::info('provider null',[$provider]);
             }
 
         }

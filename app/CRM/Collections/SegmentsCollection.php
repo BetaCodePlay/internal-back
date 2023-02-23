@@ -217,7 +217,7 @@ class SegmentsCollection
             }
         }
 
-        \Log::info('$users', [count($usersData)]);
+        //\Log::info('$users', [count($usersData)]);
 
         return [
             'users' => $usersData,

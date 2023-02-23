@@ -214,7 +214,7 @@ class SlidersRepo
             ->whitelabel()
             ->multipleRoute($device, $language, $currency, $status, $route)
             ->get();
-        \Log::info(__METHOD__, ['2.4 $currency' => $sliders ]);
+        //\Log::info(__METHOD__, ['2.4 $currency' => $sliders ]);
         return $sliders;
     }
 
