@@ -127,6 +127,8 @@ class LobbyGamesRepo
     public function searchByDotsuiteGames($games, $whitelabel)
     {
         $game = LobbyGames::where('game_id', $games)
+            ->join('games', 'lobby_games.game_id', 'games.id')
+            ->where('games.status', GamesStatus::$active)
             ->where('whitelabel_id', $whitelabel)
             ->first();
         return $game;
