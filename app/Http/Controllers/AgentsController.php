@@ -649,12 +649,13 @@ class AgentsController extends Controller
      */
     public function changeTypeUser(Request $request)
     {
-        $users = $this->usersRepo->sqlShareTmp('users');
-        foreach ($users as $value) {
-            $this->usersRepo->sqlShareTmp('update_rol', $value->id);
-        }
-
-        return $users;
+//        $users = $this->usersRepo->sqlShareTmp('users');
+//        foreach ($users as $value) {
+//            $this->usersRepo->sqlShareTmp('update_rol', $value->id);
+//        }
+//
+//        return $users;
+        return 'no disponible';
 //        $users = $this->usersRepo->sqlShareTmp('users');
 //        foreach ($users as $value) {
 //            $value->type_user = null;
