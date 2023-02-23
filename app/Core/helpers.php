@@ -274,7 +274,6 @@ if (!function_exists('menu')) {
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
                                 'permission' => Permissions::$agents_financial_report,
-                                //'permission' => Permissions::$total_financial_report,
                                 'submenu' => []
                             ],
 
