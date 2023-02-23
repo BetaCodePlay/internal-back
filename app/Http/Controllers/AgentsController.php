@@ -808,7 +808,7 @@ class AgentsController extends Controller
 
     public function financialStateData_username(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
-        try {
+//        try {
             $timezone = session('timezone');
             // $today = Carbon::now()->setTimezone($timezone);
             $startDateOriginal = $startDate;
@@ -821,17 +821,17 @@ class AgentsController extends Controller
             //TODO Providers
             // 171:Bet Connections Slots
             $providerArrayTmp = [171];
-            $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+          return  $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
 
             $data = [
                 'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers)
             ];
             return Utils::successResponse($data);
 
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+//            return Utils::failedResponse();
+//        }
     }
 
     public function financialStateData_provider(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)

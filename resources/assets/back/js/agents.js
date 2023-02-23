@@ -315,8 +315,6 @@ class Agents {
                     $('.balance').text(json.data.balance);
                     $('.balanceAuth_'+json.data.user.id).text('');
                     $('.balanceAuth_'+json.data.user.id).text(json.data.balance);
-                    $('.balanceAuth_'+json.data.user.id).val(json.data.balance);
-                    $('.balanceAuth_'+json.data.user.id).html(json.data.balance);
                     $('#user_type').html(json.data.user.type);
                     $('#status').html(json.data.user.status);
                     $('#wallet').val(json.data.wallet);
