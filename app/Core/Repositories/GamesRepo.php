@@ -159,7 +159,6 @@ class GamesRepo
             ->where('credentials.currency_iso', $currency)
             ->where('providers.id', $provider)
             ->where('credentials.status', true)
-            ->where('status', GamesStatus::$active)
             ->where(function($query) use ($whitelabel) {
                 $query->where(function($query) use($whitelabel) {
                     $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
