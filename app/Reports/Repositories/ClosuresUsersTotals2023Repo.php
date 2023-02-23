@@ -34,7 +34,7 @@ class ClosuresUsersTotals2023Repo
             FROM site.closures_users_totals_2023
             WHERE site.closures_users_totals_2023.whitelabel_id = '{$whitelabel}'
             AND site.closures_users_totals_2023.currency_iso = '{$currency_iso}'
-            --AND site.closures_users_totals_2023.user_id IN ({$arrayUsers})
+            AND site.closures_users_totals_2023.user_id IN ({$arrayUsers})
             AND site.closures_users_totals_2023.start_date BETWEEN '{$startDate}' AND '{$endDate}'
             AND site.closures_users_totals_2023.end_date BETWEEN '{$startDate}' AND '{$endDate}'
             GROUP BY site.closures_users_totals_2023.{$fieldGroup}");
