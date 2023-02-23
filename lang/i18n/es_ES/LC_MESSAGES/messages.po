@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
 "POT-Creation-Date: 2023-02-22 22:52-0400\n"
-"PO-Revision-Date: 2023-02-22 23:03-0400\n"
+"PO-Revision-Date: 2023-02-22 23:07-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_ES\n"
@@ -4073,10 +4073,8 @@ msgstr "(Escritorio)"
 
 #: ../app/Core/Collections/LobbyGamesCollection.php:31
 #: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:31
-#, fuzzy
-#| msgid "Deleted game"
 msgid "Delete game"
-msgstr "Juego eliminado"
+msgstr "Eliminar juego"
 
 #: ../app/Core/Collections/LobbyGamesCollection.php:40
 #: ../app/DotSuite/Collections/LobbyDotSuiteGamesCollection.php:34
@@ -4084,17 +4082,13 @@ msgstr "Juego eliminado"
 #: ../storage/framework/messages/63d5eb8b12137f8c1b494a2044e4e9362a91597f.php.php:34
 #: ../storage/framework/messages/63d5eb8b12137f8c1b494a2044e4e9362a91597f.php.php:69
 #: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:40
-#, fuzzy
-#| msgid "Used order"
 msgid "Has no order"
-msgstr "Orden usado"
+msgstr "No tiene orden"
 
 #: ../app/Core/Collections/LobbyGamesCollection.php:47
 #: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:47
-#, fuzzy
-#| msgid "Without image"
 msgid "Not image"
-msgstr "Sin imagen"
+msgstr "No es imagen"
 
 #: ../app/Core/Collections/PagesCollection.php:31
 #: ../app/Core/Collections/PagesCollection.php:33
@@ -4105,10 +4099,8 @@ msgstr "Página no configurada"
 
 #: ../app/Core/Collections/PagesCollection.php:35
 #: ../storage/framework/messages/25c49061d6b7302ab1580293cb921b6fd796d713.php.php:35
-#, fuzzy
-#| msgid "Page not configured"
 msgid "Date not configured"
-msgstr "Página no configurada"
+msgstr "Fecha no configurada"
 
 #: ../app/Core/Collections/ProductsLimitsCollection.php:29
 #: ../app/Core/Enums/ProductsLimits.php:68
@@ -9212,16 +9204,15 @@ msgstr "Crear dotsuite de lobby"
 
 #: ../app/Http/Controllers/DotSuiteController.php:431
 #: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:431
-#, fuzzy
-#| msgid "PG Soft credentials"
 msgid "List of credentials"
-msgstr "Credenciales de PG Soft"
+msgstr "Lista de credenciales"
 
 #: ../app/Http/Controllers/DotSuiteController.php:498
 #: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:498
 #, php-format
 msgid "%s Credentials stored by currency. %s New credentials saved"
 msgstr ""
+"%s Credenciales almacenadas por moneda. %s Nuevas credenciales guardadas"
 
 #: ../app/Http/Controllers/DotSuiteController.php:528
 #: ../app/Http/Controllers/DotSuiteController.php:554
@@ -9650,64 +9641,48 @@ msgstr ""
 
 #: ../app/Http/Controllers/LandingPagesController.php:101
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:101
-#, fuzzy
-#| msgid "Upload new slider"
 msgid "Upload new landing pages"
-msgstr "Subir nuevo slider"
+msgstr "Subir nuevas páginas de destino"
 
 #: ../app/Http/Controllers/LandingPagesController.php:130
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:130
-#, fuzzy
 msgid "Landing pages removed"
-msgstr "Páginas de aterrizaje eliminadas"
+msgstr "Páginas de destino eliminadas"
 
 #: ../app/Http/Controllers/LandingPagesController.php:131
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:131
-#, fuzzy
-#| msgid "The image was successfully removed"
 msgid "The landing pages was successfully removed"
-msgstr "La imagen fue eliminada con éxito"
+msgstr "Las páginas de destino se han eliminado correctamente"
 
 #: ../app/Http/Controllers/LandingPagesController.php:154
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:154
-#, fuzzy
-#| msgid "Update page"
 msgid "Update landing pages"
-msgstr "Actualizar Página"
+msgstr "Actualizar páginas de destino"
 
 #: ../app/Http/Controllers/LandingPagesController.php:170
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:170
-#, fuzzy
-#| msgid "List of images"
 msgid "List of Landing Pages"
-msgstr "Lista de imágenes"
+msgstr "Lista de páginas de destino"
 
 #: ../app/Http/Controllers/LandingPagesController.php:242
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:242
-#, fuzzy
 msgid "Landing pages loaded"
-msgstr "Páginas de aterrizaje cargadas"
+msgstr "Páginas de destino cargadas"
 
 #: ../app/Http/Controllers/LandingPagesController.php:243
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:243
-#, fuzzy
-#| msgid "The slider was loaded correctly"
 msgid "The landing was loaded correctly"
-msgstr "El slider fue cargado correctamente"
+msgstr "El aterrizaje se cargó correctamente"
 
 #: ../app/Http/Controllers/LandingPagesController.php:348
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:348
-#, fuzzy
-#| msgid "Exchange rate updated"
 msgid "Landing pages updated"
-msgstr "Tasa de cambio actualizada"
+msgstr "Páginas de destino actualizadas"
 
 #: ../app/Http/Controllers/LandingPagesController.php:349
 #: ../storage/framework/messages/79cf196017ba8b64d8d4bf632f30454f40bb68a7.php.php:349
-#, fuzzy
-#| msgid "The page data was updated correctly"
 msgid "Landing pages data was updated correctly"
-msgstr "Los datos de la página se actualizaron correctamente"
+msgstr "Los datos de las páginas de destino se actualizaron correctamente"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:166
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:166
@@ -9723,24 +9698,18 @@ msgstr "Juego eliminado"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:189
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:189
-#, fuzzy
-#| msgid "The segment was successfully removed"
 msgid "The game was successfully removed"
-msgstr "El segmento fue eliminado con éxito"
+msgstr "El juego se ha eliminado correctamente"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:212
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:212
-#, fuzzy
-#| msgid "Live games"
 msgid "Edit games"
-msgstr "Juegos en vivo"
+msgstr "Editar juegos"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:301
 #: ../app/Http/Controllers/LobbyGamesController.php:345
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:301
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:345
-#, fuzzy
-#| msgid "Used games"
 msgid "Used Games"
 msgstr "Juegos usados"
 
@@ -9748,28 +9717,22 @@ msgstr "Juegos usados"
 #: ../app/Http/Controllers/LobbyGamesController.php:346
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:302
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:346
-#, fuzzy
-#| msgid "The page data was updated correctly"
 msgid "The game data is used in other route"
-msgstr "Los datos de la página se actualizaron correctamente"
+msgstr "Los datos del juego se utilizan en otra ruta"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:315
 #: ../app/Http/Controllers/LobbyGamesController.php:358
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:315
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:358
-#, fuzzy
-#| msgid "Update page"
 msgid "Updated game"
-msgstr "Actualizar Página"
+msgstr "Juego actualizado"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:316
 #: ../app/Http/Controllers/LobbyGamesController.php:359
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:316
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:359
-#, fuzzy
-#| msgid "The template was updated successfully"
 msgid "The game was updated successfully"
-msgstr "La plantilla se ha actualizado con éxito"
+msgstr "El juego se actualizó correctamente"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:380
 #: ../app/Http/Controllers/WhitelabelsGamesControllers.php:248
@@ -9780,17 +9743,13 @@ msgstr "Juego guardado"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:381
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:381
-#, fuzzy
-#| msgid "The segment was created successfully"
 msgid "The game was saved successfully"
-msgstr "El segmento se ha creado con éxito"
+msgstr "El juego se guardó correctamente"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:430
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:430
-#, fuzzy
-#| msgid "Saved game"
 msgid "Saved data game"
-msgstr "Juego guardado"
+msgstr "Juego de datos guardados"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:431
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:431
@@ -9884,10 +9843,8 @@ msgstr "El usuario ha sido eliminado con éxito para el grupo"
 
 #: ../app/Http/Controllers/NotificationsController.php:418
 #: ../storage/framework/messages/851804a11571dd26f02ff38e3068a00277980688.php.php:418
-#, fuzzy
-#| msgid " User was removed from segment successfully"
 msgid "User has been removed from the messaging system."
-msgstr " El usuario ha sido eliminado del segmento con éxito"
+msgstr "El usuario se ha eliminado del sistema de mensajería."
 
 #: ../app/Http/Controllers/NotificationsController.php:501
 #: ../storage/framework/messages/851804a11571dd26f02ff38e3068a00277980688.php.php:501
@@ -16565,31 +16522,27 @@ msgstr "Retiros a través de Adams Pay"
 
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2671
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2671
-#, fuzzy, php-format
-#| msgid "Bet in round #%s on the game %s"
+#, php-format
 msgid "Bet #%s with round %s on the game %s"
-msgstr "Apuesta en la ronda #%s en el juego %s"
+msgstr "Apuesta #%s con ronda %s en el juego %s"
 
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2677
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2677
-#, fuzzy, php-format
-#| msgid "Bet in round #%s on the game %s"
+#, php-format
 msgid "Bet #%s with round %s on the game %s won"
-msgstr "Apuesta en la ronda #%s en el juego %s"
+msgstr "Apuesta #%s con la ronda %s en el juego %s ganado"
 
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2686
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2686
-#, fuzzy, php-format
-#| msgid "Rollback bet in round #%s on the game %s"
+#, php-format
 msgid "Rollback prize #%s with round %s on the game %s"
-msgstr "Rollback apuesta #%s en el juego %s"
+msgstr "Premio de reversión #%s con %s de ronda en el juego %s"
 
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2688
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2688
-#, fuzzy, php-format
-#| msgid "Rollback bet in round #%s on the game %s"
+#, php-format
 msgid "Rollback bet #%s with round %s on the game %s"
-msgstr "Rollback apuesta #%s en el juego %s"
+msgstr "Apuesta de retroceso #%s con ronda %s en el juego %s"
 
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2747
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2747
@@ -16626,10 +16579,9 @@ msgstr "Rollback apuesta en el juego %s. Sesión %s"
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2818
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2870
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2921
-#, fuzzy, php-format
-#| msgid "Freespin #%s on the game %s"
+#, php-format
 msgid "Buy freeSpins #%s on the game %s"
-msgstr "Spin Gratis #%s en el juego %s"
+msgstr "Comprar freeSpins #%s en el juego %s"
 
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2823
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2875
@@ -16637,10 +16589,9 @@ msgstr "Spin Gratis #%s en el juego %s"
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2823
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2875
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2926
-#, fuzzy, php-format
-#| msgid "Bet #%s on the game %s won"
+#, php-format
 msgid "Bet #%s on the game %s won by freeSpins"
-msgstr "Apuesta #%s en el juego %s ganada"
+msgstr "Apuesta #%s en el juego %s ganado por freeSpins"
 
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2834
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:2886
