@@ -155,6 +155,7 @@ class LobbyGamesController extends Controller
     {
         try {
             $route = Configurations::getMenu();
+            \Log::notice(__METHOD__, ['route' =>  $route ]);
             $data['route'] = $this->coreCollection->formatWhitelabelMenu($route);
             $image = new \stdClass();
             $currency = session('currency');
