@@ -11,7 +11,7 @@ if (!function_exists('menu')) {
     {
         $menu = [
             'Dashboard' => [
-                'text' => _i('Dashboard'),
+                'text' => _i('Statistics'),
                 'level_class' => 'top',
                 'route' => 'core.dashboard',
                 'params' => [],
@@ -21,7 +21,7 @@ if (!function_exists('menu')) {
             ],
 
             'Users' => [
-                'text' => _i('Users'),
+                'text' => _i('See users'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
@@ -211,7 +211,7 @@ if (!function_exists('menu')) {
             ],
 
             'Agents' => [
-                'text' => _i('Agents'),
+                'text' => _i('See agents'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
@@ -220,7 +220,7 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Dashboard'),
+                        'text' => _i('Statistics'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
                         'params' => [],
@@ -257,6 +257,15 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
+//                            'AgentsFinancialState-new' => [
+//                                'text' => _i('Financial state new'),
+//                                'level_class' => 'third',
+//                                'route' => 'agents.reports.financial-state.new',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-pie-chart',
+//                                'permission' => Permissions::$agents_financial_report,
+//                                'submenu' => []
+//                            ],
 
                             'AgentsFinancialStateSummary' => [
                                 'text' => _i('Financial state - Summary'),
@@ -264,7 +273,7 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.financial-state-summary',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
-                                'permission' => Permissions::$total_financial_report,
+                                'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
 
@@ -2606,6 +2615,25 @@ if (!function_exists('menu')) {
                 ]
             ],
 
+            'LobbyGames' => [
+                'text' => _i('Lobby Games'),
+                'level_class' => 'top',
+                'route' => null,
+                'params' => [],
+                'icon' => 'hs-admin-user',
+                'submenu' => [
+                    'CreateLobby' => [
+                        'text' => _i('Create Lobby'),
+                        'level_class' => 'second',
+                        'route' => 'games.create',
+                        'params' => [],
+                        'icon' => 'hs-admin-plus',
+                        'submenu' => []
+                    ]
+                ],
+            ],
+
+
             /*'Games' => [
                 'text' => _i('Games section'),
                 'level_class' => 'top',
@@ -3397,6 +3425,54 @@ if (!function_exists('menu')) {
                                         'level_class' => 'fourth',
                                         'route' => 'reports.games-played-by-user',
                                         'params' => [Providers::$belatra],
+                                        'icon' => 'hs-admin-stats-up',
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+
+                            'BetConnections' => [
+                                'text' => _i('Bet Connections'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$products_reports_menu,
+                                'provider' => Providers::$bet_connections,
+                                'submenu' => [
+
+                                    'Users' => [
+                                        'text' => _i('Users totals'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.users-totals',
+                                        'params' => [Providers::$bet_connections],
+                                        'icon' => 'hs-admin-user',
+                                        'submenu' => []
+                                    ],
+
+                                    //'Games' => [
+                                    //    'text' => _i('Games totals'),
+                                    //    'level_class' => 'fourth',
+                                    //    'route' => 'reports.games-totals',
+                                    //    'params' => [Providers::$belatra],
+                                    //    'icon' => 'hs-admin-game',
+                                    //    'submenu' => []
+                                    //],
+
+                                    'MostPlayedGames' => [
+                                        'text' => _i('Most played games'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.most-played-games',
+                                        'params' => [Providers::$bet_connections],
+                                        'icon' => 'hs-admin-stats-up',
+                                        'submenu' => []
+                                    ],
+
+                                    'GamesPlayedByUser' => [
+                                        'text' => _i('Games played by user'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'reports.games-played-by-user',
+                                        'params' => [Providers::$bet_connections],
                                         'icon' => 'hs-admin-stats-up',
                                         'submenu' => []
                                     ],

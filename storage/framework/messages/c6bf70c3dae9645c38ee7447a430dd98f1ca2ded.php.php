@@ -33,6 +33,7 @@
             <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.view1')); ?>">
 
             </div>
+            
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -94,8 +95,43 @@
 <?php $__env->startSection('scripts'); ?>
     <script>
         $(function () {
-            //let agents = new Agents();
-            //agents.financialStateDetails(<?php echo e($user); ?>);
+            let agents = new Agents();
+            agents.financialState(<?php echo e($user); ?>);
+
+            // financialStateDetails(user = null) {
+            //     let picker = initLitepickerEndToday();
+            //     let $table = $('#financial-state-table');
+            //     let $button = $('#update');
+            //     let api;
+            //     if (user == null) {
+            //         $('#financial-state-tab').on('show.bs.tab', function () {
+            //             $table.children().remove();
+            //             user = $('.user').val();
+            //         });
+            //     }
+            //
+            //     $button.click(function () {
+            //         $button.button('loading');
+            //         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            //         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            //
+            //         $.ajax({
+            //             url: `${$table.data('route')}/${user}/${startDate}/${endDate}`,
+            //             type: 'get',
+            //             dataType: 'json'
+            //
+            //         }).done(function (json) {
+            //             $table.html(json.data.table);
+            //
+            //         }).fail(function (json) {
+            //             swalError(json);
+            //
+            //         }).always(function () {
+            //             $button.button('reset');
+            //         });
+            //     });
+            // }
+
         });
     </script>
 <?php $__env->stopSection(); ?>

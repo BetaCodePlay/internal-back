@@ -73,6 +73,7 @@
                                             <option value="core.index">
                                                 {{ _i('Home') }}
                                             </option>
+
                                         @foreach ($menu as $item)
                                             <option value="{{ $item->route }}">
                                                 {{ $item->name }}

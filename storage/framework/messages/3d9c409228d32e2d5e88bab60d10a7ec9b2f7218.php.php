@@ -4,15 +4,18 @@
             <div class="col-auto d-flex flex-nowrap u-header-logo-toggler g-py-12">
                 <a href="<?php echo e(route('core.dashboard')); ?>"
                    class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-0">
-                   <!--  <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 109): ?>
-                    <img src="<?php echo e(asset('commons/img/bloko-light.png')); ?>" alt="Bloko" width="180" height="37">
-                    <?php elseif(\Dotworkers\Configurations\Configurations::getWhitelabel() == 125): ?>
-                        <img src="<?php echo e(asset('commons/img/lat-soft-demo.png')); ?>" alt="LatSoft" width="180" height="37">
-                    <?php elseif(\Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144): ?>
-                        <img src="<?php echo e(asset('commons/img/lat-soft-logo.jpeg')); ?>" alt="LatSoft" width="180" height="37">
-                    <?php else: ?>
-                        <img src="<?php echo e(asset('commons/img/dotpanel-light.png')); ?>" width="180" height="37" alt="Dotpanel">
-                    <?php endif; ?> -->
+                    <?php if(!is_null($logo->img_dark)): ?>
+                        <img src="<?php echo e($logo->img_dark); ?>" alt="Bloko" width="180" height="37">
+                    <?php endif; ?>
+
+
+
+
+
+
+
+
+
                 </a>
                 <a class="js-side-nav u-header__nav-toggler d-flex align-self-center ml-auto" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
@@ -39,7 +42,16 @@
                 <i class="hs-admin-search g-absolute-centered"></i>
             </a>
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pl-20--sm">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
+                    <div class="g-pos-rel">
+                        <a class="btn btn-info text-white btn-header-chat btn-header-auth g-pl-10 g-pr-10" href="javascript:void(0)" style="border-radius: 50px">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto d-flex g-py-12 ml-auto">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
                     <div class="g-pos-rel">
                         <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
                            data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
@@ -65,7 +77,7 @@
                 </div>
             </div>
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pl-20--sm">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
                     <div class="g-pos-rel">
                         <a id="languages-menu-invoker" class="d-block" href="#!" aria-controls="languages-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#languages-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
                            data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">

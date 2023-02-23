@@ -30,6 +30,19 @@ class ProvidersRepo
         return $providers;
     }
 
+    public function allIds()
+    {
+        $providers = Provider::select('providers.id')->whereNotNull('dotsuite_provider_id')->get(['id']);
+        $array = [];
+        foreach ($providers as $value){
+            $array[]=$value->id;
+        }
+
+        \Log::notice(__METHOD__, [' $providers' => $providers,'array'=>$array]);
+
+        return $array;
+    }
+
     /**
      * Get by types
      *

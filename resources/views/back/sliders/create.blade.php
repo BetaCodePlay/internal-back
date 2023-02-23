@@ -127,6 +127,7 @@
                                     <div class="form-group">
                                         <label for="route">{{ _i('Menu where it will be shown') }}</label>
                                         <select name="route[]" id="route" class="form-control" multiple>
+
                                                 <option value="core.index">
                                                     {{ _i('Home') }}
                                                 </option>
