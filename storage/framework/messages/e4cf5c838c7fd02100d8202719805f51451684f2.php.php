@@ -42,6 +42,10 @@ class DotpanelServiceProvider extends ServiceProvider
                 die;
             }
 
+            if($domain == 'back-office-v1.co' || $domain == 'back-office.co'){
+                $domain = 'back-office-v1.co';
+            }
+
             $configurations = Configurations::getConfigurationsByURL($domain);
 
             if (count($configurations) == 0) {
@@ -81,7 +85,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $whitelabel = Configurations::getWhitelabel();
                     $whitelabels = [45, 7];
                     if (!in_array($whitelabel, $whitelabels)) {
-                        if (env('APP_ENV') == 'production') {
+                        if ((env('APP_ENV') == 'production') || (env('APP_ENV') == 'testing') ) {
                             URL::forceScheme('https');
                         }
                     }
@@ -106,6 +110,8 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['all_currencies'] = $allCurrencies;
                     $data['global_timezones'] = $timezones;
                     $data['free_currency'] = Configurations::getFreeCurrency();
+                    $data['logo'] = Configurations::getLogo($mobile = true);
+                    //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
                     Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'domain' => $domain]);

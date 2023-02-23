@@ -13,12 +13,87 @@
         #financial-state-table .bg-success {
             background-color: rgba(40, 167, 69,.4) !important
         }
+        .init_tree{
+            color: rgb(77 77 77) !important
+        }
+        .init_agent{
+            color: #3398dc !important
+        }
+        .init_user{
+            color: #e62154 !important
+        }
+        .nav_link_blue {
+            color: white!important;
+            background-color: #38a7ef !important;
+        }
+        /*#dashboard {*/
+        /*    border-color: #38a7ef;*/
+        /*    border-top-style: solid;*/
+        /*    border-right-style: solid;*/
+        /*    border-bottom-style: solid;*/
+        /*    border-left-style: solid;*/
+        /*}*/
+        .nav_link_red {
+            color: white!important;
+            background-color:  #e62154 !important
+        }
+        .nav_link_green {
+            color: white!important;
+            background-color:  green !important
+        }
+        .nav_link_orange {
+            color: white!important;
+            background-color:  darkorange !important
+        }
+
     </style>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
     <div class="row">
         <div class="col-lg-3 col-xl-4">
+            
+            <div class="d-block d-sm-block d-md-none g-pa-10">
+                <div class="row">
+
+
+
+
+
+                    <div class="col-6 g-py-5">
+                        <a href="#add-users-modal" data-toggle="modal" class="btn u-btn-3d u-btn-primary btn-block" id="new-user">
+                            <i class="hs-admin-plus"></i>
+                            <?php echo e(_i(' Player')); ?>
+
+                        </a>
+                    </div>
+                    <?php if($agent->master): ?>
+                        <div class="col-6 g-py-5">
+                            <a href="#add-agents-modal" data-toggle="modal" class="btn u-btn-3d u-btn-primary btn-block" id="new-agent">
+                                <i class="hs-admin-plus"></i>
+                                <?php echo e(_i(' Agent')); ?>
+
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
                 <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
                     <div class="media">
@@ -108,9 +183,11 @@
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-8 g-py-5 g-pa-5">
-                            <select name="agent_id_search" id="agent_id_search" class="form-control select2 agent_id_search" data-route="<?php echo e(route('agents.search-username')); ?>" data-select="<?php echo e(route('agents.find-user')); ?>">
-                                <option></option>
-                            </select>
+                            <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+                                <select name="agent_id_search" id="agent_id_search"  class="form-control select2 agent_id_search" data-route="<?php echo e(route('agents.search-username')); ?>" data-select="<?php echo e(route('agents.find-user')); ?>">
+                                    <option></option>
+                                </select>
+                            <?php endif; ?>
                         </div>
                         <div class="col-6 col-md-2 g-py-5">
                             <a href="#add-users-modal" data-toggle="modal" class="btn u-btn-3d u-btn-primary btn-block" id="new-user">
@@ -121,7 +198,7 @@
                         </div>
                         <?php if($agent->master): ?>
                             <div class="col-6 col-md-2 g-py-5">
-                                <a href="#add-agents-modal" data-toggle="modal" class="btn u-btn-3d u-btn-primary btn-block" id="new-agent">
+                                <a href="#add-agents-modal" data-toggle="modal" class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">
                                     <i class="hs-admin-plus"></i>
                                     <?php echo e(_i(' Agent ')); ?>
 
@@ -204,28 +281,28 @@
                     <div class="d-none d-sm-none d-md-block">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">
+                                <a class="nav-link active nav_link_blue" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab" aria-controls="dashboard" aria-selected="true">
                                     <i class="hs-admin-dashboard"></i>
                                     <?php echo e(_i('Dashboard')); ?>
 
                                 </a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="agents-transactions-tab" data-toggle="tab" href="#agents-transactions" role="tab" aria-controls="agents-transactions" aria-selected="false">
+                                <a class="nav-link nav_link_red" id="agents-transactions-tab" data-toggle="tab" href="#agents-transactions" role="tab" aria-controls="agents-transactions" aria-selected="false">
                                     <i class="hs-admin-layout-list-thumb"></i>
                                     <?php echo e(_i('Transactions')); ?>
 
                                 </a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link d-none" id="users-transactions-tab" data-toggle="tab" href="#users-transactions" role="tab" aria-controls="users-transactions" aria-selected="false">
+                                <a class="nav-link d-none nav_link_red" id="users-transactions-tab" data-toggle="tab" href="#users-transactions" role="tab" aria-controls="users-transactions" aria-selected="false">
                                     <i class="hs-admin-layout-list-thumb"></i>
                                     <?php echo e(_i('Transactions')); ?>
 
                                 </a>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">
+                                <a class="nav-link nav_link_blue" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">
                                     <i class="hs-admin-user"></i>
                                     <?php echo e(_i('Players')); ?>
 
@@ -233,7 +310,7 @@
                             </li>
                             <?php if($agent->master): ?>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link" id="agents-tab" data-toggle="tab" href="#agents" role="tab" aria-controls="agents" aria-selected="false">
+                                    <a class="nav-link nav_link_red" id="agents-tab" data-toggle="tab" href="#agents" role="tab" aria-controls="agents" aria-selected="false">
                                         <i class="hs-admin-briefcase"></i>
                                         <?php echo e(_i('Agents')); ?>
 
@@ -241,7 +318,7 @@
                                 </li>
                             <?php endif; ?>
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="financial-state-tab" data-toggle="tab" href="#financial-state" role="tab" aria-controls="agents" aria-selected="false">
+                                <a class="nav-link nav_link_green" id="financial-state-tab" data-toggle="tab" href="#financial-state" role="tab" aria-controls="agents" aria-selected="false">
                                     <i class="hs-admin-pie-chart"></i>
                                     <?php echo e(_i('Financial state')); ?>
 
@@ -249,7 +326,7 @@
                             </li>
                             <?php if($agent->master): ?>
                                 <li class="nav-item" role="presentation">
-                                    <a class="nav-link d-none" id="locks-tab" data-toggle="tab" href="#locks" role="tab" aria-controls="agents" aria-selected="false">
+                                    <a class="nav-link d-none nav_link_orange" id="locks-tab" data-toggle="tab" href="#locks" role="tab" aria-controls="agents" aria-selected="false">
                                         <i class="hs-admin-lock"></i>
                                         <?php echo e(_i('Locks')); ?>
 
@@ -292,38 +369,43 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row g-mb-15">
-                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
-                                            <label class="g-mb-0">
-                                                <strong> <?php echo e(_i('Code')); ?></strong>
-                                            </label>
-                                        </div>
-                                        <div class="col-4 col-sm-5 col-md-4 align-self-center">
-                                            <div class="form-group g-pos-rel g-mb-0">
-                                                <span id="referral_code"></span>
+
+
+                                    <?php if(!in_array(19, session('roles'))): ?>
+                                        <div class="row g-mb-15">
+                                            <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                                <label class="g-mb-0">
+                                                    <strong> <?php echo e(_i('Code')); ?></strong>
+                                                </label>
+                                            </div>
+                                            <div class="col-4 col-sm-5 col-md-4 align-self-center">
+                                                <div class="form-group g-pos-rel g-mb-0">
+                                                    <span id="referral_code"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-4 col-sm-3 col-md-5 align-self-center">
+                                                <div class="form-group g-pos-rel g-mb-0">
+                                                    <button class="btn g-width-40 g-height-40 u-btn-primary g-rounded-4 u-btn-3d btn-sm clipboard"
+                                                            type="button" type="button" id="clipboard" data-title="<?php echo e(_i('Copied')); ?>">
+                                                        <i class="hs-admin-clipboard g-absolute-centered g-font-size-16 g-color-white"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-4 col-sm-3 col-md-5 align-self-center">
-                                            <div class="form-group g-pos-rel g-mb-0">
-                                                <button class="btn g-width-40 g-height-40 u-btn-primary g-rounded-4 u-btn-3d btn-sm clipboard"
-                                                        type="button" type="button" id="clipboard" data-title="<?php echo e(_i('Copied')); ?>">
-                                                    <i class="hs-admin-clipboard g-absolute-centered g-font-size-16 g-color-white"></i>
-                                                </button>
+                                        <div class="row g-mb-15">
+                                            <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                                <label class="g-mb-0">
+                                                    <strong><?php echo e(_i('Timezone')); ?></strong>
+                                                </label>
+                                            </div>
+                                            <div class="col-8 col-sm-8 col-md-9 align-self-center">
+                                                <div class="form-group g-pos-rel g-mb-0">
+                                                    <span id="agent_timezone"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row g-mb-15">
-                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
-                                            <label class="g-mb-0">
-                                                <strong><?php echo e(_i('Timezone')); ?></strong>
-                                            </label>
-                                        </div>
-                                        <div class="col-8 col-sm-8 col-md-9 align-self-center">
-                                            <div class="form-group g-pos-rel g-mb-0">
-                                                <span id="agent_timezone"></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php endif; ?>
+
                                     <div class="row g-mb-15">
                                         <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
@@ -624,7 +706,11 @@
                                 </div>
                             </div>
                             <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data')); ?>">
+                            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-summary-data')); ?>">
+
+
+
+
 
                             </div>
                         </div>

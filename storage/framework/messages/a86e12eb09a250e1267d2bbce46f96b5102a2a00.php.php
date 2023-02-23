@@ -77,6 +77,7 @@
                                                 <?php echo e(_i('Home')); ?>
 
                                             </option>
+
                                         <?php $__currentLoopData = $menu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($item->route); ?>">
                                                 <?php echo e($item->name); ?>

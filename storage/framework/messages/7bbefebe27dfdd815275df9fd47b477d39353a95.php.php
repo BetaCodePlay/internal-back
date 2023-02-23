@@ -1209,6 +1209,13 @@ class Providers
     public static $lucky_roulette = 170;
 
     /**
+     * Bet Connections
+     *
+     * @var int
+     */
+    public static $bet_connections = 171;
+
+    /**
      * Get transaction description
      *
      * @param int $provider Provider ID
@@ -3218,7 +3225,6 @@ class Providers
                 break;
             }
             case self::$cockfight:
-            case self::$lv_sLots:
             {
                 if (isset($data->type)) {
                     switch ($data->type) {
@@ -3244,6 +3250,29 @@ class Providers
                     }
                 }
                 break;
+            }
+            case self::$lv_sLots:
+            {
+                if (isset($data->data->type)) {
+                    switch ($data->data->type) {
+                        case 'debit':
+                        {
+                            $description = _i('Bet #%s on the game %s. Round #%s', [$data->data->provider_transaction, $data->data->game,$data->data->provider_transaction]);
+                            break;
+                        }
+                        case 'credit':
+                        {
+                            $description = _i('Bet #%s on the game %s won. Round #%s', [$data->data->provider_transaction, $data->data->game, $data->data->provider_transaction,]);
+                            break;
+                        }
+                        case 'refund':
+                        {
+                            $description = _i('Bet #%s on the game %s refunded. Round #%s', [$data->data->provider_transaction, $data->data->game, $data->data->provider_transaction,]);
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
             default:
             {
@@ -4083,6 +4112,11 @@ class Providers
             case self::$lucky_roulette:
             {
                 $name = _i('Lucky Roulette');
+                break;
+            }
+            case self::$bet_connections:
+            {
+                $name = _i('Bet Connections');
                 break;
             }
             default:

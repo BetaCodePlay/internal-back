@@ -14,6 +14,8 @@ use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Collections\UsersCollection;
+use App\Users\Enums\ActionUser;
+use App\Users\Enums\TypeUser;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UsersRepo;
 use App\Users\Repositories\UsersTempRepo;
@@ -32,6 +34,7 @@ use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Security\Security;
 use Dotworkers\Sessions\Sessions;
 use Dotworkers\Store\Store;
@@ -219,6 +222,62 @@ class AgentsController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Find agents and users
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function findUser(Request $request)
+    {
+        try {
+            if (session('admin_id')) {
+                $userId = session('admin_id');
+                $agent_player = false;
+            } else {
+                $userId = auth()->user()->id;
+                $agent_player = true;
+            }
+            $currency = session('currency');
+            $id = $request->id;
+            $walletId = null;
+            $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            $user = $this->agentsRepo->findUser($id);
+            if (!is_null($userAgent)) {
+                $user = $userAgent;
+                $balance = $userAgent->balance;
+                $master = $userAgent->master;
+                $agent = true;
+                $myself = $userId == $userAgent->id;
+                $type = 'agent';
+            } else {
+                $user = $this->agentsRepo->findUser($id);
+                $master = false;
+                $wallet = Wallet::getByClient($id, $currency);
+                $balance = $wallet->data->wallet->balance;
+                $agent = false;
+                $walletId = $wallet->data->wallet->id;
+                $myself = false;
+                $type = 'user';
+            }
+            $this->agentsCollection->formatAgent($user);
+            $data = [
+                'user' => $user,
+                'balance' => number_format($balance, 2),
+                'master' => $master,
+                'agent' => $agent,
+                'wallet' => $walletId,
+                'type' => $type,
+                'myself' => $myself,
+                'agent_player' => $agent_player
+            ];
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -585,22 +644,33 @@ class AgentsController extends Controller
     }
 
     /**
-     * Create agent balance
-     *
-     * @param object $agent Agent data
-     * @param string $currency Currency ISO
-     * @param float $balance Agent balance
+     * @param Request $request
+     * @return array
      */
-    private function createAgentBalance($agent, $currency, $balance = 0)
+    public function changeTypeUser(Request $request)
     {
-        $agentData = [
-            'agent_id' => $agent,
-            'currency_iso' => $currency,
-        ];
-        $balance = [
-            'balance' => $balance
-        ];
-        $this->agentCurrenciesRepo->store($agentData, $balance);
+        $users = $this->usersRepo->sqlShareTmp('users');
+        foreach ($users as $value) {
+            $value->type_user = null;
+            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
+            if (!is_null($agentTmp)) {
+                $value->type_user = TypeUser::$agentCajero;
+                if (isset($agentTmp->master) && $agentTmp->master) {
+                    $value->type_user = TypeUser::$agentMater;
+                }
+            }
+
+            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
+            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
+                $value->type_user = TypeUser::$player;
+            }
+            //TODO UPDATE
+            if (!is_null($value->type_user)) {
+                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
+            }
+        }
+
+        return $users;
     }
 
     /**
@@ -644,6 +714,72 @@ class AgentsController extends Controller
     }
 
     /**
+     * Financial state data
+     *
+     * @param ProvidersRepo $providersRepo
+     * @param null|int $user User ID
+     * @param null|string $startDate
+     * @param null|string $endDate
+     * @return Response
+     */
+    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    {
+        try {
+            $timezone = session('timezone');
+            $today = Carbon::now()->setTimezone($timezone);
+            $endDateOriginal = $endDate;
+//            $startDate = Utils::startOfDayUtc($startDate);
+//            $endDate = Utils::endOfDayUtc($endDate);
+
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+
+
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $table = $this->agentsCollection->financialState($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
+            $data = [
+                'table' => $table
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    public function financialStateDataRow2(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    {
+        try {
+            $timezone = session('timezone');
+            $today = Carbon::now()->setTimezone($timezone);
+            $endDateOriginal = $endDate;
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $table = $this->agentsCollection->financialStateRow2($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
+            $data = [
+                'table' => $table
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Financial state
      *
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
@@ -663,6 +799,33 @@ class AgentsController extends Controller
         return view('back.agents.reports.financial-state', $data);
     }
 
+    public function financialStateData_view1(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
+    {
+        //try {
+        $timezone = session('timezone');
+       // $today = Carbon::now()->setTimezone($timezone);
+        $startDateOriginal = $startDate;
+        $endDateOriginal = $endDate;
+        $startDate = Utils::startOfDayUtc($startDate);
+        $endDate = Utils::endOfDayUtc($endDate);
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+
+        //TODO Providers
+        // 171:Bet Connections Slots
+        $providerArrayTmp = [171];
+
+        $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+
+        $table = $this->agentsCollection->financialState_view1($whitelabel, $currency, $startDate, $endDate, $treeUsers);
+
+        return Utils::successResponse($table);
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+//            return Utils::failedResponse();
+//        }
+    }
+
     public function financialState_view1(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
 //        $currency = session('currency');
@@ -672,76 +835,29 @@ class AgentsController extends Controller
         } else {
             $data['user'] = auth()->user()->id;
         }
-        $data['title'] = _i('Financial state report').' (-View1-)';
+        $data['title'] = _i('Financial state report') . ' (-View1-)';
         return view('back.agents.reports.financial-state_view1', $data);
     }
-    public function financialStateData_view1(ProvidersRepo $providersRepo,ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
-    {
-        //try {
-            $timezone = session('timezone');
-            $today = Carbon::now()->setTimezone($timezone);
-            $endDateOriginal = $endDate;
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providerTypesName = $providersTypesRepo->getByIdsOrderId($providerTypes);
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today,$providerTypesName);
-            $data = [
-                'table' => $table
-            ];
-            return [
-                '$today'=>$today,
-                '$endDate'=>$endDate,
-                '$startDate'=>$startDate,
-                '$currency'=>$currency,
-                '$whitelabel'=>$whitelabel,
-                '$providerTypes'=>$providerTypes,
-                '$providerTypesName'=>$providerTypesName,
-                '$providers'=>$providers,
-                '$agent'=>$agent,
-                '$agents'=>$agents,
-                '$users'=>$users,
-                '$table'=>$data,
-            ];
-//            return Utils::successResponse($data);
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-//            return Utils::failedResponse();
-//        }
-    }
-
 
     /**
-     * Financial state data
+     * Financial state summary bonus data
      *
-     * @param ProvidersRepo $providersRepo
      * @param null|int $user User ID
      * @param null|string $startDate
      * @param null|string $endDate
      * @return Response
      */
-    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateSummaryBonusData($user = null, $startDate = null, $endDate = null)
     {
         try {
-            $timezone = session('timezone');
-            $today = Carbon::now()->setTimezone($timezone);
-            $endDateOriginal = $endDate;
             $startDate = Utils::startOfDayUtc($startDate);
             $endDate = Utils::endOfDayUtc($endDate);
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialState($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
+            $table = $this->agentsCollection->financialStateSummaryBonus($whitelabel, $agents, $users, $currency, $startDate, $endDate);
             $data = [
                 'table' => $table
             ];
@@ -753,11 +869,11 @@ class AgentsController extends Controller
     }
 
     /**
-     * Financial state summary
+     * Financial state summary bonus
      *
      * @return Application|Factory|View
      */
-    public function financialStateSummary()
+    public function financialStateSummaryBonus()
     {
         $data['user'] = auth()->user()->id;
         if (session('admin_id')) {
@@ -765,8 +881,8 @@ class AgentsController extends Controller
         } else {
             $data['user'] = auth()->user()->id;
         }
-        $data['title'] = _i('Financial state report - Summary');
-        return view('back.agents.reports.financial-state-summary', $data);
+        $data['title'] = _i('Financial state report - Summary (Include bonuses)');
+        return view('back.agents.reports.financial-state-summary-bonus', $data);
     }
 
     /**
@@ -799,11 +915,11 @@ class AgentsController extends Controller
     }
 
     /**
-     * Financial state summary bonus
+     * Financial state summary
      *
      * @return Application|Factory|View
      */
-    public function financialStateSummaryBonus()
+    public function financialStateSummary()
     {
         $data['user'] = auth()->user()->id;
         if (session('admin_id')) {
@@ -811,37 +927,8 @@ class AgentsController extends Controller
         } else {
             $data['user'] = auth()->user()->id;
         }
-        $data['title'] = _i('Financial state report - Summary (Include bonuses)');
-        return view('back.agents.reports.financial-state-summary-bonus', $data);
-    }
-
-    /**
-     * Financial state summary bonus data
-     *
-     * @param null|int $user User ID
-     * @param null|string $startDate
-     * @param null|string $endDate
-     * @return Response
-     */
-    public function financialStateSummaryBonusData($user = null, $startDate = null, $endDate = null)
-    {
-        try {
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialStateSummaryBonus($whitelabel, $agents, $users, $currency, $startDate, $endDate);
-            $data = [
-                'table' => $table
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
+        $data['title'] = _i('Financial state report - Summary');
+        return view('back.agents.reports.financial-state-summary', $data);
     }
 
     /**
@@ -899,62 +986,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * Find agents and users
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function findUser(Request $request)
-    {
-        try {
-            if (session('admin_id')) {
-                $userId = session('admin_id');
-                $agent_player = false;
-            } else {
-                $userId = auth()->user()->id;
-                $agent_player = true;
-            }
-            $currency = session('currency');
-            $id = $request->id;
-            $walletId = null;
-            $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-            $user = $this->agentsRepo->findUser($id);
-            if (!is_null($userAgent)) {
-                $user = $userAgent;
-                $balance = $userAgent->balance;
-                $master = $userAgent->master;
-                $agent = true;
-                $myself = $userId == $userAgent->id;
-                $type = 'agent';
-            } else {
-                $user = $this->agentsRepo->findUser($id);
-                $master = false;
-                $wallet = Wallet::getByClient($id, $currency);
-                $balance = $wallet->data->wallet->balance;
-                $agent = false;
-                $walletId = $wallet->data->wallet->id;
-                $myself = false;
-                $type = 'user';
-            }
-            $this->agentsCollection->formatAgent($user);
-            $data = [
-                'user' => $user,
-                'balance' => number_format($balance, 2),
-                'master' => $master,
-                'agent' => $agent,
-                'wallet' => $walletId,
-                'type' => $type,
-                'myself' => $myself,
-                'agent_player' => $agent_player
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      * Show dashboard
      *
      * @param CountriesRepo $countriesRepo
@@ -974,6 +1005,7 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            //return [$agent,$user,$currency];
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
@@ -992,76 +1024,6 @@ class AgentsController extends Controller
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
-        }
-    }
-
-    /**
-     * Move agent user
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function moveAgentUser(Request $request)
-    {
-        $this->validate($request, [
-            'agent' => 'required',
-        ]);
-        try {
-            $userAgent = $request->user;
-            $agent = $request->agent;
-
-            $agent = $this->agentsRepo->existAgent($agent);
-            $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
-            $data = [
-                'title' => _i('User moved'),
-                'message' => _i('User moved successfully'),
-                'close' => _i('Close')
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Move agent
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function moveAgent(Request $request)
-    {
-        $this->validate($request, [
-            'agent' => 'required',
-        ]);
-
-        try {
-            $userAgent = $request->user;
-            $agentId = $request->agent;
-            $agent = $this->agentsRepo->existAgent($userAgent);
-            if (is_null($agent)) {
-                $data = [
-                    'title' => _i('Agent moved'),
-                    'message' => _i('Agent not displaced'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-            $agentData = [
-                'owner_id' => $agentId,
-                'user_id' => $userAgent,
-            ];
-            $this->agentsRepo->update($agent->id, $agentData);
-            $data = [
-                'title' => _i('Agent moved'),
-                'message' => _i('Agent moved successfully'),
-                'close' => _i('Close')
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
         }
     }
 
@@ -1172,20 +1134,71 @@ class AgentsController extends Controller
     }
 
     /**
-     * Provider currency agent
+     * Move agent
      *
-     *
-     * @return Application|Factory|View
+     * @param Request $request
+     * @return Response
      */
-    public function providerCurrency(ProvidersRepo $providersRepo, $currency)
+    public function moveAgent(Request $request)
     {
+        $this->validate($request, [
+            'agent' => 'required',
+        ]);
+
         try {
-            $whitelabel = Configurations::getWhitelabel();
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            return Utils::successResponse($providers);
+            $userAgent = $request->user;
+            $agentId = $request->agent;
+            $agent = $this->agentsRepo->existAgent($userAgent);
+            if (is_null($agent)) {
+                $data = [
+                    'title' => _i('Agent moved'),
+                    'message' => _i('Agent not displaced'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+            $agentData = [
+                'owner_id' => $agentId,
+                'user_id' => $userAgent,
+            ];
+            $this->agentsRepo->update($agent->id, $agentData);
+            $data = [
+                'title' => _i('Agent moved'),
+                'message' => _i('Agent moved successfully'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'currency' => $currency]);
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Move agent user
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function moveAgentUser(Request $request)
+    {
+        $this->validate($request, [
+            'agent' => 'required',
+        ]);
+        try {
+            $userAgent = $request->user;
+            $agent = $request->agent;
+
+            $agent = $this->agentsRepo->existAgent($agent);
+            $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
+            $data = [
+                'title' => _i('User moved'),
+                'message' => _i('User moved successfully'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
     }
@@ -1417,98 +1430,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * Relocation agents
-     *
-     * @param int $agent Agent ID
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function relocationAgentsData($agentMoveId = null)
-    {
-        try {
-            if (!is_null($agentMoveId)) {
-                $user = auth()->user()->id;
-                $currency = session('currency');
-                $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-                $whitelabel = Configurations::getWhitelabel();
-
-                $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
-
-                $selectUsers = $this->agentsCollection->formatRelocationAgents($agent, $agents, $currency, $agentMoveId);
-            } else {
-                $selectUsers = [];
-            }
-
-            $data = [
-                'agents' => $selectUsers
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'agent' => $agent]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Search username
-     *
-     * @param Request $request
-     * @return Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function searchUsername(Request $request)
-    {
-        try {
-            $user = auth()->user()->id;
-            $currency = session('currency');
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $whitelabel = Configurations::getWhitelabel();
-            $name = strtolower($request->user);
-
-            $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
-            $users = $this->agentsRepo->getSearchUsersByAgent($currency, $agent->agent, $whitelabel);
-            $status = true;
-            $selectUsers = $this->agentsCollection->dependencySelect($name, $agents, $users, $whitelabel, $status);
-
-            $data = [
-                'agents' => $selectUsers
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Search username
-     *
-     * @param Request $request
-     * @return Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function searchAgent(Request $request)
-    {
-        try {
-            $user = auth()->user()->id;
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $name = strtolower($request->user);
-            $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
-            $status = false;
-            $selectUsers = $this->agentsCollection->dependencySelect($name, $agents, [], $whitelabel, $status);
-
-            $data = [
-                'agents' => $selectUsers
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      * Store agents
      *
      * @param Request $request
@@ -1519,10 +1440,12 @@ class AgentsController extends Controller
      */
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
+
         $this->validate($request, [
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
             'balance' => 'required',
+            'percentage' => 'required|numeric|between:1,99',
             'timezone' => 'required'
         ]);
 
@@ -1581,7 +1504,9 @@ class AgentsController extends Controller
                 'status' => true,
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
-                'register_currency' => $currency
+                'register_currency' => $currency,
+                'type_user' => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
+                'action' => ActionUser::$active,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
@@ -1613,7 +1538,7 @@ class AgentsController extends Controller
                 'user_id' => $user->id,
                 'owner_id' => $owner,
                 'master' => $master,
-                'percentage' => $percentage
+                'percentage' => $percentage,
             ];
             $agent = $this->agentsRepo->store($agentData);
 
@@ -1683,7 +1608,8 @@ class AgentsController extends Controller
                 $ownerBalance = $ownerAgent->balance;
             }
 
-            Security::assignRole($user->id, 3);
+            //Security::assignRole($user->id, 3); //TODO ROL AGENTS DEFAULT
+            Security::assignRole($user->id, Roles::$admin_Beet_sweet); //TODO NUEVO ROL OF AGENT
 
             $data = [
                 'title' => _i('Agent created'),
@@ -1695,6 +1621,136 @@ class AgentsController extends Controller
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Create agent balance
+     *
+     * @param object $agent Agent data
+     * @param string $currency Currency ISO
+     * @param float $balance Agent balance
+     */
+    private function createAgentBalance($agent, $currency, $balance = 0)
+    {
+        $agentData = [
+            'agent_id' => $agent,
+            'currency_iso' => $currency,
+        ];
+        $balance = [
+            'balance' => $balance
+        ];
+        $this->agentCurrenciesRepo->store($agentData, $balance);
+    }
+
+    /**
+     * Provider currency agent
+     *
+     *
+     * @return Application|Factory|View
+     */
+    public function providerCurrency(ProvidersRepo $providersRepo, $currency)
+    {
+        try {
+            $whitelabel = Configurations::getWhitelabel();
+            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            return Utils::successResponse($providers);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'currency' => $currency]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Relocation agents
+     *
+     * @param int $agent Agent ID
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function relocationAgentsData($agentMoveId = null)
+    {
+        try {
+            if (!is_null($agentMoveId)) {
+                $user = auth()->user()->id;
+                $currency = session('currency');
+                $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+                $whitelabel = Configurations::getWhitelabel();
+
+                $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
+
+                $selectUsers = $this->agentsCollection->formatRelocationAgents($agent, $agents, $currency, $agentMoveId);
+            } else {
+                $selectUsers = [];
+            }
+
+            $data = [
+                'agents' => $selectUsers
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'agent' => $agent]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Search username
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function searchAgent(Request $request)
+    {
+        try {
+            $user = auth()->user()->id;
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $name = strtolower($request->user);
+            $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
+            $status = false;
+            $selectUsers = $this->agentsCollection->dependencySelect($name, $agents, [], $whitelabel, $status);
+
+            $data = [
+                'agents' => $selectUsers
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Search username
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function searchUsername(Request $request)
+    {
+        try {
+            $user = auth()->user()->id;
+            $currency = session('currency');
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $whitelabel = Configurations::getWhitelabel();
+            $name = strtolower($request->user);
+
+            $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
+            $users = $this->agentsRepo->getSearchUsersByAgent($currency, $agent->agent, $whitelabel);
+            $status = true;
+            $selectUsers = $this->agentsCollection->dependencySelect($name, $agents, $users, $whitelabel, $status);
+
+            $data = [
+                'agents' => $selectUsers
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
     }
@@ -1905,7 +1961,9 @@ class AgentsController extends Controller
                 'status' => true,
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
-                'register_currency' => $currency
+                'register_currency' => $currency,
+                'type_user' => TypeUser::$player,
+                'action' => ActionUser::$active,
             ];
             $profileData = [
                 'country_iso' => $country,
@@ -1990,6 +2048,33 @@ class AgentsController extends Controller
     }
 
     /**
+     * Update percentage
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function updatePercentage(Request $request)
+    {
+        try {
+            $agentData = [
+                'percentage' => $request->percentage
+            ];
+            $agentId = $request->agent_id;
+            $this->agentsRepo->update($agentId, $agentData);
+
+            $data = [
+                'title' => _i('Percentage updated'),
+                'message' => _i('Percentage of agent successfully updated'),
+                'close' => _i('Close'),
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Agents users
      *
      * @param int $user User ID
@@ -2010,17 +2095,6 @@ class AgentsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
-    }
-
-    /**
-     *  Show view users balance report
-     *
-     * @return Factory|View
-     */
-    public function usersBalances()
-    {
-        $data['title'] = _i('Users balances');
-        return view('back.agents.reports.users-balances', $data);
     }
 
     /**
@@ -2065,29 +2139,14 @@ class AgentsController extends Controller
     }
 
     /**
-     * Update percentage
+     *  Show view users balance report
      *
-     * @param Request $request
-     * @return Response
+     * @return Factory|View
      */
-    public function updatePercentage(Request $request)
+    public function usersBalances()
     {
-        try {
-            $agentData = [
-                'percentage' => $request->percentage
-            ];
-            $agentId = $request->agent_id;
-            $this->agentsRepo->update($agentId, $agentData);
-
-            $data = [
-                'title' => _i('Percentage updated'),
-                'message' => _i('Percentage of agent successfully updated'),
-                'close' => _i('Close'),
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
+        $data['title'] = _i('Users balances');
+        return view('back.agents.reports.users-balances', $data);
     }
+
 }
