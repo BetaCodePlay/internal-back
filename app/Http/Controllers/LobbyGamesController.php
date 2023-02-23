@@ -115,7 +115,6 @@ class LobbyGamesController extends Controller
      */
     public function allGames(Request $request)
     {
-        \Log::notice(__METHOD__, ['request' => $request]);
         try {
             if (!is_null($request->providerr)) {
                 $provider = $request->provider;
@@ -155,7 +154,6 @@ class LobbyGamesController extends Controller
     {
         try {
             $route = Configurations::getMenu();
-            \Log::notice(__METHOD__, ['route' =>  $route ]);
             $data['route'] = $this->coreCollection->formatWhitelabelMenu($route);
             $image = new \stdClass();
             $currency = session('currency');
