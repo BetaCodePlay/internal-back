@@ -11,7 +11,7 @@ if (!function_exists('menu')) {
     {
         $menu = [
             'Dashboard' => [
-                'text' => _i('Dashboard'),
+                'text' => _i('Statistics'),
                 'level_class' => 'top',
                 'route' => 'core.dashboard',
                 'params' => [],
@@ -21,7 +21,7 @@ if (!function_exists('menu')) {
             ],
 
             'Users' => [
-                'text' => _i('Users'),
+                'text' => _i('See users'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
@@ -211,7 +211,7 @@ if (!function_exists('menu')) {
             ],
 
             'Agents' => [
-                'text' => _i('Agents'),
+                'text' => _i('See agents'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
@@ -220,7 +220,7 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Dashboard'),
+                        'text' => _i('Statistics'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
                         'params' => [],
@@ -273,7 +273,7 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.financial-state-summary',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
-                                'permission' => Permissions::$total_financial_report,
+                                'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
 
@@ -2614,6 +2614,27 @@ if (!function_exists('menu')) {
                     ]
                 ]
             ],
+
+            'LobbyGames' => [
+                'text' => _i('Lobby Games'),
+                'level_class' => 'top',
+                'route' => null,
+                'params' => [],
+                'icon' => 'hs-admin-user',
+                'permission' => Permissions::$section_games_menu,
+                'submenu' => [
+                    'CreateLobby' => [
+                        'text' => _i('Create Lobby'),
+                        'level_class' => 'second',
+                        'route' => 'games.create',
+                        'params' => [],
+                        'icon' => 'hs-admin-plus',
+                        'permission' => Permissions::$manage_lobby_games_menu,
+                        'submenu' => []
+                    ]
+                ],
+            ],
+
 
             /*'Games' => [
                 'text' => _i('Games section'),

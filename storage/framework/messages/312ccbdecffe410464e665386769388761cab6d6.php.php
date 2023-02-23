@@ -193,7 +193,6 @@ class SectionGamesController extends Controller
             if ($templateElementType == TemplateElementTypes::$home) {
                 $home = Configurations::getHome();
                 $quantity = $home->$section->games->quantity ?? [];
-                \Log::info(__METHOD__, ['quantity' => $quantity]);
             }
             $data['template_element_type'] = $templateElementType;
             $data['section'] = $section;

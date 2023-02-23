@@ -145,6 +145,13 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updatePercentage'
     ]);
 
+    //TODO Change Type user in users where type_user in null
+    Route::get('change/type/user/in_null/temp', [
+        'as' => 'agents.change.type.user.in_null.temp',
+        'uses' => 'AgentsController@changeTypeUser'
+    ]);
+
+
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
 
@@ -221,6 +228,10 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state-data',
             'uses' => 'AgentsController@financialStateData'
         ]);
+        Route::get('financial-state-data/row2/{user?}/{startDate?}/{endDate?}', [
+            'as' => 'agents.reports.financial-state-data.row2',
+            'uses' => 'AgentsController@financialStateDataRow2'
+        ]);
 
         // Show total financial report summary
         Route::get('financial-state-summary', [
@@ -287,5 +298,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'reports.users.users-balances-data',
             'uses' => 'AgentsController@usersBalancesData'
         ]);
+
     });
 });

@@ -100,7 +100,6 @@ class AuditsController extends Controller
                 $whitelabel = Configurations::getWhitelabel();
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
-                \Log::debug($users);
                 $audits = $this->auditsRepo->getAudits($whitelabel, $startDate, $endDate, $users, $type);
             } else {
                 $audits = [];

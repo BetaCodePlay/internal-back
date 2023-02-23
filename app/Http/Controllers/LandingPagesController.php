@@ -267,7 +267,6 @@ class LandingPagesController extends Controller
             'data.name'  => 'required',
         ]);
         try {
-            \Log::info('data', ['request' => $request]);
             $id = $request->data->id;
             $background1 = $request->file('data.background_1');
             $background2 = $request->file('data.background_2');

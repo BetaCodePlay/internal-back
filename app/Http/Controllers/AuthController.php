@@ -79,6 +79,7 @@ class AuthController extends Controller
                     session()->put('timezone', $profile->timezone);
                     session()->put('country_iso', $profile->country_iso);
                     session()->put('permissions', $permissions);
+                    session()->put('roles', $roles);
                     $this->walletAccessToken();
                     BetPay::getBetPayClientAccessToken();
                     $paymentMethods = BetPay::getClientPaymentMethods();
@@ -98,7 +99,8 @@ class AuthController extends Controller
                        $route = route('agents.index');
                     }
 
-                    if (in_array(Roles::$agents, $roles)) {
+                    //TODO ROL 19 Nuevo rol
+                    if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles)) {
                         $route = route('agents.index');
                     }
 

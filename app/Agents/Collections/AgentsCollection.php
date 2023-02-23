@@ -5,6 +5,7 @@ namespace App\Agents\Collections;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Collections\ReportsCollection;
+use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Repositories\UsersRepo;
 use Carbon\Carbon;
@@ -70,7 +71,8 @@ class AgentsCollection
                 'status' => $agent->status,
                 'icon' => "fa fa-{$icon}",
                 'li_attr' => [
-                    'data_type' => 'agent'
+                    'data_type' => 'agent',
+                    'class'=>'init_agent'
                 ]
             ];
 
@@ -220,7 +222,8 @@ class AgentsCollection
                 'selected' => true,
             ],
             'li_attr' => [
-                'data_type' => 'agent'
+                'data_type' => 'agent',
+                'class'=>'init_tree'
             ]
         ];
         $agentsChildren = $this->agentsTree($agents);
@@ -361,7 +364,7 @@ class AgentsCollection
                     _i('Netwin')
                 );
             }else{
-                Log::info('provider null',[$provider]);
+               // Log::info('provider null',[$provider]);
             }
 
         }
@@ -716,10 +719,88 @@ class AgentsCollection
         return $html;
     }
 
-
-    public function financialState_view1($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today, $providerTypesName)
+    public function financialState_view1($whitelabel, $currency,  $startDate, $endDate, $treeUsers)
     {
-        $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
+        $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
+        $providerId = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'provider_id');
+        $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
+//        return [
+//            $providerId,
+//            $username
+//        ];
+
+        $htmlUsername = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Usuario'),
+            _i('Jugado'),
+            _i('Ganado'),
+            _i('Apuestas'),
+            _i('Profit'),
+            _i('Rtp'),
+        );
+        $htmlProvider = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Proveedor'),
+            _i('Jugado (played)'),
+            _i('Ganado (won)'),
+            _i('Apuestas (bet)'),
+            _i('Profit (profit)'),
+            _i('Rtp (rtp)'),
+        );
+
+        if(!empty($username)){
+            $htmlUsername .= "<tbody>";
+            foreach ($username as $item => $value){
+                $htmlUsername .= "<tr class='table-secondary set_2'>";
+                $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
+                $htmlUsername .= "</tr>";
+            }
+            $htmlUsername .= "</tbody>";
+        }
+        if(!empty($htmlProvider)){
+            $htmlProvider .= "<tbody>";
+            foreach ($providerId as $item => $value){
+                $htmlProvider .= "<tr class='table-secondary set_2'>";
+                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->provider_id . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "</td>";
+                $htmlProvider .= "</tr>";
+            }
+            $htmlProvider .= "</tbody>";
+        }
+
+        return [
+            $htmlProvider,
+            $htmlUsername
+        ];
         $agentTotalProfit = 0;
         $providersTotalPlayed = [];
         $providersTotalWon = [];
@@ -898,7 +979,6 @@ class AgentsCollection
         ];
 
     }
-
 
     public function financialStateRow($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate)
     {
@@ -2005,7 +2085,7 @@ class AgentsCollection
     public function formatRelocationAgents($agent, $agents, $currency, $agentMoveId)
     {
         $data = collect();
-        if (!is_null($agent)) {
+        if(!is_null($agent)){
             $itemObject = new \stdClass();
             $itemObject->id = $agent['id'];
             $itemObject->username = $agent['username'];
@@ -2035,7 +2115,7 @@ class AgentsCollection
         $dataAgents = [];
 
         foreach ($agents as $agent) {
-            if ($agent->user_id != $agentMoveId) {
+            if ($agent->user_id != $agentMoveId){
                 $dataChildren = null;
                 $subAgents = $agentsRepo->getAgentsByOwner($agent->user_id, $currency);
                 if (count($subAgents) > 0) {
@@ -2046,7 +2126,7 @@ class AgentsCollection
                     $dataChildren = $agentsChildren;
                 }
                 if ($agent->user_id != $agentMoveId || $agent->owner_id != $agentMoveId) {
-                    if ($agent->master == true) {
+                    if($agent->master == true){
                         $dataAgents[] = [
                             'id' => $agent->user_id,
                             'username' => $agent->username,
@@ -2170,7 +2250,8 @@ class AgentsCollection
                 'status' => $user->status,
                 'icon' => 'fa fa-user',
                 'li_attr' => [
-                    'data_type' => 'user'
+                    'data_type' => 'user',
+                    'class'=>'init_user'
                 ]
             ];
         }

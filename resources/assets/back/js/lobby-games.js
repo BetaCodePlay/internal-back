@@ -1,12 +1,14 @@
-import {getCookie, initDatepickerStartToday, initFileInput, initSelect2} from "./commons";
-import {swalConfirm, swalError, swalSuccessWithButton} from "../../commons/js/core";
+import {clearForm, initFileInput, initSelect2} from "./commons";
+import {swalConfirm, swalError, swalSuccessNoButton, swalSuccessWithButton} from "../../commons/js/core";
 
 class LobbyGames {
 
-    // All lobby-games
+    // All DotSuiteGames
     all(){
-        let $table = $('#lobby-games-table');
+        let $table = $('#games-table');
+        let $button = $('#search');
         let api;
+
         $table.DataTable({
             "ajax": {
                 "url": $table.data('route'),
@@ -14,8 +16,11 @@ class LobbyGames {
             },
             "order": [[0, "asc"]],
             "columns": [
-                {"data": "descriptions"},
-                {"data": "start"},
+                {"data": "image"},
+                {"data": "provider"},
+                {"data": "game"},
+                {"data": "route"},
+                {"data": "order", "className": "text-right"},
                 {"data": "actions", "className": "text-right"},
             ],
             "initComplete": function () {
@@ -30,111 +35,123 @@ class LobbyGames {
                 });
             }
         });
+
+        $button.click(function () {
+            $button.button('loading');
+            let image = $('#image').val();
+            let provider = $('#provider').val();
+            let menu = $('#menu').val();
+            let game = $('#games').val();
+            console.log('paso', image, provider, menu, filter);
+            let route = `${$table.data('route')}?provider=${provider}&route=${menu}&game=${game}&image=${image}`;
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
+                $button.button('reset');
+            });
+        });
     };
 
-     game(){
-         initSelect2();
+    // Games Dotsuite
+    game() {
+        initSelect2();
+        $('#change_provider').on('change', function(){
+            let provider = $('#change_provider').val();
+            let route = $(this).data('route');
+            let games = $('#games');
 
-         $('#change-provider').on('change', function()
-         {
-             let provider = $(this).val();
-             let route = $(this).data('route');
-             var games = $('#games');
-             console.log('route', route);
-             console.log('provider', provider);
-             games.select2({
-                 minimumInputLength: 3 // only start searching when the user has input 3 or more characters
-             });
-             if(provider !== '') {
-                 $.ajax({
-                     url: route,
-                     type: 'post',
-                     dataType: 'json',
-                     data: {
-                         provider: provider
-                     }
-                 }).done(function (json) {
-                     games.html('loading');
-                     console.log('respuesta', json);
-                     games.html(json.data.games);
-                     $(json.data.games).each(function(i, v){
-                         games.append('<option value="' + v.id + '">' + v.description + '</option>');
-                     })
-                     games.prop('disabled', false);
-                 }).fail(function (json) {
-                     swalError(json);
-                 });
-             }else{
-                 games.val('');
-                 games.prop('disabled', true);
-             }
-         });
-     }
+            if(provider !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        change_provider: provider
+                    }
+                }).done(function (json) {
+                    games.html('loading');
+                    games.html(json.data.games);
+                    $(json.data.games).each(function(key, element){
+                        games.append("<option value=" + element.id + ">" + element.description + "</option>");
+                    })
+                    games.prop('disabled', false);
+                }).fail(function (json) {
 
-    // Change status
-    static change(route) {
-        $('.change-whitelabels').change(function () {
-            let status = $(this).val();
-            let whitelabel = $(this).data('whitelabel');
+                });
+            }else{
+                games.val('');
+            }
+        });
+    }
+
+    //sort
+    sort(preview) {
+        initSelect2();
+        initFileInput(preview);
+
+        let $form = $('#store-form');
+        let $button = $('#update');
+
+        $form.on('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            $button.button('loading');
             $.ajax({
-                url: route,
+                url: $form.attr('action'),
                 type: 'post',
                 dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                data: formData
+
             }).done(function (json) {
+                $('#file').val(json.data.file);
                 swalSuccessWithButton(json);
 
             }).fail(function (json) {
                 swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
             });
         });
     }
 
-    // lock lobby
-    static lockLobby(){
-        let $table = $('#lobby-games-table');
-        let api;
-        $table.DataTable({
-            "ajax": {
-                "url": $table.data('route'),
-                "dataSrc": "data.games"
-            },
-            "order": [[0, "asc"]],
-            "columns": [
-                {"data": "descriptions"},
-                {"data": "start"},
-                {"data": "actions", "className": "text-right"},
-            ],
-            "initComplete": function () {
-                api = this.api()
-                api.buttons().container()
-                    .appendTo($('#table-buttons'));
-                $(document).on('click', '.delete', function () {
-                    let $button = $(this);
-                    swalConfirm($button.data('route'), function () {
-                        $table.DataTable().ajax.url($table.data('route')).load();
-                    });
-                });
-            }
-        });
-    };
-
-    // Registration lobby games
-    save() {
+    //store
+    store() {
+        initFileInput();
         initSelect2();
-        let $form = $('#save-form');
-        let $button = $('#save');
-        $button.click(function () {
+
+        let $form = $('#store-form');
+        let $forms = $('#filter-form');
+        let $button = $('#store');
+        let $table = $('#games-table');
+        clearForm($forms);
+
+        $form.on('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
             $button.button('loading');
             $.ajax({
                 url: $form.attr('action'),
-                method: 'post',
+                type: 'post',
                 dataType: 'json',
-                data:  $('#save-form').serialize()
+                contentType: false,
+                processData: false,
+                cache: false,
+                data: formData
+
             }).done(function (json) {
-                $('save-form').trigger('reset');
+                $form.trigger('reset');
                 $('form select').val(null).trigger('change');
-                swalSuccessWithButton(json);
-                LobbyGames.lockLobby();
+                $('store-form').trigger('reset');
+                $('filter-form').trigger('reset');
+                $table.DataTable().ajax.url($table.data('route')).load();
+                swalSuccessNoButton(json);
+                setTimeout(() => window.location.href = json.data.route, 1000);
+
             }).fail(function (json) {
                 swalError(json);
 

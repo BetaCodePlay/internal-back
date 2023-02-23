@@ -133,6 +133,7 @@
                                     <div class="form-group">
                                         <label for="route"><?php echo e(_i('Menu where it will be shown')); ?></label>
                                         <select name="route[]" id="route" class="form-control" multiple>
+
                                                 <option value="core.index">
                                                     <?php echo e(_i('Home')); ?>
 
