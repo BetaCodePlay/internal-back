@@ -825,7 +825,7 @@ class AgentsController extends Controller
 
             $data = [
                 'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers),
-                auth()->user()->id, session('currency'), Configurations::getWhitelabel()
+                auth()->user()->id, auth()->user()->username, session('currency'), Configurations::getWhitelabel()
             ];
             return Utils::successResponse($data);
 
