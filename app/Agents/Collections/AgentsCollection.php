@@ -724,10 +724,10 @@ class AgentsCollection
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
         $providerId = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'provider_id');
         $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
-//        return [
-//            $providerId,
-//            $username
-//        ];
+        return [
+            $providerId,
+            $username
+        ];
 
         $htmlUsername = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
