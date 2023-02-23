@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
 "POT-Creation-Date: 2023-02-22 22:52-0400\n"
-"PO-Revision-Date: 2023-02-22 22:59-0400\n"
+"PO-Revision-Date: 2023-02-22 23:03-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_ES\n"
@@ -9207,10 +9207,8 @@ msgstr "El status del usuario se actualizó con éxito"
 
 #: ../app/Http/Controllers/DotSuiteController.php:413
 #: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:413
-#, fuzzy
-#| msgid "Credentials"
 msgid "Create lobby dotsuite"
-msgstr "Credenciales"
+msgstr "Crear dotsuite de lobby"
 
 #: ../app/Http/Controllers/DotSuiteController.php:431
 #: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:431
@@ -9713,10 +9711,8 @@ msgstr "Los datos de la página se actualizaron correctamente"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:166
 #: ../storage/framework/messages/750ff32f3e27431a7bb0f29b3d6332945a3508fc.php.php:166
-#, fuzzy
-#| msgid "Featured lobby"
 msgid "Create lobby"
-msgstr "Lobby de recomendados"
+msgstr "Crear lobby"
 
 #: ../app/Http/Controllers/LobbyGamesController.php:188
 #: ../app/Http/Controllers/WhitelabelsGamesControllers.php:138
@@ -18461,10 +18457,8 @@ msgid "Update operational balance"
 msgstr "Update operational balance"
 
 #: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:69
-#, fuzzy
-#| msgid "Used permission"
 msgid "Roles and Permissions"
-msgstr "Permiso en uso"
+msgstr "Roles y permisos"
 
 #: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:409
 msgid "Save segment"
