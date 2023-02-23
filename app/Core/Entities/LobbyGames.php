@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class to define the Lobby-games properties
  *
  * @package App\Core\Entities
- * @author  Derluin Gonzalez
+ * @author  Genesis Perez
  */
 class LobbyGames extends Model
 {
@@ -19,7 +19,7 @@ class LobbyGames extends Model
      *
      * @var string
      */
-    protected $table = 'custom_lobby_games';
+    protected $table = 'lobby_games';
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -33,7 +33,16 @@ class LobbyGames extends Model
      *
      * @var array
      */
-    protected $fillable = ['game_id', 'whitelabel_id'];
+    protected $fillable = ['game_id', 'whitelabel_id', 'data', 'order', 'route', 'image', 'name'];
+
+    /**
+     * Cast fields
+     *
+     * @var array
+     */
+    public $casts = [
+        'data' => 'array'
+    ];
 
     /**
      * Timestamps

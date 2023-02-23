@@ -31,60 +31,61 @@
             <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">
 
             </div>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Apuestas</th>
-                    <th scope="col">Apostado</th>
-                    <th scope="col">Ganado</th>
-                    <th scope="col">NetWin</th>
-                    <th scope="col">Comision</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="table-primary">
-                    <th><strong>Casino *</strong></th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-secondary">
-                    <th>&nbsp;&nbsp;&nbsp;SG -</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-light">
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evo Play /</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-light">
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Habanero /</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-secondary">
-                    <th>&nbsp;&nbsp;&nbsp;VG -</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                </tbody>
-            </table>
+            {{--TODO TABLA DE EJEMPLO--}}
+{{--            <table class="table table-hover">--}}
+{{--                <thead>--}}
+{{--                <tr>--}}
+{{--                    <th scope="col">Categoria</th>--}}
+{{--                    <th scope="col">Apuestas</th>--}}
+{{--                    <th scope="col">Apostado</th>--}}
+{{--                    <th scope="col">Ganado</th>--}}
+{{--                    <th scope="col">NetWin</th>--}}
+{{--                    <th scope="col">Comision</th>--}}
+{{--                </tr>--}}
+{{--                </thead>--}}
+{{--                <tbody>--}}
+{{--                <tr class="table-primary">--}}
+{{--                    <th><strong>Casino *</strong></th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-secondary">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;SG -</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-light">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evo Play /</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-light">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Habanero /</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-secondary">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;VG -</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
         </div>
     </div>
 @endsection
@@ -92,8 +93,43 @@
 @section('scripts')
     <script>
         $(function () {
-            //let agents = new Agents();
-            //agents.financialStateDetails({{ $user }});
+            let agents = new Agents();
+            agents.financialState({{ $user }});
+
+            // financialStateDetails(user = null) {
+            //     let picker = initLitepickerEndToday();
+            //     let $table = $('#financial-state-table');
+            //     let $button = $('#update');
+            //     let api;
+            //     if (user == null) {
+            //         $('#financial-state-tab').on('show.bs.tab', function () {
+            //             $table.children().remove();
+            //             user = $('.user').val();
+            //         });
+            //     }
+            //
+            //     $button.click(function () {
+            //         $button.button('loading');
+            //         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            //         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            //
+            //         $.ajax({
+            //             url: `${$table.data('route')}/${user}/${startDate}/${endDate}`,
+            //             type: 'get',
+            //             dataType: 'json'
+            //
+            //         }).done(function (json) {
+            //             $table.html(json.data.table);
+            //
+            //         }).fail(function (json) {
+            //             swalError(json);
+            //
+            //         }).always(function () {
+            //             $button.button('reset');
+            //         });
+            //     });
+            // }
+
         });
     </script>
 @endsection

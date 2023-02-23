@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Codes;
 use App\Core\Repositories\GamesRepo;
+use App\Core\Collections\CoreCollection;
 use App\Core\Repositories\LobbyGamesRepo;
 use App\Core\Collections\GamesCollection;
 use App\Core\Collections\LobbyGamesCollection;
@@ -17,6 +18,8 @@ use App\Core\Repositories\CredentialsRepo;
 use App\Audits\Repositories\AuditsRepo;
 use App\Audits\Enums\AuditTypes;
 use Dotworkers\Audits\Audits;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /**
  * Class LobbyGamesController
@@ -24,10 +27,17 @@ use Dotworkers\Audits\Audits;
  * This class allows to manage Lobby Games requests
  *
  * @package App\Http\Controllers
- * @author  Derluin Gonzalez
+ * @author  Genesis Perez
  */
 class LobbyGamesController extends Controller
 {
+    /**
+     * CoreCollection
+     *
+     * @var CoreCollection
+     */
+    private $coreCollection;
+
     /**
      * WhitelabelsRepo
      *
@@ -83,29 +93,48 @@ class LobbyGamesController extends Controller
      * @param LobbyGamesCollection $LobbyGamesCollection
      * @param GamesRepo $gamesRepo
      * @param GamesCollection $gamesCollection
+     * @param CoreCollection $coreCollection
      * @param CredentialsRepo $credentialsRepo
      */
-    public function __construct(WhitelabelsRepo $whitelabelsRepo, LobbyGamesRepo $lobbyGamesRepo, LobbyGamesCollection $lobbyGamesCollection, GamesRepo $gamesRepo, GamesCollection $gamesCollection, CredentialsRepo $credentialsRepo, AuditsRepo $auditsRepo)
+    public function __construct(CoreCollection $coreCollection, WhitelabelsRepo $whitelabelsRepo, LobbyGamesRepo $lobbyGamesRepo, LobbyGamesCollection $lobbyGamesCollection, GamesRepo $gamesRepo, GamesCollection $gamesCollection, CredentialsRepo $credentialsRepo, AuditsRepo $auditsRepo)
     {
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->lobbyGamesRepo = $lobbyGamesRepo;
-        $this->lobbygamesCollection = $lobbyGamesCollection;
+        $this->lobbyGamesCollection = $lobbyGamesCollection;
+        $this->coreCollection = $coreCollection;
         $this->gamesRepo = $gamesRepo;
         $this->gamesCollection = $gamesCollection;
         $this->credentialsRepo = $credentialsRepo;
     }
 
     /**
-    * Get all Lobby Games
-    *
-    * @return \Symfony\Component\HttpFoundation\Response
-    */
-    public function all()
+     * Get all games
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function allGames(Request $request)
     {
         try {
-
-            $games = $this->lobbyGamesRepo->getWhitelabel(Configurations::getWhitelabel());
-            $this->lobbygamesCollection->formatAll($games);
+            if (!is_null($request->providerr)) {
+                $provider = $request->provider;
+            }
+            if (!is_null($request->route)) {
+                $route = $request->route;
+            }
+            if (!is_null($request->games)) {
+                $game = $request->games;
+            }
+            $provider = $request->provider;
+            $route = $request->route;
+            $game = $request->games;
+            $order = $request->order;
+            $image = $request->image;
+            $items = Configurations::getMenu();
+            $category = 1;
+            $whitelabel = Configurations::getWhitelabel();
+            $games = $this->lobbyGamesRepo->getGamesWhitelabel($whitelabel, $category, $provider, $route, $order, $game, $image);
+            $this->lobbyGamesCollection->formatAll($games, $items, $order, $request->image);
             $data = [
                 'games' => $games
             ];
@@ -114,6 +143,31 @@ class LobbyGamesController extends Controller
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Show view create lobby games
+     *
+     */
+    public function createLobbyGames()
+    {
+        try {
+            $route = Configurations::getMenu();
+            $data['route'] = $this->coreCollection->formatWhitelabelMenu($route);
+            $image = new \stdClass();
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
+            $games = $this->lobbyGamesRepo->searchGamesByWhitelabel($whitelabel);
+            $data['image'] = $image;
+            $data['providers'] = $provider;
+            $data['games'] = $games;
+            $data['title'] = _i('Create lobby');
+            return view('back.lobby-games.games.create', $data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
         }
     }
 
@@ -124,15 +178,15 @@ class LobbyGamesController extends Controller
      * @param int $whitelabel whitelabels ID
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function Delete($game)
+    public function deleteGames($game)
     {
         try {
-
-            $game = (int)$game;
-            $this->lobbyGamesRepo->delete($game, Configurations::getWhitelabel());
+            $gameId = $game;
+            $whitelabel = Configurations::getWhitelabel();
+            $this->lobbyGamesRepo->delete($gameId, $whitelabel);
             $data = [
-                'title' => _i('Deleted games'),
-                'message' => _i('Games data was delete correctly'),
+                'title' => _i('Deleted game'),
+                'message' => _i('The game was successfully removed'),
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
@@ -142,22 +196,49 @@ class LobbyGamesController extends Controller
         }
     }
 
+
     /**
-     * Game Lobby Games
+     * Show edit view
      *
-     * @param int $provider Provider ID
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editLobbyGames($id)
+    {
+        $image = $this->lobbyGamesRepo->findById($id);
+        if (!is_null($image)) {
+            try {
+                $route = Configurations::getMenu();
+                $imageData = $this->lobbyGamesCollection->formatByImage($image);
+                $data['title'] = _i('Edit games');
+                $data['route'] = $this->coreCollection->formatWhitelabelMenu($route);
+                $data['image'] = $imageData;
+                return view('back.lobby-games.games.edit', $data);
+
+            } catch (\Exception $ex) {
+                \Log::error(__METHOD__, ['exception' => $ex, 'slider' => $id]);
+                abort(500);
+            }
+        } else {
+            abort(404);
+        }
+    }
+
+    /**
+     * Provider game
+     *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function game(Request $request)
     {
         try {
-
-            $provider= (int) $request->provider;
-            $games=[];
+            $provider = $request->change_provider;
+            $games = [];
             if (!is_null($provider)) {
                 $currency = session('currency');
-                $games = $this->gamesRepo->getGamesByProvider(Configurations::getWhitelabel(), $currency, $provider);
-                $this->gamesCollection->formatGames($games);
+                $whitelabel = Configurations::getWhitelabel();
+                $games = $this->gamesRepo->getGames($whitelabel, $currency, $provider);
+                $this->lobbyGamesCollection->formatDotsuiteGames($games);
             }
             $data = [
                 'games' => $games
@@ -170,26 +251,6 @@ class LobbyGamesController extends Controller
         }
     }
 
-    /**
-     * Get index view
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index()
-    {
-        try {
-
-            $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
-            $data['title'] = _i('Lobby Games');
-            $data['providers'] = $provider;
-            return view('back.lobby-games.lobby-games', $data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
 
     /**
      * Store Lobby Games
@@ -198,47 +259,184 @@ class LobbyGamesController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function storeGames(Request $request)
     {
+        $personalize = !is_null($request->personalize) ? $request->personalize : null;
+        $route = !is_null($request->route) ? $request->route : null;
         $this->validate($request, [
-            'games' => 'required|array|min:1',
+            'change_provider' => 'required'
         ]);
+        if($personalize) {
+            $this->validate($request, [
+                'games' => 'required|array|min:1'
+            ]);
+        }
+        try {
+            $whitelabel = Configurations::getWhitelabel();
 
-        $games = $request->games;
-
-            foreach ($games as $game) {
-                $usedcredencial =  $this->lobbyGamesRepo->searchByGames($game, Configurations::getWhitelabel());
-                if (!is_null($usedcredencial)) {
-                    $data = [
-                        'title' => _i('Used games'),
-                        'message' => _i('The games already exists', $game),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
+            if($personalize) {
+                $games = $request->games;
+                $image = $request->file('image');
+                if(!is_null($image)){
+                    $extension = $image->getClientOriginalExtension();
+                    $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                    $file = $request->file;
+                    $s3Directory = Configurations::getS3Directory();
+                    $filePath = "$s3Directory/lobby/";
+                    $name = Str::slug($originalName) . time() . mt_rand(1, 100) . '.' . $extension;
+                    $newFilePath = "{$filePath}{$name}";
+                    Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                }else{
+                    $name = null;
                 }
-                $lobbyData = [
-                    'whitelabel_id' => Configurations::getWhitelabel(),
-                    'game_id' =>  (int) $game
-                ];
-                $this->lobbyGamesRepo->store($lobbyData);
-            }
+                foreach ($games as $game) {
+                    $game = (integer)$game;
+                    $whitelabelGame = $this->lobbyGamesRepo->searchByDotsuiteGames($game, $whitelabel);
+                    if (!is_null($whitelabelGame)) {
+                        if ($route = $request->route) {
+                            $usedRoute = $this->lobbyGamesRepo->findRoute($route);
+                            if ($route !== $whitelabelGame->route){
+                                if ($usedRoute) {
+                                    $data = [
+                                        'title' => _i('Used Games'),
+                                        'message' => _i('The game data is used in other route', $usedRoute),
+                                        'close' => _i('Close')
+                                    ];
+                                    return Utils::errorResponse(Codes::$forbidden, $data);
+                                }
+                            } else {
+                                $whitelabelGameData = [
+                                    'order' => $request->order,
+                                    'data' => []
+                                ];
+                                $this->lobbyGamesRepo->update($whitelabelGame->game_id, $request->route, $whitelabelGameData);
 
-            $user_id = auth()->user()->id;
-            $auditData = [
-                'ip' => Utils::userIp($request),
-                'user_id' => $user_id,
-                'username' => auth()->user()->username,
-                'lobby_data' => $lobbyData
+                                $data = [
+                                    'title' => _i('Updated game'),
+                                    'message' => _i('The game was updated successfully'),
+                                    'close' => _i('Close'),
+                                    'route' => route('games.create')
+                                ];
+                                return Utils::successResponse($data);
+                            }
+                        }
+                    }
+                    $whitelabelGameData = [
+                        'whitelabel_id' => Configurations::getWhitelabel(),
+                        'order' => $request->order,
+                        'route' => $request->route,
+                        'image' => $name,
+                        'game_id' => $game,
+                        'data' => []
+                    ];
+                    $this->lobbyGamesRepo->store($whitelabelGameData);
+                }
+            }else{
+                $provider = (string) $request->change_provider;
+                $games = $this->gamesRepo->getDotSuiteGamesByProvider($provider);
+                foreach ($games as $game) {
+                    $whitelabelGame = $this->lobbyGamesRepo->searchByDotsuiteGames($game->id, $whitelabel);
+                    if (!is_null($whitelabelGame)) {
+                        if ($route = $request->route) {
+                            $usedRoute = $this->lobbyGamesRepo->findRoute($route);
+                            if ($route !== $whitelabelGame->route){
+                                if ($usedRoute) {
+                                    $data = [
+                                        'title' => _i('Used Games'),
+                                        'message' => _i('The game data is used in other route', $usedRoute),
+                                        'close' => _i('Close')
+                                    ];
+                                    return Utils::errorResponse(Codes::$forbidden, $data);
+                                }
+                            } else {
+                                $whitelabelGameData = [
+                                    'order' => $request->order,
+                                    'data' => []
+                                ];
+                                $this->lobbyGamesRepo->update($whitelabelGame->game_id, $request->route,  $whitelabelGameData);
+                                $data = [
+                                    'title' => _i('Updated game'),
+                                    'message' => _i('The game was updated successfully'),
+                                    'close' => _i('Close'),
+                                    'route' => route('games.create')
+                                ];
+                                return Utils::successResponse($data);
+                            }
+                        }
+                    }
+                    else{
+                        $whitelabelGameData = [
+                            'whitelabel_id' => Configurations::getWhitelabel(),
+                            'order' => $request->order,
+                            'route' => $request->route,
+                            'game_id' => $game->id,
+                            'data' => []
+                        ];
+                        $lobbygames=$this->lobbyGamesRepo->store($whitelabelGameData);
+                    }
+                }
+            }
+            $data = [
+                'title' => _i('Saved game'),
+                'message' => _i('The game was saved successfully'),
+                'close' => _i('Close'),
+                'route' => route('games.create')
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+
+    /**
+     * Update games lobby
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updategames(Request $request)
+    {
+
+        try {
+            $id = $request->id;
+            $file = $request->file;
+            $image = $request->file('image');
+            $s3Directory = Configurations::getS3Directory();
+            $filePath = "$s3Directory/lobby/";
+
+            $whitelabelGameData = [
+                'name' => $request->name,
+                'order' => $request->order,
+                'route' => $request->route
             ];
 
-            //Audits::store($user_id, AuditTypes::$lobbys_recommended_creation, Configurations::getWhitelabel(), $auditData);
+            if (!is_null($image)) {
+                $extension = $image->getClientOriginalExtension();
+                $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                $name = Str::slug($originalName) . time() . '.' . $extension;
+                $newFilePath = "{$filePath}{$name}";
+                $oldFilePath = "{$filePath}{$file}";
+                Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                Storage::delete($oldFilePath);
+                $whitelabelGameData['image'] = $name;
+                $file = $name;
+            }
+            $this->lobbyGamesRepo->updateImage($id, $whitelabelGameData);
+            $data = [
+                'title' => _i('Saved data game'),
+                'message' => _i('The data game was successfully updated'),
+                'close' => _i('Close'),
+                'file' => $file
+            ];
+            return Utils::successResponse($data);
 
-
-        $data = [
-            'title' => _i('Saved games'),
-            'message' => _i('Games data was saved correctly'),
-            'close' => _i('Close')
-        ];
-        return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 }

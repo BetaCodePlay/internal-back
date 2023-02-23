@@ -226,7 +226,6 @@ class SectionImagesController extends Controller
                         break;
                     }
                 }
-                \Log::info('configuration', [$image]);
                 $image->status = true;
             } else {
                 if (!is_null($id)) {

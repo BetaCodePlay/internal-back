@@ -110,6 +110,8 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['all_currencies'] = $allCurrencies;
                     $data['global_timezones'] = $timezones;
                     $data['free_currency'] = Configurations::getFreeCurrency();
+                    $data['logo'] = Configurations::getLogo($mobile = true);
+                    //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
                     Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'domain' => $domain]);
