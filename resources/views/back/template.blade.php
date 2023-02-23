@@ -57,6 +57,7 @@
 @can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
     @include('back.layout.tawk')
 @endif
+@include('back.layout.chat')
 <script>
     @if (env('APP_ENV') == 'testing')
     $(function () {
