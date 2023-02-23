@@ -724,10 +724,10 @@ class AgentsCollection
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
         $providerId = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'provider_id');
         $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
-        return [
-            $providerId,
-            $username
-        ];
+//        return [
+//            $providerId,
+//            $username
+//        ];
 
         $htmlUsername = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
@@ -761,11 +761,11 @@ class AgentsCollection
                         </tr>
                     </thead>',
             _i('Proveedor'),
-            _i('Jugado'),
-            _i('Ganado'),
-            _i('Apuestas'),
-            _i('Profit'),
-            _i('Rtp'),
+            _i('Jugado (played)'),
+            _i('Ganado (won)'),
+            _i('Apuestas (bet)'),
+            _i('Profit (profit)'),
+            _i('Rtp (rtp)'),
         );
 
         if(!empty($username)){
@@ -790,8 +790,8 @@ class AgentsCollection
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_bet, 2) . "</td>";
-                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
-                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
+                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "</td>";
                 $htmlProvider .= "</tr>";
             }
             $htmlProvider .= "</tbody>";

@@ -32,60 +32,60 @@
 
             </div>
             {{--TODO TABLA DE EJEMPLO--}}
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Apuestas</th>
-                    <th scope="col">Apostado</th>
-                    <th scope="col">Ganado</th>
-                    <th scope="col">NetWin</th>
-                    <th scope="col">Comision</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="table-primary">
-                    <th><strong>Casino *</strong></th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-secondary">
-                    <th>&nbsp;&nbsp;&nbsp;SG -</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-light">
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evo Play /</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-light">
-                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Habanero /</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                <tr class="table-secondary">
-                    <th>&nbsp;&nbsp;&nbsp;VG -</th>
-                    <td>4.000</td>
-                    <td>3.500</td>
-                    <td>100</td>
-                    <td>200.000</td>
-                    <td>4.000</td>
-                </tr>
-                </tbody>
-            </table>
+{{--            <table class="table table-hover">--}}
+{{--                <thead>--}}
+{{--                <tr>--}}
+{{--                    <th scope="col">Categoria</th>--}}
+{{--                    <th scope="col">Apuestas</th>--}}
+{{--                    <th scope="col">Apostado</th>--}}
+{{--                    <th scope="col">Ganado</th>--}}
+{{--                    <th scope="col">NetWin</th>--}}
+{{--                    <th scope="col">Comision</th>--}}
+{{--                </tr>--}}
+{{--                </thead>--}}
+{{--                <tbody>--}}
+{{--                <tr class="table-primary">--}}
+{{--                    <th><strong>Casino *</strong></th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-secondary">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;SG -</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-light">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evo Play /</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-light">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Habanero /</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                <tr class="table-secondary">--}}
+{{--                    <th>&nbsp;&nbsp;&nbsp;VG -</th>--}}
+{{--                    <td>4.000</td>--}}
+{{--                    <td>3.500</td>--}}
+{{--                    <td>100</td>--}}
+{{--                    <td>200.000</td>--}}
+{{--                    <td>4.000</td>--}}
+{{--                </tr>--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
         </div>
     </div>
 @endsection
