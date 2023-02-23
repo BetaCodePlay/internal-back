@@ -824,7 +824,8 @@ class AgentsController extends Controller
             $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
 
             $data = [
-                'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers)
+                'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers),
+                auth()->user()->id, session('currency'), Configurations::getWhitelabel()
             ];
             return Utils::successResponse($data);
 
