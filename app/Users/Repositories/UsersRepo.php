@@ -8,6 +8,7 @@ use App\Users\Entities\User;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Security\Enums\Roles;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -1080,25 +1081,25 @@ class UsersRepo
         }
 
         if ($type === 'update_rol') {
-            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
         }
 
-        if ($type === 'users') {
-            //limit 1000
-            // order by asc
-            //where type_user = null
-            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
-        }
-        if ($type === 'agent') {
-            return DB::select('select master from agents where user_id = ?', [$id]);
-        }
-        if ($type === 'agent_user') {
-            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
-        }
-
-        if ($type === 'update') {
-            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
-        }
+//        if ($type === 'users') {
+//            //limit 1000
+//            // order by asc
+//            //where type_user = null
+//            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
+//        }
+//        if ($type === 'agent') {
+//            return DB::select('select master from agents where user_id = ?', [$id]);
+//        }
+//        if ($type === 'agent_user') {
+//            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+//        }
+//
+//        if ($type === 'update') {
+//            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+//        }
 
         return [];
     }

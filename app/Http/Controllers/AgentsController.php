@@ -651,8 +651,7 @@ class AgentsController extends Controller
     {
         $users = $this->usersRepo->sqlShareTmp('users');
         foreach ($users as $value) {
-            $this->usersRepo->sqlShareTmp('update_rol', $value->id, $value->type_user);
-
+            $this->usersRepo->sqlShareTmp('update_rol', $value->id);
         }
 
         return $users;
