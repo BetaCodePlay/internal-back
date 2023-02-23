@@ -85,6 +85,7 @@ class LobbyGamesRepo
     {
         $game = LobbyGames::select('games.name')
             ->join('games', 'lobby_games.game_id', 'games.id')
+            ->where('games.status', GamesStatus::$active)
             ->where('lobby_games.whitelabel_id',$whitelabel)
             ->get();
         return $game;
