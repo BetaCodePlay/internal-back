@@ -351,6 +351,36 @@ if (!function_exists('menu')) {
                 ]
             ],
 
+            'ReportDemo' => [
+                'text' => _i('Demo Report'),
+                'level_class' => 'top',
+                'route' => null,
+                'params' => [],
+                'icon' => 'hs-admin-bar-chart',
+                'permission' => Permissions::$dashboard,
+                'submenu' => [
+                    'ReportDemoUsername' => [
+                        'text' => _i('Usuarios'),
+                        'level_class' => 'top',
+                        'route' => 'agents.reports.financial.state.username',
+                        'params' => [],
+                        'icon' => 'hs-admin-pie-chart',
+                        'permission' => Permissions::$dashboard,
+                        'submenu' => []
+                    ],
+                    'ReportDemoProviders' => [
+                        'text' => _i('Proveedor'),
+                        'level_class' => 'top',
+                        'route' => 'agents.reports.financial.state.provider',
+                        'params' => [],
+                        'icon' => 'hs-admin-pie-chart',
+                        'permission' => Permissions::$dashboard,
+                        'submenu' => []
+                    ],
+                ]
+            ],
+
+
             'Financial' => [
                 'text' => _i('Financial'),
                 'level_class' => 'top',

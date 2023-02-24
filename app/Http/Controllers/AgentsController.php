@@ -862,6 +862,33 @@ class AgentsController extends Controller
         }
     }
 
+    public function financialStateUsername(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+//        $currency = session('currency');
+//        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+
+        $data['title'] = _i('Financial state report') .' ('. _i('User').')';
+        return view('back.agents.reports.financial-state-username', $data);
+    }
+
+    public function financialStateProvider(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+//        $currency = session('currency');
+//        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['title'] = _i('Financial state report') .' ('. _i('Provider').')' ;
+        return view('back.agents.reports.financial-state-provider', $data);
+    }
+
     public function financialState_view1(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
 //        $currency = session('currency');
