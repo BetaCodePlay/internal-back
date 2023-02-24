@@ -357,7 +357,7 @@ if (!function_exists('menu')) {
                 'route' => null,
                 'params' => [],
                 'icon' => 'hs-admin-bar-chart',
-                'permission' => Permissions::$dashboard,
+                'permission' => Permissions::$agents_menu,
                 'submenu' => [
                     'ReportDemoUsername' => [
                         'text' => _i('Usuarios'),
@@ -365,7 +365,7 @@ if (!function_exists('menu')) {
                         'route' => 'agents.reports.financial.state.username',
                         'params' => [],
                         'icon' => 'hs-admin-pie-chart',
-                        'permission' => Permissions::$dashboard,
+                        'permission' => Permissions::$agents_menu,
                         'submenu' => []
                     ],
                     'ReportDemoProviders' => [
@@ -374,7 +374,7 @@ if (!function_exists('menu')) {
                         'route' => 'agents.reports.financial.state.provider',
                         'params' => [],
                         'icon' => 'hs-admin-pie-chart',
-                        'permission' => Permissions::$dashboard,
+                        'permission' => Permissions::$agents_menu,
                         'submenu' => []
                     ],
                 ]

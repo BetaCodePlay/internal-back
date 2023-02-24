@@ -743,12 +743,15 @@ class AgentsCollection
             _i('Profit'),
             _i('Rtp'),
         );
+$arrayTmp = [
+    171 => 'Bet connect',
 
+];
         if(!empty($htmlProvider)){
             $htmlProvider .= "<tbody>";
             foreach ($providerId as $item => $value){
                 $htmlProvider .= "<tr class='table-secondary set_2'>";
-                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->provider_id . "</td>";
+                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->provider_id . " (por configurar)</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . $value->total_bet . "</td>";
@@ -794,7 +797,7 @@ class AgentsCollection
             $htmlUsername .= "<tbody>";
             foreach ($username as $item => $value){
                 $htmlUsername .= "<tr class='table-secondary set_2'>";
-                $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . "</td>";
+                $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . " (por configurar)</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . $value->total_bet . "</td>";
