@@ -439,6 +439,7 @@ class Agents {
         let picker = initLitepickerEndToday();
         let $table = $('#financial-state-table');
         let $button = $('#update');
+        $button.trigger('click')
         let api;
         if (user == null) {
             $('#financial-state-tab').on('show.bs.tab', function () {

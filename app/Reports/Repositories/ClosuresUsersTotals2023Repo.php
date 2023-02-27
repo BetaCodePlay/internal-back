@@ -43,9 +43,28 @@ class ClosuresUsersTotals2023Repo
                 and closures.provider_id = total.provider_id", [$whitelabel, $currency, $startDate, $endDate]);
     }
 
+    public function dataUser($id)
+    {
+        $userArray = [
+            'username' => '',
+            'type_user' => ''
+        ];
+        $sql = DB::select('select type_user,username from site.users where id = ?', [$id]);
+        if (isset($sql[0]->type_user)) {
+            $userArray = [
+                'username' => $sql[0]->username,
+                'type_user' => $sql[0]->type_user
+            ];
+        }
+
+        return json_decode(json_encode($userArray, true));
+
+
+    }
+
     public function getClosureByGroupTotals($startDate, $endDate, $whitelabel, $currency_iso, $arrayUsers, $fieldGroup)
     {
-        if(in_array(Roles::$super_admin,session('roles'))){
+        if (in_array(Roles::$super_admin, session('roles'))) {
 
             $closure = DB::select("SELECT
                 site.closures_users_totals_2023.{$fieldGroup},
@@ -98,4 +117,32 @@ class ClosuresUsersTotals2023Repo
         return $closure;
 
     }
+
+    public function nameProvider($id)
+    {
+        $provider_name = null;
+        $sql = DB::select('select site.providers.name from site.providers where id = ?', [$id]);
+        if (isset($sql[0]->name)) {
+            $provider_name = $sql[0]->name;
+        }
+
+        if(is_null($provider_name)){
+            switch ($id) {
+                case 171:
+                {
+                    $provider_name = 'Bet Connections';
+                    break;
+                }
+                default:{
+                    $provider_name = 'Sin definir';
+                    break;
+                }
+            }
+        }
+
+        return $provider_name;
+
+
+    }
+
 }

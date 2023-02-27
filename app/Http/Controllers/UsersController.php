@@ -9,6 +9,8 @@ use App\Core\Core;
 use App\Core\Notifications\TransactionNotAllowed;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
+use App\Users\Enums\ActionUser;
+use App\Users\Enums\TypeUser;
 use App\Users\Rules\Email;
 use App\Users\Rules\Password;
 use App\Whitelabels\Repositories\OperationalBalancesRepo;
@@ -422,21 +424,36 @@ class UsersController extends Controller
      */
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
-        $rules = [
-            'username' => ['required', new Username()],
-            'password' => ['required', new Password()],
-            'email' => ['required', new Email()],
-            'country' => 'required',
-            'timezone' => 'required',
-            'currency' => 'required'
-        ];
+
+        if(in_array(Roles::$admin_Beet_sweet,session('roles'))){
+            $rules = [
+                'username' => ['required', new Username()],
+                'password' => ['required', new Password()],
+            ];
+        }else{
+
+            $rules = [
+                'username' => ['required', new Username()],
+                'password' => ['required', new Password()],
+                'country' => 'required',
+                'timezone' => 'required',
+                'currency' => 'required'
+            ];
+        }
         $this->validate($request, $rules);
 
         try {
             $uuid = Str::uuid()->toString();
             $username = strtolower($request->username);
             $email = strtolower($request->email);
-            $currency = $request->currency;
+            if (is_null($email) || empty($email)) {
+                $domain = strtolower($_SERVER['HTTP_HOST']);
+                $domain = str_replace('www.', '', $domain);
+                $email = "$username@$domain";
+                $email = strtolower($email);
+            }
+
+            $currency = $request->get('currency',session()->get('currency'));
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueEmail = $this->usersRepo->uniqueEmail($email);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
@@ -479,11 +496,13 @@ class UsersController extends Controller
                 'status' => true,
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
-                'register_currency' => $currency
+                'register_currency' => $currency,
+                //'type_user' => null,
+                'action' => ActionUser::$active,
             ];
             $profileData = [
-                'country_iso' => $request->country,
-                'timezone' => $request->timezone,
+                'country_iso' => $request->get('country',session()->get('country_iso')),
+                'timezone' => $request->get('timezone',session()->get('timezone')),
                 'level' => 1
             ];
             $user = $this->usersRepo->store($userData, $profileData);
@@ -495,7 +514,7 @@ class UsersController extends Controller
                 'user_data' => $userData,
                 'profile_data' => $profileData
             ];
-            //Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
+            Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
 
             $wallet = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'));
             Configurations::generateReferenceCode($user->id);

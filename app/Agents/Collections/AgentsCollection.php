@@ -14,6 +14,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -733,7 +734,7 @@ class AgentsCollection
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
-                            <th scope="col" class="text-center">%s</th>
+
                         </tr>
                     </thead>',
             _i('Proveedor'),
@@ -741,22 +742,19 @@ class AgentsCollection
             _i('Ganado'),
             _i('Apuestas'),
             _i('Profit'),
-            _i('Rtp'),
+//            _i('Rtp'),
         );
-$arrayTmp = [
-    171 => 'Bet connect',
 
-];
         if(!empty($htmlProvider)){
             $htmlProvider .= "<tbody>";
             foreach ($providerId as $item => $value){
-                $htmlProvider .= "<tr class='table-secondary set_2'>";
-                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->provider_id . " (por configurar)</td>";
+                $htmlProvider .= "<tr class=''>";
+                $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $closuresUsersTotalsRepo->nameProvider($value->provider_id). "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . $value->total_bet . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
-                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "</td>";
+//                $htmlProvider .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "</td>";
                 $htmlProvider .= "</tr>";
             }
             $htmlProvider .= "</tbody>";
@@ -771,13 +769,14 @@ $arrayTmp = [
     public function financialStateUsername($whitelabel, $currency,  $startDate, $endDate, $treeUsers)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotals2023Repo();
-        $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'username');
+        $username = $closuresUsersTotalsRepo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$treeUsers,'user_id');
 
         $htmlUsername = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
                             <th scope="col" class="text-center">%s</th>
@@ -791,23 +790,25 @@ $arrayTmp = [
             _i('Apuestas'),
             _i('Profit'),
             _i('Rtp'),
+            _i('Comisión'),
         );
 
         if(!empty($username)){
             $htmlUsername .= "<tbody>";
             foreach ($username as $item => $value){
-                $htmlUsername .= "<tr class='table-secondary set_2'>";
-                $htmlUsername .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->username . " (por configurar)</td>";
+                $htmlUsername .= "<tr class=''>";
+                $htmlUsername .= "<td data-type='".$closuresUsersTotalsRepo->dataUser($value->user_id)->type_user."' class='name_".$closuresUsersTotalsRepo->dataUser($value->user_id)->type_user."'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $closuresUsersTotalsRepo->dataUser($value->user_id)->username . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . $value->total_bet . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
+                $htmlUsername .= "<td class='text-center'>0.00</td>";
                 $htmlUsername .= "</tr>";
             }
             $htmlUsername .= "</tbody>";
         }else{
-            $htmlUsername .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='6'>Sin registros</td></tr></tbody>";
+            $htmlUsername .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='7'>Sin registros</td></tr></tbody>";
         }
         return  $htmlUsername;
 
