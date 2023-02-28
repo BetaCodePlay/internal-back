@@ -12,6 +12,7 @@ use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Collections\ReportsCollection;
+use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\ActionUser;
@@ -119,6 +120,7 @@ class AgentsController extends Controller
      * @var UsersCollection
      */
     private $usersCollection;
+    private $closuresUsersTotals2023Repo;
 
 
     /***
@@ -136,8 +138,9 @@ class AgentsController extends Controller
      * @param CurrenciesRepo $currenciesRepo
      * @param UsersCollection $usersCollection
      */
-    public function __construct(AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
     {
+        $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
         $this->agentsCollection = $agentsCollection;
         $this->usersRepo = $usersRepo;
@@ -963,14 +966,42 @@ class AgentsController extends Controller
             $endDate = Utils::endOfDayUtc($endDate);
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
+            //TODO PERCENTAGE AGENT
+            $iAgent = $this->agentsRepo->iAgent($user);
+
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialStateSummary($whitelabel, $agents, $users, $currency, $startDate, $endDate);
+            $table = $this->agentsCollection->financialStateSummary($whitelabel, $agents, $users, $currency, $startDate, $endDate,$iAgent);
             $data = [
                 'table' => $table
             ];
             return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    public function financialStateSummaryDataNew($user = null, $startDate = null, $endDate = null)
+    {
+        try {
+            if (is_null($user)) {
+                $user = auth()->user()->id;
+            }
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $showTypeUserTemp = [TypeUser::$agentMater,TypeUser::$agentCajero,TypeUser::$player];
+
+            $iAgent = $this->agentsRepo->iAgent($user);
+            $myUsersAndAgents = $this->closuresUsersTotals2023Repo->myUsersAndAgents($user, $currency,$whitelabel);
+            $data = [
+                'table' => $this->agentsCollection->financialStateSummaryNewTotals($whitelabel, [], $myUsersAndAgents, $currency, $startDate, $endDate,$iAgent,$showTypeUserTemp)
+            ];
+            return Utils::successResponse($data);
+
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();

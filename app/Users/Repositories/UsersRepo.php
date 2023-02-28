@@ -1038,9 +1038,9 @@ class UsersRepo
     }
 
 
-    public function treeSqlByUser(int $user, string $currency, int $whitelabel)
+    public function treeSqlByUser(int $user, string $currency, int $whitelabel,$arrayIds = true)
     {
-        $tree = DB::select('(SELECT a.user_id, u.username
+        $arrayUsers = DB::select('(SELECT a.user_id, u.username
                     FROM site.agents a
                     INNER JOIN site.users u ON a.user_id=u.id
                     INNER JOIN site.user_currencies uc ON uc.user_id=u.id
@@ -1062,10 +1062,14 @@ class UsersRepo
                     )
                     ORDER BY username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
 
-        $arrayUsers = [];
-        foreach ($tree as $myId) {
-            $arrayUsers[$myId->user_id] = $myId->user_id;
-        }
+                    if($arrayIds){
+                        $array = [];
+                        foreach ($arrayUsers as $myId) {
+                            $array[$myId->user_id] = $myId->user_id;
+                        }
+                        $arrayUsers =$array;
+
+                    }
 
         return $arrayUsers;
 

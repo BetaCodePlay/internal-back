@@ -20,8 +20,43 @@ use Illuminate\Support\Facades\DB;
 class ClosuresUsersTotals2023Repo
 {
 
+    public function allUsersByAgent(int $agent, string $currency, $arrayIds = false)
+    {
+        $arrayUsers = DB::select("SELECT au.user_id,u.username from site.agent_user as au
+                          inner join site.users as u on u.id = au.user_id
+                             where au.agent_id in (WITH RECURSIVE all_agents AS (
+                                SELECT agents.id, agents.user_id, owner_id
+                                FROM site.agents as agents
+                                         join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
+                                WHERE agents.user_id = {$agent}
+                                  AND currency_iso = '{$currency}'
+
+                                UNION ALL
+
+                                SELECT agents.id, agents.user_id, agents.owner_id
+                                FROM site.agents as agents
+                                         join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
+                                         JOIN all_agents ON agents.owner_id = all_agents.user_id
+                                where agent_currencies.currency_iso  = '{$currency}'
+                            )
+                            SELECT all_agents.id
+                            FROM all_agents)
+                    ");
+
+        if ($arrayIds) {
+            $array = [];
+            foreach ($arrayUsers as $myId) {
+                $array[] = $myId->user_id;
+            }
+            $arrayUsers = $array;
+        }
+
+        return $arrayUsers;
+    }
+
     public function closuresTotalsByProviders($whitelabel, $startDate, $endDate, $currency)
     {
+        //FAKE
         return \DB::select("WITH closures AS (
                 SELECT username, closures_users_totals_2023.user_id, provider_id, currency_iso, sum(played) AS bets
                 FROM closures_users_totals
@@ -103,18 +138,42 @@ class ClosuresUsersTotals2023Repo
 
     }
 
-    public function getClosureUserTotals($startDate, $endDate, $whitelabel, $currency_iso, $arrayUsers)
+    public function myAgents(int $user, string $currency, int $whitelabel)
     {
-        $closure = ClosureUserTotal2023::select('*')
-            ->where('start_date', '>=', $startDate)
-            ->where('end_date', '<=', $endDate)
-            ->where('whitelabel_id', $whitelabel)
-            ->where('currency_iso', $currency_iso)
-            ->whereIn('user_id', $arrayUsers)
-            ->orderBy('end_date', 'DESC')
-            ->get();
+        return DB::select("(SELECT a.user_id, a.percentage, u.username, u.type_user
+                    FROM site.agents a
+                    INNER JOIN site.users u ON a.user_id=u.id
+                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
+                    WHERE a.owner_id='{$user}'
+                     and u.whitelabel_id = {$whitelabel}
+                     and uc.currency_iso = '{$currency}'
+                    ) ORDER BY type_user ASC, username");
 
-        return $closure;
+    }
+
+    public function myUsersAndAgents(int $user, string $currency, int $whitelabel)
+    {
+        return DB::select('(SELECT a.user_id,a.percentage,u.type_user, u.username
+                    FROM site.agents a
+                    INNER JOIN site.users u ON a.user_id=u.id
+                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
+                    WHERE a.owner_id= ?
+                     and u.whitelabel_id = ?
+                     and uc.currency_iso = ?
+                    )
+                    UNION
+                    (SELECT au.user_id,null,u.type_user, u.username
+                    FROM site.agent_user au
+                    INNER JOIN site.users u ON au.user_id=u.id
+                    WHERE au.agent_id =
+                    (
+                        SELECT a.id FROM site.agents a
+                        INNER JOIN site.agent_currencies ac ON ac.agent_id=a.id
+                        WHERE a.user_id = ? and ac.currency_iso = ?
+                    )
+                     and u.whitelabel_id = ?
+                    )
+                    ORDER BY type_user,username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
 
     }
 
@@ -126,14 +185,15 @@ class ClosuresUsersTotals2023Repo
             $provider_name = $sql[0]->name;
         }
 
-        if(is_null($provider_name)){
+        if (is_null($provider_name)) {
             switch ($id) {
                 case 171:
                 {
                     $provider_name = 'Bet Connections';
                     break;
                 }
-                default:{
+                default:
+                {
                     $provider_name = 'Sin definir';
                     break;
                 }

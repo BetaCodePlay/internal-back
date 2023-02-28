@@ -260,6 +260,11 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state-summary-data',
             'uses' => 'AgentsController@financialStateSummaryData'
         ]);
+        // Get total financial data new
+        Route::get('financial-state-summary-data-new/{user?}/{startDate?}/{endDate?}', [
+            'as' => 'agents.reports.financial-state-summary-data-new',
+            'uses' => 'AgentsController@financialStateSummaryDataNew'
+        ]);
 
         // Show total financial report summary
         Route::get('financial-state-summary-bonus', [

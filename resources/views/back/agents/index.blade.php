@@ -16,11 +16,13 @@
         .init_tree{
             color: rgb(77 77 77) !important
         }
-        .init_agent{
-            color: #3398dc !important
-        }
+         .init_agent{
+             color: #3398dc !important;
+             font-weight: bold!important;
+         }
         .init_user{
-            color: #e62154 !important
+            color: #e62154 !important;
+            font-weight: bold!important;
         }
         .nav_link_blue {
             color: white!important;
