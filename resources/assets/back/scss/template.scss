@@ -7,12 +7,6 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 }
 
-.img-logo {
-    width: auto;
-    transform: scale(1.45);
-    margin-left: 25px;
-    max-width: 150px;
-}
 
 .warning-general-template {
     background: #eee;
