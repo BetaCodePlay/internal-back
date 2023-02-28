@@ -1052,11 +1052,11 @@ class AgentsCollection
                 $agentsUsersIds[] = $dependencyItem['id'];
             }
 
-            $auxHTML .= sprintf(
-                '<tr class="init_agent"><td>%s <strong>%s</strong></td>',
-                $agent->username,''
-                //_i('(Agent)')
-            );
+//            $auxHTML .= sprintf(
+//                '<tr class="init_agent"><td>%s <strong>%s</strong></td>',
+//                $agent->username,''
+//                //_i('(Agent)')
+//            );
 
             if (count($dependency) > 0) {
                 $financial = $closuresUsersTotalsRepo->getUsersTotalsByIds($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
@@ -1079,26 +1079,26 @@ class AgentsCollection
                     $percentage = '-';
                     $agentTotalCollect = $agentTotalProfit;
                 }
-                $html .= sprintf(
-                    '<td class="text-right">%s</td>',
-                    number_format($agentTotalPlayed, 2)
-                );
-                $html .= sprintf(
-                    '<td class="text-right">%s</td>',
-                    number_format($agentTotalWon, 2)
-                );
-                $html .= sprintf(
-                    '<td class="text-right">%s</td>',
-                    number_format($agentTotalProfit, 2)
-                );
-                $html .= sprintf(
-                    '<td class="text-right">%s</td>',
-                    ($percentage !='-'?$percentage.'%':$percentage)
-                );
-                $html .= sprintf(
-                    '<td class="text-right">%s</td></tr>',
-                    number_format($agentTotalCollect, 2)
-                );
+//                $html .= sprintf(
+//                    '<td class="text-right">%s</td>',
+//                    number_format($agentTotalPlayed, 2)
+//                );
+//                $html .= sprintf(
+//                    '<td class="text-right">%s</td>',
+//                    number_format($agentTotalWon, 2)
+//                );
+//                $html .= sprintf(
+//                    '<td class="text-right">%s</td>',
+//                    number_format($agentTotalProfit, 2)
+//                );
+//                $html .= sprintf(
+//                    '<td class="text-right">%s</td>',
+//                    ($percentage !='-'?$percentage.'%':$percentage)
+//                );
+//                $html .= sprintf(
+//                    '<td class="text-right">%s</td></tr>',
+//                    number_format($agentTotalCollect, 2)
+//                );
             }
             $totalPlayed += $agentTotalPlayed;
             $totalWon += $agentTotalWon;
@@ -1125,30 +1125,30 @@ class AgentsCollection
                     $won = $userTotal->won;
                     $profit = $userTotal->profit;
 
-                    $html .= sprintf(
-                        '<tr class="init_user"><td>%s <strong>%s</strong></td>',
-                        $user->username, ''
-                        //_i('(Player)')
-                    );
-                    $html .= sprintf(
-                        '<td class="text-right">%s</td>',
-                        number_format($played, 2)
-                    );
-                    $html .= sprintf(
-                        '<td class="text-right">%s</td>',
-                        number_format($won, 2)
-                    );
-                    $html .= sprintf(
-                        '<td class="text-right">%s</td>',
-                        number_format($profit, 2)
-                    );
+//                    $html .= sprintf(
+//                        '<tr class="init_user"><td>%s <strong>%s</strong></td>',
+//                        $user->username, ''
+//                        //_i('(Player)')
+//                    );
+//                    $html .= sprintf(
+//                        '<td class="text-right">%s</td>',
+//                        number_format($played, 2)
+//                    );
+//                    $html .= sprintf(
+//                        '<td class="text-right">%s</td>',
+//                        number_format($won, 2)
+//                    );
+//                    $html .= sprintf(
+//                        '<td class="text-right">%s</td>',
+//                        number_format($profit, 2)
+//                    );
 
                     $userTotalPlayed += $played;
                     $userTotalWon += $won;
                     $userTotalProfit += $profit;
 
-                    $html .= '<td class="text-right">-</td>';
-                    $html .= '<td class="text-right">-</td></tr>';
+//                    $html .= '<td class="text-right">-</td>';
+//                    $html .= '<td class="text-right">-</td></tr>';
                     $totalPlayed += $userTotalPlayed;
                     $totalWon += $userTotalWon;
                     $totalProfit += $userTotalProfit;
