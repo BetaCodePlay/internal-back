@@ -5,7 +5,7 @@
                 <a href="{{ route('core.dashboard') }}"
                    class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-0">
                     @if(!is_null($logo->img_dark))
-                        <img src="{{$logo->img_dark }}" alt="Bloko" width="180" height="37">
+                        <img src="{{$logo->img_dark }}" alt="Bloko" width="180" height="37" class="img-logo">
                     @endif
 {{--                @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)--}}
 {{--                    <img src="{{ asset('commons/img/bloko-light.png') }}" alt="Bloko" width="180" height="37">--}}
