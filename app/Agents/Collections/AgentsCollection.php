@@ -1693,7 +1693,11 @@ return $html;
         //TODO TOTAL TO PAY
         $percentageUser = '-';
         if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
-            $percentageUser = $iAgent->percentage;
+            $percentageUser = (100-$iAgent->percentage);
+            Log::info('TOTALTOPAY',[
+                $percentageUser,
+                $iAgent->percentage
+            ]);
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
             $agentTotalCollectTotal = $totalProfit - $agentTotalCollectTmp;
         } else {
