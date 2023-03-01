@@ -1679,7 +1679,7 @@ return $html;
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
             //$agentTotalCollectTotal = $totalProfit - $agentTotalCollectTmp;
         } else {
-            $agentTotalCollectTotal = $totalProfit;
+            $agentTotalCollectTmp = $totalProfit;
         }
 
         $html .= '<tr style="background-color: #92ff678c;"><td colspan="3"></td>';
@@ -1688,7 +1688,7 @@ return $html;
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',$percentageUser);
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>', $agentTotalCollectTmp
+            '<td class="text-right"><strong>%s</strong></td>', number_format($agentTotalCollectTmp,2)
         );
         $html .= '</tr>';
         //TODO TOTAL TO PAY
@@ -1707,7 +1707,7 @@ return $html;
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',(100-$percentageUser).'%');
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>', $agentTotalCollectTotal
+            '<td class="text-right"><strong>%s</strong></td>', number_format($agentTotalCollectTotal,2)
         );
         $html .= '</tr>';
 
