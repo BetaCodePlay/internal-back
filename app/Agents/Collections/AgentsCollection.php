@@ -1052,11 +1052,11 @@ class AgentsCollection
                 $agentsUsersIds[] = $dependencyItem['id'];
             }
 
-//            $auxHTML .= sprintf(
-//                '<tr class="init_agent"><td>%s <strong>%s</strong></td>',
-//                $agent->username,''
-//                //_i('(Agent)')
-//            );
+            $auxHTML .= sprintf(
+                '<tr class="init_agent"><td>%s <strong>%s</strong></td>',
+                $agent->username,''
+                //_i('(Agent)')
+            );
 
             if (count($dependency) > 0) {
                 $financial = $closuresUsersTotalsRepo->getUsersTotalsByIds($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
@@ -1080,6 +1080,7 @@ class AgentsCollection
 
                     $agentTotalCollect = $agentTotalProfit;
                 }
+
                 $html .= sprintf(
                     '<td class="text-right">%s</td>',
                     number_format($agentTotalPlayed, 2)
