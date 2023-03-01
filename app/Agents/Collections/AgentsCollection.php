@@ -1675,19 +1675,17 @@ return $html;
         //TODO TOTAL COMISSION
         $percentageUser = '-';
         if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
-            $percentageUser = $iAgent->percentage.'%';
+            $percentageUser = $iAgent->percentage;
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
-            //$agentTotalCollectTotal = $totalProfit - $agentTotalCollectTmp;
         } else {
             $agentTotalCollectTmp = $totalProfit;
         }
-        $percentageUserFinal = $percentageUser == '-'?'-':(100-$percentageUser).'%';
 
         $html .= '<tr style="background-color: #92ff678c;"><td colspan="3"></td>';
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',_i('Total Comission'));
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',$percentageUserFinal);
+            '<td class="text-right"><strong>%s</strong></td>',$percentageUser);
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>', number_format($agentTotalCollectTmp,2)
         );
