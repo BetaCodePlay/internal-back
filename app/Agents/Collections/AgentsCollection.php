@@ -1070,35 +1070,36 @@ class AgentsCollection
 
             if ($agentTotalPlayed > 0 || $agentTotalWon > 0) {
                 $html .= $auxHTML;
+                $percentage = '-';
                 if ($agent->percentage > 0) {
-                    //$percentage = number_format($agent->percentage, 2);
-                    $percentage = $agent->percentage;
-                    $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
+                    $percentage = number_format($agent->percentage, 2);
+                    //$percentage = $agent->percentage;
+                    $agentTotalCollect = $agentTotalProfit * ($agent->percentage / 100);
 
                 } else {
-                    $percentage = '-';
+
                     $agentTotalCollect = $agentTotalProfit;
                 }
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    number_format($agentTotalPlayed, 2)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    number_format($agentTotalWon, 2)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    number_format($agentTotalProfit, 2)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    ($percentage !='-'?$percentage.'%':$percentage)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td></tr>',
-//                    number_format($agentTotalCollect, 2)
-//                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalPlayed, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalWon, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalProfit, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    ($percentage !='-'?$percentage.'%':$percentage)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td></tr>',
+                    number_format($agentTotalCollect, 2)
+                );
             }
             $totalPlayed += $agentTotalPlayed;
             $totalWon += $agentTotalWon;
@@ -1125,30 +1126,30 @@ class AgentsCollection
                     $won = $userTotal->won;
                     $profit = $userTotal->profit;
 
-//                    $html .= sprintf(
-//                        '<tr class="init_user"><td>%s <strong>%s</strong></td>',
-//                        $user->username, ''
-//                        //_i('(Player)')
-//                    );
-//                    $html .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($played, 2)
-//                    );
-//                    $html .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($won, 2)
-//                    );
-//                    $html .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($profit, 2)
-//                    );
+                    $html .= sprintf(
+                        '<tr class="init_user"><td>%s <strong>%s</strong></td>',
+                        $user->username, ''
+                        //_i('(Player)')
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($played, 2)
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($won, 2)
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($profit, 2)
+                    );
 
                     $userTotalPlayed += $played;
                     $userTotalWon += $won;
                     $userTotalProfit += $profit;
 
-//                    $html .= '<td class="text-right">-</td>';
-//                    $html .= '<td class="text-right">-</td></tr>';
+                    $html .= '<td class="text-right">-</td>';
+                    $html .= '<td class="text-right">-</td></tr>';
                     $totalPlayed += $userTotalPlayed;
                     $totalWon += $userTotalWon;
                     $totalProfit += $userTotalProfit;
@@ -1552,7 +1553,8 @@ return $html;
                 $total_played = 0;
                 $total_won = 0;
                 $total_profit = 0;
-                $percentageUser = !is_null($user->percentage)?$user->percentage:'-';
+                $percentageUser = '-';
+                //$percentageUser = !is_null($user->percentage)?$user->percentage:'-';
                 $agentTotalCollect = 0;
 
                 if((int)$user->type_user != TypeUser::$player){
@@ -1565,10 +1567,11 @@ return $html;
                         $totals2023 = $closuresUsersTotals2023Repo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$allUsersByAgent,'currency_iso');
 
                         foreach ($totals2023 as $item => $value){
-                            if ($percentageUser != '-') {
-                                $agentTotalCollect = $value->total_profit * ($percentageUser / 100);
-                                //$agentTotalCollect = $value->total_profit - $agentTotalCollect0;
-                            } else {
+                            if (isset($user->percentage) && !is_null($user->percentage) && $user->percentage > 0) {
+                                $percentageUser = $user->percentage;
+                                $percentageUser = $percentageUser.'%';
+                                $agentTotalCollect = $value->total_profit * ($user->percentage / 100);
+                            }else {
                                 $agentTotalCollect = $value->total_profit;
                             }
                             //TODO SUM TOTAL
@@ -1632,7 +1635,7 @@ return $html;
                         '<td class="text-right">%s</td>',$total_profit
                     );
                     $html .= sprintf(
-                        '<td class="text-right">%s</td>',$percentageUser != '-'?$percentageUser.'%':$percentageUser
+                        '<td class="text-right">%s</td>',$percentageUser
                     );
                     $html .= sprintf(
                         '<td class="text-right">%s</td></tr>',$agentTotalCollect
@@ -1675,7 +1678,7 @@ return $html;
         //TODO TOTAL COMISSION
         $percentageUser = '-';
         if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
-            $percentageUser = $iAgent->percentage;
+            $percentageUser = $iAgent->percentage.'%';
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
         } else {
             $agentTotalCollectTmp = $totalProfit;
@@ -1694,10 +1697,7 @@ return $html;
         $percentageUser = '-';
         if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
             $percentageUser = (100-$iAgent->percentage);
-            Log::info('TOTALTOPAY',[
-                $percentageUser,
-                $iAgent->percentage
-            ]);
+            $percentageUser = $percentageUser.'%';
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
             $agentTotalCollectTotal = $totalProfit - $agentTotalCollectTmp;
         } else {
