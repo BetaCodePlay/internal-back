@@ -215,6 +215,16 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@financialState_view1'
         ]);
 
+        Route::get('financial-state/username', [
+            'as' => 'agents.reports.financial.state.username',
+            'uses' => 'AgentsController@financialStateUsername'
+        ]);
+
+        Route::get('financial-state/provider', [
+            'as' => 'agents.reports.financial.state.provider',
+            'uses' => 'AgentsController@financialStateProvider'
+        ]);
+
         Route::get('financial-state-data/username/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data.username',
             'uses' => 'AgentsController@financialStateData_username'
@@ -249,6 +259,11 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         Route::get('financial-state-summary-data/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-summary-data',
             'uses' => 'AgentsController@financialStateSummaryData'
+        ]);
+        // Get total financial data new
+        Route::get('financial-state-summary-data-new/{user?}/{startDate?}/{endDate?}', [
+            'as' => 'agents.reports.financial-state-summary-data-new',
+            'uses' => 'AgentsController@financialStateSummaryDataNew'
         ]);
 
         // Show total financial report summary

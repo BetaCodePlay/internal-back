@@ -33,6 +33,7 @@ let activeMenu = () => {
 // Clear form
 let clearForm = $form => {
     $('#clear').click(function () {
+        $form.trigger('clear');
         $form.trigger('reset');
         $form.find('select').val(null).trigger('change');
         refreshRandomPassword();

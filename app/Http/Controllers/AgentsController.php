@@ -12,6 +12,7 @@ use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Collections\ReportsCollection;
+use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\ActionUser;
@@ -119,6 +120,7 @@ class AgentsController extends Controller
      * @var UsersCollection
      */
     private $usersCollection;
+    private $closuresUsersTotals2023Repo;
 
 
     /***
@@ -136,8 +138,9 @@ class AgentsController extends Controller
      * @param CurrenciesRepo $currenciesRepo
      * @param UsersCollection $usersCollection
      */
-    public function __construct(AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
     {
+        $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
         $this->agentsCollection = $agentsCollection;
         $this->usersRepo = $usersRepo;
@@ -649,13 +652,13 @@ class AgentsController extends Controller
      */
     public function changeTypeUser(Request $request)
     {
-        $users = $this->usersRepo->sqlShareTmp('users');
-        foreach ($users as $value) {
-            $this->usersRepo->sqlShareTmp('update_rol', $value->id, $value->type_user);
-
-        }
-
-        return $users;
+//        $users = $this->usersRepo->sqlShareTmp('users');
+//        foreach ($users as $value) {
+//            $this->usersRepo->sqlShareTmp('update_rol', $value->id);
+//        }
+//
+//        return $users;
+        return 'no disponible';
 //        $users = $this->usersRepo->sqlShareTmp('users');
 //        foreach ($users as $value) {
 //            $value->type_user = null;
@@ -808,7 +811,7 @@ class AgentsController extends Controller
 
     public function financialStateData_username(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
-        try {
+//        try {
             $timezone = session('timezone');
             // $today = Carbon::now()->setTimezone($timezone);
             $startDateOriginal = $startDate;
@@ -824,14 +827,15 @@ class AgentsController extends Controller
             $treeUsers = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
 
             $data = [
-                'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers)
+                'table' => $this->agentsCollection->financialStateUsername($whitelabel, $currency, $startDate, $endDate, $treeUsers),
+                auth()->user()->id, auth()->user()->username, session('currency'), Configurations::getWhitelabel()
             ];
             return Utils::successResponse($data);
 
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+//            return Utils::failedResponse();
+//        }
     }
 
     public function financialStateData_provider(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
@@ -859,6 +863,33 @@ class AgentsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
+    }
+
+    public function financialStateUsername(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+//        $currency = session('currency');
+//        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+
+        $data['title'] = _i('Financial state report') .' ('. _i('User').')';
+        return view('back.agents.reports.financial-state-username', $data);
+    }
+
+    public function financialStateProvider(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+//        $currency = session('currency');
+//        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['title'] = _i('Financial state report') .' ('. _i('Provider').')' ;
+        return view('back.agents.reports.financial-state-provider', $data);
     }
 
     public function financialState_view1(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
@@ -935,14 +966,42 @@ class AgentsController extends Controller
             $endDate = Utils::endOfDayUtc($endDate);
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
+            //TODO PERCENTAGE AGENT
+            $iAgent = $this->agentsRepo->iAgent($user);
+
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialStateSummary($whitelabel, $agents, $users, $currency, $startDate, $endDate);
+            $table = $this->agentsCollection->financialStateSummary($whitelabel, $agents, $users, $currency, $startDate, $endDate,$iAgent);
             $data = [
                 'table' => $table
             ];
             return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    public function financialStateSummaryDataNew($user = null, $startDate = null, $endDate = null)
+    {
+        try {
+            if (is_null($user)) {
+                $user = auth()->user()->id;
+            }
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $showTypeUserTemp = [TypeUser::$agentMater,TypeUser::$agentCajero,TypeUser::$player];
+
+            $iAgent = $this->agentsRepo->iAgent($user);
+            $myUsersAndAgents = $this->closuresUsersTotals2023Repo->myUsersAndAgents($user, $currency,$whitelabel);
+            $data = [
+                'table' => $this->agentsCollection->financialStateSummaryNewTotals($whitelabel, [], $myUsersAndAgents, $currency, $startDate, $endDate,$iAgent,$showTypeUserTemp)
+            ];
+            return Utils::successResponse($data);
+
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();

@@ -268,6 +268,8 @@ class Agents {
 
     // Dashboard
     dashboard() {
+        console.log('test in dashboard fo agent.jd')
+
         initSelect2();
         clipboard();
         let $tree = $('#tree');
@@ -311,6 +313,8 @@ class Agents {
                     $('#username').text(json.data.user.username);
                     $('#agent_timezone').text(json.data.user.timezone);
                     $('.balance').text(json.data.balance);
+                    $('.balanceAuth_'+json.data.user.id).text('');
+                    $('.balanceAuth_'+json.data.user.id).text(json.data.balance);
                     $('#user_type').html(json.data.user.type);
                     $('#status').html(json.data.user.status);
                     $('#wallet').val(json.data.wallet);
@@ -435,6 +439,7 @@ class Agents {
         let picker = initLitepickerEndToday();
         let $table = $('#financial-state-table');
         let $button = $('#update');
+        $button.trigger('click')
         let api;
         if (user == null) {
             $('#financial-state-tab').on('show.bs.tab', function () {

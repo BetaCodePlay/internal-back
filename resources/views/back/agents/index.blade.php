@@ -16,11 +16,13 @@
         .init_tree{
             color: rgb(77 77 77) !important
         }
-        .init_agent{
-            color: #3398dc !important
-        }
+         .init_agent{
+             color: #3398dc !important;
+             font-weight: bold!important;
+         }
         .init_user{
-            color: #e62154 !important
+            color: #e62154 !important;
+            font-weight: bold!important;
         }
         .nav_link_blue {
             color: white!important;
@@ -273,6 +275,12 @@
                                     </a>
                                 </li>
                             @endif
+{{--                            <li class="nav-item" role="presentation">--}}
+{{--                                <a class="nav-link active nav_link_blue" id="connect-tab" data-toggle="tab" href="#connect" role="tab" aria-controls="connect" aria-selected="true">--}}
+{{--                                    <i class="hs-admin-dashboard"></i>--}}
+{{--                                    {{ _i('Connections') }}--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -619,6 +627,49 @@
                                 </div>
                             </div>
                             @include('back.layout.litepicker')
+{{--                            <div class="col-md-12">--}}
+{{--                                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">--}}
+{{--                                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">--}}
+{{--                                        <div class="media">--}}
+{{--                                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">--}}
+{{--                                                {{ _i('Connections') }}--}}
+{{--                                            </h3>--}}
+
+{{--                                            <div class="media-body d-flex justify-content-end g-mb-10" id="ip-table-buttons">--}}
+
+{{--                                            </div>--}}
+{{--                                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">--}}
+{{--                                                <input type="hidden" name="user_id" id="user_id"  class="user_id_ips" value="{{ \Illuminate\Support\Facades\Auth::user()->id }}">--}}
+{{--                                                <button class="btn u-btn-3d u-btn-primary" type="button" id="update-ip"--}}
+{{--                                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">--}}
+{{--                                                    <i class="hs-admin-reload g-color-white"></i>--}}
+{{--                                                </button>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </header>--}}
+{{--                                    <div class="card-block g-pa-15">--}}
+{{--                                        <div class="table-responsive">--}}
+{{--                                            <input type="hidden" name="user_id" id="user_id" value="{{ \Illuminate\Support\Facades\Auth::user()->id }}">--}}
+{{--                                            <table class="table table-bordered w-100" id="ip-table"--}}
+{{--                                                   data-route="{{ route('users.users-ips-data') }}">--}}
+{{--                                                <thead>--}}
+{{--                                                <tr>--}}
+{{--                                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                                        {{ _i('IP') }}--}}
+{{--                                                    </th>--}}
+{{--                                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                                        {{ _i('Quantity') }}--}}
+{{--                                                    </th>--}}
+{{--                                                </tr>--}}
+{{--                                                </thead>--}}
+{{--                                                <tbody>--}}
+{{--                                                </tbody>--}}
+{{--                                            </table>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
                             <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-summary-data') }}">
 {{--                                TODO URL ORIGINAL--}}
 {{--                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}">--}}
@@ -740,6 +791,91 @@
                                 </div>
                             </div>
                         @endif
+                        <div class="tab-pane fade mobile g-py-20 g-px-5" id="connect" role="tabpanel" aria-labelledby="connect-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row g-mb-15">
+                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                            <label class="g-mb-0">
+                                                <strong>{{ _i('Username') }}</strong>
+                                            </label>
+                                        </div>
+                                        <div class="col-4 col-sm-7 col-md-7 align-self-center">
+                                            <div class="form-group g-pos-rel g-mb-0">
+                                                <span id="username"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 col-sm-2 col-md-2 align-self-center" id="modals-transaction">
+                                            <div class="d-block d-sm-block d-md-none">
+                                                <div class="row">
+                                                    <div class="form-group mb-0">
+                                                        @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_credit_transactions])
+                                                            <label href="#transaction-modal" class="btn u-btn-3d u-btn-blue" data-toggle="modal" data-transaction-type="{{ \Dotworkers\Configurations\Enums\TransactionTypes::$credit }}" data-transaction-name="{{ _i('credit') }}">
+                                                                <i class="hs-admin-plus"></i>
+                                                            </label>
+                                                        @endcan
+                                                        @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_debit_transactions])
+                                                            <label href="#transaction-modal" class="btn u-btn-3d u-btn-primary" data-toggle="modal" data-transaction-type="{{ \Dotworkers\Configurations\Enums\TransactionTypes::$debit }}" data-transaction-name="{{ _i('debit') }}">
+                                                                <i class="hs-admin-layout-line-solid"></i>
+                                                            </label>
+                                                        @endcan
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_credit_transactions,  \Dotworkers\Security\Enums\Permissions::$agents_debit_transactions])
+                                    <div class="col-md-6">
+                                        <div class="d-none d-sm-none d-md-block">
+                                            <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30 d-none" id="transactions-form-container">
+                                                <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                                                    <div class="media">
+                                                        <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 mb-0">
+                                                            {{ _i('Balance adjustments') }}
+                                                        </h3>
+                                                    </div>
+                                                </header>
+                                                <div class="card-block g-pa-15">
+                                                    <form action="{{ route('agents.perform-transactions') }}" id="transactions-form" method="post">
+                                                        <input type="hidden" name="wallet" id="wallet">
+                                                        <input type="hidden" name="user" class="user">
+                                                        <input type="hidden" name="type" id="type">
+                                                        <div class="form-group">
+                                                            <label for="amount">{{ _i('Amount') }}</label>
+                                                            <input type="number" name="amount" id="amount" class="form-control" min="0">
+                                                        </div>
+                                                        <div class="row">
+                                                            @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_credit_transactions])
+                                                                <div class="col-6">
+                                                                    <button type="button" class="btn u-btn-3d u-btn-blue btn-block" id="credit" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
+                                                                        {{ _i('Credit') }}
+                                                                    </button>
+                                                                </div>
+                                                            @endcan
+                                                            @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_debit_transactions])
+                                                                <div class="col-6">
+                                                                    <button type="button" class="btn u-btn-3d u-btn-primary btn-block" id="debit" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
+                                                                        {{ _i('Debit') }}
+                                                                    </button>
+                                                                </div>
+                                                            @endcan
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="col-6" id="ticket">
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endcan
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -762,6 +898,7 @@
         $(function () {
             let agents = new Agents();
             let users = new Users();
+            users.usersIps();
             agents.dashboard();
             agents.searchAgentDashboard();
             agents.performTransactions();

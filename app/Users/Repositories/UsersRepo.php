@@ -8,6 +8,7 @@ use App\Users\Entities\User;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Security\Enums\Roles;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -1037,9 +1038,9 @@ class UsersRepo
     }
 
 
-    public function treeSqlByUser(int $user, string $currency, int $whitelabel)
+    public function treeSqlByUser(int $user, string $currency, int $whitelabel,$arrayIds = true)
     {
-        $tree = DB::select('(SELECT a.user_id, u.username
+        $arrayUsers = DB::select('(SELECT a.user_id, u.username
                     FROM site.agents a
                     INNER JOIN site.users u ON a.user_id=u.id
                     INNER JOIN site.user_currencies uc ON uc.user_id=u.id
@@ -1061,10 +1062,14 @@ class UsersRepo
                     )
                     ORDER BY username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
 
-        $arrayUsers = [];
-        foreach ($tree as $myId) {
-            $arrayUsers[$myId->user_id] = $myId->user_id;
-        }
+                    if($arrayIds){
+                        $array = [];
+                        foreach ($arrayUsers as $myId) {
+                            $array[$myId->user_id] = $myId->user_id;
+                        }
+                        $arrayUsers =$array;
+
+                    }
 
         return $arrayUsers;
 
@@ -1080,25 +1085,25 @@ class UsersRepo
         }
 
         if ($type === 'update_rol') {
-            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
         }
 
-        if ($type === 'users') {
-            //limit 1000
-            // order by asc
-            //where type_user = null
-            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
-        }
-        if ($type === 'agent') {
-            return DB::select('select master from agents where user_id = ?', [$id]);
-        }
-        if ($type === 'agent_user') {
-            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
-        }
-
-        if ($type === 'update') {
-            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
-        }
+//        if ($type === 'users') {
+//            //limit 1000
+//            // order by asc
+//            //where type_user = null
+//            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
+//        }
+//        if ($type === 'agent') {
+//            return DB::select('select master from agents where user_id = ?', [$id]);
+//        }
+//        if ($type === 'agent_user') {
+//            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+//        }
+//
+//        if ($type === 'update') {
+//            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+//        }
 
         return [];
     }

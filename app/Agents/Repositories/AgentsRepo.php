@@ -6,6 +6,7 @@ use App\Agents\Entities\Agent;
 use App\Users\Entities\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class AgentsRepo
@@ -163,6 +164,24 @@ class AgentsRepo
             ->where('agent_user.user_id', $user)
             ->first();
         return $user;
+    }
+    public function iAgent($user)
+    {
+        $iAgent = DB::select('SELECT a.percentage
+                 FROM site.agents a
+                 WHERE user_id = ?',[$user]);
+        return $iAgent[0];
+    }
+    public function fatherAgent($user)
+    {
+        //TODO FAKE
+        $iAgent = DB::select('SELECT a.percentage
+                 FROM site.agents a
+                 WHERE user_id in (SELECT a.owner_id
+                 FROM site.agents a
+                 WHERE user_id = ?)',[$user]);
+        return $iAgent[0];
+
     }
 
     /**
