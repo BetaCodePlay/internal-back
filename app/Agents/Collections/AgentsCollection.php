@@ -1693,19 +1693,18 @@ return $html;
         //TODO TOTAL TO PAY
         $percentageUser = '-';
         if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
-            $percentageUser = (int)$iAgent->percentage;
+            $percentageUser = $iAgent->percentage;
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
             $agentTotalCollectTotal = $totalProfit - $agentTotalCollectTmp;
         } else {
             $agentTotalCollectTotal = $totalProfit;
         }
-        $percentageUserFinal = $percentageUser == '-'?'-':(100-$percentageUser).'%';
 
         $html .= '<tr style="background-color: #ff588373;"><td colspan="3"></td>';
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',_i('Total to pay'));
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',$percentageUserFinal);
+            '<td class="text-right"><strong>%s</strong></td>',$percentageUser);
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>', number_format($agentTotalCollectTotal,2)
         );
