@@ -1,6 +1,18 @@
 /*
 sass --style compressed resources/assets/back/scss/template.scss:public/commons/css/template.min.css
 */
+#header-search-form {
+    .form-control {
+        width: 100%;
+    }
+}
+
+.img-logo {
+    width: auto;
+    transform: scale(1.45);
+    margin-left: 25px;
+    max-width: 150px;
+}
 
 .warning-general-template {
     background: #eee;
@@ -40,4 +52,14 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
             transform: translateX(-100%);
         }
     }
+}
+
+@media screen and (max-width: 575px) {
+    #header-search-form {
+        .input-group {
+            display: block;
+            width: 100%;
+        }
+    }
+
 }

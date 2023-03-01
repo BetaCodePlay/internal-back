@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('Dotpanel') }}</title>
-    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=10">
+    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.12">
     @yield('styles')
 </head>
 <body class=" currency-theme-{{ session('currency') }}">
@@ -26,7 +26,7 @@
     <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
         @include('back.layout.sidebar')
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
-            {{--@include('back.layout.warning')--}}
+            @include('back.layout.warning')
             <div class="g-pt-20 g-pr-20">
                 <div class="row">
                     <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
@@ -57,6 +57,7 @@
 @can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
     @include('back.layout.tawk')
 @endif
+@include('back.layout.chat')
 <script>
     @if (env('APP_ENV') == 'testing')
     $(function () {
