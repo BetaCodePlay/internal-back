@@ -1681,12 +1681,13 @@ return $html;
         } else {
             $agentTotalCollectTmp = $totalProfit;
         }
+        $percentageUserFinal = $percentageUser == '-'?'-':(100-$percentageUser).'%';
 
         $html .= '<tr style="background-color: #92ff678c;"><td colspan="3"></td>';
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',_i('Total Comission'));
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',$percentageUser);
+            '<td class="text-right"><strong>%s</strong></td>',$percentageUserFinal);
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>', number_format($agentTotalCollectTmp,2)
         );
@@ -1700,12 +1701,13 @@ return $html;
         } else {
             $agentTotalCollectTotal = $totalProfit;
         }
+        $percentageUserFinal = $percentageUser == '-'?'-':(100-$percentageUser).'%';
 
         $html .= '<tr style="background-color: #ff588373;"><td colspan="3"></td>';
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>',_i('Total to pay'));
         $html .= sprintf(
-            '<td class="text-right"><strong>%s</strong></td>',(100-$percentageUser).'%');
+            '<td class="text-right"><strong>%s</strong></td>',$percentageUserFinal);
         $html .= sprintf(
             '<td class="text-right"><strong>%s</strong></td>', number_format($agentTotalCollectTotal,2)
         );
