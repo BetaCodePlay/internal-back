@@ -32,7 +32,10 @@ class ProvidersRepo
 
     public function allIds()
     {
-        $providers = Provider::select('providers.id')->whereNotNull('dotsuite_provider_id')->get(['id']);
+        $providers = Provider::select('providers.id')
+            ->where('status', true)
+            ->whereNotNull('dotsuite_provider_id')
+            ->get(['id']);
         $array = [];
         foreach ($providers as $value){
             $array[]=$value->id;
@@ -52,6 +55,7 @@ class ProvidersRepo
     public function getByTypes($types)
     {
         $providers = Provider::whereIn('provider_type_id', $types)
+            ->where('status', true)
             ->orderBy('name', 'ASC')
             ->get();
         return $providers;
