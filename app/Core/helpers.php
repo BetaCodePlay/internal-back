@@ -277,7 +277,7 @@ if (!function_exists('menu')) {
                                 'submenu' => []
                             ],
 
-                            'ReportDemoUsername' => [
+                            'ReportByUsername' => [
                                 'text' => _i('By users'),
                                 'level_class' => 'top',
                                 'route' => 'agents.reports.financial.state.username',
@@ -286,7 +286,7 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_menu,
                                 'submenu' => []
                             ],
-                            'ReportDemoProviders' => [
+                            'ReportByProviders' => [
                                 'text' => _i('By providers'),
                                 'level_class' => 'top',
                                 'route' => 'agents.reports.financial.state.provider',
