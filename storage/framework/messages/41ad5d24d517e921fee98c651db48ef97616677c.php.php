@@ -1,16 +1,5 @@
 
-<?php $__env->startSection('styles'); ?>
-    <style>
-        .init_agent{
-            color: #3398dc !important;
-            font-weight: bold!important;
-        }
-        .init_user{
-            color: #e62154 !important;
-            font-weight: bold!important;
-        }
-    </style>
-<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
     <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -28,8 +17,7 @@
 
                 </div>
             </div>
-
-            <div class="table-responsive" id="total-financial-table" data-route="<?php echo e(route('agents.reports.financial-state-summary-data-new')); ?>">
+            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.provider')); ?>">
 
             </div>
         </div>
@@ -40,7 +28,8 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.totalFinancial(<?php echo e($user); ?>);
+            agents.financialState(<?php echo e($user); ?>);
+            $('#update').trigger('click')
         });
     </script>
 <?php $__env->stopSection(); ?>

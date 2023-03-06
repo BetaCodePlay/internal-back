@@ -137,4 +137,12 @@ class Roles
      * @var int
      */
     public static $franchisees = 18;
+
+    /**
+     *  Admin Beet Sweet
+     *
+     * @var int
+     */
+    public static $admin_Beet_sweet = 19;
+
 }

@@ -9,38 +9,101 @@ namespace Dotworkers\Bonus\Enums;
  *
  * This class allows to define static allocation criteria
  *
- * @package App\Bonus\Enums
+ * @package App\Rollovers\Enums
  * @author  Damelys Espinoza
  */
 class AllocationCriteria
 {
     /**
-     * Registration
+     * Welcome bonus with deposit
      *
      * @var int
      */
-    public static $registration = 1;
+    public static $welcome_bonus_with_deposit = 1;
 
     /**
-     * Deposit
+     * Welcome bonus without deposit
      *
      * @var int
      */
-    public static $deposit = 2;
+    public static $welcome_bonus_without_deposit = 2;
 
     /**
-     * Complete profile
+     * Cash back bonus
      *
      * @var int
      */
-    public static $complete_profile = 3;
+    public static $cash_back_bonus = 3;
 
     /**
-     * Bet
+     * Birthday bonus
      *
      * @var int
      */
-    public static $bet = 4;
+    public static $birthday_bonus = 4;
+
+    /**
+     * Loyalty bonus
+     *
+     * @var int
+     */
+    public static $loyalty_bonus = 5;
+
+    /**
+     * Contest winner bonus
+     *
+     * @var int
+     */
+    public static $contest_winner_bonus = 6;
+
+    /**
+     * Tournament
+     *
+     * @var int
+     */
+    public static $tournament = 7;
+
+    /**
+     * Tournament
+     *
+     * @var int
+     */
+    public static $login_bonus = 8;
+
+    /**
+     * Bonus code
+     *
+     * @var int
+     */
+    public static $bonus_code = 9;
+
+    /**
+     * Bonus code with deposit
+     *
+     * @var int
+     */
+    public static $bonus_code_with_deposit = 10;
+
+    /**
+     * Wallet bonus
+     *
+     * @var int
+     */
+    public static $wallet_bonus = 11;
+
+    /**
+     * Bet bonus
+     *
+     * @var int
+     */
+    public static $bet_bonus = 12;
+
+    /**
+     * Next deposit bonus
+     *
+     * @var int
+     */
+    public static $next_deposit_bonus = 13;
 
     /**
      * Get name
@@ -52,27 +115,81 @@ class AllocationCriteria
     {
         $name = null;
         switch ($allocationCriteria) {
-            case self::$registration:
+            case self::$welcome_bonus_with_deposit:
             {
-                $name = _i('Registration');
+                $name = _i('Welcome bonus with deposit');
                 break;
             }
-            case self::$deposit:
+            case self::$welcome_bonus_without_deposit:
             {
-                $name = _i('Deposit');
+                $name = _i('Welcome bonus without deposit');
                 break;
             }
-            case self::$complete_profile:
+            case self::$cash_back_bonus:
             {
-                $name = _i('Complete profile');
+                $name = _i('Cash back bonus');
                 break;
             }
-            case self::$bet:
+            case self::$birthday_bonus:
             {
-                $name = _i('Bet');
+                $name = _i('Birthday bonus');
+                break;
+            }
+            case self::$loyalty_bonus:
+            {
+                $name = _i('Loyalty bonus');
+                break;
+            }
+            case self::$contest_winner_bonus:
+            {
+                $name = _i('Contest winner bonus');
+                break;
+            }
+            case self::$tournament:
+            {
+                $name = _i('Tournament');
+                break;
+            }
+            case self::$login_bonus:
+            {
+                $name = _i('Login bonus');
+                break;
+            }
+            case self::$bonus_code:
+            {
+                $name = _i('Bonus code');
+                break;
+            }
+            case self::$bonus_code_with_deposit:
+            {
+                $name = _i('Bonus code with number deposit');
+                break;
+            }
+            case self::$wallet_bonus:
+            {
+                $name = _i('Wallet balance bonus');
+                break;
+            }
+            case self::$bet_bonus:
+            {
+                $name = _i('Bet bonus');
+                break;
+            }
+            case self::$next_deposit_bonus:
+            {
+                $name = _i('Next deposit bonus');
                 break;
             }
         }
         return $name;
     }
 }
+
+
+
+
+
+
+
+
+

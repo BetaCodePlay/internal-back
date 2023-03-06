@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "dotworkers/configurations": "3.*",
+        "dotworkers/configurations": "6.*",
         "dotworkers/sessions": "2.*",
         "dotworkers/wallet": "2.*",
         "jenssegers/agent": "^2.6"

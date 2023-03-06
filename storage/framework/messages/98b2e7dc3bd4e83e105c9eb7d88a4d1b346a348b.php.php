@@ -277,6 +277,25 @@ if (!function_exists('menu')) {
                                 'submenu' => []
                             ],
 
+                            'ReportByUsername' => [
+                                'text' => _i('By users'),
+                                'level_class' => 'top',
+                                'route' => 'agents.reports.financial.state.username',
+                                'params' => [],
+                                'icon' => 'hs-admin-pie-chart',
+                                'permission' => Permissions::$agents_menu,
+                                'submenu' => []
+                            ],
+                            'ReportByProviders' => [
+                                'text' => _i('By providers'),
+                                'level_class' => 'top',
+                                'route' => 'agents.reports.financial.state.provider',
+                                'params' => [],
+                                'icon' => 'hs-admin-pie-chart',
+                                'permission' => Permissions::$agents_menu,
+                                'submenu' => []
+                            ],
+
                             'AgentsFinancialStateSummaryIncludeBonuses' => [
                                 'text' => _i('Financial state - Summary (Include bonuses)'),
                                 'level_class' => 'third',
@@ -350,6 +369,36 @@ if (!function_exists('menu')) {
                     ]
                 ]
             ],
+
+//            'ReportDemo' => [
+//                'text' => _i('Demo Report'),
+//                'level_class' => 'top',
+//                'route' => null,
+//                'params' => [],
+//                'icon' => 'hs-admin-bar-chart',
+//                'permission' => Permissions::$agents_menu,
+//                'submenu' => [
+//                    'ReportDemoUsername' => [
+//                        'text' => _i('Users'),
+//                        'level_class' => 'top',
+//                        'route' => 'agents.reports.financial.state.username',
+//                        'params' => [],
+//                        'icon' => 'hs-admin-pie-chart',
+//                        'permission' => Permissions::$agents_menu,
+//                        'submenu' => []
+//                    ],
+//                    'ReportDemoProviders' => [
+//                        'text' => _i('Providers'),
+//                        'level_class' => 'top',
+//                        'route' => 'agents.reports.financial.state.provider',
+//                        'params' => [],
+//                        'icon' => 'hs-admin-pie-chart',
+//                        'permission' => Permissions::$agents_menu,
+//                        'submenu' => []
+//                    ],
+//                ]
+//            ],
+
 
             'Financial' => [
                 'text' => _i('Financial'),
@@ -2621,6 +2670,7 @@ if (!function_exists('menu')) {
                 'route' => null,
                 'params' => [],
                 'icon' => 'hs-admin-user',
+                'permission' => Permissions::$section_games_menu,
                 'submenu' => [
                     'CreateLobby' => [
                         'text' => _i('Create Lobby'),
@@ -2628,6 +2678,7 @@ if (!function_exists('menu')) {
                         'route' => 'games.create',
                         'params' => [],
                         'icon' => 'hs-admin-plus',
+                        'permission' => Permissions::$manage_lobby_games_menu,
                         'submenu' => []
                     ]
                 ],

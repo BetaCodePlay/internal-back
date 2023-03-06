@@ -874,7 +874,7 @@ class Configurations
 
                 } else {
                     $size = $templateElement->data->section_images->positions->{"logo-dark"};
-                    $configuration->logo->img_dark = "https://dotworkers-llc.s3.amazonaws.com/logos/$size/logo.png";
+                    $configuration->logo->img_dark = "https://24live-llc.s3.amazonaws.com/logos/$size/logo.png";
                 }
             }
 
@@ -887,7 +887,7 @@ class Configurations
 
                 } else {
                     $size = $templateElement->data->section_images->positions->{"logo-light"};
-                    $configuration->logo->img_light = "https://dotworkers-llc.s3.amazonaws.com/logos/$size/logo.png";
+                    $configuration->logo->img_light = "https://24live-llc.s3.amazonaws.com/logos/$size/logo.png";
                 }
             }
 
@@ -897,7 +897,7 @@ class Configurations
 
             } else {
                 $size = $templateElement->data->section_images->positions->{"logo-dark"};
-                $configuration->logo->img_dark = "https://dotworkers-llc.s3.amazonaws.com/logos/$size/logo.png";
+                $configuration->logo->img_dark = "https://24live-llc.s3.amazonaws.com/logos/$size/logo.png";
             }
 
             if (!is_null($configuration->logo->img_light)) {
@@ -905,7 +905,7 @@ class Configurations
 
             } else {
                 $size = $templateElement->data->section_images->positions->{"logo-light"};
-                $configuration->logo->img_light = "https://dotworkers-llc.s3.amazonaws.com/logos/$size/logo.png";
+                $configuration->logo->img_light = "https://24live-llc.s3.amazonaws.com/logos/$size/logo.png";
             }
         }
         return $configuration->logo;

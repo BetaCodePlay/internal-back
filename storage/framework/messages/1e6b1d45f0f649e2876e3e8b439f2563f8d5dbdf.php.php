@@ -21,7 +21,7 @@
         }
     ],
     "require": {
-        "dotworkers/configurations": "3.*"
+        "dotworkers/configurations": "6.*"
     },
     "autoload": {
         "psr-4": {

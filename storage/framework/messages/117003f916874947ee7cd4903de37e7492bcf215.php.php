@@ -25,22 +25,26 @@
     <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
         <?php echo $__env->make('back.layout.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
-            <div class="g-pt-20 g-pr-20">
-                <div class="row">
-                    <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
-                        <div class="form-group">
-                            <select name="timezone" class="form-control change-timezone" data-route="<?php echo e(route('core.change-timezone')); ?>">
-                                <?php $__currentLoopData = $global_timezones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $global_timezone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($global_timezone['timezone']); ?>" <?php echo e($global_timezone['timezone'] == session()->get('timezone') ? 'selected' : ''); ?>>
-                                        <?php echo e($global_timezone['text']); ?>
+            <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+                <div class="g-pt-20 g-pr-20">
+                    <div class="row">
+                        <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                <select name="timezone" class="form-control change-timezone" data-route="<?php echo e(route('core.change-timezone')); ?>">
+                                    <?php $__currentLoopData = $global_timezones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $global_timezone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($global_timezone['timezone']); ?>" <?php echo e($global_timezone['timezone'] == session()->get('timezone') ? 'selected' : ''); ?>>
+                                            <?php echo e($global_timezone['text']); ?>
 
-                                    </option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
+                                        </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php endif; ?>
+
+
             <div class="g-pa-20">
                 <?php echo $__env->yieldContent('content'); ?>
             </div>

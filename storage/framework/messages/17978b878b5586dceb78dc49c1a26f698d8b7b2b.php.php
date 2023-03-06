@@ -21,7 +21,7 @@
     ],
     "require": {
         "jenssegers/agent": "^2.6",
-        "dotworkers/configurations": "3.*"
+        "dotworkers/configurations": "6.*"
     },
     "autoload": {
         "psr-4": {

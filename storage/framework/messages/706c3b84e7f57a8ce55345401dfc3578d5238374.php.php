@@ -180,7 +180,7 @@ class Slider extends Model
         }
 
         if (!empty($currency)) {
-            \Log::info(__METHOD__, ['2.3 $currency' => $currency]);
+            //\Log::info(__METHOD__, ['2.3 $currency' => $currency]);
             $query->whereIn('currency_iso', $currency);
         }
 

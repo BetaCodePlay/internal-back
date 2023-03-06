@@ -1,31 +1,40 @@
 
 <?php $__env->startSection('styles'); ?>
     <style>
-        .init_agent{
-            color: #3398dc !important;
-            font-weight: bold!important;
+        .name_1{
+            color: #3398dc !important
         }
-        .init_user{
-            color: #e62154 !important;
-            font-weight: bold!important;
+        .name_2{
+            color: #e62154 !important
         }
     </style>
 <?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
-    <div class="noty_bar noty_type__warning noty_theme__unify--v1 g-mb-25">
-        <div class="noty_body">
-            <div class="g-mr-20">
-                <div class="noty_body__icon">
-                    <i class="hs-admin-alert"></i>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" id="username_like" name="username_like" class="form-control" autocomplete="off" placeholder="<?php echo e(_i('Username')); ?>">
                 </div>
             </div>
-            <div>
-                <?php echo e(_i('This report makes closings and calculations every hour')); ?>
-
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" id="date_range" class="form-control" autocomplete="off" placeholder="<?php echo e(_i('Date range')); ?>">
+                    <div class="input-group-append">
+                        <button class="btn g-bg-primary" type="button" id="update"
+                                data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                            <i class="hs-admin-reload g-color-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
-    <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <br>
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
         <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
             <div class="media">
@@ -41,7 +50,7 @@
 
                 </div>
             </div>
-            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data')); ?>">
+            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.username')); ?>">
 
             </div>
         </div>
@@ -53,6 +62,7 @@
         $(function () {
             let agents = new Agents();
             agents.financialState(<?php echo e($user); ?>);
+            $('#update').trigger('click')
         });
     </script>
 <?php $__env->stopSection(); ?>
