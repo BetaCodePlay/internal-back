@@ -360,7 +360,7 @@ if (!function_exists('menu')) {
                 'permission' => Permissions::$agents_menu,
                 'submenu' => [
                     'ReportDemoUsername' => [
-                        'text' => _i('Usuarios'),
+                        'text' => _i('Users'),
                         'level_class' => 'top',
                         'route' => 'agents.reports.financial.state.username',
                         'params' => [],
@@ -369,7 +369,7 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
                     'ReportDemoProviders' => [
-                        'text' => _i('Proveedor'),
+                        'text' => _i('Providers'),
                         'level_class' => 'top',
                         'route' => 'agents.reports.financial.state.provider',
                         'params' => [],
