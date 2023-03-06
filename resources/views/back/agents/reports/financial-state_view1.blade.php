@@ -44,7 +44,7 @@
 {{--                    <th scope="col">Apostado</th>--}}
 {{--                    <th scope="col">Ganado</th>--}}
 {{--                    <th scope="col">NetWin</th>--}}
-{{--                    <th scope="col">Comision</th>--}}
+{{--                    <th scope="col">Comission</th>--}}
 {{--                </tr>--}}
 {{--                </thead>--}}
 {{--                <tbody>--}}

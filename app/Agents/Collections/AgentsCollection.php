@@ -785,7 +785,7 @@ class AgentsCollection
                             <th scope="col" class="text-center">%s</th>
                         </tr>
                     </thead>',
-            _i('Usuario'),
+            _i('Users'),
             _i('Played'),
             _i('Win'),
             _i('Bets'),
@@ -828,7 +828,7 @@ class AgentsCollection
                             <th scope="col" class="text-center">%s</th>
                         </tr>
                     </thead>',
-            _i('Usuario'),
+            _i('Users'),
             _i('Played'),
             _i('Win'),
             _i('Bets'),
@@ -878,7 +878,7 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comission')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -976,7 +976,7 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comission')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -1109,7 +1109,7 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comission')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -1678,7 +1678,7 @@ class AgentsCollection
                 $html .= sprintf(
                     '<tr><td>%s <strong>%s</strong></td>',
                     $user->username,
-                    _i('(Playedr)')
+                    _i('(Played)')
                 );
 
                 $html .= sprintf(
@@ -1969,7 +1969,7 @@ return $html;
         }else{
             $html .= sprintf(
                 '<tr><td class="text-center" colspan="6"><strong>%s</strong></td>',
-                _i('Sin Registros')
+                _i('no records')
             );
         }
 
@@ -2079,7 +2079,7 @@ return $html;
                                   <!--TODO TOTAL COMISION-->
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' style='background-color: #92ff678c;'><strong>"._i('Total Comisison ')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' style='background-color: #92ff678c;'><strong>"._i('Total Comission ')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>

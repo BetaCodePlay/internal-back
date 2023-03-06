@@ -33,7 +33,7 @@
             <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.view1')); ?>">
 
             </div>
-            
+
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -42,7 +42,7 @@
                     <th scope="col">Apostado</th>
                     <th scope="col">Ganado</th>
                     <th scope="col">NetWin</th>
-                    <th scope="col">Comision</th>
+                    <th scope="col">Comission</th>
                 </tr>
                 </thead>
                 <tbody>
