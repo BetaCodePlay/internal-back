@@ -1022,8 +1022,8 @@ class AgentsCollection
         $totalProfit=0;
         if(!empty($tableDb)){
 
-            //$arrayProviderTmp= $closureRepo->getProvidersActive(true);
-            $arrayProviderTmp=[171,166,115]; //DEC
+            $arrayProviderTmp= $closureRepo->getProvidersActive(true);
+            //$arrayProviderTmp=[171,166,115]; //DEC
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider){
                 $providerNull[$provider]=[

@@ -277,7 +277,7 @@ class ClosuresUsersTotals2023Repo
     //PROVIDERS BY STATUS
     public function getProvidersActive(bool $active)
     {
-        return DB::select('SELECT * FROM site.site.providers WHERE status = ?', [$active]);
+        return DB::select('SELECT * FROM site.site.providers WHERE status = ? ORDER BY id DESC ', [$active]);
     }
 
 }
