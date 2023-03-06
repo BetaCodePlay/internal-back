@@ -1067,7 +1067,7 @@ class AgentsCollection
                     }
                     $arrayTmp[$value->user_id]['providers']=$providerDB;
                 }else{
-                    $arrayTmp[$value->user_id]['providers']=$providerNull;
+                   // $arrayTmp[$value->user_id]['providers']=$providerNull;
                 }
 
 
