@@ -771,10 +771,10 @@ class AgentsController extends Controller
             }
 
             $percentage = null;
-            if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+            //if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
                 $percentage = $this->agentsRepo->myPercentageByCurrency($user,session('currency'));
                 $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
-            }
+            //}
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'),$user);
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons,Configurations::getWhitelabel(),session('currency'), $startDate, $endDate,$percentage)
