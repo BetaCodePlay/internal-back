@@ -1022,6 +1022,7 @@ class AgentsCollection
         $totalProfit=0;
         if(!empty($tableDb)){
 
+            //TODO REVISAR STATSUS DE PROVEEDOR EN PRODUCCION
             //$arrayProviderTmp= $closureRepo->getProvidersActive(true);
             $arrayProviderTmp=[171,166,115]; //DEC
             $providerNull = [];
@@ -1067,7 +1068,7 @@ class AgentsCollection
                     }
                     $arrayTmp[$value->user_id]['providers']=$providerDB;
                 }else{
-                   // $arrayTmp[$value->user_id]['providers']=$providerNull;
+                    $arrayTmp[$value->user_id]['providers']=$providerNull;
                 }
 
 
