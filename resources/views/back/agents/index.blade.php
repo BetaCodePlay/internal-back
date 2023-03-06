@@ -614,6 +614,7 @@
                             </div>
                         @endif
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="financial-state" role="tabpanel" aria-labelledby="financial-state-tab">
+                            <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
                                 <div class="input-group">
                                     <input type="hidden" id="username_like" name="username_like">
                                     <input type="text" id="date_range" class="form-control" autocomplete="off" placeholder="{{ _i('Date range') }}">
@@ -624,6 +625,7 @@
                                         </button>
                                     </div>
                                 </div>
+                            </div>
 {{--                            @include('back.layout.litepicker')--}}
 {{--                            <div class="col-md-12">--}}
 {{--                                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">--}}
