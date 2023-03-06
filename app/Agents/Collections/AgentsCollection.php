@@ -15,6 +15,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -790,7 +791,6 @@ class AgentsCollection
             _i('Apuestas'),
             _i('Profit'),
             _i('Rtp'),
-            //_i('Comisión'),
         );
 
         if(!empty($username)){
@@ -801,16 +801,351 @@ class AgentsCollection
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlUsername .= "<td class='text-center'>" . $value->total_bet . "</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "%</td>";
-                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_rtp ,2) . "%</td>";
-                //$htmlUsername .= "<td class='text-center'>0.00</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
+                $htmlUsername .= "<td class='text-center'>" . number_format(($value->total_won/$value->total_played)*100 ,2) . " %</td>";
                 $htmlUsername .= "</tr>";
             }
             $htmlUsername .= "</tbody>";
         }else{
-            $htmlUsername .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='7'>Sin registros</td></tr></tbody>";
+            $htmlUsername .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='7'>"._i('no records')."</td></tr></tbody>";
         }
         return  $htmlUsername;
+
+    }
+
+    public function closuresTotalUsername($tableDb,$percentage = null)
+    {
+
+        $htmlUsername = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Usuario'),
+            _i('Jugado'),
+            _i('Ganado'),
+            _i('Apuestas'),
+            _i('Profit'),
+            _i('Rtp'),
+        );
+
+        if(!empty($tableDb)){
+            $htmlUsername .= "<tbody>";
+            $totalPlayed=0;
+            $totalWon =0;
+            $totalBet =0;
+            $totalProfit =0;
+            foreach ($tableDb as $item => $value){
+                $totalPlayed += $value->total_played;
+                $totalWon += $value->total_won;
+                $totalBet += $value->total_bet;
+                $totalProfit += $value->total_profit;
+                $htmlUsername .= "<tr class='".$value->id_user."'>";
+                    $htmlUsername .= "<td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->user_name . "</td>";
+                    //$htmlUsername .= "<td data-type='".$closuresUsersTotalsRepo->dataUser($value->user_id)->type_user."' class='name_".$closuresUsersTotalsRepo->dataUser($value->user_id)->type_user."'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $closuresUsersTotalsRepo->dataUser($value->user_id)->username . "</td>";
+                    $htmlUsername .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                    $htmlUsername .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                    $htmlUsername .= "<td class='text-center'>" . $value->total_bet . "</td>";
+                    $htmlUsername .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
+                    $htmlUsername .= "<td class='text-center'>" . number_format($value->rtp,2) . " %</td>";
+                $htmlUsername .= "</tr>";
+            }
+            $htmlUsername .= "<tr><td class='text-center' colspan='6'></td></tr>
+                              <tr>
+                                  <td class='text-center'><strong>"._i('Totales')."</strong></td>
+                                  <td class='text-center'><strong>".number_format($totalPlayed,2)."</strong></td>
+                                  <td class='text-center'><strong>".number_format($totalWon ,2)."</strong></td>
+                                  <td class='text-center'><strong>".$totalBet."</strong></td>
+                                  <td class='text-center'><strong>".number_format($totalProfit,2)."</strong></td>
+                                  <td class='text-center'><strong>".number_format(($totalWon/$totalPlayed)*100 ,2)."%</strong></td>
+                              </tr>
+                             </tbody>";
+
+            //$htmlUsername .= "</tbody>";
+
+
+            if(!is_null($percentage)){
+                $totalComission = $totalProfit* ($percentage/100);
+                $htmlUsername .= "<tr>
+                                      <td class='text-center' colspan='6'></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>".number_format(($totalComission),2)."</strong>  </td>
+                                  </tr>
+                                  <!--TODO TOTAL A PAGAR-->
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>"._i('Total a Pagar')." </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(".number_format((100-$percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" .number_format(($totalProfit-$totalComission),2)."</strong>  </td>
+                                  </tr>";
+            }else{
+                $htmlUsername .= "<tr>
+                                      <td class='text-center' colspan='6'></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Profit')."</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>".number_format(($totalProfit),2)."</strong>  </td>
+                                  </tr>
+                                  ";
+            }
+
+
+        }else{
+            $htmlUsername .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='7'>"._i('no records')."</td></tr></tbody>";
+        }
+        return  $htmlUsername;
+
+    }
+
+    public function closuresTotalsProvider($tableDb,$percentage = null)
+    {
+        $htmlProvider = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Proveedor'),
+            _i('Jugado'),
+            _i('Ganado'),
+            _i('Apuestas'),
+            _i('Profit'),
+            _i('Rtp'),
+        );
+
+        if(!empty($tableDb)){
+            $htmlProvider .= "<tbody>";
+            $totalPlayed=0;
+            $totalWon =0;
+            $totalBet =0;
+            $totalProfit =0;
+            foreach ($tableDb as $item => $value){
+                $totalPlayed += $value->total_played;
+                $totalWon += $value->total_won;
+                $totalBet += $value->total_bet;
+                $totalProfit += $value->total_profit;
+                $htmlProvider .= "<tr class='".$value->id_provider."'>";
+                    $htmlProvider .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $value->provider_name. "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . $value->total_bet . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->rtp ,2) . "%</td>";
+                $htmlProvider .= "</tr>";
+            }
+            $htmlProvider .= "<tr><td class='text-center' colspan='6'></td></tr>
+                              <tr>
+                                  <td class='text-center'><strong>"._i('Totales')."</strong></td>
+                                  <td class='text-center'><strong>".number_format($totalPlayed,2)."</strong></td>
+                                  <td class='text-center'><strong>".number_format($totalWon ,2)."</strong></td>
+                                  <td class='text-center'><strong>".$totalBet."</strong></td>
+                                  <td class='text-center'><strong>".number_format($totalProfit,2)."</strong></td>
+                                  <td class='text-center'><strong>".number_format(($totalWon/$totalPlayed)*100 ,2)."%</strong></td>
+                              </tr>
+                              </tbody>";
+
+            if(!is_null($percentage)){
+                $totalComission = $totalProfit* ($percentage/100);
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='6'></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>".number_format(($totalComission),2)."</strong>  </td>
+                                  </tr>
+                                  <!--TODO TOTAL A PAGAR-->
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>"._i('Total a Pagar')." </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(".number_format((100-$percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" .number_format(($totalProfit-$totalComission),2)."</strong>  </td>
+                                  </tr>";
+            }else{
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='6'></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Profit')."</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>".number_format(($totalProfit),2)."</strong>  </td>
+                                  </tr>
+                                  ";
+            }
+
+        }else{
+            $htmlProvider .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='6'>"._i('no records')."</td></tr></tbody>";
+        }
+
+        return  $htmlProvider;
+
+    }
+
+    public function closuresTotalsByAgentGroupProvider($tableDb,$whitelabel, $currency, $startDate, $endDate,$percentage = null)
+    {
+
+        $closureRepo = new ClosuresUsersTotals2023Repo();
+        $htmlProvider = "";
+        $totalProfit=0;
+        if(!empty($tableDb)){
+
+            $arrayProviderTmp=[171,115,166];
+            $providerNull = [];
+            foreach ($arrayProviderTmp as $index => $provider){
+                $providerNull[$provider]=[
+                    'total_played'=>0,
+                    'total_won'=>0,
+                    'total_profit'=>0,
+                ];
+            }
+            $arrayTmp=[];
+            foreach ($tableDb as $item => $value){
+
+                $arrayTmp[$value->user_id]=[
+                    'id'=>$value->user_id,
+                    'type'=>$value->type_user == 5?'init_user':'init_agent',
+                    'username'=>$value->username,
+                    'providers'=>[]
+                ];
+                if($value->type_user != TypeUser::$player){
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate,$value->user_id);
+                }else {
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id);
+                }
+                if(count($closures)>0){
+
+                    $providerDB=[];
+                    foreach ($closures as $index => $closure){
+                        $providerDB[$closure->id_provider]=[
+                            'total_played'=>$closure->total_played,
+                            'total_won'=>$closure->total_won,
+                            'total_profit'=>$closure->total_profit,
+                        ];
+                    }
+                    foreach ($arrayProviderTmp as $index => $provider){
+                        if(!isset($providerDB[$provider])){
+                            $providerDB[$provider]=[
+                                'total_played'=>0,
+                                'total_won'=>0,
+                                'total_profit'=>0,
+                            ];
+                        }
+                    }
+                    $arrayTmp[$value->user_id]['providers']=$providerDB;
+                }else{
+                    $arrayTmp[$value->user_id]['providers']=$providerNull;
+                }
+
+
+            }
+
+
+            $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>"._i('Usuarios')."</th>";
+            foreach ($arrayProviderTmp as $item => $value){
+                $name = $closureRepo->nameProvider($value);
+                $htmlProvider .= "<th  class='text-center' colspan='3'>".$name."</th>";
+            }
+            $htmlProvider .= "</tr></thead>";
+
+            $htmlProvider .= "<tbody><th></th>";
+            foreach ($arrayProviderTmp as $item => $value){
+                $htmlProvider .= "<th  class=''>"._i('Total Jugado')."</th>";
+                $htmlProvider .= "<th  class=''>"._i('Total Ganado')."</th>";
+                $htmlProvider .= "<th  class=''>"._i('Total Profit')."</th>";
+            }
+            $htmlProvider .= "</tr>";
+
+            foreach ($arrayTmp as $item => $value){
+                $htmlProvider .= "<tr>";
+                $htmlProvider .= "<td class='".$value['type']."'>".$value['username']."</td>";
+                foreach ($value['providers'] as $i => $provider){
+                    $totalProfit += $provider['total_profit'];
+                    $htmlProvider .= "<td>".$provider['total_played']."</td>";
+                    $htmlProvider .= "<td>".$provider['total_won']."</td>";
+                    $htmlProvider .= "<td>".$provider['total_profit']."</td>";
+                }
+                $htmlProvider .= "</tr>";
+
+            }
+
+            if(!is_null($percentage)){
+                $totalComission = $totalProfit* ($percentage/100);
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3)."'><br></td>
+                                      <td class='text-center'><br></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>".number_format(($totalComission),2)."</strong>  </td>
+                                  </tr>
+                                  <!--TODO TOTAL A PAGAR-->
+                                  <tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>"._i('Total a Pagar')." </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(".number_format((100-$percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1). "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" .number_format(($totalProfit-$totalComission),2)."</strong>  </td>
+                                  </tr>";
+            }else{
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3)."'><br></td>
+                                      <td class='text-center'><br></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Profit')."</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>".number_format(($totalProfit),2)."</strong>  </td>
+                                  </tr>
+                                  ";
+            }
+
+            $htmlProvider .= "</tbody>";
+
+
+        }
+
+        return $htmlProvider;
 
     }
 
@@ -1052,11 +1387,11 @@ class AgentsCollection
                 $agentsUsersIds[] = $dependencyItem['id'];
             }
 
-//            $auxHTML .= sprintf(
-//                '<tr class="init_agent"><td>%s <strong>%s</strong></td>',
-//                $agent->username,''
-//                //_i('(Agent)')
-//            );
+            $auxHTML .= sprintf(
+                '<tr class="init_agent"><td>%s <strong>%s</strong></td>',
+                $agent->username,''
+                //_i('(Agent)')
+            );
 
             if (count($dependency) > 0) {
                 $financial = $closuresUsersTotalsRepo->getUsersTotalsByIds($whitelabel, $startDate, $endDate, $currency, $agentsUsersIds);
@@ -1070,35 +1405,37 @@ class AgentsCollection
 
             if ($agentTotalPlayed > 0 || $agentTotalWon > 0) {
                 $html .= $auxHTML;
+                $percentage = '-';
                 if ($agent->percentage > 0) {
-                    //$percentage = number_format($agent->percentage, 2);
-                    $percentage = $agent->percentage;
-                    $agentTotalCollect = $agentTotalProfit * ($percentage / 100);
+                    $percentage = number_format($agent->percentage, 2);
+                    //$percentage = $agent->percentage;
+                    $agentTotalCollect = $agentTotalProfit * ($agent->percentage / 100);
 
                 } else {
-                    $percentage = '-';
+
                     $agentTotalCollect = $agentTotalProfit;
                 }
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    number_format($agentTotalPlayed, 2)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    number_format($agentTotalWon, 2)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    number_format($agentTotalProfit, 2)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td>',
-//                    ($percentage !='-'?$percentage.'%':$percentage)
-//                );
-//                $html .= sprintf(
-//                    '<td class="text-right">%s</td></tr>',
-//                    number_format($agentTotalCollect, 2)
-//                );
+
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalPlayed, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalWon, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    number_format($agentTotalProfit, 2)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td>',
+                    ($percentage !='-'?$percentage.'%':$percentage)
+                );
+                $html .= sprintf(
+                    '<td class="text-right">%s</td></tr>',
+                    number_format($agentTotalCollect, 2)
+                );
             }
             $totalPlayed += $agentTotalPlayed;
             $totalWon += $agentTotalWon;
@@ -1125,30 +1462,30 @@ class AgentsCollection
                     $won = $userTotal->won;
                     $profit = $userTotal->profit;
 
-//                    $html .= sprintf(
-//                        '<tr class="init_user"><td>%s <strong>%s</strong></td>',
-//                        $user->username, ''
-//                        //_i('(Player)')
-//                    );
-//                    $html .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($played, 2)
-//                    );
-//                    $html .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($won, 2)
-//                    );
-//                    $html .= sprintf(
-//                        '<td class="text-right">%s</td>',
-//                        number_format($profit, 2)
-//                    );
+                    $html .= sprintf(
+                        '<tr class="init_user"><td>%s <strong>%s</strong></td>',
+                        $user->username, ''
+                        //_i('(Player)')
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($played, 2)
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($won, 2)
+                    );
+                    $html .= sprintf(
+                        '<td class="text-right">%s</td>',
+                        number_format($profit, 2)
+                    );
 
                     $userTotalPlayed += $played;
                     $userTotalWon += $won;
                     $userTotalProfit += $profit;
 
-//                    $html .= '<td class="text-right">-</td>';
-//                    $html .= '<td class="text-right">-</td></tr>';
+                    $html .= '<td class="text-right">-</td>';
+                    $html .= '<td class="text-right">-</td></tr>';
                     $totalPlayed += $userTotalPlayed;
                     $totalWon += $userTotalWon;
                     $totalProfit += $userTotalProfit;
@@ -1552,23 +1889,22 @@ return $html;
                 $total_played = 0;
                 $total_won = 0;
                 $total_profit = 0;
-                $percentageUser = !is_null($user->percentage)?$user->percentage:'-';
+                $percentageUser = '-';
                 $agentTotalCollect = 0;
 
                 if((int)$user->type_user != TypeUser::$player){
                     $class = 'init_agent';
-                    $classRow = 'color: #3398dc !important;';
-                    $typeRow = _i('Agente');
                     $allUsersByAgent = $closuresUsersTotals2023Repo->allUsersByAgent($user->user_id, $currency,true);
 
                     if(count($allUsersByAgent)>0){
                         $totals2023 = $closuresUsersTotals2023Repo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,$allUsersByAgent,'currency_iso');
 
                         foreach ($totals2023 as $item => $value){
-                            if ($percentageUser != '-') {
-                                $agentTotalCollect = $value->total_profit * ($percentageUser / 100);
-                                //$agentTotalCollect = $value->total_profit - $agentTotalCollect0;
-                            } else {
+                            if (isset($user->percentage) && !is_null($user->percentage) && $user->percentage > 0) {
+                                $percentageUser = $user->percentage;
+                                $percentageUser = $percentageUser.'%';
+                                $agentTotalCollect = $value->total_profit * ($user->percentage / 100);
+                            }else {
                                 $agentTotalCollect = $value->total_profit;
                             }
                             //TODO SUM TOTAL
@@ -1587,18 +1923,8 @@ return $html;
                     }
                 }else{
                     $class = 'init_user';
-                    $classRow = 'color: #e62154 !important;';
-                    $typeRow = _i('Jugador');
                     $totals2023 = $closuresUsersTotals2023Repo->getClosureByGroupTotals($startDate, $endDate,$whitelabel,$currency,[$user->user_id],'currency_iso');
                     foreach ($totals2023 as $item => $value){
-
-//                        if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
-//                            $percentageUser = number_format($iAgent->percentage, 2);
-//                            $agentTotalCollect0 = $value->total_profit * ($percentageUser / 100);
-//                            $agentTotalCollect = $value->total_profit - $agentTotalCollect0;
-//                        } else {
-                            //$agentTotalCollect = $value->total_profit;
-//                        }
 
                         //TODO SUM TOTAL
                         $totalPlayed = $totalPlayed + $value->total_played;
@@ -1632,7 +1958,7 @@ return $html;
                         '<td class="text-right">%s</td>',$total_profit
                     );
                     $html .= sprintf(
-                        '<td class="text-right">%s</td>',$percentageUser != '-'?$percentageUser.'%':$percentageUser
+                        '<td class="text-right">%s</td>',$percentageUser
                     );
                     $html .= sprintf(
                         '<td class="text-right">%s</td></tr>',$agentTotalCollect
@@ -1675,7 +2001,7 @@ return $html;
         //TODO TOTAL COMISSION
         $percentageUser = '-';
         if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
-            $percentageUser = $iAgent->percentage;
+            $percentageUser = $iAgent->percentage.'%';
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
         } else {
             $agentTotalCollectTmp = $totalProfit;
@@ -1694,10 +2020,7 @@ return $html;
         $percentageUser = '-';
         if (isset($iAgent->percentage) && !is_null($iAgent->percentage) && $iAgent->percentage > 0) {
             $percentageUser = (100-$iAgent->percentage);
-            Log::info('TOTALTOPAY',[
-                $percentageUser,
-                $iAgent->percentage
-            ]);
+            $percentageUser = $percentageUser.'%';
             $agentTotalCollectTmp = $totalProfit * (number_format($iAgent->percentage, 2) / 100);
             $agentTotalCollectTotal = $totalProfit - $agentTotalCollectTmp;
         } else {
@@ -1716,6 +2039,69 @@ return $html;
 
         $html .= '</tbody></table>';
         return $html;
+
+    }
+
+    public function closuresTotalsByWhitelabels($tableDb,$percentage = null)
+    {
+        $htmlProvider = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Toral Jugado'),
+            _i('Total Ganado'),
+            _i('Total de Apuestas'),
+            _i('Total Profit'),
+            _i('Total Rtp'),
+        );
+
+        if(!empty($tableDb)){
+            $htmlProvider .= "<tbody>";
+            foreach ($tableDb as $item => $value){
+                $htmlProvider .= "<tr class=''>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . $value->total_bet . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->rtp ,2) . "%</td>";
+                $htmlProvider .= "</tr>";
+            }
+            if(!is_null($percentage)){
+                $totalComission = $value->total_profit* ($percentage/100);
+                $htmlProvider .= "<tr><td class='text-center' colspan='5'></td></tr>
+                                  <!--TODO TOTAL COMISION-->
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' style='background-color: #92ff678c;'><strong>"._i('Total Comisison ')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' style='background-color: #92ff678c;'><strong>".number_format(($totalComission),2)."</strong></td>
+                                  </tr>
+                                  <!--TODO TOTAL A PAGAR-->
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' style='background-color: #ff588373;'><strong>"._i('Total a Pagar')." </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(".number_format((100-$percentage),2)."%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' style='background-color: #ff588373;'><strong>".number_format(($value->total_profit-$totalComission),2)."</strong></td>
+                                  </tr>";
+            }
+
+            $htmlProvider .= "</tbody>";
+        }else{
+            $htmlProvider .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='5'>"._i('no records')."</td></tr></tbody>";
+        }
+
+        return  $htmlProvider;
 
     }
 

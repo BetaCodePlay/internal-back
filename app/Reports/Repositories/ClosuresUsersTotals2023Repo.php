@@ -109,15 +109,15 @@ class ClosuresUsersTotals2023Repo
                 SUM (site.closures_users_totals_2023.profit) as total_profit,
                 SUM (site.closures_users_totals_2023.rtp) as total_rtp
             FROM site.closures_users_totals_2023
-            WHERE site.closures_users_totals_2023.whitelabel_id = '{$whitelabel}'
+            WHERE site.closures_users_totals_2023.whitelabel_id = {$whitelabel}
             AND site.closures_users_totals_2023.currency_iso = '{$currency_iso}'
             AND site.closures_users_totals_2023.start_date BETWEEN '{$startDate}' AND '{$endDate}'
-            AND site.closures_users_totals_2023.end_date BETWEEN '{$startDate}' AND '{$endDate}'
             GROUP BY site.closures_users_totals_2023.{$fieldGroup}");
 
         } else {
-            $arrayUsers = implode(',', $arrayUsers);
 
+            $arrayUsers = implode(',', $arrayUsers);
+//dd($arrayUsers);
             $closure = DB::select("SELECT
                 site.closures_users_totals_2023.{$fieldGroup},
                 SUM (site.closures_users_totals_2023.played) as total_played,
@@ -126,11 +126,10 @@ class ClosuresUsersTotals2023Repo
                 SUM (site.closures_users_totals_2023.profit) as total_profit,
                 SUM (site.closures_users_totals_2023.rtp) as total_rtp
             FROM site.closures_users_totals_2023
-            WHERE site.closures_users_totals_2023.whitelabel_id = '{$whitelabel}'
+            WHERE site.closures_users_totals_2023.whitelabel_id = {$whitelabel}
             AND site.closures_users_totals_2023.currency_iso = '{$currency_iso}'
             AND site.closures_users_totals_2023.user_id IN ({$arrayUsers})
             AND site.closures_users_totals_2023.start_date BETWEEN '{$startDate}' AND '{$endDate}'
-            AND site.closures_users_totals_2023.end_date BETWEEN '{$startDate}' AND '{$endDate}'
             GROUP BY site.closures_users_totals_2023.{$fieldGroup}");
         }
 
@@ -203,6 +202,76 @@ class ClosuresUsersTotals2023Repo
         return $provider_name;
 
 
+    }
+
+
+    //TODO REPORTE POR USUARIO
+
+    //TODO REPORTE POR USUARIO EN LA TABLA CLOSURES_USERS_TOTAL_2023
+    public function getClosureTotalsByUsername(int $whitelabel, string $currency,string $startDate ,string $endDate,string $username)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_username(?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$username]);
+    }
+    public function getClosureTotalsByUsernameWithSon(int $whitelabel, string $currency,string $startDate ,string $endDate,string $username,int $owner_id)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_username_with_son(?,?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$username,$owner_id]);
+    }
+    public function getClosureTotalsLimit(int $whitelabel, string $currency,string $startDate ,string $endDate,int $limit = 1000)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_limit(?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$limit]);
+    }
+    public function getClosureTotalsWithSon(int $whitelabel, string $currency,string $startDate ,string $endDate,int $owner_id)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_with_son(?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$owner_id]);
+    }
+
+    //TODO REPORTE POR PROVIDERS
+
+    //TODO REPORTE POR PROVEEDOR EN LA TABLA CLOSURES_USERS_TOTAL_2023
+    public function getClosureTotalsByWhitelabelAndProviders(int $whitelabel, string $currency,string $startDate ,string $endDate)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers(?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate]);
+    }
+    public function getClosureTotalsByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency,string $startDate ,string $endDate,int $owner_id)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$owner_id]);
+    }
+    public function getClosureTotalsByWhitelabelAndProvidersAndUser(int $whitelabel, string $currency,string $startDate ,string $endDate,int $user_id)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_and_user(?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$user_id]);
+    }
+
+    //TODO REPORTE TOTALS BY WHITELABELS
+
+    //TODO RESUMEN PO WHITELABELS
+    public function getClosureTotalsByWhitelabel(int $whitelabel, string $currency,string $startDate ,string $endDate)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel(?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate]);
+    }
+    public function getClosureTotalsByWhitelabelWithSon(int $whitelabel, string $currency,string $startDate ,string $endDate,int $owner_id)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_with_son(?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$owner_id]);
+    }
+
+    //TODO AGENTS
+    public function getAgentsByWhitelabelAndCurrency(int $whitelabel, string $currency)
+    {
+        return DB::select('SELECT * FROM site.get_agents_by_whitelabel_and_currency(?,?)', [$whitelabel,$currency]);
+    }
+    public function getMyAgentsSonByWhitelabelAndCurrency(int $owner_id,int $whitelabel, string $currency)
+    {
+        return DB::select('SELECT * FROM site.get_my_agents_son_by_whitelabel_and_currency(?,?,?)', [$owner_id,$whitelabel,$currency]);
+    }
+    public function getClosureTotalsByAgentGroupProvider(int $whitelabel, string $currency,string $startDate ,string $endDate,int $owner_id)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_agent_group_provider(?,?,?,?,?)', [$whitelabel,$currency,$startDate,$endDate,$owner_id]);
+    }
+
+    //TODO
+    //SON PRIMARY (user-agent)
+    public function getUsersAgentsSon(int $whitelabel, string $currency,int $owner_id)
+    {
+        return DB::select('SELECT * FROM site.get_users_agents_son(?,?,?)', [$owner_id,$currency,$whitelabel]);
     }
 
 }

@@ -626,6 +626,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" id="username_like" name="username_like">
                             @include('back.layout.litepicker')
 {{--                            <div class="col-md-12">--}}
 {{--                                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">--}}
@@ -669,14 +670,16 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
 {{--                            </div>--}}
+                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>
+{{--                            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+{{--                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>--}}
+{{--                            @else--}}
+{{--                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-summary-data') }}">--}}
+{{--                                --}}{{----}}{{--TODO NUEVA CONSULTA--}}
+{{--                                --}}{{----}}{{--<div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">--}}
+{{--                                </div>--}}
+{{--                            @endif--}}
 
-                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-summary-data') }}">
-{{--                                TODO URL ORIGINAL--}}
-{{--                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}">--}}
-{{--                                TODO NUEVA CONSULTA--}}
-{{--                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">--}}
-
-                            </div>
                         </div>
                         @if ($agent->master)
                             <div class="tab-pane fade mobile g-py-20 g-px-5" id="locks" role="tabpanel" aria-labelledby="locks-tab">

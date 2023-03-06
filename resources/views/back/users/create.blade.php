@@ -90,6 +90,10 @@
                                         </select>
                                     </div>
                                 </div>
+                            @else
+                                <input name="country" value="{{session('country_iso')}}" type="hidden">
+                                <input name="timezone" value="{{session('timezone')}}" type="hidden">
+                                <input name="currency" value="{{session('currency')}}" type="hidden">
                             @endif
 
                             <div class="col-md-12">

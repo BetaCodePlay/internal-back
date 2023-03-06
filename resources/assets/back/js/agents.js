@@ -450,11 +450,12 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+            let username_like = $('#username_like').val() === ''?'':'?username_like='+$('#username_like').val();
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
             $.ajax({
-                url: `${$table.data('route')}/${user}/${startDate}/${endDate}`,
+                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${username_like}`,
                 type: 'get',
                 dataType: 'json'
 

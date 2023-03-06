@@ -424,22 +424,13 @@ class UsersController extends Controller
      */
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
-
-        if(in_array(Roles::$admin_Beet_sweet,session('roles'))){
-            $rules = [
-                'username' => ['required', new Username()],
-                'password' => ['required', new Password()],
-            ];
-        }else{
-
-            $rules = [
-                'username' => ['required', new Username()],
-                'password' => ['required', new Password()],
-                'country' => 'required',
-                'timezone' => 'required',
-                'currency' => 'required'
-            ];
-        }
+        $rules = [
+            'username' => ['required', new Username()],
+            'password' => ['required', new Password()],
+            'country' => 'required',
+            'timezone' => 'required',
+            'currency' => 'required'
+        ];
         $this->validate($request, $rules);
 
         try {
@@ -1868,7 +1859,7 @@ class UsersController extends Controller
     public function resetPassword(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required|confirmed',
+            'password' => ['required','confirmed',new Password()],
             'password_confirmation' => 'required'
         ]);
 

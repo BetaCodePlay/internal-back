@@ -11,7 +11,30 @@
 @endsection
 
 @section('content')
-    @include('back.layout.litepicker')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" id="username_like" name="username_like" class="form-control" autocomplete="off" placeholder="{{ _i('Username') }}">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" id="date_range" class="form-control" autocomplete="off" placeholder="{{ _i('Date range') }}">
+                    <div class="input-group-append">
+                        <button class="btn g-bg-primary" type="button" id="update"
+                                data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                            <i class="hs-admin-reload g-color-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
         <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
             <div class="media">
