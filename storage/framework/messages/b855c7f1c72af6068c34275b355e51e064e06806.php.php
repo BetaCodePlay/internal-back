@@ -660,21 +660,19 @@
                             </div>
                         <?php endif; ?>
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="financial-state" role="tabpanel" aria-labelledby="financial-state-tab">
-                            <div class="noty_bar noty_type__warning noty_theme__unify--v1 g-mb-25">
-                                <div class="noty_body">
-                                    <div class="g-mr-20">
-                                        <div class="noty_body__icon">
-                                            <i class="hs-admin-alert"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <?php echo e(_i('This report makes closings and calculations every hour')); ?>
-
+                            <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
+                                <div class="input-group">
+                                    <input type="hidden" id="username_like" name="username_like">
+                                    <input type="text" id="date_range" class="form-control" autocomplete="off" placeholder="<?php echo e(_i('Date range')); ?>">
+                                    <div class="input-group-append">
+                                        <button class="btn g-bg-primary" type="button" id="update"
+                                                data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                            <i class="hs-admin-reload g-color-white"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" id="username_like" name="username_like">
-                            <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
 
 
 

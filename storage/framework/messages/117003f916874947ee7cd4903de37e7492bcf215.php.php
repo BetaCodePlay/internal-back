@@ -17,6 +17,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="<?php echo e($favicon); ?>">
     <link rel="apple-touch-icon" sizes="114x114" href="<?php echo e($favicon); ?>">
     <title><?php echo e($title ?? _i('Dotpanel')); ?></title>
+    <link rel="stylesheet" href="<?php echo e(asset('commons/css/template.min.css')); ?>?v=0.12">
     <?php echo $__env->yieldContent('styles'); ?>
 </head>
 <body class=" currency-theme-<?php echo e(session('currency')); ?>">
@@ -25,26 +26,23 @@
     <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
         <?php echo $__env->make('back.layout.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
-            <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
-                <div class="g-pt-20 g-pr-20">
-                    <div class="row">
-                        <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
-                            <div class="form-group">
-                                <select name="timezone" class="form-control change-timezone" data-route="<?php echo e(route('core.change-timezone')); ?>">
-                                    <?php $__currentLoopData = $global_timezones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $global_timezone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($global_timezone['timezone']); ?>" <?php echo e($global_timezone['timezone'] == session()->get('timezone') ? 'selected' : ''); ?>>
-                                            <?php echo e($global_timezone['text']); ?>
+            <?php echo $__env->make('back.layout.warning', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <div class="g-pt-20 g-pr-20">
+                <div class="row">
+                    <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                        <div class="form-group">
+                            <select name="timezone" class="form-control change-timezone" data-route="<?php echo e(route('core.change-timezone')); ?>">
+                                <?php $__currentLoopData = $global_timezones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $global_timezone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($global_timezone['timezone']); ?>" <?php echo e($global_timezone['timezone'] == session()->get('timezone') ? 'selected' : ''); ?>>
+                                        <?php echo e($global_timezone['text']); ?>
 
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
+                                    </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
                         </div>
                     </div>
                 </div>
-            <?php endif; ?>
-
-
+            </div>
             <div class="g-pa-20">
                 <?php echo $__env->yieldContent('content'); ?>
             </div>
@@ -57,7 +55,10 @@
 <script src="<?php echo e(mix('js/custom.min.js', 'back')); ?>"></script>
 <script src="<?php echo e(asset('back/js/scripts.min.js')); ?>?v=21"></script>
 <?php echo $__env->yieldContent('scripts'); ?>
-
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])): ?>
+    <?php echo $__env->make('back.layout.tawk', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php endif; ?>
+<?php echo $__env->make('back.layout.chat', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <script>
     <?php if(env('APP_ENV') == 'testing'): ?>
     $(function () {
@@ -66,7 +67,6 @@
     });
     <?php endif; ?>
 </script>
-<?php echo $__env->make('back.layout.chat', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </body>
 </html>
 

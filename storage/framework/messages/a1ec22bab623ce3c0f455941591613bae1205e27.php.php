@@ -274,4 +274,10 @@ class ClosuresUsersTotals2023Repo
         return DB::select('SELECT * FROM site.get_users_agents_son(?,?,?)', [$owner_id,$currency,$whitelabel]);
     }
 
+    //PROVIDERS BY STATUS
+    public function getProvidersActive(bool $active)
+    {
+        return DB::select('SELECT * FROM site.providers WHERE status = ? ORDER BY id DESC ', [$active]);
+    }
+
 }
