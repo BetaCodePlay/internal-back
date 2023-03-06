@@ -21,7 +21,7 @@ class TypeUser
             }
             case self::$agentCajero:
             {
-                return _i('Agent Atm');
+                return _i('Cashier Agent');
                 break;
             }
             case self::$player:
@@ -31,7 +31,7 @@ class TypeUser
             }
             default:
             {
-                return _i('Sin Definir tipo...');
+                return _i('Undefined type...');
                 break;
             }
         }
