@@ -165,23 +165,19 @@ class AgentsRepo
             ->first();
         return $user;
     }
+
+    public function myPercentageByCurrency(int $user_id, string $currency)
+    {
+        $iAgent = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?)',[$user_id,$currency]);
+        return $iAgent;
+    }
+
     public function iAgent($user)
     {
         $iAgent = DB::select('SELECT a.percentage
                  FROM site.agents a
                  WHERE user_id = ?',[$user]);
         return $iAgent[0];
-    }
-    public function fatherAgent($user)
-    {
-        //TODO FAKE
-        $iAgent = DB::select('SELECT a.percentage
-                 FROM site.agents a
-                 WHERE user_id in (SELECT a.owner_id
-                 FROM site.agents a
-                 WHERE user_id = ?)',[$user]);
-        return $iAgent[0];
-
     }
 
     /**

@@ -1,5 +1,16 @@
 @extends('back.template')
-
+@section('styles')
+    <style>
+        .init_agent{
+            color: #3398dc !important;
+            font-weight: bold!important;
+        }
+        .init_user{
+            color: #e62154 !important;
+            font-weight: bold!important;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="noty_bar noty_type__warning noty_theme__unify--v1 g-mb-25">
         <div class="noty_body">

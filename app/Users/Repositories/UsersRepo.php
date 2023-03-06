@@ -60,7 +60,8 @@ class UsersRepo
             ->orderBy('username', 'ASC')
             ->get();
     }
-    public function advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode,$arrayUsers)
+
+    public function advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $arrayUsers)
     {
         return User::on('replica')
             ->select('users.id', 'profiles.gender', 'users.status', 'users.username', 'users.email', 'users.referral_code', 'profiles.last_name', 'profiles.first_name')
@@ -87,23 +88,6 @@ class UsersRepo
             ->where('provider_id', $provider)
             ->where('currency_iso', $currency)
             ->delete();
-    }
-
-    /**
-     * Find user
-     *
-     * @param int $id User ID
-     * @return mixed
-     */
-    public function find($id)
-    {
-        return User::on('replica')
-            ->select('users.*', 'profiles.*', 'user_currencies.currency_iso')
-            ->join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->leftJoin('user_currencies', 'users.id', '=', 'user_currencies.user_id')
-            ->where('users.id', $id)
-            ->whitelabel()
-            ->first();
     }
 
     /**
@@ -139,36 +123,15 @@ class UsersRepo
     }
 
     /**
-     * Get currency user
+     * Get users by IDs
      *
-     * @param int $id User ID
+     * @param array $ids Users IDs
      * @return mixed
      */
-    public function getCurrencyUser($id)
+    public function getByIDs($ids)
     {
-        $user = User::select('user_currencies.currency_iso')
-            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
-            ->where('users.id', $id)
-            ->whitelabel()
+        return User::whereIn('id', $ids)
             ->get();
-        return $user;
-    }
-
-    /**
-     * Get exclude provider user
-     *
-     * @param int $whitelabel Whitelabel ID
-     * @return mixed
-     */
-    public function getExcludeProviderUser($whitelabel)
-    {
-        $users = User::select('users.username', 'providers.name', 'exclude_providers_users.*')
-            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
-            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
-            ->where('users.whitelabel_id', $whitelabel)
-            ->orderBy('users.username', 'DESC')
-            ->get();
-        return $users;
     }
 
     /**
@@ -184,18 +147,6 @@ class UsersRepo
             ->where('users.whitelabel_id', $whitelabel)
             ->first();
         return $user;
-    }
-
-    /**
-     * Get users by IDs
-     *
-     * @param array $ids Users IDs
-     * @return mixed
-     */
-    public function getByIDs($ids)
-    {
-        return User::whereIn('id', $ids)
-            ->get();
     }
 
     /**
@@ -231,163 +182,36 @@ class UsersRepo
     }
 
     /**
-     * Get segmentation
+     * Get currency user
      *
-     * @param array $country Country ISO
-     * @param string $currency Currency ISO
-     * @param array $excludeCountry Country ISO
-     * @param bool $status User status
-     * @param int $whitelabel User whitelabel
-     * @param string $lastLoginOptions Last login options
-     * @param string $lastLogin Last login
-     * @param string $lastDepositOptions Last deposit options
-     * @param string $lastDeposit Last deposit
-     * @param string $lastWithdrawalOptions Last withdrawal options
-     * @param string $lastWithdrawal Last withdrawal
+     * @param int $id User ID
      * @return mixed
      */
-    public function getSegmentation(
-        $country,
-        $currency,
-        $excludeCountry,
-        $status,
-        $whitelabel,
-        $lastLoginOptions,
-        $lastLogin,
-        $lastDepositOptions,
-        $lastDeposit,
-        $lastWithdrawalOptions,
-        $lastWithdrawal,
-        $language,
-        $registrationOptions,
-        $registrationDate)
+    public function getCurrencyUser($id)
     {
-        $users = User::select('users.id', 'users.username', 'users.email', 'users.status', 'users.last_login', 'users.last_deposit', 'users.created_at',
-            'profiles.phone', 'profiles.country_iso', 'countries.name as country', 'user_currencies.currency_iso', 'profiles.first_name',
-            'profiles.last_name', 'user_currencies.wallet_id', 'users.last_debit', 'profiles.language',
-            \DB::raw("
-                 CASE
-                WHEN (profiles.first_name IS NOT NULL AND profiles.last_name IS NOT NULL AND profiles.dni IS NOT NULL AND profiles.gender IS NOT NULL
-                AND profiles.phone IS NOT NULL AND profiles.birth_date IS NOT NULL) THEN
-            true ELSE false
-            END AS profile_completed"))
+        $user = User::select('user_currencies.currency_iso')
             ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
-            ->join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->join('countries', 'profiles.country_iso', '=', 'countries.iso')
-            ->where('users.whitelabel_id', $whitelabel)
-            ->where('users.status', $status);
-
-        if (!is_null($country) && !in_array('', $country)) {
-            $users->whereIn('profiles.country_iso', $country);
-        }
-
-        if (!empty($excludeCountry)) {
-            $users->whereNotIn('profiles.country_iso', $excludeCountry);
-        }
-
-        if (!is_null($currency) && !in_array(null, (array)$currency)) {
-            $users->whereIn('user_currencies.currency_iso', $currency);
-
-        } else {
-            $users->where('user_currencies.default', true);
-        }
-
-        if (!is_null($lastLogin)) {
-            if ($lastLoginOptions == '==') {
-                $users->where(DB::raw('users.last_login::DATE'), '=', $lastLogin);
-            } else {
-                $users->where(DB::raw('users.last_login::DATE'), $lastLoginOptions, $lastLogin);
-            }
-        }
-
-        if (!is_null($lastDeposit)) {
-            if ($lastDepositOptions == '==') {
-                $users->where(DB::raw('users.last_deposit::DATE'), '=', $lastDeposit);
-            } else {
-                $users->where(DB::raw('users.last_deposit::DATE'), $lastDepositOptions, $lastDeposit);
-            }
-        }
-
-        if (!is_null($lastWithdrawal)) {
-            if ($lastWithdrawalOptions == '==') {
-                $users->where(DB::raw('users.last_debit::DATE'), '=', $lastWithdrawal);
-            } else {
-                $users->where(DB::raw('users.last_debit::DATE'), $lastWithdrawalOptions, $lastWithdrawal);
-            }
-        }
-
-        if (!is_null($registrationDate)) {
-            if ($registrationOptions == '==') {
-                $users->where(DB::raw('users.created_at::DATE'), '=', $registrationDate);
-            } else {
-                $users->where(DB::raw('users.created_at::DATE'), $registrationOptions, $registrationDate);
-            }
-        }
-
-        if (!is_null($language) && !in_array(null, $language)) {
-            $users->whereIn('profiles.language', $language);
-        }
-        return $users->get();
-    }
-
-    /**
-     * Get users conversion data
-     *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $birthDay Birth day
-     * @param string $birthMoth Birth moth
-     * @return mixed
-     */
-    public function getUsersBirthdays($whitelabel, $birthMoth, $birthDay)
-    {
-        $usersBirthdays = User::select('users.id', 'users.username', 'users.email', 'profiles.birth_date as date', 'profiles.phone')
-            ->join('profiles', 'users.id', 'profiles.user_id')
-            ->where('users.whitelabel_id', $whitelabel)
-            ->whereDay('profiles.birth_date', $birthDay)
-            ->whereMonth('profiles.birth_date', $birthMoth)
+            ->where('users.id', $id)
+            ->whitelabel()
             ->get();
-        return $usersBirthdays;
+        return $user;
     }
 
     /**
-     * Get users conversion data
+     * Get exclude provider user
      *
      * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
-     * @param string $startDate Start date
-     * @param string $endDate End date
      * @return mixed
      */
-    public function getUsersConversion($whitelabel, $currency, $startDate, $endDate)
+    public function getExcludeProviderUser($whitelabel)
     {
-        $transactions = User::select('users.id', 'users.created_at', 'users.username', 'users.email', 'profiles.level', 'profiles.dni', 'profiles.phone', 'users.last_login',
-            \DB::raw("
-                 CASE
-                WHEN ( profiles.first_name IS NOT NULL AND profiles.last_name IS NOT NULL AND profiles.dni IS NOT NULL AND profiles.gender IS NOT NULL
-                AND profiles.phone IS NOT NULL AND profiles.birth_date IS NOT NULL) THEN
-            TRUE ELSE FALSE
-            END AS profile_completed,
-            (
-            SELECT COUNT
-                ( * )
-            FROM
-                transactions
-                INNER JOIN providers ON providers.id = transactions.provider_id
-            WHERE
-                transactions.user_id = users.id
-                AND transactions.currency_iso = '$currency'
-                AND transactions.transaction_status_id = " . TransactionStatus::$approved . "
-                AND transactions.transaction_type_id = " . TransactionTypes::$credit . "
-                AND providers.provider_type_id IN  (" . ProviderTypes::$dotworkers . "," . ProviderTypes::$payment . ")
-                AND transactions.created_at BETWEEN '$startDate' AND '$endDate'
-            ) AS deposits"))
-            ->join('profiles', 'profiles.user_id', '=', 'users.id')
-            ->whereBetween('users.created_at', [$startDate, $endDate])
+        $users = User::select('users.username', 'providers.name', 'exclude_providers_users.*')
+            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
+            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
             ->where('users.whitelabel_id', $whitelabel)
-            ->orderBy('deposits', 'DESC');
-
-        $data = $transactions->get();
-        return $data;
+            ->orderBy('users.username', 'DESC')
+            ->get();
+        return $users;
     }
 
     /**
@@ -536,7 +360,7 @@ class UsersRepo
         return $data;
     }
 
-    public function getRegisteredUsersReportTree($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level,$arrayUsers)
+    public function getRegisteredUsersReportTree($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level, $arrayUsers)
     {
 
         $users = User::select('users.id', 'users.username', 'users.email', 'users.created_at', 'users.promo_code', 'users.status', 'countries.iso',
@@ -584,6 +408,106 @@ class UsersRepo
     }
 
     /**
+     * Get segmentation
+     *
+     * @param array $country Country ISO
+     * @param string $currency Currency ISO
+     * @param array $excludeCountry Country ISO
+     * @param bool $status User status
+     * @param int $whitelabel User whitelabel
+     * @param string $lastLoginOptions Last login options
+     * @param string $lastLogin Last login
+     * @param string $lastDepositOptions Last deposit options
+     * @param string $lastDeposit Last deposit
+     * @param string $lastWithdrawalOptions Last withdrawal options
+     * @param string $lastWithdrawal Last withdrawal
+     * @return mixed
+     */
+    public function getSegmentation(
+        $country,
+        $currency,
+        $excludeCountry,
+        $status,
+        $whitelabel,
+        $lastLoginOptions,
+        $lastLogin,
+        $lastDepositOptions,
+        $lastDeposit,
+        $lastWithdrawalOptions,
+        $lastWithdrawal,
+        $language,
+        $registrationOptions,
+        $registrationDate)
+    {
+        $users = User::select('users.id', 'users.username', 'users.email', 'users.status', 'users.last_login', 'users.last_deposit', 'users.created_at',
+            'profiles.phone', 'profiles.country_iso', 'countries.name as country', 'user_currencies.currency_iso', 'profiles.first_name',
+            'profiles.last_name', 'user_currencies.wallet_id', 'users.last_debit', 'profiles.language',
+            \DB::raw("
+                 CASE
+                WHEN (profiles.first_name IS NOT NULL AND profiles.last_name IS NOT NULL AND profiles.dni IS NOT NULL AND profiles.gender IS NOT NULL
+                AND profiles.phone IS NOT NULL AND profiles.birth_date IS NOT NULL) THEN
+            true ELSE false
+            END AS profile_completed"))
+            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->join('countries', 'profiles.country_iso', '=', 'countries.iso')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('users.status', $status);
+
+        if (!is_null($country) && !in_array('', $country)) {
+            $users->whereIn('profiles.country_iso', $country);
+        }
+
+        if (!empty($excludeCountry)) {
+            $users->whereNotIn('profiles.country_iso', $excludeCountry);
+        }
+
+        if (!is_null($currency) && !in_array(null, (array)$currency)) {
+            $users->whereIn('user_currencies.currency_iso', $currency);
+
+        } else {
+            $users->where('user_currencies.default', true);
+        }
+
+        if (!is_null($lastLogin)) {
+            if ($lastLoginOptions == '==') {
+                $users->where(DB::raw('users.last_login::DATE'), '=', $lastLogin);
+            } else {
+                $users->where(DB::raw('users.last_login::DATE'), $lastLoginOptions, $lastLogin);
+            }
+        }
+
+        if (!is_null($lastDeposit)) {
+            if ($lastDepositOptions == '==') {
+                $users->where(DB::raw('users.last_deposit::DATE'), '=', $lastDeposit);
+            } else {
+                $users->where(DB::raw('users.last_deposit::DATE'), $lastDepositOptions, $lastDeposit);
+            }
+        }
+
+        if (!is_null($lastWithdrawal)) {
+            if ($lastWithdrawalOptions == '==') {
+                $users->where(DB::raw('users.last_debit::DATE'), '=', $lastWithdrawal);
+            } else {
+                $users->where(DB::raw('users.last_debit::DATE'), $lastWithdrawalOptions, $lastWithdrawal);
+            }
+        }
+
+        if (!is_null($registrationDate)) {
+            if ($registrationOptions == '==') {
+                $users->where(DB::raw('users.created_at::DATE'), '=', $registrationDate);
+            } else {
+                $users->where(DB::raw('users.created_at::DATE'), $registrationOptions, $registrationDate);
+            }
+        }
+
+        if (!is_null($language) && !in_array(null, $language)) {
+            $users->whereIn('profiles.language', $language);
+        }
+        return $users->get();
+    }
+
+    /**
      * get total desktop or mobile login
      *
      * @param int $whitelabel Whitelabel ID
@@ -623,6 +547,38 @@ class UsersRepo
     /**
      * Get total registered users
      *
+     * @param bool|null $webRegister Web register
+     * @return mixed
+     */
+    public function getTotalRegistered($webRegister = null)
+    {
+        return User::on('replica')
+            ->whitelabel()
+            ->webRegister($webRegister)
+            ->count();
+    }
+
+    /**
+     * Get total registered users by dates
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @param bool $webRegister Web register
+     * @return mixed
+     */
+    public function getTotalRegisteredByDates($whitelabel, $startDate, $endDate, $webRegister)
+    {
+        return User::on('replica')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('whitelabel_id', $whitelabel)
+            ->webRegister($webRegister)
+            ->count();
+    }
+
+    /**
+     * Get total registered users
+     *
      * @param int $whitelabel Whitelabel ID
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
@@ -636,20 +592,6 @@ class UsersRepo
             ->groupBy('date')
             ->get();
         return $users;
-    }
-
-    /**
-     * Get total registered users
-     *
-     * @param bool|null $webRegister Web register
-     * @return mixed
-     */
-    public function getTotalRegistered($webRegister = null)
-    {
-        return User::on('replica')
-            ->whitelabel()
-            ->webRegister($webRegister)
-            ->count();
     }
 
     /**
@@ -670,6 +612,43 @@ class UsersRepo
     }
 
     /**
+     * Get username by currency
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @param string $username Username
+     * @return mixed
+     */
+    public function getUsernameByCurrency($username, $currency, $whitelabel)
+    {
+        return User::select('users.id', 'user_currencies.currency_iso')
+            ->join('user_currencies', 'user_currencies.user_id', '=', 'users.id')
+            ->where('username', $username)
+            ->where('currency_iso', $currency)
+            ->where('whitelabel_id', $whitelabel)
+            ->first();
+    }
+
+    /**
+     * Get users conversion data
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $birthDay Birth day
+     * @param string $birthMoth Birth moth
+     * @return mixed
+     */
+    public function getUsersBirthdays($whitelabel, $birthMoth, $birthDay)
+    {
+        $usersBirthdays = User::select('users.id', 'users.username', 'users.email', 'profiles.birth_date as date', 'profiles.phone')
+            ->join('profiles', 'users.id', 'profiles.user_id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->whereDay('profiles.birth_date', $birthDay)
+            ->whereMonth('profiles.birth_date', $birthMoth)
+            ->get();
+        return $usersBirthdays;
+    }
+
+    /**
      * Get users by currency
      *
      * @param int $whitelabel Whitelabel ID
@@ -687,21 +666,44 @@ class UsersRepo
     }
 
     /**
-     * Get username by currency
+     * Get users conversion data
      *
      * @param int $whitelabel Whitelabel ID
      * @param string $currency Currency ISO
-     * @param string $username Username
+     * @param string $startDate Start date
+     * @param string $endDate End date
      * @return mixed
      */
-    public function getUsernameByCurrency($username, $currency, $whitelabel)
+    public function getUsersConversion($whitelabel, $currency, $startDate, $endDate)
     {
-        return User::select('users.id', 'user_currencies.currency_iso')
-            ->join('user_currencies', 'user_currencies.user_id', '=', 'users.id')
-            ->where('username', $username)
-            ->where('currency_iso', $currency)
-            ->where('whitelabel_id', $whitelabel)
-            ->first();
+        $transactions = User::select('users.id', 'users.created_at', 'users.username', 'users.email', 'profiles.level', 'profiles.dni', 'profiles.phone', 'users.last_login',
+            \DB::raw("
+                 CASE
+                WHEN ( profiles.first_name IS NOT NULL AND profiles.last_name IS NOT NULL AND profiles.dni IS NOT NULL AND profiles.gender IS NOT NULL
+                AND profiles.phone IS NOT NULL AND profiles.birth_date IS NOT NULL) THEN
+            TRUE ELSE FALSE
+            END AS profile_completed,
+            (
+            SELECT COUNT
+                ( * )
+            FROM
+                transactions
+                INNER JOIN providers ON providers.id = transactions.provider_id
+            WHERE
+                transactions.user_id = users.id
+                AND transactions.currency_iso = '$currency'
+                AND transactions.transaction_status_id = " . TransactionStatus::$approved . "
+                AND transactions.transaction_type_id = " . TransactionTypes::$credit . "
+                AND providers.provider_type_id IN  (" . ProviderTypes::$dotworkers . "," . ProviderTypes::$payment . ")
+                AND transactions.created_at BETWEEN '$startDate' AND '$endDate'
+            ) AS deposits"))
+            ->join('profiles', 'profiles.user_id', '=', 'users.id')
+            ->whereBetween('users.created_at', [$startDate, $endDate])
+            ->where('users.whitelabel_id', $whitelabel)
+            ->orderBy('deposits', 'DESC');
+
+        $data = $transactions->get();
+        return $data;
     }
 
     /**
@@ -727,24 +729,6 @@ class UsersRepo
             })->get();
 
         return $users;
-    }
-
-    /**
-     * Get total registered users by dates
-     *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $startDate Start date to filter
-     * @param string $endDate End date to filter
-     * @param bool $webRegister Web register
-     * @return mixed
-     */
-    public function getTotalRegisteredByDates($whitelabel, $startDate, $endDate, $webRegister)
-    {
-        return User::on('replica')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->where('whitelabel_id', $whitelabel)
-            ->webRegister($webRegister)
-            ->count();
     }
 
     /**
@@ -817,6 +801,23 @@ class UsersRepo
     }
 
     /**
+     * Find user
+     *
+     * @param int $id User ID
+     * @return mixed
+     */
+    public function find($id)
+    {
+        return User::on('replica')
+            ->select('users.*', 'profiles.*', 'user_currencies.currency_iso')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->leftJoin('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->where('users.id', $id)
+            ->whitelabel()
+            ->first();
+    }
+
+    /**
      * Search users by username
      *
      * @param string $username User username
@@ -824,7 +825,7 @@ class UsersRepo
      */
     public function search(string $username)
     {
-        return  User::join('profiles', 'users.id', '=', 'profiles.user_id')
+        return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
             ->where('username', 'like', "$username%")
             ->orderBy('username', 'ASC')
@@ -839,6 +840,39 @@ class UsersRepo
             ->orderBy('username', 'ASC')
             ->whereIn('id', $arrayUsers)
             ->get();
+    }
+
+    public function sqlShareTmp($type, $id = null, $typeUser = null)
+    {
+        if ($type === 'users_agent') {
+            //limit 1000
+            // order by asc
+            //where type_user = null
+            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
+        }
+
+        if ($type === 'update_rol') {
+            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
+        }
+
+//        if ($type === 'users') {
+//            //limit 1000
+//            // order by asc
+//            //where type_user = null
+//            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
+//        }
+//        if ($type === 'agent') {
+//            return DB::select('select master from agents where user_id = ?', [$id]);
+//        }
+//        if ($type === 'agent_user') {
+//            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+//        }
+//
+//        if ($type === 'update') {
+//            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+//        }
+
+        return [];
     }
 
     /**
@@ -883,6 +917,80 @@ class UsersRepo
         $user = User::create($data);
         $user->profile()->create($profileData);
         return $user;
+    }
+
+
+    public function sqlTreeAllUsersSon(int $user, string $currency, int $whitelabel)
+    {
+            $arrayUsers = DB::select('SELECT * FROM site.get_users_id_son(?,?,?)', [$user, $currency,$whitelabel]);
+
+        return $arrayUsers;
+
+    }
+
+    public function treeSqlByUser(int $user, string $currency, int $whitelabel, $arrayIds = true, $userLike = null)
+    {
+        if (!is_null($userLike)) {
+            $ilikeTmp = '%'.$userLike.'%';
+            $arrayUsers = DB::select('(SELECT a.user_id, u.username
+                    FROM site.agents a
+                    INNER JOIN site.users u ON a.user_id=u.id
+                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
+                    WHERE a.owner_id= ?
+                     and u.whitelabel_id = ?
+                     and uc.currency_iso = ?
+                     and username Like ?
+                    )
+                    UNION
+                    (SELECT au.user_id, u.username
+                    FROM site.agent_user au
+                    INNER JOIN site.users u ON au.user_id=u.id
+                    WHERE au.agent_id =
+                    (
+                        SELECT a.id FROM site.agents a
+                        INNER JOIN site.agent_currencies ac ON ac.agent_id=a.id
+                        WHERE a.user_id = ? and ac.currency_iso = ?
+                    )
+                     and u.whitelabel_id = ?
+                     and username Like ?
+                    )
+                    ORDER BY username ASC', [$user, $whitelabel, $currency,$ilikeTmp, $user, $currency, $whitelabel,$ilikeTmp]);
+        } else {
+            $arrayUsers = DB::select('(SELECT a.user_id, u.username
+                    FROM site.agents a
+                    INNER JOIN site.users u ON a.user_id=u.id
+                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
+                    WHERE a.owner_id= ?
+                     and u.whitelabel_id = ?
+                     and uc.currency_iso = ?
+                    )
+                    UNION
+                    (SELECT au.user_id, u.username
+                    FROM site.agent_user au
+                    INNER JOIN site.users u ON au.user_id=u.id
+                    WHERE au.agent_id =
+                    (
+                        SELECT a.id FROM site.agents a
+                        INNER JOIN site.agent_currencies ac ON ac.agent_id=a.id
+                        WHERE a.user_id = ? and ac.currency_iso = ?
+                    )
+                     and u.whitelabel_id = ?
+                    )
+                    ORDER BY username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
+        }
+
+
+        if ($arrayIds) {
+            $array = [];
+            foreach ($arrayUsers as $myId) {
+                $array[$myId->user_id] = $myId->user_id;
+            }
+            $arrayUsers = $array;
+
+        }
+
+        return $arrayUsers;
+
     }
 
     /**
@@ -978,46 +1086,6 @@ class UsersRepo
     }
 
     /**
-     * Verify users associated with referrals
-     *
-     * @param int $user User ID
-     * @return mixed
-     */
-    public function verifyReferral($user)
-    {
-        return User::join('referrals', 'users.id', '=', 'referrals.user_id')->where('users.id', $user)->first();
-    }
-
-    /**
-     * Get users with roles
-     *
-     * @return mixed
-     */
-    public function usersWithRoles($whitelabel, $currency)
-    {
-        $users = User::select('users.*')
-            ->join('user_currencies', 'user_currencies.user_id', '=', 'users.id')
-            ->where('whitelabel_id', $whitelabel)
-            ->where('currency_iso', $currency)
-            ->has('roles')
-            ->get();
-        return $users;
-    }
-
-    /**
-     * Get users with permissions
-     *
-     * @return mixed
-     */
-    public function usersWithPermissions($whitelabel)
-    {
-        $users = User::has('permissions')
-            ->where('whitelabel_id', $whitelabel)
-            ->get();
-        return $users;
-    }
-
-    /**
      * User charging point find
      *
      * @param int $id User ID
@@ -1037,75 +1105,44 @@ class UsersRepo
         return $user;
     }
 
-
-    public function treeSqlByUser(int $user, string $currency, int $whitelabel,$arrayIds = true)
+    /**
+     * Get users with permissions
+     *
+     * @return mixed
+     */
+    public function usersWithPermissions($whitelabel)
     {
-        $arrayUsers = DB::select('(SELECT a.user_id, u.username
-                    FROM site.agents a
-                    INNER JOIN site.users u ON a.user_id=u.id
-                    INNER JOIN site.user_currencies uc ON uc.user_id=u.id
-                    WHERE a.owner_id= ?
-                     and u.whitelabel_id = ?
-                     and uc.currency_iso = ?
-                    )
-                    UNION
-                    (SELECT au.user_id, u.username
-                    FROM site.agent_user au
-                    INNER JOIN site.users u ON au.user_id=u.id
-                    WHERE au.agent_id =
-                    (
-                        SELECT a.id FROM site.agents a
-                        INNER JOIN site.agent_currencies ac ON ac.agent_id=a.id
-                        WHERE a.user_id = ? and ac.currency_iso = ?
-                    )
-                     and u.whitelabel_id = ?
-                    )
-                    ORDER BY username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
-
-                    if($arrayIds){
-                        $array = [];
-                        foreach ($arrayUsers as $myId) {
-                            $array[$myId->user_id] = $myId->user_id;
-                        }
-                        $arrayUsers =$array;
-
-                    }
-
-        return $arrayUsers;
-
+        $users = User::has('permissions')
+            ->where('whitelabel_id', $whitelabel)
+            ->get();
+        return $users;
     }
 
-    public function sqlShareTmp($type, $id = null, $typeUser = null)
+    /**
+     * Get users with roles
+     *
+     * @return mixed
+     */
+    public function usersWithRoles($whitelabel, $currency)
     {
-        if ($type === 'users_agent') {
-            //limit 1000
-            // order by asc
-            //where type_user = null
-            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
-        }
+        $users = User::select('users.*')
+            ->join('user_currencies', 'user_currencies.user_id', '=', 'users.id')
+            ->where('whitelabel_id', $whitelabel)
+            ->where('currency_iso', $currency)
+            ->has('roles')
+            ->get();
+        return $users;
+    }
 
-        if ($type === 'update_rol') {
-            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
-        }
-
-//        if ($type === 'users') {
-//            //limit 1000
-//            // order by asc
-//            //where type_user = null
-//            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
-//        }
-//        if ($type === 'agent') {
-//            return DB::select('select master from agents where user_id = ?', [$id]);
-//        }
-//        if ($type === 'agent_user') {
-//            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
-//        }
-//
-//        if ($type === 'update') {
-//            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
-//        }
-
-        return [];
+    /**
+     * Verify users associated with referrals
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function verifyReferral($user)
+    {
+        return User::join('referrals', 'users.id', '=', 'referrals.user_id')->where('users.id', $user)->first();
     }
 
 
