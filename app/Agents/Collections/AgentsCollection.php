@@ -1148,9 +1148,9 @@ class AgentsCollection
             $htmlProvider = sprintf(
                 '<table class="table table-bordered table-sm table-striped table-hover"><thead>
                     <tr>
-                        <th class="text-center">%s</th>
+                        <th>%s</th>
                         <th colspan="3" class="text-center">%s</th>
-                    </tr></thead><tbody><tr><td colspan="4">%s</td></tr></tbody>',
+                    </tr></thead><tbody><tr><td class="text-center" colspan="4">%s</td></tr></tbody>',
                 _i('Agents / Players'),
                 _i('Totals'),
                 _i('no records')
