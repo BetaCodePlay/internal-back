@@ -1022,7 +1022,7 @@ class AgentsCollection
         $totalProfit=0;
         if(!empty($tableDb)){
 
-            $arrayProviderTmp=[171,166];
+            $arrayProviderTmp=[171,115,166];
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider){
                 $providerNull[$provider]=[
