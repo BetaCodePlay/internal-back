@@ -1022,7 +1022,8 @@ class AgentsCollection
         $totalProfit=0;
         if(!empty($tableDb)){
 
-            $arrayProviderTmp=[171,115,166];
+            //$arrayProviderTmp= $closureRepo->getProvidersActive(true);
+            $arrayProviderTmp=[171,166,115]; //DEC
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider){
                 $providerNull[$provider]=[
@@ -1093,9 +1094,9 @@ class AgentsCollection
                 $htmlProvider .= "<td class='".$value['type']."'>".$value['username']."</td>";
                 foreach ($value['providers'] as $i => $provider){
                     $totalProfit += $provider['total_profit'];
-                    $htmlProvider .= "<td>".$provider['total_played']."</td>";
-                    $htmlProvider .= "<td>".$provider['total_won']."</td>";
-                    $htmlProvider .= "<td>".$provider['total_profit']."</td>";
+                    $htmlProvider .= "<td>".number_format($provider['total_played'],2)."</td>";
+                    $htmlProvider .= "<td>".number_format($provider['total_won'],2)."</td>";
+                    $htmlProvider .= "<td>".number_format($provider['total_profit'],2)."</td>";
                 }
                 $htmlProvider .= "</tr>";
 
