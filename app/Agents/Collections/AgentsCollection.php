@@ -2055,7 +2055,7 @@ return $html;
                             <th scope="col" class="text-center">%s</th>
                         </tr>
                     </thead>',
-            _i('Toral Jugado'),
+            _i('Total Jugado'),
             _i('Total Ganado'),
             _i('Total de Apuestas'),
             _i('Total Profit'),
