@@ -614,18 +614,18 @@
                             </div>
                         @endif
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="financial-state" role="tabpanel" aria-labelledby="financial-state-tab">
-                            <div class="noty_bar noty_type__warning noty_theme__unify--v1 g-mb-25">
-                                <div class="noty_body">
-                                    <div class="g-mr-20">
-                                        <div class="noty_body__icon">
-                                            <i class="hs-admin-alert"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        {{ _i('This report makes closings and calculations every hour') }}
-                                    </div>
-                                </div>
-                            </div>
+{{--                            <div class="noty_bar noty_type__warning noty_theme__unify--v1 g-mb-25">--}}
+{{--                                <div class="noty_body">--}}
+{{--                                    <div class="g-mr-20">--}}
+{{--                                        <div class="noty_body__icon">--}}
+{{--                                            <i class="hs-admin-alert"></i>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div>--}}
+{{--                                        {{ _i('This report makes closings and calculations every hour') }}--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <input type="hidden" id="username_like" name="username_like">
                             @include('back.layout.litepicker')
 {{--                            <div class="col-md-12">--}}

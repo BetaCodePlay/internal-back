@@ -785,7 +785,7 @@ class AgentsCollection
                             <th scope="col" class="text-center">%s</th>
                         </tr>
                     </thead>',
-            _i('Usuario'),
+            _i('Users'),
             _i('Played'),
             _i('Win'),
             _i('Bets'),
@@ -828,7 +828,7 @@ class AgentsCollection
                             <th scope="col" class="text-center">%s</th>
                         </tr>
                     </thead>',
-            _i('Usuario'),
+            _i('Users'),
             _i('Played'),
             _i('Win'),
             _i('Bets'),
@@ -878,7 +878,7 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comission')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -976,7 +976,7 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comission')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -1022,7 +1022,8 @@ class AgentsCollection
         $totalProfit=0;
         if(!empty($tableDb)){
 
-            $arrayProviderTmp=[171,115,166];
+            //$arrayProviderTmp= $closureRepo->getProvidersActive(true);
+            $arrayProviderTmp=[171,166,115]; //DEC
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider){
                 $providerNull[$provider]=[
@@ -1093,9 +1094,9 @@ class AgentsCollection
                 $htmlProvider .= "<td class='".$value['type']."'>".$value['username']."</td>";
                 foreach ($value['providers'] as $i => $provider){
                     $totalProfit += $provider['total_profit'];
-                    $htmlProvider .= "<td>".$provider['total_played']."</td>";
-                    $htmlProvider .= "<td>".$provider['total_won']."</td>";
-                    $htmlProvider .= "<td>".$provider['total_profit']."</td>";
+                    $htmlProvider .= "<td>".number_format($provider['total_played'],2)."</td>";
+                    $htmlProvider .= "<td>".number_format($provider['total_won'],2)."</td>";
+                    $htmlProvider .= "<td>".number_format($provider['total_profit'],2)."</td>";
                 }
                 $htmlProvider .= "</tr>";
 
@@ -1109,7 +1110,7 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comision')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>"._i('Total Comission')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='".(count($arrayProviderTmp)*3 - 1)."' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -1143,6 +1144,17 @@ class AgentsCollection
             $htmlProvider .= "</tbody>";
 
 
+        }else{
+            $htmlProvider = sprintf(
+                '<table class="table table-bordered table-sm table-striped table-hover"><thead>
+                    <tr>
+                        <th>%s</th>
+                        <th colspan="3" class="text-center">%s</th>
+                    </tr></thead><tbody><tr><td class="text-center" colspan="4">%s</td></tr></tbody>',
+                _i('Agents / Players'),
+                _i('Totals'),
+                _i('no records')
+            );
         }
 
         return $htmlProvider;
@@ -1678,7 +1690,7 @@ class AgentsCollection
                 $html .= sprintf(
                     '<tr><td>%s <strong>%s</strong></td>',
                     $user->username,
-                    _i('(Playedr)')
+                    _i('(Played)')
                 );
 
                 $html .= sprintf(
@@ -1969,7 +1981,7 @@ return $html;
         }else{
             $html .= sprintf(
                 '<tr><td class="text-center" colspan="6"><strong>%s</strong></td>',
-                _i('Sin Registros')
+                _i('no records')
             );
         }
 
@@ -2079,7 +2091,7 @@ return $html;
                                   <!--TODO TOTAL COMISION-->
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' style='background-color: #92ff678c;'><strong>"._i('Total Comisison ')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
+                                      <td class='text-center' style='background-color: #92ff678c;'><strong>"._i('Total Comission ')."</strong> &nbsp;&nbsp;&nbsp;&nbsp;(".number_format(($percentage),2)."%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='4' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
