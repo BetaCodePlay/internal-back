@@ -10,7 +10,7 @@ use App\Audits\Enums\AuditTypes;
 /**
  * Class AuditsCollection
  *
- * This class allows formatting Audits 
+ * This class allows formatting Audits
  *
  * @package App\Audits\Collections
  * @author  Mayinis Torrealba
@@ -99,7 +99,7 @@ class AuditsCollection
                             _i('Username'),
                             ': ',
                             $audit->data->username,
-                            _i('Currency Iso'),
+                            _i('Currency'),
                             ': ',
                             $audit->data->currency_iso,
                             _i('User Data'),
@@ -211,7 +211,7 @@ class AuditsCollection
                         }
                     }else{
                         $audit->details = '';
-                    }    
+                    }
                     break;
                 }
                 case AuditTypes::$manual_adjustments:
