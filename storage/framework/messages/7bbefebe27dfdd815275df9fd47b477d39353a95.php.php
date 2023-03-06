@@ -2784,6 +2784,7 @@ class Providers
             case self::$inbet:
             case self::$spinomenal_vg:
             case self::$five_men_vg:
+            case self::$bet_connections:
             {
                 if ($transactionType == TransactionTypes::$credit) {
                     if (isset($data->bet_type)) {
@@ -3253,21 +3254,21 @@ class Providers
             }
             case self::$lv_sLots:
             {
-                if (isset($data->data->type)) {
-                    switch ($data->data->type) {
+                if (isset($data->type)) {
+                    switch ($data->type) {
                         case 'debit':
                         {
-                            $description = _i('Bet #%s on the game %s. Round #%s', [$data->data->provider_transaction, $data->data->game,$data->data->provider_transaction]);
+                            $description = _i('Bet #%s on the game %s', [$data->provider_transaction, $data->game, $data->provider_transaction]);
                             break;
                         }
                         case 'credit':
                         {
-                            $description = _i('Bet #%s on the game %s won. Round #%s', [$data->data->provider_transaction, $data->data->game, $data->data->provider_transaction,]);
+                            $description = _i('Bet #%s on the game %s won. Round #%s', [$data->provider_transaction, $data->game, $data->provider_transaction]);
                             break;
                         }
                         case 'refund':
                         {
-                            $description = _i('Bet #%s on the game %s refunded. Round #%s', [$data->data->provider_transaction, $data->data->game, $data->data->provider_transaction,]);
+                            $description = _i('Bet #%s on the game %s refunded. Round #%s', [$data->provider_transaction, $data->game, $data->provider_transaction,]);
                             break;
                         }
                     }

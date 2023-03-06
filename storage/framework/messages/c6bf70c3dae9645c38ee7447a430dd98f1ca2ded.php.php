@@ -30,9 +30,14 @@
 
                 </div>
             </div>
-            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.view1')); ?>">
+            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.username')); ?>">
 
             </div>
+            <br><br>
+            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.provider')); ?>">
+
+            </div>
+<<<<<<< HEAD
 
             <table class="table table-hover">
                 <thead>
@@ -88,6 +93,63 @@
                 </tr>
                 </tbody>
             </table>
+=======
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 7cb1e178a56f7524e6cb1eeb8752e3f97baaeb9d
         </div>
     </div>
 <?php $__env->stopSection(); ?>
