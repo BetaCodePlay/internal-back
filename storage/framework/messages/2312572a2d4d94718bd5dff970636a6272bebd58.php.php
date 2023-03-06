@@ -38,7 +38,7 @@ class ProvidersRepo
             $array[]=$value->id;
         }
 
-        \Log::notice(__METHOD__, [' $providers' => $providers,'array'=>$array]);
+        //\Log::notice(__METHOD__, [' $providers' => $providers,'array'=>$array]);
 
         return $array;
     }
