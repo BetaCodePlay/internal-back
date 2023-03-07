@@ -785,32 +785,6 @@ class AgentsController extends Controller
             return Utils::failedResponse();
         }
 
-        try {
-            $timezone = session('timezone');
-            $today = Carbon::now()->setTimezone($timezone);
-            $endDateOriginal = $endDate;
-//            $startDate = Utils::startOfDayUtc($startDate);
-//            $endDate = Utils::endOfDayUtc($endDate);
-            //get_my_agents_by_whitelabel_and_currency
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
-
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialState($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
-            $data = [
-                'table' => $table
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
     }
 
     /**
@@ -1028,15 +1002,19 @@ class AgentsController extends Controller
     public function financialStateSummaryDataNew($user = null, $startDate = null, $endDate = null)
     {
         try {
-            $percentage = null;
-            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-                //TODO TODOS => EJE:SUPPORT
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabel(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate));
-            }else{
-                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
-                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate),Auth::user()->id);
+            if(is_null($user)){
+                $user = Auth::id();
             }
+//TODO REVISAR DATA TOTALES
+//            $percentage = null;
+//            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+//                //TODO TODOS => EJE:SUPPORT
+//                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabel(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate));
+//            }else{
+                $percentage = $this->agentsRepo->myPercentageByCurrency($user,session('currency'));
+                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate),$user);
+//            }
 
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByWhitelabels($table,$percentage)

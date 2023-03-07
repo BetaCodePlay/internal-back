@@ -243,7 +243,7 @@ class ClosuresUsersTotals2023Repo
 
     //TODO REPORTE TOTALS BY WHITELABELS
 
-    //TODO RESUMEN PO WHITELABELS
+    //TODO RESUMEN BY WHITELABELS
     public function getClosureTotalsByWhitelabel(int $whitelabel, string $currency,string $startDate ,string $endDate)
     {
         return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel(?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate]);

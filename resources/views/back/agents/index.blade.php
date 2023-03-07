@@ -669,7 +669,11 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
 {{--                            </div>--}}
-                            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>
+                            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>
+                            @else
+                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-summary-data-new') }}"></div>
+                            @endif
 {{--                            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
 {{--                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>--}}
 {{--                            @else--}}
