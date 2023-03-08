@@ -44,6 +44,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
@@ -776,13 +777,15 @@ class AgentsController extends Controller
                 $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
             //}
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'),$user);
-            return [  $sons ,'asd'];
+            if(Configurations::getWhitelabel() == 13 || Configurations::getWhitelabel() == 1 ){
+                Log::info('W:13-1, financialStateData',[$sons,$user]);
+            }
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons,Configurations::getWhitelabel(),session('currency'), $startDate, $endDate,$percentage)
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
 
