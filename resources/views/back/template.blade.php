@@ -27,21 +27,24 @@
         @include('back.layout.sidebar')
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             @include('back.layout.warning')
-            <div class="g-pt-20 g-pr-20">
-                <div class="row">
-                    <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
-                        <div class="form-group">
-                            <select name="timezone" class="form-control change-timezone" data-route="{{ route('core.change-timezone') }}">
-                                @foreach ($global_timezones as $global_timezone)
-                                    <option value="{{ $global_timezone['timezone'] }}" {{ $global_timezone['timezone'] == session()->get('timezone') ? 'selected' : '' }}>
-                                        {{ $global_timezone['text'] }}
-                                    </option>
-                                @endforeach
-                            </select>
+            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                <div class="g-pt-20 g-pr-20">
+                    <div class="row">
+                        <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                <select name="timezone" class="form-control change-timezone" data-route="{{ route('core.change-timezone') }}">
+                                    @foreach ($global_timezones as $global_timezone)
+                                        <option value="{{ $global_timezone['timezone'] }}" {{ $global_timezone['timezone'] == session()->get('timezone') ? 'selected' : '' }}>
+                                            {{ $global_timezone['text'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+            @endif
             <div class="g-pa-20">
                 @yield('content')
             </div>
