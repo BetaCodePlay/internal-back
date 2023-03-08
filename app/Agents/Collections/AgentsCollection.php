@@ -1046,8 +1046,8 @@ class AgentsCollection
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate,$value->user_id);
                 }else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id);
-                    if($whitelabel = 13){
-                        Log::info('W:13 user y $closureRepo',[$closures,$whitelabel, $currency, $startDate, $endDate, $value->user_id]);
+                    if($whitelabel = 13 || $whitelabel = 1){
+                        Log::info('W:13-1 user y $closureRepo',[$closures,$whitelabel, $currency, $startDate, $endDate, $value->user_id]);
                     }
                 }
 
