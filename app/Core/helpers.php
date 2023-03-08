@@ -35,7 +35,8 @@ if (!function_exists('menu')) {
                         'route' => 'users.create',
                         'params' => [],
                         'icon' => 'hs-admin-plus',
-                        'permission' => Permissions::$create_users,
+                        //'permission' => Permissions::$create_users,
+                        'permission' => Permissions::$add_agent_users,
                         'submenu' => []
                     ],
 
@@ -235,8 +236,8 @@ if (!function_exists('menu')) {
                         'route' => 'agents.add-users',
                         'params' => [],
                         'icon' => 'hs-admin-plus',
-                        //'permission' => Permissions::$add_agent_users,
-                        'permission' => Permissions::$create_users,
+                        'permission' => Permissions::$add_agent_users,
+                        //'permission' => Permissions::$create_users,
                         'submenu' => []
                     ],
 
