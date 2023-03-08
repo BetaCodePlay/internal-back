@@ -5,6 +5,7 @@ namespace App\Reports\Repositories;
 
 use App\Reports\Entities\ClosureGameTotal;
 use App\Reports\Entities\ClosureUserTotal;
+use App\Reports\Entities\ClosureUserTotal2023;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -278,12 +279,12 @@ class ClosuresUsersTotalsRepo
      */
     public function getActiveUsers($whitelabel, $startDate, $endDate)
     {
-        return ClosureUserTotal::select('users.id', 'users.username', 'users.email', 'users.created_at')
-            ->join('users', 'closures_users_totals.user_id', '=', 'users.id')
-            ->where('closures_users_totals.start_date', '>=', $startDate)
-            ->where('closures_users_totals.end_date', '<=', $endDate)
-            ->where('users.status', true)
-            ->where('closures_users_totals.whitelabel_id', $whitelabel)
+        return ClosureUserTotal2023::select('users.id', 'users.username', 'users.email', 'users.created_at')
+            ->join('users', 'closures_users_totals_2023.user_id', '=', 'users.id')
+            ->where('closures_users_totals_2023.start_date', '>=', $startDate)
+            //->where('closures_users_totals_2023.end_date', '<=', $endDate)
+            //->where('users.status', true)
+            ->where('closures_users_totals_2023.whitelabel_id', $whitelabel)
             ->groupBy('users.id', 'users.username', 'users.email', 'users.created_at')
             ->orderBy('users.username', 'DESC')
             ->get();

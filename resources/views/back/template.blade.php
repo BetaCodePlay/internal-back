@@ -19,6 +19,11 @@
     <title>{{ $title ?? _i('Dotpanel') }}</title>
     <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.12">
     @yield('styles')
+    <style>
+        li.has-active .u-side-nav-opened {
+            background-color: #f4f4f41f !important;
+        }
+    </style>
 </head>
 <body class=" currency-theme-{{ session('currency') }}">
 @include('back.layout.header')
