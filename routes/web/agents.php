@@ -208,6 +208,15 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state',
             'uses' => 'AgentsController@financialState'
         ]);
+        // Show financial state details report
+        Route::get('financial-state-details', [
+            'as' => 'agents.reports.financial-state-details',
+            'uses' => 'AgentsController@financialStateDetails'
+        ]);
+        Route::get('details/financial-state/{user?}/{startDate?}/{endDate?}', [
+            'as' => 'agents.reports.details.financial-state',
+            'uses' => 'AgentsController@financialStateDataDetails'
+        ]);
 
         //TODO VIEW OF EXAMPLE
         Route::get('financial-state/view1', [
@@ -234,20 +243,18 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state-data.provider',
             'uses' => 'AgentsController@financialStateData_provider'
         ]);
-//        Route::get('financial-state/view2', [
-//            'as' => 'agents.reports.financial-state.view2',
-//            'uses' => 'AgentsController@financialState_view2'
-//        ]);
 
         // Get financial state data
         Route::get('financial-state-data/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data',
             'uses' => 'AgentsController@financialStateData'
         ]);
+
         Route::get('financial-state-data-detail/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data-detail',
             'uses' => 'AgentsController@financialStateDataDetails2023'
         ]);
+
         Route::get('financial-state-data/row2/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data.row2',
             'uses' => 'AgentsController@financialStateDataRow2'

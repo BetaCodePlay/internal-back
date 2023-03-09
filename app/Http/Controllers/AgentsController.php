@@ -791,13 +791,46 @@ class AgentsController extends Controller
 
     }
 
-    /**
-     * Financial state
-     *
-     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
-     * @param ReportsCollection $reportsCollection
-     * @return Application|Factory|View
-     */
+    public function financialStateDetails()
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        //TODO LANG
+        $data['title'] = _i('Financial statement report details');
+        return view('back.agents.reports.financial-state-details', $data);
+    }
+
+    public function financialStateDataDetails($user = null, $startDate = null, $endDate = null)
+    {
+
+        try {
+            $percentage=null;
+            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+                //TODO TODOS => EJE:SUPPORT
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProviders(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate));
+            } else {
+                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
+                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),Auth::user()->id);
+            }
+            $data = [
+                'table' => $this->agentsCollection->closuresTotalsProvider($table,$percentage)
+            ];
+            $dataTmp = [
+                $user,Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+            ];
+            return Utils::successResponse($dataTmp);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
     public function financialState(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
         $currency = session('currency');

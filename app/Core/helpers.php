@@ -259,6 +259,15 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
+//                            'AgentsFinancialStateDetails' => [
+//                                'text' => _i('Financial state details'),
+//                                'level_class' => 'third',
+//                                'route' => 'agents.reports.financial-state-details',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-pie-chart',
+//                                'permission' => Permissions::$agents_financial_report,
+//                                'submenu' => []
+//                            ],
 //                            'AgentsFinancialState-new' => [
 //                                'text' => _i('Financial state new'),
 //                                'level_class' => 'third',
