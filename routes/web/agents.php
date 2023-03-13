@@ -213,6 +213,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state-details',
             'uses' => 'AgentsController@financialStateDetails'
         ]);
+
         Route::get('details/financial-state/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.details.financial-state',
             'uses' => 'AgentsController@financialStateDataDetails'

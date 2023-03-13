@@ -805,26 +805,35 @@ class AgentsController extends Controller
         return view('back.agents.reports.financial-state-details', $data);
     }
 
-    public function financialStateDataDetails($user = null, $startDate = null, $endDate = null)
+    public function financialStateDataDetails(Request $request, $user = null, $startDate = null, $endDate = null)
     {
 
         try {
             $percentage=null;
+            $username=null;
+            if ($request->has('username_like') && !is_null($request->get('username_like'))) {
+                $username = $request->get('username_like');
+            }
+            $provider=null;
+            if ($request->has('provider_id') && !is_null($request->get('provider_id'))) {
+                $provider = $request->get('provider_id');
+            }
+//return $request->all();
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProviders(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate));
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMaker(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),$username,$provider);
             } else {
-                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
-                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),Auth::user()->id);
+//                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
+//                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
+//                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),Auth::user()->id);
             }
             $data = [
-                'table' => $this->agentsCollection->closuresTotalsProvider($table,$percentage)
+                'table' => $this->agentsCollection->closuresTotalsProviderAndMaker($table,$percentage)
             ];
             $dataTmp = [
-                $user,Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+                $table,$user,Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
             ];
-            return Utils::successResponse($dataTmp);
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();

@@ -451,11 +451,12 @@ class Agents {
         $button.click(function () {
             $button.button('loading');
             let username_like = $('#username_like').val() === ''?'':'?username_like='+$('#username_like').val();
+            let provider_id = $('#provider_id').val() === ''?'':'?provider_id='+$('#provider_id').val();
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
             $.ajax({
-                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${username_like}`,
+                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${username_like}${provider_id}`,
                 type: 'get',
                 dataType: 'json'
 

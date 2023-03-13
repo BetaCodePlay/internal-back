@@ -12,7 +12,41 @@
     </style>
 @endsection
 @section('content')
-    @include('back.layout.litepicker')
+{{--    @include('back.layout.litepicker')--}}
+<div class="row">
+    <div class="offset-md-5"></div>
+    <div class="col-md-2" style="    padding: 0%!important;">
+        <div class="input-group">
+            <select name="provider_id" id="provider_id">
+                <option value="null" selected="selected" hidden>Selecciona un Proveedor</option>
+                <option value="171">Bet</option>
+                <option value="166">Vl</option>
+                <option value="115">Dot</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="input-group">
+            <input type="text" id="username_like" name="username_like" class="form-control" autocomplete="off" placeholder="{{ _i('Username') }}">
+        </div>
+    </div>
+    <div class="col-md-2" style="padding: 0%!important;">
+        <div class="input-group">
+            <input type="text" id="date_range" class="form-control" autocomplete="off" placeholder="{{ _i('Date range') }}">
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="input-group">
+            <div class="input-group-append">
+                <button class="btn g-bg-primary" type="button" id="update"
+                        data-loading-text="<i class='hs-admin-reload fa-spin g-color-white'></i>">
+                    <i class="hs-admin-search g-color-white"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
         <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
             <div class="media">
