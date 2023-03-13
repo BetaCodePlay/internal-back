@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('Dotpanel') }}</title>
-    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.12">
+    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.13">
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
