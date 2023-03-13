@@ -811,17 +811,18 @@ class AgentsController extends Controller
         try {
             $percentage=null;
             $username=null;
-            if ($request->has('username_like') && !is_null($request->get('username_like'))) {
+            if ($request->has('username_like') && !is_null($request->get('username_like')) && $request->get('username_like') != 'null') {
                 $username = $request->get('username_like');
             }
             $provider=null;
-            if ($request->has('provider_id') && !is_null($request->get('provider_id'))) {
+            if ($request->has('provider_id') && !is_null($request->get('provider_id')) && $request->get('provider_id') != 'null') {
                 $provider = $request->get('provider_id');
             }
-//return $request->all();
+
+//return [$request->all(),$provider,$username];
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMaker(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),$username,$provider);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMaker(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),$provider,'%'.$username.'%');
             } else {
 //                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
 //                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
@@ -1063,7 +1064,8 @@ class AgentsController extends Controller
 //            }
 
             $data = [
-                'table' => $this->agentsCollection->closuresTotalsByWhitelabels($table,$percentage)
+                //'table' => $this->agentsCollection->closuresTotalsByWhitelabels($table,$percentage),
+                'table' => $this->agentsCollection->closuresTotalsByWhitelabelsSymple($table,$percentage)
             ];
             return Utils::successResponse($data);
 

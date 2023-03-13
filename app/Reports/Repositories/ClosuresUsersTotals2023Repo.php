@@ -241,9 +241,9 @@ class ClosuresUsersTotals2023Repo
         return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_and_user(?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$user_id]);
     }
     //TODO PROVEEDOR AND MAKER
-    public function getClosureTotalsByProviderAndMaker(int $whitelabel, string $currency,string $startDate ,string $endDate,$username,$provider)
+    public function getClosureTotalsByProviderAndMaker(int $whitelabel, string $currency,string $startDate ,string $endDate,$provider,$username)
     {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker(?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate]);
+        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker(?,?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$provider,$username]);
     }
 
     //TODO REPORTE TOTALS BY WHITELABELS

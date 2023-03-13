@@ -2282,6 +2282,52 @@ return $html;
 
     }
 
+    public function closuresTotalsByWhitelabelsSymple($tableDb,$percentage = null)
+    {
+        $htmlProvider = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">
+                    <thead>
+                        <tr style="background-color: #517dff!important;color: white">
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                            <th scope="col" class="text-center">%s</th>
+                        </tr>
+                    </thead>',
+            _i('Total played'),
+            _i('Total won'),
+            _i('Total Profit'),
+            _i('Comission').' %',
+            _i('Total Comission'),
+            _i('Total to pay'),
+        );
+
+        if(!empty($tableDb)){
+            $htmlProvider .= "<tbody>";
+            foreach ($tableDb as $item => $value){
+                $totalComission = $value->total_profit* ($percentage/100);
+
+                $htmlProvider .= "<tr class='' style=''>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit ,2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($percentage ,2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format($totalComission ,2) . "</td>";
+                    $htmlProvider .= "<td class='text-center'>" . number_format(($value->total_profit-$totalComission) ,2) . "</td>";
+                $htmlProvider .= "</tr>";
+            }
+
+            $htmlProvider .= "</tbody>";
+        }else{
+            $htmlProvider .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='5'>"._i('no records')."</td></tr></tbody>";
+        }
+
+        return  $htmlProvider;
+
+    }
+
     /**
      * Financial state summary bonus
      *

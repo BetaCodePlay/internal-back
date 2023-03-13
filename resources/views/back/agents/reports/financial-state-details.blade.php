@@ -18,7 +18,7 @@
     <div class="col-md-2" style="    padding: 0%!important;">
         <div class="input-group">
             <select name="provider_id" id="provider_id">
-                <option value="null" selected="selected" hidden>Selecciona un Proveedor</option>
+                <option value="" selected="selected" hidden>Selecciona un Proveedor</option>
                 <option value="171">Bet</option>
                 <option value="166">Vl</option>
                 <option value="115">Dot</option>
