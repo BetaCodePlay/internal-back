@@ -83,7 +83,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     }
 
                     $whitelabel = Configurations::getWhitelabel();
-                    $whitelabels = [45, 7];
+                    $whitelabels = [45];
                     if (!in_array($whitelabel, $whitelabels)) {
                         if ((env('APP_ENV') == 'production') || (env('APP_ENV') == 'testing') ) {
                             URL::forceScheme('https');
