@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Audits\Repositories\AuditsRepo;
 use App\BetPay\Collections\PaymentsCollection;
 use App\BetPay\Collections\TransactionsCollection as BetPayTransactionsCollection;
 use App\Core\Collections\ProviderTypesCollection;
 use App\Core\Collections\TransactionsCollection;
-use App\Audits\Repositories\AuditsRepo;
+use App\Core\Repositories\CoreRepo;
 use App\Core\Repositories\CountriesRepo;
 use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
@@ -35,11 +36,9 @@ use Dotworkers\Wallet\Wallet;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
-use App\Core\Repositories\CoreRepo;
 
 /**
  * Class ReportsController
@@ -411,18 +410,6 @@ class ReportsController extends Controller
     }
 
     /**
-     * Show view games totals report
-     *
-     * @return Factory|View
-     */
-    public function gamesTotals($provider)
-    {
-        $data['provider'] = $provider;
-        $data['title'] = _i('Game totals report') . ' | ' . Providers::getName($provider);
-        return view('back.reports.products.games-totals', $data);
-    }
-
-    /**
      * Get games report data
      *
      * @param Request $request
@@ -479,6 +466,18 @@ class ReportsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Show view games totals report
+     *
+     * @return Factory|View
+     */
+    public function gamesTotals($provider)
+    {
+        $data['provider'] = $provider;
+        $data['title'] = _i('Game totals report') . ' | ' . Providers::getName($provider);
+        return view('back.reports.products.games-totals', $data);
     }
 
     /**
@@ -776,113 +775,6 @@ class ReportsController extends Controller
     }
 
     /**
-     * Show view most played games report
-     *
-     * @param int $provider Provider ID
-     * @return Factory|View
-     */
-    public function mostPlayedGames(int $provider)
-    {
-        $data['provider'] = $provider;
-        $data['title'] = _i('Most played games report');
-        return view('back.reports.products.most-played-games', $data);
-    }
-
-    /**
-     * Get most played report data
-     *
-     * @param Request $request
-     * @param null|string $startDate Start date to filter
-     * @param null|string $endDate End date to filter
-     * @param null|int $provider Provider ID
-     * @return Response
-     */
-    public function mostPlayedGamesData(Request $request, $startDate = null, $endDate = null, $provider = null)
-    {
-        try {
-            if (!is_null($startDate) && !is_null($endDate)) {
-                if (
-                    $provider == Providers::$patagonia ||
-                    $provider == Providers::$pg_soft ||
-                    $provider == Providers::$booongo ||
-                    $provider == Providers::$game_art ||
-                    $provider == Providers::$booming_games ||
-                    $provider == Providers::$kiron_interactive ||
-                    $provider == Providers::$hacksaw_gaming ||
-                    $provider == Providers::$triple_cherry ||
-                    $provider == Providers::$espresso_games
-                ) {
-                    $provider = Providers::$salsa_gaming;
-                }
-
-                if ($provider == Providers::$spinmatic) {
-                    $provider = Providers::$golden_race;
-                }
-
-                $startDate = Utils::startOfDayUtc($startDate);
-                $endDate = Utils::endOfDayUtc($endDate);
-                $whitelabel = Configurations::getWhitelabel();
-                $currency = session('currency');
-
-                $providerData = $this->providersRepo->find($provider);
-                $mostPlayedGames = $this->coreRepo->getMostPlayedGames($whitelabel, $startDate, $endDate, $currency, $providerData->tickets_table);
-            } else {
-                $mostPlayedGames = [];
-            }
-            $this->reportsCollection->mostPlayedGames($mostPlayedGames);
-            $data = [
-                'games' => $mostPlayedGames
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Show view most played by providers report
-     *
-     * @return Factory|View
-     */
-    public function mostPlayedByProviders()
-    {
-        $data['title'] = _i('Most played by providers report');
-        return view('back.reports.products.most-played-by-providers', $data);
-    }
-
-    /**
-     * Get most played by providers report data
-     *
-     * @param Request $request
-     * @param null|string $startDate Start date to filter
-     * @param null|string $endDate End date to filter
-     * @param null|int $provider Provider ID
-     * @return Response
-     */
-    public function mostPlayedByProvidersData(Request $request, $startDate = null, $endDate = null, $currency = null)
-    {
-        try {
-            if (!is_null($startDate) && !is_null($endDate)) {
-                $startDate = Utils::startOfDayUtc($startDate);
-                $endDate = Utils::endOfDayUtc($endDate);
-                $whitelabel = Configurations::getWhitelabel();
-                $mostPlayedByProvider = $this->closuresUsersTotalsRepo->closuresTotalsByProviders($whitelabel, $startDate, $endDate, $currency);
-            } else {
-                $mostPlayedByProvider = [];
-            }
-            $this->reportsCollection->mostPlayedByProviders($mostPlayedByProvider);
-            $data = [
-                'games' => $mostPlayedByProvider
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      *  Show sales daily through the web
      *
      * @return Factory|View
@@ -958,6 +850,113 @@ class ReportsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'year' => $year, 'month' => $month]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Get most played by providers report data
+     *
+     * @param Request $request
+     * @param null|string $startDate Start date to filter
+     * @param null|string $endDate End date to filter
+     * @param null|int $provider Provider ID
+     * @return Response
+     */
+    public function mostPlayedByProvidersData(Request $request, $startDate = null, $endDate = null, $currency = null)
+    {
+        try {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $whitelabel = Configurations::getWhitelabel();
+                $mostPlayedByProvider = $this->closuresUsersTotalsRepo->closuresTotalsByProviders($whitelabel, $startDate, $endDate, $currency);
+            } else {
+                $mostPlayedByProvider = [];
+            }
+            $this->reportsCollection->mostPlayedByProviders($mostPlayedByProvider);
+            $data = [
+                'games' => $mostPlayedByProvider
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Show view most played by providers report
+     *
+     * @return Factory|View
+     */
+    public function mostPlayedByProviders()
+    {
+        $data['title'] = _i('Most played by providers report');
+        return view('back.reports.products.most-played-by-providers', $data);
+    }
+
+    /**
+     * Get most played report data
+     *
+     * @param Request $request
+     * @param null|string $startDate Start date to filter
+     * @param null|string $endDate End date to filter
+     * @param null|int $provider Provider ID
+     * @return Response
+     */
+    public function mostPlayedGamesData(Request $request, $startDate = null, $endDate = null, $provider = null)
+    {
+        try {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                if (
+                    $provider == Providers::$patagonia ||
+                    $provider == Providers::$pg_soft ||
+                    $provider == Providers::$booongo ||
+                    $provider == Providers::$game_art ||
+                    $provider == Providers::$booming_games ||
+                    $provider == Providers::$kiron_interactive ||
+                    $provider == Providers::$hacksaw_gaming ||
+                    $provider == Providers::$triple_cherry ||
+                    $provider == Providers::$espresso_games
+                ) {
+                    $provider = Providers::$salsa_gaming;
+                }
+
+                if ($provider == Providers::$spinmatic) {
+                    $provider = Providers::$golden_race;
+                }
+
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $whitelabel = Configurations::getWhitelabel();
+                $currency = session('currency');
+
+                $providerData = $this->providersRepo->find($provider);
+                $mostPlayedGames = $this->coreRepo->getMostPlayedGames($whitelabel, $startDate, $endDate, $currency, $providerData->tickets_table);
+            } else {
+                $mostPlayedGames = [];
+            }
+            $this->reportsCollection->mostPlayedGames($mostPlayedGames);
+            $data = [
+                'games' => $mostPlayedGames
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Show view most played games report
+     *
+     * @param int $provider Provider ID
+     * @return Factory|View
+     */
+    public function mostPlayedGames(int $provider)
+    {
+        $data['provider'] = $provider;
+        $data['title'] = _i('Most played games report');
+        return view('back.reports.products.most-played-games', $data);
     }
 
     /***
@@ -1042,26 +1041,6 @@ class ReportsController extends Controller
         }
     }
 
-    /***
-     * Show view products totals report
-     *
-     * @return Factory|View
-     */
-    public function productsTotals()
-    {
-        $whitelabel = Configurations::getWhitelabel();
-        $currency = session('currency');
-        $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
-        $types = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$live_games, ProviderTypes::$poker];
-        $providersTypes = $this->providersTypesRepo->getByIds($types);
-        $this->providerTypesCollection->formatProviderTypes($providersTypes);
-        $data['currencies'] = Configurations::getCurrencies();
-        $data['providers'] = $providers;
-        $data['providers_types'] = $providersTypes;
-        $data['title'] = _i('Products totals');
-        return view('back.reports.products.totals', $data);
-    }
-
     /**
      * Get products totals report data
      *
@@ -1118,17 +1097,23 @@ class ReportsController extends Controller
     }
 
     /***
-     * Show view products totals overview report
+     * Show view products totals report
      *
      * @return Factory|View
      */
-    public function productsTotalsOverview()
+    public function productsTotals()
     {
-        $currencies = $this->currenciesRepo->all();
-        $data['currencies'] = $currencies;
-        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
+        $whitelabel = Configurations::getWhitelabel();
+        $currency = session('currency');
+        $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
+        $types = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$live_games, ProviderTypes::$poker];
+        $providersTypes = $this->providersTypesRepo->getByIds($types);
+        $this->providerTypesCollection->formatProviderTypes($providersTypes);
+        $data['currencies'] = Configurations::getCurrencies();
+        $data['providers'] = $providers;
+        $data['providers_types'] = $providersTypes;
         $data['title'] = _i('Products totals');
-        return view('back.reports.products.totals-overview', $data);
+        return view('back.reports.products.totals', $data);
     }
 
     /**
@@ -1170,29 +1155,18 @@ class ReportsController extends Controller
         }
     }
 
-    /**
-     * Show view profit report for hour closure
+    /***
+     * Show view products totals overview report
      *
      * @return Factory|View
      */
-    public function profitHourClosure()
+    public function productsTotalsOverview()
     {
-        $data['title'] = _i('Profit General');
+        $currencies = $this->currenciesRepo->all();
+        $data['currencies'] = $currencies;
         $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
-        $data['whitelabels'] = $this->whitelabelsRepo->all();
-        $data['currenciest'] = $this->currenciesRepo->all();
-        return view('back.reports.hour-closures.profit', $data);
-    }
-
-    /**
-     *  Show view profit by user view report
-     *
-     * @return Factory|View
-     */
-    public function profitByUserView()
-    {
-        $data['title'] = _i('Profit by user');
-        return view('back.reports.financial.profit-by-user', $data);
+        $data['title'] = _i('Products totals');
+        return view('back.reports.products.totals-overview', $data);
     }
 
     /**
@@ -1224,14 +1198,28 @@ class ReportsController extends Controller
     }
 
     /**
-     * Show view referred users report
+     *  Show view profit by user view report
      *
      * @return Factory|View
      */
-    public function referredUsers()
+    public function profitByUserView()
     {
-        $data['title'] = _i('Referred users');
-        return view('back.reports.users.referred-users', $data);
+        $data['title'] = _i('Profit by user');
+        return view('back.reports.financial.profit-by-user', $data);
+    }
+
+    /**
+     * Show view profit report for hour closure
+     *
+     * @return Factory|View
+     */
+    public function profitHourClosure()
+    {
+        $data['title'] = _i('Profit General');
+        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
+        $data['whitelabels'] = $this->whitelabelsRepo->all();
+        $data['currenciest'] = $this->currenciesRepo->all();
+        return view('back.reports.hour-closures.profit', $data);
     }
 
     /**
@@ -1264,18 +1252,14 @@ class ReportsController extends Controller
     }
 
     /**
-     *  Show user registration through the web
+     * Show view referred users report
      *
      * @return Factory|View
      */
-    public function registersUsers()
+    public function referredUsers()
     {
-        $countries = $this->countriesRepo->all();
-        $levels = Configurations::getLevels();
-        $data['levels'] = $levels;
-        $data['countries'] = $countries;
-        $data['title'] = _i('Registered users');
-        return view('back.reports.users.registered-users', $data);
+        $data['title'] = _i('Referred users');
+        return view('back.reports.users.referred-users', $data);
     }
 
     /**
@@ -1302,11 +1286,11 @@ class ReportsController extends Controller
                 $currency = session('currency');
                 $whitelabel = Configurations::getWhitelabel();
 
-                if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                     //TODO REPLICA DE TREE
                     $tree = $this->usersRepo->treeSqlByUser(Auth::id(), $currency, $whitelabel);
-                    $usersData = $this->usersRepo->getRegisteredUsersReportTree($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level,$tree);
-                }else{
+                    $usersData = $this->usersRepo->getRegisteredUsersReportTree($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level, $tree);
+                } else {
                     $usersData = $this->usersRepo->getRegisteredUsersReport($country, $currency, $endDate, $startDate, $status, $webRegister, $whitelabel, $level);
                 }
 
@@ -1325,14 +1309,18 @@ class ReportsController extends Controller
     }
 
     /**
-     * Show view totals logins report
+     *  Show user registration through the web
      *
      * @return Factory|View
      */
-    public function totalLogins()
+    public function registersUsers()
     {
-        $data['title'] = _i('Total logins');
-        return view('back.reports.users.total-logins', $data);
+        $countries = $this->countriesRepo->all();
+        $levels = Configurations::getLevels();
+        $data['levels'] = $levels;
+        $data['countries'] = $countries;
+        $data['title'] = _i('Registered users');
+        return view('back.reports.users.registered-users', $data);
     }
 
     /**
@@ -1350,11 +1338,11 @@ class ReportsController extends Controller
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
 
-                if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                     //TODO REPLICA DE TREE
-                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(),session('currency'),$whitelabel);
-                    $logins = $auditsRepo->getLoginsTree($whitelabel, $startDate, $endDate,$tree);
-                }else{
+                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(), session('currency'), $whitelabel);
+                    $logins = $auditsRepo->getLoginsTree($whitelabel, $startDate, $endDate, $tree);
+                } else {
                     $logins = $auditsRepo->getLogins($whitelabel, $startDate, $endDate);
                 }
 
@@ -1373,13 +1361,24 @@ class ReportsController extends Controller
     }
 
     /**
+     * Show view totals logins report
+     *
+     * @return Factory|View
+     */
+    public function totalLogins()
+    {
+        $data['title'] = _i('Total logins');
+        return view('back.reports.users.total-logins', $data);
+    }
+
+    /**
      * Show view financial totals report
      *
      * @return Factory|View
      */
     public function totals()
     {
-        try{
+        try {
             $paymentMethods = session('payment_methods');
             $data['title'] = _i('Totals');
             $data['payment_methods'] = $this->reportsCollection->formatPaymentMethod($paymentMethods);
@@ -1521,17 +1520,6 @@ class ReportsController extends Controller
     }
 
     /**
-     *  Show view users balance report
-     *
-     * @return Factory|View
-     */
-    public function usersBalances()
-    {
-        $data['title'] = _i('Users balances');
-        return view('back.reports.users.balances', $data);
-    }
-
-    /**
      * Get users balances report data
      *
      * @param null|string $currency Currency ISO
@@ -1558,11 +1546,11 @@ class ReportsController extends Controller
 
                 $whitelabel = Configurations::getWhitelabel();
 
-                if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                     //TODO REPLICA DE TREE
-                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(),$currency,$whitelabel);
-                    $users = $this->usersRepo->getByWhitelabelAndCurrencyTree($whitelabel, $currency,$tree);
-                }else{
+                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(), $currency, $whitelabel);
+                    $users = $this->usersRepo->getByWhitelabelAndCurrencyTree($whitelabel, $currency, $tree);
+                } else {
                     $users = $this->usersRepo->getByWhitelabelAndCurrency($whitelabel, $currency);
                 }
 
@@ -1597,14 +1585,14 @@ class ReportsController extends Controller
     }
 
     /**
-     *  Show view users birthdays report
+     *  Show view users balance report
      *
      * @return Factory|View
      */
-    public function usersBirthdays()
+    public function usersBalances()
     {
-        $data['title'] = _i('Users birthdays');
-        return view('back.reports.users.users-birthdays', $data);
+        $data['title'] = _i('Users balances');
+        return view('back.reports.users.balances', $data);
     }
 
     /**
@@ -1635,14 +1623,14 @@ class ReportsController extends Controller
     }
 
     /**
-     *  Show view users conversion report
+     *  Show view users birthdays report
      *
      * @return Factory|View
      */
-    public function usersConversion()
+    public function usersBirthdays()
     {
-        $data['title'] = _i('Users conversion');
-        return view('back.reports.users.users-conversion', $data);
+        $data['title'] = _i('Users birthdays');
+        return view('back.reports.users.users-birthdays', $data);
     }
 
     /**
@@ -1673,15 +1661,14 @@ class ReportsController extends Controller
     }
 
     /**
-     * Show view users totals report
+     *  Show view users conversion report
      *
      * @return Factory|View
      */
-    public function usersTotals($provider)
+    public function usersConversion()
     {
-        $data['provider'] = $provider;
-        $data['title'] = _i('Users totals report') . ' | ' . Providers::getName($provider);
-        return view('back.reports.products.users-totals', $data);
+        $data['title'] = _i('Users conversion');
+        return view('back.reports.users.users-conversion', $data);
     }
 
     /**
@@ -1736,115 +1723,54 @@ class ReportsController extends Controller
     }
 
     /**
-     * Show withdrawals report
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|Factory|View
-     */
-    public function withdrawals()
-    {
-        $data['title'] = _i('Withdrawals');
-        return view('back.reports.financial.withdrawals', $data);
-    }
-
-    /**
-     * Show view whitelabels totals report
+     * Show view users totals report
      *
      * @return Factory|View
      */
-    public function whitelabelsTotals()
+    public function usersTotals($provider)
     {
-        $currencies = $this->currenciesRepo->all();
-        $data['currencies'] = $currencies;
-        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
-        $data['whitelabels'] = $this->whitelabelsRepo->all();
-        $data['title'] = _i('Whitelabels totals');
-        return view('back.reports.products.whitelabels-totals', $data);
+        $data['provider'] = $provider;
+        $data['title'] = _i('Users totals report') . ' | ' . Providers::getName($provider);
+        return view('back.reports.products.users-totals', $data);
     }
 
     /**
-     * Get whitelabels totals data
-     *
-     * @param Request $request
-     * @param null|string $startDate Start date to filter
-     * @param null|string $endDate End date to filter
-     * @return Response
-     */
-    public function whitelabelsTotalsData(Request $request, $startDate = null, $endDate = null)
-    {
-        try {
-            if (!is_null($startDate) || !is_null($endDate)) {
-                $startDate = Utils::startOfDayUtc($startDate);
-                $endDate = Utils::endOfDayUtc($endDate);
-                $provider = $request->provider;
-                $whitelabel = $request->whitelabel;
-                $currency = $request->currency;
-                $totals = $this->closuresUsersTotalsRepo->whitelabelsTotals($startDate, $endDate, $currency, $provider, $whitelabel);
-            } else {
-                $totals = [];
-            }
-
-            $this->reportsCollection->whitelabelsTotals($totals);
-            $data = [
-                'totals' => $totals
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
-    }
-
-
-    /**
-     * Show view whitelabels totals report
+     *  Show whitelabels active providers
      *
      * @return Factory|View
      */
-    public function whitelabelsTotalsNew()
+    public function whitelabelsActiveProviders()
     {
-        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
+        $data['title'] = _i('Active providers');
         $data['whitelabels'] = $this->whitelabelsRepo->all();
-        $data['title'] = _i('Whitelabels totals');
-        return view('back.reports.products.whitelabels-totals-new', $data);
+        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
+        return view('back.reports.products.whitelabels-active-providers', $data);
     }
 
     /**
-     * Get whitelabels totals data
+     * Get whitelabels active providers data
      *
      * @param Request $request
-     * @param null|string $startDate Start date to filter
-     * @param null|string $endDate End date to filter
      * @return Response
      */
-    public function whitelabelsTotalsDataNew(Request $request, $startDate = null, $endDate = null)
+    public function whitelabelsActiveProvidersData(Request $request)
     {
-        if (count($request->all()) > 1) {
-            $this->validate($request, [
-                'convert' => 'required_without:currency'
-            ]);
-        }
         try {
-            $convert = $request->convert;
-            $currency = $request->currency;
+            $whitelabel = $request->whitelabel;
             $provider = $request->provider;
-            if (!is_null($startDate) || !is_null($endDate)) {
-                $startDate = Utils::startOfDayUtc($startDate);
-                $endDate = Utils::endOfDayUtc($endDate);
-                $whitelabel = $request->whitelabel;
-                $totalsWl = $this->closuresUsersTotalsRepo->whitelabelsClosuresTotals($startDate, $endDate, $currency, $provider, $whitelabel);
-                $totals = $this->closuresUsersTotalsRepo->getWhitelabelsTotal($totalsWl);
-            } else {
-                $totals = [];
-            }
-            $this->reportsCollection->whitelabelsTotalsNew($totals, $convert, $currency, $startDate, $endDate, $provider);
+            $currency = $request->currency;
+            $whitelabels = $this->providersRepo->getByWhitelabelAndProviders($whitelabel, $provider, $currency);
+            $this->reportsCollection->whitelabelsAndProviders($whitelabels);
             $data = [
-                'totals' => $totals
+                'products' => $whitelabels
             ];
             return Utils::successResponse($data);
+
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            \Log::error(__METHOD__, ['exception' => $ex, 'whitelabel' => $whitelabel, 'provider' => $provider, 'currency' => $currency]);
             return Utils::failedResponse();
         }
+
     }
 
     /**
@@ -1889,41 +1815,113 @@ class ReportsController extends Controller
     }
 
     /**
-     *  Show whitelabels active providers
+     * Get whitelabels totals data
      *
-     * @return Factory|View
+     * @param Request $request
+     * @param null|string $startDate Start date to filter
+     * @param null|string $endDate End date to filter
+     * @return Response
      */
-    public function whitelabelsActiveProviders()
+    public function whitelabelsTotalsData(Request $request, $startDate = null, $endDate = null)
     {
-        $data['title'] = _i('Active providers');
-        $data['whitelabels'] = $this->whitelabelsRepo->all();
-        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
-        return view('back.reports.products.whitelabels-active-providers', $data);
+        try {
+            if (!is_null($startDate) || !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $provider = $request->provider;
+                $whitelabel = $request->whitelabel;
+                $currency = $request->currency;
+                $totals = $this->closuresUsersTotalsRepo->whitelabelsTotals($startDate, $endDate, $currency, $provider, $whitelabel);
+            } else {
+                $totals = [];
+            }
+
+            $this->reportsCollection->whitelabelsTotals($totals);
+            $data = [
+                'totals' => $totals
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
-     * Get whitelabels active providers data
+     * Show view whitelabels totals report
+     *
+     * @return Factory|View
+     */
+    public function whitelabelsTotals()
+    {
+        $currencies = $this->currenciesRepo->all();
+        $data['currencies'] = $currencies;
+        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
+        $data['whitelabels'] = $this->whitelabelsRepo->all();
+        $data['title'] = _i('Whitelabels totals');
+        return view('back.reports.products.whitelabels-totals', $data);
+    }
+
+    /**
+     * Get whitelabels totals data
      *
      * @param Request $request
+     * @param null|string $startDate Start date to filter
+     * @param null|string $endDate End date to filter
      * @return Response
      */
-    public function whitelabelsActiveProvidersData(Request $request)
+    public function whitelabelsTotalsDataNew(Request $request, $startDate = null, $endDate = null)
     {
-        try{
-            $whitelabel = $request->whitelabel;
-            $provider = $request->provider;
+        if (count($request->all()) > 1) {
+            $this->validate($request, [
+                'convert' => 'required_without:currency'
+            ]);
+        }
+        try {
+            $convert = $request->convert;
             $currency = $request->currency;
-            $whitelabels = $this->providersRepo->getByWhitelabelAndProviders($whitelabel, $provider, $currency);
-            $this->reportsCollection->whitelabelsAndProviders($whitelabels);
+            $provider = $request->provider;
+            if (!is_null($startDate) || !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $whitelabel = $request->whitelabel;
+                $totalsWl = $this->closuresUsersTotalsRepo->whitelabelsClosuresTotals($startDate, $endDate, $currency, $provider, $whitelabel);
+                $totals = $this->closuresUsersTotalsRepo->getWhitelabelsTotal($totalsWl);
+            } else {
+                $totals = [];
+            }
+            $this->reportsCollection->whitelabelsTotalsNew($totals, $convert, $currency, $startDate, $endDate, $provider);
             $data = [
-              'products' => $whitelabels
+                'totals' => $totals
             ];
             return Utils::successResponse($data);
-
-        }catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'whitelabel' => $whitelabel, 'provider' => $provider, 'currency' => $currency]);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
+    }
 
+    /**
+     * Show view whitelabels totals report
+     *
+     * @return Factory|View
+     */
+    public function whitelabelsTotalsNew()
+    {
+        $data['providers'] = $this->providersRepo->getByTypes([ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker]);
+        $data['whitelabels'] = $this->whitelabelsRepo->all();
+        $data['title'] = _i('Whitelabels totals');
+        return view('back.reports.products.whitelabels-totals-new', $data);
+    }
+
+    /**
+     * Show withdrawals report
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View
+     */
+    public function withdrawals()
+    {
+        $data['title'] = _i('Withdrawals');
+        return view('back.reports.financial.withdrawals', $data);
     }
 }

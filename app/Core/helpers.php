@@ -290,7 +290,7 @@ if (!function_exists('menu')) {
 
                             'ReportByUsername' => [
                                 'text' => _i('By users'),
-                                'level_class' => 'top',
+                                'level_class' => 'third',
                                 'route' => 'agents.reports.financial.state.username',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
@@ -299,7 +299,7 @@ if (!function_exists('menu')) {
                             ],
                             'ReportByProviders' => [
                                 'text' => _i('By providers'),
-                                'level_class' => 'top',
+                                'level_class' => 'third',
                                 'route' => 'agents.reports.financial.state.provider',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
