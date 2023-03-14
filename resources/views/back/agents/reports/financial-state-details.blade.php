@@ -12,16 +12,16 @@
     </style>
 @endsection
 @section('content')
-{{--    @include('back.layout.litepicker')--}}
+{{--    {{dd($color = substr(md5('estarly'), 0, 6))}}--}}
 <div class="row">
     <div class="offset-md-5"></div>
     <div class="col-md-2" style="    padding: 0%!important;">
         <div class="input-group">
             <select name="provider_id" id="provider_id">
                 <option value="" selected="selected" hidden>Selecciona un Proveedor</option>
-                <option value="171">Bet</option>
-                <option value="166">Vl</option>
-                <option value="115">Dot</option>
+                <option value="171">Bet Connections</option>
+                <option value="166">LV SLots</option>
+                <option value="115">Dot Suite</option>
             </select>
         </div>
     </div>

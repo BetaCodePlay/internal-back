@@ -1040,7 +1040,7 @@ class AgentsCollection
                                 <th colspan="7" class="text-center"><br></th>
                             </tr>':'').'
                             <tr>
-                                <th colspan="7" class="text-center"><strong>'.$item->name_provider.'</strong></th>
+                                <th colspan="7" class="text-center" style="background-color: #'.substr(md5($item->name_provider), 1, 6).';color: white;font-size: larger;"><strong>'.$item->name_provider.'</strong></th>
                             </tr>
                             <tr>
                                 <th colspan="2">'._i('Maker').'</th>

@@ -809,6 +809,9 @@ class AgentsController extends Controller
     {
 
         try {
+            if(is_null($user)){
+                $user = Auth::id();
+            }
             $percentage=null;
             $username=null;
             if ($request->has('username_like') && !is_null($request->get('username_like')) && $request->get('username_like') != 'null') {
@@ -819,14 +822,13 @@ class AgentsController extends Controller
                 $provider = $request->get('provider_id');
             }
 
-//return [$request->all(),$provider,$username];
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMaker(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),$provider,'%'.$username.'%');
             } else {
 //                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
 //                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
-//                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),Auth::user()->id);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),$user,$provider,'%'.$username.'%');
             }
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsProviderAndMaker($table,$percentage)
