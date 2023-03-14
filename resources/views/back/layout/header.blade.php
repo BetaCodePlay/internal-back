@@ -6,7 +6,7 @@
                    class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-0">
                     @if(!empty($logo))
                         @if(!is_null($logo->img_dark))
-                            <img src="{{$logo->img_dark }}" alt="Bloko" width="180" height="37">
+                            <img src="{{$logo->img_dark }}" alt="Bloko" width="180" height="37" class="img-logo">
                         @endif
                     @endif
 {{--                @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)--}}
