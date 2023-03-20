@@ -636,7 +636,7 @@ class UsersController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
-                dd($transaction);
+                // dd($transaction);
                 $additionalData['wallet_transaction'] = $transaction->data->transaction->id;
                 $detailsData = [
                     'data' => json_encode($additionalData)
@@ -692,7 +692,7 @@ class UsersController extends Controller
                 return Utils::successResponse($data);
             }
         } catch (\Exception $ex) {
-            dd($ex);
+            // dd($ex);
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
