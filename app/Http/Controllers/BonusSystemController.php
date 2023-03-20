@@ -1218,6 +1218,7 @@ class BonusSystemController extends Controller
                 'gt:0'
             ]
         ];
+
         $this->validate($request, $rules);
 
         try {
