@@ -6,6 +6,7 @@ use App\Agents\Collections\AgentsCollection;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Collections\TransactionsCollection;
+use App\Core\Entities\Transaction;
 use App\Core\Repositories\CountriesRepo;
 use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
@@ -48,6 +49,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class AgentsController
@@ -144,8 +146,9 @@ class AgentsController extends Controller
      * @param WhitelabelsRepo $whitelabelsRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param UsersCollection $usersCollection
+     * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
@@ -157,6 +160,7 @@ class AgentsController extends Controller
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->usersCollection = $usersCollection;
+        $this->transactionsCollection = $transactionsCollection;
     }
 
     /**
@@ -368,6 +372,47 @@ class AgentsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * View Transaction Timeline
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function viewTransactionTimeline(Request $request)
+    {
+        $data['title'] = _i('Transaction Timeline');
+
+        return view('back.agents.reports.transaction-timeline', $data);
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function dataTransactionTimeline(Request $request)
+    {
+//        try {
+
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $providers = [Providers::$agents, Providers::$agents_users];
+            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
+            $timezone = session('timezone');
+
+            $offset = $request->has('start')?$request->get('start'):0;
+            $limit = $request->has('length')?$request->get('length'):10;
+            $user = Auth::id();
+//return $request->all();
+            $transactions = $this->transactionsRepo->getTransactions($providers, $currency,$whitelabel,$user,$startDate,$endDate,$limit,$offset);
+            $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$request);
+
+            return response()->json($data);
+
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**
@@ -2393,4 +2438,57 @@ class AgentsController extends Controller
         return view('back.agents.reports.users-balances', $data);
     }
 
+    /**
+     * Test of pagination
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function viewTmp(Request $request)
+    {
+        $data['title'] = _i('reports').' Tmp';
+
+        return view('back.agents.reports.tmp', $data);
+    }
+
+    public function dataTmp(Request $request)
+    {
+//        try {
+
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $providers = [Providers::$agents, Providers::$agents_users];
+        $startDate = Utils::startOfDayUtc(date('2020-m-d'));
+        $endDate = Utils::endOfDayUtc(date('Y-m-d'));
+
+        $start = $request->has('start')?$request->get('start'):0;
+        $limit = $request->has('length')?$request->get('length'):10;
+        $transactions = $this->closuresUsersTotals2023Repo->getClosureTmp($whitelabel, $currency,$startDate,$endDate,null,null,$limit,$start);
+        $total = empty($transactions)?0:$transactions[0]->total_pages;
+
+        $data = array();
+        if(!empty($transactions)){
+            foreach ($transactions as $value)
+            {
+                $nestedData['name_maker'] = $value->name_maker;
+                $nestedData['username'] = $value->username;
+                $nestedData['total_played'] = $value->total_played;
+
+                $data[] = $nestedData;
+            }
+        }
+        //Log::notice('tmp table',['start'=>$start,'limit'=>$limit,'transactions'=>$transactions]);
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($total),
+            "recordsFiltered" => intval($total),
+            "data"            => $data
+        );
+
+        return response()->json($json_data);
+
+        return Utils::successResponse($data);
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            return Utils::failedResponse();
+//        }
+    }
 }

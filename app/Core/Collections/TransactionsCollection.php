@@ -1410,6 +1410,77 @@ class TransactionsCollection
         }
     }
 
+    /**
+     * Format transactions timeline
+     *
+     * @param $transactions
+     */
+    public function formatTransactionTimeline($transactions,$request)
+    {
+        $timezone = session('timezone');
+        //TODO TOTAL COUNT TMP
+        $total = count($transactions);
+
+        $data = array();
+        if(!empty($transactions)){
+            foreach ($transactions as $transaction)
+            {
+                $newData['id'] = $transaction->id;
+                $newData['date'] = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+
+                $newData['names'] =  _('from').' '.$transaction->data->from .' '._('to').' '.$transaction->data->to;
+                $newData['from'] = $transaction->data->from;
+                $newData['to'] = $transaction->data->to;
+                $newData['data'] = $transaction->data;
+                $newData['amount'] = $transaction->amount;
+                $newData['debit'] = $transaction->transaction_type_id == TransactionTypes::$debit ? number_format($transaction->amount, 2) : '-';;
+                $newData['credit'] = $transaction->transaction_type_id == TransactionTypes::$credit ? number_format($transaction->amount, 2) : '-';
+                $newData['debit_'] = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : 0;;
+                $newData['credit_'] = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : 0;
+                $newData['transaction_type_id'] = $transaction->transaction_type_id;
+                $newData['balance'] = 0;
+                //$newData['balance_'] = 0;
+                if (isset($transaction->data->balance)) {
+                    $newData['balance'] = number_format($transaction->data->balance, 2);
+                    //$newData['balance_'] = $transaction->data->balance;
+                }
+
+                $data[] = $newData;
+            }
+        }
+
+        $debitTotal = array_sum(array_map(function($var) {
+            return $var['debit_'];
+        }, $data));
+        $creditTotal = array_sum(array_map(function($var) {
+            return $var['credit_'];
+        }, $data));
+
+        $data[] = [
+            'id'=>'',
+            'date'=>'',
+            'names'=>'',
+            'from'=>'',
+            'to'=>'',
+            'data'=>'',
+            'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>',
+            'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>',
+            'debit_'=>0,
+            'credit_'=>0,
+            'transaction_type_id'=>'',
+            'balance'=>'<strong>'.number_format(($creditTotal-$debitTotal),2).'</strong>',
+        ];
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($total),
+            "recordsFiltered" => intval($total),
+            "data"            => $data
+        );
+
+        return $json_data;
+    }
+
     public function formatWhitelabelsSales($sales, $currency, $startDate, $endDate)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();

@@ -260,7 +260,8 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state-data-detail',
             'uses' => 'AgentsController@financialStateDataDetails2023'
         ]);
-//Financial State Data
+
+        //Financial State Data
         Route::get('financial-state-data/row2/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data.row2',
             'uses' => 'AgentsController@financialStateDataRow2'
@@ -335,6 +336,29 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         Route::get('users-balances-data', [
             'as' => 'reports.users.users-balances-data',
             'uses' => 'AgentsController@usersBalancesData'
+        ]);
+
+        // Get Transactions Timeline
+        Route::get('transactions-timeline', [
+            'as' => 'reports.view.transaction.timeline',
+            'uses' => 'AgentsController@viewTransactionTimeline'
+        ]);
+
+        // Get Transactions Timeline Data
+        Route::get('transactions-timeline-data', [
+            'as' => 'reports.data.transaction.timeline',
+            'uses' => 'AgentsController@dataTransactionTimeline'
+        ]);
+        // Get Tmp
+        Route::get('tmp', [
+            'as' => 'reports.view.tmp',
+            'uses' => 'AgentsController@viewTmp'
+        ]);
+
+        // Get Data Tmp
+        Route::get('data-tmp', [
+            'as' => 'reports.data.tmp',
+            'uses' => 'AgentsController@dataTmp'
         ]);
 
     });

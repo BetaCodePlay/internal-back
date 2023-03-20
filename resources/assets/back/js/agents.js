@@ -1542,6 +1542,49 @@ class Agents {
             });
         });
     }
+
+    // Financial state
+    returnDate(route,id) {
+        let route2 = route;
+        let $button = $('#update');
+        let picker = initLitepickerEndToday();
+        let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+        let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+        let dateFinal = '?start_date='+startDate+'&end_date='+endDate;
+        let table = $(id).DataTable({
+                processing: true,
+                serverSide: true,
+                lengthMenu:[10,20,30],
+                ajax: {
+                    url: route+dateFinal,
+                    dataType: 'json',
+                    type: 'get',
+                },
+                columns: [
+                    { data: 'date' },
+                    { data: 'names' },
+                    { data: 'debit' },
+                    { data: 'credit' },
+                    { data: 'balance' },
+                ],
+            });
+
+        table.on('draw.dt', function () {
+            $button.button('reset');
+        });
+
+        $button.click(function () {
+            $button.button('loading');
+            startDate= ''
+            endDate= ''
+            startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            dateFinal = '?start_date='+startDate+'&end_date='+endDate
+            table.ajax.url(route2+dateFinal).load();
+            $button.button('reset');
+        });
+
+    }
 }
 
 window.Agents = Agents;

@@ -444,4 +444,9 @@ class ClosuresUsersTotals2023Repo
 
     }
 
+    public function getClosureTmp(int $whitelabel, string $currency, string $startDate, string $endDate, $provider, $username,$limit,$pag)
+    {
+        return DB::select('SELECT * FROM get_closure_totals_by_provider_and_maker_pag(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username,$limit,$pag]);
+    }
+
 }
