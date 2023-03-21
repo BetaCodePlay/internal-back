@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Bonus\Enums\AllocationCriteria;
 use Dotworkers\Configurations\Enums\Codes;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\PaymentMethods;
@@ -1413,11 +1414,11 @@ class TransactionsCollection
     /**
      * Format transactions timeline
      *
-     * @param $transactions
+     * @param array $transactions Array Transactions
+     * @param $request
      */
-    public function formatTransactionTimeline($transactions,$request)
+    public function formatTransactionTimeline($transactions,$timezone,$request)
     {
-        $timezone = session('timezone');
         //TODO TOTAL COUNT TMP
         $total = count($transactions);
 
@@ -1448,28 +1449,31 @@ class TransactionsCollection
                 $data[] = $newData;
             }
         }
+        if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+            $debitTotal = array_sum(array_map(function($var) {
+                return $var['debit_'];
+            }, $data));
+            $creditTotal = array_sum(array_map(function($var) {
+                return $var['credit_'];
+            }, $data));
 
-        $debitTotal = array_sum(array_map(function($var) {
-            return $var['debit_'];
-        }, $data));
-        $creditTotal = array_sum(array_map(function($var) {
-            return $var['credit_'];
-        }, $data));
+            $data[] = [
+                'id'=>'',
+                'date'=>'',
+                'names'=>'',
+                'from'=>'',
+                'to'=>'',
+                'data'=>'',
+                'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>',
+                'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>',
+                'debit_'=>0,
+                'credit_'=>0,
+                'transaction_type_id'=>'',
+                'balance'=>'<strong>'.number_format(($creditTotal-$debitTotal),2).'</strong>',
+            ];
 
-        $data[] = [
-            'id'=>'',
-            'date'=>'',
-            'names'=>'',
-            'from'=>'',
-            'to'=>'',
-            'data'=>'',
-            'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>',
-            'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>',
-            'debit_'=>0,
-            'credit_'=>0,
-            'transaction_type_id'=>'',
-            'balance'=>'<strong>'.number_format(($creditTotal-$debitTotal),2).'</strong>',
-        ];
+        }
+
 
         $json_data = array(
             "draw"            => intval($request->input('draw')),

@@ -185,9 +185,12 @@ class AgentsCollection
         $totalProfit = 0;
         if (!empty($tableDb)) {
 
-            //TODO REVISAR STATSUS DE PROVEEDOR EN PRODUCCION
-            //$arrayProviderTmp= $closureRepo->getProvidersActive(true);
-            $arrayProviderTmp = [171, 166, 115]; //DEC
+            //TODO STATUS OF PROVIDERS IN PROD
+             $arrayProviderTmp = array_map(function($val) {
+                return $val->id;
+            },$closureRepo->getProvidersActiveByCredentials(true,$currency,$whitelabel));
+            //$arrayProviderTmp = [171, 166, 115]; //DEC
+
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider) {
                 $providerNull[$provider] = [
@@ -238,9 +241,7 @@ class AgentsCollection
                     $arrayTmp[$value->user_id]['providers'] = $providerNull;
                 }
 
-
             }
-
 
             $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
             foreach ($arrayProviderTmp as $item => $value) {

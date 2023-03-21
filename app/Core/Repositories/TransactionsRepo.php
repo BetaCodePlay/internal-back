@@ -325,14 +325,39 @@ class TransactionsRepo
     /**
      * Get Transactions All
      *
-     * @param $providers
+     * @param array $providers Provider Ids
      * @param $currency
      * @param $whitelabel
      * @param $limit
      * @param $offset
      * @return mixed
      */
-    public function getTransactions($providers, $currency, $whitelabel,$user,$startDate,$endDate,$limit = 10, $offset = 0)
+    public function getTransactions($providers, $currency, $whitelabel,$startDate,$endDate,$limit = 10, $offset = 0)
+    {
+        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->where('transactions.currency_iso', $currency)
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        return $transactions;
+    }
+    /**
+     * Get Transactions By User
+     *
+     * @param array $providers Provider Ids
+     * @param $currency
+     * @param $whitelabel
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
+    public function getTransactionsByUser($providers, $currency, $whitelabel,$user,$startDate,$endDate,$limit = 10, $offset = 0)
     {
         $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
             'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')

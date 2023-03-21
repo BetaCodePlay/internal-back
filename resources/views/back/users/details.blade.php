@@ -30,12 +30,14 @@
                             <i class="hs-admin-close"></i>
                             {{ _i('Inactive') }}
                         </button>
-                        @can('access', [\Dotworkers\Security\Enums\Permissions::$user_login])
-                            <a type="button" class="btn u-btn-3d u-btn-blue g-mr-10" href="{{ $login_user }}" data-route="{{ route('users.audit-users') }}" target="_blank" id="login_user">
-                                <i class="hs-admin-user"></i>
-                                {{ _i('See how') }}
-                            </a>
-                        @endcan
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            @can('access', [\Dotworkers\Security\Enums\Permissions::$user_login])
+                                <a type="button" class="btn u-btn-3d u-btn-blue g-mr-10" href="{{ $login_user }}" data-route="{{ route('users.audit-users') }}" target="_blank" id="login_user">
+                                    <i class="hs-admin-user"></i>
+                                    {{ _i('See how') }}
+                                </a>
+                            @endcan
+                        @endif
                     </div>
                     <br>
                 </section>
@@ -410,19 +412,21 @@
                                 </div>
                             </div>
                         </div>
-                        @if(isset($agent))
-                            <div class="row g-mb-15">
-                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                    <label class="g-mb-0" for="id">
-                                        {{ _i('Parent agent') }}
-                                    </label>
-                                </div>
-                                <div class="col-md-10 align-self-center">
-                                    <div class="form-group g-pos-rel g-mb-0">
-                                        {!! $agent !!}
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            @if(isset($agent))
+                                <div class="row g-mb-15">
+                                    <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                        <label class="g-mb-0" for="id">
+                                            {{ _i('Parent agent') }}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-10 align-self-center">
+                                        <div class="form-group g-pos-rel g-mb-0">
+                                            {!! $agent !!}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
                         @can('access', [\Dotworkers\Security\Enums\Permissions::$show_wallet_id])
                             <div class="row g-mb-15">

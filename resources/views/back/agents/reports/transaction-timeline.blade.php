@@ -29,8 +29,11 @@
 {{--                    <th> {{ _i('Credit') }} 1:credit=abonar o descargar</th>--}}
                     <th> {{ _i('Debit') }}</th>
                     <th> {{ _i('Credit') }}</th>
-                    <th> {{ _i('Balance').' ('.\Illuminate\Support\Facades\Auth::user()->username.')' }}</th>
-{{--                    <th> {{ _i('Balance') }}</th>--}}
+                    @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                        <th> {{ _i('Balance').' ('.\Illuminate\Support\Facades\Auth::user()->username.')' }}</th>
+                    @else
+                        <th> {{ _i('Balance')}}</th>
+                    @endif
                 </tr>
                 </thead>
             </table>
@@ -46,7 +49,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.returnDate('{{route('reports.data.transaction.timeline')}}','#exampleTable');
+            agents.returnDate('{{route('reports.data.transaction.timeline')}}','#exampleTable',[20,50,100]);
 
            {{--setTimeout(function(){--}}
            {{--    $.ajax({--}}

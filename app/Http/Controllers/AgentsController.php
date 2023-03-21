@@ -253,10 +253,10 @@ class AgentsController extends Controller
         try {
             if (session('admin_id')) {
                 $userId = session('admin_id');
-                $agent_player = false;
+                $agentPlayer = false;
             } else {
                 $userId = auth()->user()->id;
-                $agent_player = true;
+                $agentPlayer = true;
             }
             $currency = session('currency');
             $id = $request->id;
@@ -289,7 +289,7 @@ class AgentsController extends Controller
                 'wallet' => $walletId,
                 'type' => $type,
                 'myself' => $myself,
-                'agent_player' => $agent_player
+                'agent_player' => $agentPlayer
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
@@ -386,6 +386,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * Consult Data of Transactions TimeLine
      * @param Request $request
      * @return Response
      */
@@ -401,11 +402,17 @@ class AgentsController extends Controller
             $timezone = session('timezone');
 
             $offset = $request->has('start')?$request->get('start'):0;
-            $limit = $request->has('length')?$request->get('length'):10;
+            $limit = $request->has('length')?$request->get('length'):100;
+            //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
             $user = Auth::id();
-//return $request->all();
-            $transactions = $this->transactionsRepo->getTransactions($providers, $currency,$whitelabel,$user,$startDate,$endDate,$limit,$offset);
-            $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$request);
+
+            if(!in_array(Roles::$admin_Beet_sweet, session('roles'))){
+               $transactions = $this->transactionsRepo->getTransactions($providers, $currency,$whitelabel,$startDate,$endDate,$limit,$offset);
+            }else{
+                $transactions = $this->transactionsRepo->getTransactionsByUser($providers, $currency,$whitelabel,$user,$startDate,$endDate,$limit,$offset);
+            }
+
+            $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request);
 
             return response()->json($data);
 
@@ -2439,7 +2446,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * Test of pagination
+     * View Test of pagination
      * @return Application|Factory|\Illuminate\Contracts\View\View
      */
     public function viewTmp(Request $request)
@@ -2451,6 +2458,7 @@ class AgentsController extends Controller
 
     public function dataTmp(Request $request)
     {
+
 //        try {
 
         $currency = session('currency');

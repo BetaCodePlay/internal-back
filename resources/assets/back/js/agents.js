@@ -1544,7 +1544,7 @@ class Agents {
     }
 
     // Financial state
-    returnDate(route,id) {
+    returnDate(route,id,lengthMenu) {
         let route2 = route;
         let $button = $('#update');
         let picker = initLitepickerEndToday();
@@ -1554,7 +1554,7 @@ class Agents {
         let table = $(id).DataTable({
                 processing: true,
                 serverSide: true,
-                lengthMenu:[10,20,30],
+                lengthMenu:lengthMenu,
                 ajax: {
                     url: route+dateFinal,
                     dataType: 'json',

@@ -287,7 +287,6 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
-
                             'ReportByUsername' => [
                                 'text' => _i('By users'),
                                 'level_class' => 'third',
@@ -317,6 +316,15 @@ if (!function_exists('menu')) {
 //                                'submenu' => []
 //                            ],
 
+                            'AgentsTransactionTimeline' => [
+                                'text' => _i('Transaction Timeline'),
+                                'level_class' => 'third',
+                                'route' => 'reports.view.transaction.timeline',
+                                'params' => [],
+                                'icon' => 'hs-admin-stats-up',
+                                'permission' => Permissions::$agents_menu,
+                                'submenu' => []
+                            ],
                             'Agents transactions' => [
                                 'text' => _i('Agents transactions'),
                                 'level_class' => 'third',
