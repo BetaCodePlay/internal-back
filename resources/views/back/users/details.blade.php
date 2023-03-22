@@ -782,46 +782,49 @@
                     </div>
                 </div>
             @endif
-            <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-15">
-                <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+            @if($payments)
+                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-15">
+                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
 
-                    <div class="media">
-                        <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                            {{ _i('Payment methods') }}
-                        </h3>
+                        <div class="media">
+                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                {{ _i('Payment methods') }}
+                            </h3>
+                        </div>
+                    </header>
+                    <div class="card-block g-pa-15">
+                        @if ($user_accounts)
+                            @foreach ($user_accounts as $account)
+                                <div class="media-md align-items-center g-parent g-brd-around g-brd-gray-light-v2 g-rounded-4 g-px-20 g-py-5 g-mb-3">
+                                    <div class="d-flex-md text-center g-mb-20 g-mb-0--md">
+                                        <div class="d-inline-block u-icon-v3 u-icon-size--lg g-bg-gray-light-v3 g-font-size-24 g-color-secondary rounded-circle">
+                                            <i class="g-font-size-0">
+                                                {!! $account->logo !!}
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
+                                        <div>
+                                            {!! $account->info !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <label class="js-check g-pos-rel d-block g-mb-20">
+                                <div class="media-md align-items-center g-parent g-bg-gray-light-v8--sibling-checked g-brd-around g-brd-gray-light-v7 g-rounded-4 g-px-10 g-py-15">
+                                    <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
+                                        <div>
+                                            {{ _i('This user does not have payment methods') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        @endif
                     </div>
-                </header>
-                <div class="card-block g-pa-15">
-                    @if ($user_accounts)
-                        @foreach ($user_accounts as $account)
-                            <div class="media-md align-items-center g-parent g-brd-around g-brd-gray-light-v2 g-rounded-4 g-px-20 g-py-5 g-mb-3">
-                                <div class="d-flex-md text-center g-mb-20 g-mb-0--md">
-                                    <div class="d-inline-block u-icon-v3 u-icon-size--lg g-bg-gray-light-v3 g-font-size-24 g-color-secondary rounded-circle">
-                                        <i class="g-font-size-0">
-                                            {!! $account->logo !!}
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
-                                    <div>
-                                        {!! $account->info !!}
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <label class="js-check g-pos-rel d-block g-mb-20">
-                            <div class="media-md align-items-center g-parent g-bg-gray-light-v8--sibling-checked g-brd-around g-brd-gray-light-v7 g-rounded-4 g-px-10 g-py-15">
-                                <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
-                                    <div>
-                                        {{ _i('This user does not have payment methods') }}
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    @endif
                 </div>
-            </div>
+            @endif
+
             @if(isset($wallets_bonuses))
                 @if (count($wallets_bonuses) > 0)
                     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-15">

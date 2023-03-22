@@ -35,6 +35,7 @@ use Carbon\CarbonPeriod;
 use Dotworkers\Audits\Audits;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
+use Dotworkers\Configurations\Enums\Components;
 use Dotworkers\Configurations\Enums\EmailTypes;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
@@ -971,6 +972,8 @@ class UsersController extends Controller
                     //$data['segments'] = $segments;
                     $data['document_verification'] = $documentVerification;
                     $data['bonus'] = $bonus;
+                    $data['payments'] = !isset(config('whitelabels.configurations')[Components::$services-1]->data->payments)?false:config('whitelabels.configurations')[Components::$services-1]->data->payments;
+
                     return view('back.users.details', $data);
                 }
 
