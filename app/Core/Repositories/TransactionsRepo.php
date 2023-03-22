@@ -323,7 +323,23 @@ class TransactionsRepo
     }
 
     /**
-     * Get Transactions All
+     * Get Sql Transactions Timeline Page
+     *
+     * @param int $whitelabel Whitelabel Id
+     //* @param array $providers Provider Ids
+     * @param int $user User Id
+     * @param string $currency Currency Iso
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
+     * @return mixed
+     */
+    public function getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit = 10, $offset = 0)
+    {
+        return DB::select('SELECT * FROM get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit, $offset]);
+    }
+
+    /**
+     * Get Transactions Timeline All
      *
      * @param array $providers Provider Ids
      * @param $currency

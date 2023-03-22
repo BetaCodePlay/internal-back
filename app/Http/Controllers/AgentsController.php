@@ -392,11 +392,13 @@ class AgentsController extends Controller
      */
     public function dataTransactionTimeline(Request $request)
     {
-//        try {
+        try {
 
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $providers = [Providers::$agents, Providers::$agents_users];
+            //TODO CONVERSION OF ARRAY '{16,25}';
+            $providers = '{'.implode(', ',$providers).'}';
             $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
             $timezone = session('timezone');
@@ -406,20 +408,23 @@ class AgentsController extends Controller
             //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
             $user = Auth::id();
 
-            if(!in_array(Roles::$admin_Beet_sweet, session('roles'))){
-               $transactions = $this->transactionsRepo->getTransactions($providers, $currency,$whitelabel,$startDate,$endDate,$limit,$offset);
+            //TODO CAMBIADO POR FUNCIONES SQL
+            //transactions = $this->transactionsRepo->getTransactions($providers, $currency,$whitelabel,$startDate,$endDate,$limit,$offset);
+            if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
             }else{
-                $transactions = $this->transactionsRepo->getTransactionsByUser($providers, $currency,$whitelabel,$user,$startDate,$endDate,$limit,$offset);
+                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,null,$limit,$offset);
             }
-
+            //TODO Return View Data
+            //return [$user,$transactions,in_array(Roles::$admin_Beet_sweet, session('roles')),Roles::$admin_Beet_sweet, session('roles')];
             $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request);
 
             return response()->json($data);
 
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            return Utils::failedResponse();
-//        }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
@@ -982,10 +987,11 @@ class AgentsController extends Controller
     }
 
     /**
+     *
      * @param Request $request
      * @param ProvidersRepo $providersRepo
      * @param ProvidersTypesRepo $providersTypesRepo
-     * @param $user
+     * @param int $user User Id
      * @param $startDate
      * @param $endDate
      * @return Response
@@ -2469,8 +2475,9 @@ class AgentsController extends Controller
 
         $start = $request->has('start')?$request->get('start'):0;
         $limit = $request->has('length')?$request->get('length'):10;
+        //return $request->all();
         $transactions = $this->closuresUsersTotals2023Repo->getClosureTmp($whitelabel, $currency,$startDate,$endDate,null,null,$limit,$start);
-        $total = empty($transactions)?0:$transactions[0]->total_pages;
+        $total = empty($transactions)?0:$transactions[0]->total_items;
 
         $data = array();
         if(!empty($transactions)){
@@ -2493,7 +2500,6 @@ class AgentsController extends Controller
 
         return response()->json($json_data);
 
-        return Utils::successResponse($data);
 //        } catch (\Exception $ex) {
 //            \Log::error(__METHOD__, ['exception' => $ex]);
 //            return Utils::failedResponse();

@@ -25,15 +25,14 @@
                 <tr>
                     <th> {{ _i('Date') }}</th>
                     <th> {{ _i('Description') }}</th>
-{{--                    <th> {{ _i('Debit') }} 2: debit=cargar</th>--}}
-{{--                    <th> {{ _i('Credit') }} 1:credit=abonar o descargar</th>--}}
                     <th> {{ _i('Debit') }}</th>
                     <th> {{ _i('Credit') }}</th>
-                    @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                        <th> {{ _i('Balance').' ('.\Illuminate\Support\Facades\Auth::user()->username.')' }}</th>
-                    @else
-                        <th> {{ _i('Balance')}}</th>
-                    @endif
+{{--                    @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+{{--                        <th> {{ _i('Balance').' ('.\Illuminate\Support\Facades\Auth::user()->username.')' }}</th>--}}
+{{--                    @else--}}
+{{--                        <th> {{ _i('Balance')}}</th>   --}}
+{{--                    @endif--}}
+                    <th> {{ _i('Balance')}}</th>
                 </tr>
                 </thead>
             </table>
@@ -49,66 +48,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.returnDate('{{route('reports.data.transaction.timeline')}}','#exampleTable',[20,50,100]);
-
-           {{--setTimeout(function(){--}}
-           {{--    $.ajax({--}}
-           {{--        url: '{{route('reports.data.transaction.timeline')}}',--}}
-           {{--        dataType: 'json',--}}
-           {{--        type: 'get',--}}
-           {{--        success : function(data) {--}}
-           {{--            //var o = JSON.parse(data);//A la variable le asigno el json decodificado--}}
-           {{--            var o =data;//A la variable le asigno el json decodificado--}}
-           {{--            console.log(o);--}}
-
-           {{--        }--}}
-           {{--    })--}}
-           {{--},2000);--}}
-           {{-- $('#exampleTable')--}}
-           {{--     .DataTable({--}}
-           {{--         processing: true,--}}
-           {{--         serverSide: true,--}}
-           {{--         lengthMenu:[10,20,30],--}}
-           {{--         ajax: {--}}
-           {{--             url: '{{route('reports.data.transaction.timeline')}}',--}}
-           {{--             dataType: 'json',--}}
-           {{--             type: 'get',--}}
-           {{--             data:{--}}
-           {{--                 'date':document.getElementById('date_range')--}}
-           {{--             }--}}
-           {{--         },--}}
-           {{--         columns: [--}}
-           {{--             { data: 'date' },--}}
-           {{--             { data: 'names' },--}}
-           {{--             // { data: 'from' },--}}
-           {{--             // { data: 'to' },--}}
-           {{--             { data: 'debit' },--}}
-           {{--             { data: 'credit' },--}}
-           {{--             { data: 'balance' },--}}
-           {{--             // {--}}
-           {{--             //     render: function(data, type, full, meta) {--}}
-           {{--             //         console.log(data, type, full, meta);--}}
-           {{--             //         return full.balance;--}}
-           {{--             //     }--}}
-           {{--             // },--}}
-           {{--         ],--}}
-           {{--         // initComplete: function () {--}}
-           {{--         //     // Apply the search--}}
-           {{--         //     this.api().columns().every( function () {--}}
-           {{--         //         var that = this;--}}
-           {{--         //--}}
-           {{--         //         $( 'input', this.header() ).on( 'keyup change clear', function () {--}}
-           {{--         //             if ( that.search() !== this.value ) {--}}
-           {{--         //                 that--}}
-           {{--         //                     .search( this.value )--}}
-           {{--         //                     .draw();--}}
-           {{--         //             }--}}
-           {{--         //         } );--}}
-           {{--         //     } );--}}
-           {{--         //--}}
-           {{--         // }--}}
-           {{--     });--}}
-
+            agents.transactionTimeline('{{route('reports.data.transaction.timeline')}}','#exampleTable',[10,20,50,100]);
         });
     </script>
 @endsection

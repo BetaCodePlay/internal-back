@@ -1419,30 +1419,36 @@ class TransactionsCollection
      */
     public function formatTransactionTimeline($transactions,$timezone,$request)
     {
-        //TODO TOTAL COUNT TMP
-        $total = count($transactions);
-
+        $total = 0;
         $data = array();
         if(!empty($transactions)){
+            $total = $transactions[0]->total_items;
             foreach ($transactions as $transaction)
             {
-                $newData['id'] = $transaction->id;
-                $newData['date'] = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+                $dataTmp = json_decode($transaction->data);
+                $newData['date'] = Carbon::create($transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
 
-                $newData['names'] =  _('from').' '.$transaction->data->from .' '._('to').' '.$transaction->data->to;
-                $newData['from'] = $transaction->data->from;
-                $newData['to'] = $transaction->data->to;
-                $newData['data'] = $transaction->data;
+                $newData['id'] = $transaction->id;
+                $newData['names'] =  _('from').' '.$dataTmp->from .' '._('to').' '.$dataTmp->to;
+                $newData['from'] = $dataTmp->from;
+                $newData['to'] = $dataTmp->to;
+                $newData['data'] = $dataTmp;
                 $newData['amount'] = $transaction->amount;
                 $newData['debit'] = $transaction->transaction_type_id == TransactionTypes::$debit ? number_format($transaction->amount, 2) : '-';;
                 $newData['credit'] = $transaction->transaction_type_id == TransactionTypes::$credit ? number_format($transaction->amount, 2) : '-';
                 $newData['debit_'] = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : 0;;
                 $newData['credit_'] = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : 0;
                 $newData['transaction_type_id'] = $transaction->transaction_type_id;
-                $newData['balance'] = 0;
-                //$newData['balance_'] = 0;
-                if (isset($transaction->data->balance)) {
-                    $newData['balance'] = number_format($transaction->data->balance, 2);
+                $newData['balance'] = '0.00';
+                if (isset($dataTmp->balance)) {
+                    //TODO IF SUPPORT
+//                    if(!in_array(Roles::$admin_Beet_sweet, session('roles'))){
+//                        //$to =
+//                        $newData['balance'] = number_format($transaction->data->balance, 2).' ('.$transaction->data->to.')';
+//                    }else{
+//                        $newData['balance'] = number_format($transaction->data->balance, 2);
+//                    }
+                    $newData['balance'] = number_format($dataTmp->balance, 2);
                     //$newData['balance_'] = $transaction->data->balance;
                 }
 
@@ -1473,7 +1479,6 @@ class TransactionsCollection
             ];
 
         }
-
 
         $json_data = array(
             "draw"            => intval($request->input('draw')),

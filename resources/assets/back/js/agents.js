@@ -1543,8 +1543,8 @@ class Agents {
         });
     }
 
-    // Financial state
-    returnDate(route,id,lengthMenu) {
+    // Table Transaction Timeline
+    transactionTimeline(route,id,lengthMenu) {
         let route2 = route;
         let $button = $('#update');
         let picker = initLitepickerEndToday();
