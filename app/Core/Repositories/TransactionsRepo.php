@@ -24,7 +24,7 @@ class TransactionsRepo
      * Count approved transactions by user and currency and date
      *
      * @param int $user User ID
-     * @param int $currency Currency type ISO
+     * @param int $currency Currency Iso
      * @param string $startDate Start date
      * @return mixed
      */
@@ -41,12 +41,13 @@ class TransactionsRepo
             ->limit(1)
             ->first();
     }
+
     /**
      * Get count by provider types
      *
-     * @param int $whitelabel Whitelabel ID
-     * @parm int $transactionType Transaction type
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param int $transactionType Transaction type
+     * @param string $currency Currency Iso
      * @param array $providerTypes Provider types
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
@@ -88,7 +89,7 @@ class TransactionsRepo
      * Find first deposit
      *
      * @param int $user User ID
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      * @return mixed
      */
     public function findFirstDeposit(int $user, string $currency)
@@ -108,9 +109,9 @@ class TransactionsRepo
      *
      * @param int $user Users IDs
      * @param array $providers Providers IDs
-     * @param string $currency Currency ISO
-     * @param string $startDate Start date
-     * @param string $endDate End date
+     * @param string $currency Currency Iso
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
      * @return mixed
      */
     public function getAgentsTransactions($user, $providers, $currency, $startDate, $endDate)
@@ -145,7 +146,7 @@ class TransactionsRepo
      * Get bonus total by user
      *
      * @param int $user User ID
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      * @return array
      */
     public function getBonusTotalByUser($user, $currency)
@@ -163,7 +164,7 @@ class TransactionsRepo
      * Get bonus totals by users
      *
      * @param array $users User ID
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return array
@@ -184,96 +185,38 @@ class TransactionsRepo
     }
 
     /**
-     * Get  transactions by transaction type and providers
+     * Get by status
      *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
-     * @param int $transactionType Transaction type ID
-     * @param array $providers Providers
+     * @param int $provider Provider ID
+     * @param int $transactionType Transaction type
+     * @param string $currency Currency Iso
+     * @param int $status Status ID
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
-     * @param int $status Status ID
      * @return mixed
      */
-    public function getByTransactionTypeAndProviders($whitelabel, $currency, $transactionType, $providers, $startDate, $endDate, $status)
+    public function getByStatusAndDates($provider, $transactionType, $currency, $status, $startDate, $endDate)
     {
-        $transactions = Transaction::select('transactions.*', 'users.username', 'users.id as user')
-            ->join('users', 'transactions.user_id', '=', 'users.id')
+        $transactions = Transaction::select('transactions.id', 'amount', 'transactions.currency_iso', 'transactions.transaction_status_id',
+            'transactions.created_at', 'transactions.updated_at', 'users.id', 'users.username', 'transactions.data', 'transactions.reference', 'transaction_details.data AS details_data')
+            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
             ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
-            ->where('transaction_details.transaction_status_id', $status)
-            ->where('users.whitelabel_id', $whitelabel)
+            ->where('transaction_type_id', $transactionType)
             ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->whereBetween('transactions.updated_at', [$startDate, $endDate])
-            ->where('transactions.transaction_type_id', $transactionType)
             ->where('transactions.transaction_status_id', $status)
-            ->orderBy('transactions.updated_at', 'DESC')
+            ->where('transaction_details.transaction_status_id', $status)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.provider_id', $provider)
+            ->orderBy('created_at', 'DESC')
             ->get();
         return $transactions;
     }
 
     /**
-     * Get transactions history
-     *
-     * @param int $user User ID
-     * @parm int $transactionType Transaction type
-     * @param string $currency Currency ISO
-     * @param array $providerTypes Provider types
-     * @return mixed
-     */
-    public function getTransactionsHistory($user, $transactionType, $currency, $providerTypes)
-    {
-        return Transaction::join('providers', 'transactions.provider_id', '=', 'providers.id')
-            ->where('transactions.user_id', $user)
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('providers.provider_type_id', $providerTypes)
-            ->where('transaction_type_id', $transactionType)
-            ->where('transaction_status_id', TransactionStatus::$approved)
-            ->sum('amount');
-    }
-    /**
-     * Get manual adjustments by transaction type and providers
-     *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
-     * @param int $transactionType Transaction type ID
-     * @param array $providers Providers
-     * @param string $startDate Start date to filter
-     * @param string $endDate End date to filter
-     * @param int $status Status ID
-     * @return mixed
-     */
-    public function getManualAdjustmentsByTransactionTypeAndProviders($whitelabel, $currency, $transactionType, $providers, $startDate, $endDate, $status)
-    {
-        $transactions = Transaction::select('transactions.*', 'users.username', 'users.id as user', 'transaction_details.data as details', 'whitelabels.description as whitelabel_description')
-            ->join('users', 'transactions.user_id', '=', 'users.id')
-            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
-            ->join('whitelabels', 'transactions.whitelabel_id', '=', 'whitelabels.id')
-            ->where('transaction_details.transaction_status_id', $status)
-            ->whereIn('transactions.provider_id', $providers)
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.transaction_status_id', $status);
-
-        if (!empty($transactionType)) {
-            $transactions->where('transactions.transaction_type_id', $transactionType);
-        }
-
-        if (!empty($currency)) {
-            $transactions->where('transactions.currency_iso', $currency);
-        }
-
-        if (!empty($whitelabel)) {
-            $transactions ->where('users.whitelabel_id', $whitelabel);
-        }
-        $data = $transactions->orderBy('transactions.created_at', 'DESC')->get();
-        return $data;
-    }
-
-    /**
      * Get  transactions by transaction type and provider types
      *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param int $transactionType Transaction type ID
      * @param array $providers Providers
      * @param string $startDate Start date to filter
@@ -299,94 +242,31 @@ class TransactionsRepo
     }
 
     /**
-     * Get transactions list by user and provider
-     *
-     * @param int $user User ID
-     * @param array $providers Providers IDS
-     * @param string $currency Currency ISO
-     * @param int $limit Transactions limit
-     * @param int $offset Transactions offset
-     * @return mixed
-     */
-    public function getByUserAndProviders($user, $providers, $currency, $limit = 2000, $offset = 0)
-    {
-        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
-            ->where('transactions.user_id', $user)
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC')
-            ->limit($limit)
-            ->offset($offset)
-            ->get();
-        return $transactions;
-    }
-
-    /**
-     * Get Sql Transactions Timeline Page
+     * Get  transactions by transaction type and providers
      *
      * @param int $whitelabel Whitelabel Id
-     //* @param array $providers Provider Ids
-     * @param int $user User Id
      * @param string $currency Currency Iso
-     * @param int $limit Transactions limit
-     * @param int $offset Transactions offset
+     * @param int $transactionType Transaction type ID
+     * @param array $providers Providers
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @param int $status Status ID
      * @return mixed
      */
-    public function getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit = 10, $offset = 0)
+    public function getByTransactionTypeAndProviders($whitelabel, $currency, $transactionType, $providers, $startDate, $endDate, $status)
     {
-        return DB::select('SELECT * FROM get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit, $offset]);
-    }
-
-    /**
-     * Get Transactions Timeline All
-     *
-     * @param array $providers Provider Ids
-     * @param $currency
-     * @param $whitelabel
-     * @param $limit
-     * @param $offset
-     * @return mixed
-     */
-    public function getTransactions($providers, $currency, $whitelabel,$startDate,$endDate,$limit = 10, $offset = 0)
-    {
-        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+        $transactions = Transaction::select('transactions.*', 'users.username', 'users.id as user')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->where('transaction_details.transaction_status_id', $status)
+            ->where('users.whitelabel_id', $whitelabel)
             ->where('transactions.currency_iso', $currency)
-            ->where('transactions.whitelabel_id', $whitelabel)
             ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC')
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->limit($limit)
-            ->offset($offset)
+            ->whereBetween('transactions.updated_at', [$startDate, $endDate])
+            ->where('transactions.transaction_type_id', $transactionType)
+            ->where('transactions.transaction_status_id', $status)
+            ->orderBy('transactions.updated_at', 'DESC')
             ->get();
-
-        return $transactions;
-    }
-    /**
-     * Get Transactions By User
-     *
-     * @param array $providers Provider Ids
-     * @param $currency
-     * @param $whitelabel
-     * @param $limit
-     * @param $offset
-     * @return mixed
-     */
-    public function getTransactionsByUser($providers, $currency, $whitelabel,$user,$startDate,$endDate,$limit = 10, $offset = 0)
-    {
-        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
-            ->where('transactions.user_id', $user)
-            ->where('transactions.currency_iso', $currency)
-            ->where('transactions.whitelabel_id', $whitelabel)
-            ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC')
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->limit($limit)
-            ->offset($offset)
-            ->get();
-
         return $transactions;
     }
 
@@ -394,7 +274,7 @@ class TransactionsRepo
      * Get transactions list by user and provider types
      *
      * @param int $user User ID
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      * @param array $provideTypes Provider types
      * @param int $limit Transactions limit
      * @param int $offset Transactions offset
@@ -418,29 +298,25 @@ class TransactionsRepo
     }
 
     /**
-     * Get by status
+     * Get transactions list by user and provider
      *
-     * @param int $provider Provider ID
-     * @param int $transactionType Transaction type
-     * @param string $currency Currency ISO
-     * @param int $status Status ID
-     * @param string $startDate Start date to filter
-     * @param string $endDate End date to filter
+     * @param int $user User ID
+     * @param array $providers Providers IDS
+     * @param string $currency Currency Iso
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByStatusAndDates($provider, $transactionType, $currency, $status, $startDate, $endDate)
+    public function getByUserAndProviders($user, $providers, $currency, $limit = 2000, $offset = 0)
     {
-        $transactions =  Transaction::select('transactions.id', 'amount', 'transactions.currency_iso', 'transactions.transaction_status_id',
-            'transactions.created_at', 'transactions.updated_at', 'users.id', 'users.username', 'transactions.data', 'transactions.reference', 'transaction_details.data AS details_data')
-            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
-            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
-            ->where('transaction_type_id', $transactionType)
+        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->where('transactions.user_id', $user)
             ->where('transactions.currency_iso', $currency)
-            ->where('transactions.transaction_status_id', $status)
-            ->where('transaction_details.transaction_status_id', $status)
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.provider_id', $provider)
-            ->orderBy('created_at', 'DESC')
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->limit($limit)
+            ->offset($offset)
             ->get();
         return $transactions;
     }
@@ -448,9 +324,8 @@ class TransactionsRepo
     /**
      * Get financial cash flow data by providers grouped by users
      *
-     * @para
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return array
@@ -490,10 +365,80 @@ class TransactionsRepo
     }
 
     /**
-     * Get financial data excluding agents to agents transactions grouped by dates
+     * Get deposists withdrawals provider data
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @param int $transactionType Transaction type ID
+     * @return mixed
+     */
+    public function getDeposistsWithdrawalsProvider($currency, $startDate, $endDate, $transactionType, $whitelabel)
+    {
+        $data = Transaction::select('transactions.*', 'users.username', 'users.id as user')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('transactions.currency_iso', $currency)
+            ->where('transactions.provider_id', Providers::$agents_users)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.transaction_type_id', $transactionType)
+            ->where('transaction_status_id', TransactionStatus::$approved)
+            ->get();
+        return $data;
+    }
+
+    /**
+     * Get deposit withdrawal by user
      *
      * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
+     * @param array $providerTypes Provider types
+     * @return array
+     */
+    public function getDepositWithdrawalByUser($whitelabel, $currency, $level, $providerTypes)
+    {
+        $deposits = Transaction::select('users.id', 'users.username', 'users.last_login', \DB::raw('sum(transactions.amount) AS amount'))
+            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->where('transactions.currency_iso', $currency)
+            ->where('transaction_type_id', TransactionTypes::$credit)
+            ->where('transaction_status_id', TransactionStatus::$approved)
+            ->whereIn('providers.provider_type_id', $providerTypes);
+
+        if (!is_null($level)) {
+            $deposits->where('profiles.level', $level);
+        }
+        $totalDeposits = $deposits->groupBy('users.id', 'users.username')->get();
+
+        $withdrawals = Transaction::select('users.id', 'users.username', \DB::raw('sum(transactions.amount) AS amount'))
+            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->where('transactions.currency_iso', $currency)
+            ->where('transaction_type_id', TransactionTypes::$debit)
+            ->where('transaction_status_id', TransactionStatus::$approved)
+            ->whereIn('providers.provider_type_id', $providerTypes);
+
+        if (!is_null($level)) {
+            $withdrawals->where('profiles.level', $level);
+        }
+        $totalWithdrawals = $withdrawals->groupBy('users.id', 'users.username')->get();
+
+        return [
+            'deposits' => $totalDeposits,
+            'withdrawals' => $totalWithdrawals
+        ];
+    }
+
+    /**
+     * Get financial data excluding agents to agents transactions grouped by dates
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param array $providerTypes Provider types
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
@@ -538,8 +483,8 @@ class TransactionsRepo
     /**
      * Get financial data excluding agents to agents transactions grouped by dates
      *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param array $providerTypes Provider types
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
@@ -585,8 +530,8 @@ class TransactionsRepo
     /**
      * Get financial totals by currency
      *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return array
@@ -611,8 +556,8 @@ class TransactionsRepo
      * Get first agent transaction
      *
      * @param array $agents Agents data
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return mixed
@@ -636,8 +581,8 @@ class TransactionsRepo
      * Get last agent transaction
      *
      * @param array $agents Agents data
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return mixed
@@ -658,13 +603,54 @@ class TransactionsRepo
     }
 
     /**
+     * Get manual adjustments by transaction type and providers
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param int $transactionType Transaction type ID
+     * @param array $providers Providers
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @param int $status Status ID
+     * @return mixed
+     */
+    public function getManualAdjustmentsByTransactionTypeAndProviders($whitelabel, $currency, $transactionType, $providers, $startDate, $endDate, $status)
+    {
+        $transactions = Transaction::select('transactions.*', 'users.username', 'users.id as user', 'transaction_details.data as details', 'whitelabels.description as whitelabel_description')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->join('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->join('whitelabels', 'transactions.whitelabel_id', '=', 'whitelabels.id')
+            ->where('transaction_details.transaction_status_id', $status)
+            ->whereIn('transactions.provider_id', $providers)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.transaction_status_id', $status);
+
+        if (!empty($transactionType)) {
+            $transactions->where('transactions.transaction_type_id', $transactionType);
+        }
+
+        if (!empty($currency)) {
+            $transactions->where('transactions.currency_iso', $currency);
+        }
+
+        if (!empty($whitelabel)) {
+            $transactions->where('users.whitelabel_id', $whitelabel);
+        }
+        $data = $transactions->orderBy('transactions.created_at', 'DESC')->get();
+        return $data;
+    }
+
+    /**
      * Get transactions list by user and provider
      *
      * @param int $user User ID
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param array $providers Providers IDS
-     * @param string $currency Currency ISO
      * @param int $limit Transactions limit
      * @param int $offset Transactions offset
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
      * @return mixed
      */
     public function getManualTransactionsFromAgents($users, $startDate, $endDate, $providers, $currency, $whitelabel, $limit = 2000, $offset = 0)
@@ -684,12 +670,23 @@ class TransactionsRepo
     }
 
     /**
+     * Get sequence next value
+     *
+     * @return mixed
+     */
+    public function getNextValue()
+    {
+        $nextValue = \DB::select("select nextval('transactions_id_seq')");
+        return $nextValue[0]->nextval;
+    }
+
+    /**
      * Get monthly sales data
      *
-     * @param int $whitelabel Whitelabel ID
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
-     * @param string $currency Currency ISO
      * @param string $timezone Time zone
      * @return mixed
      */
@@ -743,7 +740,7 @@ class TransactionsRepo
      * Get segmentation
      *
      * @param int $user User ID
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      * @param array $providerTypes Provider types
      * @return array
      */
@@ -769,7 +766,7 @@ class TransactionsRepo
      * Get deposits totals by user
      *
      * @param int $user User ID
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      * @param array $providerTypes Provider types
      * @return array
      */
@@ -798,91 +795,105 @@ class TransactionsRepo
     }
 
     /**
-     * Get deposit withdrawal by user
+     * Get Transactions Timeline All
      *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
-     * @param array $providerTypes Provider types
-     * @return array
-     */
-    public function getDepositWithdrawalByUser($whitelabel, $currency, $level, $providerTypes)
-    {
-        $deposits = Transaction::select('users.id','users.username', 'users.last_login', \DB::raw('sum(transactions.amount) AS amount'))
-            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
-            ->join('users','transactions.user_id', '=', 'users.id')
-            ->join('profiles','users.id', '=', 'profiles.user_id')
-            ->where('transactions.whitelabel_id', $whitelabel)
-            ->where('transactions.currency_iso', $currency)
-            ->where('transaction_type_id', TransactionTypes::$credit)
-            ->where('transaction_status_id', TransactionStatus::$approved)
-            ->whereIn('providers.provider_type_id', $providerTypes);
-
-        if (!is_null($level)) {
-            $deposits->where('profiles.level', $level);
-        }
-        $totalDeposits = $deposits->groupBy( 'users.id', 'users.username')->get();
-
-        $withdrawals = Transaction::select('users.id','users.username', \DB::raw('sum(transactions.amount) AS amount'))
-            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
-            ->join('users','transactions.user_id', '=', 'users.id')
-            ->join('profiles','users.id', '=', 'profiles.user_id')
-            ->where('transactions.whitelabel_id', $whitelabel)
-            ->where('transactions.currency_iso', $currency)
-            ->where('transaction_type_id', TransactionTypes::$debit)
-            ->where('transaction_status_id', TransactionStatus::$approved)
-            ->whereIn('providers.provider_type_id', $providerTypes);
-
-        if (!is_null($level)) {
-            $withdrawals->where('profiles.level', $level);
-        }
-        $totalWithdrawals = $withdrawals->groupBy( 'users.id', 'users.username')->get();
-
-        return [
-            'deposits' => $totalDeposits,
-            'withdrawals' => $totalWithdrawals
-        ];
-    }
-
-    /**
-     * Get deposists withdrawals provider data
-     *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param array $providers Provider Ids
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param $limit
+     * @param $offset
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
-     * @param int $transactionType Transaction type ID
      * @return mixed
      */
-    public function getDeposistsWithdrawalsProvider($currency, $startDate, $endDate, $transactionType, $whitelabel)
+    public function getTransactions($providers, $currency, $whitelabel, $startDate, $endDate, $limit = 10, $offset = 0)
     {
-        $data = Transaction::select('transactions.*', 'users.username', 'users.id as user')
-            ->join('users', 'transactions.user_id', '=', 'users.id')
-            ->where('users.whitelabel_id', $whitelabel)
+        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
             ->where('transactions.currency_iso', $currency)
-            ->where('transactions.provider_id', Providers::$agents_users)
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.transaction_type_id', $transactionType)
-            ->where('transaction_status_id', TransactionStatus::$approved)
+            ->limit($limit)
+            ->offset($offset)
             ->get();
-        return $data;
+
+        return $transactions;
     }
 
     /**
-     * Get sequence next value
+     * Get Transactions By User
      *
+     * @param array $providers Provider Ids
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param $limit
+     * @param $offset
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
      * @return mixed
      */
-    public function getNextValue()
+    public function getTransactionsByUser($providers, $currency, $whitelabel, $user, $startDate, $endDate, $limit = 10, $offset = 0)
     {
-        $nextValue = \DB::select("select nextval('transactions_id_seq')");
-        return $nextValue[0]->nextval;
+        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->where('transactions.user_id', $user)
+            ->where('transactions.currency_iso', $currency)
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        return $transactions;
+    }
+
+    /**
+     * Get transactions history
+     *
+     * @param int $user User Id
+     * @param string $currency Currency Iso
+     * @param int $transactionType Transaction type
+     * @param array $providerTypes Provider types
+     * @return mixed
+     */
+    public function getTransactionsHistory($user, $transactionType, $currency, $providerTypes)
+    {
+        return Transaction::join('providers', 'transactions.provider_id', '=', 'providers.id')
+            ->where('transactions.user_id', $user)
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('providers.provider_type_id', $providerTypes)
+            ->where('transaction_type_id', $transactionType)
+            ->where('transaction_status_id', TransactionStatus::$approved)
+            ->sum('amount');
+    }
+
+    /**
+     * Get Sql Transactions Timeline Page
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param array $providers Provider Ids
+     * @param int $user User Id
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @return mixed
+     */
+    public function getTransactionsTimelinePage($whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit = 10, $offset = 0)
+    {
+        return DB::select('SELECT * FROM get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset]);
     }
 
     /**
      * Get unique depositors
      *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return mixed
@@ -908,9 +919,9 @@ class TransactionsRepo
     /**
      * Get unique depositors by user ID
      *
-     * @param int $whitelabel Whitelabel ID
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
      * @param int $userId User ID
-     * @param string $currency Currency ISO
      * @return mixed
      */
     public function getUniqueDepositorsByUserId($userId, $currency, $whitelabel)
@@ -932,96 +943,9 @@ class TransactionsRepo
     }
 
     /**
-     * Store transactions
-     *
-     * @param array $data Transaction data
-     * @param int $status Status ID
-     * @param array $detailsData Details data
-     * @return mixed
-     */
-    public function store($data, $status, $detailsData)
-    {
-        $transaction = Transaction::create($data);
-        $transaction->details()->attach($status, $detailsData);
-        return $transaction;
-    }
-
-    /**
-     * Store transactions details
-     *
-     * @param int $id Transaction ID
-     * @param int $status Transaction status
-     * @param array $data Detail additional data
-     * @return mixed
-     */
-    public function storeTransactionsDetails($id, $status, $data)
-    {
-        $transaction = Transaction::find($id);
-        $transaction->transaction_status_id = $status;
-        $transaction->save();
-        $transaction->details()->attach($status, $data);
-        return $transaction;
-    }
-
-    /**
-     * Get ticket transactions user
-     *
-     */
-    public function ticketTransactionsUser($id, $whitelabel)
-    {
-        $ticket = Transaction::select('transactions.id', 'transactions.currency_iso', 'transactions.amount', 'transactions.data', 'transactions.transaction_type_id', 'transactions.created_at', 'users.username', 'providers.name')
-            ->join('users', 'transactions.user_id', '=', 'users.id')
-            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
-            ->where('transactions.id', $id)
-            ->where('transactions.whitelabel_id', $whitelabel)
-            ->first();
-
-        return $ticket;
-    }
-
-    /**
-     * Get total by provider types
-     *
-     * @param int $whitelabel Whitelabel ID
-     * @parm int $transactionType Transaction type
-     * @param string $currency Currency ISO
-     * @param array $providerTypes Provider types
-     * @param string $startDate Start date to filter
-     * @param string $endDate End date to filter
-     * @return mixed
-     */
-    public function totalByProviderTypes($whitelabel, $transactionType, $currency, $providerTypes, $startDate, $endDate)
-    {
-        return Transaction::on('replica')
-            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.whitelabel_id', $whitelabel)
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('providers.provider_type_id', $providerTypes)
-            ->where('transaction_type_id', $transactionType)
-            ->where('transaction_status_id', TransactionStatus::$approved)
-            ->sum('amount');
-    }
-
-    /**
-     * Update transactions
-     *
-     * @param int $id Transaction ID
-     * @param array $data Transaction data
-     * @return mixed
-     */
-    public function update($id, $data)
-    {
-        $transaction = Transaction::find($id);
-        $transaction->fill($data);
-        $transaction->save();
-        return $transaction;
-    }
-
-    /**
      * Get whitelabel sales
      *
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return mixed
@@ -1066,5 +990,92 @@ class TransactionsRepo
             ->groupBy('transaction_type_id', 'transaction_status_id', 'provider_id', 'provider_type_id', 'whitelabel_id', 'whitelabels.description')
             ->get();
         return $sales;
+    }
+
+    /**
+     * Store transactions
+     *
+     * @param array $data Transaction data
+     * @param int $status Status ID
+     * @param array $detailsData Details data
+     * @return mixed
+     */
+    public function store($data, $status, $detailsData)
+    {
+        $transaction = Transaction::create($data);
+        $transaction->details()->attach($status, $detailsData);
+        return $transaction;
+    }
+
+    /**
+     * Store transactions details
+     *
+     * @param int $id Transaction ID
+     * @param int $status Transaction status
+     * @param array $data Detail additional data
+     * @return mixed
+     */
+    public function storeTransactionsDetails($id, $status, $data)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->transaction_status_id = $status;
+        $transaction->save();
+        $transaction->details()->attach($status, $data);
+        return $transaction;
+    }
+
+    /**
+     * Get ticket transactions user
+     * @param int $whitelabel Whitelabel Id
+     */
+    public function ticketTransactionsUser($id, $whitelabel)
+    {
+        $ticket = Transaction::select('transactions.id', 'transactions.currency_iso', 'transactions.amount', 'transactions.data', 'transactions.transaction_type_id', 'transactions.created_at', 'users.username', 'providers.name')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
+            ->where('transactions.id', $id)
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->first();
+
+        return $ticket;
+    }
+
+    /**
+     * Get total by provider types
+     *
+     * @param int $transactionType Transaction type
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param array $providerTypes Provider types
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @return mixed
+     */
+    public function totalByProviderTypes($whitelabel, $transactionType, $currency, $providerTypes, $startDate, $endDate)
+    {
+        return Transaction::on('replica')
+            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('providers.provider_type_id', $providerTypes)
+            ->where('transaction_type_id', $transactionType)
+            ->where('transaction_status_id', TransactionStatus::$approved)
+            ->sum('amount');
+    }
+
+    /**
+     * Update transactions
+     *
+     * @param int $id Transaction ID
+     * @param array $data Transaction data
+     * @return mixed
+     */
+    public function update($id, $data)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->fill($data);
+        $transaction->save();
+        return $transaction;
     }
 }

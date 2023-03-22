@@ -43,6 +43,7 @@ use Dotworkers\Store\Store;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -493,7 +494,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * Agents tree filter
+     * Agents Tree Filter
      *
      * @param bool $status Status
      * @return Response
@@ -519,7 +520,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * block agents data
+     * Block Agents Data
      *
      * @param Request $request
      * @return Response
@@ -711,6 +712,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * Change Type User Not Available
      * @param Request $request
      * @return array
      */
@@ -788,6 +790,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * Data Financial State New Test 1
      * @param ProvidersRepo $providersRepo
      * @param $user
      * @param $startDate
@@ -822,6 +825,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * Data Financial State Details
      * @param Request $request
      * @param $user
      * @param $startDate
@@ -900,8 +904,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * Financial state data
-     *
+     * Financial state data Consult Old
      * @param ProvidersRepo $providersRepo
      * @param null|int $user User ID
      * @param null|string $startDate
@@ -939,6 +942,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * View Financial State
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|\Illuminate\Contracts\View\View
@@ -957,6 +961,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * Data Financial State By Provider
      * @param ProvidersRepo $providersRepo
      * @param ProvidersTypesRepo $providersTypesRepo
      * @param $user
@@ -987,7 +992,7 @@ class AgentsController extends Controller
     }
 
     /**
-     *
+     * Data Financial State By Username
      * @param Request $request
      * @param ProvidersRepo $providersRepo
      * @param ProvidersTypesRepo $providersTypesRepo
@@ -1034,6 +1039,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * View Financial State Details
      * @return Application|Factory|\Illuminate\Contracts\View\View
      */
     public function financialStateDetails()
@@ -1045,12 +1051,14 @@ class AgentsController extends Controller
         } else {
             $data['user'] = auth()->user()->id;
         }
-        //TODO LANG
+
+        $data['providers'] = $this->closuresUsersTotals2023Repo->getProvidersActiveByCredentials(true,$currency,$whitelabel);
         $data['title'] = _i('Financial statement report details');
         return view('back.agents.reports.financial-state-details', $data);
     }
 
     /**
+     * View Financial State By Provider
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|\Illuminate\Contracts\View\View
@@ -1198,6 +1206,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * View Financial State By Username
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|\Illuminate\Contracts\View\View
@@ -1216,6 +1225,7 @@ class AgentsController extends Controller
     }
 
     /**
+     * View Financial State
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|\Illuminate\Contracts\View\View
@@ -2462,6 +2472,12 @@ class AgentsController extends Controller
         return view('back.agents.reports.tmp', $data);
     }
 
+    /**
+     * Data Example Sql and Datatable
+     * Data Of Example
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function dataTmp(Request $request)
     {
 
@@ -2470,13 +2486,14 @@ class AgentsController extends Controller
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = [Providers::$agents, Providers::$agents_users];
+        //TODO CONVERSION OF ARRAY '{16,25}';
+        $providers = '{'.implode(', ',$providers).'}';
         $startDate = Utils::startOfDayUtc(date('2020-m-d'));
         $endDate = Utils::endOfDayUtc(date('Y-m-d'));
 
         $start = $request->has('start')?$request->get('start'):0;
         $limit = $request->has('length')?$request->get('length'):10;
-        //return $request->all();
-        $transactions = $this->closuresUsersTotals2023Repo->getClosureTmp($whitelabel, $currency,$startDate,$endDate,null,null,$limit,$start);
+        $transactions = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerpage($whitelabel, $currency,$startDate,$endDate,$providers,null,$limit,$start);
         $total = empty($transactions)?0:$transactions[0]->total_items;
 
         $data = array();

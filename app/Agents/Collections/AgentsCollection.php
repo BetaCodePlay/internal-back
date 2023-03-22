@@ -583,10 +583,10 @@ class AgentsCollection
                             </tr>
                             <tr>
                                 <th colspan="2">' . _i('Maker') . '</th>
-                                <th>' . _i('Usuarios') . '</th>
-                                <th>' . _i('Total Pagado') . '</th>
-                                <th>' . _i('Total Ganado') . '</th>
-                                <th>' . _i('Total Apuestas') . '</th>
+                                <th>' . _i('Users') . '</th>
+                                <th>' . _i('Total Payed') . '</th>
+                                <th>' . _i('Total Won') . '</th>
+                                <th>' . _i('Total Bets') . '</th>
                                 <th>' . _i('Total Profit') . '</th>
                             </tr>
                         </thead><tbody>';

@@ -4,7 +4,6 @@
 namespace App\Reports\Repositories;
 
 use App\Reports\Entities\ClosureGameTotal;
-use App\Reports\Entities\ClosureUserTotal;
 use App\Reports\Entities\ClosureUserTotal2023;
 use Illuminate\Support\Facades\DB;
 
