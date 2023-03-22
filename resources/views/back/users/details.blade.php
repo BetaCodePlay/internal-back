@@ -400,19 +400,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-mb-15">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="id">
-                                    {{ _i('Referral code') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    {{ $user->referral_code }}
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            <div class="row g-mb-15">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="id">
+                                        {{ _i('Referral code') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        {{ $user->referral_code }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                             @if(isset($agent))
                                 <div class="row g-mb-15">
                                     <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
