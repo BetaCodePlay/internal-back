@@ -1,15 +1,5 @@
 
 <?php $__env->startSection('styles'); ?>
-    <style>
-        .init_agent{
-            color: #3398dc !important;
-            font-weight: bold!important;
-        }
-        .init_user{
-            color: #e62154 !important;
-            font-weight: bold!important;
-        }
-    </style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -28,10 +18,27 @@
 
                 </div>
             </div>
+            <div class="table-responsive">
 
-            <div class="table-responsive" id="total-financial-table" data-route="<?php echo e(route('agents.reports.financial-state-summary-data-new')); ?>">
+            <table id="exampleTable" class="table table-bordered table-hover dt-responsive"  width="100%">
+                <thead>
+                <tr>
+                    <th> <?php echo e(_i('Maker')); ?></th>
+                    <th> <?php echo e(_i('Username')); ?></th>
+                    <th> <?php echo e(_i('Jugado')); ?></th>
+                </tr>
+                </thead>
 
-            </div>
+
+
+
+
+
+            </table>
+        </div>
+
+
+
         </div>
     </div>
 <?php $__env->stopSection(); ?>
@@ -39,11 +46,24 @@
 <?php $__env->startSection('scripts'); ?>
     <script>
         $(function () {
-            let agents = new Agents();
-            agents.totalFinancial(<?php echo e($user); ?>);
-            setTimeout(function (){
-                $('#update').click()
-            },1000)
+            $('#exampleTable')
+                .DataTable({
+                    processing: true,
+                    serverSide: true,
+                    lengthMenu:[10,20,30],
+                    ajax: {
+                        url: '<?php echo e(route('reports.data.tmp')); ?>',
+                        dataType: 'json',
+                        type: 'get',
+                    },
+                    columns: [
+                        { data: 'name_maker' },
+                        { data: 'username' },
+                        { data: 'total_played' },
+                    ],
+                });
+            
+            
         });
     </script>
 <?php $__env->stopSection(); ?>

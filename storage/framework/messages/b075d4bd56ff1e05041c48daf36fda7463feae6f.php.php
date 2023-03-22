@@ -33,12 +33,14 @@
                             <?php echo e(_i('Inactive')); ?>
 
                         </button>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$user_login])): ?>
-                            <a type="button" class="btn u-btn-3d u-btn-blue g-mr-10" href="<?php echo e($login_user); ?>" data-route="<?php echo e(route('users.audit-users')); ?>" target="_blank" id="login_user">
-                                <i class="hs-admin-user"></i>
-                                <?php echo e(_i('See how')); ?>
+                        <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$user_login])): ?>
+                                <a type="button" class="btn u-btn-3d u-btn-blue g-mr-10" href="<?php echo e($login_user); ?>" data-route="<?php echo e(route('users.audit-users')); ?>" target="_blank" id="login_user">
+                                    <i class="hs-admin-user"></i>
+                                    <?php echo e(_i('See how')); ?>
 
-                            </a>
+                                </a>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                     <br>
@@ -355,21 +357,23 @@
                                 </div>
                             </div>
                         </div>
-                        <?php if(isset($agent)): ?>
-                            <div class="row g-mb-15">
-                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                    <label class="g-mb-0" for="id">
-                                        <?php echo e(_i('Parent agent')); ?>
+                        <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+                            <?php if(isset($agent)): ?>
+                                <div class="row g-mb-15">
+                                    <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                        <label class="g-mb-0" for="id">
+                                            <?php echo e(_i('Parent agent')); ?>
 
-                                    </label>
-                                </div>
-                                <div class="col-md-10 align-self-center">
-                                    <div class="form-group g-pos-rel g-mb-0">
-                                        <?php echo $agent; ?>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-10 align-self-center">
+                                        <div class="form-group g-pos-rel g-mb-0">
+                                            <?php echo $agent; ?>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$show_wallet_id])): ?>
                             <div class="row g-mb-15">

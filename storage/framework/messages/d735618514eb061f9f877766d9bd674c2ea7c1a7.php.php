@@ -323,6 +323,74 @@ class TransactionsRepo
     }
 
     /**
+     * Get Sql Transactions Timeline Page
+     *
+     * @param int $whitelabel Whitelabel Id
+     //* @param array $providers Provider Ids
+     * @param int $user User Id
+     * @param string $currency Currency Iso
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
+     * @return mixed
+     */
+    public function getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit = 10, $offset = 0)
+    {
+        return DB::select('SELECT * FROM get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit, $offset]);
+    }
+
+    /**
+     * Get Transactions Timeline All
+     *
+     * @param array $providers Provider Ids
+     * @param $currency
+     * @param $whitelabel
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
+    public function getTransactions($providers, $currency, $whitelabel,$startDate,$endDate,$limit = 10, $offset = 0)
+    {
+        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->where('transactions.currency_iso', $currency)
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        return $transactions;
+    }
+    /**
+     * Get Transactions By User
+     *
+     * @param array $providers Provider Ids
+     * @param $currency
+     * @param $whitelabel
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
+    public function getTransactionsByUser($providers, $currency, $whitelabel,$user,$startDate,$endDate,$limit = 10, $offset = 0)
+    {
+        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->where('transactions.user_id', $user)
+            ->where('transactions.currency_iso', $currency)
+            ->where('transactions.whitelabel_id', $whitelabel)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        return $transactions;
+    }
+
+    /**
      * Get transactions list by user and provider types
      *
      * @param int $user User ID

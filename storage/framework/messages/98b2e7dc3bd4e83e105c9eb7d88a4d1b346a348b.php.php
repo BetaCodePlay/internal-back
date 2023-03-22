@@ -35,7 +35,8 @@ if (!function_exists('menu')) {
                         'route' => 'users.create',
                         'params' => [],
                         'icon' => 'hs-admin-plus',
-                        'permission' => Permissions::$create_users,
+                        //'permission' => Permissions::$create_users,
+                        'permission' => Permissions::$add_agent_users,
                         'submenu' => []
                     ],
 
@@ -236,6 +237,7 @@ if (!function_exists('menu')) {
                         'params' => [],
                         'icon' => 'hs-admin-plus',
                         'permission' => Permissions::$add_agent_users,
+                        //'permission' => Permissions::$create_users,
                         'submenu' => []
                     ],
 
@@ -257,6 +259,15 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
+//                            'AgentsFinancialStateDetails' => [
+//                                'text' => _i('Financial state details'),
+//                                'level_class' => 'third',
+//                                'route' => 'agents.reports.financial-state-details',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-pie-chart',
+//                                'permission' => Permissions::$agents_financial_report,
+//                                'submenu' => []
+//                            ],
 //                            'AgentsFinancialState-new' => [
 //                                'text' => _i('Financial state new'),
 //                                'level_class' => 'third',
@@ -276,10 +287,9 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
-
                             'ReportByUsername' => [
                                 'text' => _i('By users'),
-                                'level_class' => 'top',
+                                'level_class' => 'third',
                                 'route' => 'agents.reports.financial.state.username',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
@@ -288,24 +298,34 @@ if (!function_exists('menu')) {
                             ],
                             'ReportByProviders' => [
                                 'text' => _i('By providers'),
-                                'level_class' => 'top',
+                                'level_class' => 'third',
                                 'route' => 'agents.reports.financial.state.provider',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
                                 'permission' => Permissions::$agents_menu,
                                 'submenu' => []
                             ],
+//TODO BONO
+//                            'AgentsFinancialStateSummaryIncludeBonuses' => [
+//                                'text' => _i('Financial state - Summary (Include bonuses)'),
+//                                'level_class' => 'third',
+//                                'route' => 'agents.reports.financial-state-summary-bonus',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-pie-chart',
+//                                'permission' => Permissions::$total_financial_report,
+//                                'submenu' => []
+//                            ],
 
-                            'AgentsFinancialStateSummaryIncludeBonuses' => [
-                                'text' => _i('Financial state - Summary (Include bonuses)'),
+
+                            'AgentsTransactionTimeline' => [
+                                'text' => _i('Transaction Timeline'),
                                 'level_class' => 'third',
-                                'route' => 'agents.reports.financial-state-summary-bonus',
+                                'route' => 'reports.view.transaction.timeline',
                                 'params' => [],
-                                'icon' => 'hs-admin-pie-chart',
-                                'permission' => Permissions::$total_financial_report,
+                                'icon' => 'hs-admin-stats-up',
+                                'permission' => Permissions::$agents_menu,
                                 'submenu' => []
                             ],
-
                             'Agents transactions' => [
                                 'text' => _i('Agents transactions'),
                                 'level_class' => 'third',
@@ -458,16 +478,16 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$manual_transactions_report,
                         'submenu' => []
                     ],
-
-                    'Bonus' => [
-                        'text' => _i('Bonus transactions'),
-                        'level_class' => 'second',
-                        'route' => 'reports.financial.bonus-transactions',
-                        'params' => [],
-                        'icon' => 'hs-admin-gift',
-                        'permission' => Permissions::$bonus_transactions_report,
-                        'submenu' => []
-                    ],
+//TODO BONO
+//                    'Bonus' => [
+//                        'text' => _i('Bonus transactions'),
+//                        'level_class' => 'second',
+//                        'route' => 'reports.financial.bonus-transactions',
+//                        'params' => [],
+//                        'icon' => 'hs-admin-gift',
+//                        'permission' => Permissions::$bonus_transactions_report,
+//                        'submenu' => []
+//                    ],
 
                     'DailySales' => [
                         'text' => _i('Daily sales'),
@@ -2345,79 +2365,79 @@ if (!function_exists('menu')) {
                 ]
             ],
 
-
-            'BonusSystem' => [
-                'text' => _i('Bonus system'),
-                'level_class' => 'top',
-                'route' => null,
-                'params' => [],
-                'icon' => 'hs-admin-money',
-                'permission' => Permissions::$system_bonus_menu,
-                'submenu' => [
-
-                    'Campaigns' => [
-                        'text' => _i('Campaigns'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-menu-alt',
-                        'permission' => Permissions::$campaigns_menu,
-                        'submenu' => [
-
-                            'New' => [
-                                'text' => _i('New'),
-                                'level_class' => 'second',
-                                'route' => 'bonus-system.campaigns.create',
-                                'params' => [],
-                                'icon' => 'hs-admin-plus',
-                                'permission' => Permissions::$manage_campaigns,
-                                'submenu' => []
-                            ],
-
-                            'List' => [
-                                'text' => _i('List'),
-                                'level_class' => 'second',
-                                'route' => 'bonus-system.campaigns.index',
-                                'params' => [],
-                                'icon' => 'hs-admin-list',
-                                'permission' => Permissions::$manage_campaigns,
-                                'submenu' => []
-                            ],
-                        ]
-                    ],
-
-                    'CampaignsReports' => [
-                        'text' => _i('Reports'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-menu-alt',
-                        'permission' => Permissions::$campaign_reports_menu,
-                        'submenu' => [
-
-                            'CampaignOverview' => [
-                                'text' => _i('Campaigns overview'),
-                                'level_class' => 'second',
-                                'route' => 'bonus-system.reports.campaigns-overview',
-                                'params' => [],
-                                'icon' => 'hs-admin-back-right',
-                                'permission' => Permissions::$campaign_report,
-                                'submenu' => []
-                            ],
-
-                            'CampaignByUser' => [
-                                'text' => _i('Campaigns by user'),
-                                'level_class' => 'second',
-                                'route' => 'bonus-system.reports.participation-by-users',
-                                'params' => [],
-                                'icon' => 'hs-admin-user',
-                                'permission' => Permissions::$campaign_user_report,
-                                'submenu' => []
-                            ],
-                        ]
-                    ],
-                ]
-            ],
+//TODO BONO
+//            'BonusSystem' => [
+//                'text' => _i('Bonus system'),
+//                'level_class' => 'top',
+//                'route' => null,
+//                'params' => [],
+//                'icon' => 'hs-admin-money',
+//                'permission' => Permissions::$system_bonus_menu,
+//                'submenu' => [
+//
+//                    'Campaigns' => [
+//                        'text' => _i('Campaigns'),
+//                        'level_class' => 'top',
+//                        'route' => null,
+//                        'params' => [],
+//                        'icon' => 'hs-admin-menu-alt',
+//                        'permission' => Permissions::$campaigns_menu,
+//                        'submenu' => [
+//
+//                            'New' => [
+//                                'text' => _i('New'),
+//                                'level_class' => 'second',
+//                                'route' => 'bonus-system.campaigns.create',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-plus',
+//                                'permission' => Permissions::$manage_campaigns,
+//                                'submenu' => []
+//                            ],
+//
+//                            'List' => [
+//                                'text' => _i('List'),
+//                                'level_class' => 'second',
+//                                'route' => 'bonus-system.campaigns.index',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-list',
+//                                'permission' => Permissions::$manage_campaigns,
+//                                'submenu' => []
+//                            ],
+//                        ]
+//                    ],
+//
+//                    'CampaignsReports' => [
+//                        'text' => _i('Reports'),
+//                        'level_class' => 'top',
+//                        'route' => null,
+//                        'params' => [],
+//                        'icon' => 'hs-admin-menu-alt',
+//                        'permission' => Permissions::$campaign_reports_menu,
+//                        'submenu' => [
+//
+//                            'CampaignOverview' => [
+//                                'text' => _i('Campaigns overview'),
+//                                'level_class' => 'second',
+//                                'route' => 'bonus-system.reports.campaigns-overview',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-back-right',
+//                                'permission' => Permissions::$campaign_report,
+//                                'submenu' => []
+//                            ],
+//
+//                            'CampaignByUser' => [
+//                                'text' => _i('Campaigns by user'),
+//                                'level_class' => 'second',
+//                                'route' => 'bonus-system.reports.participation-by-users',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-user',
+//                                'permission' => Permissions::$campaign_user_report,
+//                                'submenu' => []
+//                            ],
+//                        ]
+//                    ],
+//                ]
+//            ],
 
 //            'Dotsuite' => [
 //                'text' => _i('Dotsuite'),
@@ -2947,199 +2967,199 @@ if (!function_exists('menu')) {
                     ],
                 ]
             ],
-
-            'CRM' => [
-                'text' => _i('CRM'),
-                'level_class' => 'top',
-                'route' => null,
-                'params' => [],
-                'icon' => 'hs-admin-target',
-                'permission' => Permissions::$crm,
-                'submenu' => [
-
-                    'SegmentationTool' => [
-                        'text' => _i('Segmentation'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-layout-list-thumb',
-                        'permission' => Permissions::$segmentation_tool_menu,
-                        'submenu' => [
-
-                            'New' => [
-                                'text' => _i('New'),
-                                'level_class' => 'second',
-                                'route' => 'segments.create',
-                                'params' => [],
-                                'icon' => 'hs-admin-plus',
-                                'permission' => Permissions::$manage_segmentation_tool,
-                                'submenu' => []
-                            ],
-
-                            'List' => [
-                                'text' => _i('List'),
-                                'level_class' => 'second',
-                                'route' => 'segments.index',
-                                'params' => [],
-                                'icon' => 'hs-admin-list',
-                                'permission' => Permissions::$manage_segmentation_tool,
-                                'submenu' => []
-                            ],
-                        ]
-                    ],
-
-                    'EmailTemplates' => [
-                        'text' => _i('Email templates'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-email',
-                        'permission' => Permissions::$email_templates_menu,
-                        'submenu' => [
-
-                            'New' => [
-                                'text' => _i('New'),
-                                'level_class' => 'second',
-                                'route' => 'email-templates.create',
-                                'icon' => 'hs-admin-plus',
-                                'permission' => Permissions::$manage_email_templates,
-                                'submenu' => []
-                            ],
-
-                            'List' => [
-                                'text' => _i('List'),
-                                'level_class' => 'second',
-                                'route' => 'email-templates.index',
-                                'icon' => 'hs-admin-list',
-                                'permission' => Permissions::$manage_email_templates,
-                                'submenu' => []
-                            ],
-                        ]
-                    ],
-
-                    'MarketingCampaigns' => [
-                        'text' => _i('Marketing campaigns'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-marker',
-                        'permission' => Permissions::$marketing_campaigns_menu,
-                        'submenu' => [
-
-                            'New' => [
-                                'text' => _i('New'),
-                                'level_class' => 'second',
-                                'route' => 'marketing-campaigns.create',
-                                'params' => [],
-                                'icon' => 'hs-admin-plus',
-                                'permission' => Permissions::$manage_marketing_campaigns,
-                                'submenu' => []
-                            ],
-
-                            'List' => [
-                                'text' => _i('List'),
-                                'level_class' => 'second',
-                                'route' => 'marketing-campaigns.index',
-                                'params' => [],
-                                'icon' => 'hs-admin-list',
-                                'permission' => Permissions::$manage_marketing_campaigns,
-                                'submenu' => []
-                            ],
-                        ]
-                    ],
-
-                    'Messaging' => [
-                        'text' => _i('Messaging'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-files',
-                        'permission' => Permissions::$notifications_menu,
-                        'submenu' => [
-
-                            'Upload' => [
-                                'text' => _i('New'),
-                                'level_class' => 'second',
-                                'route' => 'notifications.create',
-                                'params' => [],
-                                'icon' => 'hs-admin-plus',
-                                'permission' => Permissions::$manage_notifications,
-                                'submenu' => []
-                            ],
-
-                            'List' => [
-                                'text' => _i('List'),
-                                'level_class' => 'second',
-                                'route' => 'notifications.index',
-                                'params' => [],
-                                'icon' => 'hs-admin-list',
-                                'permission' => Permissions::$manage_notifications,
-                                'submenu' => []
-                            ],
-
-                            /*'EmailTemplatesTransactions' => [
-                                'text' => _i('Email templates'),
-                                'level_class' => 'top',
-                                'route' => null,
-                                'params' => [],
-                                'icon' => 'hs-admin-email',
-                                'permission' => Permissions::$email_templates_menu,
-                                'submenu' => [
-
-                                    'New' => [
-                                        'text' => _i('New'),
-                                        'level_class' => 'second',
-                                        'route' => 'email-templates.create',
-                                        'icon' => 'hs-admin-plus',
-                                        'permission' => Permissions::$manage_email_templates,
-                                        'submenu' => []
-                                    ],
-
-                                    'List' => [
-                                        'text' => _i('List'),
-                                        'level_class' => 'second',
-                                        'route' => 'email-templates.index',
-                                        'icon' => 'hs-admin-list',
-                                        'permission' => Permissions::$manage_email_templates,
-                                        'submenu' => []
-                                    ],
-                                ]
-                            ],*/
-
-                            //                    'Groups' => [
-                            //                        'text' => _i('Groups'),
-                            //                        'level_class' => 'top',
-                            //                        'route' => null,
-                            //                        'params' => [],
-                            //                        'icon' => 'hs-admin-files',
-                            //                        'permission' => Permissions::$manage_notifications,
-                            //                        'submenu' => [
-                            //
-                            //                            'Upload' => [
-                            //                                'text' => _i('New'),
-                            //                                'level_class' => 'second',
-                            //                                'route' => 'notifications.groups.create',
-                            //                                'params' => [],
-                            //                                'icon' => 'hs-admin-plus',
-                            //                                'permission' => Permissions::$manage_notifications_groups,
-                            //                                'submenu' => []
-                            //                            ],
-                            //
-                            //                            'List' => [
-                            //                                'text' => _i('List'),
-                            //                                'level_class' => 'second',
-                            //                                'route' => 'notifications.groups.index',
-                            //                                'params' => [],
-                            //                                'icon' => 'hs-admin-list',
-                            //                                'permission' => Permissions::$manage_notifications_groups,
-                            //                                'submenu' => []
-                            //                            ],
-                            //                        ]
-                            //                    ],
-                        ]
-                    ],
-                ]
-            ],
+//TODO CRM
+//            'CRM' => [
+//                'text' => _i('CRM'),
+//                'level_class' => 'top',
+//                'route' => null,
+//                'params' => [],
+//                'icon' => 'hs-admin-target',
+//                'permission' => Permissions::$crm,
+//                'submenu' => [
+//
+//                    'SegmentationTool' => [
+//                        'text' => _i('Segmentation'),
+//                        'level_class' => 'top',
+//                        'route' => null,
+//                        'params' => [],
+//                        'icon' => 'hs-admin-layout-list-thumb',
+//                        'permission' => Permissions::$segmentation_tool_menu,
+//                        'submenu' => [
+//
+//                            'New' => [
+//                                'text' => _i('New'),
+//                                'level_class' => 'second',
+//                                'route' => 'segments.create',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-plus',
+//                                'permission' => Permissions::$manage_segmentation_tool,
+//                                'submenu' => []
+//                            ],
+//
+//                            'List' => [
+//                                'text' => _i('List'),
+//                                'level_class' => 'second',
+//                                'route' => 'segments.index',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-list',
+//                                'permission' => Permissions::$manage_segmentation_tool,
+//                                'submenu' => []
+//                            ],
+//                        ]
+//                    ],
+//
+//                    'EmailTemplates' => [
+//                        'text' => _i('Email templates'),
+//                        'level_class' => 'top',
+//                        'route' => null,
+//                        'params' => [],
+//                        'icon' => 'hs-admin-email',
+//                        'permission' => Permissions::$email_templates_menu,
+//                        'submenu' => [
+//
+//                            'New' => [
+//                                'text' => _i('New'),
+//                                'level_class' => 'second',
+//                                'route' => 'email-templates.create',
+//                                'icon' => 'hs-admin-plus',
+//                                'permission' => Permissions::$manage_email_templates,
+//                                'submenu' => []
+//                            ],
+//
+//                            'List' => [
+//                                'text' => _i('List'),
+//                                'level_class' => 'second',
+//                                'route' => 'email-templates.index',
+//                                'icon' => 'hs-admin-list',
+//                                'permission' => Permissions::$manage_email_templates,
+//                                'submenu' => []
+//                            ],
+//                        ]
+//                    ],
+//
+//                    'MarketingCampaigns' => [
+//                        'text' => _i('Marketing campaigns'),
+//                        'level_class' => 'top',
+//                        'route' => null,
+//                        'params' => [],
+//                        'icon' => 'hs-admin-marker',
+//                        'permission' => Permissions::$marketing_campaigns_menu,
+//                        'submenu' => [
+//
+//                            'New' => [
+//                                'text' => _i('New'),
+//                                'level_class' => 'second',
+//                                'route' => 'marketing-campaigns.create',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-plus',
+//                                'permission' => Permissions::$manage_marketing_campaigns,
+//                                'submenu' => []
+//                            ],
+//
+//                            'List' => [
+//                                'text' => _i('List'),
+//                                'level_class' => 'second',
+//                                'route' => 'marketing-campaigns.index',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-list',
+//                                'permission' => Permissions::$manage_marketing_campaigns,
+//                                'submenu' => []
+//                            ],
+//                        ]
+//                    ],
+//
+//                    'Messaging' => [
+//                        'text' => _i('Messaging'),
+//                        'level_class' => 'top',
+//                        'route' => null,
+//                        'params' => [],
+//                        'icon' => 'hs-admin-files',
+//                        'permission' => Permissions::$notifications_menu,
+//                        'submenu' => [
+//
+//                            'Upload' => [
+//                                'text' => _i('New'),
+//                                'level_class' => 'second',
+//                                'route' => 'notifications.create',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-plus',
+//                                'permission' => Permissions::$manage_notifications,
+//                                'submenu' => []
+//                            ],
+//
+//                            'List' => [
+//                                'text' => _i('List'),
+//                                'level_class' => 'second',
+//                                'route' => 'notifications.index',
+//                                'params' => [],
+//                                'icon' => 'hs-admin-list',
+//                                'permission' => Permissions::$manage_notifications,
+//                                'submenu' => []
+//                            ],
+//
+//                            /*'EmailTemplatesTransactions' => [
+//                                'text' => _i('Email templates'),
+//                                'level_class' => 'top',
+//                                'route' => null,
+//                                'params' => [],
+//                                'icon' => 'hs-admin-email',
+//                                'permission' => Permissions::$email_templates_menu,
+//                                'submenu' => [
+//
+//                                    'New' => [
+//                                        'text' => _i('New'),
+//                                        'level_class' => 'second',
+//                                        'route' => 'email-templates.create',
+//                                        'icon' => 'hs-admin-plus',
+//                                        'permission' => Permissions::$manage_email_templates,
+//                                        'submenu' => []
+//                                    ],
+//
+//                                    'List' => [
+//                                        'text' => _i('List'),
+//                                        'level_class' => 'second',
+//                                        'route' => 'email-templates.index',
+//                                        'icon' => 'hs-admin-list',
+//                                        'permission' => Permissions::$manage_email_templates,
+//                                        'submenu' => []
+//                                    ],
+//                                ]
+//                            ],*/
+//
+//                            //                    'Groups' => [
+//                            //                        'text' => _i('Groups'),
+//                            //                        'level_class' => 'top',
+//                            //                        'route' => null,
+//                            //                        'params' => [],
+//                            //                        'icon' => 'hs-admin-files',
+//                            //                        'permission' => Permissions::$manage_notifications,
+//                            //                        'submenu' => [
+//                            //
+//                            //                            'Upload' => [
+//                            //                                'text' => _i('New'),
+//                            //                                'level_class' => 'second',
+//                            //                                'route' => 'notifications.groups.create',
+//                            //                                'params' => [],
+//                            //                                'icon' => 'hs-admin-plus',
+//                            //                                'permission' => Permissions::$manage_notifications_groups,
+//                            //                                'submenu' => []
+//                            //                            ],
+//                            //
+//                            //                            'List' => [
+//                            //                                'text' => _i('List'),
+//                            //                                'level_class' => 'second',
+//                            //                                'route' => 'notifications.groups.index',
+//                            //                                'params' => [],
+//                            //                                'icon' => 'hs-admin-list',
+//                            //                                'permission' => Permissions::$manage_notifications_groups,
+//                            //                                'submenu' => []
+//                            //                            ],
+//                            //                        ]
+//                            //                    ],
+//                        ]
+//                    ],
+//                ]
+//            ],
 
             /*
             'ProductsLimits' => [

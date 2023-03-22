@@ -1,18 +1,8 @@
 
 <?php $__env->startSection('styles'); ?>
-    <style>
-        .init_agent{
-            color: #3398dc !important;
-            font-weight: bold!important;
-        }
-        .init_user{
-            color: #e62154 !important;
-            font-weight: bold!important;
-        }
-    </style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-    <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
         <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
             <div class="media">
@@ -28,10 +18,29 @@
 
                 </div>
             </div>
+            <div class="table-reponsive">
 
-            <div class="table-responsive" id="total-financial-table" data-route="<?php echo e(route('agents.reports.financial-state-summary-data-new')); ?>">
+            <table id="exampleTable" class="table table-bordered table-hover dt-responsive"  width="100%">
+                <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <thead>
+                <tr>
+                    <th> <?php echo e(_i('Date')); ?></th>
+                    <th> <?php echo e(_i('Description')); ?></th>
+                    <th> <?php echo e(_i('Debit')); ?></th>
+                    <th> <?php echo e(_i('Credit')); ?></th>
 
-            </div>
+
+
+
+
+                    <th> <?php echo e(_i('Balance')); ?></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+
+
         </div>
     </div>
 <?php $__env->stopSection(); ?>
@@ -40,10 +49,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.totalFinancial(<?php echo e($user); ?>);
-            setTimeout(function (){
-                $('#update').click()
-            },1000)
+            agents.transactionTimeline('<?php echo e(route('reports.data.transaction.timeline')); ?>','#exampleTable',[10,20,50,100]);
         });
     </script>
 <?php $__env->stopSection(); ?>
