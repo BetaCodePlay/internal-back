@@ -31,7 +31,7 @@ class TypeUser
             }
             default:
             {
-                return _i('Undefined type...');
+                return _i('Undefined type');
                 break;
             }
         }

@@ -488,7 +488,7 @@ class UsersController extends Controller
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
                 'register_currency' => $currency,
-                //'type_user' => null,
+                'type_user' => TypeUser::$player,
                 'action' => ActionUser::$active,
             ];
             $profileData = [
@@ -541,7 +541,6 @@ class UsersController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-
     public function autoLockedUsersData(Request $request, $startDate = null, $endDate = null)
     {
         try {

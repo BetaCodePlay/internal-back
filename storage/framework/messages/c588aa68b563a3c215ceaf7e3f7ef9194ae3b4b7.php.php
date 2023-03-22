@@ -827,7 +827,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'like', "$username%")
+            ->where('username', 'ilike', "$username%")
             ->orderBy('username', 'ASC')
             ->get();
     }
@@ -836,7 +836,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'like', "$username%")
+            ->where('username', 'ilike', "$username%")
             ->orderBy('username', 'ASC')
             ->whereIn('id', $arrayUsers)
             ->get();
@@ -939,7 +939,7 @@ class UsersRepo
                     WHERE a.owner_id= ?
                      and u.whitelabel_id = ?
                      and uc.currency_iso = ?
-                     and username Like ?
+                     and username ilike ?
                     )
                     UNION
                     (SELECT au.user_id, u.username
@@ -952,7 +952,7 @@ class UsersRepo
                         WHERE a.user_id = ? and ac.currency_iso = ?
                     )
                      and u.whitelabel_id = ?
-                     and username Like ?
+                     and username ilike ?
                     )
                     ORDER BY username ASC', [$user, $whitelabel, $currency,$ilikeTmp, $user, $currency, $whitelabel,$ilikeTmp]);
         } else {

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Bonus\Enums\AllocationCriteria;
 use Dotworkers\Configurations\Enums\Codes;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\PaymentMethods;
@@ -1408,6 +1409,85 @@ class TransactionsCollection
             }
             $transaction->status = $statusText;
         }
+    }
+
+    /**
+     * Format transactions timeline
+     *
+     * @param array $transactions Array Transactions
+     * @param $request
+     */
+    public function formatTransactionTimeline($transactions,$timezone,$request)
+    {
+        $total = 0;
+        $data = array();
+        if(!empty($transactions)){
+            $total = $transactions[0]->total_items;
+            foreach ($transactions as $transaction)
+            {
+                $dataTmp = json_decode($transaction->data);
+                $newData['date'] = Carbon::create($transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
+
+                $newData['id'] = $transaction->id;
+                $newData['names'] =  _('from').' '.$dataTmp->from .' '._('to').' '.$dataTmp->to;
+                $newData['from'] = $dataTmp->from;
+                $newData['to'] = $dataTmp->to;
+                $newData['data'] = $dataTmp;
+                $newData['amount'] = $transaction->amount;
+                $newData['debit'] = $transaction->transaction_type_id == TransactionTypes::$debit ? number_format($transaction->amount, 2) : '-';;
+                $newData['credit'] = $transaction->transaction_type_id == TransactionTypes::$credit ? number_format($transaction->amount, 2) : '-';
+                $newData['debit_'] = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : 0;;
+                $newData['credit_'] = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : 0;
+                $newData['transaction_type_id'] = $transaction->transaction_type_id;
+                $newData['balance'] = '0.00';
+                if (isset($dataTmp->balance)) {
+                    //TODO IF SUPPORT
+//                    if(!in_array(Roles::$admin_Beet_sweet, session('roles'))){
+//                        //$to =
+//                        $newData['balance'] = number_format($transaction->data->balance, 2).' ('.$transaction->data->to.')';
+//                    }else{
+//                        $newData['balance'] = number_format($transaction->data->balance, 2);
+//                    }
+                    $newData['balance'] = number_format($dataTmp->balance, 2);
+                    //$newData['balance_'] = $transaction->data->balance;
+                }
+
+                $data[] = $newData;
+            }
+        }
+        if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+            $debitTotal = array_sum(array_map(function($var) {
+                return $var['debit_'];
+            }, $data));
+            $creditTotal = array_sum(array_map(function($var) {
+                return $var['credit_'];
+            }, $data));
+
+            $data[] = [
+                'id'=>'',
+                'date'=>'',
+                'names'=>'',
+                'from'=>'',
+                'to'=>'',
+                'data'=>'',
+                'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>',
+                'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>',
+                'debit_'=>0,
+                'credit_'=>0,
+                'transaction_type_id'=>'',
+                'balance'=>'<strong>'.number_format(($creditTotal-$debitTotal),2).'</strong>',
+            ];
+
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($total),
+            "recordsFiltered" => intval($total),
+            "data"            => $data
+        );
+
+        return $json_data;
     }
 
     public function formatWhitelabelsSales($sales, $currency, $startDate, $endDate)
