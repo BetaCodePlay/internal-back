@@ -450,12 +450,14 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
-            let username_like = $('#username_like').val() === ''?'':'?username_like='+$('#username_like').val();
+            let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
+            let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
+            let test = '?test=false'
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
             $.ajax({
-                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${username_like}`,
+                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${test}${username_like}${provider_id}`,
                 type: 'get',
                 dataType: 'json'
 
@@ -1539,6 +1541,49 @@ class Agents {
                 }
             });
         });
+    }
+
+    // Table Transaction Timeline
+    transactionTimeline(route,id,lengthMenu) {
+        let route2 = route;
+        let $button = $('#update');
+        let picker = initLitepickerEndToday();
+        let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+        let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+        let dateFinal = '?start_date='+startDate+'&end_date='+endDate;
+        let table = $(id).DataTable({
+                processing: true,
+                serverSide: true,
+                lengthMenu:lengthMenu,
+                ajax: {
+                    url: route+dateFinal,
+                    dataType: 'json',
+                    type: 'get',
+                },
+                columns: [
+                    { data: 'date' },
+                    { data: 'names' },
+                    { data: 'debit' },
+                    { data: 'credit' },
+                    { data: 'balance' },
+                ],
+            });
+
+        table.on('draw.dt', function () {
+            $button.button('reset');
+        });
+
+        $button.click(function () {
+            $button.button('loading');
+            startDate= ''
+            endDate= ''
+            startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            dateFinal = '?start_date='+startDate+'&end_date='+endDate
+            table.ajax.url(route2+dateFinal).load();
+            $button.button('reset');
+        });
+
     }
 }
 

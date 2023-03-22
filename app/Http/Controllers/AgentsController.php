@@ -6,6 +6,7 @@ use App\Agents\Collections\AgentsCollection;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Collections\TransactionsCollection;
+use App\Core\Entities\Transaction;
 use App\Core\Repositories\CountriesRepo;
 use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
@@ -48,6 +49,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\DataTables;
 
 /**
  * Class AgentsController
@@ -122,8 +124,13 @@ class AgentsController extends Controller
      * @var UsersCollection
      */
     private $usersCollection;
-    private $closuresUsersTotals2023Repo;
 
+    /**
+     * $closuresUsersTotals2023Repo
+     *
+     * @var ClosuresUsersTotals2023Repo
+     */
+    private $closuresUsersTotals2023Repo;
 
     /***
      * AgentsController constructor.
@@ -139,8 +146,9 @@ class AgentsController extends Controller
      * @param WhitelabelsRepo $whitelabelsRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param UsersCollection $usersCollection
+     * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
@@ -152,6 +160,7 @@ class AgentsController extends Controller
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->usersCollection = $usersCollection;
+        $this->transactionsCollection = $transactionsCollection;
     }
 
     /**
@@ -244,10 +253,10 @@ class AgentsController extends Controller
         try {
             if (session('admin_id')) {
                 $userId = session('admin_id');
-                $agent_player = false;
+                $agentPlayer = false;
             } else {
                 $userId = auth()->user()->id;
-                $agent_player = true;
+                $agentPlayer = true;
             }
             $currency = session('currency');
             $id = $request->id;
@@ -280,7 +289,7 @@ class AgentsController extends Controller
                 'wallet' => $walletId,
                 'type' => $type,
                 'myself' => $myself,
-                'agent_player' => $agent_player
+                'agent_player' => $agentPlayer
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
@@ -359,6 +368,59 @@ class AgentsController extends Controller
                 'transactions' => $transactions
             ];
             return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * View Transaction Timeline
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function viewTransactionTimeline(Request $request)
+    {
+        $data['title'] = _i('Transaction Timeline');
+
+        return view('back.agents.reports.transaction-timeline', $data);
+    }
+
+    /**
+     * Consult Data of Transactions TimeLine
+     * @param Request $request
+     * @return Response
+     */
+    public function dataTransactionTimeline(Request $request)
+    {
+        try {
+
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $providers = [Providers::$agents, Providers::$agents_users];
+            //TODO CONVERSION OF ARRAY '{16,25}';
+            $providers = '{'.implode(', ',$providers).'}';
+            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
+            $timezone = session('timezone');
+
+            $offset = $request->has('start')?$request->get('start'):0;
+            $limit = $request->has('length')?$request->get('length'):100;
+            //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
+            $user = Auth::id();
+
+            //TODO CAMBIADO POR FUNCIONES SQL
+            //transactions = $this->transactionsRepo->getTransactions($providers, $currency,$whitelabel,$startDate,$endDate,$limit,$offset);
+            if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
+            }else{
+                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,null,$limit,$offset);
+            }
+            //TODO Return View Data
+            //return [$user,$transactions,in_array(Roles::$admin_Beet_sweet, session('roles')),Roles::$admin_Beet_sweet, session('roles')];
+            $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request);
+
+            return response()->json($data);
+
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -726,6 +788,118 @@ class AgentsController extends Controller
     }
 
     /**
+     * @param ProvidersRepo $providersRepo
+     * @param $user
+     * @param $startDate
+     * @param $endDate
+     * @return Response
+     */
+    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    {
+        try {
+            if (is_null($user)) {
+                $user = Auth::id();
+            }
+
+            $percentage = null;
+            //if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+            $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
+            $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+            //}
+            $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
+//            if(Configurations::getWhitelabel() == 13 || Configurations::getWhitelabel() == 1 ){
+//                Log::info('W:13-1, financialStateData',[$sons,$user]);
+//            }
+            $data = [
+                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     * @param $user
+     * @param $startDate
+     * @param $endDate
+     * @return Response
+     */
+    public function financialStateDataDetails(Request $request, $user = null, $startDate = null, $endDate = null)
+    {
+
+        try {
+            if (is_null($user)) {
+                $user = Auth::id();
+            }
+            $percentage = null;
+            $username = null;
+            if ($request->has('username_like') && !is_null($request->get('username_like')) && $request->get('username_like') != 'null') {
+                $username = $request->get('username_like');
+            }
+            $provider = null;
+            if ($request->has('provider_id') && !is_null($request->get('provider_id')) && $request->get('provider_id') != 'null') {
+                $provider = $request->get('provider_id');
+            }
+
+            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+                //TODO TODOS => EJE:SUPPORT
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMaker(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $provider, '%' . $username . '%');
+            } else {
+//                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
+//                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user, $provider, '%' . $username . '%');
+            }
+            $data = [
+                'table' => $this->agentsCollection->closuresTotalsProviderAndMaker($table, $percentage)
+            ];
+            $dataTmp = [
+                $table, $user, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * @param ProvidersRepo $providersRepo
+     * @param $user
+     * @param $startDate
+     * @param $endDate
+     * @return Response
+     */
+    public function financialStateDataRow2(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    {
+        try {
+            $timezone = session('timezone');
+            $today = Carbon::now()->setTimezone($timezone);
+            $endDateOriginal = $endDate;
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $table = $this->agentsCollection->financialStateRow2($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
+            $data = [
+                'table' => $table
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Financial state data
      *
      * @param ProvidersRepo $providersRepo
@@ -764,39 +938,10 @@ class AgentsController extends Controller
         }
     }
 
-    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
-    {
-        try {
-            if(is_null($user)){
-                $user =    Auth::id();
-            }
-
-            $percentage = null;
-            //if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
-                $percentage = $this->agentsRepo->myPercentageByCurrency($user,session('currency'));
-                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
-            //}
-            $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'),$user);
-//            if(Configurations::getWhitelabel() == 13 || Configurations::getWhitelabel() == 1 ){
-//                Log::info('W:13-1, financialStateData',[$sons,$user]);
-//            }
-            $data = [
-                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons,Configurations::getWhitelabel(),session('currency'), $startDate, $endDate,$percentage)
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
-
-    }
-
     /**
-     * Financial state
-     *
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
      * @param ReportsCollection $reportsCollection
-     * @return Application|Factory|View
+     * @return Application|Factory|\Illuminate\Contracts\View\View
      */
     public function financialState(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
@@ -811,46 +956,28 @@ class AgentsController extends Controller
         return view('back.agents.reports.financial-state', $data);
     }
 
-    public function financialStateDataRow2(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
-    {
-        try {
-            $timezone = session('timezone');
-            $today = Carbon::now()->setTimezone($timezone);
-            $endDateOriginal = $endDate;
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table = $this->agentsCollection->financialStateRow2($whitelabel, $agents, $users, $currency, $providers, $startDate, $endDate, $endDateOriginal, $today);
-            $data = [
-                'table' => $table
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
-    }
-
+    /**
+     * @param ProvidersRepo $providersRepo
+     * @param ProvidersTypesRepo $providersTypesRepo
+     * @param $user
+     * @param $startDate
+     * @param $endDate
+     * @return Response
+     */
     public function financialStateData_provider(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
         try {
-            $percentage=null;
+            $percentage = null;
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProviders(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate));
             } else {
-                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
-                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),Auth::user()->id);
+                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
+                $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id);
             }
             $data = [
-                'table' => $this->agentsCollection->closuresTotalsProvider($table,$percentage)
+                'table' => $this->agentsCollection->closuresTotalsProvider($table, $percentage)
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
@@ -859,22 +986,20 @@ class AgentsController extends Controller
         }
     }
 
-    public function financialStateProvider(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
-    {
-
-        if (session('admin_id')) {
-            $data['user'] = session('admin_id');
-        } else {
-            $data['user'] = auth()->user()->id;
-        }
-        $data['title'] = _i('Financial state report') . ' (' . _i('Provider') . ')';
-        return view('back.agents.reports.financial-state-provider', $data);
-    }
-
+    /**
+     *
+     * @param Request $request
+     * @param ProvidersRepo $providersRepo
+     * @param ProvidersTypesRepo $providersTypesRepo
+     * @param int $user User Id
+     * @param $startDate
+     * @param $endDate
+     * @return Response
+     */
     public function financialStateData_username(Request $request, ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
         try {
-            $percentage=null;
+            $percentage = null;
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 if ($request->has('username_like') && !is_null($request->get('username_like'))) {
@@ -884,8 +1009,8 @@ class AgentsController extends Controller
                 }
             } else {
 
-                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
-                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
+                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
+                $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
 
                 //TODO ADMIN_BEET_SWEET
                 if ($request->has('username_like') && !is_null($request->get('username_like'))) {
@@ -897,7 +1022,7 @@ class AgentsController extends Controller
             }
 
             $data = [
-                'table' => $this->agentsCollection->closuresTotalUsername($table,$percentage)
+                'table' => $this->agentsCollection->closuresTotalUsername($table, $percentage)
             ];
 
             return Utils::successResponse($data);
@@ -906,6 +1031,40 @@ class AgentsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function financialStateDetails()
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        //TODO LANG
+        $data['title'] = _i('Financial statement report details');
+        return view('back.agents.reports.financial-state-details', $data);
+    }
+
+    /**
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function financialStateProvider(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['title'] = _i('Financial state report') . ' (' . _i('Provider') . ')';
+        return view('back.agents.reports.financial-state-provider', $data);
     }
 
     /**
@@ -1003,10 +1162,16 @@ class AgentsController extends Controller
         return view('back.agents.reports.financial-state-summary', $data);
     }
 
+    /**
+     * @param $user
+     * @param $startDate
+     * @param $endDate
+     * @return Response
+     */
     public function financialStateSummaryDataNew($user = null, $startDate = null, $endDate = null)
     {
         try {
-            if(is_null($user)){
+            if (is_null($user)) {
                 $user = Auth::id();
             }
 //TODO REVISAR DATA TOTALES
@@ -1015,13 +1180,14 @@ class AgentsController extends Controller
 //                //TODO TODOS => EJE:SUPPORT
 //                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabel(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate));
 //            }else{
-                $percentage = $this->agentsRepo->myPercentageByCurrency($user,session('currency'));
-                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate),$user);
+            $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
+            $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+            $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 //            }
 
             $data = [
-                'table' => $this->agentsCollection->closuresTotalsByWhitelabels($table,$percentage)
+                //'table' => $this->agentsCollection->closuresTotalsByWhitelabels($table,$percentage),
+                'table' => $this->agentsCollection->closuresTotalsByWhitelabelsSymple($table, $percentage)
             ];
             return Utils::successResponse($data);
 
@@ -1031,6 +1197,11 @@ class AgentsController extends Controller
         }
     }
 
+    /**
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
     public function financialStateUsername(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
 
@@ -1044,6 +1215,11 @@ class AgentsController extends Controller
         return view('back.agents.reports.financial-state-username', $data);
     }
 
+    /**
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
     public function financialState_view1(ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
 //        $currency = session('currency');
@@ -2275,4 +2451,58 @@ class AgentsController extends Controller
         return view('back.agents.reports.users-balances', $data);
     }
 
+    /**
+     * View Test of pagination
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function viewTmp(Request $request)
+    {
+        $data['title'] = _i('reports').' Tmp';
+
+        return view('back.agents.reports.tmp', $data);
+    }
+
+    public function dataTmp(Request $request)
+    {
+
+//        try {
+
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $providers = [Providers::$agents, Providers::$agents_users];
+        $startDate = Utils::startOfDayUtc(date('2020-m-d'));
+        $endDate = Utils::endOfDayUtc(date('Y-m-d'));
+
+        $start = $request->has('start')?$request->get('start'):0;
+        $limit = $request->has('length')?$request->get('length'):10;
+        //return $request->all();
+        $transactions = $this->closuresUsersTotals2023Repo->getClosureTmp($whitelabel, $currency,$startDate,$endDate,null,null,$limit,$start);
+        $total = empty($transactions)?0:$transactions[0]->total_items;
+
+        $data = array();
+        if(!empty($transactions)){
+            foreach ($transactions as $value)
+            {
+                $nestedData['name_maker'] = $value->name_maker;
+                $nestedData['username'] = $value->username;
+                $nestedData['total_played'] = $value->total_played;
+
+                $data[] = $nestedData;
+            }
+        }
+        //Log::notice('tmp table',['start'=>$start,'limit'=>$limit,'transactions'=>$transactions]);
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($total),
+            "recordsFiltered" => intval($total),
+            "data"            => $data
+        );
+
+        return response()->json($json_data);
+
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            return Utils::failedResponse();
+//        }
+    }
 }

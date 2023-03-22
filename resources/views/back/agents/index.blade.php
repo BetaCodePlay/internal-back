@@ -887,7 +887,6 @@
             </div>
         </div>
     </div>
-    </div>
     @if ($agent->master)
         @include('back.agents.modals.add-agents')
         @include('back.agents.modals.update-percentage')

@@ -40,6 +40,9 @@
         $(function () {
             let agents = new Agents();
             agents.totalFinancial({{ $user }});
+            setTimeout(function (){
+                $('#update').click()
+            },1000)
         });
     </script>
 @endsection
