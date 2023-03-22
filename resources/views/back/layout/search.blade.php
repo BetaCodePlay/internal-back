@@ -1,6 +1,5 @@
-<form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
-      aria-labelledby="searchInvoker" action="{{ route('users.search') }}" method="get">
-    <div class="input-group g-max-width-450">
+<form id="header-search-form" class="g-py-12" aria-labelledby="searchInvoker" action="{{ route('users.search') }}" method="get">
+    <div class="input-group col-sm">
         @can('access', [\Dotworkers\Security\Enums\Permissions::$users_search])
             <input class="form-control form-control-md g-rounded-4" type="text" name="username"
                    placeholder="{{ _i('Search user') }} {{$iphone}}" value="{{ isset($username) ? $username : '' }}">
