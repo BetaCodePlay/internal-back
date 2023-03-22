@@ -2493,7 +2493,8 @@ class AgentsController extends Controller
 
         $start = $request->has('start')?$request->get('start'):0;
         $limit = $request->has('length')?$request->get('length'):10;
-        $transactions = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerpage($whitelabel, $currency,$startDate,$endDate,$providers,null,$limit,$start);
+        //$transactions = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerpage($whitelabel, $currency,$startDate,$endDate,$providers,null,$limit,$start);
+        $transactions = $this->closuresUsersTotals2023Repo->getClosureTmp($whitelabel, $currency,$startDate,$endDate,$providers,null,$limit,$start);
         $total = empty($transactions)?0:$transactions[0]->total_items;
 
         $data = array();
