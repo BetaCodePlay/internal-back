@@ -316,16 +316,16 @@ if (!function_exists('menu')) {
 //                                'submenu' => []
 //                            ],
 
-//TODO RPEGUNTAR QUE PERMISO TENDRA?
-//                            'AgentsTransactionTimeline' => [
-//                                'text' => _i('Transaction Timeline'),
-//                                'level_class' => 'third',
-//                                'route' => 'reports.view.transaction.timeline',
-//                                'params' => [],
-//                                'icon' => 'hs-admin-stats-up',
-//                                'permission' => Permissions::$agents_menu,
-//                                'submenu' => []
-//                            ],
+
+                            'AgentsTransactionTimeline' => [
+                                'text' => _i('Transaction Timeline'),
+                                'level_class' => 'third',
+                                'route' => 'reports.view.transaction.timeline',
+                                'params' => [],
+                                'icon' => 'hs-admin-stats-up',
+                                'permission' => Permissions::$agents_menu,
+                                'submenu' => []
+                            ],
                             'Agents transactions' => [
                                 'text' => _i('Agents transactions'),
                                 'level_class' => 'third',
