@@ -33,7 +33,9 @@
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             @include('back.layout.warning')
 
-            @include('back.layout.search')
+            @if($iphone)
+                @include('back.layout.search')
+            @endif
 
             @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                 <div class="g-pt-20 g-pr-20">
