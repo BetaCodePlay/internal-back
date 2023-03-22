@@ -413,6 +413,7 @@
                                     </div>
                                 </div>
                             </div>
+{{--                            TODO COLOCAR RAMA DEL USUARIO--}}
                             @if(isset($agent))
                                 <div class="row g-mb-15">
                                     <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
@@ -428,6 +429,7 @@
                                 </div>
                             @endif
                         @endif
+
                         @can('access', [\Dotworkers\Security\Enums\Permissions::$show_wallet_id])
                             <div class="row g-mb-15">
                                 <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
@@ -442,207 +444,211 @@
                                 </div>
                             </div>
                         @endcan
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="email">
-                                    {{ _i('Email') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="email" name="email" class="form-control" type="email"
-                                           value="{{ $user->email }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="dni">
-                                    {{ _i('DNI') }}
-                                </label>
-                            </div>
 
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="dni" name="dni" class="form-control" type="text"
-                                           value="{{ $user->dni }}">
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="email">
+                                        {{ _i('Email') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="email" name="email" class="form-control" type="email"
+                                               value="{{ $user->email }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="first_name">
-                                    {{ _i('Name') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="first_name" name="first_name" class="form-control" type="text"
-                                           value="{{ $user->first_name }}">
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="dni">
+                                        {{ _i('DNI') }}
+                                    </label>
+                                </div>
+
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="dni" name="dni" class="form-control" type="text"
+                                               value="{{ $user->dni }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="last_name">
-                                    {{ _i('Last Name') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="last_name" name="last_name" class="form-control" type="text"
-                                           value="{{ $user->last_name }}">
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="first_name">
+                                        {{ _i('Name') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="first_name" name="first_name" class="form-control" type="text"
+                                               value="{{ $user->first_name }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="gender">
-                                    {{ _i('Gender') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="gender" id="gender" class="form-control">
-                                        @if (is_null($user->gender))
-                                            <option value="" selected>{{ _i('Select...') }}</option>
-                                        @endif
-                                        <option value="F" {{ $user->gender == 'F' ? 'selected' : '' }}>
-                                            {{ _i('Female') }}
-                                        </option>
-                                        <option value="M" {{ $user->gender == 'M' ? 'selected' : '' }}>
-                                            {{ _i('Male') }}
-                                        </option>
-                                    </select>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="last_name">
+                                        {{ _i('Last Name') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="last_name" name="last_name" class="form-control" type="text"
+                                               value="{{ $user->last_name }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="level">
-                                    {{ _i('User level') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="level" id="level" class="form-control">
-                                        @foreach ($levels as $level)
-                                            <option value="{{ $level->id }}" {{ $level->id == $user->level ? 'selected' : '' }}>
-                                                {{ $level->{$selected_language['iso']} }}
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="gender">
+                                        {{ _i('Gender') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="gender" id="gender" class="form-control">
+                                            @if (is_null($user->gender))
+                                                <option value="" selected>{{ _i('Select...') }}</option>
+                                            @endif
+                                            <option value="F" {{ $user->gender == 'F' ? 'selected' : '' }}>
+                                                {{ _i('Female') }}
                                             </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="country">
-                                    {{ _i('Country') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="country" id="country" class="form-control" data-route="{{ route('core.states') }}">
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->iso }}" {{ $country->iso == $user->country_iso ? 'selected' : '' }}>
-                                                {{ $country->name }}
+                                            <option value="M" {{ $user->gender == 'M' ? 'selected' : '' }}>
+                                                {{ _i('Male') }}
                                             </option>
-                                        @endforeach
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="state">
-                                    {{ _i('State') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="state" id="state" class="form-control" data-route="{{ route('core.city') }}">
-                                        <option value="">{{ _i('Select...') }}</option>
-                                    </select>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="level">
+                                        {{ _i('User level') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="level" id="level" class="form-control">
+                                            @foreach ($levels as $level)
+                                                <option value="{{ $level->id }}" {{ $level->id == $user->level ? 'selected' : '' }}>
+                                                    {{ $level->{$selected_language['iso']} }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="city">
-                                    {{ _i('City') }}
-                                </label>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="country">
+                                        {{ _i('Country') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="country" id="country" class="form-control" data-route="{{ route('core.states') }}">
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->iso }}" {{ $country->iso == $user->country_iso ? 'selected' : '' }}>
+                                                    {{ $country->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="city" id="city" class="form-control" >
-                                        <option value="">{{ _i('Select...') }}</option>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="state">
+                                        {{ _i('State') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="state" id="state" class="form-control" data-route="{{ route('core.city') }}">
+                                            <option value="">{{ _i('Select...') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="city">
+                                        {{ _i('City') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="city" id="city" class="form-control" >
+                                            <option value="">{{ _i('Select...') }}</option>
                                             @if($user->city)
                                                 <option value="{{$user->city}}" selected>{{$user->city}}</option>
                                             @endif
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="timezone">
-                                    {{ _i('Timezone') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="timezone" id="timezone" class="form-control">
-                                        @foreach ($timezones as $timezone)
-                                            <option value="{{ $timezone }}" {{ $timezone == $user->timezone ? 'selected' : '' }}>
-                                                {{ $timezone }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="timezone">
+                                        {{ _i('Timezone') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="timezone" id="timezone" class="form-control">
+                                            @foreach ($timezones as $timezone)
+                                                <option value="{{ $timezone }}" {{ $timezone == $user->timezone ? 'selected' : '' }}>
+                                                    {{ $timezone }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="phone">
-                                    {{ _i('Phone') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <select name="calling_code" class="form-control">
-                                                <option value="">{{ _i('Select...') }}</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country->calling_code }}" {{ $country->calling_code == $user->calling_code ? 'selected' : '' }}>
-                                                        {{ $country->name }} (+{{ $country->calling_code }})
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="phone">
+                                        {{ _i('Phone') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select name="calling_code" class="form-control">
+                                                    <option value="">{{ _i('Select...') }}</option>
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->calling_code }}" {{ $country->calling_code == $user->calling_code ? 'selected' : '' }}>
+                                                            {{ $country->name }} (+{{ $country->calling_code }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
-                                        <div class="col-md-8">
-                                            <input id="phone" name="phone" class="form-control" type="text"
-                                                   value="{{ $user->phone }}">
+                                            <div class="col-md-8">
+                                                <input id="phone" name="phone" class="form-control" type="text"
+                                                       value="{{ $user->phone }}">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="birth_date">
-                                    {{ _i('Date of birth') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="birth_date" name="birth_date" class="form-control datepicker" type="text"
-                                           value="{{ !is_null($user->birth_date) ? $user->birth_date : '' }}">
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="birth_date">
+                                        {{ _i('Date of birth') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="birth_date" name="birth_date" class="form-control datepicker" type="text"
+                                               value="{{ !is_null($user->birth_date) ? $user->birth_date : '' }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
+
                         <div class="row g-mb-10">
                             <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
                                 <label class="g-mb-0" for="registration_date">
