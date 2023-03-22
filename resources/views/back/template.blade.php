@@ -38,7 +38,7 @@
             @endif
 
             @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                <div class="g-pt-20 g-pr-20">
+                <div class="g-pt-20 g-pr-15 g-pl-15">
                     <div class="row">
                         <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
                             <div class="form-group">
