@@ -170,6 +170,17 @@ class ClosuresUsersTotals2023Repo
 
     }
 
+    /**
+     * @param int $whitelabel
+     * @param string $currency
+     * @param string $startDate
+     * @param string $endDate
+     * @param $provider
+     * @param $username
+     * @param $limit
+     * @param $page
+     * @return array
+     */
     public function getClosureTmp(int $whitelabel, string $currency, string $startDate, string $endDate, $provider, $username, $limit, $page)
     {
         return DB::select('SELECT * FROM get_closure_totals_by_provider_and_maker_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username, $limit, $page]);
@@ -204,6 +215,24 @@ class ClosuresUsersTotals2023Repo
     public function getClosureTotalsByProviderAndMaker(int $whitelabel, string $currency, string $startDate, string $endDate, $provider, $username)
     {
         return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username]);
+    }
+
+    /**
+     * Get Closures Totals By Provider And Maker Page
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param $provider
+     * @param $username
+     * @param $limit
+     * @param $page
+     * @return array
+     */
+    public function getClosureTotalsByProviderAndMakerpage(int $whitelabel, string $currency, string $startDate, string $endDate, $provider, $username, $limit, $page)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username, $limit, $page]);
     }
 
     /**

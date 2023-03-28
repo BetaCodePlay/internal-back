@@ -25,7 +25,7 @@
                 <tr>
                     <th> <?php echo e(_i('Maker')); ?></th>
                     <th> <?php echo e(_i('Username')); ?></th>
-                    <th> <?php echo e(_i('Jugado')); ?></th>
+                    <th> <?php echo e(_i('Payed')); ?></th>
                 </tr>
                 </thead>
 

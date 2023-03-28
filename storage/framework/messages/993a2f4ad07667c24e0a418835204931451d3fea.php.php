@@ -166,9 +166,15 @@ class AgentsRepo
         return $user;
     }
 
-    public function myPercentageByCurrency(int $user_id, string $currency)
+    /**
+     * Consult Percentage By Currency
+     * @param int $user User Id
+     * @param string $currency Currency Iso
+     * @return mixed
+     */
+    public function myPercentageByCurrency(int $user, string $currency)
     {
-        $iAgent = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?)',[$user_id,$currency]);
+        $iAgent = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?)',[$user,$currency]);
         return $iAgent;
     }
 

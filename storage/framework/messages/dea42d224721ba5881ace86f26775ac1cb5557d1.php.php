@@ -26,8 +26,10 @@
                 <tr>
                     <th> <?php echo e(_i('Date')); ?></th>
                     <th> <?php echo e(_i('Description')); ?></th>
-                    <th> <?php echo e(_i('Debit')); ?></th>
-                    <th> <?php echo e(_i('Credit')); ?></th>
+                    <th> Debit </th>
+                    <th> Credit</th>
+
+
 
 
 
