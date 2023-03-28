@@ -170,6 +170,16 @@
                     <div class="d-block d-sm-block d-md-none">
                         <div class="d-flex align-self-center justify-content-end">
                             <div class="g-pos-rel g-top-3 d-inline-block">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Dropdown button
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
                                 <a id="agents-menu-invoker" class="d-block g-text-underline--none--hover text-dark" href="#!" aria-controls="agents-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#agents-menu" data-dropdown-type="css-animation"
                                    data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
                                 <span class="g-pos-rel g-left-70">
