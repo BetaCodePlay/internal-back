@@ -35,6 +35,9 @@ class TransactionsCollection
                 $transaction->modified_amount = $transaction->transaction_type_id == TransactionTypes::$debit ? "-{$transaction->amount}" : "+{$transaction->amount}";
                 $transaction->debit = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
                 $transaction->credit = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
+                if((Configurations::getWhitelabel() == 1) && ($transaction->provider_id == 171) && ($transaction->id ==13315112)){
+                    \Log::info(__METHOD__, ['formatTransactions' => $transaction]);
+                }
                 $transaction->description = Providers::getDescription($transaction->provider_id, $transaction->transaction_type_id, $transaction->action_id, $transaction->data);
                 $transaction->provider = Providers::getName($transaction->provider_id);
 

@@ -7,27 +7,32 @@
         }
 
         #financial-state-table .bg-primary {
-            background-color: rgba(0, 123, 255,.4) !important;
+            background-color: rgba(0, 123, 255, .4) !important;
         }
 
         #financial-state-table .bg-success {
-            background-color: rgba(40, 167, 69,.4) !important
+            background-color: rgba(40, 167, 69, .4) !important
         }
-        .init_tree{
+
+        .init_tree {
             color: rgb(77 77 77) !important
         }
-         .init_agent{
-             color: #3398dc !important;
-             font-weight: bold!important;
-         }
-        .init_user{
-            color: #e62154 !important;
-            font-weight: bold!important;
+
+        .init_agent {
+            color: #3398dc !important;
+            font-weight: bold !important;
         }
+
+        .init_user {
+            color: #e62154 !important;
+            font-weight: bold !important;
+        }
+
         .nav_link_blue {
-            color: white!important;
+            color: white !important;
             background-color: #38a7ef !important;
         }
+
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -36,16 +41,18 @@
         /*    border-left-style: solid;*/
         /*}*/
         .nav_link_red {
-            color: white!important;
-            background-color:  #e62154 !important
+            color: white !important;
+            background-color: #e62154 !important
         }
+
         .nav_link_green {
-            color: white!important;
-            background-color:  green !important
+            color: white !important;
+            background-color: green !important
         }
+
         .nav_link_orange {
-            color: white!important;
-            background-color:  darkorange !important
+            color: white !important;
+            background-color: darkorange !important
         }
 
     </style>
@@ -147,7 +154,7 @@
                     <div class="row">
                         <div class="col-12 col-md-8 g-py-5 g-pa-5">
                             <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
-                                <select name="agent_id_search" id="agent_id_search"  class="form-control select2 agent_id_search" data-route="<?php echo e(route('agents.search-username')); ?>" data-select="<?php echo e(route('agents.find-user')); ?>">
+                                <select name="agent_id_search" id="agent_id_search" class="form-control select2 agent_id_search" data-route="<?php echo e(route('agents.search-username')); ?>" data-select="<?php echo e(route('agents.find-user')); ?>">
                                     <option></option>
                                 </select>
                             <?php endif; ?>
@@ -176,68 +183,54 @@
                     <div class="d-block d-sm-block d-md-none">
                         <div class="d-flex align-self-center justify-content-end">
                             <div class="g-pos-rel g-top-3 d-inline-block">
-                                <a id="agents-menu-invoker" class="d-block g-text-underline--none--hover text-dark" href="#!" aria-controls="agents-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#agents-menu" data-dropdown-type="css-animation"
-                                   data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                                <span class="g-pos-rel g-left-70">
-                                    <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i> <?php echo e(_i('Options')); ?>
+                                <div class="dropdown">
+                                    <a class="d-block g-text-underline--none--hover text-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i> <?php echo e(_i('Options')); ?>
 
-                                </span>
-                                </a>
-                                <ul id="agents-menu" class="languages-menu-pro g-z-index-9999 g-pos-abs g-left-0 g-nowrap g-font-size-14 g-py-20 g-mt-10 rounded" aria-labelledby="agents-menu-invoker">
-                                    <li class="mb-0">
-                                        <a href="#dashboard" id="dashboard-mobile" data-target="#dashboard" aria-controls="dashboard" aria-selected="true">
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#dashboard" id="dashboard-mobile" data-target="#dashboard" aria-controls="dashboard" aria-selected="true">
                                             <i class="hs-admin-dashboard"></i>
                                             <?php echo e(_i('Dashboard')); ?>
 
                                         </a>
-                                    </li>
-                                    <li class="mb-0">
-                                        <a href="#agents-transactions" id="agents-transactions-mobile" data-target="#agents-transactions" aria-controls="agents-transactions" aria-selected="false">
+                                        <a class="dropdown-item" href="#agents-transactions" id="agents-transactions-mobile" data-target="#agents-transactions" aria-controls="agents-transactions" aria-selected="false">
                                             <i class="hs-admin-layout-list-thumb"></i>
                                             <?php echo e(_i('Transactions')); ?>
 
                                         </a>
-                                    </li>
-                                    <li class="mb-0">
-                                        <a class="d-none" data-target="#users-transactions" href="#users-transactions" id="users-transactions-mobile" aria-controls="users-transactions" aria-selected="false">
+                                        <a class="dropdown-item d-none" data-target="#users-transactions" href="#users-transactions" id="users-transactions-mobile" aria-controls="users-transactions" aria-selected="false">
                                             <i class="hs-admin-layout-list-thumb"></i>
                                             <?php echo e(_i('Transactions')); ?>
 
                                         </a>
-                                    </li>
-                                    <li class="mb-0">
-                                        <a data-target="#users" href="#users" id="users-mobile" aria-controls="users" aria-selected="false">
+                                        <a class="dropdown-item" data-target="#users" href="#users" id="users-mobile" aria-controls="users" aria-selected="false">
                                             <i class="hs-admin-user"></i>
                                             <?php echo e(_i('Players')); ?>
 
                                         </a>
-                                    </li>
-                                    <?php if($agent->master): ?>
-                                        <li class="mb-0">
-                                            <a data-target="#agents" href="#agents" id="agents-mobile" aria-controls="agents" aria-selected="false">
+                                        <?php if($agent->master): ?>
+                                            <a class="dropdown-item" data-target="#agents" href="#agents" id="agents-mobile" aria-controls="agents" aria-selected="false">
                                                 <i class="hs-admin-briefcase"></i>
                                                 <?php echo e(_i('Agents')); ?>
 
                                             </a>
-                                        </li>
-                                    <?php endif; ?>
-                                    <li class="mb-0">
-                                        <a data-target="#financial-state" href="#financial-state" id="financial-state-mobile" aria-controls="agents" aria-selected="false">
+                                        <?php endif; ?>
+                                        <a class="dropdown-item" data-target="#financial-state" href="#financial-state" id="financial-state-mobile" aria-controls="agents" aria-selected="false">
                                             <i class="hs-admin-pie-chart"></i>
                                             <?php echo e(_i('Financial state')); ?>
 
                                         </a>
-                                    </li>
-                                    <?php if($agent->master): ?>
-                                        <li class="mb-0">
-                                            <a class="d-none" data-target="#locks" href="#locks" id="locks-mobile" aria-controls="agents" aria-selected="false">
+                                        <?php if($agent->master): ?>
+                                            <a class="dropdown-item d-none" data-target="#locks" href="#locks" id="locks-mobile" aria-controls="agents" aria-selected="false">
                                                 <i class="hs-admin-lock"></i>
                                                 <?php echo e(_i('Locks')); ?>
 
                                             </a>
-                                        </li>
-                                    <?php endif; ?>
-                                </ul>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -296,12 +289,12 @@
                                     </a>
                                 </li>
                             <?php endif; ?>
-
-
-
-
-
-
+                            
+                            
+                            
+                            
+                            
+                            
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -338,7 +331,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
                                         <div class="row g-mb-15">
                                             <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
@@ -672,62 +665,62 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
 
+                            
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
                                 <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data')); ?>"></div>
                             <?php else: ?>
                                 <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-summary-data-new')); ?>"></div>
                             <?php endif; ?>
-
-
-
-
-
-
-
-
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
 
                         </div>
                         <?php if($agent->master): ?>

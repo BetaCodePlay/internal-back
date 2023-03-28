@@ -33,6 +33,9 @@ class TransactionsCollection
      * Format financial cash flow data grouped by users
      *
      * @param array $financial Financial data
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @param string $currency Currency Iso
      * @return array
      */
     public function formatCashFlowDataByUsers($financial, $whitelabel, $currency, $startDate, $endDate)
@@ -152,6 +155,8 @@ class TransactionsCollection
      * @param string $convert Currency for convert to
      * @param string $currency Currency for convert from
      * @param int $whitelabel Whitelabel ID
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
      */
     public function formatDailySales($sales, $period, $convert, $currency, $startDate, $endDate, $whitelabel)
     {
@@ -506,7 +511,7 @@ class TransactionsCollection
      * Format deposits and withdrawals
      *
      * @param array $transactions Transactions data
-     * @param string $currency Currency ISO
+     * @param string $currency Currency Iso
      */
     public function formatDepositsAndWithdrawals($transactions, $currency)
     {
@@ -850,8 +855,8 @@ class TransactionsCollection
      * Format financial data by dates
      *
      * @param array $transactions Transactions data
-     * @param null|string $startDate Start date to show
-     * @param null|string $endDate End date to show
+     * @param null|string $startDate Start date to filter
+     * @param null|string $endDate End date to filter
      * @return array[]
      */
     public function formatFinancialDataByDates($transactions, $startDate, $endDate)
@@ -1278,7 +1283,7 @@ class TransactionsCollection
      * Format deposit withdrawal by user
      *
      * @param array $transactions Transaction data
-     * @param string $currency Currency iso
+     * @param string $currency Currency Iso
      * @return array
      */
     public function formatDepositWithdrawalByUser($transactionsTotals, $currency)
@@ -1412,12 +1417,14 @@ class TransactionsCollection
     }
 
     /**
+     * Collection Example Sql and Datatable
      * Format transactions timeline
      *
+     * @param string $timezone Times Zone Format Date
      * @param array $transactions Array Transactions
      * @param $request
      */
-    public function formatTransactionTimeline($transactions,$timezone,$request)
+    public function formatTransactionTimeline($transactions,$timezone,$request,$currency)
     {
         $total = 0;
         $data = array();
@@ -1428,8 +1435,14 @@ class TransactionsCollection
                 $dataTmp = json_decode($transaction->data);
                 $newData['date'] = Carbon::create($transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
 
+                $balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
+                $name = _('from').' <strong>'.$dataTmp->from .' </strong> '._i('Actual balance').': '.$balanceOld.''.$currency.' <br> '._('to').' '.$dataTmp->to;
+                if($transaction->transaction_type_id == TransactionTypes::$debit){
+                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> '._i('Actual balance').': '.$balanceOld.''.$currency.'';
+                }
+
                 $newData['id'] = $transaction->id;
-                $newData['names'] =  _('from').' '.$dataTmp->from .' '._('to').' '.$dataTmp->to;
+                $newData['names'] =  $name;
                 $newData['from'] = $dataTmp->from;
                 $newData['to'] = $dataTmp->to;
                 $newData['data'] = $dataTmp;
@@ -1490,6 +1503,13 @@ class TransactionsCollection
         return $json_data;
     }
 
+    /**
+     * @param $sales
+     * @param string $currency Currency Iso
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @return array[]
+     */
     public function formatWhitelabelsSales($sales, $currency, $startDate, $endDate)
     {
         $closuresUsersTotalsRepo = new ClosuresUsersTotalsRepo();
