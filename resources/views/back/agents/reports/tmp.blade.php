@@ -24,7 +24,7 @@
                 <tr>
                     <th> {{ _i('Maker') }}</th>
                     <th> {{ _i('Username') }}</th>
-                    <th> {{ _i('Jugado') }}</th>
+                    <th> {{ _i('Payed') }}</th>
                 </tr>
                 </thead>
 {{--                <tfoot>--}}

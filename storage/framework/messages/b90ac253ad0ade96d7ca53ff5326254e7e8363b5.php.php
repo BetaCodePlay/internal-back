@@ -2,9 +2,11 @@
 
 namespace App\Users\Collections;
 
+use App\Agents\Repositories\AgentsRepo;
 use App\Users\Enums\DocumentStatus;
 use App\Users\Repositories\AutoLockUsersRepo;
 use Carbon\Carbon;
+use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use App\Audits\Enums\AuditTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
@@ -25,6 +27,16 @@ class UsersCollection
 {
 
     /**
+     * UsersController constructor.
+     * @param AgentsRepo $agentsRepo
+     */
+    public function __construct(AgentsRepo $agentsRepo)
+    {
+        $this->agentsRepo = $agentsRepo;
+
+    }
+
+    /**
      * Format agent
      *
      * @param object $agent Agent data
@@ -38,6 +50,28 @@ class UsersCollection
                 $agent->username
             );
         }
+    }
+
+    /**
+     * Parent Tree
+     * @param int $userId User Id
+     * @return string
+     */
+    public function treeFatherFormat($userId){
+
+        $agent = $this->agentsRepo->existsUser($userId);
+        $link = '';
+        if(isset($agent->user_id)){
+            $link .= '<ul class="list" id="ul_'.$agent->user_id.'">
+                        <li  class="" id="li_'.$agent->user_id.'">'.$agent->username.'</li>';
+            if(isset($agent->user_id)){
+                $link .= $this->treeFatherFormat($agent->user_id);
+            }
+            $link .= '</ul>';
+        }
+
+        return $link;
+
     }
 
     /**

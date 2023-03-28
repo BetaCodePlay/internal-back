@@ -25,6 +25,8 @@
                 <tr>
                     <th> {{ _i('Date') }}</th>
                     <th> {{ _i('Description') }}</th>
+{{--                    <th> Debit </th>--}}
+{{--                    <th> Credit</th>--}}
                     <th> {{ _i('Debit') }}</th>
                     <th> {{ _i('Credit') }}</th>
 {{--                    @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}

@@ -212,9 +212,6 @@ class AgentsCollection
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id);
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id);
-//                    if($whitelabel == 13 || $whitelabel == 1){
-//                        Log::info('W:13-1 user y $closureRepo',[$closures,$whitelabel, $currency, $startDate, $endDate, $value->user_id]);
-//                    }
                 }
 
                 if (count($closures) > 0) {
@@ -279,7 +276,15 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . _i('Total Comission') . "</strong> &nbsp;&nbsp;&nbsp;&nbsp;(" . number_format(($percentage), 2) . "%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . _i('Total Profit') . "</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . number_format(($totalProfit), 2) . "</strong>  </td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . _i('Total Comission') . "</strong> &nbsp;(" . number_format(($percentage), 2) . "%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -288,7 +293,7 @@ class AgentsCollection
                                   <!--TODO TOTAL A PAGAR-->
                                   <tr>
                                       <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" . _i('Total to pay') . " </strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(" . number_format((100 - $percentage), 2) . "%)</td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" . _i('Total to pay') . " </strong> &nbsp;(" . number_format((100 - $percentage), 2) . "%)</td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
@@ -301,11 +306,11 @@ class AgentsCollection
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . _i('Total Profit') . "</strong></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . _i('Total Profit') . "</strong></td>
                                   </tr>
                                   <tr>
                                       <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
-                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . number_format(($totalProfit), 2) . "</strong>  </td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . number_format(($totalProfit), 2) . "</strong>  </td>
                                   </tr>
                                   ";
             }
@@ -403,7 +408,7 @@ class AgentsCollection
      * @param $percentage
      * @return string
      */
-    public function closuresTotalsByWhitelabelsSymple($tableDb, $percentage = null)
+    public function closuresTotalsByWhitelabelsSymple($tableDb, $percentage)
     {
         $htmlProvider = sprintf(
             '<table class="table table-bordered table-sm table-striped table-hover">
@@ -434,6 +439,7 @@ class AgentsCollection
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_played, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_won, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($value->total_profit, 2) . "</td>";
+//                $htmlProvider .= "<td class='text-center'>" . $percentage . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($percentage, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format($totalComission, 2) . "</td>";
                 $htmlProvider .= "<td class='text-center'>" . number_format(($value->total_profit - $totalComission), 2) . "</td>";
@@ -583,10 +589,10 @@ class AgentsCollection
                             </tr>
                             <tr>
                                 <th colspan="2">' . _i('Maker') . '</th>
-                                <th>' . _i('Usuarios') . '</th>
-                                <th>' . _i('Total Pagado') . '</th>
-                                <th>' . _i('Total Ganado') . '</th>
-                                <th>' . _i('Total Apuestas') . '</th>
+                                <th>' . _i('Users') . '</th>
+                                <th>' . _i('Total Payed') . '</th>
+                                <th>' . _i('Total Won') . '</th>
+                                <th>' . _i('Total Bets') . '</th>
                                 <th>' . _i('Total Profit') . '</th>
                             </tr>
                         </thead><tbody>';
