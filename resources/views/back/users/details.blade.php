@@ -1,5 +1,15 @@
 @extends('back.template')
 
+
+@section('styles')
+    <style>
+        .list{
+            color:black;
+            font-size:15px;
+        }
+
+    </style>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-md-3">
