@@ -7,27 +7,32 @@
         }
 
         #financial-state-table .bg-primary {
-            background-color: rgba(0, 123, 255,.4) !important;
+            background-color: rgba(0, 123, 255, .4) !important;
         }
 
         #financial-state-table .bg-success {
-            background-color: rgba(40, 167, 69,.4) !important
+            background-color: rgba(40, 167, 69, .4) !important
         }
-        .init_tree{
+
+        .init_tree {
             color: rgb(77 77 77) !important
         }
-         .init_agent{
-             color: #3398dc !important;
-             font-weight: bold!important;
-         }
-        .init_user{
-            color: #e62154 !important;
-            font-weight: bold!important;
+
+        .init_agent {
+            color: #3398dc !important;
+            font-weight: bold !important;
         }
+
+        .init_user {
+            color: #e62154 !important;
+            font-weight: bold !important;
+        }
+
         .nav_link_blue {
-            color: white!important;
+            color: white !important;
             background-color: #38a7ef !important;
         }
+
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -36,16 +41,18 @@
         /*    border-left-style: solid;*/
         /*}*/
         .nav_link_red {
-            color: white!important;
-            background-color:  #e62154 !important
+            color: white !important;
+            background-color: #e62154 !important
         }
+
         .nav_link_green {
-            color: white!important;
-            background-color:  green !important
+            color: white !important;
+            background-color: green !important
         }
+
         .nav_link_orange {
-            color: white!important;
-            background-color:  darkorange !important
+            color: white !important;
+            background-color: darkorange !important
         }
 
     </style>
@@ -143,7 +150,7 @@
                     <div class="row">
                         <div class="col-12 col-md-8 g-py-5 g-pa-5">
                             @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                                <select name="agent_id_search" id="agent_id_search"  class="form-control select2 agent_id_search" data-route="{{ route('agents.search-username')}}" data-select="{{ route('agents.find-user') }}">
+                                <select name="agent_id_search" id="agent_id_search" class="form-control select2 agent_id_search" data-route="{{ route('agents.search-username')}}" data-select="{{ route('agents.find-user') }}">
                                     <option></option>
                                 </select>
                             @endif
@@ -171,16 +178,45 @@
                         <div class="d-flex align-self-center justify-content-end">
                             <div class="g-pos-rel g-top-3 d-inline-block">
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Dropdown button
-                                    </button>
+                                    <a class="d-block g-text-underline--none--hover text-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i> {{ _i('Options') }}
+                                    </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+                                        <a class="dropdown-item" href="#dashboard" id="dashboard-mobile" data-target="#dashboard" aria-controls="dashboard" aria-selected="true">
+                                            <i class="hs-admin-dashboard"></i>
+                                            {{ _i('Dashboard') }}
+                                        </a>
+                                        <a class="dropdown-item" href="#agents-transactions" id="agents-transactions-mobile" data-target="#agents-transactions" aria-controls="agents-transactions" aria-selected="false">
+                                            <i class="hs-admin-layout-list-thumb"></i>
+                                            {{ _i('Transactions') }}
+                                        </a>
+                                        <a class="dropdown-item d-none" data-target="#users-transactions" href="#users-transactions" id="users-transactions-mobile" aria-controls="users-transactions" aria-selected="false">
+                                            <i class="hs-admin-layout-list-thumb"></i>
+                                            {{ _i('Transactions') }}
+                                        </a>
+                                        <a class="dropdown-item" data-target="#users" href="#users" id="users-mobile" aria-controls="users" aria-selected="false">
+                                            <i class="hs-admin-user"></i>
+                                            {{ _i('Players') }}
+                                        </a>
+                                        @if ($agent->master)
+                                            <a class="dropdown-item" data-target="#agents" href="#agents" id="agents-mobile" aria-controls="agents" aria-selected="false">
+                                                <i class="hs-admin-briefcase"></i>
+                                                {{ _i('Agents') }}
+                                            </a>
+                                        @endif
+                                        <a class="dropdown-item" data-target="#financial-state" href="#financial-state" id="financial-state-mobile" aria-controls="agents" aria-selected="false">
+                                            <i class="hs-admin-pie-chart"></i>
+                                            {{ _i('Financial state') }}
+                                        </a>
+                                        @if ($agent->master)
+                                            <a class="dropdown-item d-none" data-target="#locks" href="#locks" id="locks-mobile" aria-controls="agents" aria-selected="false">
+                                                <i class="hs-admin-lock"></i>
+                                                {{ _i('Locks') }}
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
-                                <a id="agents-menu-invoker" class="d-block g-text-underline--none--hover text-dark" href="#!" aria-controls="agents-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#agents-menu" data-dropdown-type="css-animation"
+                                {{--<a id="agents-menu-invoker" class="d-block g-text-underline--none--hover text-dark" href="#!" aria-controls="agents-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#agents-menu" data-dropdown-type="css-animation"
                                    data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
                                 <span class="g-pos-rel g-left-70">
                                     <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i> {{ _i('Options') }}
@@ -233,7 +269,7 @@
                                             </a>
                                         </li>
                                     @endif
-                                </ul>
+                                </ul>--}}
                             </div>
                         </div>
                     </div>
@@ -285,12 +321,12 @@
                                     </a>
                                 </li>
                             @endif
-{{--                            <li class="nav-item" role="presentation">--}}
-{{--                                <a class="nav-link active nav_link_blue" id="connect-tab" data-toggle="tab" href="#connect" role="tab" aria-controls="connect" aria-selected="true">--}}
-{{--                                    <i class="hs-admin-dashboard"></i>--}}
-{{--                                    {{ _i('Connections') }}--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            {{--                            <li class="nav-item" role="presentation">--}}
+                            {{--                                <a class="nav-link active nav_link_blue" id="connect-tab" data-toggle="tab" href="#connect" role="tab" aria-controls="connect" aria-selected="true">--}}
+                            {{--                                    <i class="hs-admin-dashboard"></i>--}}
+                            {{--                                    {{ _i('Connections') }}--}}
+                            {{--                                </a>--}}
+                            {{--                            </li>--}}
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -327,7 +363,7 @@
                                             </div>
                                         </div>
                                     </div>
-{{--                                    TODO ROL 19 NUEVO ROL DE AGENTE--}}
+                                    {{--                                    TODO ROL 19 NUEVO ROL DE AGENTE--}}
                                     @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                                         <div class="row g-mb-15">
                                             <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
@@ -636,62 +672,62 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            @include('back.layout.litepicker')--}}
-{{--                            <div class="col-md-12">--}}
-{{--                                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">--}}
-{{--                                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">--}}
-{{--                                        <div class="media">--}}
-{{--                                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">--}}
-{{--                                                {{ _i('Connections') }}--}}
-{{--                                            </h3>--}}
+                            {{--                            @include('back.layout.litepicker')--}}
+                            {{--                            <div class="col-md-12">--}}
+                            {{--                                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">--}}
+                            {{--                                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">--}}
+                            {{--                                        <div class="media">--}}
+                            {{--                                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">--}}
+                            {{--                                                {{ _i('Connections') }}--}}
+                            {{--                                            </h3>--}}
 
-{{--                                            <div class="media-body d-flex justify-content-end g-mb-10" id="ip-table-buttons">--}}
+                            {{--                                            <div class="media-body d-flex justify-content-end g-mb-10" id="ip-table-buttons">--}}
 
-{{--                                            </div>--}}
-{{--                                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">--}}
-{{--                                                <input type="hidden" name="user_id" id="user_id"  class="user_id_ips" value="{{ \Illuminate\Support\Facades\Auth::user()->id }}">--}}
-{{--                                                <button class="btn u-btn-3d u-btn-primary" type="button" id="update-ip"--}}
-{{--                                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">--}}
-{{--                                                    <i class="hs-admin-reload g-color-white"></i>--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </header>--}}
-{{--                                    <div class="card-block g-pa-15">--}}
-{{--                                        <div class="table-responsive">--}}
-{{--                                            <input type="hidden" name="user_id" id="user_id" value="{{ \Illuminate\Support\Facades\Auth::user()->id }}">--}}
-{{--                                            <table class="table table-bordered w-100" id="ip-table"--}}
-{{--                                                   data-route="{{ route('users.users-ips-data') }}">--}}
-{{--                                                <thead>--}}
-{{--                                                <tr>--}}
-{{--                                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                        {{ _i('IP') }}--}}
-{{--                                                    </th>--}}
-{{--                                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                        {{ _i('Quantity') }}--}}
-{{--                                                    </th>--}}
-{{--                                                </tr>--}}
-{{--                                                </thead>--}}
-{{--                                                <tbody>--}}
-{{--                                                </tbody>--}}
-{{--                                            </table>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{--                                            </div>--}}
+                            {{--                                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">--}}
+                            {{--                                                <input type="hidden" name="user_id" id="user_id"  class="user_id_ips" value="{{ \Illuminate\Support\Facades\Auth::user()->id }}">--}}
+                            {{--                                                <button class="btn u-btn-3d u-btn-primary" type="button" id="update-ip"--}}
+                            {{--                                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">--}}
+                            {{--                                                    <i class="hs-admin-reload g-color-white"></i>--}}
+                            {{--                                                </button>--}}
+                            {{--                                            </div>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </header>--}}
+                            {{--                                    <div class="card-block g-pa-15">--}}
+                            {{--                                        <div class="table-responsive">--}}
+                            {{--                                            <input type="hidden" name="user_id" id="user_id" value="{{ \Illuminate\Support\Facades\Auth::user()->id }}">--}}
+                            {{--                                            <table class="table table-bordered w-100" id="ip-table"--}}
+                            {{--                                                   data-route="{{ route('users.users-ips-data') }}">--}}
+                            {{--                                                <thead>--}}
+                            {{--                                                <tr>--}}
+                            {{--                                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                            {{--                                                        {{ _i('IP') }}--}}
+                            {{--                                                    </th>--}}
+                            {{--                                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                            {{--                                                        {{ _i('Quantity') }}--}}
+                            {{--                                                    </th>--}}
+                            {{--                                                </tr>--}}
+                            {{--                                                </thead>--}}
+                            {{--                                                <tbody>--}}
+                            {{--                                                </tbody>--}}
+                            {{--                                            </table>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
                             @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                                 <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>
                             @else
                                 <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-summary-data-new') }}"></div>
                             @endif
-{{--                            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
-{{--                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>--}}
-{{--                            @else--}}
-{{--                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-summary-data') }}">--}}
-{{--                                --}}{{----}}{{--TODO NUEVA CONSULTA--}}
-{{--                                --}}{{----}}{{--<div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">--}}
-{{--                                </div>--}}
-{{--                            @endif--}}
+                            {{--                            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+                            {{--                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}"></div>--}}
+                            {{--                            @else--}}
+                            {{--                                <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-summary-data') }}">--}}
+                            {{--                                --}}{{----}}{{--TODO NUEVA CONSULTA--}}
+                            {{--                                --}}{{----}}{{--<div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.view1') }}">--}}
+                            {{--                                </div>--}}
+                            {{--                            @endif--}}
 
                         </div>
                         @if ($agent->master)
