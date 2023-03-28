@@ -409,15 +409,15 @@ class AgentsController extends Controller
             //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
             $user = Auth::id();
 
-            //TODO CAMBIADO POR FUNCIONES SQL
-            if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
-                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
-            }else{
-                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,null,$limit,$offset);
-            }
+//            //TODO CAMBIADO POR FUNCIONES SQL
+//            if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
+//                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
+//            }else{
+//                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,null,$limit,$offset);
+//            }
             //TODO Return View Data
             $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
-            //return [$user,$transactions,in_array(Roles::$admin_Beet_sweet, session('roles')),Roles::$admin_Beet_sweet, session('roles')];
+
             $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request,$currency);
 
             return response()->json($data);

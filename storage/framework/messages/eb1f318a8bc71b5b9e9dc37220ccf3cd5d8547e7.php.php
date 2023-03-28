@@ -1436,9 +1436,9 @@ class TransactionsCollection
                 $newData['date'] = Carbon::create($transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
 
                 $balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
-                $name = _('from').' <strong>'.$dataTmp->from .' </strong> '._i('Actual balance').': '.$balanceOld.''.$currency.' <br> '._('to').' '.$dataTmp->to;
+                $name = _('from').' <strong>'.$dataTmp->from .' </strong> '._i('Current balance').': '.$balanceOld.''.$currency.' <br> '._('to').' '.$dataTmp->to;
                 if($transaction->transaction_type_id == TransactionTypes::$debit){
-                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> '._i('Actual balance').': '.$balanceOld.''.$currency.'';
+                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> '._i('Current balance').': '.$balanceOld.''.$currency.'';
                 }
 
                 $newData['id'] = $transaction->id;
