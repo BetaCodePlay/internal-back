@@ -1561,9 +1561,10 @@ class AgentsController extends Controller
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         $ownerBalance = $ownerAgent->balance - $amount;
+                        $agentBalanceFinal = $amount;
                     } else {
                         $walletData = Wallet::getByClient($userData->id, $currency);
-
+                        $agentBalanceFinal = $walletData->data->wallet->balance;
                         if ($amount > $walletData->data->wallet->balance) {
                             $data = [
                                 'title' => _i('Insufficient balance'),
