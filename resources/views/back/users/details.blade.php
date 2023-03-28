@@ -377,29 +377,42 @@
                     </header>
                     <div class="card-block g-pa-15">
                         <div class="row g-mb-15">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                            <div class="col-md-3 align-self-end g-mb-5 g-mb-0--md">
                                 <label class="g-mb-0" for="id">
                                     {{ _i('ID') }}
                                 </label>
                             </div>
-                            <div class="col-md-10 align-self-center">
+                            <div class="col-md-9 align-self-start">
                                 <div class="form-group g-pos-rel g-mb-0">
                                     {{ $user->id }}
                                 </div>
                             </div>
                         </div>
                         <div class="row g-mb-15">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                            <div class="col-md-3 align-self-end g-mb-5 g-mb-0--md">
                                 <label class="g-mb-0" for="id">
                                     {{ _i('Username') }}
                                 </label>
                             </div>
-                            <div class="col-md-10 align-self-center">
+                            <div class="col-md-9 align-self-start">
                                 <div class="form-group g-pos-rel g-mb-0">
                                     {{ $user->username }}
                                 </div>
                             </div>
                         </div>
+                        @if(isset($agent) && $agent != '')
+                            <div class="row g-mb-15">
+                                <div class="col-md-3 align-self-center g-mb-5 g-mb-0--md" style="padding-right: 0%;padding-top: 0%;padding-left: 3%;padding-bottom: 5%;">
+                                    <strong>{{ _i('Father tree') }}</strong>
+{{--                                    <label class="">{{ _i('Parent agent') }}</label>--}}
+                                </div>
+                                <div class="col-md-9 align-self-start" style="padding-left: 0;">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        {!! $agent !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                             <div class="row g-mb-15">
                                 <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
@@ -413,21 +426,7 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            TODO COLOCAR RAMA DEL USUARIO--}}
-                            @if(isset($agent))
-                                <div class="row g-mb-15">
-                                    <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                        <label class="g-mb-0" for="id">
-                                            {{ _i('Parent agent') }}
-                                        </label>
-                                    </div>
-                                    <div class="col-md-10 align-self-center">
-                                        <div class="form-group g-pos-rel g-mb-0">
-                                            {!! $agent !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
+
                         @endif
 
                         @can('access', [\Dotworkers\Security\Enums\Permissions::$show_wallet_id])

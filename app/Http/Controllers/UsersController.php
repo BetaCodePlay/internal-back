@@ -927,8 +927,11 @@ class UsersController extends Controller
                     $userAccounts = $this->userAccounts($user->id);
                     $countries = $this->countriesRepo->all();
                     $wallets = Wallet::getByUserAndCurrencies($id, $currencies);
-                    $agent = $this->agentsRepo->existsUser($user->id);
-                    $this->usersCollection->formatAgent($agent);
+//                    $agent = $this->agentsRepo->existsUser($user->id);
+//                    $this->usersCollection->formatAgent($agent);
+
+                    $treeFather = $this->usersCollection->treeFatherFormat($user->id);
+
                     $walletData = $wallet->data->wallet;
                     $walletsCollection->formatWallet($walletData);
                     $walletsData = $wallets->data->wallets;
@@ -955,9 +958,10 @@ class UsersController extends Controller
                         $data['points'] = number_format($pointsWallet->balance, 2);
                     }
 
-                    if (!is_null($agent)) {
-                        $data['agent'] = $agent->username;
-                    }
+//                    if (!is_null($agent)) {
+//                        $data['agent'] = $agent->username;
+                        $data['agent'] = $treeFather;
+//                    }
 
                     $data['login_user'] = $loginURL;
                     $data['user_accounts'] = $userAccounts;
@@ -973,7 +977,7 @@ class UsersController extends Controller
                     $data['document_verification'] = $documentVerification;
                     $data['bonus'] = $bonus;
                     $data['payments'] = !isset(config('whitelabels.configurations')[Components::$services-1]->data->payments)?false:config('whitelabels.configurations')[Components::$services-1]->data->payments;
-
+                    //return $data;
                     return view('back.users.details', $data);
                 }
 

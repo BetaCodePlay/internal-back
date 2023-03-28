@@ -9,6 +9,8 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Yajra\DataTables\Utilities\Helper;
 
 /**
  * Class TransactionsRepo
@@ -1004,6 +1006,25 @@ class TransactionsRepo
     {
         $transaction = Transaction::create($data);
         $transaction->details()->attach($status, $detailsData);
+        return $transaction;
+    }
+
+    /**
+     * Update data transaction
+     *
+     * @param int $id Transaction id to modify
+     * @param int $newId Add field "transaction_id" in transaction data json
+     * @param int $balance Add field "second_balance" in transaction data json
+     * @return mixed
+     */
+    public function updateData($id, $newId,$balance)
+    {
+        $transaction = Transaction::find($id);
+        $dataTmp = Helper::convertToArray($transaction->data);
+        $dataTmp['transaction_id']=$newId;
+        $dataTmp['second_balance']=$balance;
+        $transaction->data = $dataTmp;
+        $transaction->update();
         return $transaction;
     }
 

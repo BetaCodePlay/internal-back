@@ -410,15 +410,15 @@ class AgentsController extends Controller
             $user = Auth::id();
 
             //TODO CAMBIADO POR FUNCIONES SQL
-            //transactions = $this->transactionsRepo->getTransactions($providers, $currency,$whitelabel,$startDate,$endDate,$limit,$offset);
             if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
                 $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
             }else{
                 $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,null,$limit,$offset);
             }
             //TODO Return View Data
+            $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
             //return [$user,$transactions,in_array(Roles::$admin_Beet_sweet, session('roles')),Roles::$admin_Beet_sweet, session('roles')];
-            $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request);
+            $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request,$currency);
 
             return response()->json($data);
 
@@ -1534,7 +1534,9 @@ class AgentsController extends Controller
             $amount = $request->amount;
             $transactionType = $request->transaction_type;
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-            $transactionID = $transactionsRepo->getNextValue();
+            $ownerBalanceFinal = $ownerAgent->balance;
+            //$transactionID = $transactionsRepo->getNextValue();
+            $transactionIdCreated = null;
             if ($id != $user) {
                 if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'support') {
                     $data = [
@@ -1586,7 +1588,7 @@ class AgentsController extends Controller
                     $userAdditionalData['wallet_transaction'] = $transaction->data->transaction->id;
 
                     $transactionData = [
-                        'id' => $transactionID,
+                        //'id' => $transactionID,
                         'user_id' => $user,
                         'amount' => $amount,
                         'currency_iso' => $currency,
@@ -1597,7 +1599,7 @@ class AgentsController extends Controller
                         'whitelabel_id' => Configurations::getWhitelabel()
                     ];
                     $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-
+                    $transactionIdCreated = $ticket->id;
                     $button = sprintf(
                         '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
                         route('agents.ticket', [$ticket->id]),
@@ -1606,6 +1608,7 @@ class AgentsController extends Controller
                 } else {
                     $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
                     $agentBalance = round($agent->balance, 2);
+                    $agentBalanceFinal = $agent->balance;
 
                     if ($transactionType == TransactionTypes::$credit) {
                         $status = Status::$ok;
@@ -1627,6 +1630,7 @@ class AgentsController extends Controller
                             'to' => $agent->username,
                             'balance' => $balance
                         ];
+
                     } else {
                         if ($amount <= $agentBalance) {
                             $status = Status::$ok;
@@ -1652,6 +1656,7 @@ class AgentsController extends Controller
                             $balance = $agentBalance;
                             $status = Status::$failed;
                         }
+
                     }
 
                     if ($status == Status::$ok) {
@@ -1666,7 +1671,7 @@ class AgentsController extends Controller
                             'whitelabel_id' => Configurations::getWhitelabel()
                         ];
                         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-
+                        $transactionIdCreated = $ticket->id;
                         $button = sprintf(
                             '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
                             route('agents.ticket', [$ticket->id]),
@@ -1697,8 +1702,11 @@ class AgentsController extends Controller
                         $additionalData['balance'] = 0;
                     }
 
+                    $additionalData['transaction_id'] = $transactionIdCreated;
+                    $additionalData['second_balance'] = round($agentBalanceFinal,2);
+
                     $transactionData = [
-                        'id' => $transactionID,
+                        //'id' => $transactionID,
                         'user_id' => $id,
                         'amount' => $amount,
                         'currency_iso' => $currency,
@@ -1708,7 +1716,10 @@ class AgentsController extends Controller
                         'data' => $additionalData,
                         'whitelabel_id' => Configurations::getWhitelabel()
                     ];
-                    $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+
+                    $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+
+                    $this->transactionsRepo->updateData($transactionIdCreated,$transactionFinal->id,round($ownerBalanceFinal,2));
 
                     $data = [
                         'title' => _i('Transaction performed'),
