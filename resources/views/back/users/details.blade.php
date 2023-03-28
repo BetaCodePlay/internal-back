@@ -1,15 +1,5 @@
 @extends('back.template')
 
-
-@section('styles')
-    <style>
-        .list{
-            list-style:none;
-            /*list-style-image:url('https://www.html6.es/img_html/flecha_derecha.png');*/
-            list-style-image:url('{{asset('back/img/flecha_derecha.png')}}');
-        }
-    </style>
-@endsection
 @section('content')
     <div class="row">
         <div class="col-md-3">
