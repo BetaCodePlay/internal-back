@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Agents\Repositories\AgentsRepo;
 use App\BetPay\BetPay;
 use App\Core\Repositories\SectionImagesRepo;
+use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use Dotworkers\Configurations\Configurations;
@@ -64,6 +65,18 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
+
+                if(auth()->user()->action == ActionUser::$locked_higher){
+                    session()->flush();
+                    auth()->logout();
+                    $data = [
+                        'title' => _i('blocked by a superior!'),
+                        'message' => _i('Contact your superior...'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$not_found, $data);
+
+                }
                 $profile = $profilesRepo->find($user);
                 $defaultCurrency = $userCurrenciesRepo->findDefault($user);
 
