@@ -50,19 +50,21 @@
                 </section>
                 <section>
                     <ul class="list-unstyled g-mb-0">
-                        @can('access', [\Dotworkers\Security\Enums\Permissions::$reset_users_password])
-                            <li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
-                                <a href="#reset-password-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
-                                   data-toggle="modal">
-                                <span class="g-font-size-18 g-color-gray-light-v6 g-color-primary--parent-hover g-color-primary--parent-active g-mr-15">
-						            <i class="hs-admin-lock"></i>
-					            </span>
-                                    <span class="g-color-gray-dark-v6 g-color-primary--parent-hover g-color-primary--parent-active">
-                                    {{ _i('Reset password') }}
-                                </span>
-                                </a>
-                            </li>
-                        @endcan
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            @can('access', [\Dotworkers\Security\Enums\Permissions::$reset_users_password])
+                                <li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
+                                    <a href="#reset-password-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
+                                       data-toggle="modal">
+                                    <span class="g-font-size-18 g-color-gray-light-v6 g-color-primary--parent-hover g-color-primary--parent-active g-mr-15">
+                                        <i class="hs-admin-lock"></i>
+                                    </span>
+                                        <span class="g-color-gray-dark-v6 g-color-primary--parent-hover g-color-primary--parent-active">
+                                        {{ _i('Reset password') }}
+                                    </span>
+                                    </a>
+                                </li>
+                            @endcan
+                        @endif
                         {{--<li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
                             <a href="#send-message-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
                                data-toggle="modal">
@@ -1142,53 +1144,55 @@
                 </div>
             </div>
         </div>
-        @can('access', [\Dotworkers\Security\Enums\Permissions::$users_audits])
-            <div class="col-md-12">
-                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
-                        <div class="media">
-                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                                {{ _i('Audits') }}
-                            </h3>
+        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+            @can('access', [\Dotworkers\Security\Enums\Permissions::$users_audits])
+                <div class="col-md-12">
+                    <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
+                        <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                            <div class="media">
+                                <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                    {{ _i('Audits') }}
+                                </h3>
 
-                            <div class="media-body d-flex justify-content-end g-mb-10" id="audit-table-buttons">
+                                <div class="media-body d-flex justify-content-end g-mb-10" id="audit-table-buttons">
 
+                                </div>
+                                <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                                    <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                                    <button class="btn u-btn-3d u-btn-primary" type="button" id="update-audit"
+                                            data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                        <i class="hs-admin-reload g-color-white"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                        </header>
+                        <div class="card-block g-pa-15">
+                            <div class="table-responsive">
                                 <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-                                <button class="btn u-btn-3d u-btn-primary" type="button" id="update-audit"
-                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                    <i class="hs-admin-reload g-color-white"></i>
-                                </button>
+                                <table class="table table-bordered w-100" id="audit-table"
+                                       data-route="{{ route('users.users-audit-data') }}">
+                                    <thead>
+                                    <tr>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Details') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Type') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Date') }}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </header>
-                    <div class="card-block g-pa-15">
-                        <div class="table-responsive">
-                            <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-                            <table class="table table-bordered w-100" id="audit-table"
-                                   data-route="{{ route('users.users-audit-data') }}">
-                                <thead>
-                                <tr>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Details') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Type') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Date') }}
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endcan
+            @endcan
+        @endif
 
         @if ($store)
             <div class="col-md-12">
@@ -1287,53 +1291,56 @@
                 </div>
             </div>
         @endif
-        @if($document_verification)
-            <div class="col-md-12">
-                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
-                        <div class="media">
-                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                                {{ _i('Verification of documents') }}
-                            </h3>
-                            <div class="media-body d-flex justify-content-end g-mb-10" id="verification-document-table-buttons">
 
+        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+            @if($document_verification)
+                <div class="col-md-12">
+                    <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
+                        <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                            <div class="media">
+                                <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                    {{ _i('Verification of documents') }}
+                                </h3>
+                                <div class="media-body d-flex justify-content-end g-mb-10" id="verification-document-table-buttons">
+
+                                </div>
+                                <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                                    <button class="btn u-btn-3d u-btn-primary" type="button" id="verification-document-update"
+                                            data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                        <i class="hs-admin-reload g-color-white"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">
-                                <button class="btn u-btn-3d u-btn-primary" type="button" id="verification-document-update"
-                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                    <i class="hs-admin-reload g-color-white"></i>
-                                </button>
+                        </header>
+                        <div class="card-block g-pa-15">
+                            <div class="table-responsive">
+                                <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                                <table class="table table-bordered w-100" id="verification-document-table"
+                                       data-route="{{ route('store.documents-user') }}">
+                                    <thead>
+                                    <tr>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Date') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Document type') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Status') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none text-right">
+                                            {{ _i('Actions') }}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </header>
-                    <div class="card-block g-pa-15">
-                        <div class="table-responsive">
-                            <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-                            <table class="table table-bordered w-100" id="verification-document-table"
-                                   data-route="{{ route('store.documents-user') }}">
-                                <thead>
-                                <tr>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Date') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Document type') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Status') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none text-right">
-                                        {{ _i('Actions') }}
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         @endif
     </div>
     @include('back.users.modals.reset-password')

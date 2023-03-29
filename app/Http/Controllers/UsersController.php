@@ -930,7 +930,7 @@ class UsersController extends Controller
 //                    $agent = $this->agentsRepo->existsUser($user->id);
 //                    $this->usersCollection->formatAgent($agent);
 
-                    $treeFather = $this->usersCollection->treeFatherFormat($user->id);
+                    $treeFather = $this->usersCollection->treeFatherFormat($user->id,Auth::user()->id);
 
                     $walletData = $wallet->data->wallet;
                     $walletsCollection->formatWallet($walletData);
