@@ -213,9 +213,6 @@ class AgentsCollection
 
                 $providersString = '{'.implode('',$arrayProviderTmp).'}';
 
-                Log::debug('$providersString1',[$providersString]);
-                Log::debug('$providersString2',['{'.implode(',',$arrayProviderTmp).'}']);
-
                 if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 } else {
