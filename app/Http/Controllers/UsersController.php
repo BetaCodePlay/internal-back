@@ -1387,6 +1387,7 @@ class UsersController extends Controller
             $username = strtolower($request->username);
             if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 $tree = $this->usersRepo->sqlTreeAllUsersSon(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+                //TODO MIDIFICAR ARRAY IDS
                 $arrayIds = [];
                 foreach ($tree as $item => $value){
                     $arrayIds[]=$value->user_id;
