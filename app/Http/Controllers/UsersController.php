@@ -960,7 +960,7 @@ class UsersController extends Controller
 
 //                    if (!is_null($agent)) {
 //                        $data['agent'] = $agent->username;
-                        $data['agent'] = $treeFather;
+                        $data['agent'] = '<ol reversed>'.$treeFather.'<ol/>';
 //                    }
 
                     $data['login_user'] = $loginURL;
@@ -1386,8 +1386,7 @@ class UsersController extends Controller
         try {
             $username = strtolower($request->username);
             if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-                //TODO REPLICA DE TREE
-                $tree = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+                $tree = $this->usersRepo->sqlTreeAllUsersSon(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
                 $users = $this->usersRepo->searchTree($username, $tree);
             } else {
                 $users = $this->usersRepo->search($username);

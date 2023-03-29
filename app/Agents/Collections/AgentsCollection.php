@@ -208,10 +208,12 @@ class AgentsCollection
                     'username' => $value->username,
                     'providers' => []
                 ];
+
+                $providers = '{'.implode(', ',$arrayProviderTmp).'}';
                 if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providers);
                 } else {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providers);
                 }
 
                 if (count($closures) > 0) {
@@ -268,6 +270,7 @@ class AgentsCollection
 
             }
 
+            //TODO TOTALES
             if (!is_null($percentage)) {
                 $totalComission = $totalProfit * ($percentage / 100);
                 $htmlProvider .= "<tr>

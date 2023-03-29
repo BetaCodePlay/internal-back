@@ -919,7 +919,12 @@ class UsersRepo
         return $user;
     }
 
-
+    /** Sql Consult Ids Users Son
+     * @param int $user User Id Owner
+     * @param string $currency Currency Iso
+     * @param int $whitelabel Whitelabel Id
+     * @return array
+     */
     public function sqlTreeAllUsersSon(int $user, string $currency, int $whitelabel)
     {
             $arrayUsers = DB::select('SELECT * FROM site.get_users_id_son(?,?,?)', [$user, $currency,$whitelabel]);

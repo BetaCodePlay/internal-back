@@ -1,5 +1,12 @@
 @extends('back.template')
 
+@section('styles')
+    <style>
+        .list_disclosure{
+            list-style: disclosure-closed!important;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-md-3">
@@ -403,7 +410,7 @@
                         @if(isset($agent) && $agent != '')
                             <div class="row g-mb-15">
                                 <div class="col-md-3 align-self-center g-mb-5 g-mb-0--md" style="padding-right: 0%;padding-top: 0%;padding-left: 3%;padding-bottom: 5%;">
-                                    <strong>{{ _i('Father tree') }}</strong>
+                                    <label>{{ _i('Father tree') }}</label>
 {{--                                    <label class="">{{ _i('Parent agent') }}</label>--}}
                                 </div>
                                 <div class="col-md-9 align-self-start" style="padding-left: 0;">

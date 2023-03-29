@@ -1,6 +1,5 @@
 @extends('back.template')
-@section('styles')
-@endsection
+
 @section('content')
 
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">

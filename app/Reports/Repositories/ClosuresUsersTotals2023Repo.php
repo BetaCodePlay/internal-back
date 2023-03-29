@@ -303,16 +303,17 @@ class ClosuresUsersTotals2023Repo
     }
 
     /**
-     * @param int $whitelabel Whitelabel Id Id Whitelabel
+     * @param int $whitelabel Whitelabel Id
      * @param string $currency Iso Currency
      * @param string $startDate Date Start
      * @param string $endDate Date End
      * @param int $userId User Id
+     * @param array $arrayProvider Array Provider Id
      * @return array
      */
-    public function getClosureTotalsByWhitelabelAndProvidersAndUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $userId)
+    public function getClosureTotalsByWhitelabelAndProvidersAndUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $userId,string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_and_user(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $userId]);
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_and_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $userId,$arrayProvider]);
     }
 
     /**
@@ -320,12 +321,13 @@ class ClosuresUsersTotals2023Repo
      * @param string $currency Iso Currency
      * @param string $startDate Date Start
      * @param string $endDate Date End
-     * @param int $ownerId
+     * @param int $ownerId User Id Owner
+     * @param array $arrayProvider Array Provider Id
      * @return array
      */
-    public function getClosureTotalsByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId)
+    public function getClosureTotalsByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId,string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId]);
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$arrayProvider]);
     }
 
     /**
