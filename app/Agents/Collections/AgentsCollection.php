@@ -12,6 +12,7 @@ use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsCollection
@@ -191,6 +192,7 @@ class AgentsCollection
             },$closureRepo->getProvidersActiveByCredentials(true,$currency,$whitelabel));
             //$arrayProviderTmp = [171, 166, 115]; //DEC
 
+
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider) {
                 $providerNull[$provider] = [
@@ -209,11 +211,15 @@ class AgentsCollection
                     'providers' => []
                 ];
 
-                $providers = '{'.implode(', ',$arrayProviderTmp).'}';
+                $providersString = '{'.implode('',$arrayProviderTmp).'}';
+
+                Log::debug('$providersString1',[$providersString]);
+                Log::debug('$providersString2',['{'.implode(',',$arrayProviderTmp).'}']);
+
                 if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providers);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 } else {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providers);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 }
 
                 if (count($closures) > 0) {
