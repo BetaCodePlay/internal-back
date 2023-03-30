@@ -1051,7 +1051,7 @@ class UsersRepo
      * @param string $username User username
      * @return mixed
      */
-    public function uniqueUsername($username)
+    public function findUser($username)
     {
         $user = User::where('username', $username)
             ->where('curre', $currency)
