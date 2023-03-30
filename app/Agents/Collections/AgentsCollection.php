@@ -2755,18 +2755,51 @@ class AgentsCollection
      */
     public function formatAgentTransactions($transactions)
     {
+        $timezone = session('timezone');
+        $newTransactions = collect();
+        $totalDebit = 0;
+        $totalCredit = 0;
+        $totalBalance = 0;
         foreach ($transactions as $transaction) {
-            $timezone = session('timezone');
             $transaction->date = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->amount = number_format($transaction->amount, 2);
-            $transaction->debit = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
-            $transaction->credit = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
+            $transaction->debit = 0;
+            if($transaction->transaction_type_id == TransactionTypes::$debit){
+                $transaction->debit = number_format($transaction->amount,2);
+                $totalDebit = ($totalDebit + $transaction->amount);
+            }
+            $transaction->credit = 0;
+            if($transaction->transaction_type_id == TransactionTypes::$credit){
+                $transaction->credit = number_format($transaction->amount,2);
+                $totalCredit += $transaction->amount;
+            }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
-            } else {
-                $transaction->balance = 0;
+                $totalBalance += $transaction->data->balance;
             }
+            $newTransactions->push($transaction);
         }
+        $newTransactions->push([
+            'id'=>null,
+            'amount'=>null,
+            'transaction_type_id'=>null,
+            'created_at'=>null,
+            'provider_id'=>null,
+            'data'=>[
+                'from'=>null,
+                'to'=>null,
+                'balance'=>null,
+                'transaction_id'=>null,
+                'second_balance'=>null,
+            ],
+            'transaction_status_id'=>null,
+            'date'=>null,
+            'debit'=>'<strong>' . number_format($totalDebit, 2) . '</strong>',
+            'credit'=>'<strong>' . number_format($totalCredit, 2) . '</strong>',
+            'balance'=>'<strong>' . number_format($totalBalance, 2) . '</strong>',
+        ]);
+
+        return $newTransactions;
     }
 
     /**

@@ -363,8 +363,8 @@ class AgentsController extends Controller
         try {
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProviders($agent, $providers, $currency);
-            $this->agentsCollection->formatAgentTransactions($transactions);
+            $transactions = $this->transactionsRepo->getByUserAndProviders($agent, $providers, $currency,100);
+            $transactions = $this->agentsCollection->formatAgentTransactions($transactions);
             $data = [
                 'transactions' => $transactions
             ];
