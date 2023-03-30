@@ -803,11 +803,21 @@ class AgentsController extends Controller
             if (is_null($user)) {
                 $user = Auth::id();
             }
-            $percentage = null;
+
             //if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
-            $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
-            $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+                $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
+                $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
             //}
+
+            if (Auth::user()->username == 'romeo') {
+               $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'));
+               if(!isset($userTmp->id)){
+                   Log::notice('!isset User',Auth::user()->username);
+               }
+               $user = $userTmp->id;
+               $percentage = null;
+            }
+
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
