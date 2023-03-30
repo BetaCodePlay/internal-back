@@ -190,7 +190,7 @@ class AgentsCollection
              $arrayProviderTmp = array_map(function($val) {
                 return $val->id;
             },$closureRepo->getProvidersActiveByCredentials(true,$currency,$whitelabel));
-            $arrayProviderTmp = [171, 166, 115];
+            //$arrayProviderTmp = [171, 166, 115];
 
 
             $providerNull = [];
