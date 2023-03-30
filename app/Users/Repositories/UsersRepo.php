@@ -1054,6 +1054,7 @@ class UsersRepo
     public function uniqueUsername($username)
     {
         $user = User::where('username', $username)
+            ->where('curre', $currency)
             ->whitelabel()
             ->first();
         return $user;
