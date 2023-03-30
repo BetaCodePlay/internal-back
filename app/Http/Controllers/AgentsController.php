@@ -811,10 +811,9 @@ class AgentsController extends Controller
 
             if (Auth::user()->username == 'romeo') {
                $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
-               if(!isset($userTmp[0]->id)){
-                   Log::notice('!isset User',[Auth::user()->username]);
-               }
-               $user = $userTmp[0]->id;
+
+               $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
+                Log::error(__METHOD__, ['userTmp' => $userTmp, $user,'wolf',session('currency'),Configurations::getWhitelabel()]);
                $percentage = null;
             }
 
