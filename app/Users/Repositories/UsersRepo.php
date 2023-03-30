@@ -1060,6 +1060,16 @@ class UsersRepo
         return $user;
     }
 
+    public function uniqueUsername($username)
+    {
+        $user = User::where('username', $username)
+            ->whitelabel()
+            ->first();
+
+        return $user;
+    }
+
+
     /**
      * Update user
      *

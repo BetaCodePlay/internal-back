@@ -813,7 +813,6 @@ class AgentsController extends Controller
                $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
 
                $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
-                Log::error(__METHOD__, ['userTmp' => $userTmp, $user,'wolf',session('currency'),Configurations::getWhitelabel()]);
                $percentage = null;
             }
 
