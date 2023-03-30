@@ -1924,7 +1924,7 @@ class UsersController extends Controller
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
-            $users = ['wolf', 'admin', 'develop', 'supportfc', 'supportgl', 'supportnb', 'supportvj'];
+            $users = ['wolf', 'admin', 'panther', 'romeo', 'supportgl', 'supportnb', 'supportvj'];
 
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
@@ -1943,7 +1943,7 @@ class UsersController extends Controller
                                 $password = env('MAIN_SUPPORT_PASSWORD');
                                 break;
                             }
-                            case 'develop':
+                            case 'panther':
                             {
                                 $password = env('DEVELOP_PASSWORD');
                                 break;
