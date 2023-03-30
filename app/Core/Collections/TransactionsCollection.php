@@ -1364,7 +1364,7 @@ class TransactionsCollection
                 $transaction->description .= " $reason: {$details->reason}";
             }
 
-//            if (Configurations::getWhitelabel() == 45 && auth()->user()->username == 'support') {
+//            if (Configurations::getWhitelabel() == 45 && auth()->user()->username == 'wolf') {
             if (!is_null($details) && isset($details->payment_code)) {
                 $paymentCode = _i('Reference');
                 $transaction->description .= " - $paymentCode: {$details->payment_code}";

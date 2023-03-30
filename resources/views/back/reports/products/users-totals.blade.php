@@ -92,7 +92,7 @@
         </div>
     </div>
     <input type="hidden" name="provider" id="provider" value="{{ $provider }}">
-    @if (auth()->user()->username == 'support')
+    @if (auth()->user()->username == 'wolf')
         @include('back.layout.daterangepicker')
     @else
         @include('back.layout.litepicker')
@@ -161,7 +161,7 @@
     <script>
         $(function () {
             let reports = new Reports();
-            @if (auth()->user()->username == 'support')
+            @if (auth()->user()->username == 'wolf')
             reports.usersTotals(true);
             @else
             reports.usersTotals(false);

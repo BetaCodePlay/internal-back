@@ -1538,7 +1538,7 @@ class AgentsController extends Controller
             //$transactionID = $transactionsRepo->getNextValue();
             $transactionIdCreated = null;
             if ($id != $user) {
-                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'support') {
+                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
                     $data = [
                         'title' => _i('Insufficient balance'),
                         'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
@@ -1621,7 +1621,7 @@ class AgentsController extends Controller
                         $balanceData = [
                             'balance' => $balance
                         ];
-                        if ($agent->username != 'support') {
+                        if ($agent->username != 'wolf') {
                             $this->agentCurrenciesRepo->store($agentData, $balanceData);
                         }
                         $ownerBalance = $ownerAgent->balance - $amount;
@@ -1689,7 +1689,7 @@ class AgentsController extends Controller
                     $balanceData = [
                         'balance' => $ownerBalance
                     ];
-                    if ($ownerAgent->username != 'support') {
+                    if ($ownerAgent->username != 'wolf') {
                         $this->agentCurrenciesRepo->store($agentData, $balanceData);
                     }
 
@@ -1697,7 +1697,7 @@ class AgentsController extends Controller
                         $additionalData['balance'] = $ownerBalance;
                     }
 
-                    if ($ownerAgent->username != 'support') {
+                    if ($ownerAgent->username != 'wolf') {
                         $additionalData['balance'] = $ownerBalance;
                     } else {
                         $additionalData['balance'] = 0;
@@ -2093,7 +2093,7 @@ class AgentsController extends Controller
         try {
             $whitelabel = $request->whitelabel;
             $admin = 'admin';
-            $support = 'support';
+            $support = 'wolf';
             $supportAgent = null;
             $adminAgent = null;
             $supportUser = $this->usersRepo->getByUsername($support, $whitelabel);
