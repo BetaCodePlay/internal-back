@@ -2762,16 +2762,17 @@ class AgentsCollection
         $totalBalance = 0;
         foreach ($transactions as $transaction) {
             $transaction->date = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $amountTmp = $transaction->amount;
             $transaction->amount = number_format($transaction->amount, 2);
             $transaction->debit = 0;
             if($transaction->transaction_type_id == TransactionTypes::$debit){
-                $transaction->debit = number_format($transaction->amount);
-                $totalDebit = $totalDebit + number_format($transaction->amount);
+                $transaction->debit = $amountTmp;
+                $totalDebit = $totalDebit + $amountTmp;
             }
             $transaction->credit = 0;
             if($transaction->transaction_type_id == TransactionTypes::$credit){
-                $transaction->credit = number_format($transaction->amount);
-                $totalCredit = $totalCredit+ number_format($transaction->amount);
+                $transaction->credit = $amountTmp;
+                $totalCredit = $totalCredit + $amountTmp;
             }
             Log::notice('$transaction',[$transaction]);
             if (isset($transaction->data->balance)) {
