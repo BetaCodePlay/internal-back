@@ -2783,7 +2783,7 @@ class AgentsCollection
             'id'=>null,
             'amount'=>null,
             'transaction_type_id'=>null,
-            'created_at'=>null,
+            'created_at'=>_i('Totals'),
             'provider_id'=>null,
             'data'=>[
                 'from'=>null,
