@@ -181,7 +181,7 @@ class AgentsCollection
     public function closuresTotalsByAgentGroupProvider($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null)
     {
         if(Configurations::getWhitelabel() == 4){
-            \Log::notice(__METHOD__, ['closuresTotalsByAgentGroupProvider' =>$tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage);
+            \Log::notice(__METHOD__, ['closuresTotalsByAgentGroupProvider' =>$tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage]);
         }
         $closureRepo = new ClosuresUsersTotals2023Repo();
         $htmlProvider = "";
