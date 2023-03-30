@@ -1135,20 +1135,6 @@ class UsersRepo
     }
 
     /**
-     * Unique username
-     *
-     * @param string $username User username
-     * @return mixed
-     */
-    public function uniqueUsername($username)
-    {
-        $user = User::where('username', $username)
-            ->whitelabel()
-            ->first();
-        return $user;
-    }
-
-    /**
      * Get users with roles
      *
      * @return mixed
