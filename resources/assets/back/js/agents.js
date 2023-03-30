@@ -138,6 +138,7 @@ class Agents {
                     "dataSrc": "data.transactions"
                 },
                 "order": [],
+                "lengthMenu":[20,50,100],
                 "columns": [
                     {"data": "date"},
                     {"data": "data.from"},

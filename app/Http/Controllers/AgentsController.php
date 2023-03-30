@@ -361,6 +361,7 @@ class AgentsController extends Controller
     public function agentsTransactions($agent)
     {
         try {
+
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
             $transactions = $this->transactionsRepo->getByUserAndProviders($agent, $providers, $currency,100);
