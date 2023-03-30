@@ -2766,12 +2766,12 @@ class AgentsCollection
             $transaction->debit = 0;
             if($transaction->transaction_type_id == TransactionTypes::$debit){
                 $transaction->debit = $transaction->amount;
-               // $totalDebit += $transaction->amount;
+                $totalDebit = $totalDebit +$transaction->amount;
             }
             $transaction->credit = 0;
             if($transaction->transaction_type_id == TransactionTypes::$credit){
                 $transaction->credit = $transaction->amount;
-                //$totalCredit += $transaction->amount;
+                $totalCredit = $totalCredit+$transaction->amount;
             }
             Log::notice('$transaction',[$transaction]);
             if (isset($transaction->data->balance)) {
