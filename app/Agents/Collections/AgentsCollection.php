@@ -180,9 +180,6 @@ class AgentsCollection
      */
     public function closuresTotalsByAgentGroupProvider($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null)
     {
-        if(Configurations::getWhitelabel() == 4){
-            \Log::notice(__METHOD__, ['closuresTotalsByAgentGroupProvider' =>$tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage]);
-        }
         $closureRepo = new ClosuresUsersTotals2023Repo();
         $htmlProvider = "";
         $totalProfit = 0;
@@ -220,11 +217,7 @@ class AgentsCollection
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 }
-                if(Configurations::getWhitelabel() == 4){
-                    \Log::notice(__METHOD__, ['closures' =>$closures , $value->type_user]);
-                }
                 if (count($closures) > 0) {
-
                     $providerDB = [];
                     foreach ($closures as $index => $closure) {
                         $providerDB[$closure->id_provider] = [
@@ -276,7 +269,6 @@ class AgentsCollection
                 $htmlProvider .= "</tr>";
 
             }
-
             //TODO TOTALES
             if (!is_null($percentage)) {
                 $totalComission = $totalProfit * ($percentage / 100);
