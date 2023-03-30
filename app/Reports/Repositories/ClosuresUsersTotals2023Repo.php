@@ -3,6 +3,7 @@
 
 namespace App\Reports\Repositories;
 
+use Dotworkers\Configurations\Configurations;
 use Dotworkers\Security\Enums\Roles;
 use Illuminate\Support\Facades\DB;
 
@@ -327,6 +328,9 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureTotalsByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId,string $arrayProvider)
     {
+        if(Configurations::getWhitelabel() == 4){
+            \Log::notice(__METHOD__, ['closures' =>$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
+        }
         return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$arrayProvider]);
     }
 

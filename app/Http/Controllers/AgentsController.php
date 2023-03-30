@@ -803,14 +803,12 @@ class AgentsController extends Controller
             if (is_null($user)) {
                 $user = Auth::id();
             }
-
             $percentage = null;
             //if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
             $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
             //}
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
-
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];
@@ -982,7 +980,7 @@ class AgentsController extends Controller
                     return $val->id;
                 },$closureRepo->getProvidersActiveByCredentials(true,session('currency'),Configurations::getWhitelabel()));
 
-                $providersString = '{'.implode('',$arrayProviderTmp).'}';
+                $providersString = '{'.implode(',',$arrayProviderTmp).'}';
 
                 $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
                 $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
@@ -1547,7 +1545,7 @@ class AgentsController extends Controller
             //$transactionID = $transactionsRepo->getNextValue();
             $transactionIdCreated = null;
             if ($id != $user) {
-                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'support') {
+                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
                     $data = [
                         'title' => _i('Insufficient balance'),
                         'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
@@ -1630,7 +1628,7 @@ class AgentsController extends Controller
                         $balanceData = [
                             'balance' => $balance
                         ];
-                        if ($agent->username != 'support') {
+                        if ($agent->username != 'wolf') {
                             $this->agentCurrenciesRepo->store($agentData, $balanceData);
                         }
                         $ownerBalance = $ownerAgent->balance - $amount;
@@ -1698,7 +1696,7 @@ class AgentsController extends Controller
                     $balanceData = [
                         'balance' => $ownerBalance
                     ];
-                    if ($ownerAgent->username != 'support') {
+                    if ($ownerAgent->username != 'wolf') {
                         $this->agentCurrenciesRepo->store($agentData, $balanceData);
                     }
 
@@ -1706,7 +1704,7 @@ class AgentsController extends Controller
                         $additionalData['balance'] = $ownerBalance;
                     }
 
-                    if ($ownerAgent->username != 'support') {
+                    if ($ownerAgent->username != 'wolf') {
                         $additionalData['balance'] = $ownerBalance;
                     } else {
                         $additionalData['balance'] = 0;
@@ -2102,7 +2100,7 @@ class AgentsController extends Controller
         try {
             $whitelabel = $request->whitelabel;
             $admin = 'admin';
-            $support = 'support';
+            $support = 'wolf';
             $supportAgent = null;
             $adminAgent = null;
             $supportUser = $this->usersRepo->getByUsername($support, $whitelabel);
