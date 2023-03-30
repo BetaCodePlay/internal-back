@@ -809,8 +809,13 @@ class AgentsController extends Controller
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
             $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
             //}
+            if(Configurations::getWhitelabel() == 4){
+                \Log::info(__METHOD__, ['getUsersAgentsSon' =>Configurations::getWhitelabel(), session('currency'), $user]);
+            }
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
-
+            if(Configurations::getWhitelabel() == 4){
+                \Log::notice(__METHOD__, ['getUsersAgentsSon' =>$sons]);
+            }
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];
