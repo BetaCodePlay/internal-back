@@ -2765,13 +2765,13 @@ class AgentsCollection
             $transaction->amount = number_format($transaction->amount, 2);
             $transaction->debit = 0;
             if($transaction->transaction_type_id == TransactionTypes::$debit){
-                $transaction->debit = $transaction->amount;
-                $totalDebit = $totalDebit +$transaction->amount;
+                $transaction->debit = number_format($transaction->amount);
+                $totalDebit = $totalDebit + number_format($transaction->amount);
             }
             $transaction->credit = 0;
             if($transaction->transaction_type_id == TransactionTypes::$credit){
-                $transaction->credit = $transaction->amount;
-                $totalCredit = $totalCredit+$transaction->amount;
+                $transaction->credit = number_format($transaction->amount);
+                $totalCredit = $totalCredit+ number_format($transaction->amount);
             }
             Log::notice('$transaction',[$transaction]);
             if (isset($transaction->data->balance)) {
