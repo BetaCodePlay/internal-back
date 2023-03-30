@@ -2785,7 +2785,7 @@ class AgentsCollection
             'id'=>null,
             'amount'=>null,
             'transaction_type_id'=>null,
-            'created_at'=>_i('Totals'),
+            'created_at'=>null,
             'provider_id'=>null,
             'data'=>[
                 'from'=>null,
@@ -2795,7 +2795,7 @@ class AgentsCollection
                 'second_balance'=>null,
             ],
             'transaction_status_id'=>null,
-            'date'=>null,
+            'date'=>_i('Totals'),
             'debit'=>'<strong>' . number_format($totalDebit, 2) . '</strong>',
             'credit'=>'<strong>' . number_format($totalCredit, 2) . '</strong>',
             'balance'=>'<strong>' . number_format($totalBalance, 2) . '</strong>',
