@@ -4710,14 +4710,14 @@ if (!function_exists('menu')) {
                                 'params' => [],
                                 'icon' => 'hs-admin-control-shuffle',
                                 'permission' => Permissions::$products_reports_menu,
-                                'provider' => Providers::$lucky_spins,
+                                'provider' => Providers::$lucky_roulette,
                                 'submenu' => [
 
                                     'Users' => [
                                         'text' => _i('Users totals'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.users-totals',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-user',
                                         'submenu' => []
                                     ],
@@ -4735,7 +4735,7 @@ if (!function_exists('menu')) {
                                         'text' => _i('Most played games'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.most-played-games',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-stats-up',
                                         'submenu' => []
                                     ],
@@ -4744,7 +4744,7 @@ if (!function_exists('menu')) {
                                         'text' => _i('Games played by user'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.games-played-by-user',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-stats-up',
                                         'submenu' => []
                                     ],
