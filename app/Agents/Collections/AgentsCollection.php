@@ -220,7 +220,9 @@ class AgentsCollection
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 }
-
+                if(Configurations::getWhitelabel() == 4){
+                    \Log::notice(__METHOD__, ['closures' =>$closures , $value->type_user]);
+                }
                 if (count($closures) > 0) {
 
                     $providerDB = [];
