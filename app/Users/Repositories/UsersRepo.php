@@ -1046,18 +1046,16 @@ class UsersRepo
     }
 
     /**
-     * Find User By Currency Iso and Whitelabel Id
+     * Sql User By Currency Iso and Whitelabel Id
      *
      * @param string $username User username
      * @param string $currency Currency Iso
+     * @param int $whitelabel Whitelabel Id
      * @return mixed
      */
-    public function findUserCurrencyByWhitelabel(string $username,string $currency)
+    public function findUserCurrencyByWhitelabel($username, $currency, $whitelabel)
     {
-        $user = User::where('username', $username)
-            ->where('currency_iso', $currency)
-            ->whitelabel()
-            ->first();
+        $user = DB::select('select u.id from site.users u inner join site.user_currencies uc on u.id = uc.user_id where u.username = ? AND uc.currency_iso = ? AND u.whitelabel_id = ?', [$username,$currency,$whitelabel]);
 
         return $user;
     }
