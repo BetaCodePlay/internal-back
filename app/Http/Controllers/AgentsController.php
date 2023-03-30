@@ -987,7 +987,7 @@ class AgentsController extends Controller
                     return $val->id;
                 },$closureRepo->getProvidersActiveByCredentials(true,session('currency'),Configurations::getWhitelabel()));
 
-                $providersString = '{'.implode('',$arrayProviderTmp).'}';
+                $providersString = '{'.implode(',',$arrayProviderTmp).'}';
 
                 $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
                 $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
