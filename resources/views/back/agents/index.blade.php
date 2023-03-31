@@ -631,6 +631,7 @@
                                     </tbody>
                                 </table>
                                 <div class="col-md-12">
+                                    <br>
                                     <div class="table-responsive">
                                         <div class="totalsTransactionsPaginate"></div>
                                     </div>

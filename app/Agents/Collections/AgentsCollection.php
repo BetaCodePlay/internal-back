@@ -2842,9 +2842,12 @@ class AgentsCollection
                     'from'=>isset($transaction->data->form)?$transaction->data->form:null,
                     'to'  =>isset($transaction->data->to)?$transaction->data->to:null,
                 ],
-                'debit'=>'<strong>' . number_format($transaction->debit, 2, ",", ".") . '</strong>',
-                'credit'=>'<strong>' . number_format($transaction->credit, 2, ",", ".") . '</strong>',
-                'balance'=>'<strong>' . number_format($transaction->balance, 2, ",", ".") . '</strong>',
+                'debit'=> number_format($transaction->debit, 2, ",", "."),
+                'credit'=> number_format($transaction->credit, 2, ",", "."),
+                'balance'=> number_format($transaction->balance, 2, ",", "."),
+//                'debit'=>'<strong>' . number_format($transaction->debit, 2, ",", ".") . '</strong>',
+//                'credit'=>'<strong>' . number_format($transaction->credit, 2, ",", ".") . '</strong>',
+//                'balance'=>'<strong>' . number_format($transaction->balance, 2, ",", ".") . '</strong>',
             ];
         }
 
@@ -2889,9 +2892,9 @@ class AgentsCollection
                     <tbody>
                         <tr>
                             <td></td>
-                            <td class="text-right">%s</td>
-                            <td class="text-right">%s</td>
-                            <td class="text-right">%s</td>
+                            <td class="text-right"><strong>%s</strong></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                            <td class="text-right"><strong>%s</strong></td>
                         </tr>
                     </tbody>',
             _i('Totals'),
