@@ -2774,7 +2774,6 @@ class AgentsCollection
                 $transaction->credit = $amountTmp;
                 $totalCredit = $totalCredit + $amountTmp;
             }
-            Log::notice('$transaction',[$transaction]);
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
                 $totalBalance += $transaction->data->balance;
