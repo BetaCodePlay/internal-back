@@ -3,6 +3,7 @@
 namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
+use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
@@ -311,16 +312,21 @@ class TransactionsRepo
      */
     public function getByUserAndProviders($user, $providers, $currency, $limit = 2000, $offset = 0)
     {
+        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endDate = Carbon::now()->format('Y-m-d');
+
         $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
             'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
             ->where('transactions.user_id', $user)
             ->whereNotIn('transactions.user_id', [16359])
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
             ->orderBy('transactions.id', 'DESC')
             ->limit($limit)
             ->offset($offset)
             ->get();
+
         return $transactions;
     }
 

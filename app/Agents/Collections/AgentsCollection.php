@@ -2759,7 +2759,7 @@ class AgentsCollection
         $newTransactions = collect();
         $totalDebit = 0;
         $totalCredit = 0;
-        $totalBalance = 0;
+
         foreach ($transactions as $transaction) {
             $transaction->date = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $amountTmp = $transaction->amount;
@@ -2776,10 +2776,12 @@ class AgentsCollection
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
-                $totalBalance += $transaction->data->balance;
             }
             $newTransactions->push($transaction);
         }
+
+        $totalBalance = $totalCredit - $totalDebit;
+
         $newTransactions->push([
             'id'=>null,
             'amount'=>null,
@@ -2795,9 +2797,9 @@ class AgentsCollection
             ],
             'transaction_status_id'=>null,
             'date'=>'<strong>' . _i('Totals') . '</strong>',
-            'debit'=>'<strong>' . number_format($totalDebit, 2) . '</strong>',
-            'credit'=>'<strong>' . number_format($totalCredit, 2) . '</strong>',
-            'balance'=>'<strong>' . number_format($totalBalance, 2) . '</strong>',
+            'debit'=>'<strong>' . number_format($totalDebit, 2, ",", ".") . '</strong>',
+            'credit'=>'<strong>' . number_format($totalCredit, 2, ",", ".") . '</strong>',
+            'balance'=>'<strong>' . number_format($totalBalance, 2, ",", ".") . '</strong>',
         ]);
 
         return $newTransactions;
