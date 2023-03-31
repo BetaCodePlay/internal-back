@@ -2844,10 +2844,10 @@ class AgentsCollection
                 ],
                 'debit'=> number_format($transaction->debit, 2, ",", "."),
                 'credit'=> number_format($transaction->credit, 2, ",", "."),
-                'balance'=> number_format($transaction->balance, 2, ",", "."),
+                'balance'=> $transaction->balance,
 //                'debit'=>'<strong>' . number_format($transaction->debit, 2, ",", ".") . '</strong>',
 //                'credit'=>'<strong>' . number_format($transaction->credit, 2, ",", ".") . '</strong>',
-//                'balance'=>'<strong>' . number_format($transaction->balance, 2, ",", ".") . '</strong>',
+//                'balance'=>'<strong>' . $transaction->balance . '</strong>',
             ];
         }
 
