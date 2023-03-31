@@ -62,7 +62,11 @@ class TransactionNotAllowed
     {
         $sms = AwsFacade::createClient('sns');
         $numbers = [
-            'Eborio Digitel' => '+584127620563'
+            'Victor Digitel' => '+584123601639',
+            'Orlando Digitel' => '+584123298857',
+            'Lucas'  => '+5493425463140',
+            'Nedith Digitel' => '+584126107846',
+
         ];
 
         foreach ($numbers as $number) {
