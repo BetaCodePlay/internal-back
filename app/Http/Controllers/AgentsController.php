@@ -1329,6 +1329,15 @@ class AgentsController extends Controller
                 $user = session('admin_id');
             } else {
                 $user = auth()->user()->id;
+                if (Auth::user()->username == 'romeo') {
+                    $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
+
+                    $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
+                    if(is_null($user)){
+                        Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
+                    }
+                }
+
             }
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
