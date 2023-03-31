@@ -127,6 +127,18 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@agentsTransactions'
     ]);
 
+    // Agents transactions paginate
+    Route::get('transactions/paginate/{agent?}', [
+        'as' => 'agents.transactions.paginate',
+        'uses' => 'AgentsController@agentsTransactionsPaginate'
+    ]);
+
+    // Agents transactions totals
+    Route::get('transactions/totals/{agent?}', [
+        'as' => 'agents.transactions.totals',
+        'uses' => 'AgentsController@agentsTransactionsTotals'
+    ]);
+
     // Agents transactions
     Route::get('ticket/{id?}', [
         'as' => 'agents.ticket',

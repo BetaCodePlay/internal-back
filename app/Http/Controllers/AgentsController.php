@@ -377,6 +377,55 @@ class AgentsController extends Controller
     }
 
     /**
+     * Agents transactions Paginate
+     *
+     * @param int $agent User ID
+     * @return Response
+     */
+    public function agentsTransactionsPaginate($agent,Request $request)
+    {
+        try {
+
+            $offset = $request->has('start')?$request->get('start'):0;
+            $limit = $request->has('length')?$request->get('length'):100;
+
+            $currency = session('currency');
+            $providers = [Providers::$agents, Providers::$agents_users];
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$limit,$offset);
+            $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0],$transactions[1],$request);
+
+            return response()->json($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Agents transactions Totals
+     *
+     * @param int $agent User ID
+     * @return Response
+     */
+    public function agentsTransactionsTotals($agent)
+    {
+        try {
+
+            $currency = session('currency');
+            $providers = [Providers::$agents, Providers::$agents_users];
+            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency);
+
+            return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0],$totals[1]));
+
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * View Transaction Timeline
      * @return Application|Factory|\Illuminate\Contracts\View\View
      */
@@ -1357,6 +1406,7 @@ class AgentsController extends Controller
             $data['agents'] = $agentAndSubAgents;
             $data['tree'] = $tree;
             $data['title'] = _i('Agents module');
+
             return view('back.agents.index', $data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);

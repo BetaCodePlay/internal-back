@@ -156,6 +156,48 @@ class Agents {
         });
     }
 
+    // Agents Transactions Paginate
+    agentsTransactionsPaginate(lengthMenu) {
+        $('#agents-transactions-tab').on('show.bs.tab', function () {
+            let $table = $('#agents-transactions-table');
+            let user = $('.user').val();
+            let api;
+
+            if ($.fn.DataTable.isDataTable('#agents-transactions-table')) {
+                $table.DataTable().destroy();
+            }
+
+            $table.DataTable({
+                processing: true,
+                serverSide: true,
+                lengthMenu:lengthMenu,
+                ajax: {
+                    url: $table.data('route') + '/' + user,
+                    dataType: 'json',
+                    type: 'get',
+                },
+                columns: [
+                    {"data": "date"},
+                    {"data": "data.from"},
+                    {"data": "data.to"},
+                    {"data": "debit", "className": "text-right", "type": "num-fmt"},
+                    {"data": "credit", "className": "text-right", "type": "num-fmt"},
+                    {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                ]
+            });
+
+            setTimeout(function(){
+                $.ajax({
+                    url: $table.data('routetotals') + '/' + user,
+                    type: 'get',
+                }).done(function (response) {
+                    $('.totalsTransactionsPaginate').empty();
+                    $('.totalsTransactionsPaginate').append(response)
+                });
+            },1000);
+        });
+    }
+
     // Agents transactions by dates
     agentsTransactionsByDates() {
         initSelect2();

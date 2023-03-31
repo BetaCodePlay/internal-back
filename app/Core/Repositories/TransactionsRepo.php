@@ -318,7 +318,6 @@ class TransactionsRepo
         $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
             'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
             ->where('transactions.user_id', $user)
-            ->whereNotIn('transactions.user_id', [16359])
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
@@ -328,6 +327,79 @@ class TransactionsRepo
             ->get();
 
         return $transactions;
+    }
+
+    /**
+     * Get transactions list by user and provider With Paginate
+     *
+     * @param int $user User ID
+     * @param array $providers Providers IDS
+     * @param string $currency Currency Iso
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
+     * @return mixed
+     */
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $limit = 2000, $offset = 0)
+    {
+        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endDate = Carbon::now()->format('Y-m-d');
+
+        $countTransactions = Transaction::select('transactions.id')
+            ->where('transactions.user_id', $user)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->get();
+
+        $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->where('transactions.user_id', $user)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
+
+        return [$transactions,count($countTransactions)];
+    }
+
+    /**
+     * Totals Transactions by user
+     * Providers And Currency
+     *
+     * @param int $user User ID
+     * @param array $providers Providers IDS
+     * @param string $currency Currency Iso
+     * @return mixed
+     */
+    public function getByUserAndProvidersTotales($user, $providers, $currency)
+    {
+        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endDate = Carbon::now()->format('Y-m-d');
+
+        $countTransactions = Transaction::select('transactions.id','transactions.amount', 'transactions.transaction_type_id')
+            ->where('transactions.user_id', $user)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->get();
+
+        $totalDebit = 0;
+        $totalCredit = 0;
+        foreach ($countTransactions as $item => $value){
+            if($value->transaction_type_id == TransactionTypes::$debit){
+                $totalDebit = $totalDebit + $value->amount;
+            }
+            if($value->transaction_type_id == TransactionTypes::$credit){
+                $totalCredit = $totalCredit + $value->amount;
+            }
+        }
+
+        return [$totalCredit,$totalDebit];
     }
 
     /**

@@ -2806,6 +2806,106 @@ class AgentsCollection
     }
 
     /**
+     * Format agents transactions Paginate
+     *
+     * @param array $transactions Transactions data
+     */
+    public function formatAgentTransactionsPaginate($transactions,$total,$request)
+    {
+        $timezone = session('timezone');
+        $totalDebit = 0;
+        $totalCredit = 0;
+        $data = array();
+
+        foreach ($transactions as $transaction) {
+            $amountTmp = $transaction->amount;
+            //$transaction->amount = number_format($transaction->amount, 2);
+            $transaction->debit = 0;
+            $transaction->credit = 0;
+            $transaction->balance = 0;
+
+            if($transaction->transaction_type_id == TransactionTypes::$debit){
+                $transaction->debit = $amountTmp;
+                $totalDebit = $totalDebit + $amountTmp;
+            }
+            if($transaction->transaction_type_id == TransactionTypes::$credit){
+                $transaction->credit = $amountTmp;
+                $totalCredit = $totalCredit + $amountTmp;
+            }
+            if (isset($transaction->data->balance)) {
+                $transaction->balance = number_format($transaction->data->balance, 2);
+            }
+            $data[] =[
+                'id'=>null,
+                'date'=>$transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
+                'data'=>[
+                    'from'=>isset($transaction->data->form)?$transaction->data->form:null,
+                    'to'  =>isset($transaction->data->to)?$transaction->data->to:null,
+                ],
+                'debit'=>'<strong>' . number_format($transaction->debit, 2, ",", ".") . '</strong>',
+                'credit'=>'<strong>' . number_format($transaction->credit, 2, ",", ".") . '</strong>',
+                'balance'=>'<strong>' . number_format($transaction->balance, 2, ",", ".") . '</strong>',
+            ];
+        }
+
+        $totalBalance = $totalCredit - $totalDebit;
+
+//        $data[] = [
+//            'id'=>null,
+//            'date'=>'<strong>' . _i('Totals') . '</strong>',
+//            'data'=>[
+//                'from'=>null,
+//                'to'=>null,
+//            ],
+//            'debit'=>'<strong>' . number_format($totalDebit, 2, ",", ".") . '</strong>',
+//            'credit'=>'<strong>' . number_format($totalCredit, 2, ",", ".") . '</strong>',
+//            'balance'=>'<strong>' . number_format($totalBalance, 2, ",", ".") . '</strong>',
+//        ];
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($total),
+            "recordsFiltered" => intval($total),
+            "data"            => $data
+        );
+
+        return $json_data;
+
+    }
+
+    public function formatAgentTransactionsTotals($credit, $debit)
+    {
+
+        $htmlTotals = sprintf(
+            '<table  class="table table-bordered w-100">
+                    <thead>
+                        <tr>
+                            <th>%s</th>
+                            <th class="text-right">'._i('Debit').'</th>
+                            <th class="text-right">'._i('Credit').'</th>
+                            <th class="text-right">'._i('Balance').'</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td class="text-right">%s</td>
+                            <td class="text-right">%s</td>
+                            <td class="text-right">%s</td>
+                        </tr>
+                    </tbody>',
+            _i('Totals'),
+            number_format($debit,2),
+            number_format($credit,2),
+            number_format(($credit-$debit),2),
+        );
+
+        return $htmlTotals;
+
+    }
+
+
+    /**
      * Format agents transactions report
      *
      * @param array $transactions Transactions data
