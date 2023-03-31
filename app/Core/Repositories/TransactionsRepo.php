@@ -314,6 +314,7 @@ class TransactionsRepo
         $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
             'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
             ->where('transactions.user_id', $user)
+            ->whereNotIn('transactions.user_id', [16359])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
             ->orderBy('transactions.id', 'DESC')
