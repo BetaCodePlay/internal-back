@@ -316,9 +316,13 @@ class AgentsController extends Controller
             $user = $this->agentsRepo->findUser($id);
             // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $providers = [Providers::$agents, Providers::$agents_users];
-
+            $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
             $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, $currency, $startDate, $endDate);
-
+            if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
+                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
+            } else {
+                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
+            }
 
             $data = [
                 'payments' => [
