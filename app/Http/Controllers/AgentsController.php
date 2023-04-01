@@ -313,7 +313,9 @@ class AgentsController extends Controller
             $id = $request->id;
 
             $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-            $data = [];
+            $data = [
+                'payments' => []
+            ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
