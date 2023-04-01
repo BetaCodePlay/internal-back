@@ -243,6 +243,48 @@ class Agents {
         });
     }
 
+    // Agents payments
+    agentsPayments(){
+        console.log('agent payments.jd')
+        clipboard();
+        let $tree = $('#tree');
+        $tree.jstree({
+            'core': {
+                'data': $('#tree').data('json')
+            }
+        });
+
+        $tree.on('changed.jstree', function (event, data) {
+            let id;
+            let type;
+
+            if (data.action === 'select_node') {
+                id = data.selected[0];
+                type = data.node.li_attr.data_type;
+
+            } else {
+                id = data.selected[0];
+                type = 'agent';
+            }
+            if (id !== undefined) {
+
+                $.ajax({
+                    url: $tree.data('route'),
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        id, type
+                    }
+
+                }).done(function (json) {
+
+                }).fail(function (json) {
+                    swalError(json);
+                });
+            }
+        })
+    }
+
     // Cash flow by dates
     cashFlowByDates() {
         let picker = initLitepickerEndToday();
