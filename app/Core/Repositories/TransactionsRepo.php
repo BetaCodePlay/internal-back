@@ -362,6 +362,7 @@ class TransactionsRepo
             ->limit($limit)
             ->offset($offset)
             ->get();
+        Log::notice('getByUserAndProvidersPaginate',[$startDate,$endDate]);
 
         return [$transactions,count($countTransactions)];
     }

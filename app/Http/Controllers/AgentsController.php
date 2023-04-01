@@ -394,6 +394,7 @@ class AgentsController extends Controller
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$limit,$offset);
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0],$transactions[1],$request);
 
+            Log::notice('agentsTransactionsPaginate',[$request->all()]);
             return response()->json($data);
 
         } catch (\Exception $ex) {
