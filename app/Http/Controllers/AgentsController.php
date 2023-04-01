@@ -244,7 +244,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * Show agents transactions by dates
+     * Show agents payments
      *
      * @return Application|Factory|View
      */
@@ -285,6 +285,36 @@ class AgentsController extends Controller
             $data['title'] = _i('Agents Payments');
 
             return view('back.agents.reports.payments', $data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Show agents payments transactions by dates
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function findUserPayment(Request $request)
+    {
+        try {
+
+            if (session('admin_id')) {
+                $userId = session('admin_id');
+                $agentPlayer = false;
+            } else {
+                $userId = auth()->user()->id;
+                $agentPlayer = true;
+            }
+
+            $currency = session('currency');
+            $id = $request->id;
+
+            $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            $data = [];
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
