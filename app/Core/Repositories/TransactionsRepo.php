@@ -362,9 +362,9 @@ class TransactionsRepo
             ->limit($limit)
             ->offset($offset)
             ->get();
-        Log::notice('getByUserAndProvidersPaginate',[$startDate,$endDate]);
+        Log::notice('getByUserAndProvidersPaginate', [$startDate, $endDate]);
 
-        return [$transactions,count($countTransactions)];
+        return [$transactions, count($countTransactions)];
     }
 
     /**
@@ -381,7 +381,7 @@ class TransactionsRepo
         $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
         $endDate = Carbon::now()->format('Y-m-d');
 
-        $countTransactions = Transaction::select('transactions.id','transactions.amount', 'transactions.transaction_type_id')
+        $countTransactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id')
             ->where('transactions.user_id', $user)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
@@ -391,16 +391,16 @@ class TransactionsRepo
 
         $totalDebit = 0;
         $totalCredit = 0;
-        foreach ($countTransactions as $item => $value){
-            if($value->transaction_type_id == TransactionTypes::$debit){
+        foreach ($countTransactions as $item => $value) {
+            if ($value->transaction_type_id == TransactionTypes::$debit) {
                 $totalDebit = $totalDebit + $value->amount;
             }
-            if($value->transaction_type_id == TransactionTypes::$credit){
+            if ($value->transaction_type_id == TransactionTypes::$credit) {
                 $totalCredit = $totalCredit + $value->amount;
             }
         }
 
-        return [$totalCredit,$totalDebit];
+        return [$totalCredit, $totalDebit];
     }
 
     /**
@@ -440,7 +440,36 @@ class TransactionsRepo
             ->groupBy('users.id', 'users.username')
             ->get();
 
-        \Log::notice(__METHOD__, ['deposits' => $deposits,'withdrawals' => $withdrawals]);
+        if (auth()->user()->id == 463) {
+            $deposits = Transaction::select('users.id', 'users.username', \DB::raw('sum(amount) AS total'))
+                ->join('users', 'transactions.user_id', '=', 'users.id')
+                ->where('transactions.provider_id', Providers::$agents)
+                ->whereBetween('transactions.created_at', [$startDate, $endDate])
+                ->where('users.whitelabel_id', $whitelabel)
+                ->where('transactions.currency_iso', $currency)
+                ->where('transaction_type_id', TransactionTypes::$credit)
+                ->where('transaction_status_id', TransactionStatus::$approved)
+                ->whereIn('transactions.user_id', $agents)
+                ->where('transactions.data->from', 'support')
+                ->groupBy('users.id', 'users.username')
+                ->get();
+
+            $withdrawals = Transaction::select('users.id', 'users.username', \DB::raw('sum(amount) AS total'))
+                ->join('users', 'transactions.user_id', '=', 'users.id')
+                ->where('transactions.provider_id', Providers::$agents)
+                ->whereBetween('transactions.created_at', [$startDate, $endDate])
+                ->where('users.whitelabel_id', $whitelabel)
+                ->where('transactions.currency_iso', $currency)
+                ->where('transaction_type_id', TransactionTypes::$debit)
+                ->where('transaction_status_id', TransactionStatus::$approved)
+                ->whereIn('transactions.user_id', $agents)
+                ->where('transactions.data->to', 'support')
+                ->groupBy('users.id', 'users.username')
+                ->get();
+
+
+        }
+
         return [
             'deposits' => $deposits,
             'withdrawals' => $withdrawals
@@ -1091,25 +1120,6 @@ class TransactionsRepo
     }
 
     /**
-     * Update data transaction
-     *
-     * @param int $id Transaction id to modify
-     * @param int $newId Add field "transaction_id" in transaction data json
-     * @param int $balance Add field "second_balance" in transaction data json
-     * @return mixed
-     */
-    public function updateData($id, $newId,$balance)
-    {
-        $transaction = Transaction::find($id);
-        $dataTmp = Helper::convertToArray($transaction->data);
-        $dataTmp['transaction_id']=$newId;
-        $dataTmp['second_balance']=$balance;
-        $transaction->data = $dataTmp;
-        $transaction->update();
-        return $transaction;
-    }
-
-    /**
      * Store transactions details
      *
      * @param int $id Transaction ID
@@ -1164,6 +1174,25 @@ class TransactionsRepo
             ->where('transaction_type_id', $transactionType)
             ->where('transaction_status_id', TransactionStatus::$approved)
             ->sum('amount');
+    }
+
+    /**
+     * Update data transaction
+     *
+     * @param int $id Transaction id to modify
+     * @param int $newId Add field "transaction_id" in transaction data json
+     * @param int $balance Add field "second_balance" in transaction data json
+     * @return mixed
+     */
+    public function updateData($id, $newId, $balance)
+    {
+        $transaction = Transaction::find($id);
+        $dataTmp = Helper::convertToArray($transaction->data);
+        $dataTmp['transaction_id'] = $newId;
+        $dataTmp['second_balance'] = $balance;
+        $transaction->data = $dataTmp;
+        $transaction->update();
+        return $transaction;
     }
 
     /**
