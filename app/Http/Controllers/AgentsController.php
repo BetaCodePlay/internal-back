@@ -294,13 +294,15 @@ class AgentsController extends Controller
     /**
      * Show agents payments transactions by dates
      *
-     * @param Request $request
+     * @param null $startDate
+     * @param null $endDate
+     * @param null $user_id
      * @return Response
      */
-    public function findUserPayment(Request $request)
+    public function findUserPayment($startDate = null, $endDate = null, $user_id = null)
     {
         try {
-/*
+
             if (session('admin_id')) {
                 $userId = session('admin_id');
                 $agentPlayer = false;
@@ -310,11 +312,24 @@ class AgentsController extends Controller
             }
 
             $currency = session('currency');
-            $id = $request->id;
+            $id = $user_id;
+            $user = $this->agentsRepo->findUser($id);
+            // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            $providers = [Providers::$agents, Providers::$agents_users];
 
-            $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);*/
+            $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, $currency, $startDate, $endDate);
+
+
             $data = [
-                'payments' => []
+                'payments' => [
+                    'username' => 'qwerty',
+                    'loads' => $transactions,
+                    'downloads' => $transactions['debit'],
+                    'total' => '1231',
+                    'comission' => '1232',
+                    'payment' => '35645',
+                    'receivable' => '33243'
+                ]
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {

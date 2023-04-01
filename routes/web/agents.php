@@ -186,7 +186,7 @@ Route::group(['prefix' => 'agents'], function () {
         ]);
 
         // Show agents transactions by dates
-        Route::get('find-user-payment', [
+        Route::get('find-user-payment/{startDate?}/{endDate?}/{user_id?}', [
             'as' => 'agents.reports.find-user-payment',
             'uses' => 'AgentsController@findUserPayment'
         ]);
