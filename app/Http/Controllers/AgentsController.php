@@ -394,7 +394,6 @@ class AgentsController extends Controller
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$limit,$offset);
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0],$transactions[1],$request);
 
-            Log::notice('agentsTransactionsPaginate',[$request->all()]);
             return response()->json($data);
 
         } catch (\Exception $ex) {
@@ -865,7 +864,6 @@ class AgentsController extends Controller
                $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
 
                $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
-               //Log::notice('findUserCurrencyByWhitelabel',['0'=>$userTmp,session('currency'),Configurations::getWhitelabel()]);
                $percentage = null;
             }
 
@@ -1385,9 +1383,6 @@ class AgentsController extends Controller
                     $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
 
                     $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
-                    if(is_null($user)){
-                        Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
-                    }
                 }
 
             }
@@ -1396,6 +1391,7 @@ class AgentsController extends Controller
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             //return [$agent,$user,$currency];
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
             $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents($agents);
@@ -2600,7 +2596,6 @@ class AgentsController extends Controller
                 $data[] = $nestedData;
             }
         }
-        //Log::notice('tmp table',['start'=>$start,'limit'=>$limit,'transactions'=>$transactions]);
         $json_data = array(
             "draw"            => intval($request->input('draw')),
             "recordsTotal"    => intval($total),
