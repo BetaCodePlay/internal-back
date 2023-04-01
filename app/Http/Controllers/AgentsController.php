@@ -322,13 +322,13 @@ class AgentsController extends Controller
 
             $data = [
                 'payments' => [
-                    'username' => '',
+                    'username' => 'qwerty',
                     'loads' => $transactions['credit'],
                     'downloads' => $transactions['debit'],
-                    'total' => '',
-                    'comission' => '',
-                    'payment' => '',
-                    'receivable' => ''
+                    'total' => '1231',
+                    'comission' => '1232',
+                    'payment' => '35645',
+                    'receivable' => '33243'
                 ]
             ];
             return Utils::successResponse($data);
