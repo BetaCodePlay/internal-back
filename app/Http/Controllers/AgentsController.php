@@ -310,17 +310,17 @@ class AgentsController extends Controller
                 $userId = auth()->user()->id;
                 $agentPlayer = true;
             }
-            \Log::debug(['date', $startDate, $endDate ]);
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
-            $currency = session('currency');
-            // $user = $this->agentsRepo->findUser($id);
-            // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $currency = session('currency');
 
-            $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getAgentsTransactions(intval($user_id), $providers, $currency, $startDate, $endDate);
-            \Log::debug([intval($user_id), $providers, $currency, $startDate, $endDate, $transactions]);
+                $providers = [Providers::$agents, Providers::$agents_users];
+                $transactions = $this->transactionsRepo->getAgentsTransactions(intval($user_id), $providers, $currency, $startDate, $endDate);
+                // \Log::debug([intval($user_id), $providers, $currency, $startDate, $endDate, $transactions]);
 
+                $percentage = $this->agentsRepo->myPercentageByCurrency(intval($user_id), session('currency'));
+            }
 
             $data = [
                 'payments' => [
@@ -334,6 +334,7 @@ class AgentsController extends Controller
                 ]
             ];
             return Utils::successResponse($data);
+
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
