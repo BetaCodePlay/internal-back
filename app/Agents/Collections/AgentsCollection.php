@@ -203,6 +203,7 @@ class AgentsCollection
                 ];
             }
             $arrayTmp = [];
+            //$transactions = 0;
             foreach ($tableDb as $item => $value) {
 
                 $arrayTmp[$value->user_id] = [
@@ -273,7 +274,7 @@ class AgentsCollection
                 $htmlProvider .= "</tr>";
 
             }
-            Log::notice('closuresTotalsByAgentGroupProvider',[$totalCredit,$totalDebit]);
+
             //TODO TOTALES
             if (!is_null($percentage)) {
                 $totalComission = $totalProfit * ($percentage / 100);

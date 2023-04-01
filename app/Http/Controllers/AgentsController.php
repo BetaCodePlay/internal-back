@@ -442,7 +442,6 @@ class AgentsController extends Controller
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$limit,$offset);
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0],$transactions[1],$request);
 
-            Log::notice('agentsTransactionsPaginate',[$request->all()]);
             return response()->json($data);
 
         } catch (\Exception $ex) {
@@ -913,7 +912,6 @@ class AgentsController extends Controller
                $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
 
                $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
-               //Log::notice('findUserCurrencyByWhitelabel',['0'=>$userTmp,session('currency'),Configurations::getWhitelabel()]);
                $percentage = null;
             }
 
@@ -1433,9 +1431,6 @@ class AgentsController extends Controller
                     $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
 
                     $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
-                    if(is_null($user)){
-                        Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
-                    }
                 }
 
             }
@@ -1446,7 +1441,9 @@ class AgentsController extends Controller
             // dd($agent);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+            //return [json_decode($tree)];
             $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents($agents);
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
             $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
@@ -2649,7 +2646,6 @@ class AgentsController extends Controller
                 $data[] = $nestedData;
             }
         }
-        //Log::notice('tmp table',['start'=>$start,'limit'=>$limit,'transactions'=>$transactions]);
         $json_data = array(
             "draw"            => intval($request->input('draw')),
             "recordsTotal"    => intval($total),
