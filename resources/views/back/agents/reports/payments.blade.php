@@ -95,7 +95,7 @@
                                     <select name="agent_id_search" id="username_search"
                                             class="form-control select2 username_search agent_id_search"
                                             data-route="{{ route('agents.search-username')}}"
-                                            data-select="{{ route('agents.find-user') }}">
+                                            data-select="{{ route('agents.reports.find-user-payment') }}">
                                         <option></option>
                                     </select>
                                 @endif
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="">
-                        <div id="tree" data-route="{{ route('agents.find') }}" data-json="{{ $tree }}"></div>
+                        <div id="tree" data-route="{{ route('agents.reports.find-user-payment') }}" data-json="{{ $tree }}"></div>
                     </div>
                 </div>
             </div>
