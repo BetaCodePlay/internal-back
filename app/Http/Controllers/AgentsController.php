@@ -1394,6 +1394,7 @@ class AgentsController extends Controller
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+            //return [json_decode($tree)];
             $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents($agents);
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
             $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);

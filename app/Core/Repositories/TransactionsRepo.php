@@ -439,36 +439,6 @@ class TransactionsRepo
             ->groupBy('users.id', 'users.username')
             ->get();
 
-        if (auth()->user()->id == 463) {
-            $deposits = Transaction::select('users.id', 'users.username', \DB::raw('sum(amount) AS total'))
-                ->join('users', 'transactions.user_id', '=', 'users.id')
-                ->where('transactions.provider_id', Providers::$agents)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('users.whitelabel_id', $whitelabel)
-                ->where('transactions.currency_iso', $currency)
-                ->where('transaction_type_id', TransactionTypes::$credit)
-                ->where('transaction_status_id', TransactionStatus::$approved)
-                ->whereIn('transactions.user_id', $agents)
-                ->where('transactions.data->from', 'support')
-                ->groupBy('users.id', 'users.username')
-                ->get();
-
-            $withdrawals = Transaction::select('users.id', 'users.username', \DB::raw('sum(amount) AS total'))
-                ->join('users', 'transactions.user_id', '=', 'users.id')
-                ->where('transactions.provider_id', Providers::$agents)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('users.whitelabel_id', $whitelabel)
-                ->where('transactions.currency_iso', $currency)
-                ->where('transaction_type_id', TransactionTypes::$debit)
-                ->where('transaction_status_id', TransactionStatus::$approved)
-                ->whereIn('transactions.user_id', $agents)
-                ->where('transactions.data->to', 'support')
-                ->groupBy('users.id', 'users.username')
-                ->get();
-
-
-        }
-
         return [
             'deposits' => $deposits,
             'withdrawals' => $withdrawals
