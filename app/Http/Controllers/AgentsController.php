@@ -300,7 +300,7 @@ class AgentsController extends Controller
     public function findUserPayment(Request $request)
     {
         try {
-
+/*
             if (session('admin_id')) {
                 $userId = session('admin_id');
                 $agentPlayer = false;
@@ -312,7 +312,7 @@ class AgentsController extends Controller
             $currency = session('currency');
             $id = $request->id;
 
-            $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);*/
             $data = [
                 'payments' => []
             ];
