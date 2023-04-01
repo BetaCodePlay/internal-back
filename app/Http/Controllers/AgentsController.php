@@ -302,7 +302,8 @@ class AgentsController extends Controller
     public function findUserPayment($startDate = null, $endDate = null, $user = null)
     {
         try {
-
+            $startDate = Carbon::now()->subDays(30);
+            $endDate = Carbon::now();
             if (session('admin_id')) {
                 $userId = session('admin_id');
                 $agentPlayer = false;
@@ -323,6 +324,7 @@ class AgentsController extends Controller
 
                 $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
             }
+
             $providers = [Providers::$agents, Providers::$agents_users];
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
             $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, session('currency'), $startDate, $endDate);
@@ -341,7 +343,6 @@ class AgentsController extends Controller
                 $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), $startDate, $endDate, $user,$providersString);
             }
             \Log::debug('closures',[$closures]);
-
             $data = [
                 'payments' => [
                     'username' => 'qwerty',
