@@ -129,7 +129,7 @@
                     </div>
                     <div class="table-responsive">
                         <table class="table table-bordered w-100" id="agent-payment-transactions-table"
-                               data-route="{{ route('reports.financial.bonus-transactions-data') }}">
+                               data-route="{{ route('agents.reports.find-user-payment') }}">
                             <thead>
                             <tr>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
