@@ -327,14 +327,14 @@ class AgentsController extends Controller
             $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, session('currency'), $startDate, $endDate);
 
             $closureRepo = new ClosuresUsersTotals2023Repo();
-
+            $typeUser=$this->usersRepo->findTypeUser($user);
             $arrayProviderTmp = array_map(function($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'),$whitelabel));
 
 
             $providersString = '{'.implode(',',$arrayProviderTmp).'}';
-            if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
+            if (in_array($typeUser, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
                 $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $user,$providersString);
             } else {
                 $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $user,$providersString);
