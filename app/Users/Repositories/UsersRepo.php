@@ -818,6 +818,20 @@ class UsersRepo
     }
 
     /**
+     * Find Type User
+     *
+     * @param int $id User ID
+     * @return mixed
+     */
+    public function findTypeUser($id)
+    {
+        return User::select('users.type_user')
+            ->where('users.id', $id)
+            ->whitelabel()
+            ->first();
+    }
+
+    /**
      * Search users by username
      *
      * @param string $username User username
