@@ -299,7 +299,7 @@ class AgentsController extends Controller
      * @param null $user_id
      * @return Response
      */
-    public function findUserPayment($startDate = null, $endDate = null, $user_id = null)
+    public function findUserPayment($startDate = null, $endDate = null, $user = null)
     {
         try {
 
@@ -310,19 +310,36 @@ class AgentsController extends Controller
                 $userId = auth()->user()->id;
                 $agentPlayer = true;
             }
+            $whitelabel = Configurations::getWhitelabel();
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $currency = session('currency');
 
-            $currency = session('currency');
-            $id = $user_id;
-            $user = $this->agentsRepo->findUser($id);
-            // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+                $providers = [Providers::$agents, Providers::$agents_users];
+                $transactions = $this->transactionsRepo->getAgentsTransactions(intval($user), $providers, $currency, $startDate, $endDate);
+                // \Log::debug([intval($user_id), $providers, $currency, $startDate, $endDate, $transactions]);
+
+                $percentage = $this->agentsRepo->myPercentageByCurrency(intval($user), session('currency'));
+            }
             $providers = [Providers::$agents, Providers::$agents_users];
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
-            $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, $currency, $startDate, $endDate);
+            $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, session('currency'), $startDate, $endDate);
+
+            $closureRepo = new ClosuresUsersTotals2023Repo();
+
+            $arrayProviderTmp = array_map(function($val) {
+                return $val->id;
+            }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'),$whitelabel));
+
+
+            $providersString = '{'.implode(',',$arrayProviderTmp).'}';
             if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
+                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $user,$providersString);
             } else {
-                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
+                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $user,$providersString);
             }
+            \Log::debug('closures'[$closures]);
 
             $data = [
                 'payments' => [
