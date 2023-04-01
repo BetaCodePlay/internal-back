@@ -310,6 +310,7 @@ class AgentsController extends Controller
                 $userId = auth()->user()->id;
                 $agentPlayer = true;
             }
+            $user= intval($user);
             $whitelabel = Configurations::getWhitelabel();
             if (!is_null($startDate) && !is_null($endDate)) {
                 $startDate = Utils::startOfDayUtc($startDate);
@@ -317,10 +318,10 @@ class AgentsController extends Controller
                 $currency = session('currency');
 
                 $providers = [Providers::$agents, Providers::$agents_users];
-                $transactions = $this->transactionsRepo->getAgentsTransactions(intval($user), $providers, $currency, $startDate, $endDate);
+                $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, $currency, $startDate, $endDate);
                 // \Log::debug([intval($user_id), $providers, $currency, $startDate, $endDate, $transactions]);
 
-                $percentage = $this->agentsRepo->myPercentageByCurrency(intval($user), session('currency'));
+                $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
             }
             $providers = [Providers::$agents, Providers::$agents_users];
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
