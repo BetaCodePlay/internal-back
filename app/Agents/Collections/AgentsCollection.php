@@ -2819,7 +2819,6 @@ class AgentsCollection
 
         foreach ($transactions as $transaction) {
             $amountTmp = $transaction->amount;
-            //$transaction->amount = number_format($transaction->amount, 2);
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
@@ -2839,31 +2838,15 @@ class AgentsCollection
                 'id'=>null,
                 'date'=>$transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
                 'data'=>[
-                    'from'=>isset($transaction->data->form)?$transaction->data->form:null,
+                    'from'=>isset($transaction->data->from)?$transaction->data->from:null,
                     'to'  =>isset($transaction->data->to)?$transaction->data->to:null,
                 ],
                 'debit'=> number_format($transaction->debit, 2, ",", "."),
                 'credit'=> number_format($transaction->credit, 2, ",", "."),
                 'balance'=> $transaction->balance,
-//                'debit'=>'<strong>' . number_format($transaction->debit, 2, ",", ".") . '</strong>',
-//                'credit'=>'<strong>' . number_format($transaction->credit, 2, ",", ".") . '</strong>',
-//                'balance'=>'<strong>' . $transaction->balance . '</strong>',
             ];
+
         }
-
-        $totalBalance = $totalCredit - $totalDebit;
-
-//        $data[] = [
-//            'id'=>null,
-//            'date'=>'<strong>' . _i('Totals') . '</strong>',
-//            'data'=>[
-//                'from'=>null,
-//                'to'=>null,
-//            ],
-//            'debit'=>'<strong>' . number_format($totalDebit, 2, ",", ".") . '</strong>',
-//            'credit'=>'<strong>' . number_format($totalCredit, 2, ",", ".") . '</strong>',
-//            'balance'=>'<strong>' . number_format($totalBalance, 2, ",", ".") . '</strong>',
-//        ];
 
         $json_data = array(
             "draw"            => intval($request->input('draw')),
@@ -2876,6 +2859,12 @@ class AgentsCollection
 
     }
 
+    /**
+     * Format Total Credit And Debit
+     * @param $credit
+     * @param $debit
+     * @return string
+     */
     public function formatAgentTransactionsTotals($credit, $debit)
     {
 
