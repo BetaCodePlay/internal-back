@@ -302,7 +302,7 @@ class AgentsController extends Controller
     public function findUserPayment($startDate = null, $endDate = null, $user_id = null)
     {
         try {
-/*
+
             if (session('admin_id')) {
                 $userId = session('admin_id');
                 $agentPlayer = false;
@@ -312,11 +312,24 @@ class AgentsController extends Controller
             }
 
             $currency = session('currency');
-            $id = $request->id;
+            $id = $user_id;
+            $user = $this->agentsRepo->findUser($id);
+            // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            $providers = [Providers::$agents, Providers::$agents_users];
 
-            $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);*/
+            $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, $currency, $startDate, $endDate);
+
+
             $data = [
-                'payments' => []
+                'payments' => [
+                    'username' => '',
+                    'loads' => $transactions['credit'],
+                    'downloads' => $transactions['debit'],
+                    'total' => '',
+                    'comission' => '',
+                    'payment' => '',
+                    'receivable' => ''
+                ]
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
@@ -331,7 +344,7 @@ class AgentsController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function findUser()
+    public function findUser(Request $request)
     {
         try {
             if (session('admin_id')) {
