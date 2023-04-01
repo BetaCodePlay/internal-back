@@ -123,8 +123,8 @@ class TransactionsRepo
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->where('transactions.user_id', $user)
             ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            // ->whereIn('transactions.provider_id', $providers)
+            // ->whereBetween('transactions.created_at', [$startDate, $endDate])
             // ->where('transaction_type_id', TransactionTypes::$debit)
             ->groupBy('users.id', 'users.username')
             ->get();
