@@ -124,7 +124,7 @@ class TransactionsRepo
             ->where('transactions.user_id', $user)
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
-            // ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transaction_type_id', TransactionTypes::$debit)
             ->groupBy('users.id', 'users.username')
             ->get();
@@ -134,7 +134,7 @@ class TransactionsRepo
             ->where('transactions.user_id', $user)
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
-            // ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transaction_type_id', TransactionTypes::$credit)
             ->groupBy('users.id', 'users.username')
             ->get();
