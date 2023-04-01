@@ -316,14 +316,14 @@ class AgentsController extends Controller
             $user = $this->agentsRepo->findUser($id);
             // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $providers = [Providers::$agents, Providers::$agents_users];
-
+            \Log::debug([$user, $providers, $currency, $startDate, $endDate]);
             $transactions = $this->transactionsRepo->getAgentsTransactions($user, $providers, $currency, $startDate, $endDate);
 
 
             $data = [
                 'payments' => [
                     'username' => 'qwerty',
-                    'loads' => $transactions,
+                    'loads' => $transactions['credit'],
                     'downloads' => $transactions['debit'],
                     'total' => '1231',
                     'comission' => '1232',
