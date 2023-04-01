@@ -260,7 +260,7 @@ class AgentsController extends Controller
 
                     $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
                     if(is_null($user)){
-                        Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
+                        \Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
                     }
                 }
 

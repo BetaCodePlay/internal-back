@@ -161,27 +161,30 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered w-100" id="bonus-transactions-table"
+                        <table class="table table-bordered w-100" id="agent-payment-transactions-table"
                                data-route="{{ route('reports.financial.bonus-transactions-data') }}">
                             <thead>
                             <tr>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    {{ _i('ID') }}
+                                    {{ _i('Agent / User') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    {{ _i('Username') }}
+                                    {{ _i('Loads (Total)') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    {{ _i('Operator') }}
+                                    {{ _i('Downloads (Total)') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    {{ _i('Description') }}
+                                    {{ _i('Totals 100%') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    {{ _i('Amount') }}
+                                    {{ _i('Commission %') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    {{ _i('Registered') }}
+                                    {{ _i('Total to pay %') }}
+                                </th>
+                                <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                    {{ _i('Total receivable %') }}
                                 </th>
                             </tr>
                             </thead>
@@ -201,34 +204,9 @@
         $(function () {
             let agents = new Agents();
             let users = new Users();
-            users.usersIps();
             agents.dashboard();
-            agents.searchAgentDashboard();
-            agents.performTransactions();
-            agents.manualTransactionsModal();
-            //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([20, 50, 100, 500, 1000]);
-            agents.usersTransactions();
-            agents.users();
-            agents.agents();
-            agents.storeAgents();
-            agents.storeUsers();
-            agents.changeUserStatus();
-            users.resetPassword();
-            agents.financialState();
-            agents.lockProvider();
-            agents.moveAgentUser();
-            agents.moveAgent();
-            agents.optionsFormUser();
-            agents.optionsFormAgent();
-            agents.menuMobile();
             agents.selectAgentOrUser('{{ _i('Agents search...') }}');
             agents.selectUsernameSearch('{{ _i('Agents search...') }}');
-            agents.statusFilter();
-            @if($agent->master)
-            agents.changeAgentType();
-            @endif
-            agents.relocationAgents();
         });
     </script>
 @endsection
