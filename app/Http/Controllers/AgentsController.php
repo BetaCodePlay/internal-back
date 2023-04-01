@@ -244,6 +244,54 @@ class AgentsController extends Controller
     }
 
     /**
+     * Show agents transactions by dates
+     *
+     * @return Application|Factory|View
+     */
+    public function agentsPayments(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+        try {
+            if (session('admin_id')) {
+                $user = session('admin_id');
+            } else {
+                $user = auth()->user()->id;
+                if (Auth::user()->username == 'romeo') {
+                    $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
+
+                    $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
+                    if(is_null($user)){
+                        Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
+                    }
+                }
+
+            }
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = session('currency');
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            //return [$agent,$user,$currency];
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents($agents);
+            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $data['currencies'] = Configurations::getCurrencies();
+            $data['countries'] = $countriesRepo->all();
+            $data['timezones'] = \DateTimeZone::listIdentifiers();
+            $data['providers'] = $providers;
+            $data['agent'] = $agent;
+            $data['agents'] = $agentAndSubAgents;
+            $data['tree'] = $tree;
+            $data['title'] = _i('Agents Payments');
+
+            return view('back.agents.reports.payments', $data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
      * Find agents and users
      *
      * @param Request $request
@@ -1395,6 +1443,7 @@ class AgentsController extends Controller
             $currency = session('currency');
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             //return [$agent,$user,$currency];
+            // dd($agent);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);

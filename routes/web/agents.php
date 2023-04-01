@@ -178,6 +178,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@agentsBalancesData'
         ]);
 
+        // Show payment report
+        Route::get('agents-payments', [
+            'as' => 'agents.reports.agents-payments',
+            'uses' => 'AgentsController@agentsPayments'
+        ]);
+
         // Show agents transactions report
         Route::get('agents-transactions', [
             'as' => 'agents.reports.agents-transactions',
@@ -372,6 +378,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'reports.data.tmp',
             'uses' => 'AgentsController@dataTmp'
         ]);
+
 
     });
 });
