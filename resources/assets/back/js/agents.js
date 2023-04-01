@@ -311,7 +311,7 @@ class Agents {
                     $button.button('loading');
                     let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                     let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-                    let route = `${$table.data('route')}/${startDate}/${endDate}`;
+                    let route = `${$table.data('route')}/${startDate}/${endDate}/${id}`;
                     api.ajax.url(route).load();
                     $table.on('draw.dt', function () {
                         $button.button('reset');
