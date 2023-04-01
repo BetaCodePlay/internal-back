@@ -440,6 +440,7 @@ class TransactionsRepo
             ->groupBy('users.id', 'users.username')
             ->get();
 
+        \Log::notice(__METHOD__, ['deposits' => $deposits,'withdrawals' => $withdrawals]);
         return [
             'deposits' => $deposits,
             'withdrawals' => $withdrawals
