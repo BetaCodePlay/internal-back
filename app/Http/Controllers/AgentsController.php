@@ -310,12 +310,13 @@ class AgentsController extends Controller
                 $userId = auth()->user()->id;
                 $agentPlayer = true;
             }
-
+            \Log::debug(['date', $startDate, $endDate ]);
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
             $currency = session('currency');
             // $user = $this->agentsRepo->findUser($id);
             // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
+
             $providers = [Providers::$agents, Providers::$agents_users];
             $transactions = $this->transactionsRepo->getAgentsTransactions(intval($user_id), $providers, $currency, $startDate, $endDate);
             \Log::debug([intval($user_id), $providers, $currency, $startDate, $endDate, $transactions]);
