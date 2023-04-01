@@ -3,7 +3,8 @@
 /**
  * Agents routes
  */
-Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => 'agents'], function () {
+// Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 
     // Show add user
     Route::get('add-users', [
@@ -178,10 +179,16 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@agentsBalancesData'
         ]);
 
-        // Show payment report
+        // Show agents payments
         Route::get('agents-payments', [
             'as' => 'agents.reports.agents-payments',
             'uses' => 'AgentsController@agentsPayments'
+        ]);
+
+        // Show agents transactions by dates
+        Route::get('find-user-payment', [
+            'as' => 'agents.reports.find-user-payment',
+            'uses' => 'AgentsController@findUserPayment'
         ]);
 
         // Show agents transactions report
