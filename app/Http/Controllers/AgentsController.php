@@ -314,7 +314,6 @@ class AgentsController extends Controller
             $currency = session('currency');
             // $user = $this->agentsRepo->findUser($id);
             // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-            date($startDate);
             $startDate = Utils::startOfDayUtc($startDate);
             $endDate = Utils::endOfDayUtc($endDate);
             $providers = [Providers::$agents, Providers::$agents_users];
