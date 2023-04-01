@@ -299,7 +299,7 @@ class AgentsController extends Controller
      * @param int $user_id
      * @return Response
      */
-    public function findUserPayment($startDate = '', $endDate = '', $user_id = null)
+    public function findUserPayment($startDate = null, $endDate = null, $user_id = null)
     {
         try {
 
@@ -315,8 +315,8 @@ class AgentsController extends Controller
             // $user = $this->agentsRepo->findUser($id);
             // $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             date($startDate);
-            $startDate = date($startDate);
-            $endDate = date($endDate);
+            $startDate = Utils::startOfDayUtc($startDate);
+            $endDate = Utils::endOfDayUtc($endDate);
             $providers = [Providers::$agents, Providers::$agents_users];
             $transactions = $this->transactionsRepo->getAgentsTransactions(intval($user_id), $providers, $currency, $startDate, $endDate);
             \Log::debug([intval($user_id), $providers, $currency, $startDate, $endDate, $transactions]);
