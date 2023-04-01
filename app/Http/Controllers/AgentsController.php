@@ -294,10 +294,12 @@ class AgentsController extends Controller
     /**
      * Show agents payments transactions by dates
      *
-     * @param Request $request
+     * @param null $startDate
+     * @param null $endDate
+     * @param null $user_id
      * @return Response
      */
-    public function findUserPayment(Request $request)
+    public function findUserPayment($startDate = null, $endDate = null, $user_id = null)
     {
         try {
 /*
@@ -329,7 +331,7 @@ class AgentsController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function findUser(Request $request)
+    public function findUser()
     {
         try {
             if (session('admin_id')) {
