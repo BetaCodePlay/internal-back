@@ -99,40 +99,7 @@
                                         <option></option>
                                     </select>
                                 @endif
-
                             </div>
-                            <div class="col-6 g-py-5">
-                                <a href="#add-users-modal" data-toggle="modal"
-                                   class="btn u-btn-3d u-btn-primary btn-block" id="new-user">
-                                    <i class="hs-admin-plus"></i>
-                                    {{ _i(' Player') }}
-                                </a>
-                            </div>
-                            @if ($agent->master)
-                                <div class="col-6 g-py-5">
-                                    <a href="#add-agents-modal" data-toggle="modal"
-                                       class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">
-                                        <i class="hs-admin-plus"></i>
-                                        {{ _i(' Agent') }}
-                                    </a>
-                                </div>
-                            @endif
-                            {{--<div class="col-6 g-py-5">--}}
-                            {{--   <button type="button" data-route="{{ route('agents.tree-filter', [1]) }}" data-status="1"--}}
-                            {{--           class="btn u-btn-3d u-btn-teal g-mr-10 btn-block status_filter"--}}
-                            {{--           data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Updating') }}" id="active-status">--}}
-                            {{--        <i class="hs-admin-check"></i>--}}
-                            {{--       {{ _i('Active') }}--}}
-                            {{--    </button>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-6 g-py-5">--}}
-                            {{--    <button type="button" data-route="{{ route('agents.tree-filter', [0]) }}" data-status="0"--}}
-                            {{--            class="btn u-btn-3d u-btn-primary g-mr-10 btn-block status_filter"--}}
-                            {{--            data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Updating') }}" id="inactive-status">--}}
-                            {{--       <i class="hs-admin-close"></i>--}}
-                            {{--       {{ _i('Inactive') }}--}}
-                            {{--    </button>--}}
-                            {{--</div>--}}
                         </div>
                     </div>
                     <div class="">
@@ -203,10 +170,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            let users = new Users();
-            agents.dashboard();
-            agents.selectAgentOrUser('{{ _i('Agents search...') }}');
-            agents.selectUsernameSearch('{{ _i('Agents search...') }}');
+            agents.agentsPayments();
         });
     </script>
 @endsection
