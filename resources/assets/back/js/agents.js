@@ -246,6 +246,10 @@ class Agents {
     // Agents payments
     agentsPayments(){
         console.log('agent payments.jd')
+        let picker = initLitepickerEndToday();
+        let $table = $('#agent-payment-transactions-table');
+        let $button = $('#update');
+        let api;
         clipboard();
         let $tree = $('#tree');
         $tree.jstree({
@@ -266,6 +270,7 @@ class Agents {
                 id = data.selected[0];
                 type = 'agent';
             }
+            console.log('agents', id, type);
             if (id !== undefined) {
 
                 $.ajax({
@@ -275,11 +280,49 @@ class Agents {
                     data: {
                         id, type
                     }
-
                 }).done(function (json) {
 
                 }).fail(function (json) {
                     swalError(json);
+                });
+                $table.DataTable({
+                    "ajax": {
+                        "url": $table.data('route'),
+                        "dataSrc": "data.payments"
+                    },
+                    "order": [],
+                    "columns": [
+                        {"data": "username"},
+                        {"data": "loads"},
+                        {"data": "downloads"},
+                        {"data": "total"},
+                        {"data": "commission"},
+                        {"data": "payment"},
+                        {"data": "receivable"},
+                    ],
+                    "initComplete": function () {
+                        api = this.api();
+                        api.buttons().container()
+                            .appendTo($('#table-buttons'));
+                    }
+                });
+
+                $button.click(function () {
+                    $button.button('loading');
+                    let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+                    let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+                    let route = `${$table.data('route')}/${startDate}/${endDate}`;
+                    api.ajax.url(route).load();
+                    $table.on('draw.dt', function () {
+                        $button.button('reset');
+                    });
+                });
+
+                $table.on('xhr.dt', function (event, settings, json, xhr) {
+                    $('#total').text(json.data.total)
+                    if (xhr.status === 500) {
+                        swalError(xhr);
+                    }
                 });
             }
         })
