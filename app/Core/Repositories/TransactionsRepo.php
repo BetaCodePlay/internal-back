@@ -341,8 +341,8 @@ class TransactionsRepo
      */
     public function getByUserAndProvidersPaginate($user, $providers, $currency, $limit = 2000, $offset = 0)
     {
-        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $endDate = Carbon::now()->format('Y-m-d');
+        $startDate = Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
+        $endDate = Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
 
         $countTransactions = Transaction::select('transactions.id')
             ->where('transactions.user_id', $user)

@@ -850,6 +850,7 @@ class AgentsController extends Controller
      */
     public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
+
         try {
             if (is_null($user)) {
                 $user = Auth::id();
@@ -917,9 +918,9 @@ class AgentsController extends Controller
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsProviderAndMaker($table, $percentage)
             ];
-            $dataTmp = [
-                $table, $user, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
-            ];
+//            $dataTmp = [
+//                $table, $user, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+//            ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
