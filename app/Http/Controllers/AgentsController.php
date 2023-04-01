@@ -323,7 +323,7 @@ class AgentsController extends Controller
             $data = [
                 'payments' => [
                     'username' => 'qwerty',
-                    'loads' => $transactions['credit'],
+                    'loads' => $transactions,
                     'downloads' => $transactions['debit'],
                     'total' => '1231',
                     'comission' => '1232',
