@@ -869,6 +869,7 @@ class AgentsController extends Controller
             }
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
+            //return [$startDate,$endDate,$sons,$percentage];
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];

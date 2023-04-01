@@ -183,13 +183,15 @@ class AgentsCollection
         $closureRepo = new ClosuresUsersTotals2023Repo();
         $htmlProvider = "";
         $totalProfit = 0;
+        $totalCredit = 0;
+        $totalDebit = 0;
         if (!empty($tableDb)) {
 
             //TODO STATUS OF PROVIDERS IN PROD
              $arrayProviderTmp = array_map(function($val) {
                 return $val->id;
             },$closureRepo->getProvidersActiveByCredentials(true,$currency,$whitelabel));
-            //$arrayProviderTmp = [171, 166, 115];
+            //$arrayProviderTmp = [171, 166];
 
 
             $providerNull = [];
@@ -262,6 +264,8 @@ class AgentsCollection
                 $htmlProvider .= "<td class='" . $value['type'] . "'>" . $value['username'] . "</td>";
                 foreach ($value['providers'] as $i => $provider) {
                     $totalProfit += $provider['total_profit'];
+                    $totalDebit += $provider['total_played'];
+                    $totalCredit += $provider['total_won'];
                     $htmlProvider .= "<td>" . number_format($provider['total_played'], 2) . "</td>";
                     $htmlProvider .= "<td>" . number_format($provider['total_won'], 2) . "</td>";
                     $htmlProvider .= "<td>" . number_format($provider['total_profit'], 2) . "</td>";
@@ -269,6 +273,7 @@ class AgentsCollection
                 $htmlProvider .= "</tr>";
 
             }
+            Log::notice('closuresTotalsByAgentGroupProvider',[$totalCredit,$totalDebit]);
             //TODO TOTALES
             if (!is_null($percentage)) {
                 $totalComission = $totalProfit * ($percentage / 100);
