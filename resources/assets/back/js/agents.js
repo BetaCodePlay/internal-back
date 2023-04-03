@@ -290,7 +290,7 @@ class Agents {
 
                 $table.DataTable({
                     "ajax": {
-                        "url": $table.data('route')/${startDate}/${endDate}/${id},
+                        "url": $table.data('route')+'/'+startDate+'/'+endDate+'/'+id,
                         "dataSrc": "data.payments"
                     },
                     "order": [],
