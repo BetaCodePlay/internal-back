@@ -219,6 +219,22 @@ class ClosuresUsersTotals2023Repo
     }
 
     /**
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param $userId
+     * @param $provider
+     * @param $username
+     * @return array
+     */
+    public function getClosureTotalsByProviderAndMakerWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, $userId, $provider, $username)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username]);
+        //return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_with_son(?,?,?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$userId,$provider,$username]);
+    }
+
+    /**
      * Get Closures Totals By Provider And Maker Page
      *
      * @param int $whitelabel Whitelabel Id
@@ -234,22 +250,6 @@ class ClosuresUsersTotals2023Repo
     public function getClosureTotalsByProviderAndMakerpage(int $whitelabel, string $currency, string $startDate, string $endDate, $provider, $username, $limit, $page)
     {
         return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username, $limit, $page]);
-    }
-
-    /**
-     * @param int $whitelabel Whitelabel Id
-     * @param string $currency Iso Currency
-     * @param string $startDate Date Start
-     * @param string $endDate Date End
-     * @param $userId
-     * @param $provider
-     * @param $username
-     * @return array
-     */
-    public function getClosureTotalsByProviderAndMakerWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, $userId, $provider, $username)
-    {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username]);
-        //return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_with_son(?,?,?,?,?,?,?)', [$whitelabel,$currency,$startDate, $endDate,$userId,$provider,$username]);
     }
 
     /**
@@ -312,9 +312,9 @@ class ClosuresUsersTotals2023Repo
      * @param array $arrayProvider Array Provider Id
      * @return array
      */
-    public function getClosureTotalsByWhitelabelAndProvidersAndUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $userId,string $arrayProvider)
+    public function getClosureTotalsByWhitelabelAndProvidersAndUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $userId, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_and_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $userId,$arrayProvider]);
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_and_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $userId, $arrayProvider]);
     }
 
     /**
@@ -326,9 +326,9 @@ class ClosuresUsersTotals2023Repo
      * @param array $arrayProvider Array Provider Id
      * @return array
      */
-    public function getClosureTotalsByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId,string $arrayProvider)
+    public function getClosureTotalsByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$arrayProvider]);
+        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
     }
 
     /**
@@ -388,14 +388,44 @@ class ClosuresUsersTotals2023Repo
      * @param string $currency Iso Currency
      * @return array
      */
-    public function getProvidersActiveByCredentials(bool $active,string $currency, int $whitelabel)
+    public function getProvidersActiveByCredentials(bool $active, string $currency, int $whitelabel)
     {
         return DB::select('select p.id,p.name from site.providers p
                             inner join site.credentials c on c.provider_id = p.id
                             where c.currency_iso = ?
                             AND c.status = ?
                             AND c.client_id = ?
-                            order by p.id desc ', [$currency,$active,$whitelabel]);
+                            order by p.id desc ', [$currency, $active, $whitelabel]);
+    }
+
+    /**
+     * Get Total Closure Payments By Owner
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param int $ownerId User Id Owner
+     * @param string $arrayProvider Array Provider Id
+     * @return array
+     */
+    public function getTotalsClosurePaymentsByOwner(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId,string $arrayProvider)
+    {
+        return DB::select('SELECT * FROM site.get_totals_closure_payments_owner(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$arrayProvider]);
+    }
+
+    /**
+     * Get Total Closure Payments By User
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param int $user User Id
+     * @param string $arrayProvider Array Provider Id
+     * @return array
+     */
+    public function getTotalsClosurePaymentsByUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $user,string $arrayProvider)
+    {
+        return DB::select('SELECT * FROM site.get_totals_closure_payments_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $user,$arrayProvider]);
     }
 
     /**

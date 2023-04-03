@@ -331,9 +331,12 @@ class AgentsController extends Controller
             $providersString = '{'.implode(',',$arrayProviderTmp).'}';
             \Log::debug(['Params Closures:', $whitelabel, session('currency'), $startDateClosure, $endDateClosure, $user,$providersString]);
             if (in_array($typeUser->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, session('currency'),'2023-01-03', $endDateClosure, $user,$providersString);
+                //$closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, session('currency'),'2023-01-03', $endDateClosure, $user,$providersString);
+                //TODO USER = OWNER
+                $closures = $closureRepo->getTotalsClosurePaymentsByOwner($whitelabel, session('currency'),$startDate, $endDateClosure, $user,$providersString);
             } else {
-                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), '2023-01-03', $endDateClosure, $user,$providersString);
+                $closures = $closureRepo->getTotalsClosurePaymentsByUser($whitelabel, session('currency'),$startDate, $endDateClosure, $user,$providersString);
+                //$closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), '2023-01-03', $endDateClosure, $user,$providersString);
             }
             \Log::debug('closures',[$closures] );
             $data = [
