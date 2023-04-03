@@ -275,22 +275,22 @@ class Agents {
             console.log('agents', id, type);
             if (id !== undefined) {
 
-                $.ajax({
-                    url: $tree.data('route'),
-                    type: 'get',
-                    dataType: 'json',
-                    data: {
-                        id, type
-                    }
-                }).done(function (json) {
+                // $.ajax({
+                //     url: $tree.data('route'),
+                //     type: 'get',
+                //     dataType: 'json',
+                //     data: {
+                //         startDate, endDate, id, type
+                //     }
+                // }).done(function (json) {
 
-                }).fail(function (json) {
-                    swalError(json);
-                });
+                // }).fail(function (json) {
+                //     swalError(json);
+                // });
 
                 $table.DataTable({
                     "ajax": {
-                        "url": $table.data('route')+'/'+startDate+'/'+endDate+'/'+id,
+                        "url": `${$table.data('route')}/${startDate}/${endDate}/${id}`,
                         "dataSrc": "data.payments"
                     },
                     "order": [],
