@@ -325,12 +325,13 @@ class AgentsController extends Controller
 
 
             $providersString = '{'.implode(',',$arrayProviderTmp).'}';
+            \Log::debug(['Params Closures:', $whitelabel, session('currency'), $startDate, $endDate, $user,$providersString]);
             if (in_array($typeUser, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
                 $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, session('currency'), $startDate, $endDate, $user,$providersString);
             } else {
                 $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), $startDate, $endDate, $user,$providersString);
             }
-            \Log::debug('closures',[$closures]);
+            \Log::debug('closures',[$closures] );
             $data = [
                 'payments' => [
                     'username' => 'qwerty',
