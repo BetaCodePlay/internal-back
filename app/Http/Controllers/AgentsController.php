@@ -302,6 +302,9 @@ class AgentsController extends Controller
     public function findUserPayment($startDate = null, $endDate = null, $user = null)
     {
         try {
+            $startDateClosure = $startDate;
+            $endDateClosure = $endDate;
+
             $startDate = Carbon::now()->subDays(30);
             $endDate = Carbon::now();
             if (session('admin_id')) {
@@ -319,18 +322,18 @@ class AgentsController extends Controller
 
             $closureRepo = new ClosuresUsersTotals2023Repo();
             $typeUser=$this->usersRepo->findTypeUser($user);
-            \Log::info('typeUser',[$typeUser] );
+            // \Log::info('typeUser',[$typeUser] );
             $arrayProviderTmp = array_map(function($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'),$whitelabel));
 
 
             $providersString = '{'.implode(',',$arrayProviderTmp).'}';
-            \Log::debug(['Params Closures:', $whitelabel, session('currency'), $startDate, $endDate, $user,$providersString]);
+            \Log::debug(['Params Closures:', $whitelabel, session('currency'), $startDateClosure, $endDateClosure, $user,$providersString]);
             if (in_array($typeUser->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, session('currency'), $startDate, $endDate, $user,$providersString);
+                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, session('currency'), $startDateClosure, $endDateClosure, $user,$providersString);
             } else {
-                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), $startDate, $endDate, $user,$providersString);
+                $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), $startDateClosure, $endDateClosure, $user,$providersString);
             }
             \Log::debug('closures',[$closures] );
             $data = [
