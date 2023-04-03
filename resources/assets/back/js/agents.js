@@ -261,6 +261,8 @@ class Agents {
         $tree.on('changed.jstree', function (event, data) {
             let id;
             let type;
+            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
             if (data.action === 'select_node') {
                 id = data.selected[0];
@@ -285,9 +287,10 @@ class Agents {
                 }).fail(function (json) {
                     swalError(json);
                 });
+
                 $table.DataTable({
                     "ajax": {
-                        "url": $table.data('route'),
+                        "url": $table.data('route')/${startDate}/${endDate}/${id},
                         "dataSrc": "data.payments"
                     },
                     "order": [],
