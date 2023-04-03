@@ -319,6 +319,7 @@ class AgentsController extends Controller
 
             $closureRepo = new ClosuresUsersTotals2023Repo();
             $typeUser=$this->usersRepo->findTypeUser($user);
+            \Log::info('typeUser',[$typeUser] );
             $arrayProviderTmp = array_map(function($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'),$whitelabel));
@@ -326,7 +327,7 @@ class AgentsController extends Controller
 
             $providersString = '{'.implode(',',$arrayProviderTmp).'}';
             \Log::debug(['Params Closures:', $whitelabel, session('currency'), $startDate, $endDate, $user,$providersString]);
-            if (in_array($typeUser, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
+            if (in_array($typeUser->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
                 $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, session('currency'), $startDate, $endDate, $user,$providersString);
             } else {
                 $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), $startDate, $endDate, $user,$providersString);
