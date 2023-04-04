@@ -1087,7 +1087,7 @@
             agents.performTransactions();
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([20, 50, 100, 500, 1000]);
+            agents.agentsTransactionsPaginate([10,20, 50, 100, 500, 1000,2000]);
             agents.usersTransactions();
             agents.users();
             agents.agents();

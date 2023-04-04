@@ -178,7 +178,7 @@ class AgentsCollection
      * @param $percentage
      * @return string
      */
-    public function closuresTotalsByAgentGroupProvider($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null,$dd = false)
+    public function closuresTotalsByAgentGroupProvider($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null)
     {
         $closureRepo = new ClosuresUsersTotals2023Repo();
         $htmlProvider = "";
@@ -202,7 +202,6 @@ class AgentsCollection
             }
 
             $arrayTmp = [];
-            $closuresTmp = [];
             //$transactions = 0;
             foreach ($tableDb as $item => $value) {
 
@@ -220,7 +219,7 @@ class AgentsCollection
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 }
-                $closuresTmp[][$value->user_id]=$closures;
+
                 if (count($closures) > 0) {
                     $providerDB = [];
                     foreach ($closures as $index => $closure) {
@@ -246,10 +245,9 @@ class AgentsCollection
 
             }
 
-            if($dd){
-                return [$providerNull,$arrayProviderTmp,$tableDb,$closuresTmp,$arrayTmp,$value];
+            if($whitelabel ==  4){
+                Log::notice('closuresTotalsByAgentGroupProvider',[$closures,$arrayProviderTmp]);
             }
-
 
             $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
             foreach ($arrayProviderTmp as $item => $value) {

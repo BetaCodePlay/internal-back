@@ -967,7 +967,7 @@ class AgentsController extends Controller
      * @param $endDate
      * @return Response
      */
-    public function financialStateData(Request $request,ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
 
         try {
@@ -980,8 +980,6 @@ class AgentsController extends Controller
                 $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
             //}
 
-            $dd = $request->has('dd') && $request->get('dd') == 'dd' ? true:false;
-
             if (Auth::user()->username == 'romeo') {
                $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
 
@@ -991,7 +989,7 @@ class AgentsController extends Controller
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
             $data = [
-                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage,$dd)
+                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
