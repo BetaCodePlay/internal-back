@@ -960,14 +960,14 @@ class AgentsController extends Controller
     }
 
     /**
-     * Data Financial State New Test 1
+     * Data Financial State New "for support"
      * @param ProvidersRepo $providersRepo
      * @param $user
      * @param $startDate
      * @param $endDate
      * @return Response
      */
-    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateData(Request $request,ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
 
         try {
@@ -980,6 +980,8 @@ class AgentsController extends Controller
                 $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
             //}
 
+            $dd = $request->has('dd') && $request->get('dd') == 'dd' ? true:false;
+
             if (Auth::user()->username == 'romeo') {
                $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
 
@@ -988,9 +990,8 @@ class AgentsController extends Controller
             }
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
-            //return [$startDate,$endDate,$sons,$percentage];
             $data = [
-                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
+                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage,$dd)
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
@@ -1378,7 +1379,8 @@ class AgentsController extends Controller
 
             $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 //            }
-
+            //TODO AGENT
+            //return $table;
             $data = [
                 //'table' => $this->agentsCollection->closuresTotalsByWhitelabels($table,$percentage),
                 'table' => $this->agentsCollection->closuresTotalsByWhitelabelsSymple($table, $percentage)

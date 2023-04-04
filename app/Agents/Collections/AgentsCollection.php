@@ -178,7 +178,7 @@ class AgentsCollection
      * @param $percentage
      * @return string
      */
-    public function closuresTotalsByAgentGroupProvider($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null)
+    public function closuresTotalsByAgentGroupProvider($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null,$dd = false)
     {
         $closureRepo = new ClosuresUsersTotals2023Repo();
         $htmlProvider = "";
@@ -188,11 +188,9 @@ class AgentsCollection
         if (!empty($tableDb)) {
 
             //TODO STATUS OF PROVIDERS IN PROD
-             $arrayProviderTmp = array_map(function($val) {
+            $arrayProviderTmp = array_map(function($val) {
                 return $val->id;
             },$closureRepo->getProvidersActiveByCredentials(true,$currency,$whitelabel));
-            //$arrayProviderTmp = [171, 166];
-
 
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider) {
@@ -202,7 +200,9 @@ class AgentsCollection
                     'total_profit' => 0,
                 ];
             }
+
             $arrayTmp = [];
+            $closuresTmp = [];
             //$transactions = 0;
             foreach ($tableDb as $item => $value) {
 
@@ -220,6 +220,7 @@ class AgentsCollection
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 }
+                $closuresTmp[][$value->user_id]=$closures;
                 if (count($closures) > 0) {
                     $providerDB = [];
                     foreach ($closures as $index => $closure) {
@@ -244,6 +245,11 @@ class AgentsCollection
                 }
 
             }
+
+            if($dd){
+                return [$providerNull,$arrayProviderTmp,$tableDb,$closuresTmp,$arrayTmp,$value];
+            }
+
 
             $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
             foreach ($arrayProviderTmp as $item => $value) {
