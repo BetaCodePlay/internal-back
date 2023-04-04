@@ -157,7 +157,7 @@ class Agents {
     }
 
     // Agents Transactions Paginate
-    agentsTransactionsPaginate(lengthMenu) {
+    agentsTransactionsPaginate(lengthMenu,user =null) {
         $('#agents-transactions-tab').on('show.bs.tab', function () {
 
                let $tableTransaction = $('#agents-transactions-table');
@@ -166,7 +166,9 @@ class Agents {
                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
-               let user = $('.user').val();
+               if (user == null) {
+                   user = $('.user').val();
+                }
                let api;
 
                $tableTransaction.DataTable({
