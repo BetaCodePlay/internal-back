@@ -170,6 +170,7 @@ class Agents {
                let api;
 
                $tableTransaction.DataTable({
+                   destroy: true,
                    processing: true,
                    serverSide: true,
                    lengthMenu:lengthMenu,

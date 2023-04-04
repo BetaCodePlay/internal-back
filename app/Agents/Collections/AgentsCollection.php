@@ -170,6 +170,7 @@ class AgentsCollection
     }
 
     /**
+     * Closures Totals By Agent Group Provider
      * @param $tableDb
      * @param $whitelabel
      * @param $currency
@@ -202,6 +203,7 @@ class AgentsCollection
             }
 
             $arrayTmp = [];
+            $arrayTmpClosures = [];
             //$transactions = 0;
             foreach ($tableDb as $item => $value) {
 
@@ -219,6 +221,7 @@ class AgentsCollection
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
                 }
+                $arrayTmpClosures[$value->user_id]=$closures;
 
                 if (count($closures) > 0) {
                     $providerDB = [];
@@ -242,11 +245,6 @@ class AgentsCollection
                 } else {
                     $arrayTmp[$value->user_id]['providers'] = $providerNull;
                 }
-
-            }
-
-            if($whitelabel ==  4){
-                Log::notice('closuresTotalsByAgentGroupProvider',[$closures,$arrayProviderTmp]);
             }
 
             $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
@@ -277,6 +275,10 @@ class AgentsCollection
                 }
                 $htmlProvider .= "</tr>";
 
+            }
+
+            if($whitelabel ==  3){
+                Log::notice('closuresTotalsByAgentGroupProvider',[$arrayProviderTmp,$totalProfit,$arrayTmpClosures]);
             }
 
             //TODO TOTALES
