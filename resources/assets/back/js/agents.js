@@ -157,7 +157,7 @@ class Agents {
     }
 
     // Agents Transactions Paginate
-    agentsTransactionsPaginate(lengthMenu,user =null) {
+    agentsTransactionsPaginate(lengthMenu) {
         $('#agents-transactions-tab').on('show.bs.tab', function () {
 
                let $tableTransaction = $('#agents-transactions-table');
@@ -165,10 +165,8 @@ class Agents {
                let picker = initLitepickerEndTodayNew();
                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+               let user = $('.user').val();
 
-               if (user == null) {
-                   user = $('.user').val();
-                }
                let api;
 
                $tableTransaction.DataTable({
@@ -191,8 +189,6 @@ class Agents {
                    ],
                    initComplete: function () {
                        api = this.api();
-                       api.buttons().container()
-                           .appendTo($('#table-buttons'));
                    }
                });
 
@@ -202,6 +198,7 @@ class Agents {
                    $button.button('loading');
                    let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                    let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+                   let user = $('.user').val();
                    let route = `${$tableTransaction.data('route')}/${user}?startDate=${startDate}&endDate=${endDate}`;
                    api.ajax.url(route).load();
                    $tableTransaction.on('draw.dt', function () {
