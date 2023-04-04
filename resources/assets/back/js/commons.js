@@ -244,6 +244,25 @@ let initLitepickerEndToday = () => {
     });
 };
 
+// Init lite picker end today with class
+let initLitepickerEndTodayNew = () => {
+    let locale = getCookie('language-js');
+    locale = locale.replace('_', '-');
+
+    return new Litepicker({
+        element: document.getElementById('date_range_new'),
+        format: 'DD/MM/YYYY',
+        singleMode: false,
+        startDate: moment(),
+        endDate: moment(),
+        maxDate: moment(),
+        numberOfMonths: 2,
+        numberOfColumns: 2,
+        showTooltip: false,
+        lang: locale
+    });
+};
+
 // Init file input
 let initFileInput = (preview, field) => {
     let locale = getCookie('language-js');
@@ -413,6 +432,7 @@ export {
     initDatepickerStartToday,
     initDateRangePickerEndToday,
     initLitepickerEndToday,
+    initLitepickerEndTodayNew,
     initFileInput,
     initSelect2,
     initTinyMCE,

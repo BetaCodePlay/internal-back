@@ -312,13 +312,9 @@ class TransactionsRepo
      */
     public function getByUserAndProviders($user, $providers, $currency, $limit = 2000, $offset = 0)
     {
-        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $endDate = Carbon::now()->format('Y-m-d');
-
         $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
             'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
             ->where('transactions.user_id', $user)
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
             ->orderBy('transactions.id', 'DESC')
@@ -339,10 +335,8 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $limit = 2000, $offset = 0)
+    public function getByUserAndProvidersPaginate($user, $providers, $currency,$startDate,$endDate, $limit = 2000, $offset = 0)
     {
-        $startDate = Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
-        $endDate = Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
 
         $countTransactions = Transaction::select('transactions.id')
             ->where('transactions.user_id', $user)
@@ -375,10 +369,8 @@ class TransactionsRepo
      * @param string $currency Currency Iso
      * @return mixed
      */
-    public function getByUserAndProvidersTotales($user, $providers, $currency)
+    public function getByUserAndProvidersTotales($user, $providers, $currency,$startDate,$endDate)
     {
-        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
-        $endDate = Carbon::now()->format('Y-m-d');
 
         $countTransactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id')
             ->where('transactions.user_id', $user)

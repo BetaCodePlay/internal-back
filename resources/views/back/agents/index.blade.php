@@ -353,12 +353,6 @@
                                     </a>
                                 </li>
                             @endif
-                            {{--                            <li class="nav-item" role="presentation">--}}
-                            {{--                                <a class="nav-link active nav_link_blue" id="connect-tab" data-toggle="tab" href="#connect" role="tab" aria-controls="connect" aria-selected="true">--}}
-                            {{--                                    <i class="hs-admin-dashboard"></i>--}}
-                            {{--                                    {{ _i('Connections') }}--}}
-                            {{--                                </a>--}}
-                            {{--                            </li>--}}
                         </ul>
                     </div>
                     <div class="tab-content" id="myTabContent">
@@ -404,7 +398,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{--                                    TODO ROL 19 NUEVO ROL DE AGENTE--}}
+                                    {{-- TODO ROL 19 NUEVO ROL DE AGENTE--}}
                                     @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                                         <div class="row g-mb-15">
                                             <div
@@ -595,6 +589,21 @@
                         </div>
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
+                            <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
+                                <div class="input-group">
+                                    <input type="text" id="date_range_new" class="form-control" autocomplete="off"
+                                           placeholder="{{ _i('Date range') }}">
+                                    <div class="input-group-append">
+                                        <button class="btn g-bg-primary" type="button" id="updateNew"
+                                                data-route="{{ route('agents.transactions.paginate') }}"
+                                                data-routetotals="{{ route('agents.transactions.totals') }}"
+                                                data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                            <i class="hs-admin-reload g-color-white"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="media">
                                 <div class="media-body d-flex justify-content-end g-mb-10"
                                      id="table-buttons-agents-transactions">
@@ -604,7 +613,6 @@
                                 <table class="table table-bordered w-100" id="agents-transactions-table"
                                        data-route="{{ route('agents.transactions.paginate') }}"
                                        data-routetotals="{{ route('agents.transactions.totals') }}">
-                                    {{--                                <table class="table table-bordered w-100" id="agents-transactions-table" data-route="{{ route('agents.transactions') }}">--}}
                                     <thead>
                                     <tr>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

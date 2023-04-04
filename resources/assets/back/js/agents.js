@@ -7,7 +7,7 @@ import {
     swalSuccessNoButton,
     swalInput
 } from "../../commons/js/core";
-import {clearForm, getCookie, initDateRangePickerEndToday, initLitepickerEndToday, initSelect2, refreshRandomPassword} from "./commons";
+import {clearForm, getCookie, initDateRangePickerEndToday, initLitepickerEndToday,initLitepickerEndTodayNew, initSelect2, refreshRandomPassword} from "./commons";
 import moment from 'moment';
 
 class Agents {
@@ -159,42 +159,62 @@ class Agents {
     // Agents Transactions Paginate
     agentsTransactionsPaginate(lengthMenu) {
         $('#agents-transactions-tab').on('show.bs.tab', function () {
-            let $table = $('#agents-transactions-table');
-            let user = $('.user').val();
-            let api;
 
-            if ($.fn.DataTable.isDataTable('#agents-transactions-table')) {
-                $table.DataTable().destroy();
-            }
+               let $tableTransaction = $('#agents-transactions-table');
+               let $button = $('#updateNew');
+               let picker = initLitepickerEndTodayNew();
+               let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+               let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+               let urlTmpTable = $button.data('route');
+               let urlTmpTotal = $button.data('routetotals');
 
-            $table.DataTable({
-                processing: true,
-                serverSide: true,
-                lengthMenu:lengthMenu,
-                ajax: {
-                    url: $table.data('route') + '/' + user,
-                    dataType: 'json',
-                    type: 'get',
-                },
-                columns: [
-                    {"data": "date"},
-                    {"data": "data.from"},
-                    {"data": "data.to"},
-                    {"data": "debit", "className": "text-right", "type": "num-fmt"},
-                    {"data": "credit", "className": "text-right", "type": "num-fmt"},
-                    {"data": "balance", "className": "text-right", "type": "num-fmt"}
-                ]
-            });
+               let user = $('.user').val();
+               let api;
 
-            setTimeout(function(){
-                $.ajax({
-                    url: $table.data('routetotals') + '/' + user,
-                    type: 'get',
-                }).done(function (response) {
-                    $('.totalsTransactionsPaginate').empty();
-                    $('.totalsTransactionsPaginate').append(response)
-                });
-            },1000);
+               $tableTransaction.DataTable({
+                   processing: true,
+                   serverSide: true,
+                   lengthMenu:lengthMenu,
+                   ajax: {
+                       url: urlTmpTable + '/' + user+'?startDate='+startDate+'&endDate='+endDate,
+                       dataType: 'json',
+                       type: 'get',
+                   },
+                   columns: [
+                       {"data": "date"},
+                       {"data": "data.from"},
+                       {"data": "data.to"},
+                       {"data": "debit", "className": "text-right", "type": "num-fmt"},
+                       {"data": "credit", "className": "text-right", "type": "num-fmt"},
+                       {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                   ]
+               });
+
+               Agents.agentsTransactionsPaginateTotal(urlTmpTotal,user,startDate,endDate)
+               $button.click(function () {
+                   startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+                   endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+                   /*
+                   *  let route = `${$table.data('route')}?start_date=${startDate}&end_date=${endDate}&currency=${currency}`;
+                      api.ajax.url(route).load();
+                   * */
+                   $tableTransaction.ajax.url(urlTmpTable + '/' + user+'?startDate='+startDate+'&endDate='+endDate).load();
+                   $button.button('loading');
+                   Agents.agentsTransactionsPaginateTotal(urlTmpTotal,user,startDate,endDate);
+                   $button.button('reset');
+               });
+
+        });
+    }
+    // Agents Transactions Paginate Total
+    static agentsTransactionsPaginateTotal(url_total,user,start_date,end_date) {
+        console.log('agentsTransactionsPaginateTotal',url_total,user,start_date,end_date)
+        $.ajax({
+            url: url_total+'/'+user+'?startDate='+start_date+'&endDate='+end_date,
+            type: 'get',
+        }).done(function (response) {
+            $('.totalsTransactionsPaginate').empty();
+            $('.totalsTransactionsPaginate').append(response)
         });
     }
 
@@ -399,7 +419,7 @@ class Agents {
 
     // Dashboard
     dashboard() {
-        console.log('test in dashboard fo agent.jd')
+        //console.log('test in dashboard fo agent.jd')
 
         initSelect2();
         clipboard();

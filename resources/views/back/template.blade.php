@@ -5,8 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=2">
+{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
+{{--    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=2">--}}
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
     @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)
@@ -37,7 +37,7 @@
                 @include('back.layout.search')
             @endif
 
-            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+{{--            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
                 <div class="g-pt-20 g-pr-15 g-pl-15">
                     <div class="row">
                         <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
@@ -53,8 +53,8 @@
                         </div>
                     </div>
                 </div>
+{{--            @endif--}}
 
-            @endif
             <div class="g-pa-20">
                 @yield('content')
             </div>

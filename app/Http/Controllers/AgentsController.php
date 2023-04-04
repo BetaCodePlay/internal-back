@@ -51,6 +51,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\DataTables;
+use function GuzzleHttp\Promise\all;
 
 /**
  * Class AgentsController
@@ -478,7 +479,7 @@ class AgentsController extends Controller
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProviders($agent, $providers, $currency,100);
+            $transactions = $this->transactionsRepo->getByUserAndProviders($agent, $providers, $currency);
             $transactions = $this->agentsCollection->formatAgentTransactions($transactions);
             $data = [
                 'transactions' => $transactions
@@ -502,10 +503,12 @@ class AgentsController extends Controller
 
             $offset = $request->has('start')?$request->get('start'):0;
             $limit = $request->has('length')?$request->get('length'):100;
-
+            $starDate = $request->has('startDate')?$request->get('startDate'):Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
+            $endDate = $request->has('endDate')?$request->get('endDate'): Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$limit,$offset);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$starDate,$endDate,$limit,$offset);
+
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0],$transactions[1],$request);
 
             return response()->json($data);
@@ -522,13 +525,16 @@ class AgentsController extends Controller
      * @param int $agent User ID
      * @return Response
      */
-    public function agentsTransactionsTotals($agent)
+    public function agentsTransactionsTotals($agent,Request $request)
     {
         try {
 
+            $starDate = $request->has('startDate')?$request->get('startDate'):Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
+            $endDate = $request->has('endDate')?$request->get('endDate'): Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
+
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency);
+            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency,$starDate,$endDate);
 
             return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0],$totals[1]));
 
