@@ -199,9 +199,9 @@ class Agents {
                       api.ajax.url(route).load();
                    * */
                    $tableTransaction.ajax.url(urlTmpTable + '/' + user+'?startDate='+startDate+'&endDate='+endDate).load();
-                   $button.button('loading');
+                   // $button.button('loading');
                    Agents.agentsTransactionsPaginateTotal(urlTmpTotal,user,startDate,endDate);
-                   $button.button('reset');
+                   // $button.button('reset');
                });
 
         });
