@@ -3,7 +3,7 @@
 /**
  * Agents routes
  */
-Route::group(['prefix' => 'agents'], function () {
+Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 // Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 
     // Show add user
