@@ -278,7 +278,7 @@ class AgentsCollection
             }
 
             if($whitelabel ==  3){
-                Log::notice('closuresTotalsByAgentGroupProvider',[$arrayProviderTmp,$totalProfit,$arrayTmpClosures]);
+                Log::notice('closuresTotalsByAgentGroupProvider',[0=>$providersString,1=>$tableDb,2=>$arrayTmpClosures]);
             }
 
             //TODO TOTALES
