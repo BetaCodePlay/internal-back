@@ -503,8 +503,17 @@ class AgentsController extends Controller
 
             $offset = $request->has('start')?$request->get('start'):0;
             $limit = $request->has('length')?$request->get('length'):100;
-            $starDate = $request->has('startDate')?$request->get('startDate'):Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
-            $endDate = $request->has('endDate')?$request->get('endDate'): Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
+            $starDate = Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
+            if($request->has('startDate')){
+                $starDate =  Carbon::parse($request->get('startDate'))->setTimezone(session('timezone'))->format('Y-m-d');
+            }
+            $endDate = Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
+            if($request->has('endDate')){
+                $endDate =  Carbon::parse($request->get('endDate'))->setTimezone(session('timezone'))->format('Y-m-d');
+            }
+//            $starDate = $request->has('startDate')?$request->get('startDate'):Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
+//            $endDate = $request->has('endDate')?$request->get('endDate'): Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
+            //
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$starDate,$endDate,$limit,$offset);
