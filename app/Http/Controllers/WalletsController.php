@@ -10,6 +10,7 @@ use Dotworkers\Configurations\Utils;
 use Dotworkers\Store\Store;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 /**
@@ -137,6 +138,7 @@ class WalletsController extends Controller
             if (!is_null(($wallet))) {
                 $transactions = Wallet::getTransactionsByWalletAndClient($wallet, $limit = 2000, $offset = 0);
                 $transactionsData = $transactions->data->transactions;
+                Log::info('transactions user',$transactions->data);
                 $this->transactionsCollection->formatTransactions($transactionsData);
                 $data = [
                     'transactions' => $transactionsData
