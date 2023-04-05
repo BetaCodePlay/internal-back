@@ -503,20 +503,13 @@ class AgentsController extends Controller
 
             $offset = $request->has('start')?$request->get('start'):0;
             $limit = $request->has('length')?$request->get('length'):100;
-            $starDate = Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
-            if($request->has('startDate')){
-                $starDate =  Carbon::parse($request->get('startDate'))->setTimezone(session('timezone'))->format('Y-m-d');
-            }
-            $endDate = Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
-            if($request->has('endDate')){
-                $endDate =  Carbon::parse($request->get('endDate'))->setTimezone(session('timezone'))->format('Y-m-d');
-            }
-//            $starDate = $request->has('startDate')?$request->get('startDate'):Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
-//            $endDate = $request->has('endDate')?$request->get('endDate'): Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
-            //
+
+            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
+
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$starDate,$endDate,$limit,$offset);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency,$startDate,$endDate,$limit,$offset);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0],$transactions[1],$request);
 
@@ -538,12 +531,12 @@ class AgentsController extends Controller
     {
         try {
 
-            $starDate = $request->has('startDate')?$request->get('startDate'):Carbon::now()->timezone(session('timezone'))->startOfMonth()->format('Y-m-d');
-            $endDate = $request->has('endDate')?$request->get('endDate'): Carbon::now()->timezone(session('timezone'))->format('Y-m-d');
+            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency,$starDate,$endDate);
+            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency,$startDate,$endDate);
 
             return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0],$totals[1]));
 
