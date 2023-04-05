@@ -540,7 +540,6 @@ class AgentsController extends Controller
 
             return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0],$totals[1]));
 
-
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
