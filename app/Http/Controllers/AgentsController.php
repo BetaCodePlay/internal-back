@@ -504,8 +504,8 @@ class AgentsController extends Controller
             $offset = $request->has('start')?$request->get('start'):0;
             $limit = $request->has('length')?$request->get('length'):100;
 
-            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
-            $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
+            $startDate = Utils::startOfDayUtc($request->has('startDate')?$request->get('startDate'):date('Y-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('endDate')?$request->get('endDate'):date('Y-m-d'));
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
@@ -531,8 +531,8 @@ class AgentsController extends Controller
     {
         try {
 
-            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
-            $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
+            $startDate = Utils::startOfDayUtc($request->has('startDate')?$request->get('startDate'):date('Y-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('endDate')?$request->get('endDate'):date('Y-m-d'));
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
