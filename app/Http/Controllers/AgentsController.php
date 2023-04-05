@@ -1498,7 +1498,6 @@ class AgentsController extends Controller
             if (session('admin_id')) {
                 $user = session('admin_id');
             } else {
-                \Log::info(__METHOD__, ['index' => auth()->user(), Auth::id()]);
                 $user = auth()->user()->id?Auth::id():null;
                 if (is_null(Auth::user()->username) == 'romeo') {
                     $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
