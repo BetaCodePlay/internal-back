@@ -281,7 +281,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         //Financial State Data Details
         Route::get('financial-state-data-detail/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data-detail',
-            'uses' => 'AgentsController@financialStateDataDetails2023'
+            'uses' => 'AgentsController@financialStateDataDetails'
         ]);
 
         //Financial State Data
