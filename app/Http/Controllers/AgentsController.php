@@ -1442,7 +1442,7 @@ class AgentsController extends Controller
                 $userId = session('admin_id');
                 $agent_player = false;
             } else {
-                $userId = auth()->user()->id;
+                $userId = auth()->user()->id?Auth::id():null;
                 $agent_player = true;
             }
             $currency = session('currency');
@@ -1498,12 +1498,10 @@ class AgentsController extends Controller
             if (session('admin_id')) {
                 $user = session('admin_id');
             } else {
-                \Log::info(__METHOD__, ['index' => auth()->user()]);
-                $user = auth()->user()->id;
-
-                if (Auth::user()->username == 'romeo') {
+                \Log::info(__METHOD__, ['index' => auth()->user(), Auth::id()]);
+                $user = auth()->user()->id?Auth::id():null;
+                if (is_null(Auth::user()->username) == 'romeo') {
                     $userTmp =  $this->usersRepo->findUserCurrencyByWhitelabel('wolf',session('currency'),Configurations::getWhitelabel());
-
                     $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
                 }
 
