@@ -82,6 +82,33 @@ class UsersCollection
     }
 
     /**
+     * Validate Parent Tree
+     * @param int $userId User Id
+     * @param int $userIdAuth User Id Authenticated
+     * @return string
+     */
+    public function treeFatherValidate($userId,$userIdAuth){
+
+        //$agent = $this->agentsRepo->existsUser($userId);
+        $status = false;
+        $array = [];
+        do{
+            $agent = $this->agentsRepo->existsUser($userId);
+            $userId = $agent->user_id;
+            if($userId === $userIdAuth){
+                $status = true;
+            }
+            Log::info('father',[
+                $userId,$userIdAuth,$agent
+            ]);
+            $array[]=$agent;
+        }while($status);
+
+        return [$array,$status];
+
+    }
+
+    /**
      * Formatting User Gender
      * @param array $users gender data
      *

@@ -611,10 +611,33 @@ class UsersController extends Controller
                     'action' => ActionUser::$locked_higher,
                 ];
             } else {
-                $data = [
-                    'action' => ActionUser::$active,
-                ];
+
                 //TODO VALIDAR EL SUPERIOR
+                if ($type == ActionUser::$active) {
+                    $data = [
+                        'action' => ActionUser::$active,
+                    ];
+                }
+
+                /*
+                    $agent = $this->agentsRepo->existsUser($userId);
+                    $link = '';
+                    if(isset($agent->user_id)){
+                        if($agent->user_id == $userIdAuth){
+                            $link .= '<ul class="list_disclosure" id="ul_'.$agent->user_id.'">
+                                     <li  class="" id="li_'.$agent->user_id.'">'.$agent->username.'</li></ul>';
+                        }else{
+                            $link .= '<ul class="list_disclosure" id="ul_'.$agent->user_id.'">
+                                    <li  class="" id="li_'.$agent->user_id.'">'.$agent->username.'</li>';
+                            if(isset($agent->user_id)){
+                                $link .= $this->treeFatherFormat($agent->user_id,$userIdAuth);
+                            }
+                            $link .= '</ul>';
+                        }
+                    }
+
+                    return $link;
+                 */
             }
 
             $userLock = $this->usersRepo->update($request->get('user_id'), $data);
@@ -1014,8 +1037,9 @@ class UsersController extends Controller
 //                    $agent = $this->agentsRepo->existsUser($user->id);
 //                    $this->usersCollection->formatAgent($agent);
 
-                    $treeFather = $this->usersCollection->treeFatherFormat($user->id, Auth::user()->id);
-
+                    $treeFather = $this->usersCollection->treeFatherValidate($user->id, Auth::user()->id);
+                    //$treeFather = $this->usersCollection->treeFatherFormat($user->id, Auth::user()->id);
+return $treeFather;
                     $walletData = $wallet->data->wallet;
                     $walletsCollection->formatWallet($walletData);
                     $walletsData = $wallets->data->wallets;
