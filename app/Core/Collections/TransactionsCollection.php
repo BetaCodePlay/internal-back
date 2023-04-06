@@ -1489,7 +1489,7 @@ class TransactionsCollection
                 'debit_'=>0,
                 'credit_'=>0,
                 'transaction_type_id'=>'',
-                'balance'=>'<strong>'.number_format(($creditTotal-$debitTotal),2).'</strong>',
+                'balance'=>'<strong>'.number_format(($debitTotal-$creditTotal),2).'</strong>',
             ];
 
         }
