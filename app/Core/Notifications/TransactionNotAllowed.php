@@ -49,7 +49,7 @@ class TransactionNotAllowed
         }
 
         $message = "⚠ Alerta de transferencia o ajuste ⚠" . PHP_EOL . "WL: {$whitelabel}" . PHP_EOL . "Monto: {$currency} {$amount}" . PHP_EOL . "Operador: {$operator}" . PHP_EOL . "Usuario: {$userData->username}" . PHP_EOL . "Método: {$providerName}";
-        $this->sendTelegram($message, $whitelabelId, $currency);
+     //   $this->sendTelegram($message, $whitelabelId, $currency);
         $this->sendSms($message);
     }
 
@@ -60,6 +60,7 @@ class TransactionNotAllowed
      */
     private function sendSms($message)
     {
+        /*
         $sms = AwsFacade::createClient('sns');
         $numbers = [
             'Victor Digitel' => '+584123601639',
@@ -84,7 +85,13 @@ class TransactionNotAllowed
                     ],
                 ],
             ]);
-        }
+        }*/
+        $sms = AwsFacade::createClient('sns');
+        $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
+        $sms->publish([
+            'Message' => $message,
+            'TopicArn' => $theme
+        ]);
     }
 
     /**
