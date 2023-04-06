@@ -86,8 +86,10 @@ class TransactionNotAllowed
                 ],
             ]);
         }*/
+
         $sms = AwsFacade::createClient('sns');
         $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
+        \Log::notice(__METHOD__, ['message' =>  $message, 'theme' => $theme]);
         $sms->publish([
             'Message' => $message,
             'TopicArn' => $theme

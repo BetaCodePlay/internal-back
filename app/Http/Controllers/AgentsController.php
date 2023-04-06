@@ -1735,6 +1735,7 @@ class AgentsController extends Controller
             $ownerBalanceFinal = $ownerAgent->balance;
             //$transactionID = $transactionsRepo->getNextValue();
             $transactionIdCreated = null;
+            \Log::notice(__METHOD__, ['amount' =>   $request->amount, 'balance' =>  $ownerAgent->balance]);
             if ($id != $user) {
                 if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
                     $data = [
@@ -1758,7 +1759,7 @@ class AgentsController extends Controller
                             'to' => $userData->username
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
-                       new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
+                        new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $amount;
                     } else {
@@ -1872,6 +1873,8 @@ class AgentsController extends Controller
                             'whitelabel_id' => Configurations::getWhitelabel()
                         ];
                         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                        new TransactionNotAllowed($amount, $agent->id, Providers::$agents, $transactionType);
+                        \Log::notice(__METHOD__, ['amount $agent->id' =>   $request->amount, 'balance' =>  $ownerAgent->balance]);
                         $transactionIdCreated = $ticket->id;
                         $button = sprintf(
                             '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
@@ -1919,7 +1922,8 @@ class AgentsController extends Controller
                     ];
 
                     $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-
+                    new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
+                    \Log::notice(__METHOD__, ['amount $ownerAgent->agent' =>   $request->amount, 'balance' =>  $ownerAgent->balance]);
                     $this->transactionsRepo->updateData($transactionIdCreated,$transactionFinal->id,round($ownerBalanceFinal,2));
 
                     $data = [
