@@ -1484,8 +1484,8 @@ class TransactionsCollection
                 'from'=>'',
                 'to'=>'',
                 'data'=>'',
-                'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>',
-                'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>',
+                'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>', // ingreso por cargas
+                'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>', // egreso por descargas
                 'debit_'=>0,
                 'credit_'=>0,
                 'transaction_type_id'=>'',

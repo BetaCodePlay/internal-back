@@ -2885,8 +2885,8 @@ class AgentsCollection
                     <thead>
                         <tr>
                             <th>%s</th>
-                            <th class="text-right">'._i('Credit').'</th>
                             <th class="text-right">'._i('Debit').'</th>
+                            <th class="text-right">'._i('Credit').'</th>
                             <th class="text-right">'._i('Balance').'</th>
                         </tr>
                     </thead>
@@ -2899,9 +2899,9 @@ class AgentsCollection
                         </tr>
                     </tbody>',
             _i('Totals'),
-            number_format($credit,2),
             number_format($debit,2),
-            number_format(($debit-$credit),2),
+            number_format($credit,2),
+            number_format(($credit-$debit),2),
         );
 
         return $htmlTotals;
