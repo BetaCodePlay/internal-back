@@ -571,7 +571,7 @@ class AgentsController extends Controller
             $providers = [Providers::$agents, Providers::$agents_users];
             //TODO CONVERSION OF ARRAY '{16,25}';
             $providers = '{'.implode(', ',$providers).'}';
-            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('2020-m-d'));
+            $startDate = Utils::startOfDayUtc($request->has('start_date')?$request->get('start_date'):date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('end_date')?$request->get('end_date'):date('Y-m-d'));
             $timezone = session('timezone');
 
