@@ -959,6 +959,9 @@ class TransactionsRepo
      */
     public function getTransactionsTimelinePage($whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit = 10, $offset = 0)
     {
+        Log::notice('getTransactionsTimelinePage',[
+            $whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset
+        ]);
         return DB::select('SELECT * FROM get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset]);
     }
 

@@ -589,7 +589,9 @@ class AgentsController extends Controller
 //            }
             //TODO Return View Data
             $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
-
+            Log::notice('dataTransactionTimeline',[
+                $transactions
+            ]);
             $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request,$currency);
 
             return response()->json($data);
