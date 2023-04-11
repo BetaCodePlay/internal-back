@@ -949,7 +949,7 @@ class TransactionsRepo
      *
      * @param int $whitelabel Whitelabel Id
      * @param string $currency Currency Iso
-     * @param array $providers Provider Ids
+     * @param string $providers Provider Ids
      * @param int $user User Id
      * @param int $limit Transactions limit
      * @param int $offset Transactions offset
@@ -962,7 +962,7 @@ class TransactionsRepo
         Log::notice('getTransactionsTimelinePage',[
             '$whitelabel'=>$whitelabel, '$currency'=>$currency, '$startDate'=>$startDate, '$endDate'=>$endDate, '$providers'=>$providers, '$user'=>$user, $limit, $offset
         ]);
-        return DB::select('SELECT * FROM get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset]);
+        return DB::select('SELECT * FROM site.get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset]);
     }
 
     /**
