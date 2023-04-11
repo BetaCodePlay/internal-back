@@ -89,22 +89,25 @@ class UsersCollection
      */
     public function treeFatherValidate($userId,$userIdAuth){
 
-        //$agent = $this->agentsRepo->existsUser($userId);
-        $status = false;
-        $array = [];
+        $statusFather = false;
+        $userIdTmp = $userId;
         do{
-            $agent = $this->agentsRepo->existsUser($userId);
-            $userId = $agent->user_id;
-            if($userId === $userIdAuth){
+
+            $status = false;
+            if(!is_null($userIdTmp)){
+                $agent = $this->agentsRepo->existsUser($userIdTmp);
+                $userIdTmp = is_null($agent->user_id)?null:$agent->user_id;
                 $status = true;
+
+                if($userIdTmp === $userIdAuth){
+                    $statusFather = true;
+                    $status = false;
+                }
             }
-            Log::info('father',[
-                $userId,$userIdAuth,$agent
-            ]);
-            $array[]=$agent;
+
         }while($status);
 
-        return [$array,$status];
+        return $statusFather;
 
     }
 
