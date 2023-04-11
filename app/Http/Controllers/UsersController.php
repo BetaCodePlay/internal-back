@@ -582,9 +582,10 @@ class UsersController extends Controller
      */
     public function blockAgent(Request $request)
     {
+
         try {
 
-            $rules = [
+          $rules = [
                 'user_id' => ['required', 'exists:users,id'],
                 'lock_type' => ['required', 'integer'],
                 'description' => ['required'],
@@ -604,39 +605,59 @@ class UsersController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $response);
             }
 
+            $statusUpdate = false;
             $data = [];
             $type = $request->get('lock_type');
             if ($type == ActionUser::$locked_higher) {
                 $data = [
                     'action' => ActionUser::$locked_higher,
                 ];
+                $statusUpdate = true;
             } else {
-                $data = [
-                    'action' => ActionUser::$active,
-                ];
+
                 //TODO VALIDAR EL SUPERIOR
+                $father = $this->usersCollection->treeFatherValidate($request->get('user_id'),Auth::id());
+                if ($type == ActionUser::$active &&  $father) {
+                    $data = [
+                        'action' => ActionUser::$active,
+                    ];
+                    $statusUpdate =  true;
+                }
+
             }
 
-            $userLock = $this->usersRepo->update($request->get('user_id'), $data);
+            if($statusUpdate){
+                $this->usersRepo->update($request->get('user_id'), $data);
 
-            $auditData = [
-                'ip' => Utils::userIp($request),
-                'user_id' => auth()->user()->id,
-                'username' => auth()->user()->username,
-                'new_action' => $type,
-                'description' => $request->get('description')
+                $auditData = [
+                    'ip' => Utils::userIp($request),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'new_action' => $type,
+                    'description' => $request->get('description')
+                ];
+
+                Audits::store($request->get('user_id'), AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
+
+                $data = [
+                    'title' => _i('Status updated'),
+                    'message' => _i('User status was updated successfully'),
+                    'close' => _i('Close'),
+                    'type' => $type
+                ];
+
+                return Utils::successResponse($data);
+            }
+
+            $response = [
+                'title' => __('Wrong Parameters'),
+                'message' => __('You need to fill in all the required fields'),
+                'data' => $validator->errors()->getMessages(),
+                'close' => _i('Close')
             ];
 
-            Audits::store($request->get('user_id'), AuditTypes::$agent_user_password, Configurations::getWhitelabel(), $auditData);
+            return Utils::errorResponse(Codes::$forbidden, $response);
 
-            $data = [
-                'title' => _i('Status updated'),
-                'message' => _i('User status was updated successfully'),
-                'close' => _i('Close'),
-                'type' => $type
-            ];
-
-            return Utils::successResponse($data);
 
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
@@ -1014,6 +1035,7 @@ class UsersController extends Controller
 //                    $agent = $this->agentsRepo->existsUser($user->id);
 //                    $this->usersCollection->formatAgent($agent);
 
+                    //$treeFather = $this->usersCollection->treeFatherValidate($user->id, Auth::user()->id);
                     $treeFather = $this->usersCollection->treeFatherFormat($user->id, Auth::user()->id);
 
                     $walletData = $wallet->data->wallet;
