@@ -580,7 +580,7 @@ class UsersController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function blockAgent(Request $request)
+    public function blockAgent(Request $request,$user,$lock_type,$fake,$description)
     {
 
         try {
@@ -591,7 +591,11 @@ class UsersController extends Controller
                 'description' => ['required'],
             ];
 
-            $validator = Validator::make($request->all(), $rules, $this->custom_message());
+            $validator = Validator::make([
+                'user_id'=>$user,
+                'lock_type'=>$lock_type,
+                'description'=>$description
+            ], $rules, $this->custom_message());
 
             if ($validator->fails()) {
 
@@ -607,43 +611,48 @@ class UsersController extends Controller
 
             $statusUpdate = false;
             $data = [];
-            $type = $request->get('lock_type');
+            $type = $lock_type;
             if ($type == ActionUser::$locked_higher) {
                 $data = [
                     'action' => ActionUser::$locked_higher,
+                    'status' => false,
                 ];
                 $statusUpdate = true;
             } else {
 
                 //TODO VALIDAR EL SUPERIOR
-                $father = $this->usersCollection->treeFatherValidate($request->get('user_id'),Auth::id());
+                $father = $this->usersCollection->treeFatherValidate($user,Auth::id());
                 if ($type == ActionUser::$active &&  $father) {
                     $data = [
                         'action' => ActionUser::$active,
+                        'status' => true,
                     ];
                     $statusUpdate =  true;
                 }
 
             }
+            Log::notice('blockAgent',[
+                'user'=>$user,'data'=>$data,
+            ]);
 
             if($statusUpdate){
-                $this->usersRepo->update($request->get('user_id'), $data);
+                $this->usersRepo->update($user, $data);
 
                 $auditData = [
                     'ip' => Utils::userIp($request),
                     'user_id' => auth()->user()->id,
                     'username' => auth()->user()->username,
                     'new_action' => $type,
-                    'description' => $request->get('description')
+                    'description' => $description
                 ];
 
-                Audits::store($request->get('user_id'), AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
+                Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
 
                 $data = [
                     'title' => _i('Status updated'),
                     'message' => _i('User status was updated successfully'),
                     'close' => _i('Close'),
-                    'type' => $type
+                    'type' => $fake
                 ];
 
                 return Utils::successResponse($data);
@@ -871,8 +880,8 @@ class UsersController extends Controller
         return [
             'description.required' => __('Description is required'),
             'lock_type.required' => __('Lock type is required'),
-            'user_id.required' => __('Username is required'),
-            'user_id.exists' => __('Username does not exist'),
+            'user_id.required' => __('Id user is required'),
+            'user_id.exists' => __('Id user does not exist'),
         ];
     }
 
