@@ -53,6 +53,10 @@ class Agents {
             }
 
             $table.DataTable({
+                "responsive": true,
+                "bFilter": false,
+                "bInfo": false,
+                "ordering": false,
                 "ajax": {
                     "url": $route,
                     "dataSrc": "data.agents"
@@ -82,6 +86,10 @@ class Agents {
         let api;
 
         $table.DataTable({
+            "responsive": true,
+            "bFilter": false,
+            "bInfo": false,
+            "ordering": false,
             "ajax": {
                 "url": $table.data('route'),
                 "dataSrc": "data.agents"
@@ -133,6 +141,10 @@ class Agents {
             }
 
             $table.DataTable({
+                "responsive": true,
+                "bFilter": false,
+                "bInfo": false,
+                "ordering": false,
                 "ajax": {
                     "url": $table.data('route') + '/' + user,
                     "dataSrc": "data.transactions"
@@ -230,6 +242,10 @@ class Agents {
         let api;
 
         $table.DataTable({
+            "responsive": true,
+            "bFilter": false,
+            "bInfo": false,
+            "ordering": false,
             "ajax": {
                 "url": $table.data('route'),
                 "dataSrc": "data.transactions"
@@ -362,6 +378,10 @@ class Agents {
         let api;
 
         $table.DataTable({
+            "responsive": true,
+            "bFilter": false,
+            "bInfo": false,
+            "ordering": false,
             "ajax": {
                 "url": $table.data('route'),
                 "dataSrc": "data.financial"
@@ -1110,6 +1130,10 @@ class Agents {
         let api;
 
         $table.DataTable({
+            "responsive": true,
+            "bFilter": false,
+            "bInfo": false,
+            "ordering": false,
             "ajax": {
                 "url": $table.data('route'),
                 "dataSrc": "data.agents"
@@ -1579,6 +1603,10 @@ class Agents {
                 $table.DataTable().destroy();
             }
             $table.DataTable({
+                "responsive": true,
+                "bFilter": false,
+                "bInfo": false,
+                "ordering": false,
                 "ajax": {
                     "url": $table.data('route') + '/' + user,
                     "dataSrc": "data.users"
@@ -1604,6 +1632,10 @@ class Agents {
         let api;
 
         $table.DataTable({
+            "responsive": true,
+            "bFilter": false,
+            "bInfo": false,
+            "ordering": false,
             "ajax": {
                 "url": $table.data('route'),
                 "dataSrc": "data.users"
@@ -1679,6 +1711,10 @@ class Agents {
             }
 
             $table.DataTable({
+                "responsive": true,
+                "bFilter": false,
+                "bInfo": false,
+                "ordering": false,
                 "ajax": {
                     "url": $table.data('route') + '/' + wallet,
                     "dataSrc": "data.transactions"
@@ -1710,8 +1746,13 @@ class Agents {
         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
         let dateFinal = '?start_date='+startDate+'&end_date='+endDate;
         let table = $(id).DataTable({
+                responsive: true,
+                bFilter: false,
+                bInfo: false,
+                ordering: false,
                 processing: true,
                 serverSide: true,
+                bAutoWidth: false,
                 lengthMenu:lengthMenu,
                 ajax: {
                     url: route+dateFinal,
