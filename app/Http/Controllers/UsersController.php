@@ -631,9 +631,6 @@ class UsersController extends Controller
                 }
 
             }
-            Log::notice('blockAgent',[
-                'user'=>$user,'data'=>$data,
-            ]);
 
             if($statusUpdate){
                 $this->usersRepo->update($user, $data);
