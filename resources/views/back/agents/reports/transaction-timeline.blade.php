@@ -1,5 +1,19 @@
 @extends('back.template')
+@section('styles')
+{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css"> --}}
+<style>
+    table.display {
+        table-layout: fixed; /* Establecer el diseño de la tabla en fijo */
+    }
 
+    th, td {
+        word-wrap: break-word; /* Permitir que las palabras se ajusten en las celdas */
+        overflow: scroll; /* Ocultar el contenido que se desborda */
+        text-overflow: ellipsis; /* Mostrar puntos suspensivos para el contenido que se desborda */
+    }
+</style>
+
+@endsection
 @section('content')
 
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -18,7 +32,7 @@
             </div>
             <div class="table-reponsive">
 
-            <table id="exampleTable" class="table table-bordered table-hover dt-responsive"  width="100%">
+            <table id="exampleTable" class="table table-bordered display nowrap"  style="width:100%">
                 @include('back.layout.litepicker')
                 <thead>
                 <tr>
@@ -51,5 +65,6 @@
             let agents = new Agents();
             agents.transactionTimeline('{{route('reports.data.transaction.timeline')}}','#exampleTable',[10,20,50,100]);
         });
+
     </script>
 @endsection

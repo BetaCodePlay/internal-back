@@ -1,5 +1,7 @@
 @extends('back.template')
-
+@section('styles')
+{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css"> --}}
+@endsection
 @section('content')
     <div class="row">
         <div class="col-sm-4 col-lg-4 col-xl-4 g-mb-30">
@@ -86,7 +88,7 @@
 
                         </div>
                     </div>
-                    <table class="table table-bordered table-responsive-sm w-100" id="agents-transactions-table"
+                    <table class="table table-bordered display nowrap" style="width:100%" id="agents-transactions-table"
                            data-route="{{ route('agents.reports.agents-transactions-data') }}">
                         <thead>
                         <tr>

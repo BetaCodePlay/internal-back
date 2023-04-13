@@ -1,7 +1,8 @@
 @extends('back.template')
 
 @section('styles')
-    <style>
+{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css"> --}}
+<style>
         #financial-state-table .bg-warning {
             background-color: rgba(255, 193, 7, 0.4) !important;
         }
@@ -610,7 +611,7 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered w-100" id="agents-transactions-table"
+                                <table class="table table-bordered display nowrap"  style="width:100%" id="agents-transactions-table"
                                        data-route="{{ route('agents.transactions.paginate') }}"
                                        data-routetotals="{{ route('agents.transactions.totals') }}">
                                     <thead>
@@ -649,7 +650,7 @@
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="users-transactions" role="tabpanel"
                              aria-labelledby="users-transactions-tab">
                             <div class="table-responsive">
-                                <table class="table table-bordered w-100" id="users-transactions-table"
+                                <table class="table table-bordered display nowrap"  style="width:100%" id="users-transactions-table"
                                        data-route="{{ route('wallets.transactions') }}">
                                     <thead>
                                     <tr>
@@ -687,7 +688,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered w-100" id="users-table"
+                                        <table class="table table-bordered display nowrap"  style="width:100%" id="users-table"
                                                data-route="{{ route('agents.users') }}">
                                             <thead>
                                             <tr>
@@ -717,7 +718,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered w-100" id="agents-table"
+                                            <table class="table table-bordered display nowrap"  style="width:100%" id="agents-table"
                                                    data-route="{{ route('agents.agents') }}">
                                                 <thead>
                                                 <tr>
