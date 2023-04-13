@@ -6,7 +6,7 @@
         table-layout: fixed; /* Establecer el diseño de la tabla en fijo */
     }
 
-    th, td {
+    td {
         word-wrap: break-word; /* Permitir que las palabras se ajusten en las celdas */
         overflow: scroll; /* Ocultar el contenido que se desborda */
         text-overflow: ellipsis; /* Mostrar puntos suspensivos para el contenido que se desborda */
