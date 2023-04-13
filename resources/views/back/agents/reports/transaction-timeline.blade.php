@@ -8,7 +8,7 @@
 
     td {
         word-wrap: break-word; /* Permitir que las palabras se ajusten en las celdas */
-        overflow: scroll; /* Ocultar el contenido que se desborda */
+        overflow: auto; /* Ocultar el contenido que se desborda */
         text-overflow: ellipsis; /* Mostrar puntos suspensivos para el contenido que se desborda */
     }
 </style>
