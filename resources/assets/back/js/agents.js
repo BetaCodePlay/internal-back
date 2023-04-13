@@ -65,9 +65,9 @@ class Agents {
                 "columns": [
                     {"data": "username"},
                     {"data": "type"},
-                    {"data": "percentages", "className": "text-right", "type": "num-fmt"},
-                    {"data": "balance", "className": "text-right", "type": "num-fmt"},
-                    {"data": "actions", "className": "text-right"}
+                    {"data": "percentages", "type": "num-fmt"},
+                    {"data": "balance", "type": "num-fmt"},
+                    {"data": "actions"}
                 ],
                 "initComplete": function () {
                     let api = this.api();
@@ -97,7 +97,7 @@ class Agents {
             "order": [[1, 'desc']],
             "columns": [
                 {"data": "username"},
-                {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                {"data": "balance", "type": "num-fmt"}
             ],
             "initComplete": function () {
                 api = this.api();
@@ -155,9 +155,9 @@ class Agents {
                     {"data": "date"},
                     {"data": "data.from"},
                     {"data": "data.to"},
-                    {"data": "debit", "className": "text-right", "type": "num-fmt"},
-                    {"data": "credit", "className": "text-right", "type": "num-fmt"},
-                    {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                    {"data": "debit", "type": "num-fmt"},
+                    {"data": "credit", "type": "num-fmt"},
+                    {"data": "balance", "type": "num-fmt"}
                 ],
                 "initComplete": function () {
                     api = this.api();
@@ -195,9 +195,9 @@ class Agents {
                        {"data": "date"},
                        {"data": "data.from"},
                        {"data": "data.to"},
-                       {"data": "debit", "className": "text-right", "type": "num-fmt"},
-                       {"data": "credit", "className": "text-right", "type": "num-fmt"},
-                       {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                       {"data": "debit", "type": "num-fmt"},
+                       {"data": "credit", "type": "num-fmt"},
+                       {"data": "balance", "type": "num-fmt"}
                    ],
                    initComplete: function () {
                        api = this.api();
@@ -253,9 +253,9 @@ class Agents {
             "order": [[0, "asc"]],
             "columns": [
                 {"data": "username"},
-                {"data": "debit", "className": "text-right", "type": "num-fmt"},
-                {"data": "credit", "className": "text-right", "type": "num-fmt"},
-                {"data": "profit", "className": "text-right", "type": "num-fmt"},
+                {"data": "debit", "type": "num-fmt"},
+                {"data": "credit", "type": "num-fmt"},
+                {"data": "profit", "type": "num-fmt"},
             ],
             "initComplete": function () {
                 api = this.api();
@@ -390,10 +390,10 @@ class Agents {
             "columns": [
                 {"data": "user"},
                 {"data": "username"},
-                {"data": "initial_balance", "className": "text-right", "type": "num-fmt"},
-                {"data": "debit", "className": "text-right", "type": "num-fmt"},
-                {"data": "credit", "className": "text-right", "type": "num-fmt"},
-                {"data": "final_balance", "className": "text-right", "type": "num-fmt"}
+                {"data": "initial_balance", "type": "num-fmt"},
+                {"data": "debit", "type": "num-fmt"},
+                {"data": "credit", "type": "num-fmt"},
+                {"data": "final_balance", "type": "num-fmt"}
             ],
             "initComplete": function () {
                 api = this.api();
@@ -578,7 +578,7 @@ class Agents {
             "columns": [
                 {"data": "user"},
                 {"data": "username"},
-                {"data": "amount", "className": "text-right", "type": "num-fmt"},
+                {"data": "amount", "type": "num-fmt"},
             ],
             "initComplete": function () {
                 api = this.api();
@@ -946,9 +946,9 @@ class Agents {
                 {"data": "date"},
                 {"data": "data.from"},
                 {"data": "data.to"},
-                {"data": "debit", "className": "text-right", "type": "num-fmt"},
-                {"data": "credit", "className": "text-right", "type": "num-fmt"},
-                {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                {"data": "debit", "type": "num-fmt"},
+                {"data": "credit", "type": "num-fmt"},
+                {"data": "balance", "type": "num-fmt"}
             ],
             "initComplete": function () {
                 api = this.api();
@@ -1142,7 +1142,7 @@ class Agents {
             "columns": [
                 {"data": "agent"},
                 {"data": "provider"},
-                {"data": "date", "className": "text-right"},
+                {"data": "date"},
             ],
             "initComplete": function () {
                 api = this.api();
@@ -1614,7 +1614,7 @@ class Agents {
                 "order": [],
                 "columns": [
                     {"data": "username"},
-                    {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                    {"data": "balance", "type": "num-fmt"}
                 ],
                 "initComplete": function () {
                     let api = this.api();
@@ -1643,7 +1643,7 @@ class Agents {
             "order": [[1, 'desc']],
             "columns": [
                 {"data": "username"},
-                {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                {"data": "balance", "type": "num-fmt"}
             ],
             "initComplete": function () {
                 api = this.api();
@@ -1724,9 +1724,9 @@ class Agents {
                     {"data": "date"},
                     {"data": "provider"},
                     {"data": "description"},
-                    {"data": "debit", "className": "text-right", "type": "num-fmt"},
-                    {"data": "credit", "className": "text-right", "type": "num-fmt"},
-                    {"data": "balance", "className": "text-right", "type": "num-fmt"}
+                    {"data": "debit", "type": "num-fmt"},
+                    {"data": "credit", "type": "num-fmt"},
+                    {"data": "balance", "type": "num-fmt"}
                 ],
                 "initComplete": function () {
                     let api = this.api();
