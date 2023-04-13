@@ -589,7 +589,9 @@ class AgentsController extends Controller
 //            }
             //TODO Return View Data
             $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
-
+            Log::notice('dataTransactionTimeline',[
+                $transactions
+            ]);
             $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request,$currency);
 
             return response()->json($data);
@@ -826,28 +828,27 @@ class AgentsController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
 
-            if (!is_null($startDate) && !is_null($endDate)) {
-                if (session('admin_id')) {
-                    $user = session('admin_id');
-                    $username = session('admin_agent_username');
-                } else {
-                    $user = auth()->user()->id;
-                    $username = auth()->user()->username;
-                }
-
-                $startDate = Utils::startOfDayUtc($startDate);
-                $endDate = Utils::endOfDayUtc($endDate);
-                $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-                $agentsIds = [];
-
-                foreach ($agents as $agent) {
-                    $agentsIds[] = $agent->user_id;
-                }
-                $financialData = $this->transactionsRepo->getCashFlowTransactions($username, $agentsIds, $whitelabel, $currency, $startDate, $endDate);
+            if (session('admin_id')) {
+                $user = session('admin_id');
+                $username = session('admin_agent_username');
             } else {
-                $financialData = [];
+                $user = auth()->user()->id;
+                $username = auth()->user()->username;
             }
-            $financial = $transactionsCollection->formatCashFlowDataByUsers($financialData, $whitelabel, $currency, $startDate, $endDate);
+            $startDate = Utils::startOfDayUtc(!is_null($startDate)?$startDate:date('Y-m-d'));
+            $endDate = Utils::endOfDayUtc(!is_null($endDate)?$endDate:date('Y-m-d'));
+
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $agentsIds = [];
+
+            foreach ($agents as $agent) {
+                $agentsIds[] = $agent->user_id;
+            }
+            $financialDataTest = $this->transactionsRepo->getCashFlowTransactionsNew($username, $agentsIds, $whitelabel, $currency, $startDate, $endDate);
+            //$financialData = $this->transactionsRepo->getCashFlowTransactions($username, $agentsIds, $whitelabel, $currency, $startDate, $endDate);
+
+            $financial = $transactionsCollection->formatCashFlowDataByUsers($financialDataTest, $whitelabel, $currency, $startDate, $endDate);
+
             return Utils::successResponse($financial);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);

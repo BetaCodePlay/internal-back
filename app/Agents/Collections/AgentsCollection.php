@@ -6,6 +6,7 @@ use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
@@ -2703,17 +2704,29 @@ class AgentsCollection
      */
     public function formatAgent($user)
     {
+        //TODO New route block agent and user, field action and status
+        $actionTmp = (int)$user->action === 1 ||  (int)$user->action === 0 ?  ActionUser::$active:ActionUser::$locked_higher;
+        $statusTextTmp = ActionUser::getName($actionTmp);
+        $statusClassTmp = $actionTmp === 1 ||  (int)$user->action === 0 ? 'teal'  : 'lightred';
+        $user->status = sprintf(
+            '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
+            route('users.block.status', [$user->id, ((int)$user->action === 1 ?ActionUser::$locked_higher:  ActionUser::$active), 0]),
+            $statusClassTmp,
+            $statusTextTmp
+        );
+
         $statusClass = $user->status ? 'teal' : 'lightred';
         $statusText = $user->status ? _i('Active') : _i('Blocked');
         $words = ['dotpanel.', 'admin.', 'latsoft.'];
         $domain = Configurations::getDomain();
         $user->url = "https://$domain/register?r=$user->referral_code";
-        $user->status = sprintf(
-            '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
-            route('users.change-status', [$user->id, (int)$user->status, 0]),
-            $statusClass,
-            $statusText
-        );
+        //TODO Btn change status
+//        $user->status_old = sprintf(
+//            '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
+//            route('users.change-status', [$user->id, (int)$user->status, 0]),
+//            $statusClass,
+//            $statusText
+//        );
 
         if (isset($user->master)) {
             $typeClass = $user->master ? 'blue' : 'bluegray';

@@ -54,6 +54,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@changeStatus'
     ]);
 
+    // Block user status
+    Route::get('block-user-status/{user}/{status}/{type}/{description?}', [
+        'as' => 'users.block.status',
+        'uses' => 'UsersController@blockAgent'
+    ]);
+
     // Get completed profiles
     Route::get('completed-profiles', [
         'as' => 'users.completed-profiles',

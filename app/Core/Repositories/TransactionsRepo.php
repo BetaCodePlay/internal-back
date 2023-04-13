@@ -335,7 +335,7 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency,$startDate,$endDate, $limit = 2000, $offset = 0)
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0)
     {
 
         $countTransactions = Transaction::select('transactions.id')
@@ -369,7 +369,7 @@ class TransactionsRepo
      * @param string $currency Currency Iso
      * @return mixed
      */
-    public function getByUserAndProvidersTotales($user, $providers, $currency,$startDate,$endDate)
+    public function getByUserAndProvidersTotales($user, $providers, $currency, $startDate, $endDate)
     {
 
         $countTransactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id')
@@ -435,6 +435,54 @@ class TransactionsRepo
             'deposits' => $deposits,
             'withdrawals' => $withdrawals
         ];
+    }
+
+    /**
+     * Get financial cash flow data by providers grouped by users new
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @return array
+     */
+    public function getCashFlowTransactionsNew($username, $agents, $whitelabel, $currency, $startDate, $endDate)
+    {
+        $result = DB::SELECT("
+                             SELECT u.id,
+                               u.username,
+                               SUM(CASE WHEN t.transaction_type_id = 1 THEN t.amount ELSE 0 END) AS debit,
+                               SUM(CASE WHEN t.transaction_type_id = 2 THEN t.amount ELSE 0 END) AS credit
+                                FROM site.transactions as t
+                                INNER JOIN site.users as u ON t.user_id = u.id
+                                WHERE t.provider_id = ?
+                                AND t.created_at BETWEEN ? AND ?
+                                AND u.whitelabel_id = ?
+                                AND t.currency_iso = ?
+                                AND t.transaction_status_id = ?
+                                AND t.user_id IN (" . implode(',', $agents) . ")
+
+                                AND ((t.data->>'from' = ? AND t.transaction_type_id = 1) OR (t.data->>'to' = ? AND t.transaction_type_id = 2))
+                                GROUP BY u.id, u.username",[Providers::$agents, $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved,$username, $username]);
+
+        $financialDataExample =[];
+        foreach ($result as $item => $value){
+            $debit = [
+                'id' => $value->id,
+                'username' => $value->username,
+                'total' => $value->debit,
+            ];
+            $credit = [
+                'id' => $value->id,
+                'username' => $value->username,
+                'total' => $value->credit,
+            ];
+            $financialDataExample['deposits'][]=json_decode(json_encode($debit));
+            $financialDataExample['withdrawals'][]=json_decode(json_encode($credit));
+
+        }
+
+        return $financialDataExample;
     }
 
     /**
@@ -949,7 +997,7 @@ class TransactionsRepo
      *
      * @param int $whitelabel Whitelabel Id
      * @param string $currency Currency Iso
-     * @param array $providers Provider Ids
+     * @param string $providers Provider Ids
      * @param int $user User Id
      * @param int $limit Transactions limit
      * @param int $offset Transactions offset
@@ -959,7 +1007,10 @@ class TransactionsRepo
      */
     public function getTransactionsTimelinePage($whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit = 10, $offset = 0)
     {
-        return DB::select('SELECT * FROM get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset]);
+        Log::notice('getTransactionsTimelinePage', [
+            '$whitelabel' => $whitelabel, '$currency' => $currency, '$startDate' => $startDate, '$endDate' => $endDate, '$providers' => $providers, '$user' => $user, $limit, $offset
+        ]);
+        return DB::select('SELECT * FROM site.get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset]);
     }
 
     /**
