@@ -158,10 +158,6 @@ let swalInputInfo = (route, resolve) => {
         preConfirm: (description) => {
             return fetch(`${route}/${description}`)
                 .then(response => {
-                    console.log(response,'response')
-                    if (!response.ok) {
-                            throw new Error(response.statusText)
-                    }
                     return response.json()
                 })
                 .catch(error => {
@@ -180,23 +176,12 @@ let swalInputInfo = (route, resolve) => {
             if (result.value.data.status !== '') {
                 $('#status').val(result.value.data.status);
 
-                if (result.value.data.status) {
-                    $('#active-status').removeClass('d-none');
-                    $('#inactive-status').addClass('d-none');
-                } else {
-                    $('#active-status').addClass('d-none');
-                    $('#inactive-status').removeClass('d-none');
-                }
-
                 if (result.value.data.type == "0"){
                     setTimeout(() => {
                         window.location.href = '';
                     }, 1000);
                     swalSuccessNoButton(result.value);
-                }else if (result.value.data.type === 'info'){
-                    setTimeout(() => {
-                        window.location.href = '';
-                    }, 1000);
+                }else if (result.value.data.type === 'info' || result.value.data.type === 'basic'){
                     swalInfoNoButton(result.value);
                 } else {
                     swalSuccessWithButton(result.value, resolve);

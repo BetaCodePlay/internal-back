@@ -580,7 +580,7 @@ class UsersController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function blockAgent(Request $request,$user,$lock_type,$fake,$description)
+    public function blockAgent($user,$lock_type,$fake,$description = null)
     {
 
         try {
@@ -603,7 +603,8 @@ class UsersController extends Controller
                     'title' => __('Wrong Parameters'),
                     'message' => __('You need to fill in all the required fields'),
                     'data' => $validator->errors()->getMessages(),
-                    'close' => _i('Close')
+                    'close' => _i('Close'),
+                    'type'=>'info'
                 ];
 
                 return Utils::errorResponse(Codes::$forbidden, $response);
@@ -643,7 +644,7 @@ class UsersController extends Controller
                 $this->usersRepo->update($user, $data);
 
                 $auditData = [
-                    'ip' => Utils::userIp($request),
+                    'ip' => Utils::userIp(),
                     'user_id' => auth()->user()->id,
                     'username' => auth()->user()->username,
                     'new_action' => $type,
