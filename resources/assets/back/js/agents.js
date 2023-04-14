@@ -1765,8 +1765,8 @@ class Agents {
                     { data: 'names' },
                     { data: 'debit' },
                     { data: 'credit' },
-                    { data: 'balance' },
                     { data: 'balanceFrom' },
+                    { data: 'balance' },
                 ],
             });
 
