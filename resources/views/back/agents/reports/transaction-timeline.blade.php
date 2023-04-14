@@ -1,18 +1,18 @@
 @extends('back.template')
 @section('styles')
-{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css"> --}}
-<style>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">
+
+{{-- <style>
     table.display {
         table-layout: fixed; /* Establecer el diseño de la tabla en fijo */
     }
 
     th, td {
         word-wrap: break-word; /* Permitir que las palabras se ajusten en las celdas */
-        overflow: scroll; /* Ocultar el contenido que se desborda */
+        overflow: auto; /* Ocultar el contenido que se desborda */
         text-overflow: ellipsis; /* Mostrar puntos suspensivos para el contenido que se desborda */
     }
-</style>
-
+</style> --}}
 @endsection
 @section('content')
 

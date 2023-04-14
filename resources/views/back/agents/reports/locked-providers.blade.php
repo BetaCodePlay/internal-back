@@ -1,6 +1,6 @@
 @extends('back.template')
 @section('styles')
-{{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css"> --}}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">
 @endsection
 @section('content')
     <div class="row">
