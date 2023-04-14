@@ -17,7 +17,6 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
-use Illuminate\Support\Facades\Log;
 use Ixudra\Curl\Facades\Curl;
 
 /**

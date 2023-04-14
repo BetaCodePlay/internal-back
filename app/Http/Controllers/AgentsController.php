@@ -262,7 +262,7 @@ class AgentsController extends Controller
 
                     $user = isset($userTmp[0]->id)?$userTmp[0]->id:null;
                     if(is_null($user)){
-                        \Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
+                        //\Log::notice('AgentsController::index',['0'=>$userTmp,'currency'=>session('currency'),Configurations::getWhitelabel()]);
                     }
                 }
 
@@ -324,14 +324,13 @@ class AgentsController extends Controller
 
             $closureRepo = new ClosuresUsersTotals2023Repo();
             $typeUser=$this->usersRepo->findTypeUser($user);
-            // \Log::info('typeUser',[$typeUser] );
             $arrayProviderTmp = array_map(function($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'),$whitelabel));
 
 
             $providersString = '{'.implode(',',$arrayProviderTmp).'}';
-            \Log::debug(['Params Closures:', $whitelabel, session('currency'), $startDateClosure, $endDateClosure, $user,$providersString]);
+            //\Log::debug(['Params Closures:', $whitelabel, session('currency'), $startDateClosure, $endDateClosure, $user,$providersString]);
             if (in_array($typeUser->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
                 //$closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, session('currency'),'2023-01-03', $endDateClosure, $user,$providersString);
                 //TODO USER = OWNER
@@ -340,7 +339,7 @@ class AgentsController extends Controller
                 $closures = $closureRepo->getTotalsClosurePaymentsByUser($whitelabel, session('currency'),$startDate, $endDateClosure, $user,$providersString);
                 //$closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, session('currency'), '2023-01-03', $endDateClosure, $user,$providersString);
             }
-            \Log::debug('closures',[$closures] );
+            //\Log::debug('closures',[$closures] );
             $data = [
                 'payments' => [
                     'username' => 'qwerty',
@@ -589,9 +588,7 @@ class AgentsController extends Controller
 //            }
             //TODO Return View Data
             $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
-            Log::notice('dataTransactionTimeline',[
-                $transactions
-            ]);
+
             $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request,$currency);
 
             return response()->json($data);
@@ -1736,7 +1733,7 @@ class AgentsController extends Controller
             $ownerBalanceFinal = $ownerAgent->balance;
             //$transactionID = $transactionsRepo->getNextValue();
             $transactionIdCreated = null;
-           // \Log::notice(__METHOD__, ['amount' =>   $request->amount, 'balance' =>  $ownerAgent->balance]);
+
             if ($id != $user) {
                 if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
                     $data = [
@@ -1875,7 +1872,6 @@ class AgentsController extends Controller
                         ];
                         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
                       //  new TransactionNotAllowed($amount, $agent->id, Providers::$agents, $transactionType);
-                     //   \Log::notice(__METHOD__, ['amount $agent->id' =>   $request->amount, 'balance' =>  $ownerAgent->balance]);
                         $transactionIdCreated = $ticket->id;
                         $button = sprintf(
                             '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
@@ -1924,7 +1920,6 @@ class AgentsController extends Controller
 
                     $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
                   //  new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
-                   // \Log::notice(__METHOD__, ['amount $ownerAgent->agent' =>   $request->amount, 'balance' =>  $ownerAgent->balance]);
                     $this->transactionsRepo->updateData($transactionIdCreated,$transactionFinal->id,round($ownerBalanceFinal,2));
 
                     $data = [

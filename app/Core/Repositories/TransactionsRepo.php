@@ -10,7 +10,6 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
 /**
@@ -1007,9 +1006,6 @@ class TransactionsRepo
      */
     public function getTransactionsTimelinePage($whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit = 10, $offset = 0)
     {
-        Log::notice('getTransactionsTimelinePage', [
-            '$whitelabel' => $whitelabel, '$currency' => $currency, '$startDate' => $startDate, '$endDate' => $endDate, '$providers' => $providers, '$user' => $user, $limit, $offset
-        ]);
         return DB::select('SELECT * FROM site.get_transactions_timeline_page(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $providers, $user, $limit, $offset]);
     }
 

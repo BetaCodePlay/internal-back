@@ -138,7 +138,7 @@ class WalletsController extends Controller
             if (!is_null(($wallet))) {
                 $transactions = Wallet::getTransactionsByWalletAndClient($wallet, $limit = 2000, $offset = 0);
                 $transactionsData = $transactions->data->transactions;
-                Log::info('transactions user',[$transactions->data]);
+                //Log::info('transactions user',[$transactions->data]);
                 $this->transactionsCollection->formatTransactions($transactionsData);
                 $data = [
                     'transactions' => $transactionsData
