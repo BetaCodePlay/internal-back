@@ -1435,7 +1435,7 @@ class TransactionsCollection
                 $dataTmp = json_decode($transaction->data);
                 $newData['date'] = Carbon::create($transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
 
-                $balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
+                //$balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
                 $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
                 if($transaction->transaction_type_id == TransactionTypes::$debit) {
                     $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> ';
@@ -1469,7 +1469,7 @@ class TransactionsCollection
                 }
                 if($transaction->transaction_type_id == TransactionTypes::$credit) {
                     if (isset($dataTmp->balance)) {
-                        $newData['balance'] =  number_format((float) $dataTmp->second_balance - (float) $newData['credit_'], 2);
+                        $newData['balance'] =  number_format((float) $dataTmp->second_balance - (float) $newData['credit'], 2);
                     }
                     if(isset($dataTmp->second_balance)) {
                         $newData['balanceFrom'] =  number_format($dataTmp->balance, 2);
