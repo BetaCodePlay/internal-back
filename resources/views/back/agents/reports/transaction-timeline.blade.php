@@ -38,17 +38,10 @@
                 <tr>
                     <th> {{ _i('Date') }}</th>
                     <th> {{ _i('Description') }}</th>
-{{--                    <th> Debit </th>--}}
-{{--                    <th> Credit</th>--}}
                     <th> {{ _i('Debit') }}</th>
                     <th> {{ _i('Credit') }}</th>
-{{--                    @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
-{{--                        <th> {{ _i('Balance').' ('.\Illuminate\Support\Facades\Auth::user()->username.')' }}</th>--}}
-{{--                    @else--}}
-{{--                        <th> {{ _i('Balance')}}</th>   --}}
-{{--                    @endif--}}
-                    <th> {{ _i('Balance(to)')}}</th>
-                    <th> {{ _i('Balance(from)')}}</th>
+                    <th> {{ _i('Balance'). ' ('._i('to').')'}}</th>
+                    <th> {{ _i('Balance'). ' ('._i('from').')'}}</th>
                 </tr>
                 </thead>
             </table>
