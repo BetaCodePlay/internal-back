@@ -2706,7 +2706,7 @@ class AgentsCollection
     {
         //TODO New route block agent and user, field action and status
         $actionTmp = (int)$user->action === 1 ||  (int)$user->action === 0 ?  ActionUser::$active:ActionUser::$locked_higher;
-        $statusTextTmp = ActionUser::getName($actionTmp);
+        $statusTextTmp = (int)$user->action === 1 ? _i('Active') : _i('Blocked');
         $statusClassTmp = $actionTmp === 1 ||  (int)$user->action === 0 ? 'teal'  : 'lightred';
         $user->status = sprintf(
             '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',

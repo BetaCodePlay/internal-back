@@ -96,7 +96,7 @@ class UsersCollection
             $status = false;
             if(!is_null($userIdTmp)){
                 $agent = $this->agentsRepo->existsUser($userIdTmp);
-                $userIdTmp = is_null($agent->user_id)?null:$agent->user_id;
+                $userIdTmp = is_null($agent) && !isset($agent->user_id)?null:$agent->user_id;
                 $status = true;
 
                 if($userIdTmp === $userIdAuth){

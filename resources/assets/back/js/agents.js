@@ -5,7 +5,7 @@ import {
     swalError,
     swalSuccessWithButton,
     swalSuccessNoButton,
-    swalInput
+    swalInput, swalInputInfo
 } from "../../commons/js/core";
 import {clearForm, getCookie, initDateRangePickerEndToday, initLitepickerEndToday,initLitepickerEndTodayNew, initSelect2, refreshRandomPassword} from "./commons";
 import moment from 'moment';
@@ -436,7 +436,8 @@ class Agents {
         $(document).on('click', '#change-user-status', function () {
             let description = $('#description').val();
             let route = $(this).data('route');
-            swalInput(route);
+            swalInputInfo(route);
+            //swalInput(route);
         });
     }
 

@@ -620,8 +620,15 @@ class UsersController extends Controller
                 $statusUpdate = true;
             } else {
 
-                //TODO VALIDAR EL SUPERIOR
-                $father = $this->usersCollection->treeFatherValidate($user,Auth::id());
+                $typeAudit = $this->auditsRepo->lastByType($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel());
+                $father = false;
+                if(!is_null($typeAudit) && isset($typeAudit->data->user_id)){
+                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id,Auth::id());
+                    if($typeAudit->data->user_id == Auth::id()){
+                        $father = true;
+                    }
+                }
+
                 if ($type == ActionUser::$active &&  $father) {
                     $data = [
                         'action' => ActionUser::$active,
@@ -656,10 +663,10 @@ class UsersController extends Controller
             }
 
             $response = [
-                'title' => __('Wrong Parameters'),
-                'message' => __('You need to fill in all the required fields'),
-                'data' => $validator->errors()->getMessages(),
-                'close' => _i('Close')
+                'title' => ActionUser::getName(ActionUser::$locked_higher),
+                'message' => __('This process requires superior access'),
+                'close' => _i('Close'),
+                'type'=>'info'
             ];
 
             return Utils::errorResponse(Codes::$forbidden, $response);
