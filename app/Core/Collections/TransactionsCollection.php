@@ -1441,9 +1441,13 @@ class TransactionsCollection
 //                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> ';
 //                }
 
-                $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
+
+                if($transaction->transaction_type_id == TransactionTypes::$credit) {
+                    $name = _('from').' <strong>'.$dataTmp->to .' </strong>'._('to').' '.$dataTmp->from;
+                    //$name = _('from').' '.$dataTmp->to .' <br>'._('to').' <strong>'.$dataTmp->from .' </strong> ';
+                }
                 if($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    $name = _('from').' '.$dataTmp->to .' <br>'._('to').' <strong>'.$dataTmp->from .' </strong> ';
+                    $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
                 }
 
 
