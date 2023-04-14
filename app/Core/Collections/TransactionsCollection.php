@@ -1467,10 +1467,10 @@ class TransactionsCollection
 
                 if($transaction->transaction_type_id == TransactionTypes::$debit) {
                     if (isset($dataTmp->second_balance)) {
-                        $newData['balance'] = number_format($dataTmp->second_balance, 2);
+                        $newData['balanceFrom'] = number_format($dataTmp->second_balance, 2);
                     }
                     if(isset($dataTmp->balance)) {
-                        $newData['balanceFrom'] = number_format((float) $dataTmp->balance + (float) $newData['debit_'], 2);
+                        $newData['balance'] = number_format((float) $dataTmp->balance + (float) $newData['debit_'], 2);
                     }
                 }
 
