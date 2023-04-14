@@ -47,7 +47,8 @@
 {{--                    @else--}}
 {{--                        <th> {{ _i('Balance')}}</th>   --}}
 {{--                    @endif--}}
-                    <th> {{ _i('Balance')}}</th>
+                    <th> {{ _i('Balance(to)')}}</th>
+                    <th> {{ _i('Balance(from)')}}</th>
                 </tr>
                 </thead>
             </table>
