@@ -1468,10 +1468,10 @@ class TransactionsCollection
                     }
                 }
                 if($transaction->transaction_type_id == TransactionTypes::$credit) {
-                    if (isset($dataTmp->balance)) {
+                    if (isset($dataTmp->second_balance)) {
                         $newData['balance'] =  number_format((float) $dataTmp->second_balance - (float) $newData['credit_'], 2);
                     }
-                    if(isset($dataTmp->second_balance)) {
+                    if(isset($dataTmp->balance)) {
                         $newData['balanceFrom'] =  number_format((float) $dataTmp->balance, 2);
                     }
                 }
