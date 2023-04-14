@@ -1443,11 +1443,11 @@ class TransactionsCollection
 
 
                 if($transaction->transaction_type_id == TransactionTypes::$credit) {
-                    $name = _i('from').' <strong>'.$dataTmp->to .' </strong>'._i('to').' '.$dataTmp->from;
+                    $name = '<strong>'._i('from').' '.$dataTmp->to .' </strong>'._i('to').' '.$dataTmp->from;
                     //$name = _('from').' '.$dataTmp->to .' <br>'._('to').' <strong>'.$dataTmp->from .' </strong> ';
                 }
                 if($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    $name = _i('from').' <strong>'.$dataTmp->from .' </strong>'._i('to').' '.$dataTmp->to;
+                    $name = '<strong>'._i('from').' '.$dataTmp->from .' </strong>'._i('to').' '.$dataTmp->to;
                 }
 
 

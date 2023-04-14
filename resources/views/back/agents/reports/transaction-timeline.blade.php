@@ -40,7 +40,7 @@
                     <th> {{ _i('Description') }}</th>
                     <th> {{ _i('Debit') }}</th>
                     <th> {{ _i('Credit') }}</th>
-                    <th> {{ _i('Balance'). ' ('._i('from').')'}}</th>
+                    <th> {{ _i('Balance')}} <strong>{{'('._i('from').')'}}</strong></th>
                     <th> {{ _i('Balance')}}</th>
 {{--                    <th> {{ _i('Balance'). ' ('._i('to').')'}}</th>--}}
                 </tr>
