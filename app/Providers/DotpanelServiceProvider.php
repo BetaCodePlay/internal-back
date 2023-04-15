@@ -35,6 +35,7 @@ class DotpanelServiceProvider extends ServiceProvider
         if (isset($_SERVER['HTTP_HOST'])) {
             $regex = '/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/';
             $domain = strtolower($_SERVER['HTTP_HOST']);
+            $iphone = 0;
 
             if ($request->path() == 'elb-health-check') {
                 $domain = 'dotworkers.net';
@@ -94,8 +95,6 @@ class DotpanelServiceProvider extends ServiceProvider
                     $browser = $agent->browser();
                     if(($browser== "Safari") && ($agent->isMobile() || $agent->isPhone() || $agent->isTablet())){
                         $iphone = 1;
-                    } else {
-                        $iphone = 0;
                     }
 
                     $languagesData = $coreCollection->formatLanguages($languages);
