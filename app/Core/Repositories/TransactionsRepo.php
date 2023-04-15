@@ -462,10 +462,10 @@ class TransactionsRepo
                                 AND t.user_id IN (" . implode(',', $agents) . ")
 
                                 AND ((t.data->>'from' = ? AND t.transaction_type_id = 1) OR (t.data->>'to' = ? AND t.transaction_type_id = 2))
-                                GROUP BY u.id, u.username",[Providers::$agents, $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved,$username, $username]);
+                                GROUP BY u.id, u.username", [Providers::$agents, $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
 
-        $financialDataExample =[];
-        foreach ($result as $item => $value){
+        $financialDataExample = [];
+        foreach ($result as $item => $value) {
             $debit = [
                 'id' => $value->id,
                 'username' => $value->username,
@@ -476,8 +476,8 @@ class TransactionsRepo
                 'username' => $value->username,
                 'total' => $value->credit,
             ];
-            $financialDataExample['deposits'][]=json_decode(json_encode($debit));
-            $financialDataExample['withdrawals'][]=json_decode(json_encode($credit));
+            $financialDataExample['deposits'][] = json_decode(json_encode($debit));
+            $financialDataExample['withdrawals'][] = json_decode(json_encode($credit));
 
         }
 
@@ -997,7 +997,7 @@ class TransactionsRepo
      * @param int $whitelabel Whitelabel Id
      * @param string $currency Currency Iso
      * @param string $providers Provider Ids
-     * @param int $user User Id
+     * @param string $user User Ids
      * @param int $limit Transactions limit
      * @param int $offset Transactions offset
      * @param string $startDate Start date to filter

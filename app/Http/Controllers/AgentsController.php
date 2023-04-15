@@ -580,14 +580,16 @@ class AgentsController extends Controller
             //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
             $user = Auth::id();
 
-//            //TODO CAMBIADO POR FUNCIONES SQL
-//            if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
-//                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
-//            }else{
-//                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,null,$limit,$offset);
-//            }
+            //TODO TEST ARRAYS OF IDS
+            //CHANGE BY FUNCTION SQL DATABASE
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $trees = $this->agentsCollection->dependencyTreeIds($agent, $agents, $users);
+            $trees = '{'.implode(', ',$trees).'}';
+
             //TODO Return View Data
-            $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
+            $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$trees,$limit,$offset);
 
             $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request,$currency);
 
@@ -1492,6 +1494,7 @@ class AgentsController extends Controller
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|View
      */
+
     public function index(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
         try {
@@ -1508,13 +1511,10 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            //return [$agent,$user,$currency];
-            // dd($agent);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
-            //return [json_decode($tree)];
+
             $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents($agents);
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
             $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
