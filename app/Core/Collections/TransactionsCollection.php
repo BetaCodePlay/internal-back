@@ -1470,13 +1470,13 @@ class TransactionsCollection
                         $newData['balanceFrom'] = number_format($dataTmp->second_balance + (float) $newData['debit_'], 2);
                     }
                     if(isset($dataTmp->balance)) {
-                        $newData['balance'] = number_format((float) $dataTmp->balance + (float) $newData['debit_'], 2);
+                        $newData['balance'] = number_format((float) $dataTmp->balance, 2);
                     }
                 }
 
                 if($transaction->transaction_type_id == TransactionTypes::$credit) {
                     if (isset($dataTmp->balance)) {
-                        $newData['balance'] =  number_format((float) $dataTmp->balance - (float) $newData['credit_'], 2);
+                        $newData['balance'] =  number_format((float) $dataTmp->balance, 2);
                     }
                     if(isset($dataTmp->second_balance)) {
                         $newData['balanceFrom'] =  number_format((float) $dataTmp->second_balance - (float) $newData['credit_'], 2);
