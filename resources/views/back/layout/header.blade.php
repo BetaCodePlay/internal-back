@@ -26,7 +26,8 @@
                     <i class="hs-admin-align-left"></i>
                 </a>
             </div>
-            @if(!$iphone)
+            @if(isset($iphone))
+                @if(!$iphone)
                 <form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
                       aria-labelledby="searchInvoker" action="{{ route('users.search') }}" method="get">
                     <div class="input-group g-max-width-450">
@@ -43,6 +44,7 @@
                    data-dropdown-target="#header-search-form" data-dropdown-type="css-animation" data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
                     <i class="hs-admin-search g-absolute-centered"></i>
                 </a>
+            @endif
             @endif
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
