@@ -28,6 +28,7 @@ let activeMenu = () => {
     let $item = $(`a[href="${url}"]`);
     $item.addClass('active');
     $item.parents('li').addClass('has-active u-side-nav-opened');
+    $item.parents('li').find('.collapse').eq(0).addClass('show');
 };
 
 // Clear form

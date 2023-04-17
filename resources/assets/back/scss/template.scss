@@ -54,17 +54,13 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 }
 
-#sideNavMenu {
-    .u-side-nav--has-sub-menu.u-side-nav-opened > ul {
-        display: inherit !important;
-    }
+.collapse {
+    display: none !important;
 
-    .u-side-nav--has-sub-menu > ul {
-        display: inherit !important;
+    &.show {
+        display: block !important;
     }
 }
-
-
 
 @media screen and (max-width: 575px) {
     #header-search-form {
