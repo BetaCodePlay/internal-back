@@ -259,15 +259,16 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
-                           'AgentsPayments' => [
-                               'text' => _i('Agents Payments'),
-                               'level_class' => 'third',
-                               'route' => 'agents.reports.agents-payments',
-                               'params' => [],
-                               'icon' => 'hs-admin-pie-chart',
-                               'permission' => Permissions::$agents_financial_report,
-                               'submenu' => []
-                           ],
+                            //TODO REPORTE QUEDO A MEDIA
+//                           'AgentsPayments' => [
+//                               'text' => _i('Agents Payments'),
+//                               'level_class' => 'third',
+//                               'route' => 'agents.reports.agents-payments',
+//                               'params' => [],
+//                               'icon' => 'hs-admin-pie-chart',
+//                               'permission' => Permissions::$agents_financial_report,
+//                               'submenu' => []
+//                           ],
 //                            'AgentsFinancialStateDetails' => [
 //                                'text' => _i('Financial state details'),
 //                                'level_class' => 'third',
