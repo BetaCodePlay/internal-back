@@ -58,7 +58,7 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     display: none;
 
     &.show {
-        display: block !important;
+        display: block;
     }
 }
 
