@@ -1654,6 +1654,26 @@ class AgentsController extends Controller
 
         try {
             $userAgent = $request->user;
+            $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
+            if($userData->action == ActionUser::$locked_higher){
+                $data = [
+                    'title' => _i('Blocked by a superior!'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+
+            if($userData->status == false){
+                $data = [
+                    'title' => _i('Deactivated user'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
             $agentId = $request->agent;
             $agent = $this->agentsRepo->existAgent($userAgent);
             if (is_null($agent)) {
@@ -1694,6 +1714,27 @@ class AgentsController extends Controller
         ]);
         try {
             $userAgent = $request->user;
+            $userData = $this->agentsRepo->findUser($userAgent);
+            if($userData->action == ActionUser::$locked_higher){
+                $data = [
+                    'title' => _i('Blocked by a superior!'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+
+            if($userData->status == false){
+                $data = [
+                    'title' => _i('Deactivated user'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+
             $agent = $request->agent;
 
             $agent = $this->agentsRepo->existAgent($agent);
@@ -1748,7 +1789,25 @@ class AgentsController extends Controller
                     $wallet = $request->wallet;
 
                     $userData = $this->agentsRepo->findUser($user);
+                    if($userData->action == ActionUser::$locked_higher){
+                        $data = [
+                            'title' => _i('Blocked by a superior!'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
 
+                    }
+
+                    if($userData->status == false){
+                        $data = [
+                            'title' => _i('Deactivated user'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
                     if ($transactionType == TransactionTypes::$credit) {
                         $uuid = Str::uuid()->toString();
                         $additionalData = [
@@ -1807,6 +1866,26 @@ class AgentsController extends Controller
                     );
                 } else {
                     $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+                    if($agent->action == ActionUser::$locked_higher){
+                        $data = [
+                            'title' => _i('Blocked by a superior!'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
+
+                    if($agent->status == false){
+                        $data = [
+                            'title' => _i('Deactivated user'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
+
                     $agentBalance = round($agent->balance, 2);
                     $agentBalanceFinal = $agent->balance;
 
