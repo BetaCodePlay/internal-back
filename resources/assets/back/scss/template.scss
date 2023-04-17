@@ -54,8 +54,12 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 }
 
-.collapse:not(.show) {
-    display: none;
+.collapse {
+    display: none !important;
+
+    &.show {
+        display: block !important;
+    }
 }
 
 @media screen and (max-width: 575px) {
