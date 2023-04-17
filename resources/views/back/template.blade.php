@@ -16,7 +16,7 @@
     @endif
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
-    <title>{{ $title ?? _i('Dotpanel') }}</title>
+    <title>{{ $title ?? _i('BackOffice') }}</title>
     <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.15">
     @yield('styles')
     <style>
@@ -32,11 +32,11 @@
         @include('back.layout.sidebar')
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             @include('back.layout.warning')
-
-            @if($iphone)
-                @include('back.layout.search')
+            @if(isset($iphone))
+                @if($iphone)
+                    @include('back.layout.search')
+                @endif
             @endif
-
 {{--            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
                 <div class="g-pt-20 g-pr-15 g-pl-15">
                     <div class="row">
