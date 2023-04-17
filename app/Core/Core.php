@@ -233,7 +233,7 @@ class Core
                 } else {
 
                     $html .= sprintf(
-                        '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--%s-level-menu-item">',
+                        '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--%s-level-menu-item collapse" data-toggle="collapse" data-target="#demo" id="demo">',
                         $item->level_class
                     );
 
