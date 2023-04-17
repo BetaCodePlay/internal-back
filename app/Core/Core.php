@@ -239,9 +239,10 @@ class Core
                     );
 
                     $html .= sprintf(
-                        '<a class="%s media u-side-nav--%s-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-toggle="collapse" data-target="#%s">',
+                        '<a class="%s media u-side-nav--%s-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#%s" data-toggle="collapse" data-target="#%s">',
                         $anchorFlex,
                         $item->level_class,
+                        $key . $item->level_class,
                         $key . $item->level_class
                     );
                 }
@@ -289,7 +290,7 @@ class Core
                         }
                     }
                     $html .= sprintf(
-                        '<ul id="%s" class="u-sidebar-navigation-v1-menu u-side-nav--%s-level-menu mb-0 u-side-nav-opened collapse">',
+                        '<ul id="%s" class="u-sidebar-navigation-v1-menu u-side-nav--%s-level-menu mb-0 collapse">',
                         $key . $item->level_class,
                         $level
                     );
