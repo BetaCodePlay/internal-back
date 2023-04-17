@@ -239,10 +239,9 @@ class Core
                     );
 
                     $html .= sprintf(
-                        '<a class="%s media u-side-nav--%s-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#%s" data-toggle="collapse" data-target="#%s">',
+                        '<a class="%s media u-side-nav--%s-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-toggle="collapse" data-target="#%s">',
                         $anchorFlex,
                         $item->level_class,
-                        $key . $item->level_class,
                         $key . $item->level_class
                     );
                 }
