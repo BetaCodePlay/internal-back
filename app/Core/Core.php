@@ -233,14 +233,15 @@ class Core
                 } else {
 
                     $html .= sprintf(
-                        '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--%s-level-menu-item collapse" data-toggle="collapse" data-target="#demo" id="demo">',
+                        '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--%s-level-menu-item">',
                         $item->level_class
                     );
 
                     $html .= sprintf(
-                        '<a class="%s media u-side-nav--%s-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#%s">',
+                        '<a class="%s media u-side-nav--%s-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#%s" data-toggle="collapse" data-target="#%s">',
                         $anchorFlex,
                         $item->level_class,
+                        $key . $item->level_class,
                         $key . $item->level_class
                     );
                 }
@@ -288,7 +289,7 @@ class Core
                         }
                     }
                     $html .= sprintf(
-                        '<ul id="%s" class="u-sidebar-navigation-v1-menu u-side-nav--%s-level-menu mb-0">',
+                        '<ul id="%s" class="u-sidebar-navigation-v1-menu u-side-nav--%s-level-menu mb-0 collapse">',
                         $key . $item->level_class,
                         $level
                     );
