@@ -54,6 +54,10 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 }
 
+.collapse:not(.show) {
+    display: none;
+}
+
 @media screen and (max-width: 575px) {
     #header-search-form {
         .input-group {
@@ -61,5 +65,4 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
             width: 100%;
         }
     }
-
 }
