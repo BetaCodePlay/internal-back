@@ -54,12 +54,8 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 }
 
-.collapse {
-    display: none;
-
-    &.show {
-        display: block;
-    }
+#sideNavMenu .u-side-nav--has-sub-menu.u-side-nav-opened > ul {
+    display: inherit !important;
 }
 
 @media screen and (max-width: 575px) {
