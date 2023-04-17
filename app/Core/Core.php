@@ -219,7 +219,7 @@ class Core
                     }
 
                     $html .= sprintf(
-                        '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--%s-level-menu-item">',
+                        '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--%s-level-menu-item" data-toggle="collapse" data-target="#demo" id="demo" class="collapse">',
                         $item->level_class
                     );
 
