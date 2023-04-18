@@ -1946,6 +1946,7 @@ class AgentsController extends Controller
                     $additionalData['transaction_id'] = $transactionIdCreated;
 
                     $additionalData['second_balance'] = $transactionType == TransactionTypes::$credit ? round($agentBalanceFinal,2) : round($agentBalanceFinal,2) - $amount;
+
                     $transactionData = [
                         //'id' => $transactionID,
                         'user_id' => $id,

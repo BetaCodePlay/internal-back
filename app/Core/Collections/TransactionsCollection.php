@@ -1435,15 +1435,21 @@ class TransactionsCollection
                 $dataTmp = json_decode($transaction->data);
                 $newData['date'] = Carbon::create($transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
 
-                $balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
-                $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
-                if($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> ';
+                //$balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
+//                $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
+//                if($transaction->transaction_type_id == TransactionTypes::$debit) {
+//                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> ';
+//                }
+
+
+                if($transaction->transaction_type_id == TransactionTypes::$credit) {
+                    $name = '<strong>'._i('from').' '.$dataTmp->to .' </strong>'._i('to').' '.$dataTmp->from;
+                    //$name = _('from').' '.$dataTmp->to .' <br>'._('to').' <strong>'.$dataTmp->from .' </strong> ';
                 }
-                // $name = _('from').' <strong>'.$dataTmp->from .' </strong> '._i('Current balance').': '.$balanceOld.''.$currency.' <br> '._('to').' '.$dataTmp->to;
-                // if($transaction->transaction_type_id == TransactionTypes::$debit){
-                //     $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> '._i('Current balance').': '.$balanceOld.''.$currency.'';
-                // }
+                if($transaction->transaction_type_id == TransactionTypes::$debit) {
+                    $name = '<strong>'._i('from').' '.$dataTmp->from .' </strong>'._i('to').' '.$dataTmp->to;
+                }
+
 
                 $newData['id'] = $transaction->id;
                 $newData['names'] =  $name;
@@ -1460,21 +1466,32 @@ class TransactionsCollection
                 $newData['balanceFrom'] = '0.00';
 
                 if($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    if (isset($dataTmp->balance)) {
-                        $newData['balance'] = number_format($dataTmp->balance, 2);
+                    if (isset($dataTmp->second_balance)) {
+                        $newData['balanceFrom'] = number_format($dataTmp->second_balance, 2);
                     }
-                    if(isset($dataTmp->second_balance)) {
-                        $newData['balanceFrom'] = number_format((float) $dataTmp->second_balance + (float) $newData['debit'], 2);
+                    if(isset($dataTmp->balance)) {
+                        $newData['balance'] = number_format((float) $dataTmp->balance, 2);
                     }
                 }
+
                 if($transaction->transaction_type_id == TransactionTypes::$credit) {
                     if (isset($dataTmp->balance)) {
-                        $newData['balance'] =  number_format((float) $dataTmp->second_balance - (float) $newData['credit_'], 2);
+                        $newData['balance'] =  number_format((float) $dataTmp->balance, 2);
                     }
                     if(isset($dataTmp->second_balance)) {
-                        $newData['balanceFrom'] =  number_format($dataTmp->balance, 2);
+                        $newData['balanceFrom'] =  number_format((float) $dataTmp->second_balance, 2);
                     }
                 }
+
+//                if($transaction->transaction_type_id == TransactionTypes::$credit) {
+//                    $name = _('from').' <strong>'.$dataTmp->to .' </strong>'._('to').' '.$dataTmp->from;
+//                }
+//                if($transaction->transaction_type_id == TransactionTypes::$debit) {
+//                    $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
+//                }
+//
+
+
 
                 $data[] = $newData;
             }

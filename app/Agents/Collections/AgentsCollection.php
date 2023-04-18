@@ -13,6 +13,7 @@ use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -190,9 +191,9 @@ class AgentsCollection
         if (!empty($tableDb)) {
 
             //TODO STATUS OF PROVIDERS IN PROD
-            $arrayProviderTmp = array_map(function($val) {
+            $arrayProviderTmp = array_map(function ($val) {
                 return $val->id;
-            },$closureRepo->getProvidersActiveByCredentials(true,$currency,$whitelabel));
+            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));
 
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider) {
@@ -215,14 +216,14 @@ class AgentsCollection
                     'providers' => []
                 ];
 
-                $providersString = '{'.implode(',',$arrayProviderTmp).'}';
+                $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
 
                 if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 } else {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id,$providersString);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 }
-                $arrayTmpClosures[$value->user_id]=$closures;
+                $arrayTmpClosures[$value->user_id] = $closures;
 
                 if (count($closures) > 0) {
                     $providerDB = [];
@@ -276,10 +277,6 @@ class AgentsCollection
                 }
                 $htmlProvider .= "</tr>";
 
-            }
-
-            if($whitelabel ==  3){
-                Log::notice('closuresTotalsByAgentGroupProvider',[0=>$providersString,1=>$tableDb,2=>$arrayTmpClosures]);
             }
 
             //TODO TOTALES
@@ -985,6 +982,93 @@ class AgentsCollection
                     ]
                 ];
             }
+        }
+        return $children;
+    }
+
+    /**
+     * Format dependency tree Ids
+     *
+     * @param array $agents Agents data
+     * @param array $users Users data
+     * @return false|string
+     */
+    public function dependencyTreeIds($agent, $agents, $users)
+    {
+        $tree = [
+            'id' => $agent->id,
+        ];
+        $agentsChildren = $this->agentsTreeIds($agents);
+        $usersChildren = $this->usersTreeIds($users);
+        $children = array_merge($agentsChildren, $usersChildren);
+        $tree = array_merge($children, $tree);
+
+        return Arr::flatten($tree);
+    }
+
+    /**
+     * Agents tree Ids
+     *
+     * @param array $agents Agents data
+     * @return array
+     */
+    private function agentsTreeIds($agents)
+    {
+        $agentsRepo = new AgentsRepo();
+        $currency = session('currency');
+        $tree = [];
+
+        foreach ($agents as $agent) {
+            $children = null;
+            $subAgents = $agentsRepo->getAgentsByOwner($agent->user_id, $currency);
+            $users = $agentsRepo->getUsersByAgent($agent->id, $currency);
+
+            if (count($subAgents) > 0) {
+                $agentsChildren = $this->agentsTreeIds($subAgents);
+            }
+
+            if (count($users) > 0) {
+                $usersChildren = $this->usersTreeIds($users);
+            }
+
+            if (count($subAgents) > 0 && count($users) > 0) {
+                $children = array_merge($agentsChildren, $usersChildren);
+
+            } else {
+                if (count($subAgents) > 0) {
+                    $children = $agentsChildren;
+                }
+
+                if (count($users) > 0) {
+                    $children = $usersChildren;
+                }
+            }
+
+            $treeItem = [
+                'id' => $agent->user_id,
+            ];
+
+            if (!is_null($children)) {
+                $treeItem[] = $children;
+            }
+            $tree[] = $treeItem;
+        }
+        return $tree;
+    }
+
+    /**
+     * Users tree Ids
+     *
+     * @param array $users Users data
+     * @return array
+     */
+    private function usersTreeIds($users)
+    {
+        $children = [];
+        foreach ($users as $user) {
+            $children[] = [
+                'id' => $user->id,
+            ];
         }
         return $children;
     }
@@ -2705,12 +2789,12 @@ class AgentsCollection
     public function formatAgent($user)
     {
         //TODO New route block agent and user, field action and status
-        $actionTmp = (int)$user->action === 1 ||  (int)$user->action === 0 ?  ActionUser::$active:ActionUser::$locked_higher;
+        $actionTmp = (int)$user->action === 1 || (int)$user->action === 0 ? ActionUser::$active : ActionUser::$locked_higher;
         $statusTextTmp = (int)$user->action === 1 ? _i('Active') : _i('Blocked');
-        $statusClassTmp = $actionTmp === 1 ||  (int)$user->action === 0 ? 'teal'  : 'lightred';
+        $statusClassTmp = $actionTmp === 1 || (int)$user->action === 0 ? 'teal' : 'lightred';
         $user->status = sprintf(
             '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
-            route('users.block.status', [$user->id, ((int)$user->action === 1 ?ActionUser::$locked_higher:  ActionUser::$active), 0]),
+            route('users.block.status', [$user->id, ((int)$user->action === 1 ? ActionUser::$locked_higher : ActionUser::$active), 0]),
             $statusClassTmp,
             $statusTextTmp
         );
@@ -2790,12 +2874,12 @@ class AgentsCollection
             $amountTmp = $transaction->amount;
             $transaction->amount = number_format($transaction->amount, 2);
             $transaction->debit = 0;
-            if($transaction->transaction_type_id == TransactionTypes::$debit){
+            if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
                 $totalDebit = $totalDebit + $amountTmp;
             }
             $transaction->credit = 0;
-            if($transaction->transaction_type_id == TransactionTypes::$credit){
+            if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
                 $totalCredit = $totalCredit + $amountTmp;
             }
@@ -2808,23 +2892,23 @@ class AgentsCollection
         $totalBalance = $totalCredit - $totalDebit;
 
         $newTransactions->push([
-            'id'=>null,
-            'amount'=>null,
-            'transaction_type_id'=>null,
-            'created_at'=>null,
-            'provider_id'=>null,
-            'data'=>[
-                'from'=>null,
-                'to'=>null,
-                'balance'=>null,
-                'transaction_id'=>null,
-                'second_balance'=>null,
+            'id' => null,
+            'amount' => null,
+            'transaction_type_id' => null,
+            'created_at' => null,
+            'provider_id' => null,
+            'data' => [
+                'from' => null,
+                'to' => null,
+                'balance' => null,
+                'transaction_id' => null,
+                'second_balance' => null,
             ],
-            'transaction_status_id'=>null,
-            'date'=>'<strong>' . _i('Totals') . '</strong>',
-            'debit'=>'<strong>' . number_format($totalDebit, 2, ",", ".") . '</strong>',
-            'credit'=>'<strong>' . number_format($totalCredit, 2, ",", ".") . '</strong>',
-            'balance'=>'<strong>' . number_format($totalBalance, 2, ",", ".") . '</strong>',
+            'transaction_status_id' => null,
+            'date' => '<strong>' . _i('Totals') . '</strong>',
+            'debit' => '<strong>' . number_format($totalDebit, 2, ",", ".") . '</strong>',
+            'credit' => '<strong>' . number_format($totalCredit, 2, ",", ".") . '</strong>',
+            'balance' => '<strong>' . number_format($totalBalance, 2, ",", ".") . '</strong>',
         ]);
 
         return $newTransactions;
@@ -2835,7 +2919,7 @@ class AgentsCollection
      *
      * @param array $transactions Transactions data
      */
-    public function formatAgentTransactionsPaginate($transactions,$total,$request)
+    public function formatAgentTransactionsPaginate($transactions, $total, $request)
     {
         $timezone = session('timezone');
         $totalDebit = 0;
@@ -2848,79 +2932,41 @@ class AgentsCollection
             $transaction->credit = 0;
             $transaction->balance = 0;
 
-            if($transaction->transaction_type_id == TransactionTypes::$debit){
+            if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
                 $totalDebit = $totalDebit + $amountTmp;
             }
-            if($transaction->transaction_type_id == TransactionTypes::$credit){
+            if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
                 $totalCredit = $totalCredit + $amountTmp;
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
             }
-            $data[] =[
-                'id'=>null,
-                'date'=>$transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
-                'data'=>[
-                    'from'=>isset($transaction->data->from)?$transaction->data->from:null,
-                    'to'  =>isset($transaction->data->to)?$transaction->data->to:null,
+            $data[] = [
+                'id' => null,
+                'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
+                'data' => [
+                    'from' => isset($transaction->data->from) ? $transaction->data->from : null,
+                    'to' => isset($transaction->data->to) ? $transaction->data->to : null,
                 ],
-                'debit'=> number_format($transaction->debit, 2, ",", "."),
-                'credit'=> number_format($transaction->credit, 2, ",", "."),
-                'balance'=> $transaction->balance,
+                'debit' => number_format($transaction->debit, 2, ",", "."),
+                'credit' => number_format($transaction->credit, 2, ",", "."),
+                'balance' => $transaction->balance,
             ];
 
         }
 
         $json_data = array(
-            "draw"            => intval($request->input('draw')),
-            "recordsTotal"    => intval($total),
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($total),
             "recordsFiltered" => intval($total),
-            "data"            => $data
+            "data" => $data
         );
 
         return $json_data;
 
     }
-
-    /**
-     * Format Total Credit And Debit
-     * @param $credit
-     * @param $debit
-     * @return string
-     */
-    public function formatAgentTransactionsTotals($credit, $debit)
-    {
-
-        $htmlTotals = sprintf(
-            '<table  class="table table-bordered w-100">
-                    <thead>
-                        <tr>
-                            <th>%s</th>
-                            <th class="text-right">'._i('Debit').'</th>
-                            <th class="text-right">'._i('Credit').'</th>
-                            <th class="text-right">'._i('Balance').'</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                        </tr>
-                    </tbody>',
-            _i('Totals'),
-            number_format($debit,2),
-            number_format($credit,2),
-            number_format(($credit-$debit),2),
-        );
-
-        return $htmlTotals;
-
-    }
-
 
     /**
      * Format agents transactions report
@@ -2941,6 +2987,43 @@ class AgentsCollection
                 $transaction->balance = 0;
             }
         }
+    }
+
+    /**
+     * Format Total Credit And Debit
+     * @param $credit
+     * @param $debit
+     * @return string
+     */
+    public function formatAgentTransactionsTotals($credit, $debit)
+    {
+
+        $htmlTotals = sprintf(
+            '<table  class="table table-bordered w-100">
+                    <thead>
+                        <tr>
+                            <th>%s</th>
+                            <th class="text-right">' . _i('Debit') . '</th>
+                            <th class="text-right">' . _i('Credit') . '</th>
+                            <th class="text-right">' . _i('Balance') . '</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                        </tr>
+                    </tbody>',
+            _i('Totals'),
+            number_format($debit, 2),
+            number_format($credit, 2),
+            number_format(($credit - $debit), 2),
+        );
+
+        return $htmlTotals;
+
     }
 
     /**
