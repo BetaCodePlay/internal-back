@@ -1734,7 +1734,10 @@ class AgentsController extends Controller
             //$transactionID = $transactionsRepo->getNextValue();
             $transactionIdCreated = null;
 
+             /* If the logged in user is different from the user that the balance is added to*/
             if ($id != $user) {
+
+                /*Insufficient balance */
                 if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
                     $data = [
                         'title' => _i('Insufficient balance'),
@@ -1744,11 +1747,12 @@ class AgentsController extends Controller
                     return Utils::errorResponse(Codes::$forbidden, $data);
                 }
 
+                /* User Type: User */
                 if ($type == 'user') {
                     $wallet = $request->wallet;
 
                     $userData = $this->agentsRepo->findUser($user);
-
+                    $walletData = Wallet::getByClient($userData->id, $currency);
                     if ($transactionType == TransactionTypes::$credit) {
                         $uuid = Str::uuid()->toString();
                         $additionalData = [
@@ -1759,9 +1763,9 @@ class AgentsController extends Controller
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                       //  new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
-                        $agentBalanceFinal = $amount;
+                        $agentBalanceFinal = $walletData->data->wallet->balance;
                     } else {
-                        $walletData = Wallet::getByClient($userData->id, $currency);
+
                         $agentBalanceFinal = $walletData->data->wallet->balance;
                         if ($amount > $walletData->data->wallet->balance) {
                             $data = [
@@ -1805,48 +1809,74 @@ class AgentsController extends Controller
                         route('agents.ticket', [$ticket->id]),
                         _i('Print ticket')
                     );
-                } else {
+                }
+                /* User Type: Agent */
+                else {
+                    /*We consulted the agent to recharge balance*/
                     $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+                    /* Agent Balance */
                     $agentBalance = round($agent->balance, 2);
-                    $agentBalanceFinal = $agent->balance;
 
+                    // $agentBalanceFinal = $agent->balance;
+
+                    /*If the transaction is credit type */
                     if ($transactionType == TransactionTypes::$credit) {
+                        /*Valid status */
                         $status = Status::$ok;
+                        /*$balance: is the sum of the agent's current balance and the amount to be credited */
                         $balance = $agentBalance + $amount;
+                        /*$agentBalanceFinal: is the sum of the agent's current balance and the amount to be credited */
+                        $agentBalanceFinal = $agent->balance + $amount;
+                        /*$agentData: agent id and selected currency are saved */
                         $agentData = [
                             'agent_id' => $agent->agent,
                             'currency_iso' => $currency
                         ];
+                        /*$balanceData: balance is saved */
                         $balanceData = [
                             'balance' => $balance
                         ];
+                        /*The balance field of that agent is added or modified in the agent_currencies table */
                         if ($agent->username != 'wolf') {
-                            $this->agentCurrenciesRepo->store($agentData, $balanceData);
+                           $this->agentCurrenciesRepo->store($agentData, $balanceData);
                         }
+                        /* $ownerBalance: Balance from which the transaction was generated minus the amount to be credited */
                         $ownerBalance = $ownerAgent->balance - $amount;
-
+                        /*$additionalData: This is what is stored in the data field of the transactions table  */
                         $additionalData = [
                             'from' => $ownerAgent->username,
                             'to' => $agent->username,
                             'balance' => $balance
                         ];
 
-                    } else {
+                    }
+                    /*If the transaction is debit type */
+                    else {
                         if ($amount <= $agentBalance) {
+                            /*Valid status */
                             $status = Status::$ok;
+                            /*$balance: is the sum of the agent's current balance and the amount to be debited */
                             $balance = $agentBalance - $amount;
+                            /*$agentBalanceFinal: is the sum of the agent's current balance and the amount to be debited */
+                            $agentBalanceFinal = $agent->balance;
+
+                            /*$agentData: agent id and selected currency are saved */
                             $agentData = [
                                 'agent_id' => $agent->agent,
                                 'currency_iso' => $currency
                             ];
+
+                            /*$balanceData: balance is saved */
                             $balanceData = [
                                 'balance' => $balance
                             ];
-                            if ($agent->username != 'support') {
+                            /*The balance field of that agent is added or modified in the agent_currencies table */
+                            if ($agent->username != 'wolf') {
                                 $this->agentCurrenciesRepo->store($agentData, $balanceData);
                             }
+                            /* $ownerBalance: Balance from which the transaction was generated minus the amount to be credited */
                             $ownerBalance = $ownerAgent->balance + $amount;
-
+                            /*$additionalData: This is what is stored in the data field of the transactions table  */
                             $additionalData = [
                                 'from' => $agent->username,
                                 'to' => $ownerAgent->username,
@@ -1858,8 +1888,9 @@ class AgentsController extends Controller
                         }
 
                     }
-
+                    /*If valid status equals true*/
                     if ($status == Status::$ok) {
+                        /*$transactionData: This is the data of the first transaction that is generated. */
                         $transactionData = [
                             'user_id' => $agent->id,
                             'amount' => $amount,
@@ -1870,9 +1901,12 @@ class AgentsController extends Controller
                             'data' => $additionalData,
                             'whitelabel_id' => Configurations::getWhitelabel()
                         ];
+                        /* $ticket: here the first transaction in the table is generated.*/
                         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-                      //  new TransactionNotAllowed($amount, $agent->id, Providers::$agents, $transactionType);
+
                         $transactionIdCreated = $ticket->id;
+
+                        //  new TransactionNotAllowed($amount, $agent->id, Providers::$agents, $transactionType);
                         $button = sprintf(
                             '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
                             route('agents.ticket', [$ticket->id]),
@@ -1880,32 +1914,38 @@ class AgentsController extends Controller
                         );
                     }
                 }
-
+                /*If valid status equals true*/
                 if ($status == Status::$ok) {
+                    /*$agentData: agent id and selected currency are saved */
                     $agentData = [
                         'agent_id' => $ownerAgent->agent,
                         'currency_iso' => $currency
                     ];
+                    /*$balanceData: balance is saved */
                     $balanceData = [
                         'balance' => $ownerBalance
                     ];
+                    /*The balance field of that agent is added or modified in the agent_currencies table */
                     if ($ownerAgent->username != 'wolf') {
                         $this->agentCurrenciesRepo->store($agentData, $balanceData);
                     }
-
+                    /* if $type equals user */
                     if ($type == 'user') {
+                        /*I assign the balance */
                         $additionalData['balance'] = $ownerBalance;
                     }
-
+                    /* If the logged in user is different from wolf */
                     if ($ownerAgent->username != 'wolf') {
+                        /*I assign the balance */
                         $additionalData['balance'] = $ownerBalance;
                     } else {
+                        /*I assign the balance */
                         $additionalData['balance'] = 0;
                     }
-
+                    /*it is assigned the id of the transaction created first */
                     $additionalData['transaction_id'] = $transactionIdCreated;
-                    $additionalData['second_balance'] = round($agentBalanceFinal,2);
 
+                    $additionalData['second_balance'] = $transactionType == TransactionTypes::$credit ? round($agentBalanceFinal,2) : round($agentBalanceFinal,2) - $amount;
                     $transactionData = [
                         //'id' => $transactionID,
                         'user_id' => $id,
@@ -1920,7 +1960,7 @@ class AgentsController extends Controller
 
                     $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
                   //  new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
-                    $this->transactionsRepo->updateData($transactionIdCreated,$transactionFinal->id,round($ownerBalanceFinal,2));
+                    $this->transactionsRepo->updateData($transactionIdCreated,$transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal,2) - $amount :  round($ownerBalanceFinal,2) + $amount);
 
                     $data = [
                         'title' => _i('Transaction performed'),
