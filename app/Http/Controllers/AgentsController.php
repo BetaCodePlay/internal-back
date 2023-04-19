@@ -1662,6 +1662,25 @@ class AgentsController extends Controller
             $userAgent = $request->user;
             $agentId = $request->agent;
             $agent = $this->agentsRepo->existAgent($userAgent);
+            $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
+            if($userData->action == ActionUser::$locked_higher){
+                $data = [
+                    'title' => _i('Blocked by a superior!'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+            if($userData->status == false){
+                $data = [
+                    'title' => _i('Deactivated user'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
             if (is_null($agent)) {
                 $data = [
                     'title' => _i('Agent moved'),
@@ -1703,6 +1722,26 @@ class AgentsController extends Controller
             $agent = $request->agent;
 
             $agent = $this->agentsRepo->existAgent($agent);
+            $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
+            if($userData->action == ActionUser::$locked_higher){
+                $data = [
+                    'title' => _i('Blocked by a superior!'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+            if($userData->status == false){
+                $data = [
+                    'title' => _i('Deactivated user'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+
             $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
             $data = [
                 'title' => _i('User moved'),
