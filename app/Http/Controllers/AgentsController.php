@@ -580,14 +580,17 @@ class AgentsController extends Controller
             //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
             $user = Auth::id();
 
-//            //TODO CAMBIADO POR FUNCIONES SQL
-//            if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
-//                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
-//            }else{
-//                $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,null,$limit,$offset);
-//            }
+            //TODO TEST ARRAYS OF IDS
+            //CHANGE BY FUNCTION SQL DATABASE
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $trees = $this->agentsCollection->dependencyTreeIds($agent, $agents, $users);
+            $trees = '{'.implode(', ',$trees).'}';
+
             //TODO Return View Data
-            $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
+            $transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$trees,$limit,$offset);
+            //$transactions = $this->transactionsRepo->getTransactionsTimelinePage($whitelabel, $currency, $startDate,$endDate,$providers,$user,$limit,$offset);
 
             $data = $this->transactionsCollection->formatTransactionTimeline($transactions,$timezone,$request,$currency);
 
@@ -841,8 +844,11 @@ class AgentsController extends Controller
             foreach ($agents as $agent) {
                 $agentsIds[] = $agent->user_id;
             }
-            $financialDataTest = $this->transactionsRepo->getCashFlowTransactionsNew($username, $agentsIds, $whitelabel, $currency, $startDate, $endDate);
-            //$financialData = $this->transactionsRepo->getCashFlowTransactions($username, $agentsIds, $whitelabel, $currency, $startDate, $endDate);
+            $financialDataTest = [];
+            if(count($agentsIds)>0){
+                $financialDataTest = $this->transactionsRepo->getCashFlowTransactionsNew($username, $agentsIds, $whitelabel, $currency, $startDate, $endDate);
+                //$financialData = $this->transactionsRepo->getCashFlowTransactions($username, $agentsIds, $whitelabel, $currency, $startDate, $endDate);
+            }
 
             $financial = $transactionsCollection->formatCashFlowDataByUsers($financialDataTest, $whitelabel, $currency, $startDate, $endDate);
 
@@ -1752,6 +1758,25 @@ class AgentsController extends Controller
                     $wallet = $request->wallet;
 
                     $userData = $this->agentsRepo->findUser($user);
+                    if($userData->action == ActionUser::$locked_higher){
+                        $data = [
+                            'title' => _i('Blocked by a superior!'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
+                    if($userData->status == false){
+                        $data = [
+                            'title' => _i('Deactivated user'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
+
                     $walletData = Wallet::getByClient($userData->id, $currency);
                     if ($transactionType == TransactionTypes::$credit) {
                         $uuid = Str::uuid()->toString();
@@ -1814,6 +1839,25 @@ class AgentsController extends Controller
                 else {
                     /*We consulted the agent to recharge balance*/
                     $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+                    if($agent->action == ActionUser::$locked_higher){
+                        $data = [
+                            'title' => _i('Blocked by a superior!'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
+                    if($agent->status == false){
+                        $data = [
+                            'title' => _i('Deactivated user'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
+
                     /* Agent Balance */
                     $agentBalance = round($agent->balance, 2);
 
