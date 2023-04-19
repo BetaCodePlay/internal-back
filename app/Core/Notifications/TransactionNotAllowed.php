@@ -60,13 +60,11 @@ class TransactionNotAllowed
      */
     private function sendSms($message)
     {
-        /*
+
         $sms = AwsFacade::createClient('sns');
         $numbers = [
             'Victor Digitel' => '+584123601639',
-            'Orlando Digitel' => '+584123298857',
-            'Lucas'  => '+5493425463140',
-            'Nedith Digitel' => '+584126107846',
+            'Orlando Digitel' => '+584123298857'
 
         ];
 
@@ -85,15 +83,16 @@ class TransactionNotAllowed
                     ],
                 ],
             ]);
-        }*/
-
+        }
+        \Log::notice(__METHOD__, ['message' =>  $message, 'sms' =>  $sms ]);
+        /*
         $sms = AwsFacade::createClient('sns');
         $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
-        \Log::notice(__METHOD__, ['message' =>  $message, 'theme' => $theme]);
+
         $sms->publish([
             'Message' => $message,
             'TopicArn' => $theme
-        ]);
+        ]);*/
     }
 
     /**
