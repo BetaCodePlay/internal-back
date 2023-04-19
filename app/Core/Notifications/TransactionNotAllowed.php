@@ -67,32 +67,34 @@ class TransactionNotAllowed
             'Orlando Digitel' => '+584123298857'
 
         ];
-
-        foreach ($numbers as $number) {
-            $sms->publish([
-                'Message' => $message,
-                'PhoneNumber' => $number,
-                'MessageAttributes' => [
-                    'AWS.SNS.SMS.SMSType' => [
-                        'DataType' => 'String',
-                        'StringValue' => 'Transactional',
-                    ],
-                    'AWS.SNS.SMS.SenderID' => [
-                        'DataType' => 'String',
-                        'StringValue' => 'DotPanel'
-                    ],
-                ],
-            ]);
-        }
-        \Log::notice(__METHOD__, ['message' =>  $message, 'sms' =>  $sms ]);
         /*
-        $sms = AwsFacade::createClient('sns');
-        $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
+               foreach ($numbers as $number) {
+                   $sms->publish([
+                       'Message' => $message,
+                       'PhoneNumber' => $number,
+                       'MessageAttributes' => [
+                           'AWS.SNS.SMS.SMSType' => [
+                               'DataType' => 'String',
+                               'StringValue' => 'Transactional',
+                           ],
+                           'AWS.SNS.SMS.SenderID' => [
+                               'DataType' => 'String',
+                               'StringValue' => 'back-office'
+                           ],
+                       ],
+                   ]);
+               }
+        */
 
-        $sms->publish([
-            'Message' => $message,
-            'TopicArn' => $theme
-        ]);*/
+
+               $sms = AwsFacade::createClient('sns');
+               $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
+
+               $sms->publish([
+                   'Message' => $message,
+                   'TopicArn' => $theme
+               ]);
+        \Log::notice(__METHOD__, ['message' =>  $message, 'sms' =>  $sms ]);
     }
 
     /**
