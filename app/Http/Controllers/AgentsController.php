@@ -1863,7 +1863,7 @@ class AgentsController extends Controller
                             'to' => $userData->username
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
-                        //  new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
+                        new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
                     } else {
@@ -1885,7 +1885,7 @@ class AgentsController extends Controller
                             'to' => $ownerAgent->username
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
-                        //  new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
+                        new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance + $amount;
                     }
                     $balance = $transaction->data->wallet->balance;
@@ -2079,7 +2079,7 @@ class AgentsController extends Controller
                     ];
 
                     $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-                    //  new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
+                    new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
                     $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
 
                     $data = [
