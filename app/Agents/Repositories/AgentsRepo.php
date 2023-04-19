@@ -148,6 +148,17 @@ class AgentsRepo
             ->first();
     }
 
+    /** find action and status by user
+     * @param int $user Ids
+     * @return mixed
+     */
+    public function statusActionByUser(int $user)
+    {
+        return User::select('status','action')
+            ->where('id', $user)
+            ->first();
+    }
+
     /**
      * Find user
      *
