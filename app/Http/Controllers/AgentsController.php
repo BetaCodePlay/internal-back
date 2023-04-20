@@ -1803,7 +1803,7 @@ class AgentsController extends Controller
 
             $agent = $this->agentsRepo->existAgent($agent);
             $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
-            if ($userData->action == ActionUser::$locked_higher || $userData->status == false) {
+            if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
                     'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
                     'message' => _i('Contact your superior...'),
