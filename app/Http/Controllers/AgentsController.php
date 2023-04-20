@@ -1801,20 +1801,11 @@ class AgentsController extends Controller
             $userAgent = $request->user;
             $agent = $request->agent;
 
-            $agent = $this->agentsRepocexistAgent($agent);
+            $agent = $this->agentsRepo->existAgent($agent);
             $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
-            if ($userData->action == ActionUser::$locked_higher) {
+            if ($userData->action == ActionUser::$locked_higher || $userData->status == false) {
                 $data = [
-                    'title' => _i('Blocked by a superior!'),
-                    'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$not_found, $data);
-
-            }
-            if ($userData->status == false) {
-                $data = [
-                    'title' => _i('Deactivated user'),
+                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
