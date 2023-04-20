@@ -821,7 +821,22 @@ class Agents {
             });
         });
    }
+   // Balance Current of Agent
+    balanceAgentCurrent($url){
+        $('.balance').text('');
+        $.ajax({
+            url: $url,
+            method: 'get',
+            dataType: 'json'
+        }).done(function (json) {
+            if(json.status){
+                $('.balance').text(json.balance);
+            }
 
+        }).fail(function (json) {
+            swalError(json);
+        });
+    }
     // Move agent user
     moveAgentUser(){
         initSelect2();
