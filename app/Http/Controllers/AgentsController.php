@@ -1801,8 +1801,8 @@ class AgentsController extends Controller
             $userAgent = $request->user;
             $agent = $request->agent;
 
-            $agent = $this->agentsRepo->existAgent($agent);
-            $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
+            $agent = $this->agentsRepocexistAgent($agent);
+            $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
             if ($userData->action == ActionUser::$locked_higher) {
                 $data = [
                     'title' => _i('Blocked by a superior!'),

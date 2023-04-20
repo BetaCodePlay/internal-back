@@ -164,6 +164,13 @@ class AgentsRepo
             ->first();
     }
 
+    public function statusActionByUser_tmp(int $user)
+    {
+        return User::select('status','action')
+            ->where('id', $user)
+            ->first();
+    }
+
     /**
      * Find user
      *
