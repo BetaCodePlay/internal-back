@@ -1192,12 +1192,14 @@ class TransactionsRepo
      * @param int $balance Add field "second_balance" in transaction data json
      * @return mixed
      */
-    public function updateData($id, $newId, $balance)
+    public function updateData($id, $newId, $balance = null)
     {
         $transaction = Transaction::find($id);
         $dataTmp = Helper::convertToArray($transaction->data);
         $dataTmp['transaction_id'] = $newId;
-        $dataTmp['second_balance'] = $balance;
+        if(!is_null($balance)){
+            $dataTmp['second_balance'] = $balance;
+        }
         $transaction->data = $dataTmp;
         $transaction->update();
         return $transaction;
