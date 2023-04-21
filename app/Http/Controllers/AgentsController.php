@@ -2465,6 +2465,13 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$not_found, $data);
 
             }
+            $transactionData = [
+                'amount' => $amount,
+                'currency_iso' => $currency,
+                'transaction_status_id' => TransactionStatus::$approved,
+                'provider_id' => Providers::$agents,
+                'whitelabel_id' => Configurations::getWhitelabel()
+            ];
 
             switch ($transactionType){
                 case TransactionTypes::$credit:{
@@ -2475,6 +2482,7 @@ class AgentsController extends Controller
                     // BUSCO BALANCE CON EL AGENTE1,MONDEDA Y DEBITAR
                     // BUSCAR EL AGENTE2 CON EN ID USER 2
                     // BUSCO BALANCE CON EL AGENTE2, MONEDA Y ACREDITAR
+                    //                                          user debit , amount,  user credit, currency
                     $balance = $agentsRepo->statusActionByUser($userAuth->id,$amount,$userAffected,$currency);
                     /*error debiting*/
                     if($balance->status == 'FAILED'){
@@ -2491,40 +2499,28 @@ class AgentsController extends Controller
                     // AGENT2 Y NUEVO BALANCE
 
                     /*add authenticated user transactions*/
-                    $transactionData = [
-                        'user_id' => $userAuth->id,
-                        'amount' => $amount,
-                        'currency_iso' => $currency,
-                        'transaction_type_id' => TransactionTypes::$debit,
-                        'transaction_status_id' => TransactionStatus::$approved,
-                        'provider_id' => Providers::$agents,
-                        'data' => [
-                            'from' => $userAuth->username,//TODO username auth
-                            'to' => $userAuth->username,//TODO username affect
-                            'balance' => $balance //TODO balance de username auth
-                        ],
-                        'whitelabel_id' => Configurations::getWhitelabel()
+                    $transactionAdd = $transactionData;
+                    $transactionAdd['user_id']=$userAuth->id;
+                    $transactionAdd['transaction_type_id']=TransactionTypes::$debit;
+                    $transactionAdd['data']=[
+                        'from' => $userAuth->username,//TODO username auth
+                        'to' => $userAuth->username,//TODO username affect
+                        'balance' => $balance //TODO balance de username auth
                     ];
 
-                    $transaction1 = $transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                    $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
 
                     /*add affected user transactions*/
-                    $transactionData = [
-                        'user_id' => $userAffected,
-                        'amount' => $amount,
-                        'currency_iso' => $currency,
-                        'transaction_type_id' => TransactionTypes::$credit,
-                        'transaction_status_id' => TransactionStatus::$approved,
-                        'provider_id' => Providers::$agents,
-                        'data' => [
-                            'from' => $userAuth->username,//TODO username auth
-                            'to' => $userAuth->username,//TODO username affect
-                            'balance' => $balance, //TODO balance de affect auth
-                            'transaction_id'=>$transaction1->id
-                        ],
-                        'whitelabel_id' => Configurations::getWhitelabel()
+                    $transactionAdd = $transactionData;
+                    $transactionAdd['user_id']=$userAffected;
+                    $transactionAdd['transaction_type_id']=TransactionTypes::$credit;
+                    $transactionAdd['data']=[
+                        'from' => $userAuth->username,//TODO username auth
+                        'to' => $userAuth->username,//TODO username affect
+                        'balance' => $balance, //TODO balance de username auth
+                        'transaction_id'=>$transaction1->id
                     ];
-                    $transaction2 = $transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                    $transaction2 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
 
                     /*add related transaction id*/
                     $transactionsRepo->updateData($transaction1->id, $transaction2->id);
