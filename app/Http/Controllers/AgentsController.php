@@ -805,6 +805,48 @@ class AgentsController extends Controller
     }
 
     /**
+     * Consult Balance by Type
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function consultBalanceByType(Request $request)
+    {
+
+        try {
+
+            $id = $request->has('user') ? $request->get('user') : Auth::id();
+            $type = $request->has('type') ? $request->get('type') : 'agent';
+            $currency = session('currency');
+            $balance = 0;
+            if ($type == 'agent') {
+                $agent = $this->agentsRepo->balanceCurrentAgent($id, $currency);
+                $balance = isset($agent->balance) ? number_format($agent->balance, 2) : 0;
+
+            }/* else {
+                $user = $this->agentsRepo->findUser($id);
+                $master = false;
+                $wallet = Wallet::getByClient($id, $currency);
+                $balance = $wallet->data->wallet->balance;
+                $agent = false;
+                $walletId = $wallet->data->wallet->id;
+                $myself = false;
+            }*/
+
+            $json_data = array(
+                "status" => true,
+                "balance" => $balance
+            );
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            $json_data = array(
+                "status" => false,
+            );
+        }
+
+        return response()->json($json_data);
+    }
+
+    /**
      * Data Example Sql and Datatable
      * Data Of Example
      * @param Request $request
@@ -1760,19 +1802,10 @@ class AgentsController extends Controller
             $agent = $request->agent;
 
             $agent = $this->agentsRepo->existAgent($agent);
-            $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
-            if ($userData->action == ActionUser::$locked_higher) {
+            $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
+            if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => _i('Blocked by a superior!'),
-                    'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$not_found, $data);
-
-            }
-            if ($userData->status == false) {
-                $data = [
-                    'title' => _i('Deactivated user'),
+                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2830,6 +2863,32 @@ class AgentsController extends Controller
     {
         $data['title'] = _i('Users balances');
         return view('back.agents.reports.users-balances', $data);
+    }
+
+    /**
+     * View Create User
+     * @param CountriesRepo $countriesRepo
+     * @param ProvidersRepo $providersRepo
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|\Illuminate\Contracts\View\View|void
+     */
+    public function viewCreateUser(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+        try {
+
+            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency(auth()->user()->id, session('currency'));
+            $data['countries'] = $countriesRepo->all();
+            $data['timezones'] = \DateTimeZone::listIdentifiers();
+
+            $data['title'] = _i('Create player');
+
+            return view('back.agents.user-and-agent.create-user', $data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
     }
 
     /**
