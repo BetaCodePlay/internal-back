@@ -20,7 +20,7 @@
                     <form action="<?php echo e(route('agents.store-user')); ?>" method="post" id="create-users-form">
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="username"><?php echo e(_i('Username')); ?></label>
                                         <input type="text" name="username" class="form-control" autocomplete="off">
@@ -28,7 +28,7 @@
                                         <small class="form-text text-muted"><?php echo e(_i('The username cannot be changed later')); ?></small>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-md-4">
                                     <label for="password"><?php echo e(_i('Password')); ?></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="password">
@@ -40,7 +40,7 @@
                                     </div>
                                     <small class="form-text text-muted"><?php echo e(_i('Minimum 8 characters, 1 letter and 1 number')); ?></small>
                                 </div>
-                                <div class="col-12 col-sm-4">
+                                <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="balance"><?php echo e(_i('Balance')); ?></label>
                                         <input type="number" name="balance" class="form-control">
@@ -62,14 +62,14 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4 option_data_user d-none">
+                                <div class="col-12 col-md-4 option_data_user d-none">
                                     <div class="form-group">
                                         <label for="email"><?php echo e(_i('Email')); ?></label>
                                         <input type="email" name="email" id="email" class="form-control"
                                                placeholder="<?php echo e(_i('Optional')); ?>" autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4 option_data_user d-none">
+                                <div class="col-12 col-md-4 option_data_user d-none">
                                     <div class="form-group">
                                         <label for="country"><?php echo e(_i('Country')); ?></label>
                                         <select name="country" id="country" class="form-control" style="width: 100%">
@@ -84,7 +84,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-4 option_data_user d-none">
+                                <div class="col-12 col-md-4 option_data_user d-none">
                                     <div class="form-group">
                                         <label for="timezone"><?php echo e(_i('Timezone')); ?></label>
                                         <select name="timezone" id="timezone" class="form-control" style="width: 100%">
