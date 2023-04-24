@@ -28,16 +28,7 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-user',
                 'permission' => Permissions::$users_menu,
                 'submenu' => [
-                    //Create Player
-                    'AgentsCreateUser' => [
-                        'text' => _i('Create player'),
-                        'level_class' => 'second',
-                        'route' => 'agents.create.user',
-                        'params' => [],
-                        'icon' => 'hs-admin-dashboard',
-                        'permission' => Permissions::$agents_dashboard,
-                        'submenu' => []
-                    ],
+
                     'Create' => [
                         'text' => _i('Create'),
                         'level_class' => 'second',
@@ -236,6 +227,16 @@ if (!function_exists('menu')) {
                         'params' => [],
                         'icon' => 'hs-admin-dashboard',
                         'permission' => Permissions::$agents_dashboard,
+                        'submenu' => []
+                    ],
+                    //Create Player
+                    'AgentsCreateUser' => [
+                        'text' => _i('Create player'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.user',
+                        'params' => [],
+                        'icon' => 'hs-admin-dashboard',
+                        'permission' => Permissions::$add_agent_users,
                         'submenu' => []
                     ],
 

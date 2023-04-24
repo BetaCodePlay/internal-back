@@ -33,6 +33,22 @@ class AgentsRepo
     }
 
     /**
+     * Balance Current by user ID and currency
+     *
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return Builder|Model|object|null
+     */
+    public function balanceCurrentAgent(int $user, string $currency)
+    {
+        return Agent::select('agent_currencies.balance')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('agents.user_id', $user)
+            ->first();
+    }
+
+    /**
      * Block agents and users
      *
      * @param array $agents Agent data
@@ -106,7 +122,7 @@ class AgentsRepo
     {
         $agent = Agent::on('replica')
             ->select('users.id', 'users.username', 'users.status', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
-            'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance', 'agent_currencies.currency_iso')
+                'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance', 'agent_currencies.currency_iso')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('users', 'agents.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
@@ -138,13 +154,20 @@ class AgentsRepo
     public function findByUserIdAndCurrency(int $user, string $currency)
     {
         return Agent::on('replica')
-            ->select('users.id', 'users.username', 'users.status', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
-            'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance', 'agent_currencies.currency_iso')
+            ->select('users.id', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
+                'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance', 'agent_currencies.currency_iso')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('users', 'agents.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.id', $user)
+            ->first();
+    }
+
+    public function statusActionByUser_tmp(int $user)
+    {
+        return User::select('status','action')
+            ->where('id', $user)
             ->first();
     }
 
@@ -157,7 +180,7 @@ class AgentsRepo
     public function findUser($user)
     {
         $user = Agent::on('replica')
-            ->select('users.id', 'users.username', 'users.status', 'profiles.timezone', 'agent_user.agent_id as owner', 'users.referral_code')
+            ->select('users.id', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agent_user.agent_id as owner', 'users.referral_code')
             ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
             ->join('users', 'agent_user.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
@@ -167,23 +190,30 @@ class AgentsRepo
     }
 
     /**
-     * Consult Percentage By Currency
-     * @param int $user User Id
-     * @param string $currency Currency Iso
+     * get agent lock by provider
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @param int $provider Provider ID
      * @return mixed
      */
-    public function myPercentageByCurrency(int $user, string $currency)
+    public function getAgentLockByProvider($currency, $provider, $whitelabel)
     {
-        $iAgent = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?)',[$user,$currency]);
-        return $iAgent;
-    }
+        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_providers_users.provider_id', 'exclude_providers_users.created_at', 'providers.name')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
+            ->join('providers', 'exclude_providers_users.provider_id', '=', 'providers.id')
+            ->where('exclude_providers_users.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabel);
 
-    public function iAgent($user)
-    {
-        $iAgent = DB::select('SELECT a.percentage
-                 FROM site.agents a
-                 WHERE user_id = ?',[$user]);
-        return $iAgent[0];
+        if (!empty($provider)) {
+            $agents->where('exclude_providers_users.provider_id', $provider);
+        }
+
+        $data = $agents->get();
+        return $data;
     }
 
     /**
@@ -239,6 +269,21 @@ class AgentsRepo
     }
 
     /**
+     * Get exclude user provider
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getExcludeUserProvider($user)
+    {
+        $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.currency_iso')
+            ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
+            ->where('exclude_providers_users.user_id', $user)
+            ->get();
+        return $data;
+    }
+
+    /**
      * Get searcg agents by owner
      *
      * @param var $username Username
@@ -262,45 +307,26 @@ class AgentsRepo
     }
 
     /**
-     * Get exclude user provider
+     * Get search users by agent
      *
-     * @param int $user User ID
-     * @return mixed
-     */
-    public function getExcludeUserProvider($user)
-    {
-        $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.currency_iso')
-            ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
-            ->where('exclude_providers_users.user_id', $user)
-            ->get();
-        return $data;
-    }
-
-    /**
-     * get agent lock by provider
-     *
-     * @param int $whitelabel Whitelabel ID
+     * @param int $agent Agent ID
      * @param string $currency Currency ISO
-     * @param string $startDate Start date to filter
-     * @param string $endDate End date to filter
-     * @param int $provider Provider ID
      * @return mixed
      */
-    public function getAgentLockByProvider($currency, $provider, $whitelabel)
+    public function getSearchUsersByAgent($currency, $agent, $whitelabel)
     {
-        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_providers_users.provider_id', 'exclude_providers_users.created_at', 'providers.name')
-            ->join('users', 'agents.user_id', '=', 'users.id')
-            ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
-            ->join('providers', 'exclude_providers_users.provider_id', '=', 'providers.id')
-            ->where('exclude_providers_users.currency_iso', $currency)
-            ->where('users.whitelabel_id', $whitelabel);
-
-        if (!empty($provider)) {
-            $agents->where('exclude_providers_users.provider_id', $provider);
-        }
-
-        $data = $agents->get();
-        return $data;
+        $users = Agent::on('replica')
+            ->select('users.id', 'users.username', 'users.status', 'profiles.timezone', 'agent_user.agent_id as owner', 'users.referral_code')
+            ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
+            ->join('users', 'agent_user.user_id', '=', 'users.id')
+            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('agents.id', $agent)
+            ->where('user_currencies.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabel)
+            ->orderBy('users.username', 'ASC')
+            ->get();
+        return $users;
     }
 
     /**
@@ -346,27 +372,12 @@ class AgentsRepo
             ->get();
     }
 
-    /**
-     * Get search users by agent
-     *
-     * @param int $agent Agent ID
-     * @param string $currency Currency ISO
-     * @return mixed
-     */
-    public function getSearchUsersByAgent($currency, $agent, $whitelabel)
+    public function iAgent($user)
     {
-        $users = Agent::on('replica')
-            ->select('users.id', 'users.username', 'users.status', 'profiles.timezone', 'agent_user.agent_id as owner', 'users.referral_code')
-            ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
-            ->join('users', 'agent_user.user_id', '=', 'users.id')
-            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
-            ->join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->where('agents.id', $agent)
-            ->where('user_currencies.currency_iso', $currency)
-            ->where('users.whitelabel_id', $whitelabel)
-            ->orderBy('users.username', 'ASC')
-            ->get();
-        return $users;
+        $iAgent = DB::select('SELECT a.percentage
+                 FROM site.agents a
+                 WHERE user_id = ?', [$user]);
+        return $iAgent[0];
     }
 
     /**
@@ -386,18 +397,6 @@ class AgentsRepo
     }
 
     /**
-     * Store agent
-     *
-     * @param array $data Agent data
-     * @return mixed
-     */
-    public function store($data)
-    {
-        $agent = Agent::create($data);
-        return $agent;
-    }
-
-    /**
      * Update agents
      *
      * @param int $id Agent ID
@@ -409,6 +408,30 @@ class AgentsRepo
         $agent = Agent::find($id);
         $agent->fill($data);
         $agent->save();
+        return $agent;
+    }
+
+    /**
+     * Consult Percentage By Currency
+     * @param int $user User Id
+     * @param string $currency Currency Iso
+     * @return mixed
+     */
+    public function myPercentageByCurrency(int $user, string $currency)
+    {
+        $iAgent = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?)', [$user, $currency]);
+        return $iAgent;
+    }
+
+    /**
+     * Store agent
+     *
+     * @param array $data Agent data
+     * @return mixed
+     */
+    public function store($data)
+    {
+        $agent = Agent::create($data);
         return $agent;
     }
 

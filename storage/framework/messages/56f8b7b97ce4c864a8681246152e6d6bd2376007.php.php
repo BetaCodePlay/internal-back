@@ -55,6 +55,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -68,6 +69,7 @@ use App\CRM\Repositories\SegmentsRepo;
 use App\CRM\Collections\SegmentsCollection;
 use App\Users\Repositories\AutoLockUsersRepo;
 use Jenssegers\Agent\Agent;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class UsersController
@@ -445,7 +447,7 @@ class UsersController extends Controller
                 $email = strtolower($email);
             }
 
-            $currency = $request->get('currency',session()->get('currency'));
+            $currency = $request->get('currency', session()->get('currency'));
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueEmail = $this->usersRepo->uniqueEmail($email);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
@@ -493,8 +495,8 @@ class UsersController extends Controller
                 'action' => ActionUser::$active,
             ];
             $profileData = [
-                'country_iso' => $request->get('country',session()->get('country_iso')),
-                'timezone' => $request->get('timezone',session()->get('timezone')),
+                'country_iso' => $request->get('country', session()->get('country_iso')),
+                'timezone' => $request->get('timezone', session()->get('timezone')),
                 'level' => 1
             ];
             $user = $this->usersRepo->store($userData, $profileData);
@@ -571,6 +573,110 @@ class UsersController extends Controller
     {
         $data['title'] = _i('Autolocked users');
         return view('back.users.autolocked-users', $data);
+    }
+
+    /**
+     * Block Agent
+     * @param Request $request
+     * @return Response
+     */
+    public function blockAgent($user,$lock_type,$fake,$description = null)
+    {
+
+        try {
+
+          $rules = [
+                'user_id' => ['required', 'exists:users,id'],
+                'lock_type' => ['required', 'integer'],
+                'description' => ['required'],
+            ];
+
+            $validator = Validator::make([
+                'user_id'=>$user,
+                'lock_type'=>$lock_type,
+                'description'=>$description
+            ], $rules, $this->custom_message());
+
+            if ($validator->fails()) {
+
+                $response = [
+                    'title' => __('Wrong Parameters'),
+                    'message' => __('You need to fill in all the required fields'),
+                    'data' => $validator->errors()->getMessages(),
+                    'close' => _i('Close'),
+                    'type'=>'info'
+                ];
+
+                return Utils::errorResponse(Codes::$forbidden, $response);
+            }
+
+            $statusUpdate = false;
+            $data = [];
+            $type = $lock_type;
+            if ($type == ActionUser::$locked_higher) {
+                $data = [
+                    'action' => ActionUser::$locked_higher,
+                    'status' => false,
+                ];
+                $statusUpdate = true;
+            } else {
+
+                $typeAudit = $this->auditsRepo->lastByType($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel());
+                $father = false;
+                if(!is_null($typeAudit) && isset($typeAudit->data->user_id)){
+                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id,Auth::id());
+                    if($typeAudit->data->user_id == Auth::id()){
+                        $father = true;
+                    }
+                }
+
+                if ($type == ActionUser::$active &&  $father) {
+                    $data = [
+                        'action' => ActionUser::$active,
+                        'status' => true,
+                    ];
+                    $statusUpdate =  true;
+                }
+
+            }
+
+            if($statusUpdate){
+                $this->usersRepo->update($user, $data);
+
+                $auditData = [
+                    'ip' => Utils::userIp(),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'new_action' => $type,
+                    'description' => $description
+                ];
+
+                Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
+
+                $data = [
+                    'title' => _i('Status updated'),
+                    'message' => _i('User status was updated successfully'),
+                    'close' => _i('Close'),
+                    'type' => $fake
+                ];
+
+                return Utils::successResponse($data);
+            }
+
+            $response = [
+                'title' => ActionUser::getName(ActionUser::$locked_higher),
+                'message' => __('This process requires superior access'),
+                'close' => _i('Close'),
+                'type'=>'info'
+            ];
+
+            return Utils::errorResponse(Codes::$forbidden, $response);
+
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
@@ -771,6 +877,19 @@ class UsersController extends Controller
         }
     }
 
+    /** Custom Message Validator
+     * @return array
+     */
+    public function custom_message()
+    {
+        return [
+            'description.required' => __('Description is required'),
+            'lock_type.required' => __('Lock type is required'),
+            'user_id.required' => __('Id user is required'),
+            'user_id.exists' => __('Id user does not exist'),
+        ];
+    }
+
     /**
      * Dashboard graphic
      *
@@ -930,7 +1049,8 @@ class UsersController extends Controller
 //                    $agent = $this->agentsRepo->existsUser($user->id);
 //                    $this->usersCollection->formatAgent($agent);
 
-                    $treeFather = $this->usersCollection->treeFatherFormat($user->id);
+                    //$treeFather = $this->usersCollection->treeFatherValidate($user->id, Auth::user()->id);
+                    $treeFather = $this->usersCollection->treeFatherFormat($user->id, Auth::user()->id);
 
                     $walletData = $wallet->data->wallet;
                     $walletsCollection->formatWallet($walletData);
@@ -960,7 +1080,7 @@ class UsersController extends Controller
 
 //                    if (!is_null($agent)) {
 //                        $data['agent'] = $agent->username;
-                        $data['agent'] = $treeFather;
+                    $data['agent'] = '<ol reversed>' . $treeFather . '<ol/>';
 //                    }
 
                     $data['login_user'] = $loginURL;
@@ -976,7 +1096,7 @@ class UsersController extends Controller
                     //$data['segments'] = $segments;
                     $data['document_verification'] = $documentVerification;
                     $data['bonus'] = $bonus;
-                    $data['payments'] = !isset(config('whitelabels.configurations')[Components::$services-1]->data->payments)?false:config('whitelabels.configurations')[Components::$services-1]->data->payments;
+                    $data['payments'] = !isset(config('whitelabels.configurations')[Components::$services - 1]->data->payments) ? false : config('whitelabels.configurations')[Components::$services - 1]->data->payments;
                     //return $data;
                     return view('back.users.details', $data);
                 }
@@ -1386,9 +1506,13 @@ class UsersController extends Controller
         try {
             $username = strtolower($request->username);
             if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-                //TODO REPLICA DE TREE
-                $tree = $this->usersRepo->treeSqlByUser(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
-                $users = $this->usersRepo->searchTree($username, $tree);
+                $tree = $this->usersRepo->sqlTreeAllUsersSon(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
+                //TODO MIDIFICAR ARRAY IDS
+                $arrayIds = [];
+                foreach ($tree as $item => $value) {
+                    $arrayIds[] = $value->user_id;
+                }
+                $users = $this->usersRepo->searchTree($username, $arrayIds);
             } else {
                 $users = $this->usersRepo->search($username);
             }
@@ -1865,12 +1989,23 @@ class UsersController extends Controller
     public function resetPassword(Request $request)
     {
         $this->validate($request, [
-            'password' => ['required','confirmed',new Password()],
+            'password' => ['required', 'confirmed', new Password()],
             'password_confirmation' => 'required'
         ]);
 
         try {
             $user = $request->user;
+            $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
+                $data = [
+                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+
             $password = $request->password;
             $userData = [
                 'password' => $password
@@ -1920,7 +2055,7 @@ class UsersController extends Controller
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
-            $users = ['support', 'admin', 'develop', 'supportfc', 'supportgl', 'supportnb', 'supportvj'];
+            $users = ['wolf', 'admin', 'panther', 'romeo', 'supportgl', 'supportnb', 'supportvj'];
 
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
@@ -1934,12 +2069,12 @@ class UsersController extends Controller
                         $email = "{$user}@dotworkers.com";
 
                         switch ($user) {
-                            case 'support':
+                            case 'wolf':
                             {
                                 $password = env('MAIN_SUPPORT_PASSWORD');
                                 break;
                             }
-                            case 'develop':
+                            case 'panther':
                             {
                                 $password = env('DEVELOP_PASSWORD');
                                 break;

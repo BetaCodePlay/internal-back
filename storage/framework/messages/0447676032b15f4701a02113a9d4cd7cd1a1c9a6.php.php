@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Agents\Repositories\AgentsRepo;
 use App\BetPay\BetPay;
 use App\Core\Repositories\SectionImagesRepo;
+use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use Dotworkers\Configurations\Configurations;
@@ -49,6 +50,7 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
+
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -59,11 +61,48 @@ class AuthController extends Controller
                 'username' => strtolower($request->username),
                 'password' => $request->password,
                 'whitelabel_id' => $whitelabel,
-                'status' => true
+                //'status' => true
             ];
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
+
+                if(auth()->user()->action == ActionUser::$locked_higher){
+                    session()->flush();
+                    auth()->logout();
+                    $data = [
+                        'title' => _i('Blocked by a superior!'),
+                        'message' => _i('Contact your superior...'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$not_found, $data);
+
+                }
+                if(auth()->user()->action == ActionUser::$locked_login_attempts || auth()->user()->action == ActionUser::$changed_password){
+                    session()->flush();
+                    auth()->logout();
+                    $data = [
+                        'title' => _i('Access denied'),
+                        'message' => _i('Contact your superior...'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$not_found, $data);
+
+                }
+
+                if(auth()->user()->status == false){
+                    session()->flush();
+                    auth()->logout();
+                    $data = [
+                        'title' => _i('Deactivated user'),
+                        'message' => _i('Contact your superior...'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$not_found, $data);
+
+                }
+                //TODO VALIDAR LAS OTRAS ACCIONES
+                //
                 $profile = $profilesRepo->find($user);
                 $defaultCurrency = $userCurrenciesRepo->findDefault($user);
 
