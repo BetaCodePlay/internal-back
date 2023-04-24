@@ -39,7 +39,7 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
                     //Create Agent
-                    'AgentsCreateUser' => [
+                    'AgentsCreateAgent' => [
                         'text' => _i('Create agent'),
                         'level_class' => 'second',
                         'route' => 'agents.create.agent',
