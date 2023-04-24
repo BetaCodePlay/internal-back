@@ -41,7 +41,7 @@ class CoreCollection
             $country = strtolower(substr($language, 3, 2));
             $languagesData[] = [
                 'iso' => $language,
-                'flag' => global_asset("dotworkers-llc/flags/circle/$country.png"),
+                'flag' => global_asset("24live-llc/flags/circle/$country.png"),
                 'name' => Languages::getName($language)
             ];
         }
@@ -95,7 +95,7 @@ class CoreCollection
         $languagesData = [
             'iso' => $language,
             'iso_abbreviation' => $isoAbbreviation,
-            'flag' => global_asset("dotworkers-llc/flags/circle/$country.png"),
+            'flag' => global_asset("24live-llc/flags/circle/$country.png"),
             'name' => Languages::getName($language)
         ];
         return $languagesData;
