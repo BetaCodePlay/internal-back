@@ -1805,7 +1805,7 @@ class AgentsController extends Controller
             $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!') : _i('Deactivated user'),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2863,6 +2863,32 @@ class AgentsController extends Controller
     {
         $data['title'] = _i('Users balances');
         return view('back.agents.reports.users-balances', $data);
+    }
+
+    /**
+     * View Create Agent
+     * @param CountriesRepo $countriesRepo
+     * @param ProvidersRepo $providersRepo
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|\Illuminate\Contracts\View\View|void
+     */
+    public function viewCreateAgent(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+        try {
+
+            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency(auth()->user()->id, session('currency'));
+            $data['countries'] = $countriesRepo->all();
+            $data['timezones'] = \DateTimeZone::listIdentifiers();
+
+            $data['title'] = _i('Create agent');
+
+            return view('back.agents.user-and-agent.create-user', $data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
     }
 
     /**
