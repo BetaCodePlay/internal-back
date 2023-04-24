@@ -20,8 +20,10 @@
                                     <div class="form-group">
                                         <label for="username">{{ _i('Username') }}</label>
                                         <input type="text" name="username" class="form-control" autocomplete="off">
-                                        <small class="form-text text-muted">{{ _i('Only letters and numbers without spaces (4-12 characters)') }}</small>
-                                        <small class="form-text text-muted">{{ _i('The username cannot be changed later') }}</small>
+                                        <small
+                                            class="form-text text-muted">{{ _i('Only letters and numbers without spaces (4-12 characters)') }}</small>
+                                        <small
+                                            class="form-text text-muted">{{ _i('The username cannot be changed later') }}</small>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
@@ -29,16 +31,20 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="password">
                                         <div class="input-group-append">
-                                            <button class="btn u-input-btn--v1 g-width-40 u-btn-primary g-rounded-right-4 u-btn-3d refresh-password" type="button">
+                                            <button
+                                                class="btn u-input-btn--v1 g-width-40 u-btn-primary g-rounded-right-4 u-btn-3d refresh-password"
+                                                type="button">
                                                 <i class="hs-admin-reload g-absolute-centered g-font-size-16 g-color-white"></i>
                                             </button>
                                         </div>
                                     </div>
-                                    <small class="form-text text-muted">{{ _i('Minimum 8 characters, 1 letter and 1 number') }}</small>
+                                    <small
+                                        class="form-text text-muted">{{ _i('Minimum 8 characters, 1 letter and 1 number') }}</small>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
-                                        <label for="balance">{{ _i('Operational balance (It will be credited in %s)', [session('currency')]) }}</label>
+                                        <label
+                                            for="balance">{{ _i('Operational balance (It will be credited in %s)', [session('currency')]) }}</label>
                                         <input type="number" name="balance" class="form-control">
                                         <small class="form-text text-danger">
                                             {{ _i('Available') }}: <span class="balance"></span>
@@ -55,7 +61,8 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="form-group">
                                         <label for="master">{{ _i('Agent type') }}</label><br>
-                                        <select name="master" id="master" class="form-control agent_type" style="width: 100%">
+                                        <select name="master" id="master" class="form-control agent_type"
+                                                style="width: 100%">
                                             <option value="true">
                                                 {{ _i('Master agent') }}
                                             </option>
@@ -77,7 +84,8 @@
                                         <select name="timezone" class="form-control" style="width: 100%">
                                             <option value="">{{ _i('Select...') }}</option>
                                             @foreach ($timezones as $timezone)
-                                                <option value="{{ $timezone }}" {{ $timezone == session()->get('timezone') ? 'selected' : '' }}>
+                                                <option
+                                                    value="{{ $timezone }}" {{ $timezone == session()->get('timezone') ? 'selected' : '' }}>
                                                     {{ $timezone }}
                                                 </option>
                                             @endforeach
@@ -89,10 +97,12 @@
                                     <div class="col-12 col-sm-6 option_data_agent">
                                         <div class="form-group">
                                             <label for="currencies">{{ _i('Currencies') }}</label>
-                                            <select name="currencies[]" class="form-control" multiple style="width: 100%">
+                                            <select name="currencies[]" class="form-control" multiple
+                                                    style="width: 100%">
                                                 <option value="">{{ _i('Select...') }}</option>
                                                 @foreach ($whitelabel_currencies as $currency)
-                                                    <option value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
+                                                    <option
+                                                        value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
                                                         {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
                                                     </option>
                                                 @endforeach

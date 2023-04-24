@@ -38,6 +38,16 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$agents_dashboard,
                         'submenu' => []
                     ],
+                    //Create Agent
+                    'AgentsCreateUser' => [
+                        'text' => _i('Create agent'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.agent',
+                        'params' => [],
+                        'icon' => 'hs-admin-dashboard',
+                        'permission' => Permissions::$agents_dashboard,
+                        'submenu' => []
+                    ],
                     'Create' => [
                         'text' => _i('Create'),
                         'level_class' => 'second',

@@ -39,6 +39,11 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@viewCreateUser'
     ]);
 
+    Route::get('create-agent', [
+        'as' => 'agents.create.agent',
+        'uses' => 'AgentsController@viewCreateAgent'
+    ]);
+
     Route::get('consult-balance-by-type', [
         'as' => 'agents.consult.balance.by.type',
         'uses' => 'AgentsController@consultBalanceByType'

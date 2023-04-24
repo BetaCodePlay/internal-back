@@ -2883,7 +2883,7 @@ class AgentsController extends Controller
 
             $data['title'] = _i('Create agent');
 
-            return view('back.agents.user-and-agent.create-user', $data);
+            return view('back.agents.user-and-agent.create-agent', $data);
 
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
