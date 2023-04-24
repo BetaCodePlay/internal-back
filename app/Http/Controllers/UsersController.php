@@ -885,8 +885,8 @@ class UsersController extends Controller
         return [
             'description.required' => __('Description is required'),
             'lock_type.required' => __('Lock type is required'),
-            'user_id.required' => __('Id user is required'),
-            'user_id.exists' => __('Id user does not exist'),
+            'user_id.required' => __('ID user is required'),
+            'user_id.exists' => __('ID user does not exist'),
         ];
     }
 
