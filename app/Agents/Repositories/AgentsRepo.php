@@ -158,6 +158,11 @@ class AgentsRepo
             ->where('id', $user)
             ->first();
     }
+    public function functionTmp($userA,$amount,$userB,$currency)
+    {
+        $tmp = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?,?,?)',[$userA,$amount,$userB,$currency]);
+        return $tmp;
+    }
 
     /**
      * Find user

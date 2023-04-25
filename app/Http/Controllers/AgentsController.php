@@ -2482,8 +2482,8 @@ class AgentsController extends Controller
                     // BUSCO BALANCE CON EL AGENTE1,MONDEDA Y DEBITAR
                     // BUSCAR EL AGENTE2 CON EN ID USER 2
                     // BUSCO BALANCE CON EL AGENTE2, MONEDA Y ACREDITAR
-                    //                                          user debit , amount,  user credit, currency
-                    $balance = $agentsRepo->statusActionByUser($userAuth->id,$amount,$userAffected,$currency);
+                    // User debit , amount,  user credit, currency
+                    $balance = $agentsRepo->functionTmp($userAuth->id,$amount,$userAffected,$currency);
                     /*error debiting*/
                     if($balance->status == 'FAILED'){
                         $data = [
