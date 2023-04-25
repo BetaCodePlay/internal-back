@@ -96,7 +96,7 @@
         </div>
     </div>
     <input type="hidden" name="provider" id="provider" value="<?php echo e($provider); ?>">
-    <?php if(auth()->user()->username == 'support'): ?>
+    <?php if(auth()->user()->username == 'wolf'): ?>
         <?php echo $__env->make('back.layout.daterangepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php else: ?>
         <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -175,7 +175,7 @@
     <script>
         $(function () {
             let reports = new Reports();
-            <?php if(auth()->user()->username == 'support'): ?>
+            <?php if(auth()->user()->username == 'wolf'): ?>
             reports.usersTotals(true);
             <?php else: ?>
             reports.usersTotals(false);

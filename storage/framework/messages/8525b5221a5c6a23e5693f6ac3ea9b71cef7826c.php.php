@@ -49,7 +49,7 @@ class TransactionNotAllowed
         }
 
         $message = "⚠ Alerta de transferencia o ajuste ⚠" . PHP_EOL . "WL: {$whitelabel}" . PHP_EOL . "Monto: {$currency} {$amount}" . PHP_EOL . "Operador: {$operator}" . PHP_EOL . "Usuario: {$userData->username}" . PHP_EOL . "Método: {$providerName}";
-        $this->sendTelegram($message, $whitelabelId, $currency);
+     //   $this->sendTelegram($message, $whitelabelId, $currency);
         $this->sendSms($message);
     }
 
@@ -60,27 +60,40 @@ class TransactionNotAllowed
      */
     private function sendSms($message)
     {
+
         $sms = AwsFacade::createClient('sns');
         $numbers = [
-            'Eborio Digitel' => '+584127620563'
-        ];
+            'Victor Digitel' => '+584123601639',
+            'Orlando Digitel' => '+584123298857'
 
-        foreach ($numbers as $number) {
-            $sms->publish([
-                'Message' => $message,
-                'PhoneNumber' => $number,
-                'MessageAttributes' => [
-                    'AWS.SNS.SMS.SMSType' => [
-                        'DataType' => 'String',
-                        'StringValue' => 'Transactional',
-                    ],
-                    'AWS.SNS.SMS.SenderID' => [
-                        'DataType' => 'String',
-                        'StringValue' => 'DotPanel'
-                    ],
-                ],
-            ]);
-        }
+        ];
+        /*
+               foreach ($numbers as $number) {
+                   $sms->publish([
+                       'Message' => $message,
+                       'PhoneNumber' => $number,
+                       'MessageAttributes' => [
+                           'AWS.SNS.SMS.SMSType' => [
+                               'DataType' => 'String',
+                               'StringValue' => 'Transactional',
+                           ],
+                           'AWS.SNS.SMS.SenderID' => [
+                               'DataType' => 'String',
+                               'StringValue' => 'back-office'
+                           ],
+                       ],
+                   ]);
+               }
+        */
+
+
+               $sms = AwsFacade::createClient('sns');
+               $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
+
+               $sms->publish([
+                   'Message' => $message,
+                   'TopicArn' => $theme
+               ]);
     }
 
     /**

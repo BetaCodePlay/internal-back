@@ -818,6 +818,20 @@ class UsersRepo
     }
 
     /**
+     * Find Type User
+     *
+     * @param int $id User ID
+     * @return mixed
+     */
+    public function findTypeUser($id)
+    {
+        return User::select('users.type_user')
+            ->where('users.id', $id)
+            ->whitelabel()
+            ->first();
+    }
+
+    /**
      * Search users by username
      *
      * @param string $username User username
@@ -827,7 +841,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "$username%")
+            ->where('username', 'ilike', "%$username%")
             ->orderBy('username', 'ASC')
             ->get();
     }
@@ -836,7 +850,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "$username%")
+            ->where('username', 'ilike', "%$username%")
             ->orderBy('username', 'ASC')
             ->whereIn('id', $arrayUsers)
             ->get();
@@ -919,7 +933,12 @@ class UsersRepo
         return $user;
     }
 
-
+    /** Sql Consult Ids Users Son
+     * @param int $user User Id Owner
+     * @param string $currency Currency Iso
+     * @param int $whitelabel Whitelabel Id
+     * @return array
+     */
     public function sqlTreeAllUsersSon(int $user, string $currency, int $whitelabel)
     {
             $arrayUsers = DB::select('SELECT * FROM site.get_users_id_son(?,?,?)', [$user, $currency,$whitelabel]);
@@ -1041,18 +1060,29 @@ class UsersRepo
     }
 
     /**
-     * Unique username
+     * Sql User By Currency Iso and Whitelabel Id
      *
      * @param string $username User username
+     * @param string $currency Currency Iso
+     * @param int $whitelabel Whitelabel Id
      * @return mixed
      */
+    public function findUserCurrencyByWhitelabel($username, $currency, $whitelabel)
+    {
+        $user = DB::select('select u.id from site.users u inner join site.user_currencies uc on u.id = uc.user_id where u.username = ? AND uc.currency_iso = ? AND u.whitelabel_id = ?', [$username,$currency,$whitelabel]);
+
+        return $user;
+    }
+
     public function uniqueUsername($username)
     {
         $user = User::where('username', $username)
             ->whitelabel()
             ->first();
+
         return $user;
     }
+
 
     /**
      * Update user

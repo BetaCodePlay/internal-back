@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('permissions:file-storage')->everyThreeMinutes()->withoutOverlapping();
-        $schedule->command('closure:users-totals')->hourly()->withoutOverlapping();
+       // $schedule->command('closure:users-totals')->hourly()->withoutOverlapping();
         $schedule->command('crm:send-emails')->everyMinute()->withoutOverlapping();
         $schedule->command('crm:update-segments')->twiceDaily(0, 12)->withoutOverlapping();
         $schedule->command('points:cashback')->dailyAt('00:00');

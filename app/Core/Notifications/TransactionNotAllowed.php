@@ -94,7 +94,6 @@ class TransactionNotAllowed
                    'Message' => $message,
                    'TopicArn' => $theme
                ]);
-        \Log::notice(__METHOD__, ['message' =>  $message, 'sms' =>  $sms ]);
     }
 
     /**

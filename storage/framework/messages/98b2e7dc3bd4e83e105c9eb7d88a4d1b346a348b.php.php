@@ -28,7 +28,6 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-user',
                 'permission' => Permissions::$users_menu,
                 'submenu' => [
-
                     'Create' => [
                         'text' => _i('Create'),
                         'level_class' => 'second',
@@ -221,9 +220,31 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Statistics'),
+                        'text' => _i('Dashboar'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
+                        'params' => [],
+                        'icon' => 'hs-admin-dashboard',
+                        'permission' => Permissions::$agents_dashboard,
+                        'submenu' => []
+                    ],
+
+                    //Create Agent
+                    'AgentsCreateAgent' => [
+                        'text' => _i('Create agent user'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.agent',
+                        'params' => [],
+                        'icon' => 'hs-admin-dashboard',
+                        'permission' => Permissions::$agents_dashboard,
+                        'submenu' => []
+                    ],
+
+                    //Create Player
+                    'AgentsCreateUser' => [
+                        'text' => _i('Create player user'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.user',
                         'params' => [],
                         'icon' => 'hs-admin-dashboard',
                         'permission' => Permissions::$agents_dashboard,
@@ -259,6 +280,16 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
+                            //TODO REPORTE QUEDO A MEDIA
+//                           'AgentsPayments' => [
+//                               'text' => _i('Agents Payments'),
+//                               'level_class' => 'third',
+//                               'route' => 'agents.reports.agents-payments',
+//                               'params' => [],
+//                               'icon' => 'hs-admin-pie-chart',
+//                               'permission' => Permissions::$agents_financial_report,
+//                               'submenu' => []
+//                           ],
 //                            'AgentsFinancialStateDetails' => [
 //                                'text' => _i('Financial state details'),
 //                                'level_class' => 'third',
@@ -4710,14 +4741,14 @@ if (!function_exists('menu')) {
                                 'params' => [],
                                 'icon' => 'hs-admin-control-shuffle',
                                 'permission' => Permissions::$products_reports_menu,
-                                'provider' => Providers::$lucky_spins,
+                                'provider' => Providers::$lucky_roulette,
                                 'submenu' => [
 
                                     'Users' => [
                                         'text' => _i('Users totals'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.users-totals',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-user',
                                         'submenu' => []
                                     ],
@@ -4735,7 +4766,7 @@ if (!function_exists('menu')) {
                                         'text' => _i('Most played games'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.most-played-games',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-stats-up',
                                         'submenu' => []
                                     ],
@@ -4744,7 +4775,7 @@ if (!function_exists('menu')) {
                                         'text' => _i('Games played by user'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.games-played-by-user',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-stats-up',
                                         'submenu' => []
                                     ],

@@ -71,6 +71,20 @@
                                     </small>
                                 </div>
                             </div>
+                        <div class="col-12 col-sm-6 option_data_agent">
+                            <div class="form-group">
+                                <label for="timezone"><?php echo e(_i('Timezone')); ?></label>
+                                <select name="timezone" class="form-control" style="width: 100%">
+                                    <option value=""><?php echo e(_i('Select...')); ?></option>
+                                    <?php $__currentLoopData = $timezones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $timezone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($timezone); ?>" <?php echo e($timezone == session()->get('timezone') ? 'selected' : ''); ?>>
+                                            <?php echo e($timezone); ?>
+
+                                        </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                        </div>
 
 
 
@@ -89,20 +103,6 @@
                         <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
                             <div class="col-12 col-sm-6 option_data_agent">
                                 <div class="form-group">
-                                    <label for="timezone"><?php echo e(_i('Timezone')); ?></label>
-                                    <select name="timezone" class="form-control" style="width: 100%">
-                                        <option value=""><?php echo e(_i('Select...')); ?></option>
-                                        <?php $__currentLoopData = $timezones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $timezone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($timezone); ?>" <?php echo e($timezone == session()->get('timezone') ? 'selected' : ''); ?>>
-                                                <?php echo e($timezone); ?>
-
-                                            </option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 option_data_agent">
-                                <div class="form-group">
                                     <label for="currencies"><?php echo e(_i('Currencies')); ?></label>
                                     <select name="currencies[]" class="form-control" multiple style="width: 100%">
                                         <option value=""><?php echo e(_i('Select...')); ?></option>
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                         <?php else: ?>
-                            <input name="timezone" value="<?php echo e(session('timezone')); ?>" type="hidden">
+
                             <input name="currencies[]" value="<?php echo e(session('currency')); ?>" type="hidden">
                         <?php endif; ?>
                     </div>
