@@ -2,6 +2,7 @@
 /**
  * Segmentation tool routes
  */
+/**
 Route::group(['prefix' => 'segments', 'middleware' => ['auth']], function () {
 
     // Add user
@@ -82,3 +83,4 @@ Route::group(['prefix' => 'segments', 'middleware' => ['auth']], function () {
         'uses' => 'SegmentsController@userSegment',
     ]);
 });
+*/
