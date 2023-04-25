@@ -4,7 +4,7 @@
  * Bonus system routes
  */
 
-/**
+
 Route::group(['prefix' => 'bonus-system', 'middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'campaigns'], function () {
@@ -162,4 +162,4 @@ Route::group(['prefix' => 'bonus-system', 'middleware' => ['auth']], function ()
         });
     });
 });
- * /
+
