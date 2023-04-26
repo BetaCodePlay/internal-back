@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
-"POT-Creation-Date: 2023-04-24 16:32-0400\n"
-"PO-Revision-Date: 2023-04-24 16:34-0400\n"
+"POT-Creation-Date: 2023-04-24 19:10-0400\n"
+"PO-Revision-Date: 2023-04-24 19:20-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_AR\n"
@@ -4715,35 +4715,40 @@ msgstr "Ícono de Favoritos"
 msgid "Undefined"
 msgstr "Indefinido"
 
-#: ../app/Core/Enums/Languages.php:75
-#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:75
+#: ../app/Core/Enums/Languages.php:82
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:82
 msgid "English"
 msgstr "Inglés"
 
-#: ../app/Core/Enums/Languages.php:81
-#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:81
+#: ../app/Core/Enums/Languages.php:88
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:88
 msgid "Spanish"
 msgstr "Español"
 
-#: ../app/Core/Enums/Languages.php:86
-#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:86
+#: ../app/Core/Enums/Languages.php:93
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:93
 msgid "Portuguese"
 msgstr "Portugués"
 
-#: ../app/Core/Enums/Languages.php:91
-#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:91
+#: ../app/Core/Enums/Languages.php:98
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:98
 msgid "Hebrew"
 msgstr "Hebreo"
 
-#: ../app/Core/Enums/Languages.php:96
-#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:96
+#: ../app/Core/Enums/Languages.php:103
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:103
 msgid "French"
 msgstr "Francés"
 
-#: ../app/Core/Enums/Languages.php:101
-#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:101
+#: ../app/Core/Enums/Languages.php:108
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:108
 msgid "Turkish"
 msgstr "Turco"
+
+#: ../app/Core/Enums/Languages.php:113
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:113
+msgid "Argentinian"
+msgstr "Argentino"
 
 #: ../app/Core/Enums/Pages.php:251
 #: ../storage/framework/messages/5e886e37059c00276607526815fa6725a327472e.php.php:251
@@ -14777,7 +14782,6 @@ msgstr "5 Hombres"
 #: ../storage/framework/messages/27705d3def405be571af91f0d487767e64930d1c.php.php:209
 #: ../storage/framework/messages/78ae66acb9a1dac21a515179dc3a1be4efdb9b26.php.php:230
 #: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:149
-#, fuzzy
 msgid "Spinomenal"
 msgstr "Espinomenal"
 
@@ -14786,43 +14790,36 @@ msgstr "Espinomenal"
 #: ../storage/framework/messages/3afab36669fc9db2c4faf6dd413a6c7f841beec5.php.php:86
 #: ../storage/framework/messages/78ae66acb9a1dac21a515179dc3a1be4efdb9b26.php.php:240
 #: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:71
-#, fuzzy
 msgid "Order (optional)"
 msgstr "Pedido (opcional)"
 
 #: ../storage/framework/messages/27705d3def405be571af91f0d487767e64930d1c.php.php:230
 #: ../storage/framework/messages/72ec84523bdd772adc48d695fec4773502227f4c.php.php:121
-#, fuzzy
 msgid "Upload slider"
 msgstr "Control deslizante Cargar"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:20
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:20
-#, fuzzy
 msgid "Awarded bonuses"
 msgstr "Bonificaciones otorgadas"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:43
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:43
-#, fuzzy
 msgid "Ended bonuses"
 msgstr "Bonificaciones finalizadas"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:66
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:66
-#, fuzzy
 msgid "Active bonuses"
 msgstr "Bonificaciones activas"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:89
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:89
-#, fuzzy
 msgid "Converted bonuses"
 msgstr "Bonificaciones convertidas"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:112
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:112
-#, fuzzy
 msgid "Amount deposited"
 msgstr "Cantidad depositada"
 
@@ -14832,14 +14829,12 @@ msgstr "Cantidad depositada"
 #: ../storage/framework/messages/35678ed5435ee85015d941b7d9128097ca4c68ad.php.php:30
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:139
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:165
-#, fuzzy
 msgid "All options"
 msgstr "Todas las opciones"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:157
 #: ../storage/framework/messages/847bf35dfd9d873d392315ab5b506ca12745874a.php.php:13
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:163
-#, fuzzy
 msgid "Campaigns"
 msgstr "Campañas"
 
@@ -14850,7 +14845,6 @@ msgstr "Campañas"
 #: ../storage/framework/messages/81795d0154b6636f54ab75cf31b33d0a890ac708.php.php:68
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:177
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:68
-#, fuzzy
 msgid "Convert to"
 msgstr "Convertir a"
 
@@ -14861,7 +14855,6 @@ msgstr "Convertir a"
 #: ../storage/framework/messages/81795d0154b6636f54ab75cf31b33d0a890ac708.php.php:70
 #: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:179
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:70
-#, fuzzy
 msgid "No conversion"
 msgstr "Sin conversión"
 
@@ -14905,22 +14898,18 @@ msgid "Deposited"
 msgstr "Depositado"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:281
-#, fuzzy
 msgid "Historical deposits"
 msgstr "Depósitos históricos"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:285
-#, fuzzy
 msgid "Historical withdrawals"
 msgstr "Retiros históricos"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:289
-#, fuzzy
 msgid "Gross amount"
 msgstr "Importe bruto"
 
 #: ../storage/framework/messages/2904c0bbbe17bffb2723a0cf6b43d67d41cabb25.php.php:293
-#, fuzzy
 msgid "% Bonus / Deposits"
 msgstr "% Bono / Depósitos"
 
@@ -14936,7 +14925,6 @@ msgstr "Fecha"
 #: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:11
 #: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:11
 #: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:11
-#, fuzzy
 msgid "Filter data"
 msgstr "Filtrar datos"
 
@@ -14944,13 +14932,11 @@ msgstr "Filtrar datos"
 #: ../storage/framework/messages/3f6860d4fe9bb2c133e1dc4d838bffac5c2a7d74.php.php:152
 #: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:131
 #: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:22
-#, fuzzy
 msgid "All providers"
 msgstr "Todos los proveedores"
 
 #: ../storage/framework/messages/291c6016bf933d4b6e6ec98220260a35b11125cf.php.php:35
 #: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:35
-#, fuzzy
 msgid "Games Personalize: "
 msgstr "Juegos personalizados: "
 
@@ -14961,7 +14947,6 @@ msgid "Select"
 msgstr "Seleccionar"
 
 #: ../storage/framework/messages/291c6016bf933d4b6e6ec98220260a35b11125cf.php.php:79
-#, fuzzy
 msgid " The maximum file size is 5mb"
 msgstr " El tamaño máximo de archivo es de 5 MB"
 
@@ -14973,7 +14958,6 @@ msgstr " El tamaño máximo de archivo es de 5 MB"
 #: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:71
 #: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:44
 #: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:139
-#, fuzzy
 msgid "Games"
 msgstr "Juegos"
 
@@ -14995,9 +14979,8 @@ msgstr "Orden"
 #: ../storage/framework/messages/5121640008660330cee1f5058b187574ac5bb60d.php.php:20
 #: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:691
 #: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:20
-#, fuzzy
 msgid "Whitelabels"
-msgstr "Marcas blancas"
+msgstr "Whitelabels"
 
 #: ../storage/framework/messages/2fc294378933f0ed6b2d4a78994df847326cd3f8.php.php:151
 msgid "%"
@@ -15008,12 +14991,10 @@ msgid "Payment"
 msgstr "Pago"
 
 #: ../storage/framework/messages/314f74c6f26a6bad3141e585c83b0406a4880dc4.php.php:12
-#, fuzzy
 msgid "Users details"
-msgstr "Datos del usuario"
+msgstr "Detalles de los usuarios"
 
 #: ../storage/framework/messages/314f74c6f26a6bad3141e585c83b0406a4880dc4.php.php:36
-#, fuzzy
 msgid ""
 "For the assignment of users, the excluded will be taken into account as the "
 "first option"
@@ -15022,7 +15003,6 @@ msgstr ""
 "primera opción"
 
 #: ../storage/framework/messages/314f74c6f26a6bad3141e585c83b0406a4880dc4.php.php:46
-#, fuzzy
 msgid "User search type"
 msgstr "Tipo de búsqueda de usuario"
 
@@ -15035,29 +15015,24 @@ msgid "Segment"
 msgstr "Segmento"
 
 #: ../storage/framework/messages/314f74c6f26a6bad3141e585c83b0406a4880dc4.php.php:158
-#, fuzzy
 msgid "Campaign for all users"
 msgstr "Campaña para todos los usuarios"
 
 #: ../storage/framework/messages/315f2e3fc6a202ee1ab0897a43283cec91932696.php.php:110
 #: ../storage/framework/messages/525b76c8a331854173f232c554d00b2a5e2ed931.php.php:110
-#, fuzzy
 msgid "Are you sure you want to delete this log file: :date ?"
 msgstr "¿Está seguro de que desea eliminar este archivo de registro: :d ate ?"
 
 #: ../storage/framework/messages/319767424885d7fa58f4673d7ac8342a8525bd22.php.php:5
-#, fuzzy
 msgid "Verify document"
 msgstr "Verificar documento"
 
 #: ../storage/framework/messages/319767424885d7fa58f4673d7ac8342a8525bd22.php.php:13
 #: ../storage/framework/messages/80a117d3cd73ae8d31373ca95471cfe6d7c5b6d5.php.php:13
-#, fuzzy
 msgid "Are you sure to take the action?"
 msgstr "¿Está seguro de tomar la acción?"
 
 #: ../storage/framework/messages/31ccfe32f00df0f3969ff652ff3f2830d6df5d59.php.php:15
-#, fuzzy
 msgid ""
 "This report shows the total deposits and withdrawals, both pending and "
 "approved, for each activated payment method in the selected currency."
@@ -15066,7 +15041,6 @@ msgstr ""
 "aprobados, para cada método de pago activado en la moneda seleccionada."
 
 #: ../storage/framework/messages/31ccfe32f00df0f3969ff652ff3f2830d6df5d59.php.php:19
-#, fuzzy
 msgid ""
 "Transactions made through agents or manual transactions are not reflected in "
 "this report."
@@ -15075,27 +15049,22 @@ msgstr ""
 "se reflejan en este informe."
 
 #: ../storage/framework/messages/31ccfe32f00df0f3969ff652ff3f2830d6df5d59.php.php:43
-#, fuzzy
 msgid "Total approved deposits"
 msgstr "Total de depósitos aprobados"
 
 #: ../storage/framework/messages/31ccfe32f00df0f3969ff652ff3f2830d6df5d59.php.php:66
-#, fuzzy
 msgid "Total pending deposits"
 msgstr "Total de depósitos pendientes"
 
 #: ../storage/framework/messages/31ccfe32f00df0f3969ff652ff3f2830d6df5d59.php.php:89
-#, fuzzy
 msgid "Total approved withdrawals"
 msgstr "Total de retiros aprobados"
 
 #: ../storage/framework/messages/31ccfe32f00df0f3969ff652ff3f2830d6df5d59.php.php:112
-#, fuzzy
 msgid "Total pending withdrawals"
 msgstr "Total de retiros pendientes"
 
 #: ../storage/framework/messages/31ccfe32f00df0f3969ff652ff3f2830d6df5d59.php.php:135
-#, fuzzy
 msgid "Difference"
 msgstr "Diferencia"
 
@@ -15109,7 +15078,6 @@ msgid "Category"
 msgstr "Categoría"
 
 #: ../storage/framework/messages/334e77371e75b67899299dcbdd07f7f2bfaf20f9.php.php:345
-#, fuzzy
 msgid "Url Launch"
 msgstr "Inicio de URL"
 
@@ -15118,7 +15086,6 @@ msgstr "Inicio de URL"
 #: ../storage/framework/messages/9284ab60b9a6c3127545f2d31f3241bb044e6059.php.php:24
 #: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:17
 #: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:27
-#, fuzzy
 msgid "Only letters and numbers without spaces (4-12 characters)"
 msgstr "Solo letras y números sin espacios (4-12 caracteres)"
 
@@ -15127,7 +15094,6 @@ msgstr "Solo letras y números sin espacios (4-12 caracteres)"
 #: ../storage/framework/messages/9284ab60b9a6c3127545f2d31f3241bb044e6059.php.php:26
 #: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:18
 #: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:28
-#, fuzzy
 msgid "The username cannot be changed later"
 msgstr "El nombre de usuario no se puede cambiar más tarde"
 
@@ -15137,13 +15103,12 @@ msgstr "El nombre de usuario no se puede cambiar más tarde"
 #: ../storage/framework/messages/9284ab60b9a6c3127545f2d31f3241bb044e6059.php.php:43
 #: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:31
 #: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:41
-#, fuzzy
 msgid "Minimum 8 characters, 1 letter and 1 number"
 msgstr "Mínimo 8 caracteres, 1 letra y 1 número"
 
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:37
 #: ../storage/framework/messages/56a0ba48c7016fa360d0906e12e9bee842d4d38b.php.php:48
-#, fuzzy, php-format
+#, php-format
 msgid "Operational balance (It will be credited in %s)"
 msgstr "Saldo operativo (se acreditará en %s)"
 
@@ -15156,19 +15121,16 @@ msgstr "Disponible"
 
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:48
 #: ../storage/framework/messages/56a0ba48c7016fa360d0906e12e9bee842d4d38b.php.php:59
-#, fuzzy
 msgid "Rango disponible de 1 - 99"
 msgstr "Rango disponible de 1 - 99"
 
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:53
 #: ../storage/framework/messages/56a0ba48c7016fa360d0906e12e9bee842d4d38b.php.php:64
-#, fuzzy
 msgid "Agent type"
 msgstr "Tipo de agente"
 
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:65
 #: ../storage/framework/messages/56a0ba48c7016fa360d0906e12e9bee842d4d38b.php.php:77
-#, fuzzy
 msgid "Master agents can have subagents and players dependent on them"
 msgstr ""
 "Los agentes maestros pueden tener subagentes y jugadores dependientes de "
@@ -15176,17 +15138,14 @@ msgstr ""
 
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:69
 #: ../storage/framework/messages/56a0ba48c7016fa360d0906e12e9bee842d4d38b.php.php:81
-#, fuzzy
 msgid "Cashiers can only have players dependent on them."
 msgstr "Los cajeros solo pueden tener jugadores que dependan de ellos."
 
 #: ../storage/framework/messages/35241d910d6614f8cd94e54b9f4ac2a9f5b826cb.php.php:22
-#, fuzzy
 msgid "Transactions file"
 msgstr "Archivo de transacciones"
 
 #: ../storage/framework/messages/35241d910d6614f8cd94e54b9f4ac2a9f5b826cb.php.php:58
-#, fuzzy
 msgid "Import results"
 msgstr "Importar resultados"
 
@@ -15199,42 +15158,34 @@ msgid "Time"
 msgstr "Hora"
 
 #: ../storage/framework/messages/35678ed5435ee85015d941b7d9128097ca4c68ad.php.php:31
-#, fuzzy
 msgid "1 month"
 msgstr "1 mes"
 
 #: ../storage/framework/messages/35678ed5435ee85015d941b7d9128097ca4c68ad.php.php:32
-#, fuzzy
 msgid "3 month"
 msgstr "3 meses"
 
 #: ../storage/framework/messages/35678ed5435ee85015d941b7d9128097ca4c68ad.php.php:90
-#, fuzzy
 msgid "Lock date"
 msgstr "Fecha de bloqueo"
 
 #: ../storage/framework/messages/35678ed5435ee85015d941b7d9128097ca4c68ad.php.php:94
-#, fuzzy
 msgid "Auto unlock date"
 msgstr "Fecha de desbloqueo automático"
 
 #: ../storage/framework/messages/35678ed5435ee85015d941b7d9128097ca4c68ad.php.php:98
-#, fuzzy
 msgid "Lock time / Months"
 msgstr "Tiempo de bloqueo / Meses"
 
 #: ../storage/framework/messages/35678ed5435ee85015d941b7d9128097ca4c68ad.php.php:102
-#, fuzzy
 msgid "Number of locks"
 msgstr "Número de cerraduras"
 
 #: ../storage/framework/messages/3876496110f9a5e7d3eddb703e93bbb7781d1ce4.php.php:87
-#, fuzzy
 msgid "Reward name"
 msgstr "Nombre de la recompensa"
 
 #: ../storage/framework/messages/3919c1624c12fe66f4aed9f68d5f38185050338a.php.php:139
-#, fuzzy
 msgid "transaction ticket"
 msgstr "Ticket de transacción"
 
@@ -15250,13 +15201,11 @@ msgstr "A"
 
 #: ../storage/framework/messages/3a11d9d71f8cdb9956003c89cb7846561040ecb8.php.php:6
 #: ../storage/framework/messages/e9e4d7eaf95f07b9a78b928fb803ebe6c7b43eb7.php.php:6
-#, fuzzy
 msgid "Update percentage"
 msgstr "Porcentaje de actualización"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:12
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:12
-#, fuzzy
 msgid "Landing Pages details"
 msgstr "Detalles de las páginas de destino"
 
@@ -15268,12 +15217,10 @@ msgstr "Subtítulo"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:47
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:45
-#, fuzzy
 msgid "Text button"
 msgstr "Botón de texto"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:150
-#, fuzzy
 msgid "Update landing"
 msgstr "Aterrizaje de actualizaciones"
 
@@ -15281,7 +15228,6 @@ msgstr "Aterrizaje de actualizaciones"
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:192
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:147
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:154
-#, fuzzy
 msgid "Background 2"
 msgstr "Antecedentes 2"
 
@@ -15289,25 +15235,21 @@ msgstr "Antecedentes 2"
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:211
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:166
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:173
-#, fuzzy
 msgid "Image left"
 msgstr "Imagen izquierda"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:242
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:204
-#, fuzzy
 msgid "Steps"
 msgstr "Pasos"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:251
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:213
-#, fuzzy
 msgid "Steps Title"
 msgstr "Título de los pasos"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:258
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:219
-#, fuzzy
 msgid "Steps Content"
 msgstr "Contenido de los pasos"
 
@@ -15318,13 +15260,11 @@ msgstr "Términos"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:283
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:244
-#, fuzzy
 msgid "Terms Title"
 msgstr "Términos Título"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:290
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:250
-#, fuzzy
 msgid "Terms Content"
 msgstr "Términos Contenido"
 
@@ -15335,19 +15275,16 @@ msgstr "Adicional"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:315
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:275
-#, fuzzy
 msgid "Additional Title"
 msgstr "Título adicional"
 
 #: ../storage/framework/messages/3a3f57a2f148c18d8a7ebaf933e60c20e1ba3651.php.php:323
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:282
-#, fuzzy
 msgid "Additional Content"
 msgstr "Contenido adicional"
 
 #: ../storage/framework/messages/3afab36669fc9db2c4faf6dd413a6c7f841beec5.php.php:27
 #: ../storage/framework/messages/480c10015472069dea8bbbb56ebdd5c27e1a0d3e.php.php:31
-#, fuzzy
 msgid "The maximum file size is 5mb"
 msgstr "El tamaño máximo de archivo es de 5 MB"
 
@@ -15356,19 +15293,16 @@ msgid "Domain"
 msgstr "Dominio"
 
 #: ../storage/framework/messages/3bbdcffbf934c220b991f8584ddfe3b60e8e7ee1.php.php:34
-#, fuzzy
 msgid "Current status"
 msgstr "Estado actual"
 
 #: ../storage/framework/messages/3bbf05f4d2a5362a2062cd527f15385950c48e27.php.php:13
-#, fuzzy
 msgid "You do not have credentials for $%, request your credentials."
 msgstr "No tiene credenciales para $%, solicite sus credenciales."
 
 #: ../storage/framework/messages/3d9c409228d32e2d5e88bab60d10a7ec9b2f7218.php.php:36
 #: ../storage/framework/messages/87b0e374a8ea61cbb267c25d402e68699d3a0e15.php.php:5
 #: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:114
-#, fuzzy
 msgid "Search user"
 msgstr "Buscar usuario"
 
@@ -15389,29 +15323,24 @@ msgid "Accept"
 msgstr "Aceptar"
 
 #: ../storage/framework/messages/3f6860d4fe9bb2c133e1dc4d838bffac5c2a7d74.php.php:9
-#, fuzzy
 msgid "This report makes closings and calculations every hour"
 msgstr "Este informe realiza cierres y cálculos cada hora"
 
 #: ../storage/framework/messages/3f6860d4fe9bb2c133e1dc4d838bffac5c2a7d74.php.php:12
-#, fuzzy
 msgid "If you want to see data in real time please use the product reports"
 msgstr ""
 "Si desea ver los datos en tiempo real, utilice los informes de productos"
 
 #: ../storage/framework/messages/3f6860d4fe9bb2c133e1dc4d838bffac5c2a7d74.php.php:125
-#, fuzzy
 msgid "Total hold"
 msgstr "Retención total"
 
 #: ../storage/framework/messages/3f6860d4fe9bb2c133e1dc4d838bffac5c2a7d74.php.php:166
-#, fuzzy
 msgid "All provider types"
 msgstr "Todos los tipos de proveedores"
 
 #: ../storage/framework/messages/3f6860d4fe9bb2c133e1dc4d838bffac5c2a7d74.php.php:279
 #: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1046
-#, fuzzy
 msgid "Hold"
 msgstr "Sostener"
 
@@ -15423,14 +15352,12 @@ msgstr "Ultimos 30 días"
 #: ../storage/framework/messages/40452079a11221bb2b20bbda6b6db8fc6d9bb77d.php.php:82
 #: ../storage/framework/messages/81795d0154b6636f54ab75cf31b33d0a890ac708.php.php:123
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:123
-#, fuzzy
 msgid "New registers"
 msgstr "Nuevos registros"
 
 #: ../storage/framework/messages/40452079a11221bb2b20bbda6b6db8fc6d9bb77d.php.php:86
 #: ../storage/framework/messages/81795d0154b6636f54ab75cf31b33d0a890ac708.php.php:127
 #: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:127
-#, fuzzy
 msgid "Unique depositors"
 msgstr "Depositantes únicos"
 
@@ -15441,7 +15368,6 @@ msgid "Bonuses"
 msgstr "Bonos"
 
 #: ../storage/framework/messages/42359ca1a80a9d297336f77a532aa1760a71dc26.php.php:5
-#, fuzzy
 msgid "Binance QR"
 msgstr "Binance QR"
 
@@ -15459,48 +15385,39 @@ msgstr "Resultados de Búsqueda"
 
 #: ../storage/framework/messages/45a53add41deafde81c9356dcba26ffd3af49d07.php.php:5
 #: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:139
-#, fuzzy
 msgid "Points transactions"
 msgstr "Transacciones de puntos"
 
 #: ../storage/framework/messages/46b1a302d70b9ec6540cc292192bda65e3a1d876.php.php:138
-#, fuzzy
 msgid "Agent / User"
 msgstr "Agente / Usuario"
 
 #: ../storage/framework/messages/46b1a302d70b9ec6540cc292192bda65e3a1d876.php.php:142
-#, fuzzy
 msgid "Loads (Total)"
 msgstr "Cargas (total)"
 
 #: ../storage/framework/messages/46b1a302d70b9ec6540cc292192bda65e3a1d876.php.php:146
-#, fuzzy
 msgid "Downloads (Total)"
 msgstr "Descargas (total)"
 
 #: ../storage/framework/messages/46b1a302d70b9ec6540cc292192bda65e3a1d876.php.php:150
-#, fuzzy
 msgid "Totals 100%"
 msgstr "Totales 100%"
 
 #: ../storage/framework/messages/46b1a302d70b9ec6540cc292192bda65e3a1d876.php.php:154
-#, fuzzy
 msgid "Commission %"
 msgstr "Comisión %"
 
 #: ../storage/framework/messages/46b1a302d70b9ec6540cc292192bda65e3a1d876.php.php:158
-#, fuzzy
 msgid "Total to pay %"
 msgstr "Total a pagar %"
 
 #: ../storage/framework/messages/46b1a302d70b9ec6540cc292192bda65e3a1d876.php.php:162
-#, fuzzy
 msgid "Total receivable %"
 msgstr "% total por cobrar"
 
 #: ../storage/framework/messages/46fdf7bce52314e4e527c19f20baef1a43261120.php.php:5
 #: ../storage/framework/messages/9445c803961d0fc5bd72ed0d931f89566419b391.php.php:5
-#, fuzzy
 msgid "Template preview"
 msgstr "Vista previa de la plantilla"
 
@@ -15518,17 +15435,14 @@ msgid "End date"
 msgstr "Fecha de finalizacion"
 
 #: ../storage/framework/messages/4931e70c593113eb5392861bc7032541a7167e05.php.php:76
-#, fuzzy
 msgid "Grant secret"
 msgstr "Conceder secreto"
 
 #: ../storage/framework/messages/4b5d6eccb17dda57ac41c3874237c1beece59571.php.php:5
-#, fuzzy
 msgid "Unlock balance"
 msgstr "Desbloquear saldo"
 
 #: ../storage/framework/messages/4b5d6eccb17dda57ac41c3874237c1beece59571.php.php:13
-#, fuzzy
 msgid "Are you sure you want to unlock the balance?"
 msgstr "¿Estás seguro de que quieres desbloquear el saldo?"
 
@@ -15539,7 +15453,6 @@ msgid "Unlock"
 msgstr "Desbloquear"
 
 #: ../storage/framework/messages/4d06c719f33092bf59e531cac935aaf77ac838b5.php.php:5
-#, fuzzy
 msgid "Relate Permissions to User"
 msgstr "Relacionar permisos con el usuario"
 
@@ -15554,7 +15467,6 @@ msgid "Search by filter"
 msgstr "Buscar por filtro"
 
 #: ../storage/framework/messages/4d3bc049b18b56f47037e8e274c3353ac75bdcd6.php.php:75
-#, fuzzy
 msgid "Code bonus"
 msgstr "Bono de código"
 
@@ -15563,18 +15475,15 @@ msgstr "Bono de código"
 #: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:89
 #: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:127
 #: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:65
-#, fuzzy
 msgid "Quantity of turns"
 msgstr "Cantidad de vueltas"
 
 #: ../storage/framework/messages/4d9701cd10dc7514d4427b459e2d1fb88613a013.php.php:61
-#, fuzzy
 msgid "User password admin"
 msgstr "Administrador de contraseña de usuario"
 
 #: ../storage/framework/messages/4d9701cd10dc7514d4427b459e2d1fb88613a013.php.php:65
 #: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:389
-#, fuzzy
 msgid "Copied"
 msgstr "Copiado"
 
@@ -15584,12 +15493,10 @@ msgstr "Copiado"
 #: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:148
 #: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:28
 #: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:467
-#, fuzzy
 msgid "Publishing..."
 msgstr "Editorial..."
 
 #: ../storage/framework/messages/52ad010cd397bbbaa893a21939a7e3431914ab54.php.php:58
-#, fuzzy
 msgid "Publish group"
 msgstr "Grupo de publicación"
 
@@ -15608,7 +15515,6 @@ msgid "Reset"
 msgstr "Reiniciar"
 
 #: ../storage/framework/messages/55976616d0f6f168601e0de6f31c986d34367658.php.php:5
-#, fuzzy
 msgid "Remove bonus"
 msgstr "Eliminar bono"
 
@@ -15637,17 +15543,14 @@ msgstr "Opciones"
 #: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:77
 #: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:62
 #: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:115
-#, fuzzy
 msgid "Code reference"
 msgstr "Referencia de código"
 
 #: ../storage/framework/messages/56e406687e0f6c02c76a92aaedaab5913128a145.php.php:5
-#, fuzzy
 msgid "Manual adjustment"
 msgstr "Ajuste manual"
 
 #: ../storage/framework/messages/58693084088c95e6b35c182de554d9c5b3b05cde.php.php:6
-#, fuzzy
 msgid "Update Limit"
 msgstr "Límite de actualización"
 
@@ -15670,54 +15573,46 @@ msgid "Permissions"
 msgstr "Permisos"
 
 #: ../storage/framework/messages/5982bae60d19451d0e3fc7b8ca4405ab62701bcd.php.php:48
-#, fuzzy
 msgid "Exclude permissions"
 msgstr "Excluir permisos"
 
 #: ../storage/framework/messages/5982bae60d19451d0e3fc7b8ca4405ab62701bcd.php.php:63
-#, fuzzy
 msgid "Excluded permissions users"
 msgstr "Usuarios de permisos excluidos"
 
 #: ../storage/framework/messages/5982bae60d19451d0e3fc7b8ca4405ab62701bcd.php.php:111
-#, fuzzy
 msgid "Select Permissions"
 msgstr "Seleccione Permisos"
 
 #: ../storage/framework/messages/59a7de2650b59df50d98d58a0764a2008e48b509.php.php:16
 #: ../storage/framework/messages/7a183cf4a75a86782237c0051d93a24190e39391.php.php:16
 #: ../storage/framework/messages/7bc0c7288d9bcb955a2c8c03448b22fb61e78269.php.php:16
-#, fuzzy
 msgid "Send to processor"
 msgstr "Enviar al procesador"
 
 #: ../storage/framework/messages/5a1f00f2c91ca1c90f5e12ed01c1be55f43a211c.php.php:3
 #: ../storage/framework/messages/5a1f00f2c91ca1c90f5e12ed01c1be55f43a211c.php.php:5
-#, fuzzy
 msgid "Forbidden"
 msgstr "Prohibido"
 
 #: ../storage/framework/messages/5aa2cc08654a8fe2b0d0fa1bca74e12228d2f0e8.php.php:12
 #: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:12
-#, fuzzy
 msgid "Cover image"
 msgstr "Imagen de portada"
 
 #: ../storage/framework/messages/5aa2cc08654a8fe2b0d0fa1bca74e12228d2f0e8.php.php:31
 #: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:31
-#, fuzzy
 msgid "This image is shown in the list of posts."
 msgstr "Esta imagen se muestra en la lista de publicaciones."
 
 #: ../storage/framework/messages/5aa2cc08654a8fe2b0d0fa1bca74e12228d2f0e8.php.php:47
 #: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:47
-#, fuzzy
 msgid "Main image"
 msgstr "Imagen principal"
 
 #: ../storage/framework/messages/5aa2cc08654a8fe2b0d0fa1bca74e12228d2f0e8.php.php:62
 #: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:62
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "The recommended width for the image is %s pixels. Using a different size can "
 "cause misalignment on the page."
@@ -15727,7 +15622,6 @@ msgstr ""
 
 #: ../storage/framework/messages/5aa2cc08654a8fe2b0d0fa1bca74e12228d2f0e8.php.php:66
 #: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:66
-#, fuzzy
 msgid "This image is optional and is shown as the main image within the post."
 msgstr ""
 "Esta imagen es opcional y se muestra como la imagen principal dentro de la "
@@ -15735,7 +15629,6 @@ msgstr ""
 
 #: ../storage/framework/messages/5aa2cc08654a8fe2b0d0fa1bca74e12228d2f0e8.php.php:84
 #: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:84
-#, fuzzy
 msgid "Post details"
 msgstr "Detalles de la publicación"
 
@@ -15749,24 +15642,20 @@ msgid "Content"
 msgstr "Contenido"
 
 #: ../storage/framework/messages/5aa2cc08654a8fe2b0d0fa1bca74e12228d2f0e8.php.php:180
-#, fuzzy
 msgid "Publish post"
 msgstr "Publicar publicación"
 
 #: ../storage/framework/messages/5d6f2c409d84ccd4d5e534f001c951df8e38ee7f.php.php:40
 #: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:40
-#, fuzzy
 msgid "Ticket details"
 msgstr "Detalles del boleto"
 
 #: ../storage/framework/messages/5d6f2c409d84ccd4d5e534f001c951df8e38ee7f.php.php:93
 #: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:93
-#, fuzzy
 msgid "Ticket selections"
 msgstr "Selección de entradas"
 
 #: ../storage/framework/messages/5df3cb7e573d3581949c3bcc1b11f675b82a8902.php.php:15
-#, fuzzy
 msgid ""
 "This report shows the list of manual transactions carried out in a certain "
 "date range, allowing them to be filtered by type of transaction."
@@ -15776,7 +15665,6 @@ msgstr ""
 "transacción."
 
 #: ../storage/framework/messages/5df3cb7e573d3581949c3bcc1b11f675b82a8902.php.php:19
-#, fuzzy
 msgid ""
 "Deposits or withdrawals made with payment methods or agent transactions made "
 "to players are not taken into account."
@@ -15801,7 +15689,6 @@ msgstr "Agente"
 
 #: ../storage/framework/messages/60eaa6b421413eb42df9cfdafcb75686c42fc67f.php.php:42
 #: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:53
-#, fuzzy
 msgid "Adding..."
 msgstr "Agregar..."
 
@@ -15811,7 +15698,6 @@ msgid "Add user"
 msgstr "Agregar usuario"
 
 #: ../storage/framework/messages/60eaa6b421413eb42df9cfdafcb75686c42fc67f.php.php:64
-#, fuzzy
 msgid ""
 "The agent selector is loaded by the session currency, verify that the user "
 "has the session currency."
@@ -15821,7 +15707,6 @@ msgstr ""
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:27
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:27
-#, fuzzy
 msgid ""
 "The recommended size for the image is 280x280 pixels. Using a different size "
 "can cause misalignments on the page."
@@ -15830,69 +15715,57 @@ msgstr ""
 "tamaño diferente puede causar desalineaciones en la página."
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:46
-#, fuzzy
 msgid "Reward details"
 msgstr "Detalles de la recompensa"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:68
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:68
-#, fuzzy
 msgid "Description to help the user understand the reward"
 msgstr "Descripción para ayudar al usuario a entender la recompensa"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:74
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:74
-#, fuzzy
 msgid "Available quantity (optional)"
 msgstr "Cantidad disponible (opcional)"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:94
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:93
-#, fuzzy
 msgid "Points needed to get the reward"
 msgstr "Puntos necesarios para obtener la recompensa"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:100
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:99
-#, fuzzy
 msgid "Amount that the reward will deliver as a prize"
 msgstr "Cantidad que la recompensa entregará como premio"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:106
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:105
-#, fuzzy
 msgid "Start date (optional)"
 msgstr "Fecha de inicio (opcional)"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:112
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:112
-#, fuzzy
 msgid "Finish date (optional)"
 msgstr "Fecha de finalización (opcional)"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:136
-#, fuzzy
 msgid "No active"
 msgstr "No activo"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:142
 #: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:150
-#, fuzzy
 msgid "Category (optional)"
 msgstr "Categoría (opcional)"
 
 #: ../storage/framework/messages/6170e5a2906a9520156b9a27decf848450148a72.php.php:159
-#, fuzzy
 msgid "Upload reward"
 msgstr "Subir recompensa"
 
 #: ../storage/framework/messages/61fb96db1c7df0dc7150197a7c4e9bd89d875100.php.php:62
-#, fuzzy
 msgid "VES rate"
 msgstr "Tasa VES"
 
 #: ../storage/framework/messages/61fb96db1c7df0dc7150197a7c4e9bd89d875100.php.php:68
-#, fuzzy
 msgid "ARS rate"
 msgstr "Tasa ARS"
 
@@ -15900,7 +15773,6 @@ msgstr "Tasa ARS"
 #: ../storage/framework/messages/99521f2ed22116c4b9e3484dfc5cefceab745dd6.php.php:107
 #: ../storage/framework/messages/d31d5ee9c46a8989dce6a13918cd7358f1837587.php.php:120
 #: ../storage/framework/messages/f63bd5a31d7e40332d019278cfba3501a81542ea.php.php:120
-#, fuzzy
 msgid "Page :current of :last"
 msgstr "Página :actual de :last"
 
@@ -15909,7 +15781,6 @@ msgid "Read"
 msgstr "Leer"
 
 #: ../storage/framework/messages/665d7929ee7204772b0abe0b8ae7ea996035e755.php.php:5
-#, fuzzy
 msgid "Remove from segment"
 msgstr "Eliminar del segmento"
 
@@ -15928,7 +15799,6 @@ msgid "Exclude roles"
 msgstr "Rol exclusivo"
 
 #: ../storage/framework/messages/6873fa160cbea25d769f31d8433c7f0186d4ad5c.php.php:63
-#, fuzzy
 msgid "Excluded roles users"
 msgstr "Usuarios de roles excluidos"
 
@@ -15940,7 +15810,6 @@ msgid "Role"
 msgstr "Rol"
 
 #: ../storage/framework/messages/6873fa160cbea25d769f31d8433c7f0186d4ad5c.php.php:111
-#, fuzzy
 msgid "Select role"
 msgstr "Seleccionar rol"
 
@@ -15948,17 +15817,14 @@ msgstr "Seleccionar rol"
 #: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:44
 #: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:43
 #: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:67
-#, fuzzy
 msgid "Data for withdrawal"
 msgstr "Datos para el desistimiento"
 
 #: ../storage/framework/messages/6c44d7270842e8560ad5c8dbbe6b87b1ce879286.php.php:5
-#, fuzzy
 msgid "Activation"
 msgstr "Activación"
 
 #: ../storage/framework/messages/6c44d7270842e8560ad5c8dbbe6b87b1ce879286.php.php:13
-#, fuzzy
 msgid "Activation of account"
 msgstr "Activación de la cuenta"
 
@@ -15972,12 +15838,10 @@ msgstr "Enviar"
 #: ../storage/framework/messages/70e846c194f28b1dfcf70351c8646ed0f8f81776.php.php:22
 #: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:20
 #: ../storage/framework/messages/d7180da36af108a25afecf8d3f49f6d5c93a3747.php.php:22
-#, fuzzy
 msgid "Total balances"
 msgstr "Saldos totales"
 
 #: ../storage/framework/messages/71614af6eeef380ad6e3a5364b0832bbac69e68a.php.php:15
-#, fuzzy
 msgid ""
 "This report shows the total deposits and withdrawals that were approved in "
 "the selected date range."
@@ -15986,7 +15850,6 @@ msgstr ""
 "rango de fechas seleccionado."
 
 #: ../storage/framework/messages/71614af6eeef380ad6e3a5364b0832bbac69e68a.php.php:19
-#, fuzzy
 msgid ""
 "This report includes transactions made with activated payment methods in the "
 "selected currency, manual transactions and agent transactions made to "
@@ -15997,13 +15860,11 @@ msgstr ""
 "transacciones de agentes realizadas a los jugadores."
 
 #: ../storage/framework/messages/71614af6eeef380ad6e3a5364b0832bbac69e68a.php.php:43
-#, fuzzy
 msgid "Total deposits"
 msgstr "Total depósitos"
 
 #: ../storage/framework/messages/71614af6eeef380ad6e3a5364b0832bbac69e68a.php.php:66
 #: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:97
-#, fuzzy
 msgid "Total withdrawals"
 msgstr "Total de retiros"
 
@@ -16022,7 +15883,6 @@ msgstr "Ingrese la Contraseña"
 
 #: ../storage/framework/messages/768305cd0ce939a7444b7e3160abde7203c58ac5.php.php:87
 #: ../storage/framework/messages/aebf3ac602f4f3e6edd8edcacd97183aa3350fdf.php.php:6
-#, fuzzy
 msgid "Developed by Betsweet. Operated by"
 msgstr "Desarrollado por Betsweet. Operado por"
 
