@@ -154,14 +154,22 @@ class AgentsRepo
      */
     public function statusActionByUser(int $user)
     {
-        return User::select('status','action')
+        return User::select('username','status','action')
             ->where('id', $user)
             ->first();
     }
-    public function functionTmp($userA,$amount,$userB,$currency)
+
+    /** get and update balance by agent
+     * @param string $currency Curency Iso
+     * @param int $userDebit User Id Debit
+     * @param int $userCredit User Id Credit
+     * @param  float $amount Amount of the operation
+     * @return array
+     */
+    public function getAndUpdateBalance($currency, $userDebit, $userCredit, $amount)
     {
-        $tmp = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?,?,?)',[$userA,$amount,$userB,$currency]);
-        return $tmp;
+        $result = DB::select('SELECT * FROM site.get_and_update_balance_for_agent(?,?,?,?)',[$currency,$userDebit,$userCredit,$amount]);
+        return $result;
     }
 
     /**
