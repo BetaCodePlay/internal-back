@@ -2931,24 +2931,30 @@ class AgentsCollection
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
-
+            $from = '';
+            $to = '';
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
+                $to = isset($transaction->data->to) ? $transaction->data->to : null;
+                $from = isset($transaction->data->from) ? $transaction->data->from : null;
                 $transaction->debit = $amountTmp;
                 $totalDebit = $totalDebit + $amountTmp;
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
+                $from = isset($transaction->data->to) ? $transaction->data->to : null;
+                $to = isset($transaction->data->from) ? $transaction->data->from : null;
                 $transaction->credit = $amountTmp;
                 $totalCredit = $totalCredit + $amountTmp;
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
             }
+
             $data[] = [
                 'id' => null,
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
                 'data' => [
-                    'from' => isset($transaction->data->from) ? $transaction->data->from : null,
-                    'to' => isset($transaction->data->to) ? $transaction->data->to : null,
+                    'from' => $from,
+                    'to' => $to,
                 ],
                 'debit' => number_format($transaction->debit, 2, ",", "."),
                 'credit' => number_format($transaction->credit, 2, ",", "."),
@@ -3019,6 +3025,7 @@ class AgentsCollection
             _i('Totals'),
             number_format($debit, 2),
             number_format($credit, 2),
+            //number_format(($debit-$credit), 2),
             number_format(($credit - $debit), 2),
         );
 
