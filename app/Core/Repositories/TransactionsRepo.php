@@ -448,7 +448,8 @@ class TransactionsRepo
      */
     public function getCashFlowTransactionsNew($username, $agents, $whitelabel, $currency, $startDate, $endDate)
     {
-        Log::info('getCashFlowTransactionsNew',[$username, $agents, $whitelabel, $currency, $startDate, $endDate]);
+
+        $providersArray = [Providers::$agents,Providers::$agents_users];
         $result = DB::SELECT("
                              SELECT u.id,
                                u.username,
@@ -456,7 +457,7 @@ class TransactionsRepo
                                SUM(CASE WHEN t.transaction_type_id = 2 THEN t.amount ELSE 0 END) AS credit
                                 FROM site.transactions as t
                                 INNER JOIN site.users as u ON t.user_id = u.id
-                                WHERE t.provider_id in (?)
+                                WHERE t.provider_id in (" . implode(',', $providersArray) . ")
                                 AND t.created_at BETWEEN ? AND ?
                                 AND u.whitelabel_id = ?
                                 AND t.currency_iso = ?
@@ -464,7 +465,7 @@ class TransactionsRepo
                                 AND t.user_id IN (" . implode(',', $agents) . ")
 
                                 AND ((t.data->>'from' = ? AND t.transaction_type_id = 1) OR (t.data->>'to' = ? AND t.transaction_type_id = 2))
-                                GROUP BY u.id, u.username", [[16,25], $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
+                                GROUP BY u.id, u.username", [$startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
 
         Log::info('getCashFlowTransactionsNew:result',[$result]);
         $financialDataExample = [];
