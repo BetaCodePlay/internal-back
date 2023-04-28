@@ -3025,8 +3025,8 @@ class AgentsCollection
             _i('Totals'),
             number_format($debit, 2),
             number_format($credit, 2),
-            //number_format(($debit-$credit), 2),
-            number_format(($credit - $debit), 2),
+            number_format(($debit-$credit), 2),
+            //number_format(($credit - $debit), 2),
         );
 
         return $htmlTotals;
