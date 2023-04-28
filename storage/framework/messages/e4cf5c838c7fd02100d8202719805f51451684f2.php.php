@@ -32,6 +32,7 @@ class DotpanelServiceProvider extends ServiceProvider
      */
     public function boot(Request $request, CoreCollection $coreCollection, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
     {
+
         if (isset($_SERVER['HTTP_HOST'])) {
             $regex = '/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/';
             $domain = strtolower($_SERVER['HTTP_HOST']);

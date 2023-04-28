@@ -1,8 +1,8 @@
 
 
 <?php $__env->startSection('styles'); ?>
-
-<style>
+    
+    <style>
         #financial-state-table .bg-warning {
             background-color: rgba(255, 193, 7, 0.4) !important;
         }
@@ -103,24 +103,22 @@
                                 <?php endif; ?>
 
                             </div>
-                            <div class="col-6 g-py-5">
-                                <a href="#add-users-modal" data-toggle="modal"
-                                   class="btn u-btn-3d u-btn-primary btn-block" id="new-user">
-                                    <i class="hs-admin-plus"></i>
-                                    <?php echo e(_i(' Player')); ?>
-
-                                </a>
-                            </div>
-                            <?php if($agent->master): ?>
-                                <div class="col-6 g-py-5">
-                                    <a href="#add-agents-modal" data-toggle="modal"
-                                       class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">
-                                        <i class="hs-admin-plus"></i>
-                                        <?php echo e(_i(' Agent')); ?>
-
-                                    </a>
-                                </div>
-                            <?php endif; ?>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             
                             
                             
@@ -161,33 +159,31 @@
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-8 g-py-5 g-pa-5">
-
-                                <select name="agent_id_search" id="agent_id_search"
-                                        class="form-control select2 agent_id_search"
-                                        data-route="<?php echo e(route('agents.search-username')); ?>"
-                                        data-select="<?php echo e(route('agents.find-user')); ?>">
-                                    <option></option>
-                                </select>
-
+                            
+                            <select name="agent_id_search" id="agent_id_search"
+                                    class="form-control select2 agent_id_search"
+                                    data-route="<?php echo e(route('agents.search-username')); ?>"
+                                    data-select="<?php echo e(route('agents.find-user')); ?>">
+                                <option></option>
+                            </select>
+                            
                         </div>
-                        <div class="col-6 col-md-2 g-py-5">
-                            <a href="#add-users-modal" data-toggle="modal" class="btn u-btn-3d u-btn-primary btn-block"
-                               id="new-user">
-                                <i class="hs-admin-plus"></i>
-                                <?php echo e(_i(' Player')); ?>
-
-                            </a>
-                        </div>
-                        <?php if($agent->master): ?>
-                            <div class="col-6 col-md-2 g-py-5">
-                                <a href="#add-agents-modal" data-toggle="modal"
-                                   class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">
-                                    <i class="hs-admin-plus"></i>
-                                    <?php echo e(_i(' Agent ')); ?>
-
-                                </a>
-                            </div>
-                        <?php endif; ?>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -585,7 +581,8 @@
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered display nowrap"  style="width:100%" id="agents-transactions-table"
+                                <table class="table table-bordered display nowrap" style="width:100%"
+                                       id="agents-transactions-table"
                                        data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
                                        data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>">
                                     <thead>
@@ -602,14 +599,25 @@
                                             <?php echo e(_i('Toward')); ?>
 
                                         </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('Debit')); ?>
+                                        <?php if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Charged him')); ?>
 
-                                        </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('Credit')); ?>
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('withdrew')); ?>
 
-                                        </th>
+                                            </th>
+                                        <?php else: ?>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Debit')); ?>
+
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Credit')); ?>
+
+                                            </th>
+                                        <?php endif; ?>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             <?php echo e(_i('Balance')); ?>
 
@@ -630,7 +638,8 @@
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="users-transactions" role="tabpanel"
                              aria-labelledby="users-transactions-tab">
                             <div class="table-responsive">
-                                <table class="table table-bordered display nowrap"  style="width:100%" id="users-transactions-table"
+                                <table class="table table-bordered display nowrap" style="width:100%"
+                                       id="users-transactions-table"
                                        data-route="<?php echo e(route('wallets.transactions')); ?>">
                                     <thead>
                                     <tr>
@@ -646,14 +655,25 @@
                                             <?php echo e(_i('Description')); ?>
 
                                         </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('Debit')); ?>
+                                        <?php if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Charged him')); ?>
 
-                                        </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('Credit')); ?>
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('withdrew')); ?>
 
-                                        </th>
+                                            </th>
+                                        <?php else: ?>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Debit')); ?>
+
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Credit')); ?>
+
+                                            </th>
+                                        <?php endif; ?>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             <?php echo e(_i('Balance')); ?>
 
@@ -674,7 +694,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered display nowrap"  style="width:100%" id="users-table"
+                                        <table class="table table-bordered display nowrap" style="width:100%"
+                                               id="users-table"
                                                data-route="<?php echo e(route('agents.users')); ?>">
                                             <thead>
                                             <tr>
@@ -706,7 +727,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered display nowrap"  style="width:100%" id="agents-table"
+                                            <table class="table table-bordered display nowrap" style="width:100%"
+                                                   id="agents-table"
                                                    data-route="<?php echo e(route('agents.agents')); ?>">
                                                 <thead>
                                                 <tr>
@@ -1093,7 +1115,7 @@
             agents.performTransactions();
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([10,20, 50, 100, 500, 1000,2000]);
+            agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
             agents.usersTransactions();
             agents.users();
             agents.agents();
