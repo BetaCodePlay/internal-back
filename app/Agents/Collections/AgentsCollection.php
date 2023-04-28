@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -3003,6 +3004,10 @@ class AgentsCollection
      */
     public function formatAgentTransactionsTotals($credit, $debit)
     {
+        $balance = $credit - $debit;
+        if(in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            $balance = $debit - $credit;
+        }
 
         $htmlTotals = sprintf(
             '<table  class="table table-bordered w-100">
@@ -3025,8 +3030,7 @@ class AgentsCollection
             _i('Totals'),
             number_format($debit, 2),
             number_format($credit, 2),
-            number_format(($debit-$credit), 2),
-            //number_format(($credit - $debit), 2),
+            number_format($balance, 2),
         );
 
         return $htmlTotals;

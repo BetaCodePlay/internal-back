@@ -10,6 +10,7 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
 /**
@@ -447,6 +448,7 @@ class TransactionsRepo
      */
     public function getCashFlowTransactionsNew($username, $agents, $whitelabel, $currency, $startDate, $endDate)
     {
+        Log::info('getCashFlowTransactionsNew',[$username, $agents, $whitelabel, $currency, $startDate, $endDate]);
         $result = DB::SELECT("
                              SELECT u.id,
                                u.username,
@@ -454,7 +456,7 @@ class TransactionsRepo
                                SUM(CASE WHEN t.transaction_type_id = 2 THEN t.amount ELSE 0 END) AS credit
                                 FROM site.transactions as t
                                 INNER JOIN site.users as u ON t.user_id = u.id
-                                WHERE t.provider_id = ?
+                                WHERE t.provider_id in (?)
                                 AND t.created_at BETWEEN ? AND ?
                                 AND u.whitelabel_id = ?
                                 AND t.currency_iso = ?
@@ -462,7 +464,8 @@ class TransactionsRepo
                                 AND t.user_id IN (" . implode(',', $agents) . ")
 
                                 AND ((t.data->>'from' = ? AND t.transaction_type_id = 1) OR (t.data->>'to' = ? AND t.transaction_type_id = 2))
-                                GROUP BY u.id, u.username", [Providers::$agents, $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
+                                GROUP BY u.id, u.username", [[Providers::$agents,Providers::$agents_users], $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
+
 
         $financialDataExample = [];
         foreach ($result as $item => $value) {
