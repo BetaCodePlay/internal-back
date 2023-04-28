@@ -102,22 +102,22 @@
                                 @endif
 
                             </div>
-                            <div class="col-6 g-py-5">
-                                <a href="#add-users-modal" data-toggle="modal"
-                                   class="btn u-btn-3d u-btn-primary btn-block" id="new-user">
-                                    <i class="hs-admin-plus"></i>
-                                    {{ _i(' Player') }}
-                                </a>
-                            </div>
-                            @if ($agent->master)
-                                <div class="col-6 g-py-5">
-                                    <a href="#add-agents-modal" data-toggle="modal"
-                                       class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">
-                                        <i class="hs-admin-plus"></i>
-                                        {{ _i(' Agent') }}
-                                    </a>
-                                </div>
-                            @endif
+{{--                            <div class="col-6 g-py-5">--}}
+{{--                                <a href="#add-users-modal" data-toggle="modal"--}}
+{{--                                   class="btn u-btn-3d u-btn-primary btn-block" id="new-user">--}}
+{{--                                    <i class="hs-admin-plus"></i>--}}
+{{--                                    {{ _i(' Player') }}--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                            @if ($agent->master)--}}
+{{--                                <div class="col-6 g-py-5">--}}
+{{--                                    <a href="#add-agents-modal" data-toggle="modal"--}}
+{{--                                       class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">--}}
+{{--                                        <i class="hs-admin-plus"></i>--}}
+{{--                                        {{ _i(' Agent') }}--}}
+{{--                                    </a>--}}
+{{--                                </div>--}}
+{{--                            @endif--}}
                             {{--<div class="col-6 g-py-5">--}}
                             {{--   <button type="button" data-route="{{ route('agents.tree-filter', [1]) }}" data-status="1"--}}
                             {{--           class="btn u-btn-3d u-btn-teal g-mr-10 btn-block status_filter"--}}
@@ -166,22 +166,22 @@
                                 </select>
 {{--                            @endif--}}
                         </div>
-                        <div class="col-6 col-md-2 g-py-5">
-                            <a href="#add-users-modal" data-toggle="modal" class="btn u-btn-3d u-btn-primary btn-block"
-                               id="new-user">
-                                <i class="hs-admin-plus"></i>
-                                {{ _i(' Player') }}
-                            </a>
-                        </div>
-                        @if ($agent->master)
-                            <div class="col-6 col-md-2 g-py-5">
-                                <a href="#add-agents-modal" data-toggle="modal"
-                                   class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">
-                                    <i class="hs-admin-plus"></i>
-                                    {{ _i(' Agent ') }}
-                                </a>
-                            </div>
-                        @endif
+{{--                        <div class="col-6 col-md-2 g-py-5">--}}
+{{--                            <a href="#add-users-modal" data-toggle="modal" class="btn u-btn-3d u-btn-primary btn-block"--}}
+{{--                               id="new-user">--}}
+{{--                                <i class="hs-admin-plus"></i>--}}
+{{--                                {{ _i(' Player') }}--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                        @if ($agent->master)--}}
+{{--                            <div class="col-6 col-md-2 g-py-5">--}}
+{{--                                <a href="#add-agents-modal" data-toggle="modal"--}}
+{{--                                   class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">--}}
+{{--                                    <i class="hs-admin-plus"></i>--}}
+{{--                                    {{ _i(' Agent ') }}--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
                     </div>
                 </div>
             </div>
