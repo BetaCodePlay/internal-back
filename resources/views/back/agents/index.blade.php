@@ -626,7 +626,8 @@
                                             {{ _i('Toward') }}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            {{ _i('Debit') }}
+{{--                                            {{ _i('Debit') }}--}}
+                                            Cargó
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             {{ _i('Credit') }}
