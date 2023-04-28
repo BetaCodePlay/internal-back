@@ -1463,8 +1463,8 @@ class Agents {
             placeholder,
             allowClear: true,
             language: 'es',
-            id: username_search.id || username_search.id,
-            text: username_search.text || username_search.username,
+            id: $username_search.id || $username_search.id,
+            text: $username_search.text || $username_search.username,
 
             ajax: {
                 type: "POST",

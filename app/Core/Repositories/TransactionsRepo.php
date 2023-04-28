@@ -448,7 +448,7 @@ class TransactionsRepo
      */
     public function getCashFlowTransactionsNew($username, $agents, $whitelabel, $currency, $startDate, $endDate)
     {
-        Log::info('getCashFlowTransactionsNew',[$username, $agents, $whitelabel, $currency, $startDate, $endDate]);
+
         $providersArray = [Providers::$agents,Providers::$agents_users,Providers::$dotworkers,Providers::$manual_adjustments];
         $result = DB::SELECT("
                              SELECT u.id,
@@ -467,7 +467,6 @@ class TransactionsRepo
                                 AND ((t.data->>'from' = ? AND t.transaction_type_id = 1) OR (t.data->>'to' = ? AND t.transaction_type_id = 2))
                                 GROUP BY u.id, u.username", [$startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
 
-        Log::info('getCashFlowTransactionsNew:result',[$result]);
         $financialDataExample = [];
         foreach ($result as $item => $value) {
             $debit = [
