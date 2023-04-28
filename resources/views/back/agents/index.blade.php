@@ -631,7 +631,7 @@
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('Credit') }}--}}
-                                            Ventas
+                                            Le retiró
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             {{ _i('Balance') }}
