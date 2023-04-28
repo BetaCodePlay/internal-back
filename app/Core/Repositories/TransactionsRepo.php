@@ -457,7 +457,7 @@ class TransactionsRepo
                                SUM(CASE WHEN t.transaction_type_id = 2 THEN t.amount ELSE 0 END) AS credit
                                 FROM site.transactions as t
                                 INNER JOIN site.users as u ON t.user_id = u.id
-                                WHERE t.provider_id in (" . implode(',', $providersArray) . ")
+                                WHERE t.provider_id IN (" . implode(',', $providersArray) . ")
                                 AND t.created_at BETWEEN ? AND ?
                                 AND u.whitelabel_id = ?
                                 AND t.currency_iso = ?
