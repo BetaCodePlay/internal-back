@@ -448,7 +448,7 @@ class TransactionsRepo
      */
     public function getCashFlowTransactionsNew($username, $agents, $whitelabel, $currency, $startDate, $endDate)
     {
-
+        Log::info('getCashFlowTransactionsNew',[$username, $agents, $whitelabel, $currency, $startDate, $endDate]);
         $providersArray = [Providers::$agents,Providers::$agents_users];
         $result = DB::SELECT("
                              SELECT u.id,
