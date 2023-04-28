@@ -485,7 +485,7 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $username = Utils::endOfDayUtc($request->has('username') ? $request->get('username') : null);
+            $username = $request->has('username') ? $request->get('username') : null;
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
