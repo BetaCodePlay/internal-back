@@ -464,7 +464,7 @@ class TransactionsRepo
                                 AND t.user_id IN (" . implode(',', $agents) . ")
 
                                 AND ((t.data->>'from' = ? AND t.transaction_type_id = 1) OR (t.data->>'to' = ? AND t.transaction_type_id = 2))
-                                GROUP BY u.id, u.username", [[Providers::$agents,Providers::$agents_users], $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
+                                GROUP BY u.id, u.username", [[16,25], $startDate, $endDate, $whitelabel, $currency, TransactionStatus::$approved, $username, $username]);
 
         Log::info('getCashFlowTransactionsNew:result',[$result]);
         $financialDataExample = [];
