@@ -1012,6 +1012,8 @@ class AgentsController extends Controller
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
             $data = [
+                //ADD startOfDayUtc to Date
+                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];
             return Utils::successResponse($data);
@@ -1921,6 +1923,11 @@ class AgentsController extends Controller
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance + $amount;
+                    }
+                    if(empty($transaction) || empty($transaction->data)){
+                        Log::debug('error data, wallet',[
+                            $transaction,$request->all(),Auth::user()->id
+                        ]);
                     }
                     $balance = $transaction->data->wallet->balance;
                     $status = $transaction->status;
