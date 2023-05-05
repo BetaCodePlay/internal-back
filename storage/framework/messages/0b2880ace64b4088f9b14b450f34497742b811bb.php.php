@@ -485,10 +485,11 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $username = $request->has('username') ? $request->get('username') : null;
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
@@ -1011,6 +1012,8 @@ class AgentsController extends Controller
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
             $data = [
+                //ADD startOfDayUtc to Date
+                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];
             return Utils::successResponse($data);
@@ -1896,6 +1899,19 @@ class AgentsController extends Controller
                             'to' => $userData->username
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        if (empty($transaction) || empty($transaction->data)) {
+                            Log::debug('error data, wallet credit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
+
+                            $data = [
+                                'title' => _i('An error occurred'),
+                                'message' => _i("please contact support"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+
+                        }
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
@@ -1918,6 +1934,19 @@ class AgentsController extends Controller
                             'to' => $ownerAgent->username
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        if (empty($transaction) || empty($transaction->data)) {
+                            Log::debug('error data, wallet debit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
+
+                            $data = [
+                                'title' => _i('An error occurred'),
+                                'message' => _i("please contact support"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+
+                        }
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance + $amount;
                     }

@@ -235,8 +235,8 @@ if (!function_exists('menu')) {
                         'level_class' => 'second',
                         'route' => 'agents.create.agent',
                         'params' => [],
-                        'icon' => 'hs-admin-dashboard',
-                        'permission' => Permissions::$agents_dashboard,
+                        'icon' => 'hs-admin-user',
+                        'permission' => Permissions::$create_user_agent,
                         'submenu' => []
                     ],
 
@@ -246,7 +246,7 @@ if (!function_exists('menu')) {
                         'level_class' => 'second',
                         'route' => 'agents.create.user',
                         'params' => [],
-                        'icon' => 'hs-admin-dashboard',
+                        'icon' => 'hs-admin-user',
                         'permission' => Permissions::$agents_dashboard,
                         'submenu' => []
                     ],
