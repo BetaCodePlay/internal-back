@@ -489,7 +489,7 @@ class AgentsController extends Controller
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset,$username);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
@@ -1899,6 +1899,19 @@ class AgentsController extends Controller
                             'to' => $userData->username
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        if (empty($transaction) || empty($transaction->data)) {
+                            Log::debug('error data, wallet credit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
+
+                            $data = [
+                                'title' => _i('Contact support'),
+                                'message' => _i("An error occurred contact support"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+
+                        }
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
@@ -1921,13 +1934,21 @@ class AgentsController extends Controller
                             'to' => $ownerAgent->username
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        if (empty($transaction) || empty($transaction->data)) {
+                            Log::debug('error data, wallet debit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
+
+                            $data = [
+                                'title' => _i('Contact support'),
+                                'message' => _i("An error occurred contact support"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+
+                        }
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance + $amount;
-                    }
-                    if(empty($transaction) || empty($transaction->data)){
-                        Log::debug('error data, wallet',[
-                            $transaction,$request->all(),Auth::user()->id
-                        ]);
                     }
                     $balance = $transaction->data->wallet->balance;
                     $status = $transaction->status;
