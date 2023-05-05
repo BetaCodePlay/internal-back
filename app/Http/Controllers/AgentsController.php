@@ -1905,8 +1905,8 @@ class AgentsController extends Controller
                             ]);
 
                             $data = [
-                                'title' => _i('Contact support'),
-                                'message' => _i("An error occurred contact support"),
+                                'title' => _i('An error occurred'),
+                                'message' => _i("please contact support"),
                                 'close' => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
@@ -1940,8 +1940,8 @@ class AgentsController extends Controller
                             ]);
 
                             $data = [
-                                'title' => _i('Contact support'),
-                                'message' => _i("An error occurred contact support"),
+                                'title' => _i('An error occurred'),
+                                'message' => _i("please contact support"),
                                 'close' => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
