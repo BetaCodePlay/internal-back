@@ -631,12 +631,13 @@ class Agents {
             $button.button('loading');
             let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
             let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
+            let _hour = $('#_hour').val() === ''?'':'&_hour='+$('#_hour').val();
             let test = '?test=false'
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
             $.ajax({
-                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${test}${username_like}${provider_id}`,
+                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${test}${username_like}${provider_id}${_hour}`,
                 type: 'get',
                 dataType: 'json'
 

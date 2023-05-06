@@ -773,6 +773,7 @@
                              aria-labelledby="financial-state-tab">
                             <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
                                 <div class="input-group">
+                                    <input type="hidden" id="_hour" name="_hour" value="hour">
                                     <input type="hidden" id="username_like" name="username_like">
                                     <input type="text" id="date_range" class="form-control" autocomplete="off"
                                            placeholder="{{ _i('Date range') }}">
