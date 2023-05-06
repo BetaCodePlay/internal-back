@@ -380,6 +380,19 @@ class ClosuresUsersTotals2023Repo
         return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_with_son(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId]);
     }
 
+    /** FOR AGENT STATE FINANCIAL HOUR
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param int $ownerId User Id Owner
+     * @return array
+     */
+    public function getClosureTotalsByWhitelabelWithSonHour(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_hour_by_whitelabel_with_son(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId]);
+    }
+
     /**
      * @param int $whitelabel Whitelabel Id
      * @param string $currency Iso Currency

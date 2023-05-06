@@ -1019,7 +1019,7 @@ class AgentsController extends Controller
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
             if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
-                Log::debug('field _hour',[
+                Log::debug('financialStateData:field _hour',[
                     Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
                 ]);
 
@@ -1398,7 +1398,7 @@ class AgentsController extends Controller
      * @param $endDate
      * @return Response
      */
-    public function financialStateSummaryDataNew($user = null, $startDate = null, $endDate = null)
+    public function financialStateSummaryDataNew(Request $request,$user = null, $startDate = null, $endDate = null)
     {
         try {
             if (is_null($user)) {
@@ -1414,6 +1414,16 @@ class AgentsController extends Controller
             $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
 
             $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
+
+            //TODO ENVIAR CAMPO _hour para consultar la otra tabla
+            if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
+                Log::debug('financialStateSummaryDataNew:field _hour',[
+                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+                ]);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSonHour(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
+
+            }
+
 //            }
             //TODO AGENT
             //return $table;

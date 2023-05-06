@@ -1595,9 +1595,10 @@ class Agents {
             $button.button('loading');
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let _hour = $('#_hour').val() === ''?'':'?_hour='+$('#_hour').val();
 
             $.ajax({
-                url: `${$table.data('route')}/${user}/${startDate}/${endDate}`,
+                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${_hour}`,
                 type: 'get',
                 dataType: 'json'
             }).done(function (json) {
