@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
-"POT-Creation-Date: 2023-04-28 16:16-0400\n"
-"PO-Revision-Date: 2023-04-28 16:18-0400\n"
+"POT-Creation-Date: 2023-05-05 11:04-0400\n"
+"PO-Revision-Date: 2023-05-05 11:09-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_AR\n"
@@ -435,10 +435,10 @@ msgid "(Player)"
 msgstr "(Jugador)"
 
 #: ../app/Agents/Collections/AgentsCollection.php:1534
-#: ../app/Http/Controllers/AgentsController.php:1281
+#: ../app/Http/Controllers/AgentsController.php:1283
 #: ../app/Users/Collections/UsersCollection.php:1059
 #: ../app/Users/Collections/UsersCollection.php:1153
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1280
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1283
 #: ../storage/framework/messages/197b839b4313afebfab0b0f3651c5a33edc1f0f0.php.php:21
 #: ../storage/framework/messages/197b839b4313afebfab0b0f3651c5a33edc1f0f0.php.php:100
 #: ../storage/framework/messages/2912055a4d99a0d0cf845c83748c6c32613acbb5.php.php:114
@@ -898,8 +898,8 @@ msgstr "Cajero"
 
 #: ../app/Agents/Collections/AgentsCollection.php:2837
 #: ../app/Agents/Collections/AgentsCollection.php:3227
-#: ../app/Http/Controllers/AgentsController.php:1432
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1431
+#: ../app/Http/Controllers/AgentsController.php:1434
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1434
 #: ../storage/framework/messages/0d284b9b9f960a8d195d8b6c865d6e11b2e737c1.php.php:27
 #: ../storage/framework/messages/0d336862fad1454b55a186ae4a141aec87a5713d.php.php:20
 #: ../storage/framework/messages/0f4096b615ffe585310d2005ee04183dc4679266.php.php:33
@@ -4946,10 +4946,10 @@ msgid "Users status"
 msgstr "Estado de los usuarios"
 
 #: ../app/Core/helpers.php:73 ../app/Core/helpers.php:391
-#: ../app/Http/Controllers/AgentsController.php:2865
+#: ../app/Http/Controllers/AgentsController.php:2893
 #: ../app/Http/Controllers/ReportsController.php:1594
 #: ../storage/framework/messages/02b9e2e6cd9a702989513a88b97833adc730e5f3.php.php:1594
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2864
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2893
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:73
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:391
 msgid "Users balances"
@@ -5081,14 +5081,14 @@ msgid "By providers"
 msgstr "Por proveedores"
 
 #: ../app/Core/helpers.php:352
-#: ../app/Http/Controllers/AgentsController.php:2938
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2937
+#: ../app/Http/Controllers/AgentsController.php:2966
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2966
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:352
 msgid "Transaction Timeline"
 msgstr "Cronograma de transacciones"
 
 #: ../app/Core/helpers.php:371 ../app/Http/Controllers/AgentsController.php:693
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:692
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:693
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:371
 msgid "Cash flow"
 msgstr "Flujo de caja"
@@ -6413,7 +6413,7 @@ msgstr "Alternar"
 #: ../app/Core/helpers.php:5899
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5899
 msgid "Tickets"
-msgstr "Entradas"
+msgstr "Tickets"
 
 #: ../app/Core/helpers.php:5910 ../app/Core/helpers.php:8037
 #: ../app/Http/Controllers/ConfigurationsController.php:496
@@ -6875,32 +6875,34 @@ msgstr "El usuario se ha agregado correctamente"
 #: ../app/Http/Controllers/AgentsController.php:653
 #: ../app/Http/Controllers/AgentsController.php:675
 #: ../app/Http/Controllers/AgentsController.php:760
-#: ../app/Http/Controllers/AgentsController.php:1751
-#: ../app/Http/Controllers/AgentsController.php:1760
-#: ../app/Http/Controllers/AgentsController.php:1769
-#: ../app/Http/Controllers/AgentsController.php:1781
-#: ../app/Http/Controllers/AgentsController.php:1811
-#: ../app/Http/Controllers/AgentsController.php:1821
-#: ../app/Http/Controllers/AgentsController.php:1862
-#: ../app/Http/Controllers/AgentsController.php:1876
-#: ../app/Http/Controllers/AgentsController.php:1885
+#: ../app/Http/Controllers/AgentsController.php:1753
+#: ../app/Http/Controllers/AgentsController.php:1762
+#: ../app/Http/Controllers/AgentsController.php:1771
+#: ../app/Http/Controllers/AgentsController.php:1783
+#: ../app/Http/Controllers/AgentsController.php:1813
+#: ../app/Http/Controllers/AgentsController.php:1823
+#: ../app/Http/Controllers/AgentsController.php:1864
+#: ../app/Http/Controllers/AgentsController.php:1878
+#: ../app/Http/Controllers/AgentsController.php:1887
 #: ../app/Http/Controllers/AgentsController.php:1910
-#: ../app/Http/Controllers/AgentsController.php:1956
-#: ../app/Http/Controllers/AgentsController.php:1965
-#: ../app/Http/Controllers/AgentsController.php:2122
-#: ../app/Http/Controllers/AgentsController.php:2131
-#: ../app/Http/Controllers/AgentsController.php:2139
-#: ../app/Http/Controllers/AgentsController.php:2190
-#: ../app/Http/Controllers/AgentsController.php:2201
-#: ../app/Http/Controllers/AgentsController.php:2334
-#: ../app/Http/Controllers/AgentsController.php:2500
-#: ../app/Http/Controllers/AgentsController.php:2509
-#: ../app/Http/Controllers/AgentsController.php:2579
-#: ../app/Http/Controllers/AgentsController.php:2630
-#: ../app/Http/Controllers/AgentsController.php:2647
-#: ../app/Http/Controllers/AgentsController.php:2659
-#: ../app/Http/Controllers/AgentsController.php:2756
-#: ../app/Http/Controllers/AgentsController.php:2785
+#: ../app/Http/Controllers/AgentsController.php:1925
+#: ../app/Http/Controllers/AgentsController.php:1945
+#: ../app/Http/Controllers/AgentsController.php:1984
+#: ../app/Http/Controllers/AgentsController.php:1993
+#: ../app/Http/Controllers/AgentsController.php:2150
+#: ../app/Http/Controllers/AgentsController.php:2159
+#: ../app/Http/Controllers/AgentsController.php:2167
+#: ../app/Http/Controllers/AgentsController.php:2218
+#: ../app/Http/Controllers/AgentsController.php:2229
+#: ../app/Http/Controllers/AgentsController.php:2362
+#: ../app/Http/Controllers/AgentsController.php:2528
+#: ../app/Http/Controllers/AgentsController.php:2537
+#: ../app/Http/Controllers/AgentsController.php:2607
+#: ../app/Http/Controllers/AgentsController.php:2658
+#: ../app/Http/Controllers/AgentsController.php:2675
+#: ../app/Http/Controllers/AgentsController.php:2687
+#: ../app/Http/Controllers/AgentsController.php:2784
+#: ../app/Http/Controllers/AgentsController.php:2813
 #: ../app/Http/Controllers/AltenarController.php:113
 #: ../app/Http/Controllers/AuthController.php:77
 #: ../app/Http/Controllers/AuthController.php:88
@@ -7206,11 +7208,11 @@ msgstr "El usuario se ha agregado correctamente"
 #: ../app/Users/Import/TransactionsByLotImport.php:95
 #: ../storage/framework/messages/003f9d8999fb4e3d60375438fc93c8a0d511328d.php.php:40
 #: ../storage/framework/messages/03c90fcb92607c9337e6b9cdb4927e4e356c2df0.php.php:40
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:76
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:87
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:99
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:179
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:188
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:77
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:88
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:100
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:186
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:195
 #: ../storage/framework/messages/05d034ae164b08a8a1d69e6c41777e1914235e76.php.php:40
 #: ../storage/framework/messages/076514636545126b89492b95bc27ca87b90be77c.php.php:56
 #: ../storage/framework/messages/09f200d860251468a7c144636e1dddb927ec9d3d.php.php:226
@@ -7242,37 +7244,39 @@ msgstr "El usuario se ha agregado correctamente"
 #: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:221
 #: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:229
 #: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:238
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:614
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:628
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:652
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:674
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:759
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1750
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1759
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1768
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1780
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1810
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1820
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1861
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1875
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1884
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1909
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1955
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1964
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2121
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2130
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2138
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2189
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2200
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2333
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2499
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2508
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2578
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2629
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2646
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:615
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:629
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:653
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:675
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:760
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1753
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1762
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1771
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1783
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1813
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1823
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1864
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1878
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1887
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1910
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1925
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1945
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1984
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1993
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2150
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2159
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2167
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2218
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2229
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2362
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2528
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2537
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2607
 #: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2658
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2755
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2675
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2687
 #: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2784
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2813
 #: ../storage/framework/messages/1609cf04685567e03369f193aa1b22da7d011493.php.php:167
 #: ../storage/framework/messages/18782e210147aad4bb2e5ba035dc4891e87a3350.php.php:113
 #: ../storage/framework/messages/1dc830d10736334ce799362c441bbf2709163c7d.php.php:27
@@ -7672,203 +7676,203 @@ msgid "Agents Payments"
 msgstr "Pagos de Agentes"
 
 #: ../app/Http/Controllers/AgentsController.php:613
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:612
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:613
 msgid "Locked provider"
 msgstr "Proveedor bloqueado"
 
 #: ../app/Http/Controllers/AgentsController.php:614
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:613
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:614
 msgid "The provider was locked to the agent and his entire tree"
 msgstr "El proveedor estaba bloqueado al agente y a todo su árbol"
 
 #: ../app/Http/Controllers/AgentsController.php:627
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:626
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:627
 msgid "Unlocked provider"
 msgstr "Proveedor desbloqueado"
 
 #: ../app/Http/Controllers/AgentsController.php:628
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:627
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:628
 msgid "The provider was unlocked to the agent and his entire tree"
 msgstr "El proveedor fue desbloqueado para el agente y todo su árbol"
 
 #: ../app/Http/Controllers/AgentsController.php:651
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:650
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:651
 msgid "Locked users"
 msgstr "Usuarios bloqueados"
 
 #: ../app/Http/Controllers/AgentsController.php:652
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:651
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:652
 msgid "The agent and his entire tree was locked"
 msgstr "El agente y todo su árbol estaban encerrados"
 
 #: ../app/Http/Controllers/AgentsController.php:673
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:672
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:673
 msgid "Unlocked users"
 msgstr "Usuarios desbloqueados"
 
 #: ../app/Http/Controllers/AgentsController.php:674
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:673
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:674
 msgid "The agent and his entire tree was unlocked"
 msgstr "El agente y todo su árbol fueron desbloqueados"
 
 #: ../app/Http/Controllers/AgentsController.php:758
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:757
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:758
 msgid "Agent type changed"
 msgstr "Tipo de agente cambiado"
 
 #: ../app/Http/Controllers/AgentsController.php:759
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:758
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:759
 msgid "Agent type was successfully changed"
 msgstr "El tipo de agente se ha cambiado correctamente"
 
 #: ../app/Http/Controllers/AgentsController.php:952
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:951
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:952
 msgid "Deposits withdrawals provider by report"
 msgstr "Proveedor de retiros de depósitos por informe"
 
-#: ../app/Http/Controllers/AgentsController.php:1157
-#: ../app/Http/Controllers/AgentsController.php:1281
-#: ../app/Http/Controllers/AgentsController.php:1432
-#: ../app/Http/Controllers/AgentsController.php:1451
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1156
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1280
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1431
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1450
+#: ../app/Http/Controllers/AgentsController.php:1159
+#: ../app/Http/Controllers/AgentsController.php:1283
+#: ../app/Http/Controllers/AgentsController.php:1434
+#: ../app/Http/Controllers/AgentsController.php:1453
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1159
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1283
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1434
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1453
 msgid "Financial state report"
 msgstr "Informe de estado financiero"
 
-#: ../app/Http/Controllers/AgentsController.php:1263
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1262
+#: ../app/Http/Controllers/AgentsController.php:1265
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1265
 msgid "Financial statement report details"
 msgstr "Detalles del informe de estados financieros"
 
-#: ../app/Http/Controllers/AgentsController.php:1327
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1326
+#: ../app/Http/Controllers/AgentsController.php:1329
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1329
 msgid "Financial state report - Summary (Include bonuses)"
 msgstr "Informe de estado financiero - Resumen (Incluye bonificaciones)"
 
-#: ../app/Http/Controllers/AgentsController.php:1376
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1375
+#: ../app/Http/Controllers/AgentsController.php:1378
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1378
 msgid "Financial state report - Summary"
 msgstr "Informe de estado financiero - Resumen"
 
-#: ../app/Http/Controllers/AgentsController.php:1615
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1614
+#: ../app/Http/Controllers/AgentsController.php:1617
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1617
 msgid "Agents module"
 msgstr "Módulo de agentes"
 
-#: ../app/Http/Controllers/AgentsController.php:1631
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1630
+#: ../app/Http/Controllers/AgentsController.php:1633
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1633
 msgid "Locked providers"
 msgstr "Proveedores bloqueados"
 
-#: ../app/Http/Controllers/AgentsController.php:1671
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1670
+#: ../app/Http/Controllers/AgentsController.php:1673
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1673
 msgid "Create main agents"
 msgstr "Crear agentes principales"
 
-#: ../app/Http/Controllers/AgentsController.php:1684
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1683
+#: ../app/Http/Controllers/AgentsController.php:1686
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1686
 #: ../storage/framework/messages/3dc2c0a04df229339424c2fbf31b5e31fc284d63.php.php:5
 msgid "Manual transaction"
 msgstr "Transacción manual"
 
-#: ../app/Http/Controllers/AgentsController.php:1749
-#: ../app/Http/Controllers/AgentsController.php:1809
-#: ../app/Http/Controllers/AgentsController.php:1874
-#: ../app/Http/Controllers/AgentsController.php:1954
+#: ../app/Http/Controllers/AgentsController.php:1751
+#: ../app/Http/Controllers/AgentsController.php:1811
+#: ../app/Http/Controllers/AgentsController.php:1876
+#: ../app/Http/Controllers/AgentsController.php:1982
 #: ../app/Http/Controllers/AuthController.php:75
 #: ../app/Http/Controllers/UsersController.php:2001
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:74
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1748
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1808
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1873
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1953
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:75
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1751
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1811
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1876
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1982
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:2001
 msgid "Blocked by a superior!"
 msgstr "¡Bloqueado por un superior!"
 
-#: ../app/Http/Controllers/AgentsController.php:1750
-#: ../app/Http/Controllers/AgentsController.php:1759
-#: ../app/Http/Controllers/AgentsController.php:1810
-#: ../app/Http/Controllers/AgentsController.php:1875
-#: ../app/Http/Controllers/AgentsController.php:1884
-#: ../app/Http/Controllers/AgentsController.php:1955
-#: ../app/Http/Controllers/AgentsController.php:1964
+#: ../app/Http/Controllers/AgentsController.php:1752
+#: ../app/Http/Controllers/AgentsController.php:1761
+#: ../app/Http/Controllers/AgentsController.php:1812
+#: ../app/Http/Controllers/AgentsController.php:1877
+#: ../app/Http/Controllers/AgentsController.php:1886
+#: ../app/Http/Controllers/AgentsController.php:1983
+#: ../app/Http/Controllers/AgentsController.php:1992
 #: ../app/Http/Controllers/AuthController.php:76
 #: ../app/Http/Controllers/AuthController.php:87
 #: ../app/Http/Controllers/AuthController.php:99
 #: ../app/Http/Controllers/UsersController.php:2002
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:75
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:86
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:98
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1749
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1758
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1809
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1874
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1883
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1954
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1963
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:76
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:87
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:99
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1752
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1761
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1812
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1877
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1886
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1983
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1992
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:2002
 msgid "Contact your superior..."
 msgstr "Póngase en contacto con su superior..."
 
-#: ../app/Http/Controllers/AgentsController.php:1758
-#: ../app/Http/Controllers/AgentsController.php:1809
-#: ../app/Http/Controllers/AgentsController.php:1883
-#: ../app/Http/Controllers/AgentsController.php:1963
+#: ../app/Http/Controllers/AgentsController.php:1760
+#: ../app/Http/Controllers/AgentsController.php:1811
+#: ../app/Http/Controllers/AgentsController.php:1885
+#: ../app/Http/Controllers/AgentsController.php:1991
 #: ../app/Http/Controllers/AuthController.php:98
 #: ../app/Http/Controllers/UsersController.php:2001
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:97
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1757
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1808
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1882
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1962
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:98
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1760
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1811
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1885
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1991
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:2001
 msgid "Deactivated user"
 msgstr "Usuario desactivado"
 
-#: ../app/Http/Controllers/AgentsController.php:1767
-#: ../app/Http/Controllers/AgentsController.php:1779
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1766
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1778
+#: ../app/Http/Controllers/AgentsController.php:1769
+#: ../app/Http/Controllers/AgentsController.php:1781
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1769
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1781
 msgid "Agent moved"
 msgstr "Agente movido"
 
-#: ../app/Http/Controllers/AgentsController.php:1768
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1767
+#: ../app/Http/Controllers/AgentsController.php:1770
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1770
 msgid "Agent not displaced"
 msgstr "Agente no desplazado"
 
-#: ../app/Http/Controllers/AgentsController.php:1780
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1779
+#: ../app/Http/Controllers/AgentsController.php:1782
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1782
 msgid "Agent moved successfully"
 msgstr "El agente se ha movido correctamente"
 
-#: ../app/Http/Controllers/AgentsController.php:1819
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1818
+#: ../app/Http/Controllers/AgentsController.php:1821
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1821
 msgid "User moved"
 msgstr "Usuario movido"
 
-#: ../app/Http/Controllers/AgentsController.php:1820
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1819
+#: ../app/Http/Controllers/AgentsController.php:1822
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1822
 msgid "User moved successfully"
 msgstr "El usuario se ha movido correctamente"
 
-#: ../app/Http/Controllers/AgentsController.php:1860
-#: ../app/Http/Controllers/AgentsController.php:1908
-#: ../app/Http/Controllers/AgentsController.php:2129
-#: ../app/Http/Controllers/AgentsController.php:2199
-#: ../app/Http/Controllers/AgentsController.php:2657
+#: ../app/Http/Controllers/AgentsController.php:1862
+#: ../app/Http/Controllers/AgentsController.php:1923
+#: ../app/Http/Controllers/AgentsController.php:2157
+#: ../app/Http/Controllers/AgentsController.php:2227
+#: ../app/Http/Controllers/AgentsController.php:2685
 #: ../app/Http/Controllers/BetPayController.php:1285
 #: ../app/Http/Controllers/BetPayController.php:5044
 #: ../app/Http/Controllers/UsersController.php:1733
 #: ../app/Http/Controllers/WalletsController.php:116
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1859
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1907
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2128
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2198
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2656
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1862
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1923
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2157
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2227
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2685
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:1733
 #: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1285
 #: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5044
@@ -7876,39 +7880,53 @@ msgstr "El usuario se ha movido correctamente"
 msgid "Insufficient balance"
 msgstr "Saldo insuficiente"
 
-#: ../app/Http/Controllers/AgentsController.php:1861
-#: ../app/Http/Controllers/AgentsController.php:2200
-#: ../app/Http/Controllers/AgentsController.php:2658
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1860
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2199
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2657
+#: ../app/Http/Controllers/AgentsController.php:1863
+#: ../app/Http/Controllers/AgentsController.php:2228
+#: ../app/Http/Controllers/AgentsController.php:2686
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1863
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2228
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2686
 msgid ""
 "The agents's operational balance is insufficient to perform the transaction"
 msgstr ""
 "El saldo operativo de los agentes es insuficiente para realizar la "
 "transacción"
 
+#: ../app/Http/Controllers/AgentsController.php:1908
+#: ../app/Http/Controllers/AgentsController.php:1943
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1908
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1943
+msgid "An error occurred"
+msgstr "Ocurrió un error"
+
 #: ../app/Http/Controllers/AgentsController.php:1909
-#: ../app/Http/Controllers/AgentsController.php:2130
+#: ../app/Http/Controllers/AgentsController.php:1944
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1909
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1944
+msgid "please contact support"
+msgstr "por favor contacte a soporte"
+
+#: ../app/Http/Controllers/AgentsController.php:1924
+#: ../app/Http/Controllers/AgentsController.php:2158
 #: ../app/Http/Controllers/BetPayController.php:1286
 #: ../app/Http/Controllers/BetPayController.php:5045
 #: ../app/Http/Controllers/UsersController.php:1734
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1908
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2129
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1924
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2158
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:1734
 #: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1286
 #: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5045
 msgid "The user's balance is insufficient to perform the transaction"
 msgstr "El saldo del usuario es insuficiente para realizar la transacción"
 
-#: ../app/Http/Controllers/AgentsController.php:1946
-#: ../app/Http/Controllers/AgentsController.php:2066
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1945
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2065
+#: ../app/Http/Controllers/AgentsController.php:1974
+#: ../app/Http/Controllers/AgentsController.php:2094
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:1974
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2094
 msgid "Print ticket"
 msgstr "Imprimir ticket"
 
-#: ../app/Http/Controllers/AgentsController.php:2120
+#: ../app/Http/Controllers/AgentsController.php:2148
 #: ../app/Http/Controllers/BetPayController.php:1330
 #: ../app/Http/Controllers/BetPayController.php:5114
 #: ../app/Http/Controllers/BonusSystemController.php:1168
@@ -7917,7 +7935,7 @@ msgstr "Imprimir ticket"
 #: ../app/Http/Controllers/UsersController.php:1804
 #: ../app/Http/Controllers/UsersController.php:1906
 #: ../storage/framework/messages/09f200d860251468a7c144636e1dddb927ec9d3d.php.php:1168
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2119
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2148
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:791
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:1656
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:1804
@@ -7927,7 +7945,7 @@ msgstr "Imprimir ticket"
 msgid "Transaction performed"
 msgstr "Transacción realizada"
 
-#: ../app/Http/Controllers/AgentsController.php:2121
+#: ../app/Http/Controllers/AgentsController.php:2149
 #: ../app/Http/Controllers/BetPayController.php:1331
 #: ../app/Http/Controllers/BetPayController.php:5115
 #: ../app/Http/Controllers/BonusSystemController.php:1169
@@ -7936,7 +7954,7 @@ msgstr "Transacción realizada"
 #: ../app/Http/Controllers/UsersController.php:1805
 #: ../app/Http/Controllers/UsersController.php:1907
 #: ../storage/framework/messages/09f200d860251468a7c144636e1dddb927ec9d3d.php.php:1169
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2120
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2149
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:792
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:1657
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:1805
@@ -7946,7 +7964,7 @@ msgstr "Transacción realizada"
 msgid "The transaction was successfully made to the user"
 msgstr "La transacción se realizó correctamente al usuario"
 
-#: ../app/Http/Controllers/AgentsController.php:2137
+#: ../app/Http/Controllers/AgentsController.php:2165
 #: ../app/Http/Controllers/BetPayController.php:2206
 #: ../app/Http/Controllers/BetPayController.php:2234
 #: ../app/Http/Controllers/BetPayController.php:2365
@@ -7974,7 +7992,7 @@ msgstr "La transacción se realizó correctamente al usuario"
 #: ../app/Http/Controllers/DotSuiteController.php:1020
 #: ../app/Http/Controllers/DotSuiteController.php:1145
 #: ../app/Http/Controllers/WalletsController.php:108
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2136
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2165
 #: ../storage/framework/messages/35241d910d6614f8cd94e54b9f4ac2a9f5b826cb.php.php:92
 #: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2206
 #: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2234
@@ -8006,123 +8024,121 @@ msgstr "La transacción se realizó correctamente al usuario"
 msgid "Error"
 msgstr "Error"
 
-#: ../app/Http/Controllers/AgentsController.php:2138
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2137
+#: ../app/Http/Controllers/AgentsController.php:2166
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2166
 msgid "You cannot make transactions to yourself"
 msgstr "No puedes hacerte transacciones a ti mismo"
 
-#: ../app/Http/Controllers/AgentsController.php:2188
-#: ../app/Http/Controllers/AgentsController.php:2628
+#: ../app/Http/Controllers/AgentsController.php:2216
+#: ../app/Http/Controllers/AgentsController.php:2656
 #: ../app/Http/Controllers/UsersController.php:464
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2187
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2627
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2216
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2656
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:464
 msgid "Username in use"
 msgstr "Nombre de usuario en uso"
 
-#: ../app/Http/Controllers/AgentsController.php:2189
-#: ../app/Http/Controllers/AgentsController.php:2629
+#: ../app/Http/Controllers/AgentsController.php:2217
+#: ../app/Http/Controllers/AgentsController.php:2657
 #: ../app/Http/Controllers/UsersController.php:465
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2188
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2628
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2217
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2657
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:465
 msgid "The indicated username is already in use"
 msgstr "El nombre de usuario indicado ya está en uso"
 
-#: ../app/Http/Controllers/AgentsController.php:2332
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2331
+#: ../app/Http/Controllers/AgentsController.php:2360
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2360
 msgid "Agent created"
 msgstr "Agente creado"
 
-#: ../app/Http/Controllers/AgentsController.php:2333
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2332
+#: ../app/Http/Controllers/AgentsController.php:2361
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2361
 msgid "Agent created successfully"
 msgstr "Agente creado correctamente"
 
-#: ../app/Http/Controllers/AgentsController.php:2498
-#: ../app/Http/Controllers/AgentsController.php:2507
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2497
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2506
+#: ../app/Http/Controllers/AgentsController.php:2526
+#: ../app/Http/Controllers/AgentsController.php:2535
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2526
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2535
 #, php-format
 msgid "User %s does not exist"
 msgstr "El %s de usuario no existe"
 
-#: ../app/Http/Controllers/AgentsController.php:2499
-#: ../app/Http/Controllers/AgentsController.php:2508
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2498
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2507
+#: ../app/Http/Controllers/AgentsController.php:2527
+#: ../app/Http/Controllers/AgentsController.php:2536
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2527
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2536
 #, php-format
 msgid "The %s user has not yet been created. Please create it first"
 msgstr "El usuario %s aún no se ha creado. Por favor, créelo primero"
 
-#: ../app/Http/Controllers/AgentsController.php:2577
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2576
+#: ../app/Http/Controllers/AgentsController.php:2605
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2605
 msgid "Agents created"
 msgstr "Agentes creados"
 
-#: ../app/Http/Controllers/AgentsController.php:2578
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2577
+#: ../app/Http/Controllers/AgentsController.php:2606
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2606
 msgid "Agents were created successfully"
 msgstr "Los agentes se crearon correctamente"
 
-#: ../app/Http/Controllers/AgentsController.php:2645
+#: ../app/Http/Controllers/AgentsController.php:2673
 #: ../app/Http/Controllers/UsersController.php:473
 #: ../app/Http/Controllers/UsersController.php:2385
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2644
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2673
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:473
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:2385
 msgid "Email in use"
 msgstr "Correo electrónico en uso"
 
-#: ../app/Http/Controllers/AgentsController.php:2646
+#: ../app/Http/Controllers/AgentsController.php:2674
 #: ../app/Http/Controllers/UsersController.php:474
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2645
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2674
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:474
 msgid "The indicated email is already in use"
 msgstr "El correo electrónico indicado ya está en uso"
 
-#: ../app/Http/Controllers/AgentsController.php:2754
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2753
+#: ../app/Http/Controllers/AgentsController.php:2782
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2782
 msgid "Player created"
 msgstr "Reproductor creado"
 
-#: ../app/Http/Controllers/AgentsController.php:2755
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2754
+#: ../app/Http/Controllers/AgentsController.php:2783
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2783
 msgid "Player created successfully"
 msgstr "Reproductor creado correctamente"
 
-#: ../app/Http/Controllers/AgentsController.php:2783
+#: ../app/Http/Controllers/AgentsController.php:2811
 #: ../app/Http/Controllers/ConfigurationsController.php:2801
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2782
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2811
 #: ../storage/framework/messages/39733f6b1dab24e38157cf18ffe895710afc9b1c.php.php:2801
 msgid "Percentage updated"
 msgstr "Porcentaje actualizado"
 
-#: ../app/Http/Controllers/AgentsController.php:2784
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2783
+#: ../app/Http/Controllers/AgentsController.php:2812
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2812
 msgid "Percentage of agent successfully updated"
 msgstr "Porcentaje de agente actualizado correctamente"
 
-#: ../app/Http/Controllers/AgentsController.php:2885
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2884
+#: ../app/Http/Controllers/AgentsController.php:2913
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2913
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:5
 #: ../storage/framework/messages/3510532e13a110c003bb07adc4d02bf49cb7514c.php.php:128
 #: ../storage/framework/messages/56a0ba48c7016fa360d0906e12e9bee842d4d38b.php.php:128
-#, fuzzy
 msgid "Create agent"
 msgstr "Crear agente"
 
-#: ../app/Http/Controllers/AgentsController.php:2911
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2910
+#: ../app/Http/Controllers/AgentsController.php:2939
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2939
 #: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:5
 #: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:97
 #: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:107
-#, fuzzy
 msgid "Create player"
-msgstr "Crear reproductor"
+msgstr "Crear jugador"
 
-#: ../app/Http/Controllers/AgentsController.php:2927
-#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2926
+#: ../app/Http/Controllers/AgentsController.php:2955
+#: ../storage/framework/messages/0b2880ace64b4088f9b14b450f34497742b811bb.php.php:2955
 msgid "reports"
 msgstr "informes"
 
@@ -8146,37 +8162,37 @@ msgid "Audits overview"
 msgstr "Descripción general de las auditorías"
 
 #: ../app/Http/Controllers/AuthController.php:86
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:85
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:86
 msgid "Access denied"
 msgstr "Acceso denegado"
 
 #: ../app/Http/Controllers/AuthController.php:173
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:166
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:173
 msgid "Welcome!"
 msgstr "¡Bienvenido!"
 
 #: ../app/Http/Controllers/AuthController.php:174
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:167
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:174
 msgid "We will shortly direct you to the control panel"
 msgstr "En breve lo dirigiremos al panel de control"
 
 #: ../app/Http/Controllers/AuthController.php:184
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:177
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:184
 msgid "Access denied!"
 msgstr "¡Acceso denegado!"
 
 #: ../app/Http/Controllers/AuthController.php:185
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:178
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:185
 msgid "You do not have access to the system"
 msgstr "No tiene acceso al sistema"
 
 #: ../app/Http/Controllers/AuthController.php:193
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:186
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:193
 msgid "Invalid credentials!"
 msgstr "¡Credenciales no válidas!"
 
 #: ../app/Http/Controllers/AuthController.php:194
-#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:187
+#: ../storage/framework/messages/0447676032b15f4701a02113a9d4cd7cd1a1c9a6.php.php:194
 msgid "The username or password are incorrect"
 msgstr "El nombre de usuario o la contraseña son incorrectos"
 
@@ -11021,17 +11037,13 @@ msgstr "Se requiere el tipo de bloqueo"
 
 #: ../app/Http/Controllers/UsersController.php:888
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:888
-#, fuzzy
-#| msgid "Id user is required"
 msgid "ID user is required"
 msgstr "Se requiere ID de usuario"
 
 #: ../app/Http/Controllers/UsersController.php:889
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:889
-#, fuzzy
-#| msgid "Id user does not exist"
 msgid "ID user does not exist"
-msgstr "El usuario Id no existe"
+msgstr "ID de usuario no existe"
 
 #: ../app/Http/Controllers/UsersController.php:925
 #: ../storage/framework/messages/56f8b7b97ce4c864a8681246152e6d6bd2376007.php.php:925

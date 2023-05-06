@@ -335,7 +335,7 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0)
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null)
     {
 
         $countTransactions = Transaction::select('transactions.id')
@@ -354,8 +354,13 @@ class TransactionsRepo
             ->whereIn('transactions.provider_id', $providers)
             ->orderBy('transactions.id', 'DESC')
             ->limit($limit)
-            ->offset($offset)
-            ->get();
+            ->offset($offset);
+
+        if(!is_null($username)){
+            //$transactions = $transactions->where('username', 'like', '%' . $username . '%');
+        }
+
+        $transactions = $transactions->get();
 
         return [$transactions, count($countTransactions)];
     }
