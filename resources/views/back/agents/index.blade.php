@@ -627,11 +627,11 @@
                                         @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">
 {{--                                                {{ _i('Charged him') }}--}}
-                                                Cobro
+                                                Carga
                                             </th>
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">
 {{--                                                {{ _i('withdrew') }}--}}
-                                                Pago
+                                                Retiro
                                             </th>
                                         @else
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
