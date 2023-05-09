@@ -2066,7 +2066,7 @@ class UsersController extends Controller
                         $password = $request->password;
 
                     } else {
-                        $email = "{$user}@dotworkers.com";
+                        $email = "{$user}@betsweet.com";
 
                         switch ($user) {
                             case 'wolf':
