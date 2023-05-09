@@ -132,14 +132,19 @@ class WalletsController extends Controller
      * @param int $wallet Wallet ID
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function transactions($wallet = null)
+    public function transactions(Request $request,$wallet = null)
     {
         try {
+
+            $offset = $request->has('start') ? $request->get('start') : 0;
+            $limit = $request->has('length') ? $request->get('length') : 2000;
+            $data = [];
             if (!is_null(($wallet))) {
-                $transactions = Wallet::getTransactionsByWalletAndClient($wallet, $limit = 2000, $offset = 0);
+                $transactions = Wallet::getTransactionsByWalletAndClient($wallet, $limit, $offset);
                 $transactionsData = $transactions->data->transactions;
                 //Log::info('transactions user',[$transactions->data]);
                 $this->transactionsCollection->formatTransactions($transactionsData);
+                //$data = $this->transactionsCollection->formatTransactionsPage($transactionsData,2000,$request);
                 $data = [
                     'transactions' => $transactionsData
                 ];

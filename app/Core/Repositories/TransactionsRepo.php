@@ -357,11 +357,10 @@ class TransactionsRepo
             ->offset($offset);
 
         if(!is_null($username)){
-            //$transactions = $transactions->where('username', 'like', '%' . $username . '%');
+            $transactions = $transactions->where('data->from', 'ilike', '%' . $username . '%')->orWhere('data->to', 'ilike', '%' . $username . '%');
         }
 
         $transactions = $transactions->get();
-
         return [$transactions, count($countTransactions)];
     }
 

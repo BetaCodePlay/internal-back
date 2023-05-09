@@ -485,7 +485,7 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $username = $request->has('username') ? $request->get('username') : null;
+            $username = $request->get('search')['value'];
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
@@ -1201,6 +1201,7 @@ class AgentsController extends Controller
                 $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
                 $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id, $providersString);
+                //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id, $providersString);
             }
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsProvider($table, $percentage)
@@ -1242,8 +1243,10 @@ class AgentsController extends Controller
                 if ($request->has('username_like') && !is_null($request->get('username_like'))) {
                     //TODO validar user_id para tener dinamismo
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsernameWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%', Auth::user()->id);
+                    //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourByUsernameWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%', Auth::user()->id);
                 } else {
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id);
+                    //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id);
                 }
             }
 
