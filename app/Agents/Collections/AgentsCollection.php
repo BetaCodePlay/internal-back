@@ -15,6 +15,7 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -3109,35 +3110,71 @@ class AgentsCollection
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
-            $from = $transaction->data->from;
-            $to = $transaction->data->to;
-            if ($transaction->transaction_type_id == TransactionTypes::$debit) {
+
+            if($transaction->user_id == Auth::user()->id){
+
+                $from = $transaction->data->from;
+                $to = $transaction->data->to;
+                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
 //                $to = isset($transaction->data->to) ? $transaction->data->to : null;
 //                $from = isset($transaction->data->from) ? $transaction->data->from : null;
-                $transaction->debit = $amountTmp;
-                $totalDebit = $totalDebit + $amountTmp;
-            }
-            if ($transaction->transaction_type_id == TransactionTypes::$credit) {
+                    $transaction->debit = $amountTmp;
+                    $totalDebit = $totalDebit + $amountTmp;
+                }
+                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
 //                $from = isset($transaction->data->to) ? $transaction->data->to : null;
 //                $to = isset($transaction->data->from) ? $transaction->data->from : null;
-                $transaction->credit = $amountTmp;
-                $totalCredit = $totalCredit + $amountTmp;
-            }
-            if (isset($transaction->data->balance)) {
-                $transaction->balance = number_format($transaction->data->balance, 2);
+                    $transaction->credit = $amountTmp;
+                    $totalCredit = $totalCredit + $amountTmp;
+                }
+                if (isset($transaction->data->balance)) {
+                    $transaction->balance = number_format($transaction->data->balance, 2);
+                }
+
+                $data[] = [
+                    'id' => null,
+                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s').'-'.$transaction->id,
+                    'data' => [
+                        'from' => $from,
+                        'to' => $to,
+                    ],
+                    'debit' => number_format($transaction->credit, 2, ",", "."),
+                    'credit' => number_format($transaction->dedit, 2, ",", "."),
+                    'balance' => $transaction->balance,
+                ];
+
+            }else{
+                $from = $transaction->data->from;
+                $to = $transaction->data->to;
+                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
+//                $to = isset($transaction->data->to) ? $transaction->data->to : null;
+//                $from = isset($transaction->data->from) ? $transaction->data->from : null;
+                    $transaction->debit = $amountTmp;
+                    $totalDebit = $totalDebit + $amountTmp;
+                }
+                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
+//                $from = isset($transaction->data->to) ? $transaction->data->to : null;
+//                $to = isset($transaction->data->from) ? $transaction->data->from : null;
+                    $transaction->credit = $amountTmp;
+                    $totalCredit = $totalCredit + $amountTmp;
+                }
+                if (isset($transaction->data->balance)) {
+                    $transaction->balance = number_format($transaction->data->balance, 2);
+                }
+
+                $data[] = [
+                    'id' => null,
+                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s').'-'.$transaction->id,
+                    'data' => [
+                        'from' => $from,
+                        'to' => $to,
+                    ],
+                    'debit' => number_format($transaction->debit, 2, ",", "."),
+                    'credit' => number_format($transaction->credit, 2, ",", "."),
+                    'balance' => $transaction->balance,
+                ];
             }
 
-            $data[] = [
-                'id' => null,
-                'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s').'-'.$transaction->id,
-                'data' => [
-                    'from' => $from,
-                    'to' => $to,
-                ],
-                'debit' => number_format($transaction->debit, 2, ",", "."),
-                'credit' => number_format($transaction->credit, 2, ",", "."),
-                'balance' => $transaction->balance,
-            ];
 
         }
 
