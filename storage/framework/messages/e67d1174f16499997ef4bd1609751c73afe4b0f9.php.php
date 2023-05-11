@@ -53,4 +53,57 @@ class TransactionsCollection
             }
         }
     }
+
+    /**
+     * Data Table transactions user page
+     * Format transactions
+     *
+     * @param $transactions
+     */
+    public function formatTransactionsPage($transactions,$total,$request)
+    {
+
+        $data = array();
+        foreach ($transactions as $transaction) {
+                $totalBalance = $transaction->balance;
+                $timezone = session('timezone');
+
+                $debit = $transaction->transaction_type_id == TransactionTypes::$debit ?  number_format($transaction->amount, 2, ",", ".") : '-';
+                $credit = $transaction->transaction_type_id == TransactionTypes::$credit ?  number_format($transaction->amount, 2, ",", ".") : '-';
+
+                if (isset($transaction->balances)) {
+                    foreach ($transaction->balances as $balance) {
+                        $totalBalance += $balance->balance;
+                    }
+                }
+
+                $data[] = [
+                    'id' => null,
+                    'date' => Carbon::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s'),
+                    'amount' => number_format($transaction->amount, 2),
+                    'description' => Providers::getDescription($transaction->provider_id, $transaction->transaction_type_id, $transaction->action_id, $transaction->data),
+                    'provider' =>  Providers::getName($transaction->provider_id),
+                    'modified_amount' =>  $transaction->transaction_type_id == TransactionTypes::$debit ? "-{$transaction->amount}" : "+{$transaction->amount}",
+    //                'data' => [
+    //                    'from' => $from,
+    //                    'to' => $to,
+    //                ],
+                    'debit' => $debit,
+                    'credit' =>$credit,
+                    'balance' => number_format($totalBalance, 2),
+                ];
+
+
+        }
+
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($total),
+            "recordsFiltered" => intval($total),
+            "data" => $data
+        );
+
+        return $json_data;
+
+    }
 }

@@ -485,7 +485,8 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $username = $request->has('username') ? $request->get('username') : null;
+            $username = $request->get('search')['value'];
+            $type = $request->has('type') ? $request->get('type') : 'all';
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
@@ -990,7 +991,7 @@ class AgentsController extends Controller
      * @param $endDate
      * @return Response
      */
-    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateData(Request $request,ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
 
         try {
@@ -1016,6 +1017,18 @@ class AgentsController extends Controller
                 //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];
+
+            //TODO ENVIAR CAMPO _hour para consultar la otra tabla
+            if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
+//                Log::debug('financialStateData:field _hour',[
+//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+//                ]);
+
+                $data = [
+                    'table' => $this->agentsCollection->closuresTotalsByAgentGroupProviderHour($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
+                ];
+            }
+
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
@@ -1189,6 +1202,7 @@ class AgentsController extends Controller
                 $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
                 $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id, $providersString);
+                //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id, $providersString);
             }
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsProvider($table, $percentage)
@@ -1230,8 +1244,10 @@ class AgentsController extends Controller
                 if ($request->has('username_like') && !is_null($request->get('username_like'))) {
                     //TODO validar user_id para tener dinamismo
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsernameWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%', Auth::user()->id);
+                    //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourByUsernameWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%', Auth::user()->id);
                 } else {
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id);
+                    //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id);
                 }
             }
 
@@ -1380,12 +1396,13 @@ class AgentsController extends Controller
     }
 
     /**
+     * Summary State Financial New
      * @param $user
      * @param $startDate
      * @param $endDate
      * @return Response
      */
-    public function financialStateSummaryDataNew($user = null, $startDate = null, $endDate = null)
+    public function financialStateSummaryDataNew(Request $request,$user = null, $startDate = null, $endDate = null)
     {
         try {
             if (is_null($user)) {
@@ -1401,6 +1418,16 @@ class AgentsController extends Controller
             $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
 
             $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
+
+            //TODO ENVIAR CAMPO _hour para consultar la otra tabla
+            if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
+//                Log::debug('financialStateSummaryDataNew:field _hour',[
+//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+//                ]);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSonHour(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
+
+            }
+
 //            }
             //TODO AGENT
             //return $table;
@@ -1900,9 +1927,9 @@ class AgentsController extends Controller
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
-                            Log::debug('error data, wallet credit', [
-                                $transaction, $request->all(), Auth::user()->id
-                            ]);
+//                            Log::debug('error data, wallet credit', [
+//                                $transaction, $request->all(), Auth::user()->id
+//                            ]);
 
                             $data = [
                                 'title' => _i('An error occurred'),
@@ -1930,14 +1957,14 @@ class AgentsController extends Controller
                         $uuid = Str::uuid()->toString();
                         $additionalData = [
                             'provider_transaction' => $uuid,
-                            'from' => $userData->username,
-                            'to' => $ownerAgent->username
+                            'from' => $ownerAgent->username,
+                            'to' => $userData->username
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
-                            Log::debug('error data, wallet debit', [
-                                $transaction, $request->all(), Auth::user()->id
-                            ]);
+//                            Log::debug('error data, wallet debit', [
+//                                $transaction, $request->all(), Auth::user()->id
+//                            ]);
 
                             $data = [
                                 'title' => _i('An error occurred'),
@@ -2059,8 +2086,8 @@ class AgentsController extends Controller
                             $ownerBalance = $ownerAgent->balance + $amount;
                             /*$additionalData: This is what is stored in the data field of the transactions table  */
                             $additionalData = [
-                                'from' => $agent->username,
-                                'to' => $ownerAgent->username,
+                                'from' => $ownerAgent->username,
+                                'to' => $agent->username,
                                 'balance' => $balance
                             ];
                         } else {

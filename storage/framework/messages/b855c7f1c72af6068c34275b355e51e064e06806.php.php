@@ -592,32 +592,42 @@
 
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('From')); ?>
+
+                                            Cuenta origen
 
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('Toward')); ?>
 
+                                            Cuenta destino
                                         </th>
-                                        <?php if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('Charged him')); ?>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 
-                                            </th>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('withdrew')); ?>
+                                            Descarga
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 
-                                            </th>
-                                        <?php else: ?>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('Debit')); ?>
+                                            Carga
+                                        </th>
 
-                                            </th>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('Credit')); ?>
 
-                                            </th>
-                                        <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             <?php echo e(_i('Balance')); ?>
 
@@ -766,6 +776,7 @@
                              aria-labelledby="financial-state-tab">
                             <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
                                 <div class="input-group">
+                                    <input type="hidden" id="_hour" name="_hour" value="_hour">
                                     <input type="hidden" id="username_like" name="username_like">
                                     <input type="text" id="date_range" class="form-control" autocomplete="off"
                                            placeholder="<?php echo e(_i('Date range')); ?>">
