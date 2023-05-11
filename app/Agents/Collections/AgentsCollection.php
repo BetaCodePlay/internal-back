@@ -3111,39 +3111,39 @@ class AgentsCollection
             $transaction->credit = 0;
             $transaction->balance = 0;
 
-//            if($transaction->user_id == Auth::user()->id){
-//
-//                $from = $transaction->data->from;
-//                $to = $transaction->data->to;
-//                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
-////                $to = isset($transaction->data->to) ? $transaction->data->to : null;
-////                $from = isset($transaction->data->from) ? $transaction->data->from : null;
-//                    $transaction->debit = $amountTmp;
-//                    $totalDebit = $totalDebit + $amountTmp;
-//                }
-//                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-////                $from = isset($transaction->data->to) ? $transaction->data->to : null;
-////                $to = isset($transaction->data->from) ? $transaction->data->from : null;
-//                    $transaction->credit = $amountTmp;
-//                    $totalCredit = $totalCredit + $amountTmp;
-//                }
-//                if (isset($transaction->data->balance)) {
-//                    $transaction->balance = number_format($transaction->data->balance, 2);
-//                }
-//
-//                $data[] = [
-//                    'id' => null,
-//                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s').'-'.$transaction->id,
-//                    'data' => [
-//                        'from' => $from,
-//                        'to' => $to,
-//                    ],
-//                    'debit' => number_format($transaction->credit, 2, ",", "."),
-//                    'credit' => number_format($transaction->dedit, 2, ",", "."),
-//                    'balance' => $transaction->balance,
-//                ];
-//
-//            }else{
+            if($transaction->user_id == Auth::user()->id){
+
+                $from = $transaction->data->from;
+                $to = $transaction->data->to;
+                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
+//                $to = isset($transaction->data->to) ? $transaction->data->to : null;
+//                $from = isset($transaction->data->from) ? $transaction->data->from : null;
+                    $transaction->debit = $amountTmp;
+                    $totalDebit = $totalDebit + $amountTmp;
+                }
+                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
+//                $from = isset($transaction->data->to) ? $transaction->data->to : null;
+//                $to = isset($transaction->data->from) ? $transaction->data->from : null;
+                    $transaction->credit = $amountTmp;
+                    $totalCredit = $totalCredit + $amountTmp;
+                }
+                if (isset($transaction->data->balance)) {
+                    $transaction->balance = number_format($transaction->data->balance, 2);
+                }
+
+                $data[] = [
+                    'id' => null,
+                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s').'-'.$transaction->id,
+                    'data' => [
+                        'from' => $from,
+                        'to' => $to,
+                    ],
+                    'debit' => number_format($transaction->credit, 2, ",", "."),
+                    'credit' => number_format($transaction->dedit, 2, ",", "."),
+                    'balance' => $transaction->balance,
+                ];
+
+            }else{
                 $from = $transaction->data->from;
                 $to = $transaction->data->to;
                 if ($transaction->transaction_type_id == TransactionTypes::$debit) {
@@ -3174,7 +3174,7 @@ class AgentsCollection
                     'balance' => $transaction->balance,
                     'trans'=>$transaction
                 ];
-//            }
+            }
 
 
         }
