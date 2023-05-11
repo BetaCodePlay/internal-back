@@ -621,29 +621,38 @@
                                             {{ _i('Date') }}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('From') }}--}}
-                                            {{ _i('User') }}
+                                            {{ _i('From') }}
+{{--                                            {{ _i('User') }}--}}
                                         </th>
-                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">
-{{--                                                {{ _i('Charged him') }}--}}
-                                                Carga
-                                            </th>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">
-{{--                                                {{ _i('withdrew') }}--}}
-                                                Retiro
-                                            </th>
-                                        @else
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                {{ _i('Debit') }}
-                                            </th>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                {{ _i('Credit') }}
-                                            </th>
-                                        @endif
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('Toward') }}--}}...
+                                            {{ _i('Toward') }}
                                         </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Debit') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Credit') }}
+                                        </th>
+{{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
+{{--                                                {{ _i('Charged him') }}--}}
+{{--                                                Carga--}}
+{{--                                            </th>--}}
+{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">--}}
+{{--                                                {{ _i('withdrew') }}--}}
+{{--                                                Retiro--}}
+{{--                                            </th>--}}
+{{--                                        @else--}}
+{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                                {{ _i('Debit') }}--}}
+{{--                                            </th>--}}
+{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                                {{ _i('Credit') }}--}}
+{{--                                            </th>--}}
+{{--                                        @endif--}}
+{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                            {{ _i('Toward') }}--}}{{--...--}}
+{{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             {{ _i('Balance') }}
                                         </th>

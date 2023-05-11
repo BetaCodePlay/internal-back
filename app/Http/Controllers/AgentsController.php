@@ -1956,8 +1956,8 @@ class AgentsController extends Controller
                         $uuid = Str::uuid()->toString();
                         $additionalData = [
                             'provider_transaction' => $uuid,
-                            'from' => $userData->username,
-                            'to' => $ownerAgent->username
+                            'from' => $ownerAgent->username,
+                            'to' => $userData->username
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
@@ -2085,8 +2085,8 @@ class AgentsController extends Controller
                             $ownerBalance = $ownerAgent->balance + $amount;
                             /*$additionalData: This is what is stored in the data field of the transactions table  */
                             $additionalData = [
-                                'from' => $agent->username,
-                                'to' => $ownerAgent->username,
+                                'from' => $ownerAgent->username,
+                                'to' => $agent->username,
                                 'balance' => $balance
                             ];
                         } else {

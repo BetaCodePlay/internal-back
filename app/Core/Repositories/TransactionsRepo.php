@@ -348,6 +348,7 @@ class TransactionsRepo
 
         $transactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
             'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
             ->where('transactions.user_id', $user)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
@@ -357,7 +358,8 @@ class TransactionsRepo
             ->offset($offset);
 
         if(!is_null($username)){
-            $transactions = $transactions->where('data->from', 'ilike', '%' . $username . '%')->orWhere('data->to', 'ilike', '%' . $username . '%');
+            $transactions = $transactions->where('username', 'ilike', "%$username%");
+            //$transactions = $transactions->where('data->from', 'ilike', '%' . $username . '%')->orWhere('data->to', 'ilike', '%' . $username . '%');
         }
 
         $transactions = $transactions->get();
