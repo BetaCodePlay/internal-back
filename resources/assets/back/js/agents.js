@@ -177,7 +177,7 @@ class Agents {
                let picker = initLitepickerEndTodayNew();
                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-               let type = 'all';
+               let type = $('#type_select').val() === ''?'&type=all':'&type='+$('#type_select').val();
                let user = $('.user').val();
 
                let api;
@@ -188,7 +188,7 @@ class Agents {
                    serverSide: true,
                    lengthMenu:lengthMenu,
                    ajax: {
-                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate,
+                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+''+type,
                        dataType: 'json',
                        type: 'get',
                    },

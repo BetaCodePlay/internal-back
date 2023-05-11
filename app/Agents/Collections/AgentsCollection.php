@@ -3220,14 +3220,15 @@ class AgentsCollection
     public function formatAgentTransactionsTotals($credit, $debit)
     {
         $balance = $credit - $debit;
-
+        //' . _i('Debit') . '
+        //' . _i('Credit') . '
         $htmlTotals = sprintf(
             '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
                             <th>%s</th>
-                            <th class="text-right">' . _i('Debit') . '</th>
-                            <th class="text-right">' . _i('Credit') . '</th>
+                            <th class="text-right">Descarga</th>
+                            <th class="text-right">Carga</th>
                             <th class="text-right">' . _i('Balance') . '</th>
                         </tr>
                     </thead>
