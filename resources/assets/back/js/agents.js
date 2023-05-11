@@ -177,6 +177,7 @@ class Agents {
                let picker = initLitepickerEndTodayNew();
                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+               let type = 'all';
                let user = $('.user').val();
 
                let api;

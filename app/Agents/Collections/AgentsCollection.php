@@ -3220,9 +3220,6 @@ class AgentsCollection
     public function formatAgentTransactionsTotals($credit, $debit)
     {
         $balance = $credit - $debit;
-        if(in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-            $balance = $debit - $credit;
-        }
 
         $htmlTotals = sprintf(
             '<table  class="table table-bordered w-100">
