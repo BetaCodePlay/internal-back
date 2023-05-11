@@ -3129,7 +3129,7 @@ class AgentsCollection
 
             $data[] = [
                 'id' => null,
-                'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
+                'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s').'-'.$transaction->id,
                 'data' => [
                     'from' => $from,
                     'to' => $to,
