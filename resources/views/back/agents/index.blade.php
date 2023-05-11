@@ -621,11 +621,13 @@
                                             {{ _i('Date') }}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            {{ _i('From') }}
+{{--                                            {{ _i('From') }}--}}
+                                            Cuenta origen
 {{--                                            {{ _i('User') }}--}}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            {{ _i('Toward') }}
+{{--                                            {{ _i('Toward') }}--}}
+                                            Cuenta destino
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             {{ _i('Debit') }}
