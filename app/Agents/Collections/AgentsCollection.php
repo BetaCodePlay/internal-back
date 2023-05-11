@@ -3118,8 +3118,8 @@ class AgentsCollection
                 $totalDebit = $totalDebit + $amountTmp;
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-//                $from = isset($transaction->data->to) ? $transaction->data->to : null;
-//                $to = isset($transaction->data->from) ? $transaction->data->from : null;
+                $from = isset($transaction->data->to) ? $transaction->data->to : null;
+                $to = isset($transaction->data->from) ? $transaction->data->from : null;
                 $transaction->credit = $amountTmp;
                 $totalCredit = $totalCredit + $amountTmp;
             }
