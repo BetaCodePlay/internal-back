@@ -3116,14 +3116,10 @@ class AgentsCollection
                 $from = $transaction->data->from;
                 $to = $transaction->data->to;
                 if ($transaction->transaction_type_id == TransactionTypes::$debit) {
-//                $to = isset($transaction->data->to) ? $transaction->data->to : null;
-//                $from = isset($transaction->data->from) ? $transaction->data->from : null;
                     $transaction->debit = $amountTmp;
                     $totalDebit = $totalDebit + $amountTmp;
                 }
                 if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-//                $from = isset($transaction->data->to) ? $transaction->data->to : null;
-//                $to = isset($transaction->data->from) ? $transaction->data->from : null;
                     $transaction->credit = $amountTmp;
                     $totalCredit = $totalCredit + $amountTmp;
                 }
@@ -3147,14 +3143,10 @@ class AgentsCollection
                 $from = $transaction->data->from;
                 $to = $transaction->data->to;
                 if ($transaction->transaction_type_id == TransactionTypes::$debit) {
-//                $to = isset($transaction->data->to) ? $transaction->data->to : null;
-//                $from = isset($transaction->data->from) ? $transaction->data->from : null;
                     $transaction->debit = $amountTmp;
                     $totalDebit = $totalDebit + $amountTmp;
                 }
                 if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-//                $from = isset($transaction->data->to) ? $transaction->data->to : null;
-//                $to = isset($transaction->data->from) ? $transaction->data->from : null;
                     $transaction->credit = $amountTmp;
                     $totalCredit = $totalCredit + $amountTmp;
                 }
@@ -3172,7 +3164,6 @@ class AgentsCollection
                     'debit' => number_format($transaction->debit, 2, ",", "."),
                     'credit' => number_format($transaction->credit, 2, ",", "."),
                     'balance' => $transaction->balance,
-                    'trans'=>$transaction
                 ];
             }
 

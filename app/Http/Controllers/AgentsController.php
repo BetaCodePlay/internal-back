@@ -1020,9 +1020,9 @@ class AgentsController extends Controller
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
             if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
-                Log::debug('financialStateData:field _hour',[
-                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
-                ]);
+//                Log::debug('financialStateData:field _hour',[
+//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+//                ]);
 
                 $data = [
                     'table' => $this->agentsCollection->closuresTotalsByAgentGroupProviderHour($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
@@ -1421,9 +1421,9 @@ class AgentsController extends Controller
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
             if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
-                Log::debug('financialStateSummaryDataNew:field _hour',[
-                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
-                ]);
+//                Log::debug('financialStateSummaryDataNew:field _hour',[
+//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+//                ]);
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSonHour(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 
             }
@@ -1927,9 +1927,9 @@ class AgentsController extends Controller
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
-                            Log::debug('error data, wallet credit', [
-                                $transaction, $request->all(), Auth::user()->id
-                            ]);
+//                            Log::debug('error data, wallet credit', [
+//                                $transaction, $request->all(), Auth::user()->id
+//                            ]);
 
                             $data = [
                                 'title' => _i('An error occurred'),
@@ -1962,9 +1962,9 @@ class AgentsController extends Controller
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
-                            Log::debug('error data, wallet debit', [
-                                $transaction, $request->all(), Auth::user()->id
-                            ]);
+//                            Log::debug('error data, wallet debit', [
+//                                $transaction, $request->all(), Auth::user()->id
+//                            ]);
 
                             $data = [
                                 'title' => _i('An error occurred'),
