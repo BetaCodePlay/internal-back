@@ -3172,6 +3172,7 @@ class AgentsCollection
                     'debit' => number_format($transaction->debit, 2, ",", "."),
                     'credit' => number_format($transaction->credit, 2, ",", "."),
                     'balance' => $transaction->balance,
+                    'trans'=>$transaction
                 ];
 //            }
 
