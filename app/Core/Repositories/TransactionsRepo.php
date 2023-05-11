@@ -335,7 +335,7 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null)
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$type = null)
     {
 
         $countTransactions = Transaction::select('transactions.id')

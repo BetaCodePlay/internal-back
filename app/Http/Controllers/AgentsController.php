@@ -490,7 +490,7 @@ class AgentsController extends Controller
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username,$type);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 

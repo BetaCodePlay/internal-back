@@ -177,7 +177,7 @@ class Agents {
                let picker = initLitepickerEndTodayNew();
                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-               let type = $('#type_select').val() === ''?'&type=all':'&type='+$('#type_select').val();
+               let type = $('#type_select').val() === ''?'all':$('#type_select').val();
                let user = $('.user').val();
 
                let api;
@@ -188,7 +188,7 @@ class Agents {
                    serverSide: true,
                    lengthMenu:lengthMenu,
                    ajax: {
-                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+''+type,
+                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+'&type='+type,
                        dataType: 'json',
                        type: 'get',
                    },
@@ -211,8 +211,9 @@ class Agents {
                    $button.button('loading');
                    let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                    let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+                   let type = $('#type_select').val() === ''?'all':$('#type_select').val();
                    let user = $('.user').val();
-                   let route = `${$tableTransaction.data('route')}/${user}?startDate=${startDate}&endDate=${endDate}`;
+                   let route = `${$tableTransaction.data('route')}/${user}?startDate=${startDate}&endDate=${endDate}&type=${type}`;
                    api.ajax.url(route).load();
                    $tableTransaction.on('draw.dt', function () {
                        $button.button('reset');
