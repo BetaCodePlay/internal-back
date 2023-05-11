@@ -630,10 +630,12 @@
                                             Cuenta destino
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            {{ _i('Debit') }}
+{{--                                            {{ _i('Debit') }}--}}
+                                            Descarga
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            {{ _i('Credit') }}
+{{--                                            {{ _i('Credit') }}--}}
+                                            Carga
                                         </th>
 {{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
 {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
