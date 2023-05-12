@@ -3110,7 +3110,9 @@ class AgentsCollection
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
-
+Log::notice('formatAgentTransactionsPaginate',[
+    $transaction,
+]);
             if($transaction->user_id == Auth::user()->id){
 
                 $from = $transaction->data->from;
@@ -3134,8 +3136,8 @@ class AgentsCollection
                         'from' => $from,
                         'to' => $to,
                     ],
-                    'debit' => number_format($transaction->credit, 2, ",", "."),
-                    'credit' => number_format($transaction->dedit, 2, ",", "."),
+                    'debit' => number_format($transaction->dedit, 2, ",", "."),
+                    'credit' => number_format($transaction->credit, 2, ",", "."),
                     'balance' => $transaction->balance,
                 ];
 
