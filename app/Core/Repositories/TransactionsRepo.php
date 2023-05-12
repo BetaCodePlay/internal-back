@@ -456,8 +456,15 @@ class TransactionsRepo
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC')
-            ->get();
+            ->orderBy('transactions.id', 'DESC');
+
+        if (!is_null($typeUser) || $typeUser == 'user') {
+            $countTransactions = $countTransactions->whereNotNull('data->provider_transaction');
+        }
+        if (!is_null($typeUser) || $typeUser == 'agent'){
+            $countTransactions = $countTransactions->whereNull('data->provider_transaction');
+        }
+            $countTransactions = $countTransactions->get();
 
         $totalDebit = 0;
         $totalCredit = 0;
