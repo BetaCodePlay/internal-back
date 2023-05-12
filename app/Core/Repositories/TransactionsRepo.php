@@ -409,7 +409,7 @@ class TransactionsRepo
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
                 ->where('data->provider_transaction', 'is not', null)
-                ->whereIn('transactions.provider_id', [Providers::$agents_users])
+                ->whereIn('transactions.provider_id', [Providers::$agents])
                 ->orderBy('transactions.id', 'DESC');
 
             if (!is_null($username)) {
@@ -420,12 +420,12 @@ class TransactionsRepo
             $transactions = Transaction::select('users.username', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
                 'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
                 ->join('users', 'transactions.user_id', '=', 'users.id')
-                ->where('data->provider_transaction', 'is not', null)
-                //->whereNotNull('data->provider_transaction')
+                //->where('data->provider_transaction', 'is not', null)
+                ->whereNotNull('data->provider_transaction')
                 ->where('transactions.user_id', $user)
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', [Providers::$agents_users])
+                ->whereIn('transactions.provider_id', [Providers::$agents])
                 ->orderBy('transactions.id', 'DESC')
                 ->limit($limit)
                 ->offset($offset);
