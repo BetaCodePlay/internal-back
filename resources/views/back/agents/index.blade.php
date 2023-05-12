@@ -55,6 +55,10 @@
             color: white !important;
             background-color: darkorange !important
         }
+        .select2-container {
+            width: 100% !important;
+            text-align: left !important;
+        }
 
     </style>
 @endsection
@@ -591,10 +595,10 @@
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
                             <div class="row">
-                                <div class="offset-md-9"></div>
+                                <div class="offset-md-7"></div>
                                 <div class="col-md-2 text-right">
                                     <div class="input-group">
-                                        <select name="type_select" id="type_select" class="form-control select2">
+                                        <select name="type_select" id="type_select" class="form-control">
                                             <option value="all" selected="selected" hidden>Todos</option>
                                             <option value="agent">{{_i('agent')}}</option>
                                             <option value="user">{{_i('user')}}</option>
