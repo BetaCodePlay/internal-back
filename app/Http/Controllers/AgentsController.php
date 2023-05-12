@@ -486,11 +486,12 @@ class AgentsController extends Controller
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
             $username = $request->get('search')['value'];
-            $type = $request->has('type') ? $request->get('type') : 'all';
+            $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
             $currency = session('currency');
-            $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username,$type);
+            //$providers = [Providers::$agents, Providers::$agents_users];
+            $providers = [Providers::$agents];
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username,$typeUser);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
@@ -535,10 +536,11 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency, $startDate, $endDate);
+            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency, $startDate, $endDate,$typeUser);
 
             return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0], $totals[1]));
 

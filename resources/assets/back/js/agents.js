@@ -177,7 +177,7 @@ class Agents {
                let picker = initLitepickerEndTodayNew();
                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-               let type = $('#type_select').val() === ''?'all':$('#type_select').val();
+            let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ?'all':$('#type_select').val();
                let user = $('.user').val();
 
                let api;
@@ -188,7 +188,7 @@ class Agents {
                    serverSide: true,
                    lengthMenu:lengthMenu,
                    ajax: {
-                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+'&type='+type,
+                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+'&typeUser='+type,
                        dataType: 'json',
                        type: 'get',
                    },
@@ -205,29 +205,29 @@ class Agents {
                    }
                });
 
-               Agents.agentsTransactionsPaginateTotal($tableTransaction.data('routetotals'),user,startDate,endDate)
+               Agents.agentsTransactionsPaginateTotal($tableTransaction.data('routetotals'),user,startDate,endDate,type)
 
                $button.click(function () {
                    $button.button('loading');
                    let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                    let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-                   let type = $('#type_select').val() === ''?'all':$('#type_select').val();
+                   let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ?'all':$('#type_select').val();
                    let user = $('.user').val();
-                   let route = `${$tableTransaction.data('route')}/${user}?startDate=${startDate}&endDate=${endDate}&type=${type}`;
+                   let route = `${$tableTransaction.data('route')}/${user}?startDate=${startDate}&endDate=${endDate}&typeUser=${type}`;
                    api.ajax.url(route).load();
                    $tableTransaction.on('draw.dt', function () {
                        $button.button('reset');
                    });
-                   Agents.agentsTransactionsPaginateTotal($tableTransaction.data('routetotals'),user,startDate,endDate)
+                   Agents.agentsTransactionsPaginateTotal($tableTransaction.data('routetotals'),user,startDate,endDate,type)
 
                });
 
         });
     }
     // Agents Transactions Paginate Total
-    static agentsTransactionsPaginateTotal(url_total,user,start_date,end_date) {
+    static agentsTransactionsPaginateTotal(url_total,user,start_date,end_date,type) {
         $.ajax({
-            url: url_total+'/'+user+'?startDate='+start_date+'&endDate='+end_date,
+            url: url_total+'/'+user+'?startDate='+start_date+'&endDate='+end_date+'&typeUser='+type,
             type: 'get',
         }).done(function (response) {
             $('.totalsTransactionsPaginate').empty();
