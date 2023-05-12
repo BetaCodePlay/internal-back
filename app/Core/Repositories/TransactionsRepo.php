@@ -9,6 +9,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
@@ -451,7 +452,7 @@ class TransactionsRepo
     public function getByUserAndProvidersTotales($user, $providers, $currency, $startDate, $endDate,$typeUser=null)
     {
 
-        $countTransactions = Transaction::select('transactions.id', 'transactions.data','transactions.amount', 'transactions.transaction_type_id')
+        $countTransactions = Transaction::select('transactions.id', 'transactions.user_id','transactions.data','transactions.amount', 'transactions.transaction_type_id')
             ->where('transactions.user_id', $user)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
@@ -469,11 +470,27 @@ class TransactionsRepo
         $totalDebit = 0;
         $totalCredit = 0;
         foreach ($countTransactions as $item => $value) {
+//            $credit = $transaction->credit;
+//            $debit = $transaction->debit;
+//            if($transaction->user_id === Auth::user()->id){
+//                $debit = $transaction->credit;
+//                $credit = $transaction->debit;
+//            }
+
             if ($value->transaction_type_id == TransactionTypes::$debit) {
                 $totalDebit = $totalDebit + $value->amount;
+                if($value->user_id === Auth::user()->id){
+                    $totalDebit = $totalDebit - $value->amount;
+                    $totalCredit = $totalCredit + $value->amount;
+                }
             }
             if ($value->transaction_type_id == TransactionTypes::$credit) {
                 $totalCredit = $totalCredit + $value->amount;
+                if($value->user_id === Auth::user()->id){
+                    $totalCredit = $totalCredit - $value->amount;
+                    $totalDebit = $totalDebit + $value->amount;
+
+                }
             }
         }
 
