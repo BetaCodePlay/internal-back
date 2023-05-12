@@ -3101,8 +3101,6 @@ class AgentsCollection
     public function formatAgentTransactionsPaginate($transactions, $total, $request)
     {
         $timezone = session('timezone');
-        $totalDebit = 0;
-        $totalCredit = 0;
         $data = array();
 
         foreach ($transactions as $transaction) {
@@ -3110,65 +3108,50 @@ class AgentsCollection
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
-Log::notice('formatAgentTransactionsPaginate',[
-    $transaction,
-]);
-            if($transaction->user_id == Auth::user()->id){
 
-                $from = $transaction->data->from;
-                $to = $transaction->data->to;
-                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    $transaction->debit = $amountTmp;
-                    $totalDebit = $totalDebit + $amountTmp;
-                }
-                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-                    $transaction->credit = $amountTmp;
-                    $totalCredit = $totalCredit + $amountTmp;
-                }
-                if (isset($transaction->data->balance)) {
-                    $transaction->balance = number_format($transaction->data->balance, 2);
-                }
 
-                $data[] = [
-                    'id' => null,
-                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
-                    'data' => [
-                        'from' => $from,
-                        'to' => $to,
-                    ],
-                    'debit' => number_format($transaction->dedit, 2, ",", "."),
-                    'credit' => number_format($transaction->credit, 2, ",", "."),
-                    'balance' => $transaction->balance,
-                ];
-
-            }else{
-                $from = $transaction->data->from;
-                $to = $transaction->data->to;
-                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    $transaction->debit = $amountTmp;
-                    $totalDebit = $totalDebit + $amountTmp;
-                }
-                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-                    $transaction->credit = $amountTmp;
-                    $totalCredit = $totalCredit + $amountTmp;
-                }
-                if (isset($transaction->data->balance)) {
-                    $transaction->balance = number_format($transaction->data->balance, 2);
-                }
-
-                $data[] = [
-                    'id' => null,
-                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
-                    'data' => [
-                        'from' => $from,
-                        'to' => $to,
-                    ],
-                    'debit' => number_format($transaction->debit, 2, ",", "."),
-                    'credit' => number_format($transaction->credit, 2, ",", "."),
-                    'balance' => $transaction->balance,
-                ];
+            $from = $transaction->data->from;
+            $to = $transaction->data->to;
+            if ($transaction->transaction_type_id == TransactionTypes::$debit) {
+                $transaction->debit = $amountTmp;
+            }
+            if ($transaction->transaction_type_id == TransactionTypes::$credit) {
+                $transaction->credit = $amountTmp;
+            }
+            if (isset($transaction->data->balance)) {
+                $transaction->balance = number_format($transaction->data->balance, 2);
             }
 
+            $credit = $transaction->credit;
+            $debit = $transaction->debit;
+
+            if($transaction->user_id == Auth::user()->id){
+                Log::notice('formatAgentTransactionsPaginate - '. Auth::user()->username,[
+                    $transaction,
+                    'carga'=>$credit,
+                    'descarga'=>$debit
+                ]);
+
+            }else {
+                Log::notice('formatAgentTransactionsPaginate - Otro',[
+                    $transaction,
+                    'carga'=>$credit,
+                    'descarga'=>$debit
+                ]);
+
+            }
+
+            $data[] = [
+                'id' => null,
+                'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
+                'data' => [
+                    'from' => $from,
+                    'to' => $to,
+                ],
+                'debit' => number_format($debit, 2, ",", "."),
+                'credit' => number_format($credit, 2, ",", "."),
+                'balance' => $transaction->balance,
+            ];
 
         }
 
