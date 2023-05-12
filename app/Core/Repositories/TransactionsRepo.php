@@ -337,14 +337,12 @@ class TransactionsRepo
      */
     public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null)
     {
-        $providersNew = [Providers::$agents, Providers::$agents_users];
-
         if (is_null($typeUser) || $typeUser == 'all') {
             $countTransactions = Transaction::select('transactions.id')
                 ->where('transactions.user_id', $user)
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', [Providers::$agents,Providers::$agents_users])
+                ->whereIn('transactions.provider_id', $providers)
                 ->orderBy('transactions.id', 'DESC');
 
                 if (!is_null($username)) {
@@ -359,7 +357,7 @@ class TransactionsRepo
                 ->where('transactions.user_id', $user)
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', [Providers::$agents,Providers::$agents_users])
+                ->whereIn('transactions.provider_id', $providers)
                 ->orderBy('transactions.id', 'DESC')
                 ->limit($limit)
                 ->offset($offset);
@@ -376,7 +374,7 @@ class TransactionsRepo
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
                 ->whereNull('data->provider_transaction')
-                ->whereIn('transactions.provider_id', [Providers::$agents])
+                ->whereIn('transactions.provider_id', $providers)
                 ->orderBy('transactions.id', 'DESC');
 
             if (!is_null($username)) {
@@ -391,7 +389,7 @@ class TransactionsRepo
                 ->where('transactions.user_id', $user)
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', [Providers::$agents])
+                ->whereIn('transactions.provider_id', $providers)
                 ->orderBy('transactions.id', 'DESC')
                 ->limit($limit)
                 ->offset($offset);
@@ -409,7 +407,7 @@ class TransactionsRepo
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
                 ->where('data->provider_transaction', 'is not', null)
-                ->whereIn('transactions.provider_id', [Providers::$agents])
+                ->whereIn('transactions.provider_id', $providers)
                 ->orderBy('transactions.id', 'DESC');
 
             if (!is_null($username)) {
@@ -425,7 +423,7 @@ class TransactionsRepo
                 ->where('transactions.user_id', $user)
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', [Providers::$agents])
+                ->whereIn('transactions.provider_id', $providers)
                 ->orderBy('transactions.id', 'DESC')
                 ->limit($limit)
                 ->offset($offset);

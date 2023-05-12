@@ -489,8 +489,7 @@ class AgentsController extends Controller
             $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
             $currency = session('currency');
-            //$providers = [Providers::$agents, Providers::$agents_users];
-            $providers = [Providers::$agents];
+            $providers = [Providers::$agents, Providers::$agents_users];
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username,$typeUser);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
