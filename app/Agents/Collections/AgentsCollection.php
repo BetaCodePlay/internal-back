@@ -3128,6 +3128,7 @@ class AgentsCollection
             if($transaction->user_id === Auth::user()->id){
                 Log::notice('formatAgentTransactionsPaginate - '. Auth::user()->username,[
                     $transaction,
+                    Auth::user()->id,
                     'carga'=>$credit,
                     'descarga'=>$debit
                 ]);
@@ -3135,6 +3136,7 @@ class AgentsCollection
             }else {
                 Log::notice('formatAgentTransactionsPaginate - Otro',[
                     $transaction,
+                    Auth::user()->id,
                     'carga'=>$credit,
                     'descarga'=>$debit
                 ]);
