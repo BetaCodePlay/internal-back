@@ -458,10 +458,10 @@ class TransactionsRepo
             ->whereIn('transactions.provider_id', $providers)
             ->orderBy('transactions.id', 'DESC');
 
-        if (!is_null($typeUser) || $typeUser == 'user') {
+        if (!is_null($typeUser) && $typeUser == 'user') {
             $countTransactions = $countTransactions->whereNotNull('data->provider_transaction');
         }
-        if (!is_null($typeUser) || $typeUser == 'agent'){
+        if (!is_null($typeUser) && $typeUser == 'agent'){
             $countTransactions = $countTransactions->whereNull('data->provider_transaction');
         }
             $countTransactions = $countTransactions->get();
