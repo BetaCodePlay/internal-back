@@ -350,7 +350,7 @@ class TransactionsRepo
                 }
                 $countTransactions = $countTransactions->get();
 
-            $transactions = Transaction::select('users.username', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
                 'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
                 ->join('users', 'transactions.user_id', '=', 'users.id')
                 ->where('transactions.user_id', $user)
@@ -381,7 +381,7 @@ class TransactionsRepo
             }
             $countTransactions = $countTransactions->get();
 
-            $transactions = Transaction::select('users.username', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
                 'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
                 ->join('users', 'transactions.user_id', '=', 'users.id')
                 ->whereNull('data->provider_transaction')
@@ -415,7 +415,7 @@ class TransactionsRepo
             }
             $countTransactions = $countTransactions->get();
 
-            $transactions = Transaction::select('users.username', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            $transactions = Transaction::select('users.username', 'transactions.user_id','transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
                 'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
                 ->join('users', 'transactions.user_id', '=', 'users.id')
                 //->where('data->provider_transaction', 'is not', null)
