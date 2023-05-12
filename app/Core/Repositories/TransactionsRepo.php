@@ -451,7 +451,7 @@ class TransactionsRepo
     public function getByUserAndProvidersTotales($user, $providers, $currency, $startDate, $endDate,$typeUser=null)
     {
 
-        $countTransactions = Transaction::select('transactions.id', 'transactions.amount', 'transactions.transaction_type_id')
+        $countTransactions = Transaction::select('transactions.id', 'transactions.data','transactions.amount', 'transactions.transaction_type_id')
             ->where('transactions.user_id', $user)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
