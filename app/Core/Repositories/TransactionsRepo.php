@@ -408,7 +408,7 @@ class TransactionsRepo
                 ->where('transactions.user_id', $user)
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
-                ->whereNotNull('data->provider_transaction')
+                ->where('data->provider_transaction', 'is not', null)
                 ->whereIn('transactions.provider_id', [Providers::$agents_users])
                 ->orderBy('transactions.id', 'DESC');
 
@@ -420,7 +420,8 @@ class TransactionsRepo
             $transactions = Transaction::select('users.username', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
                 'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
                 ->join('users', 'transactions.user_id', '=', 'users.id')
-                ->whereNotNull('data->provider_transaction')
+                ->where('data->provider_transaction', 'is not', null)
+                //->whereNotNull('data->provider_transaction')
                 ->where('transactions.user_id', $user)
                 ->whereBetween('transactions.created_at', [$startDate, $endDate])
                 ->where('transactions.currency_iso', $currency)
