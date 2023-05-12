@@ -3125,7 +3125,7 @@ class AgentsCollection
             $credit = $transaction->credit;
             $debit = $transaction->debit;
 
-            if($transaction->user_id == Auth::user()->id){
+            if($transaction->user_id === Auth::user()->id){
                 Log::notice('formatAgentTransactionsPaginate - '. Auth::user()->username,[
                     $transaction,
                     'carga'=>$credit,
