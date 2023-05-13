@@ -475,6 +475,11 @@ class TransactionsRepo
                     $totalDebit = $totalDebit - $value->amount;
                     $totalCredit = $totalCredit + $value->amount;
                 }
+
+                if($value->data->from != Auth::user()->username){
+                    $totalDebit = $totalDebit + $value->amount;
+                    $totalCredit = $totalCredit - $value->amount;
+                }
             }
             if ($value->transaction_type_id == TransactionTypes::$credit) {
                 $totalCredit = $totalCredit + $value->amount;
@@ -483,13 +488,11 @@ class TransactionsRepo
                     $totalDebit = $totalDebit + $value->amount;
 
                 }
+                if($value->data->from != Auth::user()->username){
+                    $totalCredit = $totalCredit + $value->amount;
+                    $totalDebit = $totalDebit - $value->amount;
+                }
             }
-//
-//            if($value->data->from != Auth::user()->username){
-//                $totalDebit = $totalDebit + $value->amount;
-//                $totalCredit = $totalCredit + $value->amount;
-//            }
-
 
         }
 
