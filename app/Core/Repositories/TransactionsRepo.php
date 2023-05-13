@@ -484,6 +484,13 @@ class TransactionsRepo
 
                 }
             }
+
+            if($value->data->from != Auth::user()->username){
+                $totalDebit = $totalDebit + $value->amount;
+                $totalCredit = $totalCredit + $value->amount;
+            }
+
+
         }
 
         return [$totalCredit, $totalDebit];
