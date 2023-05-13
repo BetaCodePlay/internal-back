@@ -490,7 +490,7 @@ class AgentsController extends Controller
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username,$typeUser);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
@@ -539,7 +539,7 @@ class AgentsController extends Controller
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency, $startDate, $endDate,$typeUser);
+            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency, $startDate, $endDate, $typeUser);
 
             return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0], $totals[1]));
 
@@ -992,7 +992,7 @@ class AgentsController extends Controller
      * @param $endDate
      * @return Response
      */
-    public function financialStateData(Request $request,ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateData(Request $request, ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
 
         try {
@@ -1020,7 +1020,7 @@ class AgentsController extends Controller
             ];
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
-            if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
+            if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
 //                Log::debug('financialStateData:field _hour',[
 //                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
 //                ]);
@@ -1403,7 +1403,7 @@ class AgentsController extends Controller
      * @param $endDate
      * @return Response
      */
-    public function financialStateSummaryDataNew(Request $request,$user = null, $startDate = null, $endDate = null)
+    public function financialStateSummaryDataNew(Request $request, $user = null, $startDate = null, $endDate = null)
     {
         try {
             if (is_null($user)) {
@@ -1421,7 +1421,7 @@ class AgentsController extends Controller
             $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
-            if($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour'){
+            if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
 //                Log::debug('financialStateSummaryDataNew:field _hour',[
 //                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
 //                ]);
