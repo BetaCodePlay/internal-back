@@ -3128,6 +3128,10 @@ class AgentsCollection
                 $debit = $transaction->credit;
                 $credit = $transaction->debit;
             }
+            if($transaction->data->from === Auth::user()->username){
+                $credit = $transaction->credit;
+                $debit = $transaction->debit;
+            }
 
             $data[] = [
                 'id' => null,
