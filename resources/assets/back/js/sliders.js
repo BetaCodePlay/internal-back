@@ -120,6 +120,7 @@ class Sliders {
 
             }).done(function (json) {
                 $('#file').val(json.data.file);
+                $('#archive').val(json.data.file);
                 swalSuccessWithButton(json);
 
             }).fail(function (json) {
