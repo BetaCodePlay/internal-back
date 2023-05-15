@@ -77,9 +77,10 @@ class SlidersCollection
             if (Gate::allows('access', Permissions::$manage_sliders)) {
                 $slider->actions = sprintf(
                     '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                    route('sliders.edit', [$slider->id, $slider->front]),
+                    route('sliders.edit', [$slider->id, $front]),
                     _i('Edit')
                 );
+                \Log::warning(__METHOD__, ['front' => $front]);
                 $slider->actions .= sprintf(
                     '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
                     route('sliders.delete', [$slider->id, $file, $front]),
