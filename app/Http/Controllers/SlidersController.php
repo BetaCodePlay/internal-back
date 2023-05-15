@@ -126,6 +126,7 @@ class SlidersController extends Controller
 
             }
             $menu = Configurations::getMenu();
+            \Log::info(__METHOD__, ['sliders' => $sliders]);
             $this->slidersCollection->formatAll($sliders, $menu);
             $data = [
                 'sliders' => $sliders
