@@ -204,7 +204,6 @@ class SlidersController extends Controller
     public function edit($id)
     {
         $slider = $this->slidersRepo->find($id);
-        \Log::info(__METHOD__, ['slider' => $slider]);
         if (!is_null($slider)) {
             try {
 
@@ -222,6 +221,7 @@ class SlidersController extends Controller
                 $data['slider'] = $slider;
                 $data['order'] = $count;
                 $data['title'] = _i('Update slider');
+                \Log::info(__METHOD__, ['slider' => $slider]);
                 return view('back.sliders.edit', $data);
 
             } catch (\Exception $ex) {
