@@ -262,7 +262,6 @@ class SlidersController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::debug(__METHOD__, ['request' => $request->all()]);
         $rules = [
             'image' => 'required',
             'device' => 'required',
@@ -344,6 +343,8 @@ class SlidersController extends Controller
                         Storage::put($path, file_get_contents($front->getRealPath()), 'public');
                         $sliderData['front'] = $nameFront;
                         $sliderData['route'] = $route;
+                    }else{
+                        $sliderData['front'] = null;
                     }
                     $this->slidersRepo->store($sliderData);
                 }
