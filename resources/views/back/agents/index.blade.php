@@ -55,6 +55,10 @@
             color: white !important;
             background-color: darkorange !important
         }
+        .select2-container {
+            width: 100% !important;
+            text-align: left !important;
+        }
 
     </style>
 @endsection
