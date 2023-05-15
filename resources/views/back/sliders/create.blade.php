@@ -38,23 +38,25 @@
                             <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                             <span class="glyphicon glyphicon-ok">{{ _i('Slider with movement: ') }}</span>
                         </label>
-                        <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
-                            <div class="noty_body">
-                                <div class="g-mr-20">
-                                    <div class="noty_body__icon">
-                                        <i class="hs-admin-info"></i>
+                        <div class="div_a_show">
+                            <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
+                                <div class="noty_body">
+                                    <div class="g-mr-20">
+                                        <div class="noty_body__icon">
+                                            <i class="hs-admin-info"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            {{ _i('The maximum file size is 5mb and the maximum width is 3440px') }}
+                                        </p>
                                     </div>
                                 </div>
-                                <div>
-                                    <p>
-                                        {{ _i('The maximum file size is 5mb and the maximum width is 3440px') }}
-                                    </p>
-                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="image">{{ _i('Image') }}</label>
-                            <input type="file" name="image" id="image" class="opacity-0">
+                            <div class="form-group">
+                                <label for="image">{{ _i('Image') }}</label>
+                                <input type="file" name="image" id="image" class="opacity-0">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -68,7 +70,8 @@
                                 {{ _i('Slider details') }}
                             </h3>
                             <div class="media-body d-flex justify-content-end">
-                                <a href="{{ route('sliders.index', [$template_element_type, $section]) }}" class="btn u-btn-3d u-btn-primary float-right">
+                                <a href="{{ route('sliders.index', [$template_element_type, $section]) }}"
+                                   class="btn u-btn-3d u-btn-primary float-right">
                                     <i class="hs-admin-layout-list-thumb"></i>
                                     {{ _i('Go to list') }}
                                 </a>
@@ -94,7 +97,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="end_date">{{ _i('Finish date') }}</label>
-                                    <input type="text" name="end_date" id="end_date" class="form-control datetimepicker" autocomplete="off">
+                                    <input type="text" name="end_date" id="end_date"
+                                           class="form-control datetimepicker" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -130,7 +134,8 @@
                                         <option value="">{{ _i('Select...') }}</option>
                                         <option value="*">{{ _i('All') }}</option>
                                         @foreach ($whitelabel_currencies as $currency)
-                                            <option value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
+                                            <option
+                                                value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
                                                 {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
                                             </option>
                                         @endforeach
@@ -152,9 +157,9 @@
                                         <label for="route">{{ _i('Menu where it will be shown') }}</label>
                                         <select name="route[]" id="route" class="form-control" multiple>
 
-                                                <option value="core.index">
-                                                    {{ _i('Home') }}
-                                                </option>
+                                            <option value="core.index">
+                                                {{ _i('Home') }}
+                                            </option>
                                             @foreach ($menu as $item)
                                                 <option value="{{ $item->route }}">
                                                     {{ $item->name }}
@@ -171,47 +176,47 @@
                                                 </option>
                                             @endif
                                             @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 147 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 149 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144)
-                                                 <option value="store.index">
-                                                      {{ _i('Store') }}
-                                                 </option>
+                                                <option value="store.index">
+                                                    {{ _i('Store') }}
+                                                </option>
                                             @endif
                                             @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114)
                                                 <option value="vivo-gaming-dotsuite.lobby">
                                                     {{ _i('Vivo Gaming Dotsuite') }}
                                                 </option>
                                             @endif
-                                                @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 125 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 153)
-                                                    <option value="bet-soft.vg.lobby">
-                                                        {{ _i('Bet Soft') }}
-                                                    </option>
-                                                    <option value="tom-horn.vg.lobby">
-                                                        {{ _i('Tom Horn') }}
-                                                    </option>
-                                                    <option value="platipus.vg.lobby">
-                                                        {{ _i('Platipus') }}
-                                                    </option>
-                                                    <option value="booongo.vg.lobby">
-                                                        {{ _i('Booongo') }}
-                                                    </option>
-                                                    <option value="leap.vg.lobby">
-                                                        {{ _i('Leap') }}
-                                                    </option>
-                                                    <option value="arrows-edge.vg.lobby">
-                                                        {{ _i('Arrows Edge') }}
-                                                    </option>
-                                                    <option value="red-rake.vg.lobby">
-                                                        {{ _i('Red Rake') }}
-                                                    </option>
-                                                    <option value="playson.vg.lobby">
-                                                        {{ _i('Playson') }}
-                                                    </option>
-                                                    <option value="5men.vg.lobby">
-                                                        {{ _i('5 Men') }}
-                                                    </option>
-                                                    <option value="spinomenal.vg.lobby">
-                                                        {{ _i('Spinomenal') }}
-                                                    </option>
-                                                @endif
+                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 125 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 153)
+                                                <option value="bet-soft.vg.lobby">
+                                                    {{ _i('Bet Soft') }}
+                                                </option>
+                                                <option value="tom-horn.vg.lobby">
+                                                    {{ _i('Tom Horn') }}
+                                                </option>
+                                                <option value="platipus.vg.lobby">
+                                                    {{ _i('Platipus') }}
+                                                </option>
+                                                <option value="booongo.vg.lobby">
+                                                    {{ _i('Booongo') }}
+                                                </option>
+                                                <option value="leap.vg.lobby">
+                                                    {{ _i('Leap') }}
+                                                </option>
+                                                <option value="arrows-edge.vg.lobby">
+                                                    {{ _i('Arrows Edge') }}
+                                                </option>
+                                                <option value="red-rake.vg.lobby">
+                                                    {{ _i('Red Rake') }}
+                                                </option>
+                                                <option value="playson.vg.lobby">
+                                                    {{ _i('Playson') }}
+                                                </option>
+                                                <option value="5men.vg.lobby">
+                                                    {{ _i('5 Men') }}
+                                                </option>
+                                                <option value="spinomenal.vg.lobby">
+                                                    {{ _i('Spinomenal') }}
+                                                </option>
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -219,12 +224,14 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="order">{{ _i('Order (optional)') }}</label>
-                                    <input type="number" name="order" id="order" value="0" class="form-control" min="0">
+                                    <input type="number" name="order" id="order" value="0" class="form-control"
+                                           min="0">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="hidden" name="template_element_type" value="{{ $template_element_type }}">
+                                    <input type="hidden" name="template_element_type"
+                                           value="{{ $template_element_type }}">
                                     <input type="hidden" name="section" value="{{ $section }}">
                                     <button type="submit" class="btn u-btn-3d u-btn-primary" id="store"
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Uploading...') }}">
@@ -249,7 +256,7 @@
         });
     </script>
     <script>
-        $(function() {
+        $(function () {
 
             // obtener campos ocultar div
             var checkbox = $(".checkshow");
@@ -257,14 +264,14 @@
             //
 
             hidden.hide();
-            checkbox.change(function() {
+            checkbox.change(function () {
                 if (checkbox.is(':checked')) {
                     //hidden.show();
                     $(".div_a_show").fadeIn("200")
                 } else {
                     //hidden.hide();
                     $(".div_a_show").fadeOut("200")
-                    $('input[type=checkbox]').prop('checked',false);// limpia los valores de checkbox al ser ocultado
+                    $('input[type=checkbox]').prop('checked', false);// limpia los valores de checkbox al ser ocultado
 
                 }
             });
