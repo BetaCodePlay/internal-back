@@ -38,6 +38,7 @@ class SlidersCollection
                 !is_null($slider->url) ? $slider->url : _i('Without URL')
             );
             $front = $slider->front;
+            \Log::info(__METHOD__, ['front' => $front]);
             if (!is_null($front)) {
                 $urlFront = s3_asset("sliders/static/{$slider->front}");
                 $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";

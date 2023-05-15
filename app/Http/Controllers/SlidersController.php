@@ -130,7 +130,6 @@ class SlidersController extends Controller
             $data = [
                 'sliders' => $sliders
             ];
-            \Log::info(__METHOD__, ['sliders' => $sliders]);
             return Utils::successResponse($data);
 
         } catch (\Exception $ex) {
