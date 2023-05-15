@@ -77,7 +77,7 @@ class SlidersCollection
             if (Gate::allows('access', Permissions::$manage_sliders)) {
                 $slider->actions = sprintf(
                     '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                    route('sliders.edit', [$slider->image, $slider->front]),
+                    route('sliders.edit', [$slider->id, $slider->front]),
                     _i('Edit')
                 );
                 $slider->actions .= sprintf(

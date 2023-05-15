@@ -32,10 +32,6 @@
                             <label for="image">{{ _i('Image') }}</label>
                             <input type="file" name="image" id="image" class="opacity-0">
                         </div>
-                        <div class="form-group">
-                            <label for="front">{{ _i('Image') }}</label>
-                            <input type="file" name="front" id="front" class="opacity-0">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -225,7 +221,6 @@
                                     <input type="hidden" name="id" value="{{ $slider->id }}">
                                     <input type="hidden" name="file" id="file" value="{{ $slider->file }}" >
                                     <input type="hidden" name="image" id="image" value="{{ $slider->file }}">
-                                    <input type="hidden" name="front" id="front" value="{{ $slider->file }}">
                                     <input type="hidden" name="template_element_type"
                                            value="{{ $slider->element_type_id }}">
                                     <input type="hidden" name="section" value="{{ $slider->section }}">
