@@ -65,7 +65,8 @@ class Sliders {
 
         let $button = $('#store');
         let $form = $('#sliders-form');
-        let $file = $('#image, #front');
+        let $file = $('#image');
+        let $file1 = $('#front');
         $form.on('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(this);
@@ -95,8 +96,8 @@ class Sliders {
     }
 
     // Update
-    update(preview) {
-        initFileInput(preview);
+    update(preview, preview2) {
+        initFileInput(preview, preview2);
         initSelect2();
         initDateTimePicker();
 
@@ -119,6 +120,7 @@ class Sliders {
 
             }).done(function (json) {
                 $('#file').val(json.data.file);
+                $('#file1').val(json.data.file);
                 swalSuccessWithButton(json);
 
             }).fail(function (json) {
