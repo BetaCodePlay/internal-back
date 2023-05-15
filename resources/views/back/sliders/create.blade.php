@@ -33,6 +33,30 @@
                             <input type="file" name="image" id="image" class="opacity-0">
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <label class="">
+                            <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok">{{ _i('Slider with movement: ') }}</span>
+                        </label>
+                        <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
+                            <div class="noty_body">
+                                <div class="g-mr-20">
+                                    <div class="noty_body__icon">
+                                        <i class="hs-admin-info"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p>
+                                        {{ _i('The maximum file size is 5mb and the maximum width is 3440px') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">{{ _i('Image') }}</label>
+                            <input type="file" name="image" id="image" class="opacity-0">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -224,4 +248,27 @@
             sliders.store();
         });
     </script>
+    <script>
+        $(function() {
+
+            // obtener campos ocultar div
+            var checkbox = $(".checkshow");
+            var hidden = $(".div_a_show");
+            //
+
+            hidden.hide();
+            checkbox.change(function() {
+                if (checkbox.is(':checked')) {
+                    //hidden.show();
+                    $(".div_a_show").fadeIn("200")
+                } else {
+                    //hidden.hide();
+                    $(".div_a_show").fadeOut("200")
+                    $('input[type=checkbox]').prop('checked',false);// limpia los valores de checkbox al ser ocultado
+
+                }
+            });
+        });
+    </script>
+    <script>
 @endsection
