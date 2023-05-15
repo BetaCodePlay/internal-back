@@ -49,6 +49,12 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.number-users-connected-by-device',
         'uses' => 'CoreController@numberConnectedDivice'
     ]);
+
+    // Get makers by providers
+    Route::get('maker', [
+        'as' => 'core.maker',
+        'uses' => 'CoreController@makers'
+    ]);
 });
 
 // Change language

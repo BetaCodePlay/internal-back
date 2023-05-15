@@ -903,7 +903,7 @@
                                                             <div class="form-group">
                                                                 <label for="agent">{{ _i('Provider') }}</label>
                                                                 <select name="provider" id="provider"
-                                                                        class="form-control">
+                                                                        class="form-control" data-route="{{ route('core.maker') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                     @foreach ($providers as $provider)
                                                                         <option value="{{ $provider->id }}">
@@ -919,11 +919,6 @@
                                                                 <select name="maker" id="maker"
                                                                         class="form-control">
                                                                     <option value="">{{ _i('Select...') }}</option>
-                                                                    @foreach ($providers as $provider)
-                                                                        <option value="{{ $provider->id }}">
-                                                                            {{ $provider->name }}
-                                                                        </option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -1162,6 +1157,7 @@
             agents.menuMobile();
             agents.selectAgentOrUser('{{ _i('Agents search...') }}');
             agents.selectUsernameSearch('{{ _i('Agents search...') }}');
+            agents.selectProvidersMaker();
             agents.statusFilter();
             @if($agent->master)
             agents.changeAgentType();
