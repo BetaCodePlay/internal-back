@@ -28,7 +28,6 @@ class SlidersCollection
         foreach ($sliders as $slider) {
             $locale = LaravelGettext::getLocale();
             $url = s3_asset("sliders/static/{$slider->image}");
-            $urlFront = s3_asset("sliders/static/{$slider->front}");
             $start = !is_null($slider->start_date) ? $slider->start_date->setTimezone($timezone)->format('d-m-Y h:i a') : _i('No starting date');
             $end = !is_null($slider->end_date) ? $slider->end_date->setTimezone($timezone)->format('d-m-Y h:i a') : _i('No end date');
             $file = $slider->image;
@@ -40,6 +39,7 @@ class SlidersCollection
             );
             $front = $slider->front;
             if (!is_null($front)) {
+                $urlFront = s3_asset("sliders/static/{$slider->front}");
                 $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";
             }else{
                 $slider->front = _i('Not image');
