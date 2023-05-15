@@ -277,7 +277,7 @@ class SlidersController extends Controller
             $image = $request->file('image');
             $front = $request->file('front');
             $extension = $image->getClientOriginalExtension();
-            $extensionFront = $front->getClientOriginalExtension();
+            $extensionFront = !is_null($front->getClientOriginalExtension()) ? $front->getClientOriginalExtension() : null;
             $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
             $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
             $timezone = session('timezone');
