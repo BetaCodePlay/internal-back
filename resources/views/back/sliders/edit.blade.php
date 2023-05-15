@@ -32,6 +32,12 @@
                             <label for="image">{{ _i('Image') }}</label>
                             <input type="file" name="image" id="image" class="opacity-0">
                         </div>
+                        @if(!is_null($slider->front))
+                        <div class="form-group">
+                                <label for="front">{{ _i('Image') }}</label>
+                                <input type="file" name="front" id="front" class="opacity-0">
+                            </div>
+                            @endif
                     </div>
                 </div>
             </div>

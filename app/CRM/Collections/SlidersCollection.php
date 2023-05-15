@@ -98,7 +98,6 @@ class SlidersCollection
     {
         $timezone = session('timezone');
         $url = s3_asset("sliders/static/{$slider->image}");
-        $slider->archive = $slider->front;
         $slider->file = $slider->image;
         $slider->image = "<img src='$url' class='img-responsive' width='600'>";
         $start = !is_null($slider->start_date) ? $slider->start_date->setTimezone($timezone)->format('d-m-Y h:i a') : null;
