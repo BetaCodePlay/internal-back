@@ -39,7 +39,11 @@ class SlidersCollection
                 !is_null($slider->url) ? $slider->url : _i('Without URL')
             );
             $front = $slider->front;
-            $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";
+            if (!is_null($front)) {
+                $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";
+            }else{
+                $slider->front = _i('Not image');
+            }
             $slider->front .= sprintf(
                 '<strong>%s:</strong> %s',
                 _i('URL'),
