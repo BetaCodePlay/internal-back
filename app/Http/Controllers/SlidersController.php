@@ -275,11 +275,13 @@ class SlidersController extends Controller
 
         try {
             $image = $request->file('image');
-            $front = $request->file('front');
             $extension = $image->getClientOriginalExtension();
-            $extensionFront = !is_null($front->getClientOriginalExtension()) ? $front->getClientOriginalExtension() : null;
             $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
-            $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+            $front = $request->file('front');
+            if(!is_null($front)){
+                $extensionFront = $front->getClientOriginalExtension();
+                $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+            }
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
