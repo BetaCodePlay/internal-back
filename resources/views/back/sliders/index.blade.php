@@ -180,6 +180,9 @@
                                     {{ _i('Image') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                    {{ _i('Front') }}
+                                </th>
+                                <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                     {{ _i('Menu') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

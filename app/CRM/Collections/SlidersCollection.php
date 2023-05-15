@@ -39,7 +39,7 @@ class SlidersCollection
                 !is_null($slider->url) ? $slider->url : _i('Without URL')
             );
             $front = $slider->front;
-            $slider->front = "<img src='$url' class='img-responsive g-mb-10' width='200'><br>";
+            $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";
             $slider->front .= sprintf(
                 '<strong>%s:</strong> %s',
                 _i('URL'),
@@ -72,7 +72,7 @@ class SlidersCollection
             if (Gate::allows('access', Permissions::$manage_sliders)) {
                 $slider->actions = sprintf(
                     '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                    route('sliders.edit', [$slider->id, $front]),
+                    route('sliders.edit', [$slider->id]),
                     _i('Edit')
                 );
                 $slider->actions .= sprintf(
@@ -93,6 +93,9 @@ class SlidersCollection
     {
         $timezone = session('timezone');
         $url = s3_asset("sliders/static/{$slider->image}");
+        $urlFront = s3_asset("sliders/static/{$slider->front}");
+        $slider->archive = $slider->front;
+        $slider->front = "<img src='$urlFront' class='img-responsive' width='600'>";
         $slider->file = $slider->image;
         $slider->image = "<img src='$url' class='img-responsive' width='600'>";
         $start = !is_null($slider->start_date) ? $slider->start_date->setTimezone($timezone)->format('d-m-Y h:i a') : null;

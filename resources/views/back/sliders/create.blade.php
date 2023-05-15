@@ -55,7 +55,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="front">{{ _i('Image') }}</label>
-                                <input type="front" name="front" id="front" class="opacity-0">
+                                <input type="archive" name="front" id="front" class="opacity-0">
                             </div>
                         </div>
                     </div>
