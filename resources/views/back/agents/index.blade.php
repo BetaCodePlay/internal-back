@@ -895,10 +895,24 @@
                                                       id="lock-agent-form" method="post">
                                                     <div class="row">
                                                         <input type="hidden" name="user" class="user">
-                                                        <div class="col-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="agent">{{ _i('Provider') }}</label>
                                                                 <select name="provider" id="provider"
+                                                                        class="form-control">
+                                                                    <option value="">{{ _i('Select...') }}</option>
+                                                                    @foreach ($providers as $provider)
+                                                                        <option value="{{ $provider->id }}">
+                                                                            {{ $provider->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="maker">{{ _i('Maker') }}</label>
+                                                                <select name="maker" id="maker"
                                                                         class="form-control">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                     @foreach ($providers as $provider)
