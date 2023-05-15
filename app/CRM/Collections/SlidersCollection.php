@@ -47,7 +47,7 @@ class SlidersCollection
                     !is_null($slider->url) ? $slider->url : _i('Without URL')
                 );
             }else{
-                $slider->front = _i('Not image');
+                $slider->front = _i('Without front image');
             }
 
             $slider->language = $slider->language == '*' ? _i('All languages') : Languages::getName($slider->language);
@@ -103,7 +103,7 @@ class SlidersCollection
             $urlFront = s3_asset("sliders/static/{$slider->front}");
             $slider->front = "<img src='$urlFront' class='img-responsive' width='600'>";
         }else{
-            $slider->front = _i('Not image');
+            $slider->front = _i('Without front image');
         }
         $slider->file = $slider->image;
         $slider->image = "<img src='$url' class='img-responsive' width='600'>";
