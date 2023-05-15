@@ -203,7 +203,6 @@ class SlidersController extends Controller
      */
     public function edit($id)
     {
-        \Log::info(__METHOD__, ['id' => $id]);
         $slider = $this->slidersRepo->find($id);
         if (!is_null($slider)) {
             try {
