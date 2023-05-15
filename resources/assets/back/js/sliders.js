@@ -18,6 +18,7 @@ class Sliders {
             "order": [[6, "asc"]],
             "columns": [
                 {"data": "image"},
+                {"data": "front"},
                 {"data": "route"},
                 {"data": "dates", "className": "text-right"},
                 {"data": "language"},
