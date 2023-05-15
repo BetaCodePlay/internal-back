@@ -35,7 +35,7 @@
                         @if(!is_null($slider->front))
                         <div class="form-group">
                                 <label for="front">{{ _i('Image') }}</label>
-                                <input type="archive" name="front" id="front" class="opacity-0">
+                                <input type="file" name="front" id="front" class="opacity-0">
                             </div>
                             @endif
                     </div>
