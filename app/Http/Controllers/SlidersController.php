@@ -276,7 +276,7 @@ class SlidersController extends Controller
 
         try {
             $image = $request->file('image');
-            $front = $request->archive('front');
+            $front = $request->file('front');
             $extension = $image->getClientOriginalExtension();
             $extensionFront = $front->getClientOriginalExtension();
             $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
