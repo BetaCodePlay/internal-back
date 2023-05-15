@@ -18,7 +18,7 @@ Route::group(['prefix' => 'sliders', 'middleware' => ['auth']], function () {
     ]);
 
     // Delete sliders
-    Route::get('delete/{id}/{file}/{front}', [
+    Route::get('delete/{id}/{file}', [
         'as' => 'sliders.delete',
         'uses' => 'SlidersController@delete'
     ]);

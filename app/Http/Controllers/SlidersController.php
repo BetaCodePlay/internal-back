@@ -177,10 +177,10 @@ class SlidersController extends Controller
      * @param string $front File name
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete($id, $file, $front)
+    public function delete($id, $file)
     {
         try {
-            $path = "{$this->filePath}{$file}{$front}";
+            $path = "{$this->filePath}{$file}";
             Storage::delete($path);
             $this->slidersRepo->delete($id);
             $data = [
