@@ -54,8 +54,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="image">{{ _i('Image') }}</label>
-                                <input type="file" name="image" id="image" class="opacity-0">
+                                <label for="front">{{ _i('Image') }}</label>
+                                <input type="front" name="front" id="front" class="opacity-0">
                             </div>
                         </div>
                     </div>

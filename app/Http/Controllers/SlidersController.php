@@ -126,11 +126,11 @@ class SlidersController extends Controller
 
             }
             $menu = Configurations::getMenu();
-            \Log::info(__METHOD__, ['sliders' => $sliders]);
             $this->slidersCollection->formatAll($sliders, $menu);
             $data = [
                 'sliders' => $sliders
             ];
+            \Log::info(__METHOD__, ['sliders' => $sliders]);
             return Utils::successResponse($data);
 
         } catch (\Exception $ex) {
@@ -174,12 +174,13 @@ class SlidersController extends Controller
      *
      * @param int $id Slider ID
      * @param string $file File name
+     * @param string $front File name
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function delete($id, $file)
+    public function delete($id, $file, $front)
     {
         try {
-            $path = "{$this->filePath}{$file}";
+            $path = "{$this->filePath}{$file}{$front}";
             Storage::delete($path);
             $this->slidersRepo->delete($id);
             $data = [
@@ -261,6 +262,7 @@ class SlidersController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::debug(__METHOD__, ['request' => $request->all()]);
         $rules = [
             'image' => 'required',
             'device' => 'required',

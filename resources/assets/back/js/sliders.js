@@ -65,6 +65,7 @@ class Sliders {
         let $button = $('#store');
         let $form = $('#sliders-form');
         let $file = $('#image');
+        let $front = $('#front');
         $form.on('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(this);
@@ -118,6 +119,7 @@ class Sliders {
 
             }).done(function (json) {
                 $('#file').val(json.data.file);
+                $('#front').val(json.data.file);
                 swalSuccessWithButton(json);
 
             }).fail(function (json) {
