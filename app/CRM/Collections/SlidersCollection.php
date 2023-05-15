@@ -38,18 +38,18 @@ class SlidersCollection
                 !is_null($slider->url) ? $slider->url : _i('Without URL')
             );
             $front = $slider->front;
-            \Log::info(__METHOD__, ['front' => $front]);
             if (!is_null($front)) {
                 $urlFront = s3_asset("sliders/static/{$slider->front}");
                 $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";
+                $slider->front .= sprintf(
+                    '<strong>%s:</strong> %s',
+                    _i('URL'),
+                    !is_null($slider->url) ? $slider->url : _i('Without URL')
+                );
             }else{
                 $slider->front = _i('Not image');
             }
-            $slider->front .= sprintf(
-                '<strong>%s:</strong> %s',
-                _i('URL'),
-                !is_null($slider->url) ? $slider->url : _i('Without URL')
-            );
+
             $slider->language = $slider->language == '*' ? _i('All languages') : Languages::getName($slider->language);
             $slider->currency_iso = $slider->currency_iso == '*' ? _i('All currencies') : $slider->currency_iso;
             $slider->mobile = $slider->mobile == '*' ? _i('All devices') : ($slider->mobile == 'true' ? _i('Mobile') : _i('Desktop'));
