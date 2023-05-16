@@ -3521,6 +3521,7 @@ class AgentsCollection
             }else{
                 $listMakers[] = $maker;
             }
+            \Log::debug($listMakers);
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
