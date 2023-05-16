@@ -3554,12 +3554,9 @@ class AgentsCollection
                 $excludedUsers = $usersRepo->getExcludeProviderUserByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedUsers as $excludedUser) {
                     $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
-                    if($user['id'] == $excludedUser->user_id && in_array($maker,$makersExclude)){
+                    if($user['id'] == $excludedUser->user_id){
                         \Log::debug("SI SE ENCONTRO",[$user['id'],$makersExclude,$dataMakers]);
-                        $dataMakers = $makersExclude;
-                    }else{
-                        \Log::debug("NO SE ENCONTRO",[$user['id'],$makersExclude,$dataMakers]);
-                        $dataMakers = array_merge($dataMakers,$makersExclude);
+                        $dataMakers = array_unique($makersExclude);
                     }
                 }
             }
