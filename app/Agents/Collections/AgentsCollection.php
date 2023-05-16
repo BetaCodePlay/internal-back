@@ -3527,6 +3527,7 @@ class AgentsCollection
                     }
                 }
             }
+            \Log::debug([$dataAgents]);
 
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
