@@ -3509,10 +3509,22 @@ class AgentsCollection
             if(isset($provider)){
                 $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 if($excludedUser){
-                    $makerExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : null;
-                    \Log::debug($makerExclude);
+                    //$makerExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : null;
+                    \Log::debug($excludedUser);
                 }
             }
+
+            // if(isset($provider)){
+            //     $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+            //     if($excludedUser){
+            //         $makerExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : null;
+            //         if(!is_null($makerExclude)){
+            //             $dataMakers = array_merge($makerExclude,$maker);
+            //         }
+            //     }else{
+            //         $dataMakers[] = $maker;
+            //     }
+            // }
             $dataMakers[] = $maker;
             $dataAgents[] = [
                 'currency_iso' => $currency,
