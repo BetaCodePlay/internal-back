@@ -632,6 +632,7 @@ class AgentsController extends Controller
                         $providerId = $userToUpdate['provider_id'];
                         $userId = $userToUpdate['user_id'];
                         if(is_null($maker)){
+                            \Log::debug("HOLA");
                             $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
                         }else{
                             $nuevoArray = array_diff($userToUpdate['makers'], [$maker]);
