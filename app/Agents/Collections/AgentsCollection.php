@@ -3453,12 +3453,25 @@ class AgentsCollection
         $blockUsers = [];
         $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
         $dataUsers = $this->formatDataLockUsers($users, $currency, $provider, $maker);
+        $agentsRepo = new AgentsRepo();
+        $whitelabel = Configurations::getWhitelabel();
 
         if (!is_null($agent)) {
+            $dataMakers[] = $maker;  
+            if(isset($provider)){
+                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                foreach ($excludedAgents as $excludedAgent) {
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    if($agent->id == $excludedAgent->user_id){
+                        $listMakers = array_merge($dataMakers,$makersExclude);
+                        $dataMakers = array_unique($listMakers);
+                    }
+                }
+            }
             $blockUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => null,
+                'makers' => json_encode($dataMakers),
                 'user_id' => $agent->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -3511,10 +3524,9 @@ class AgentsCollection
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) {
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    if($agent->user_id == $excludedAgent->user_id && in_array($maker,$makersExclude)){
-                        $dataMakers = $makersExclude;
-                    }else{
-                        $dataMakers = array_merge($dataMakers,$makersExclude);
+                    if($agent->user_id == $excludedAgent->user_id){
+                        $listMakers = array_merge($dataMakers,$makersExclude);
+                        $dataMakers = array_unique($listMakers);
                     }
                 }
             }
@@ -3555,7 +3567,6 @@ class AgentsCollection
                 foreach ($excludedUsers as $excludedUser) {
                     $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
                     if($user['id'] == $excludedUser->user_id){
-                        \Log::debug("SI SE ENCONTRO",[$user['id'],$makersExclude,$dataMakers]);
                         $listMakers = array_merge($dataMakers,$makersExclude);
                         $dataMakers = array_unique($listMakers);
                     }
