@@ -3556,7 +3556,8 @@ class AgentsCollection
                     $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
                     if($user['id'] == $excludedUser->user_id){
                         \Log::debug("SI SE ENCONTRO",[$user['id'],$makersExclude,$dataMakers]);
-                        $dataMakers = array_unique($makersExclude);
+                        $listMakers = array_merge($dataMakers,$makersExclude);
+                        $dataMakers = array_unique($listMakers);
                     }
                 }
             }
