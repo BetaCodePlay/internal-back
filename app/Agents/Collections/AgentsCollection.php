@@ -3464,7 +3464,7 @@ class AgentsCollection
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->id == $excludedAgent->user_id){
                         $listMakers = array_merge($dataMakers,$makersExclude);
-                        $dataMakers = array_unique($listMakers,SORT_REGULAR);
+                        $dataMakers = array_values(array_unique($listMakers));
                     }
                 }
             }
@@ -3526,7 +3526,7 @@ class AgentsCollection
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id){
                         $listMakers = array_merge($dataMakers,$makersExclude);
-                        $dataMakers = array_unique($listMakers);
+                        $dataMakers = array_values(array_unique($listMakers));
                     }
                 }
             }
@@ -3568,7 +3568,7 @@ class AgentsCollection
                     $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
                     if($user['id'] == $excludedUser->user_id){
                         $listMakers = array_merge($dataMakers,$makersExclude);
-                        $dataMakers = array_unique($listMakers);
+                        $dataMakers = array_values(array_unique($listMakers));
                     }
                 }
             }
