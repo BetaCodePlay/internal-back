@@ -3511,19 +3511,20 @@ class AgentsCollection
                     foreach ($excludedAgents as $excludedAgent) {
                         $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                         foreach ($makersExclude as $makerExclude) {
-                            if($agent->user_id == $excludedAgent->user_id && $makerExclude != $maker){   
-                                $dataMakers = array_merge($makersExclude,$maker[]);
+                            if($agent->user_id == $excludedAgent->user_id && $makerExclude != $maker){ 
+                                $dataMakers[] = $maker;  
+                                $listMakers = array_merge($makersExclude,$dataMakers);
                             }
                         }
                     }
                 }
             }else{
-                $dataMakers[] = $maker;
+                $listMakers[] = $maker;
             }
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => json_encode($dataMakers),
+                'makers' => json_encode($listMakers),
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
