@@ -3516,7 +3516,7 @@ class AgentsCollection
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => $dataMakers,
+                'makers' => json_encode($dataMakers),
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
