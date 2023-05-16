@@ -3509,7 +3509,6 @@ class AgentsCollection
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => json_encode($dataMakers),
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -3526,8 +3525,9 @@ class AgentsCollection
                         $dataAgents['makers'] = json_encode($data);
                     }
                 }
+            }else{
+                $dataAgents['makers'] = json_encode($dataMakers);
             }
-            \Log::debug([$dataAgents]);
 
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
