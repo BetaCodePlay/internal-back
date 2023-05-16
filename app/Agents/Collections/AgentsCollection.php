@@ -3506,12 +3506,17 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
+            $dataMakers[] = $maker;
             if(isset($provider)){
-                $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                if($excludedUser){
-                    \Log::debug([$excludedUser->makers]);
-                    $makerExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : null;
-                    \Log::debug([$excludedUser]);
+                $excludedAgent = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                if($excludedAgent){
+                    foreach ($excludedAgent as $exclude) {
+                        if($agent->user_id == $exclude->user_id){
+                            $makerExclude = isset($exclude->makers) ? json_decode($exclude->makers) : null;
+                            $test = array_merge($makerExclude,$dataMakers);
+                            \Log::debug($test);
+                        }
+                    }
                 }
             }
 
@@ -3526,7 +3531,6 @@ class AgentsCollection
             //         $dataMakers[] = $maker;
             //     }
             // }
-            $dataMakers[] = $maker;
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
