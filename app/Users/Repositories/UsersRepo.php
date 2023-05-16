@@ -215,6 +215,29 @@ class UsersRepo
     }
 
     /**
+     * Get exclude provider user by currency, whitelabel and provider
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @param int $provider Provider ID
+     * @return mixed
+     */
+    public function getExcludeProviderUserByProvider($currency, $provider, $whitelabel)
+    {
+        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_providers_users.*')
+            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
+            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('exclude_providers_users.currency_iso', $currency);
+
+            if (!empty($provider)) {
+                $users->where('exclude_providers_users.provider_id', $provider);
+            }
+            $data = $users->orderBy('users.username', 'DESC')->get();
+        return $data;
+    }
+
+    /**
      * Get first deposit users
      *
      * @param int $whitelabel Whitelabel ID

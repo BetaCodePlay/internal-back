@@ -3,6 +3,7 @@
 namespace App\Agents\Collections;
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Users\Repositories\UsersRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
@@ -3479,13 +3480,13 @@ class AgentsCollection
     public function formatDataLockSubAngents($agents, $currency, $provider, $maker)
     {
         $agentsRepo = new AgentsRepo();
+        $whitelabel = Configurations::getWhitelabel();
         $dataAgents = [];
         $dataMakers = [];
         foreach ($agents as $agent) {
             $dataChildren = null;
             $subAgents = $agentsRepo->getAgentsByOwner($agent->user_id, $currency);
             $users = $agentsRepo->getUsersByAgent($agent->id, $currency);
-            $whitelabel = Configurations::getWhitelabel();
 
             if (count($subAgents) > 0) {
                 $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
@@ -3511,10 +3512,8 @@ class AgentsCollection
                 foreach ($excludedAgents as $excludedAgent) {
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id && in_array($maker,$makersExclude)){
-                        \Log::debug("si encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
                         $dataMakers = $makersExclude;
                     }else{
-                        \Log::debug("no encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
                         $dataMakers = array_merge($dataMakers,$makersExclude);
                     }
                 }
@@ -3544,14 +3543,28 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLockUsers($users, $currency, $provider)
+    public function formatDataLockUsers($users, $currency, $provider, $maker)
     {
         $dataUsers = [];
+        $whitelabel = Configurations::getWhitelabel();
+        $usersRepo = new UsersRepo();
         foreach ($users as $user) {
+            $dataMakers[] = $maker;  
+            if(isset($provider)){
+                $excludedUsers = $usersRepo->getExcludeProviderUserByProvider($currency, $provider, $whitelabel);
+                foreach ($excludedUsers as $excludedUser) {
+                    $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
+                    if($user['id'] == $excludedUser->user_id && in_array($maker,$makersExclude)){
+                        $dataMakers = $makersExclude;
+                    }else{
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
+                    }
+                }
+            }
             $dataUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => null,
+                'makers' => json_encode($dataMakers),
                 'user_id' => $user['id'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
