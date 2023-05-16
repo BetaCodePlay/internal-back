@@ -3523,11 +3523,10 @@ class AgentsCollection
                     }else{
                         \Log::debug("no encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
                         $data = array_merge($dataMakers,$makersExclude);
-                        \Log::debug([$data]);
+                        $dataAgents['makers'] = json_encode($data);
                     }
                 }
             }
-            \Log::debug($dataMakers);
 
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
