@@ -632,12 +632,11 @@ class AgentsController extends Controller
                         $providerId = $userToUpdate['provider_id'];
                         $userId = $userToUpdate['user_id'];
                         if(is_null($maker)){
-                            \Log::debug("HOLA");
                             $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
                         }else{
-                            $nuevoArray = array_diff(json_decode($userToUpdate['makers']), [$maker]);
-                            \Log::debug([$nuevoArray]);
-                            //$this->agentsRepo->updateBlockAgents($currencyIso,$providerId,$userId,$data);
+                            $unBlockMaker = array_diff(json_decode($userToUpdate['makers']), [$maker]);
+                            $data['makers'] = json_encode($unBlockMaker);
+                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$providerId,$userId,$data);
                         }
                     }
                     $data = [

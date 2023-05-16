@@ -76,6 +76,19 @@ class AgentsRepo
     }
 
     /**
+     * Update unBlock agents and makers
+     *
+     * @param array $agents Agent data
+     * @return mixed
+     */
+    public function unBlockAgentsMaker($currency,$provider,$user,$data)
+    {
+        $agents = \DB::table('exclude_providers_users')->where('currency_iso', $currency)->where('provider_id', $provider)->where('user_id', $user)->update($data);
+        return $agents;
+    }
+
+
+    /**
      * Block users
      *
      * @param int $user User ID
