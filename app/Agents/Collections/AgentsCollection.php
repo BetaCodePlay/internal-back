@@ -3518,14 +3518,10 @@ class AgentsCollection
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) {
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    if($agent->user_id == $excludedAgent->user_id && !in_array($maker,$makersExclude)){
-                        \Log::debug("no encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
-                        $data = array_merge($dataMakers,$makersExclude);
-                        \Log::debug([$data]);
-                    }else{
+                    if($agent->user_id == $excludedAgent->user_id && in_array($maker,$makersExclude)){
                         \Log::debug("si encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
-                        $data = $makersExclude;
-                        \Log::debug($data);
+                    }else{
+                        \Log::debug("no encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
                     }
                 }
             }
