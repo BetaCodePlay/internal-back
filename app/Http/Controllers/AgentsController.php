@@ -635,6 +635,7 @@ class AgentsController extends Controller
                             \Log::debug("HOLA");
                             $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
                         }else{
+                            \Log::debug($userToUpdate['makers']);
                             $nuevoArray = array_diff($userToUpdate['makers'], [$maker]);
                             \Log::debug([$nuevoArray]);
                             //$this->agentsRepo->updateBlockAgents($currencyIso,$providerId,$userId,$data);
