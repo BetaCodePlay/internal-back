@@ -3513,7 +3513,7 @@ class AgentsCollection
                     foreach ($excludedAgents as $excludedAgent) {
                         $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                         foreach ($makersExclude as $makerExclude) {
-                            if($agent->user_id == $exclude->user_id && $makerExclude != $maker){
+                            if($agent->user_id == $excludedAgent->user_id && $makerExclude != $maker){
                                 $dataMakers = array_merge($makersExclude,$dataMakers);
                             }
                         }
