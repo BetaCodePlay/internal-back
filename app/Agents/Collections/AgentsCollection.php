@@ -3506,26 +3506,6 @@ class AgentsCollection
                 }
             }
             $dataMakers[] = $maker;  
-            if(isset($provider)){
-                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                if($excludedAgents){
-                    foreach ($excludedAgents as $excludedAgent) {
-                        $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                        if($agent->user_id == $excludedAgent->user_id && !in_array($maker,$makersExclude)){ 
-                            \Log::debug("por aca");
-                            \Log::debug($makersExclude);
-                            \Log::debug($dataMakers);
-                            $dataMakers = array_merge($makersExclude,$dataMakers);
-                        }else{
-                            \Log::debug("por aca2");
-                            \Log::debug($makersExclude);
-                            \Log::debug($dataMakers);
-                            $dataMakers = $makersExclude;
-                        }
-                    }
-                }
-            }
-            \Log::debug($dataMakers);
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
@@ -3534,6 +3514,23 @@ class AgentsCollection
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
+            if(isset($provider)){
+                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                foreach ($excludedAgents as $excludedAgent) {
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    if($agent->user_id == $excludedAgent->user_id){ 
+                        if(in_array($maker,$makersExclude)){
+                            $dataMakers = array_merge($makersExclude,$dataMakers);
+                            \Log::debug($dataMakers);
+
+                        }else{
+                            $dataMakers = $makersExclude;
+                            \Log::debug($dataMakers);
+                        }
+                    }
+                }
+            }
+            \Log::debug($dataMakers);
 
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
