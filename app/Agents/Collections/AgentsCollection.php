@@ -3519,13 +3519,13 @@ class AgentsCollection
                 foreach ($excludedAgents as $excludedAgent) {
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id && !in_array($maker,$makersExclude)){
-                        \Log::debug($dataMakers);
-                        \Log::debug($makersExclude);
-                        $dataMakers = array_merge($makersExclude,$dataMakers);
-                        \Log::debug($dataMakers);
+                        \Log::debug([$excludedAgent->user_id,$dataMakers,$makersExclude]);
+                        $data = array_merge($makersExclude,json_decode($dataMakers));
+                        \Log::debug($data);
                     }else{
-                        $dataMakers = $makersExclude;
-                        \Log::debug($dataMakers);
+                        \Log::debug([$excludedAgent->user_id,$dataMakers,$makersExclude]);
+                        $data = $makersExclude;
+                        \Log::debug($data);
                     }
                 }
             }
