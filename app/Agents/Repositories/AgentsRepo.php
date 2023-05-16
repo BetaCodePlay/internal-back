@@ -201,7 +201,7 @@ class AgentsRepo
      */
     public function getAgentLockByProvider($currency, $provider, $whitelabel)
     {
-        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_providers_users.provider_id', 'exclude_providers_users.created_at', 'providers.name')
+        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_providers_users.provider_id', 'exclude_providers_users.makers','exclude_providers_users.created_at', 'providers.name')
             ->join('users', 'agents.user_id', '=', 'users.id')
             ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
             ->join('providers', 'exclude_providers_users.provider_id', '=', 'providers.id')

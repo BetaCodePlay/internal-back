@@ -591,7 +591,7 @@ class AgentsController extends Controller
             $user = $request->user;
             $currency = session('currency');
             $provider = $request->provider;
-            $maker = $request->maker;
+            $maker = isset($request->maker) ? $request->maker : null;
             $type = $request->type;
             $lockUsers = $request->lock_users;
 
@@ -604,7 +604,7 @@ class AgentsController extends Controller
                     'id' => $user
                 ];
             }
-            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider);
+            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker);
             \Log::debug([$usersToUpdate]);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;

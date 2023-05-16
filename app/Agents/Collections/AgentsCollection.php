@@ -3447,11 +3447,11 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLock($subAgents, $users, $agent, $currency, $provider)
+    public function formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker)
     {
         $blockUsers = [];
-        $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $provider);
-        $dataUsers = $this->formatDataLockUsers($users, $currency, $provider);
+        $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
+        $dataUsers = $this->formatDataLockUsers($users, $currency, $provider, $maker);
 
         if (!is_null($agent)) {
             $blockUsers[] = [
@@ -3475,21 +3475,24 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLockSubAngents($agents, $currency, $provider)
+    public function formatDataLockSubAngents($agents, $currency, $provider, $maker)
     {
         $agentsRepo = new AgentsRepo();
         $dataAgents = [];
+        $dataMakers = [];
         foreach ($agents as $agent) {
             $dataChildren = null;
+            $makerExclude = null;
             $subAgents = $agentsRepo->getAgentsByOwner($agent->user_id, $currency);
             $users = $agentsRepo->getUsersByAgent($agent->id, $currency);
+            $whitelabel = Configurations::getWhitelabel();
 
             if (count($subAgents) > 0) {
-                $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $provider);
+                $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
             }
 
             if (count($users) > 0) {
-                $usersChildren = $this->formatDataLockUsers($users, $currency, $provider);
+                $usersChildren = $this->formatDataLockUsers($users, $currency, $provider, $maker);
             }
 
             if (count($subAgents) > 0 && count($users) > 0) {
@@ -3502,9 +3505,18 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
+            // if(isset($provider)){
+            //     $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+            //     if($excludedUser){
+            //         $makerExclude = isset($excludedUser->maker) ? json_decode($excludedUser->maker) : null;
+            //         \Log::debug($makerExclude);
+            //     }
+            // }
+            $dataMakers[] = $maker;
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
+                'makers' => $dataMakers,
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
