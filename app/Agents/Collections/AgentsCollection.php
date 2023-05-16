@@ -3509,7 +3509,7 @@ class AgentsCollection
             if(isset($provider)){
                 $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 if($excludedUser){
-                    $makerExclude = isset($excludedUser->maker) ? json_decode($excludedUser->maker) : null;
+                    $makerExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : null;
                     \Log::debug($makerExclude);
                 }
             }
