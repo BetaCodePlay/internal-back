@@ -3483,7 +3483,6 @@ class AgentsCollection
         $dataMakers = [];
         foreach ($agents as $agent) {
             $dataChildren = null;
-            $makerExclude = null;
             $subAgents = $agentsRepo->getAgentsByOwner($agent->user_id, $currency);
             $users = $agentsRepo->getUsersByAgent($agent->id, $currency);
             $whitelabel = Configurations::getWhitelabel();

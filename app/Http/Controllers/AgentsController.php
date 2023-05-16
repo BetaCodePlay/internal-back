@@ -610,7 +610,10 @@ class AgentsController extends Controller
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
-                    $this->agentsRepo->blockAgents($usersToUpdate);
+                    foreach ($usersToUpdate as $userToUpdate) {
+                        $user = $userToUpdate['user_id'];
+                        $this->agentsRepo->updateBlockAgents($currency,$provider,$user,$usersToUpdate);
+                    }
                     $data = [
                         'title' => _i('Locked provider'),
                         'message' => _i('The provider was locked to the agent and his entire tree'),

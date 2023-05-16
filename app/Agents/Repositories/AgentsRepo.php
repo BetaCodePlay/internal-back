@@ -61,6 +61,21 @@ class AgentsRepo
     }
 
     /**
+     * Update Block agents and users
+     *
+     * @param array $agents Agent data
+     * @return mixed
+     */
+    public function updateBlockAgents($currency, $provider, $user, $agents)
+    {
+        $agents = \DB::table('exclude_providers_users')->updateOrInsert(
+            ['provider_id' => $provider, 'user_id' => $user, 'currency_iso' => $currency],
+            $agents
+        );
+        return $agents;
+    }
+
+    /**
      * Block users
      *
      * @param int $user User ID
