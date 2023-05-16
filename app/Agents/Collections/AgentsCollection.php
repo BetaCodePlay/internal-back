@@ -3511,10 +3511,14 @@ class AgentsCollection
                 $excludedAgent = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 if($excludedAgent){
                     foreach ($excludedAgent as $exclude) {
-                        if($agent->user_id == $exclude->user_id){
-                            $makerExclude = isset($exclude->makers) ? json_decode($exclude->makers) : null;
-                            $test = array_merge($makerExclude,$dataMakers);
-                            \Log::debug($test);
+                        $makerExclude = isset($exclude->makers) ? json_decode($exclude->makers) : [];
+                        foreach ($makerExclude as $excludeMaker) {
+                            if($agent->user_id == $exclude->user_id && $excludeMaker != $maker){
+                                $test = array_merge($makerExclude,$dataMakers);
+                                \Log::debug($test);
+                            }else{
+                                \Log::debug("es el mismo");
+                            }
                         }
                     }
                 }
