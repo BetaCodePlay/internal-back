@@ -605,7 +605,6 @@ class AgentsController extends Controller
                 ];
             }
             $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker);
-            \Log::debug($usersToUpdate);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
@@ -632,7 +631,13 @@ class AgentsController extends Controller
                         $currencyIso = $userToUpdate['currency_iso'];
                         $providerId = $userToUpdate['provider_id'];
                         $userId = $userToUpdate['user_id'];
-                        $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
+                        if(is_null($maker)){
+                            $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
+                        }else{
+                            $nuevoArray = array_diff($userToUpdate['makers'], [$maker]);
+                            \Log::debug([$nuevoArray]);
+                            //$this->agentsRepo->updateBlockAgents($currencyIso,$providerId,$userId,$data);
+                        }
                     }
                     $data = [
                         'title' => _i('Unlocked provider'),
