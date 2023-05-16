@@ -3508,33 +3508,18 @@ class AgentsCollection
             }
             $dataMakers[] = $maker;
             if(isset($provider)){
-                $excludedAgent = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                if($excludedAgent){
-                    foreach ($excludedAgent as $exclude) {
-                        $makerExclude = isset($exclude->makers) ? json_decode($exclude->makers) : [];
-                        foreach ($makerExclude as $excludeMaker) {
-                            if($agent->user_id == $exclude->user_id && $excludeMaker != $maker){
-                                $test = array_merge($makerExclude,$dataMakers);
-                                \Log::debug($test);
-                            }else{
-                                \Log::debug("es el mismo");
+                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                if($excludedAgents){
+                    foreach ($excludedAgents as $excludedAgent) {
+                        $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                        foreach ($makersExclude as $makerExclude) {
+                            if($agent->user_id == $exclude->user_id && $makerExclude != $maker){
+                                $dataMakers = array_merge($makersExclude,$dataMakers);
                             }
                         }
                     }
                 }
             }
-
-            // if(isset($provider)){
-            //     $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-            //     if($excludedUser){
-            //         $makerExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : null;
-            //         if(!is_null($makerExclude)){
-            //             $dataMakers = array_merge($makerExclude,$maker);
-            //         }
-            //     }else{
-            //         $dataMakers[] = $maker;
-            //     }
-            // }
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
