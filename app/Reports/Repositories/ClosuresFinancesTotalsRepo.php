@@ -19,9 +19,9 @@ class ClosuresFinancesTotalsRepo
      * @param $endDate
      * @return mixed
      */
-    public function updateClosureHourTickets( string $startDate, string $endDate)
+    public function updateClosureHourTickets( $startDate, $endDate)
     {
-        DB::select('Select * from public.cmd_update_closure_hour(?,?)',[$startDate, $endDate]);
+      return DB::select('Select * from public.cmd_update_closure_hour(?,?)',[$startDate, $endDate]);
     }
 
     /**
@@ -29,8 +29,8 @@ class ClosuresFinancesTotalsRepo
      * @param $endDate
      * @return mixed
      */
-    public function updateClosureHourLvSlots(string $startDate, string $endDate)
+    public function updateClosureHourLvSlots( $startDate, $endDate)
     {
-        DB::select('Select * from public.cmd_update_closure_hour_lv_slots(?,?)',[$startDate, $endDate]);
+       return DB::select('Select * from public.cmd_update_closure_hour_lv_slots(?,?)',[$startDate, $endDate]);
     }
 }
