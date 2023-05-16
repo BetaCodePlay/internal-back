@@ -3555,8 +3555,10 @@ class AgentsCollection
                 foreach ($excludedUsers as $excludedUser) {
                     $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
                     if($user['id'] == $excludedUser->user_id && in_array($maker,$makersExclude)){
+                        \Log::debug("SI SE ENCONTRO",[$user['id'],$makersExclude,$dataMakers]);
                         $dataMakers = $makersExclude;
                     }else{
+                        \Log::debug("NO SE ENCONTRO",[$user['id'],$makersExclude,$dataMakers]);
                         $dataMakers = array_merge($dataMakers,$makersExclude);
                     }
                 }
