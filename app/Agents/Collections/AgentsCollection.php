@@ -3457,6 +3457,7 @@ class AgentsCollection
             $blockUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
+                'makers' => null,
                 'user_id' => $agent->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
