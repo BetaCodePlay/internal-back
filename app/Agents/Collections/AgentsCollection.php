@@ -3522,6 +3522,8 @@ class AgentsCollection
                         \Log::debug("si encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
                     }else{
                         \Log::debug("no encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
+                        $data = array_merge($dataMakers,$makersExclude);
+                        \Log::debug([$data]);
                     }
                 }
             }
