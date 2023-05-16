@@ -3520,7 +3520,7 @@ class AgentsCollection
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id && !in_array($maker,$makersExclude)){
                         \Log::debug([$excludedAgent->user_id,$dataMakers,$makersExclude]);
-                        $data = array_merge($makersExclude,json_decode($dataMakers));
+                        $data = array_merge($makersExclude,$dataMakers);
                         \Log::debug($data);
                     }else{
                         \Log::debug([$excludedAgent->user_id,$dataMakers,$makersExclude]);
