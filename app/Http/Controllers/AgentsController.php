@@ -614,7 +614,7 @@ class AgentsController extends Controller
                         $user = $userToUpdate['user_id']; 
                         $data = [
                             'currency_iso' => $userToUpdate['currency_iso'],
-                            'provider_id' => $userToUpdate['provider'],
+                            'provider_id' => $userToUpdate['provider_id'],
                             'makers' => $userToUpdate['makers'],
                             'user_id' => $user
                         ];
