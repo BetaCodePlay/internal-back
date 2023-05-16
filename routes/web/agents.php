@@ -242,6 +242,36 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@financialStateDataDetails'
         ]);
 
+        // Show financial State Makers
+        Route::get('financial-state-makers', [
+            'as' => 'agents.reports.financial-state-makers',
+            'uses' => 'AgentsController@financialStateMakers'
+        ]);
+
+        //Financial State Makers
+        Route::get('financial-state-data-makers/{startDate?}/{endDate?}/{currency_iso?}/{provider_id?}/{whitelabel_id?}', [
+            'as' => 'agents.reports.financial-state-data-makers',
+            'uses' => 'AgentsController@financialStateDataMakers'
+        ]);
+
+        //Financial State Makers Totals
+        Route::get('financial-state-data-makers-totals', [
+            'as' => 'agents.reports.financial-state-data-makers-totals',
+            'uses' => 'AgentsController@financialStateDataMakersTotals'
+        ]);
+
+        // Show financial State Makers Details
+        Route::get('financial-state-makers-details', [
+            'as' => 'agents.reports.financial-state-makers',
+            'uses' => 'AgentsController@financialStateMakersDetails'
+        ]);
+
+        //Financial State Makers Details
+        Route::get('financial-state-data-makers-details/{startDate?}/{endDate?}/{currency_iso?}/{provider_id?}/{whitelabel_id?}', [
+            'as' => 'agents.reports.financial-state-data-makers-details',
+            'uses' => 'AgentsController@financialStateDataMakers'
+        ]);
+
         //Financial State
         Route::get('financial-state/view1', [
             'as' => 'agents.reports.financial-state.new',

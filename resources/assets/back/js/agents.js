@@ -608,49 +608,105 @@ class Agents {
             }
         });
     }
+    // Financial state Makers
+    financialStateMakers() {
+        // $('#financial-state-tab').on('show.bs.tab', function () {
 
-   // Financial state
-   financialState(user = null) {
-       $('#financial-state-tab').on('show.bs.tab', function () {
+        // })
 
-       })
+         let picker = initLitepickerEndToday();
+         let $table = $('#financial-state-table-makers');
+         let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
+         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+         let $button = $('#update');
+         $button.trigger('click')
+         let api;
+        //  if (user == null) {
+        //      $('#financial-state-tab').on('show.bs.tab', function () {
+        //          $table.children().remove();
+        //          user = $('.user').val();
+        //      });
+        //  }
+        Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso)
+         $button.click(function () {
+             $button.button('loading');
+            //  let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
+            //  let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
 
-        let picker = initLitepickerEndToday();
-        let $table = $('#financial-state-table');
-        let $button = $('#update');
-        $button.trigger('click')
-        let api;
-        if (user == null) {
-            $('#financial-state-tab').on('show.bs.tab', function () {
-                $table.children().remove();
-                user = $('.user').val();
-            });
-        }
 
-        $button.click(function () {
-            $button.button('loading');
-            let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
-            let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
-            let test = '?test=false'
-            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+             $.ajax({
+                 url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}/`,
+                 type: 'get',
+                 dataType: 'json'
 
-            $.ajax({
-                url: `${$table.data('route')}/${user}/${startDate}/${endDate}${test}${username_like}${provider_id}`,
-                type: 'get',
-                dataType: 'json'
+             }).done(function (json) {
+                 $table.html(json.data.table);
 
-            }).done(function (json) {
-                $table.html(json.data.table);
+             }).fail(function (json) {
+                 swalError(json);
 
-            }).fail(function (json) {
-                swalError(json);
+             }).always(function () {
+                 $button.button('reset');
+             });
 
-            }).always(function () {
-                $button.button('reset');
-            });
+             Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
+         });
+     }
+     // Agents Transactions Paginate Total
+    static financialStateMakersTotal(url_total,start_date,end_date, currency_iso) {
+        $.ajax({
+            url: url_total+'?startDate='+start_date+'&endDate='+end_date+'&currency_iso='+currency_iso,
+            type: 'get',
+        }).done(function (response) {
+            $('.financialStateDataMakersTotals').empty();
+            $('.financialStateDataMakersTotals').append(response)
         });
     }
+         // Financial state Makers
+    financialStateMakersDetails() {
+        // $('#financial-state-tab').on('show.bs.tab', function () {
+
+        // })
+
+         let picker = initLitepickerEndToday();
+         let $table = $('#financial-state-table');
+         let $button = $('#update');
+         $button.trigger('click')
+         let api;
+        //  if (user == null) {
+        //      $('#financial-state-tab').on('show.bs.tab', function () {
+        //          $table.children().remove();
+        //          user = $('.user').val();
+        //      });
+        //  }
+
+         $button.click(function () {
+             $button.button('loading');
+            //  let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
+             let whitelabel_id = $('#whitelabel_id').val() === ''?'':$('#whitelabel_id').val();
+             let provider_id = $('#provider_id').val() === ''?'':$('#provider_id').val();
+             let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
+             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+
+             $.ajax({
+                 url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}/${provider_id}/${whitelabel_id}`,
+                 type: 'get',
+                 dataType: 'json'
+
+             }).done(function (json) {
+                 $table.html(json.data.table);
+
+             }).fail(function (json) {
+                 swalError(json);
+
+             }).always(function () {
+                 $button.button('reset');
+             });
+         });
+     }
+
 
   financialStateDetails(user = null) {
         let picker = initLitepickerEndToday();
