@@ -3506,13 +3506,6 @@ class AgentsCollection
                 }
             }
             $dataMakers[] = $maker;  
-            $dataAgents[] = [
-                'currency_iso' => $currency,
-                'provider_id' => $provider,
-                'user_id' => $agent->user_id,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) {
@@ -3521,13 +3514,19 @@ class AgentsCollection
                         \Log::debug("si encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
                     }else{
                         \Log::debug("no encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
-                        $data = array_merge($dataMakers,$makersExclude);
-                        $dataAgents['makers'] = json_encode($data);
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
                     }
                 }
-            }else{
-                $dataAgents['makers'] = json_encode($dataMakers);
             }
+            
+            $dataAgents[] = [
+                'currency_iso' => $currency,
+                'provider_id' => $provider,
+                'makers' => json_encode($dataMakers),
+                'user_id' => $agent->user_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
 
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
