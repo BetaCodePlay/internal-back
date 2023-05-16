@@ -584,6 +584,7 @@ class AgentsController extends Controller
     {
         $this->validate($request, [
             'provider' => ['required_if:lock_users,false'],
+            'maker' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
@@ -591,6 +592,7 @@ class AgentsController extends Controller
             $user = $request->user;
             $currency = session('currency');
             $provider = $request->provider;
+            $maker = $request->maker;
             $type = $request->type;
             $lockUsers = $request->lock_users;
 
@@ -604,7 +606,7 @@ class AgentsController extends Controller
                 ];
             }
             $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider);
-
+            \Log::debug([$usersToUpdate]);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
