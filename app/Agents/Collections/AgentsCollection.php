@@ -3512,6 +3512,7 @@ class AgentsCollection
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id && in_array($maker,$makersExclude)){
                         \Log::debug("si encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
+                        $dataMakers = $makersExclude;
                     }else{
                         \Log::debug("no encontro elemento en array",[$excludedAgent->user_id,$dataMakers,$makersExclude]);
                         $dataMakers = array_merge($dataMakers,$makersExclude);
