@@ -11,6 +11,7 @@ use App\Store\Commands\PointsCashback;
 use App\Store\Commands\PointsCashbackManual;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Reports\Commands\FinancesTotals;
+use App\Reports\Commands\FinancesTotalsManual;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -28,7 +29,8 @@ class Kernel extends ConsoleKernel
         UpdateSegments::class,
         PointsCashback::class,
         PointsCashbackManual::class,
-        FinancesTotals::class
+        FinancesTotals::class,
+        FinancesTotalsManual::class
     ];
 
     /**
