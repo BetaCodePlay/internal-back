@@ -3544,6 +3544,7 @@ class AgentsCollection
             $dataUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
+                'makers' => null,
                 'user_id' => $user['id'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
