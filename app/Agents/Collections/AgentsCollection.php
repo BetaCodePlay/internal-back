@@ -3506,13 +3506,13 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
-            // if(isset($provider)){
-            //     $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-            //     if($excludedUser){
-            //         $makerExclude = isset($excludedUser->maker) ? json_decode($excludedUser->maker) : null;
-            //         \Log::debug($makerExclude);
-            //     }
-            // }
+            if(isset($provider)){
+                $excludedUser = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                if($excludedUser){
+                    $makerExclude = isset($excludedUser->maker) ? json_decode($excludedUser->maker) : null;
+                    \Log::debug($makerExclude);
+                }
+            }
             $dataMakers[] = $maker;
             $dataAgents[] = [
                 'currency_iso' => $currency,
