@@ -611,8 +611,14 @@ class AgentsController extends Controller
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
                     foreach ($usersToUpdate as $userToUpdate) {
-                        $user = $userToUpdate['user_id'];
-                        $this->agentsRepo->updateBlockAgents($currency,$provider,$user,$usersToUpdate);
+                        $user = $userToUpdate['user_id']; 
+                        $data = [
+                            'currency_iso' => $userToUpdate['currency_iso'],
+                            'provider_id' => $userToUpdate['provider'],
+                            'makers' => $userToUpdate['makers'],
+                            'user_id' => $user
+                        ];
+                        $this->agentsRepo->updateBlockAgents($currency,$provider,$user,$data);
                     }
                     $data = [
                         'title' => _i('Locked provider'),
