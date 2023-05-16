@@ -3519,6 +3519,7 @@ class AgentsCollection
                     }
                 }
             }
+            \Log::debug($dataMakers);
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
