@@ -317,14 +317,10 @@ class SectionImagesController extends Controller
                 $extensionFront = $front->getClientOriginalExtension();
                 $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
                 $nameFront = Str::slug($originalNameFront) . time() . '.' . $extensionFront;
-                $fileFront = $request->file;
-                $newFilePath = "{$filePath}{$name}";
-                $oldFilePath = "{$filePath}{$fileFront}";
-                Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
-                Storage::delete($oldFilePath);
             }else{
                 $nameFront = null;
             }
+            \Log::info(__METHOD__, ['name' => $name, 'namefront' => $nameFront]);
             $imageData = [
                 'title' => $request->title,
                 'button' => $request->button,
