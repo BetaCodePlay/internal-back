@@ -3602,6 +3602,7 @@ class AgentsCollection
                     $dataUsers[] = [
                         'currency_iso' => $currency,
                         'provider_id' => $excludedUser->provider_id,
+                        'makers' => $excludedUser->makers,
                         'user_id' => $user,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
@@ -3611,6 +3612,7 @@ class AgentsCollection
                     $dataUsers[] = [
                         'currency_iso' => $currency,
                         'provider_id' => $excludedUser->provider_id,
+                        'makers' => $excludedUser->makers,
                         'user_id' => $user,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
