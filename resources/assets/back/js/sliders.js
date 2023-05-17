@@ -67,6 +67,7 @@ class Sliders {
         let $form = $('#sliders-form');
         let $file = $('#image');
         let $file1 = $('#front');
+        console.log('file', $file, $file1);
         $form.on('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(this);
