@@ -3258,7 +3258,6 @@ class AgentsCollection
      */
     public function formatAgentDataMakersTotals($totals)
     {
-
         $htmlTotals = sprintf(
             '<table  class="table table-bordered w-100">
                     <thead>
@@ -3280,10 +3279,10 @@ class AgentsCollection
                         </tr>
                     </tbody>',
             _i('Totals'),
-            number_format($totals->total_played, 2),
-            number_format($totals->total_won, 2),
-            number_format($totals->total_bet, 2),
-            number_format($totals->total_profit, 2),
+            $totals[0]->total_played,
+            number_format($totals[0]->total_won, 2),
+            number_format($totals[0]->total_bet, 2),
+            number_format($totals[0]->total_profit, 2),
         );
 
         return $htmlTotals;
