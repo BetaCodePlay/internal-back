@@ -497,11 +497,11 @@ class AgentsController extends Controller
 //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
 //            }
 
-            //$arraySonIds = $this->usersRepo->arraySonIds($agent, session('currency'), Configurations::getWhitelabel());
 
-           // $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
+           //$arraySonIds = $this->usersRepo->arraySonIds($agent, session('currency'), Configurations::getWhitelabel());
+           //$transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
 
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
+           $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
@@ -2381,7 +2381,8 @@ class AgentsController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
-                $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                $transactionTmp = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+
                 $auditData = [
                     'ip' => Utils::userIp(),
                     'user_id' => auth()->user()->id,
@@ -2390,7 +2391,9 @@ class AgentsController extends Controller
                 ];
                 //Audits::store($user, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditData);
 
+                //TODO AQUI
                 $additionalData['balance'] = $balance;
+                //$additionalData['transaction_id'] = $transactionTmp2->id;
                 $transactionData = [
                     'user_id' => $user->id,
                     'amount' => $balance,
@@ -2401,7 +2404,14 @@ class AgentsController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
-                $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                $transactionTmp2 = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+
+                //TODO AQUI
+                //UPDATE TRANSACTIOS
+                //primer id   $transactionTmp1->id;
+                //segundo id  $transactionTmp2->id;
+                // $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
+
                 $auditData = [
                     'ip' => Utils::userIp(),
                     'user_id' => auth()->user()->id,

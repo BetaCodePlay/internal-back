@@ -1125,7 +1125,10 @@ class UsersRepo
         ', [$whitelabel,$id, $currency, $currency,$whitelabel,$id, $currency,$currency]);
         $arrayIds =[];
         foreach ($ids as $value){
-            $arrayIds[]=$value->id;
+            //if($id != $value->id){
+                $arrayIds[]=$value->id;
+            //}
+
         }
         return $arrayIds;
     }
