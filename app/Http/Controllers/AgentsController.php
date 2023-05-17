@@ -2374,7 +2374,7 @@ class AgentsController extends Controller
             'timezone' => 'required'
         ]);
 
-        try {
+        //try {
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
             $currency = session('currency');
@@ -2522,9 +2522,9 @@ class AgentsController extends Controller
                     'ip' => Utils::userIp(),
                     'user_id' => auth()->user()->id,
                     'username' => auth()->user()->username,
-                    'transaction_data' => $transactionTmp2
+                    'transaction_data' => $transactionData2
                 ];
-                Audits::store($user, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
+                Audits::store($user->id, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
 
                 //TODO UPDATE TRANSACTION 1 DATA = transaction_id
                 $transactionData1_updated = $this->transactionsRepo->updateData($transactionTmp1->id, $transactionTmp2->id);
@@ -2536,7 +2536,7 @@ class AgentsController extends Controller
                     'username' => auth()->user()->username,
                     'transaction_data' => $transactionData1_updated
                 ];
-                Audits::store($user, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
+                Audits::store($user->id, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
 
             } else {
                 $ownerBalance = $ownerAgent->balance;
@@ -2553,10 +2553,10 @@ class AgentsController extends Controller
                 'route' => route('agents.index'),
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**
