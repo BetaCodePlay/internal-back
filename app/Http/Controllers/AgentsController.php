@@ -591,7 +591,7 @@ class AgentsController extends Controller
             $user = $request->user;
             $currency = session('currency');
             $provider = $request->provider;
-            $maker = $request->maker ? $request->maker : [];
+            $maker = $request->maker;
             $type = $request->type;
             $lockUsers = $request->lock_users;
 
