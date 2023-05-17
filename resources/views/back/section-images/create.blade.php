@@ -33,6 +33,32 @@
                             <input type="file" name="image" id="image" class="opacity-0">
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <label class="">
+                            <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
+                            <span class="glyphicon glyphicon-ok">{{ _i('Enable only for moving sliders: ') }}</span>
+                        </label>
+                        <div class="div_a_show">
+                            <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
+                                <div class="noty_body">
+                                    <div class="g-mr-20">
+                                        <div class="noty_body__icon">
+                                            <i class="hs-admin-info"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            {{ _i('This image is only if you want to activate sliders with movement.The maximum file size is 5mb and the maximum width is 3440px') }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="front">{{ _i('Image') }}</label>
+                                <input type="file" name="front" id="front" class="opacity-0">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6">

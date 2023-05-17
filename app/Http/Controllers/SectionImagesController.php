@@ -312,6 +312,19 @@ class SectionImagesController extends Controller
             $oldFilePath = "{$filePath}{$file}";
             Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
             Storage::delete($oldFilePath);
+            $front = $request->file('front');
+            if(!is_null($front)){
+                $extensionFront = $front->getClientOriginalExtension();
+                $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+                $nameFront = Str::slug($originalNameFront) . time() . '.' . $extensionFront;
+                $fileFront = $request->file;
+                $newFilePath = "{$filePath}{$name}";
+                $oldFilePath = "{$filePath}{$fileFront}";
+                Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
+                Storage::delete($oldFilePath);
+            }else{
+                $nameFront = null;
+            }
             $imageData = [
                 'title' => $request->title,
                 'button' => $request->button,
@@ -324,6 +337,7 @@ class SectionImagesController extends Controller
                 'status' => $request->status,
                 'section' => $section,
                 'image' => $name,
+                'front' => $nameFront,
                 'whitelabel_id' => $whitelabel,
                 'start_date' => $startDate,
                 'end_date' => $endDate
