@@ -3477,7 +3477,9 @@ class AgentsCollection
                 'updated_at' => Carbon::now()
             ];
         }
-        Log::debug([$dataAngets, $dataUsers, $blockUsers]);
+        Log::debug("agents",[$dataAngets]);
+        Log::debug("users",[$dataUsers]);
+        Log::debug("otros",[$blockUsers]);
 
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
         
