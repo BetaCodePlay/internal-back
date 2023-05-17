@@ -439,6 +439,60 @@ class TransactionsRepo
     }
 
     /**
+     * Get transactions list by user and provider With Paginate V 1.0
+     *
+     * @param int $user User ID
+     * @param array $providers Providers IDS
+     * @param array $arraySonIds Ids Son All
+     * @param string $currency Currency Iso
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
+     * @return mixed
+     */
+    public function getByUserAndProvidersPaginateV1($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [])
+    {
+
+        $countTransactions = Transaction::select('transactions.id')
+            ->whereIn('transactions.user_id', $arraySonIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC');
+
+       $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->whereIn('transactions.user_id', $arraySonIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC')
+            ->limit($limit)
+            ->offset($offset);
+
+        if (is_null($typeUser) || $typeUser === 'all') {
+
+        }elseif ($typeUser === 'agent'){
+            $countTransactions = $countTransactions->whereNull('data->provider_transaction');
+            $transactions = $transactions->whereNull('data->provider_transaction');
+        } else {
+            $countTransactions = $countTransactions->whereNotNull('data->provider_transaction');
+            $transactions = $transactions->whereNotNull('data->provider_transaction');
+        }
+
+        if (!is_null($username)) {
+            $countTransactions = $countTransactions->where('username', 'ilike', "%$username%");
+            $transactions = $transactions->where('username', 'ilike', "%$username%");
+        }
+
+        $countTransactions = $countTransactions->get();
+        $transactions = $transactions->get();
+
+        return [$transactions, count($countTransactions)];
+
+    }
+
+    /**
      * Totals Transactions by user
      * Providers And Currency
      *
