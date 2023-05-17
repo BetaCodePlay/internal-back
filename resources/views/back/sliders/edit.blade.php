@@ -251,7 +251,7 @@
             let sliders = new Sliders();
             console.log('sliders', sliders);
             sliders.update("{!! $slider->image !!}");
-            if ("{!! $slider->front !!}" != null) {
+            if (sliders.length > 0) {
                 sliders.update("{!! $slider->front !!}");
             }
         });
