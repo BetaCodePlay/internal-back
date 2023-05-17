@@ -1,12 +1,9 @@
 
 
-
 <?php $__env->startSection('styles'); ?>
     <style>
-        .list{
-            list-style:none;
-            /*list-style-image:url('https://www.html6.es/img_html/flecha_derecha.png');*/
-            list-style-image:url('<?php echo e(asset('back/img/flecha_derecha.png')); ?>');
+        .list_disclosure{
+            list-style: disclosure-closed!important;
         }
     </style>
 <?php $__env->stopSection(); ?>
@@ -57,19 +54,21 @@
                 </section>
                 <section>
                     <ul class="list-unstyled g-mb-0">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$reset_users_password])): ?>
-                            <li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
-                                <a href="#reset-password-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
-                                   data-toggle="modal">
-                                <span class="g-font-size-18 g-color-gray-light-v6 g-color-primary--parent-hover g-color-primary--parent-active g-mr-15">
-						            <i class="hs-admin-lock"></i>
-					            </span>
-                                    <span class="g-color-gray-dark-v6 g-color-primary--parent-hover g-color-primary--parent-active">
-                                    <?php echo e(_i('Reset password')); ?>
+                        <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$reset_users_password])): ?>
+                                <li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
+                                    <a href="#reset-password-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
+                                       data-toggle="modal">
+                                    <span class="g-font-size-18 g-color-gray-light-v6 g-color-primary--parent-hover g-color-primary--parent-active g-mr-15">
+                                        <i class="hs-admin-lock"></i>
+                                    </span>
+                                        <span class="g-color-gray-dark-v6 g-color-primary--parent-hover g-color-primary--parent-active">
+                                        <?php echo e(_i('Reset password')); ?>
 
-                                </span>
-                                </a>
-                            </li>
+                                    </span>
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                         <?php endif; ?>
                         
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$manual_adjustments])): ?>
@@ -355,11 +354,11 @@
                         </div>
                         <?php if(isset($agent) && $agent != ''): ?>
                             <div class="row g-mb-15">
-                                <div class="col-md-3 align-self-center g-mb-5 g-mb-0--md" style="padding-right: 0%;padding-top: 0%;padding-left: 3%;padding-bottom: 5%;">
-                                    <strong><?php echo e(_i('Father tree')); ?></strong>
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md" style="padding-right: 0%;padding-top: 0%;padding-left: 3%;padding-bottom: 5%;">
+                                    <label><?php echo e(_i('Father tree')); ?></label>
 
                                 </div>
-                                <div class="col-md-9 align-self-start" style="padding-left: 0;">
+                                <div class="col-md-10 align-self-start" style="padding-left: 0;">
                                     <div class="form-group g-pos-rel g-mb-0">
                                         <?php echo $agent; ?>
 
@@ -1111,56 +1110,58 @@
                 </div>
             </div>
         </div>
-        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_audits])): ?>
-            <div class="col-md-12">
-                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
-                        <div class="media">
-                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                                <?php echo e(_i('Audits')); ?>
+        <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_audits])): ?>
+                <div class="col-md-12">
+                    <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
+                        <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                            <div class="media">
+                                <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                    <?php echo e(_i('Audits')); ?>
 
-                            </h3>
+                                </h3>
 
-                            <div class="media-body d-flex justify-content-end g-mb-10" id="audit-table-buttons">
+                                <div class="media-body d-flex justify-content-end g-mb-10" id="audit-table-buttons">
 
+                                </div>
+                                <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                                    <input type="hidden" name="user_id" id="user_id" value="<?php echo e($user->id); ?>">
+                                    <button class="btn u-btn-3d u-btn-primary" type="button" id="update-audit"
+                                            data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                        <i class="hs-admin-reload g-color-white"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                        </header>
+                        <div class="card-block g-pa-15">
+                            <div class="table-responsive">
                                 <input type="hidden" name="user_id" id="user_id" value="<?php echo e($user->id); ?>">
-                                <button class="btn u-btn-3d u-btn-primary" type="button" id="update-audit"
-                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                    <i class="hs-admin-reload g-color-white"></i>
-                                </button>
+                                <table class="table table-bordered w-100" id="audit-table"
+                                       data-route="<?php echo e(route('users.users-audit-data')); ?>">
+                                    <thead>
+                                    <tr>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            <?php echo e(_i('Details')); ?>
+
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            <?php echo e(_i('Type')); ?>
+
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            <?php echo e(_i('Date')); ?>
+
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </header>
-                    <div class="card-block g-pa-15">
-                        <div class="table-responsive">
-                            <input type="hidden" name="user_id" id="user_id" value="<?php echo e($user->id); ?>">
-                            <table class="table table-bordered w-100" id="audit-table"
-                                   data-route="<?php echo e(route('users.users-audit-data')); ?>">
-                                <thead>
-                                <tr>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        <?php echo e(_i('Details')); ?>
-
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        <?php echo e(_i('Type')); ?>
-
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        <?php echo e(_i('Date')); ?>
-
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php endif; ?>
         <?php endif; ?>
 
         <?php if($store): ?>
@@ -1271,58 +1272,61 @@
                 </div>
             </div>
         <?php endif; ?>
-        <?php if($document_verification): ?>
-            <div class="col-md-12">
-                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
-                        <div class="media">
-                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                                <?php echo e(_i('Verification of documents')); ?>
 
-                            </h3>
-                            <div class="media-body d-flex justify-content-end g-mb-10" id="verification-document-table-buttons">
+        <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
+            <?php if($document_verification): ?>
+                <div class="col-md-12">
+                    <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
+                        <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                            <div class="media">
+                                <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                    <?php echo e(_i('Verification of documents')); ?>
 
+                                </h3>
+                                <div class="media-body d-flex justify-content-end g-mb-10" id="verification-document-table-buttons">
+
+                                </div>
+                                <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                                    <button class="btn u-btn-3d u-btn-primary" type="button" id="verification-document-update"
+                                            data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                        <i class="hs-admin-reload g-color-white"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">
-                                <button class="btn u-btn-3d u-btn-primary" type="button" id="verification-document-update"
-                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                    <i class="hs-admin-reload g-color-white"></i>
-                                </button>
+                        </header>
+                        <div class="card-block g-pa-15">
+                            <div class="table-responsive">
+                                <input type="hidden" name="user_id" id="user_id" value="<?php echo e($user->id); ?>">
+                                <table class="table table-bordered w-100" id="verification-document-table"
+                                       data-route="<?php echo e(route('store.documents-user')); ?>">
+                                    <thead>
+                                    <tr>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            <?php echo e(_i('Date')); ?>
+
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            <?php echo e(_i('Document type')); ?>
+
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            <?php echo e(_i('Status')); ?>
+
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none text-right">
+                                            <?php echo e(_i('Actions')); ?>
+
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </header>
-                    <div class="card-block g-pa-15">
-                        <div class="table-responsive">
-                            <input type="hidden" name="user_id" id="user_id" value="<?php echo e($user->id); ?>">
-                            <table class="table table-bordered w-100" id="verification-document-table"
-                                   data-route="<?php echo e(route('store.documents-user')); ?>">
-                                <thead>
-                                <tr>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        <?php echo e(_i('Date')); ?>
-
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        <?php echo e(_i('Document type')); ?>
-
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        <?php echo e(_i('Status')); ?>
-
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none text-right">
-                                        <?php echo e(_i('Actions')); ?>
-
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
     <?php echo $__env->make('back.users.modals.reset-password', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

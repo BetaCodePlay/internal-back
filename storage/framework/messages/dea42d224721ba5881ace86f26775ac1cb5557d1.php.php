@@ -1,5 +1,8 @@
 
 <?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">
+
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
@@ -20,22 +23,17 @@
             </div>
             <div class="table-reponsive">
 
-            <table id="exampleTable" class="table table-bordered table-hover dt-responsive"  width="100%">
+            <table id="exampleTable" class="table table-bordered display nowrap"  style="width:100%">
                 <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <thead>
                 <tr>
                     <th> <?php echo e(_i('Date')); ?></th>
                     <th> <?php echo e(_i('Description')); ?></th>
-
-
                     <th> <?php echo e(_i('Debit')); ?></th>
                     <th> <?php echo e(_i('Credit')); ?></th>
-
-
-
-
-
+                    <th> <?php echo e(_i('Balance')); ?> <strong><?php echo e('('._i('from').')'); ?></strong></th>
                     <th> <?php echo e(_i('Balance')); ?></th>
+
                 </tr>
                 </thead>
             </table>
@@ -53,6 +51,7 @@
             let agents = new Agents();
             agents.transactionTimeline('<?php echo e(route('reports.data.transaction.timeline')); ?>','#exampleTable',[10,20,50,100]);
         });
+
     </script>
 <?php $__env->stopSection(); ?>
 

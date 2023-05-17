@@ -885,8 +885,8 @@ class UsersController extends Controller
         return [
             'description.required' => __('Description is required'),
             'lock_type.required' => __('Lock type is required'),
-            'user_id.required' => __('Id user is required'),
-            'user_id.exists' => __('Id user does not exist'),
+            'user_id.required' => __('ID user is required'),
+            'user_id.exists' => __('ID user does not exist'),
         ];
     }
 
@@ -1995,6 +1995,17 @@ class UsersController extends Controller
 
         try {
             $user = $request->user;
+            $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
+                $data = [
+                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+
             $password = $request->password;
             $userData = [
                 'password' => $password
@@ -2055,7 +2066,7 @@ class UsersController extends Controller
                         $password = $request->password;
 
                     } else {
-                        $email = "{$user}@dotworkers.com";
+                        $email = "{$user}@betsweet.com";
 
                         switch ($user) {
                             case 'wolf':

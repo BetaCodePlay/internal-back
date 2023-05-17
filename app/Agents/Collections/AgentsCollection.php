@@ -12,8 +12,10 @@ use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -222,6 +224,183 @@ class AgentsCollection
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                }
+                $arrayTmpClosures[$value->user_id] = $closures;
+
+                if (count($closures) > 0) {
+                    $providerDB = [];
+                    foreach ($closures as $index => $closure) {
+                        $providerDB[$closure->id_provider] = [
+                            'total_played' => $closure->total_played,
+                            'total_won' => $closure->total_won,
+                            'total_profit' => $closure->total_profit,
+                        ];
+                    }
+                    foreach ($arrayProviderTmp as $index => $provider) {
+                        if (!isset($providerDB[$provider])) {
+                            $providerDB[$provider] = [
+                                'total_played' => 0,
+                                'total_won' => 0,
+                                'total_profit' => 0,
+                            ];
+                        }
+                    }
+                    $arrayTmp[$value->user_id]['providers'] = $providerDB;
+                } else {
+                    $arrayTmp[$value->user_id]['providers'] = $providerNull;
+                }
+            }
+
+            $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
+            foreach ($arrayProviderTmp as $item => $value) {
+                $name = $closureRepo->nameProvider($value);
+                $htmlProvider .= "<th  class='text-center' colspan='3'>" . $name . "</th>";
+            }
+            $htmlProvider .= "</tr></thead>";
+
+            $htmlProvider .= "<tbody><th></th>";
+            foreach ($arrayProviderTmp as $item => $value) {
+                $htmlProvider .= "<th  class=''>" . _i('total played') . "</th>";
+                $htmlProvider .= "<th  class=''>" . _i('Total won') . "</th>";
+                $htmlProvider .= "<th  class=''>" . _i('Total Profit') . "</th>";
+            }
+            $htmlProvider .= "</tr>";
+
+            foreach ($arrayTmp as $item => $value) {
+                $htmlProvider .= "<tr>";
+                $htmlProvider .= "<td class='" . $value['type'] . "'>" . $value['username'] . "</td>";
+                foreach ($value['providers'] as $i => $provider) {
+                    $totalProfit += $provider['total_profit'];
+                    $totalDebit += $provider['total_played'];
+                    $totalCredit += $provider['total_won'];
+                    $htmlProvider .= "<td>" . number_format($provider['total_played'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($provider['total_won'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($provider['total_profit'], 2) . "</td>";
+                }
+                $htmlProvider .= "</tr>";
+
+            }
+
+            //TODO TOTALES
+            if (!is_null($percentage)) {
+                $totalComission = $totalProfit * ($percentage / 100);
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3) . "'><br></td>
+                                      <td class='text-center'><br></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . _i('Total Profit') . "</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . number_format(($totalProfit), 2) . "</strong>  </td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . _i('Total Comission') . "</strong> &nbsp;(" . number_format(($percentage), 2) . "%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . number_format(($totalComission), 2) . "</strong>  </td>
+                                  </tr>
+                                  <!--TODO TOTAL A PAGAR-->
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" . _i('Total to pay') . " </strong> &nbsp;(" . number_format((100 - $percentage), 2) . "%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" . number_format(($totalProfit - $totalComission), 2) . "</strong>  </td>
+                                  </tr>";
+            } else {
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3) . "'><br></td>
+                                      <td class='text-center'><br></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . _i('Total Profit') . "</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . number_format(($totalProfit), 2) . "</strong>  </td>
+                                  </tr>
+                                  ";
+            }
+
+            $htmlProvider .= "</tbody>";
+
+
+        } else {
+            $htmlProvider = sprintf(
+                '<table class="table table-bordered table-sm table-striped table-hover"><thead>
+                    <tr>
+                        <th>%s</th>
+                        <th colspan="3" class="text-center">%s</th>
+                    </tr></thead><tbody><tr><td class="text-center" colspan="4">%s</td></tr></tbody>',
+                _i('Agents / Players'),
+                _i('Totals'),
+                _i('no records')
+            );
+        }
+
+        return $htmlProvider;
+
+    }
+
+    /**
+     * MODO TEST NEW TABLE _HOUR
+     * Closures Totals By Agent Group Provider
+     * @param $tableDb
+     * @param $whitelabel
+     * @param $currency
+     * @param $startDate
+     * @param $endDate
+     * @param $percentage
+     * @return string
+     */
+    public function closuresTotalsByAgentGroupProviderHour($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null)
+    {
+        $closureRepo = new ClosuresUsersTotals2023Repo();
+        $htmlProvider = "";
+        $totalProfit = 0;
+        $totalCredit = 0;
+        $totalDebit = 0;
+        if (!empty($tableDb)) {
+
+            //TODO STATUS OF PROVIDERS IN PROD
+            $arrayProviderTmp = array_map(function ($val) {
+                return $val->id;
+            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));
+
+            $providerNull = [];
+            foreach ($arrayProviderTmp as $index => $provider) {
+                $providerNull[$provider] = [
+                    'total_played' => 0,
+                    'total_won' => 0,
+                    'total_profit' => 0,
+                ];
+            }
+
+            $arrayTmp = [];
+            $arrayTmpClosures = [];
+            //$transactions = 0;
+            foreach ($tableDb as $item => $value) {
+
+                $arrayTmp[$value->user_id] = [
+                    'id' => $value->user_id,
+                    'type' => $value->type_user == 5 ? 'init_user' : 'init_agent',
+                    'username' => $value->username,
+                    'providers' => []
+                ];
+
+                $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
+
+                if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSonHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                } else {
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUserHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 }
                 $arrayTmpClosures[$value->user_id] = $closures;
 
@@ -2992,8 +3171,6 @@ class AgentsCollection
     public function formatAgentTransactionsPaginate($transactions, $total, $request)
     {
         $timezone = session('timezone');
-        $totalDebit = 0;
-        $totalCredit = 0;
         $data = array();
 
         foreach ($transactions as $transaction) {
@@ -3002,26 +3179,39 @@ class AgentsCollection
             $transaction->credit = 0;
             $transaction->balance = 0;
 
+
+            $from = $transaction->data->from;
+            $to = $transaction->data->to;
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
-                $totalDebit = $totalDebit + $amountTmp;
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
-                $totalCredit = $totalCredit + $amountTmp;
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
             }
+
+            $credit = $transaction->credit;
+            $debit = $transaction->debit;
+            if($transaction->user_id === Auth::user()->id){
+                $debit = $transaction->credit;
+                $credit = $transaction->debit;
+            }
+            if($transaction->data->from != Auth::user()->username){
+                $credit = $transaction->credit;
+                $debit = $transaction->debit;
+            }
+
             $data[] = [
                 'id' => null,
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
                 'data' => [
-                    'from' => isset($transaction->data->from) ? $transaction->data->from : null,
-                    'to' => isset($transaction->data->to) ? $transaction->data->to : null,
+                    'from' => $from,
+                    'to' => $to,
                 ],
-                'debit' => number_format($transaction->debit, 2, ",", "."),
-                'credit' => number_format($transaction->credit, 2, ",", "."),
+                'debit' => number_format($debit, 2, ",", "."),
+                'credit' => number_format($credit, 2, ",", "."),
                 'balance' => $transaction->balance,
             ];
 
@@ -3106,14 +3296,16 @@ class AgentsCollection
      */
     public function formatAgentTransactionsTotals($credit, $debit)
     {
-
+        $balance = $credit - $debit;
+        //' . _i('Debit') . '
+        //' . _i('Credit') . '
         $htmlTotals = sprintf(
             '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
                             <th>%s</th>
-                            <th class="text-right">' . _i('Debit') . '</th>
-                            <th class="text-right">' . _i('Credit') . '</th>
+                            <th class="text-right">Descarga</th>
+                            <th class="text-right">Carga</th>
                             <th class="text-right">' . _i('Balance') . '</th>
                         </tr>
                     </thead>
@@ -3128,7 +3320,7 @@ class AgentsCollection
             _i('Totals'),
             number_format($debit, 2),
             number_format($credit, 2),
-            number_format(($credit - $debit), 2),
+            number_format($balance, 2),
         );
 
         return $htmlTotals;

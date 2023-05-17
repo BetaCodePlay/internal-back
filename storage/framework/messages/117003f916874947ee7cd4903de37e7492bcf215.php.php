@@ -16,8 +16,8 @@
     <?php endif; ?>
     <link rel="apple-touch-icon" sizes="57x57" href="<?php echo e($favicon); ?>">
     <link rel="apple-touch-icon" sizes="114x114" href="<?php echo e($favicon); ?>">
-    <title><?php echo e($title ?? _i('Dotpanel')); ?></title>
-    <link rel="stylesheet" href="<?php echo e(asset('commons/css/template.min.css')); ?>?v=0.15">
+    <title><?php echo e($title ?? _i('BackOffice')); ?></title>
+    <link rel="stylesheet" href="<?php echo e(asset('commons/css/template.min.css')); ?>?v=0.22">
     <?php echo $__env->yieldContent('styles'); ?>
     <style>
         li.has-active .u-side-nav-opened {
@@ -32,12 +32,12 @@
         <?php echo $__env->make('back.layout.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             <?php echo $__env->make('back.layout.warning', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
-            <?php if($iphone): ?>
-                <?php echo $__env->make('back.layout.search', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php if(isset($iphone)): ?>
+                <?php if($iphone): ?>
+                    <?php echo $__env->make('back.layout.search', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php endif; ?>
             <?php endif; ?>
 
-            <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
                 <div class="g-pt-20 g-pr-15 g-pl-15">
                     <div class="row">
                         <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-            <?php endif; ?>
+
             <div class="g-pa-20">
                 <?php echo $__env->yieldContent('content'); ?>
             </div>

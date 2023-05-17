@@ -18,7 +18,7 @@
                         <thead>
                         <tr>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                <?php echo e(_i('Id')); ?>
+                                <?php echo e(_i('ID')); ?>
 
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

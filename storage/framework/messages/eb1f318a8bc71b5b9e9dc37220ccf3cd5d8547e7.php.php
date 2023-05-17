@@ -1364,7 +1364,7 @@ class TransactionsCollection
                 $transaction->description .= " $reason: {$details->reason}";
             }
 
-//            if (Configurations::getWhitelabel() == 45 && auth()->user()->username == 'support') {
+//            if (Configurations::getWhitelabel() == 45 && auth()->user()->username == 'wolf') {
             if (!is_null($details) && isset($details->payment_code)) {
                 $paymentCode = _i('Reference');
                 $transaction->description .= " - $paymentCode: {$details->payment_code}";
@@ -1435,11 +1435,21 @@ class TransactionsCollection
                 $dataTmp = json_decode($transaction->data);
                 $newData['date'] = Carbon::create($transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
 
-                $balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
-                $name = _('from').' <strong>'.$dataTmp->from .' </strong> '._i('Current balance').': '.$balanceOld.''.$currency.' <br> '._('to').' '.$dataTmp->to;
-                if($transaction->transaction_type_id == TransactionTypes::$debit){
-                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> '._i('Current balance').': '.$balanceOld.''.$currency.'';
+                //$balanceOld = number_format(isset($dataTmp->second_balance)? round($dataTmp->second_balance,2):0,2);
+//                $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
+//                if($transaction->transaction_type_id == TransactionTypes::$debit) {
+//                    $name = _('from').' '.$dataTmp->from .' <br>'._('to').' <strong>'.$dataTmp->to .' </strong> ';
+//                }
+
+
+                if($transaction->transaction_type_id == TransactionTypes::$credit) {
+                    $name = '<strong>'._i('from').' '.$dataTmp->to .' </strong>'._i('to').' '.$dataTmp->from;
+                    //$name = _('from').' '.$dataTmp->to .' <br>'._('to').' <strong>'.$dataTmp->from .' </strong> ';
                 }
+                if($transaction->transaction_type_id == TransactionTypes::$debit) {
+                    $name = '<strong>'._i('from').' '.$dataTmp->from .' </strong>'._i('to').' '.$dataTmp->to;
+                }
+
 
                 $newData['id'] = $transaction->id;
                 $newData['names'] =  $name;
@@ -1447,23 +1457,41 @@ class TransactionsCollection
                 $newData['to'] = $dataTmp->to;
                 $newData['data'] = $dataTmp;
                 $newData['amount'] = $transaction->amount;
-                $newData['debit'] = $transaction->transaction_type_id == TransactionTypes::$debit ? number_format($transaction->amount, 2) : '-';;
+                $newData['debit'] = $transaction->transaction_type_id == TransactionTypes::$debit ? number_format($transaction->amount, 2) : '-';
                 $newData['credit'] = $transaction->transaction_type_id == TransactionTypes::$credit ? number_format($transaction->amount, 2) : '-';
-                $newData['debit_'] = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : 0;;
+                $newData['debit_'] = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : 0;
                 $newData['credit_'] = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : 0;
                 $newData['transaction_type_id'] = $transaction->transaction_type_id;
                 $newData['balance'] = '0.00';
-                if (isset($dataTmp->balance)) {
-                    //TODO IF SUPPORT
-//                    if(!in_array(Roles::$admin_Beet_sweet, session('roles'))){
-//                        //$to =
-//                        $newData['balance'] = number_format($transaction->data->balance, 2).' ('.$transaction->data->to.')';
-//                    }else{
-//                        $newData['balance'] = number_format($transaction->data->balance, 2);
-//                    }
-                    $newData['balance'] = number_format($dataTmp->balance, 2);
-                    //$newData['balance_'] = $transaction->data->balance;
+                $newData['balanceFrom'] = '0.00';
+
+                if($transaction->transaction_type_id == TransactionTypes::$debit) {
+                    if (isset($dataTmp->second_balance)) {
+                        $newData['balanceFrom'] = number_format($dataTmp->second_balance, 2);
+                    }
+                    if(isset($dataTmp->balance)) {
+                        $newData['balance'] = number_format((float) $dataTmp->balance, 2);
+                    }
                 }
+
+                if($transaction->transaction_type_id == TransactionTypes::$credit) {
+                    if (isset($dataTmp->balance)) {
+                        $newData['balance'] =  number_format((float) $dataTmp->balance, 2);
+                    }
+                    if(isset($dataTmp->second_balance)) {
+                        $newData['balanceFrom'] =  number_format((float) $dataTmp->second_balance, 2);
+                    }
+                }
+
+//                if($transaction->transaction_type_id == TransactionTypes::$credit) {
+//                    $name = _('from').' <strong>'.$dataTmp->to .' </strong>'._('to').' '.$dataTmp->from;
+//                }
+//                if($transaction->transaction_type_id == TransactionTypes::$debit) {
+//                    $name = _('from').' <strong>'.$dataTmp->from .' </strong>'._('to').' '.$dataTmp->to;
+//                }
+//
+
+
 
                 $data[] = $newData;
             }
@@ -1483,12 +1511,15 @@ class TransactionsCollection
                 'from'=>'',
                 'to'=>'',
                 'data'=>'',
-                'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>',
-                'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>',
+                'debit'=>'<strong>'.number_format($debitTotal,2).'</strong>', // ingreso por cargas
+                'credit'=>'<strong>'.number_format($creditTotal,2).'</strong>', // egreso por descargas
                 'debit_'=>0,
                 'credit_'=>0,
                 'transaction_type_id'=>'',
-                'balance'=>'<strong>'.number_format(($creditTotal-$debitTotal),2).'</strong>',
+                'balance'=>'',
+                'balanceFrom' => ''
+//                'balance'=>'<strong>'.number_format(($debitTotal-$creditTotal),2).'</strong>',
+//                'balanceFrom' => '<strong>'.number_format(($creditTotal-$debitTotal),2).'</strong>'
             ];
 
         }
@@ -1499,7 +1530,7 @@ class TransactionsCollection
             "recordsFiltered" => intval($total),
             "data"            => $data
         );
-
+        // dd($json_data);
         return $json_data;
     }
 

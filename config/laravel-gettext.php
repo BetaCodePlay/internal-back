@@ -33,7 +33,8 @@ return [
     'tr_TR',
     'fr_FR',*/
     'en_GB',
-    'es_CL'
+    'es_CL',
+    'es_AR'
 
     ],
 

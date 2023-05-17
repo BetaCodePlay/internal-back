@@ -60,40 +60,40 @@ class TransactionNotAllowed
      */
     private function sendSms($message)
     {
-        /*
+
         $sms = AwsFacade::createClient('sns');
         $numbers = [
             'Victor Digitel' => '+584123601639',
-            'Orlando Digitel' => '+584123298857',
-            'Lucas'  => '+5493425463140',
-            'Nedith Digitel' => '+584126107846',
+            'Orlando Digitel' => '+584123298857'
 
         ];
+        /*
+               foreach ($numbers as $number) {
+                   $sms->publish([
+                       'Message' => $message,
+                       'PhoneNumber' => $number,
+                       'MessageAttributes' => [
+                           'AWS.SNS.SMS.SMSType' => [
+                               'DataType' => 'String',
+                               'StringValue' => 'Transactional',
+                           ],
+                           'AWS.SNS.SMS.SenderID' => [
+                               'DataType' => 'String',
+                               'StringValue' => 'back-office'
+                           ],
+                       ],
+                   ]);
+               }
+        */
 
-        foreach ($numbers as $number) {
-            $sms->publish([
-                'Message' => $message,
-                'PhoneNumber' => $number,
-                'MessageAttributes' => [
-                    'AWS.SNS.SMS.SMSType' => [
-                        'DataType' => 'String',
-                        'StringValue' => 'Transactional',
-                    ],
-                    'AWS.SNS.SMS.SenderID' => [
-                        'DataType' => 'String',
-                        'StringValue' => 'DotPanel'
-                    ],
-                ],
-            ]);
-        }*/
 
-        $sms = AwsFacade::createClient('sns');
-        $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
-        \Log::notice(__METHOD__, ['message' =>  $message, 'theme' => $theme]);
-        $sms->publish([
-            'Message' => $message,
-            'TopicArn' => $theme
-        ]);
+               $sms = AwsFacade::createClient('sns');
+               $theme = 'arn:aws:sns:us-east-1:072423260887:Alertas-SMS';
+
+               $sms->publish([
+                   'Message' => $message,
+                   'TopicArn' => $theme
+               ]);
     }
 
     /**

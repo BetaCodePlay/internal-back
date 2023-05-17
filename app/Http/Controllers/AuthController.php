@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Dotworkers\Audits\Audits;
 use App\Audits\Enums\AuditTypes;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -114,10 +115,16 @@ class AuthController extends Controller
                 $roles = Security::getUserRoles($user);
 
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
+                    $permissionsMerge = $permissions;
+                    //TODO IF AGENT ADD NEW PERMISSIONS
+                    if(Auth::user()->type_user == 1){
+                        $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
+                    }
+
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
                     session()->put('country_iso', $profile->country_iso);
-                    session()->put('permissions', $permissions);
+                    session()->put('permissions', $permissionsMerge);
                     session()->put('roles', $roles);
                     $this->walletAccessToken();
                     BetPay::getBetPayClientAccessToken();

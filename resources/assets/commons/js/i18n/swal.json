@@ -34,5 +34,14 @@
             "action_cannot_be_undone": "לא ניתן לבטל את הפעולה!",
             "close": "לסגור"
         }
+    },
+    "es_AR": {
+        "translation": {
+            "confirm": "Confirmar",
+            "cancel": "Cancelar",
+            "are_you_sure": "¿Estás seguro?",
+            "action_cannot_be_undone": "¡La acción no se puede deshacer!",
+            "close": "Cerrar"
+        }
     }
 }
