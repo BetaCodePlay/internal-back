@@ -3523,7 +3523,7 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
-            $dataMakers[] = $maker;  
+            $dataMakers[] = array_values(array_unique($maker));
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) {            
@@ -3535,7 +3535,6 @@ class AgentsCollection
                     }
                 }
             }
-            Log::debug("hola2",[$dataMakers]);
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
