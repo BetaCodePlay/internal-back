@@ -3500,7 +3500,6 @@ class AgentsCollection
         $agentsRepo = new AgentsRepo();
         $whitelabel = Configurations::getWhitelabel();
         $dataAgents = [];
-        $dataMakers = [];
         foreach ($agents as $agent) {
             $dataChildren = null;
             $subAgents = $agentsRepo->getAgentsByOwner($agent->user_id, $currency);
@@ -3526,9 +3525,9 @@ class AgentsCollection
             }
             $dataMakers[] = $maker;  
             if(isset($provider)){
-                Log::debug("hola");
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                foreach ($excludedAgents as $excludedAgent) {
+                foreach ($excludedAgents as $excludedAgent) {            
+                    Log::debug("hola");
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id){
                         $listMakers = array_merge($dataMakers,$makersExclude);
