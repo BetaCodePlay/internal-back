@@ -119,7 +119,7 @@ class Sliders {
                 data: formData
 
             }).done(function (json) {
-                $('#file').val(json.data.file);
+                $('#file, #file1').val(json.data.file);
                 console.log('file', #file);
                 swalSuccessWithButton(json);
 
