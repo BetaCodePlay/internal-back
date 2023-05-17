@@ -3463,27 +3463,21 @@ class AgentsCollection
                 foreach ($excludedAgents as $excludedAgent) {
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->id == $excludedAgent->user_id){
-                        $listMakers = array_merge($dataMakers,$makersExclude);
-                        $dataMakers = array_values(array_unique($listMakers));
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
                     }
                 }
             }
+            $listMakers = array_values(array_unique($dataMakers));
             $blockUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => json_encode($dataMakers),
+                'makers' => json_encode($listMakers),
                 'user_id' => $agent->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
         }
-        Log::debug("agents",[$dataAngets]);
-        Log::debug("users",[$dataUsers]);
-        Log::debug("otros",[$blockUsers]);
-
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
-        
-        
         return $data;
     }
 
@@ -3571,15 +3565,15 @@ class AgentsCollection
                 foreach ($excludedUsers as $excludedUser) {
                     $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
                     if($user['id'] == $excludedUser->user_id){
-                        $listMakers = array_merge($dataMakers,$makersExclude);
-                        $dataMakers = array_values(array_unique($listMakers));
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
                     }
                 }
             }
+            $listMakers = array_values(array_unique($dataMakers));
             $dataUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => json_encode($dataMakers),
+                'makers' => json_encode($listMakers),
                 'user_id' => $user['id'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
