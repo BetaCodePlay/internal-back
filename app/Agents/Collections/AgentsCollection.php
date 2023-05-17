@@ -3478,7 +3478,10 @@ class AgentsCollection
             ];
         }
 
+
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
+        
+        Log::debug([$data]);
         return $data;
     }
 
