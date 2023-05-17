@@ -304,7 +304,7 @@ class AgentsRepo
      */
     public function getExcludeUserProvider($user)
     {
-        $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.currency_iso')
+        $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.makers', 'exclude_providers_users.currency_iso')
             ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
             ->where('exclude_providers_users.user_id', $user)
             ->get();
