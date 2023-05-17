@@ -3523,22 +3523,22 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
-            $dataMakers[] = array_values(array_unique($maker));
+            $dataMakers[] = $maker;
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) {            
                     Log::debug("hola");
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id){
-                        $listMakers = array_merge($dataMakers,$makersExclude);
-                        $dataMakers = array_values(array_unique($listMakers));
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
                     }
                 }
             }
+            $listMakers = array_values(array_unique($dataMakers));
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => json_encode($dataMakers),
+                'makers' => json_encode($listMakers),
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
