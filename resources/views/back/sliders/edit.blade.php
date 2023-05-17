@@ -249,7 +249,10 @@
     <script>
         $(function () {
             let sliders = new Sliders();
-            sliders.update("{!! $slider->image || $slider->front!!}");
+            sliders.update("{!! $slider->image !!}");
+            @if(!is_null($slider->front))
+            sliders.update("{!! $slider->front !!}");
+            @endif
         });
     </script>
 @endsection
