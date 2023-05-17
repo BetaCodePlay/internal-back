@@ -30,10 +30,12 @@ class SectionImagesCollection
             $size = "{$configuration->width}x{$configuration->height}";
             $width = $configuration->width < '250' ? $configuration->width : '250';
             $url = s3_asset("section-images/{$image->image}");
+            $urlFront = s3_asset("section-images/{$image->front}");
             $image->url = !is_null($image->url) ? $image->url : _i('Without URL');
             $statusClass = $image->status ? 'teal' : 'lightred';
             $statusText = $image->status ? _i('Published') : _i('Unpublished');
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
+            $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
             $image->position = _i('Does not apply to this image');
             $image->size = $size;
             $image->status = sprintf(
@@ -220,6 +222,9 @@ class SectionImagesCollection
                     default:
                     {
                         $url = s3_asset("section-images/{$image->image}");
+                        if(!is_null($image->front)){
+                            $urlFront = s3_asset("section-images/{$image->front}");
+                        }
                     }
                 }
 
@@ -243,6 +248,7 @@ class SectionImagesCollection
             }
 
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
+            $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
             $image->position = ImagesPositions::get($key);
             $image->size = $size;
 

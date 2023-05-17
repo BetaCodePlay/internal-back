@@ -27,7 +27,7 @@ class SectionImage extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'button', 'whitelabel_id', 'image', 'url', 'language', 'currency_iso', 'status', 'element_type_id', 'position', 'mobile', 'section'];
+    protected $fillable = ['title', 'description', 'button', 'whitelabel_id', 'image', 'url', 'language', 'currency_iso', 'status', 'element_type_id', 'position', 'mobile', 'section', 'front'];
 
     /**
      * The attributes that should be mutated to dates.

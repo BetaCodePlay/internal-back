@@ -13,6 +13,7 @@ class SectionImages {
             "order": [],
             "columns": [
                 {"data": "image"},
+                {"data": "front"},
                 {"data": "position"},
                 {"data": "size"},
                 {"data": "url"},
