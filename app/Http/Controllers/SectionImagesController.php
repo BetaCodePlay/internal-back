@@ -128,6 +128,7 @@ class SectionImagesController extends Controller
                     $image = new \stdClass();
                     $image->size = "{$home->$section->section_images->width}x{$home->$section->section_images->height}";
                     $data['image'] = $image;
+                    $data['front'] = $image;
                 }
             }
             $data['template_element_type'] = $templateElementType;
