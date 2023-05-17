@@ -615,7 +615,9 @@ class AgentsController extends Controller
                             'currency_iso' => $userToUpdate['currency_iso'],
                             'provider_id' => $userToUpdate['provider_id'],
                             'makers' => $userToUpdate['makers'],
-                            'user_id' => $user
+                            'user_id' => $user,
+                            'created_at' => $userToUpdate['created_at'],
+                            'updated_at' => $userToUpdate['updated_at']
                         ];
                         $this->agentsRepo->updateBlockAgents($currency,$provider,$user,$data);
                     }
