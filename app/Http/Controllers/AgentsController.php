@@ -1182,7 +1182,7 @@ class AgentsController extends Controller
 
             // $currency = session('currency');
             // $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getFinancialDataMakersTotals(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $currency_iso, $provider_id, $whitelabel_id);
 
             return response()->json($this->agentsCollection->formatAgentDataMakersTotals($totals));
 
