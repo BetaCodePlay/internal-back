@@ -3517,7 +3517,7 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
-            $dataMakers[] = !is_null($maker) ? $maker : [];
+            $dataMakers[] = $maker ? $maker : [];
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) { 
