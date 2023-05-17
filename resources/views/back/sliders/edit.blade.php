@@ -1,6 +1,7 @@
 @extends('back.template')
 
 @section('content')
+    @dd($slider)
     <form action="{{ route('sliders.update') }}" id="sliders-form" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-6">
