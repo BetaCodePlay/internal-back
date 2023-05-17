@@ -3527,11 +3527,11 @@ class AgentsCollection
                     }
                 }
             }
-            $listMakers = !empty($dataMakers) ? array_values(array_unique($dataMakers)) : [];
+            $listMakers = !empty($dataMakers) ? json_encode(array_values(array_unique($dataMakers))) : [];
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => json_encode($listMakers),
+                'makers' => $listMakers,
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
