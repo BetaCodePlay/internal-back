@@ -3528,6 +3528,8 @@ class AgentsCollection
                 }
             }
             $listMakers = array_values(array_unique($dataMakers));
+
+            $listMakers = [];
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
