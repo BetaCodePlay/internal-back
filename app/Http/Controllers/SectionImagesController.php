@@ -102,6 +102,7 @@ class SectionImagesController extends Controller
             } else {
                 $imagesData = $this->sectionImagesCollection->formatAllWithPositions($positions, $templateElementType, $section);
             }
+            \Log::info(__METHOD__, ['images' => $imagesData]);
             $data = [
                 'images' => $imagesData
             ];
