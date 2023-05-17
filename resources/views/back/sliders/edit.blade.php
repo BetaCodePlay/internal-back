@@ -249,9 +249,7 @@
     <script>
         $(function () {
             let sliders = new Sliders();
-            console.log('sliders', sliders);
-            sliders.update("{!! $slider->image !!}, {!! $slider->front !!}");
-            console.log('update',  sliders.update);
+            sliders.update("{!! $slider->image !!} {!! $slider->front !!}");
         });
     </script>
 @endsection
