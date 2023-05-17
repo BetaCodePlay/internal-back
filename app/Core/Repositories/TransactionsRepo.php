@@ -380,7 +380,21 @@ class TransactionsRepo
     }
 
     /**
-     * Get transactions list by user and provider With Paginate V 1.0
+     * Totals Data Makers
+     * Providers And Currency
+     *
+     * @param int $user User ID
+     * @param array $providers Providers IDS
+     * @param string $currency Currency Iso
+     * @return mixed
+     */
+    public function getFinancialDataMakersTotals(string $startDate, string $endDate, string $currency, $provider, $whitelabel)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_global_total(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider]);
+    }
+
+     /**
+     *  Get transactions list by user and provider With Paginate V 1.0
      *
      * @param int $user User ID
      * @param array $providers Providers IDS

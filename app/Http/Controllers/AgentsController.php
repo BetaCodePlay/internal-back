@@ -14,6 +14,7 @@ use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
@@ -81,6 +82,13 @@ class AgentsController extends Controller
      */
     private $agentsCollection;
 
+     /**
+     * TransactionsCollection
+     *
+     * @var TransactionsCollection
+     */
+    private $transactionsCollection;
+
     /**
      * UsersRepo
      *
@@ -94,6 +102,13 @@ class AgentsController extends Controller
      * @var TransactionsRepo
      */
     private $transactionsRepo;
+
+    /**
+     * WhitelabelsGamesRepo
+     *
+     * @var WhitelabelsGamesRepo
+     */
+    private $whitelabelsGamesRepo;
 
     /**
      * AgentCurrenciesRepo
@@ -145,6 +160,7 @@ class AgentsController extends Controller
      * @param AgentsCollection $agentsCollection
      * @param CountriesRepo $countriesRepo
      * @param TransactionsRepo $transactionsRepo
+     * @param WhitelabelsGamesRepo $whitelabelsGamesRepo
      * @param UsersTempRepo $usersTempRepo
      * @param AgentCurrenciesRepo $agentCurrenciesRepo
      * @param GenerateReferenceCode $generateReferenceCode
@@ -153,7 +169,7 @@ class AgentsController extends Controller
      * @param UsersCollection $usersCollection
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
@@ -163,6 +179,7 @@ class AgentsController extends Controller
         $this->agentCurrenciesRepo = $agentCurrenciesRepo;
         $this->generateReferenceCode = $generateReferenceCode;
         $this->whitelabelsRepo = $whitelabelsRepo;
+        $this->whitelabelsGamesRepo = $whitelabelsGamesRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->usersCollection = $usersCollection;
         $this->transactionsCollection = $transactionsCollection;
@@ -1118,6 +1135,64 @@ class AgentsController extends Controller
     }
 
     /**
+     * Data Financial State Makers
+     * @param Request $request
+     * @param $startDate
+     * @param $endDate
+     * @param $currency_iso
+     * @param $provider_id
+     * @param $whitelabel_id
+     * @return Response
+     */
+    public function financialStateDataMakers(Request $request, $startDate = null, $endDate = null, $currency_iso= null, $provider_id = null, $whitelabel_id = null)
+    {
+
+        try {
+
+            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+                //TODO TODOS => EJE:SUPPORT
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+            } else {
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+
+            }
+            $data = [
+                'table' => $this->agentsCollection->closuresTotalsProviderAndMakerGlobal($table)
+            ];
+
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Data Financial State Makers Totals
+     *
+     * @param int $agent User ID
+     * @return Response
+     */
+    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null, $currency_iso= null, $provider_id = null, $whitelabel_id = null)
+    {
+        try {
+
+            $startDate = Utils::startOfDayUtc($request->has('startDate')?$request->get('startDate'):date('Y-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('endDate')?$request->get('endDate'):date('Y-m-d'));
+
+            // $currency = session('currency');
+            // $providers = [Providers::$agents, Providers::$agents_users];
+            $totals = $this->transactionsRepo->getFinancialDataMakersTotals(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+
+            return response()->json($this->agentsCollection->formatAgentDataMakersTotals($totals));
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * @param ProvidersRepo $providersRepo
      * @param $user
      * @param $startDate
@@ -1314,6 +1389,50 @@ class AgentsController extends Controller
         $data['providers'] = $this->closuresUsersTotals2023Repo->getProvidersActiveByCredentials(true, $currency, $whitelabel);
         $data['title'] = _i('Financial statement report details');
         return view('back.agents.reports.financial-state-details', $data);
+    }
+
+
+    /**
+     * View Financial State Makers
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function financialStateMakers()
+    {
+        $whitelabel = null;
+        $currency = null;
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['currencies'] = Configurations::getCurrencies();
+        // $data['currencies'] = $this->currenciesRepo->all();
+        // $data['whitelabels'] = $this->whitelabelsGamesRepo->all();
+        $data['providers'] = $this->closuresUsersTotals2023Repo->getProvidersByCurrencyAndCredentials(true, $currency, $whitelabel);
+        $data['title'] = _i('Financial statement report makers');
+        return view('back.agents.reports.financial-state-makers', $data);
+    }
+
+    /**
+     * View Financial State Makers Details
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function financialStateMakersDetails()
+    {
+        $whitelabel = null;
+        $currency = null;
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['currencies'] = Configurations::getCurrencies();
+        // $data['currencies'] = $this->currenciesRepo->all();
+        $data['whitelabel'] = $this->whitelabelsGamesRepo->all();
+        // dd($data);
+        $data['providers'] = $this->closuresUsersTotals2023Repo->getProvidersByCurrencyAndCredentials(true, $currency, $whitelabel);
+        $data['title'] = _i('Financial statement report makers details');
+        return view('back.agents.reports.financial-state-makers-details', $data);
     }
 
     /**
