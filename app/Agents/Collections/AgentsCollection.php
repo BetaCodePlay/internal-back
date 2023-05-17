@@ -3477,11 +3477,11 @@ class AgentsCollection
                 'updated_at' => Carbon::now()
             ];
         }
-
+        Log::debug([$dataAngets, $dataUsers, $blockUsers]);
 
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
         
-        Log::debug([$data]);
+        
         return $data;
     }
 
