@@ -3536,6 +3536,7 @@ class AgentsCollection
                 }
             }
             
+            Log::debug("makers",[$dataMakers]);
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
@@ -3544,11 +3545,10 @@ class AgentsCollection
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
-            Log::debug("agents soloS",[$dataAgents]);
+        
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
             }
-            Log::debug("Agentes hijos",[$dataChildren]);
         }
         return $dataAgents;
     }
