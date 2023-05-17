@@ -2524,7 +2524,7 @@ class AgentsController extends Controller
                     'username' => auth()->user()->username,
                     'transaction_data' => $transactionTmp2
                 ];
-                Audits::store($user, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
+                //Audits::store($user, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
                 Log::notice('audit2',[$auditDataTransaction2]);
                 //TODO UPDATE TRANSACTION 1 DATA = transaction_id
                 $transactionData1_updated = $this->transactionsRepo->updateData($transactionTmp1->id, $transactionTmp2->id);
@@ -2538,7 +2538,7 @@ class AgentsController extends Controller
                 ];
 
                 Log::notice('audit1',[$auditDataTransaction1]);
-                Audits::store($user, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
+                //Audits::store($user, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
 
             } else {
                 $ownerBalance = $ownerAgent->balance;
