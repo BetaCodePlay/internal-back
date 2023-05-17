@@ -3592,7 +3592,6 @@ class AgentsCollection
      */
     public function formatExcluderProvidersUsers($user, $excludedUsers, $currency)
     {
-        \Log::debug([$excludedUsers]);
         $dataUsers = [];
         $auxCurrencies = [];
         foreach ($excludedUsers as $excludedUser) {
@@ -3621,7 +3620,6 @@ class AgentsCollection
                 }
             }
         }
-        \Log::debug([$dataUsers]);
         return $dataUsers;
     }
 
