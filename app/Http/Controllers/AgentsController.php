@@ -495,7 +495,7 @@ class AgentsController extends Controller
      */
     public function agentsTransactionsPaginate($agent, Request $request)
     {
-        try {
+//        try {
 
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit = $request->has('length') ? $request->get('length') : 100;
@@ -507,16 +507,27 @@ class AgentsController extends Controller
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
+
+//            $user = auth()->user()->id ? Auth::id() : null;
+//            if (is_null(Auth::user()->username) == 'romeo') {
+//                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+//                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+//            }
+
+            //$arraySonIds = $this->usersRepo->arraySonIds($agent, session('currency'), Configurations::getWhitelabel());
+
+           // $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
+
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
 
             $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
             return response()->json($data);
 
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**
@@ -874,10 +885,35 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
-
-//        try {
-
         $currency = session('currency');
+        $agent=76;
+
+        //TODO PROBAR TRANSACCION DE SUPERIOR A UN 3er INFERIOR
+        $offset = $request->has('start') ? $request->get('start') : 0;
+        $limit = $request->has('length') ? $request->get('length') : 100;
+
+        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('2020-m-d'));
+        $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $username = $request->has('search') ? $request->get('search')['value']:null;
+        $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+
+        $providers = [Providers::$agents, Providers::$agents_users];
+
+        $agents = $this->agentsRepo->getAgentsByOwner($agent, $currency);
+        $users = $this->agentsCollection->formatAgentsId($agents, $currency);
+        if (!in_array($agent, $users)) {
+            $users[] = $agent;
+        }
+
+        $users = [76,81,82,83,84];
+        $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$users);
+
+        $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
+
+        return response()->json($data);
+
+        //TODO DATA_TMP PAGIANTE
+     return   $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = [Providers::$agents, Providers::$agents_users];
         //TODO CONVERSION OF ARRAY '{16,25}';
@@ -910,10 +946,6 @@ class AgentsController extends Controller
 
         return response()->json($json_data);
 
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            return Utils::failedResponse();
-//        }
     }
 
     /**
