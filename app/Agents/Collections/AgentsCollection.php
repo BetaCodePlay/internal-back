@@ -3544,7 +3544,7 @@ class AgentsCollection
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
-            Log::debug("agents soloS",[$dataAngets]);
+            Log::debug("agents soloS",[$dataAgents]);
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
             }
