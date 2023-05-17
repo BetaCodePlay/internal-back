@@ -3125,14 +3125,14 @@ class AgentsCollection
             $credit = $transaction->credit;
             $debit = $transaction->debit;
             //TODO COMENTADO
-            //            if($transaction->user_id === Auth::user()->id){
-            //                $debit = $transaction->credit;
-            //                $credit = $transaction->debit;
-            //            }
-            //            if($transaction->data->from != Auth::user()->username){
-            //                $credit = $transaction->credit;
-            //                $debit = $transaction->debit;
-            //            }
+//            if($transaction->user_id === Auth::user()->id){
+//                $debit = $transaction->credit;
+//                $credit = $transaction->debit;
+//            }
+//            if($transaction->data->from != Auth::user()->username){
+//                $credit = $transaction->credit;
+//                $debit = $transaction->debit;
+//            }
 
             $data[] = [
                 'id' => null,

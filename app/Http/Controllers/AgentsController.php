@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Agents\Collections\AgentsCollection;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
+use App\Audits\Enums\AuditTypes;
 use App\Core\Collections\TransactionsCollection;
 use App\Core\Entities\Transaction;
 use App\Core\Notifications\TransactionNotAllowed;
@@ -29,6 +30,7 @@ use App\Users\Users as GenerateReferenceCode;
 use App\Whitelabels\Repositories\WhitelabelsRepo;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use Dotworkers\Audits\Audits;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
@@ -497,13 +499,12 @@ class AgentsController extends Controller
 //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
 //            }
 
+            $arraySonIds = $this->usersRepo->arraySonIds($agent, session('currency'), Configurations::getWhitelabel());
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
 
-           //$arraySonIds = $this->usersRepo->arraySonIds($agent, session('currency'), Configurations::getWhitelabel());
-           //$transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
+           //$transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
 
-           $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
-
-            $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
+           $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
             return response()->json($data);
 
@@ -896,7 +897,7 @@ class AgentsController extends Controller
         return response()->json($data);
 
         //TODO DATA_TMP PAGIANTE
-     return   $currency = session('currency');
+        $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = [Providers::$agents, Providers::$agents_users];
         //TODO CONVERSION OF ARRAY '{16,25}';
@@ -2371,7 +2372,7 @@ class AgentsController extends Controller
                     'to' => $user->username,
                     'balance' => $ownerBalance
                 ];
-                $transactionData = [
+                $transactionData1 = [
                     'user_id' => $ownerAgent->id,
                     'amount' => $balance,
                     'currency_iso' => $currency,
@@ -2381,20 +2382,11 @@ class AgentsController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
-                $transactionTmp = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                $transactionTmp1 = $this->transactionsRepo->store($transactionData1, TransactionStatus::$approved, []);
 
-                $auditData = [
-                    'ip' => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
-                    'transaction_data' => $transactionData
-                ];
-                //Audits::store($user, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditData);
-
-                //TODO AQUI
                 $additionalData['balance'] = $balance;
-                //$additionalData['transaction_id'] = $transactionTmp2->id;
-                $transactionData = [
+                $additionalData['transaction_id'] = $transactionTmp1->id;
+                $transactionData2 = [
                     'user_id' => $user->id,
                     'amount' => $balance,
                     'currency_iso' => $currency,
@@ -2404,21 +2396,29 @@ class AgentsController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
-                $transactionTmp2 = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                $transactionTmp2 = $this->transactionsRepo->store($transactionData2, TransactionStatus::$approved, []);
 
-                //TODO AQUI
-                //UPDATE TRANSACTIOS
-                //primer id   $transactionTmp1->id;
-                //segundo id  $transactionTmp2->id;
-                // $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
-
-                $auditData = [
+                //TODO AUDIT 2 CREDIT
+                $auditDataTransaction2 = [
                     'ip' => Utils::userIp(),
                     'user_id' => auth()->user()->id,
                     'username' => auth()->user()->username,
-                    'transaction_data' => $transactionData
+                    'transaction_data' => $transactionTmp2
                 ];
-                //Audits::store($user, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditData);
+                Audits::store($user, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
+
+                //TODO UPDATE TRANSACTION 1 DATA = transaction_id
+                $transactionData1_updated = $this->transactionsRepo->updateData($transactionTmp1->id, $transactionTmp2->id);
+
+                 //TODO AUDIT 1 DEBIT
+                $auditDataTransaction1 = [
+                    'ip' => Utils::userIp(),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'transaction_data' => $transactionData1_updated
+                ];
+                Audits::store($user, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
+
             } else {
                 $ownerBalance = $ownerAgent->balance;
             }
