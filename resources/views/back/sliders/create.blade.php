@@ -277,5 +277,4 @@
             });
         });
     </script>
-    <script>
 @endsection
