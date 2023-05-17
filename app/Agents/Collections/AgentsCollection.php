@@ -3526,6 +3526,7 @@ class AgentsCollection
             }
             $dataMakers[] = $maker;  
             if(isset($provider)){
+                Log::debug("hola");
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) {
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
@@ -3535,8 +3536,7 @@ class AgentsCollection
                     }
                 }
             }
-            
-            Log::debug("makers",[$dataMakers]);
+            Log::debug("hola2",[$dataMakers]);
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
