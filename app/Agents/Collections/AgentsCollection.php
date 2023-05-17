@@ -3517,7 +3517,7 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
-            $dataMakers[] = $maker;
+            $dataMakers = [];
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) { 
@@ -3527,11 +3527,11 @@ class AgentsCollection
                     }
                 }
             }
-            $listMakers = !empty($dataMakers) ? json_encode(array_values(array_unique($dataMakers))) : [];
+            $listMakers = array_values(array_unique($dataMakers));
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
-                'makers' => $listMakers,
+                'makers' => json_encode($listMakers),
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
