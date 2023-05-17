@@ -96,11 +96,11 @@ class Sliders {
     }
 
     // Update
-    update(preview, preview2) {
-        initFileInput(preview, preview2);
+    update(preview) {
+        initFileInput(preview);
         initSelect2();
         initDateTimePicker();
-        console.log('preview', preview, preview2);
+
         var $button = $('#update');
         var $form = $('#sliders-form');
 
