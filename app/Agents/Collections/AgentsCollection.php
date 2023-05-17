@@ -3520,8 +3520,7 @@ class AgentsCollection
             $dataMakers[] = $maker;
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                foreach ($excludedAgents as $excludedAgent) {            
-                    Log::debug("hola");
+                foreach ($excludedAgents as $excludedAgent) { 
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id){
                         $dataMakers = array_merge($dataMakers,$makersExclude);
