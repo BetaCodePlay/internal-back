@@ -91,7 +91,9 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 
     &.u-sidebar-navigation-v1--mini {
-        width: 50px;
+        .col-social-navigation {
+            width: 50px;
+        }
     }
 }
 
