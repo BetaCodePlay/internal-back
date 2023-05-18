@@ -3527,7 +3527,7 @@ class AgentsCollection
                     }
                 }
             }
-            $listMakers = array_values(array_unique($dataMakers));
+            $listMakers = array_filter(array_values(array_unique($dataMakers)));
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
@@ -3568,7 +3568,7 @@ class AgentsCollection
                     }
                 }
             }
-            $listMakers = array_values(array_unique($dataMakers));
+            $listMakers = array_filter(array_values(array_unique($dataMakers)));
             $dataUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
