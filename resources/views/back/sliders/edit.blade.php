@@ -30,12 +30,12 @@
                         </div>
                         <div class="form-group">
                             <label for="image">{{ _i('Image') }}</label>
-                            <input type="file" name="image" id="background" class="opacity-0">
+                            <input type="file" name="image" id="show-image" class="opacity-0">
                         </div>
                         @if(!is_null($slider->front))
                             <div class="form-group">
                                 <label for="front">{{ _i('Image') }}</label>
-                                <input type="file" name="front" id="front" class="opacity-0">
+                                <input type="file" name="front" id="show-front" class="opacity-0">
                             </div>
                         @endif
                     </div>
@@ -250,8 +250,8 @@
     <script>
         $(function () {
             let sliders = new Sliders();
-            sliders.update("{!! $slider->image !!}", "background");
-            /*sliders.update("{!! $slider->front !!}");*/
+            sliders.update("{!! $slider->image !!}", "show-image");
+            sliders.update("{!! $slider->front !!}", "show-front");
         });
     </script>
 @endsection
