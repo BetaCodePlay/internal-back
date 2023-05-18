@@ -1475,7 +1475,7 @@ class UsersController extends Controller
                         'user_data' => [
                             'user_id' => $userData->id,
                             'provider_id' => $provider,
-                            'makers' => $listMakers,
+                            'makers' => $makersArray,
                             'currency_iso' => $currency
                         ]
                     ];
