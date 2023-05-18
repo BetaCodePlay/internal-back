@@ -96,8 +96,8 @@ class Sliders {
     }
 
     // Update
-    update(preview) {
-        initFileInput(preview);
+    update(preview, field) {
+        initFileInput(preview, field);
         initSelect2();
         initDateTimePicker();
 
