@@ -386,6 +386,7 @@ class Users {
     // Exclude provider user list
     excludeProviderUserList() {
         initSelect2();
+        initDateRangePickerEndToday(open = 'right');
         let $table = $('#exclude-providers-users-table');
         let $button = $('#update-exclude');
         let api;
