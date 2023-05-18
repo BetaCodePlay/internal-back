@@ -269,10 +269,12 @@ class UsersCollection
             );
             $user->makers = '';
             foreach ($makers as $maker) {
-                $user->makers .= sprintf(
-                    '<li>%s</li>',
-                    $maker
-                );
+                if(!is_null($maker)){
+                    $user->makers .= sprintf(
+                        '<li>%s</li>',
+                        $maker
+                    );
+                }
             }
             $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $user->actions = sprintf(
