@@ -96,7 +96,7 @@ class Sliders {
     }
 
     // Update
-    update(preview) {
+    update(preview, file = '#file') {
         initFileInput(preview);
         initSelect2();
         initDateTimePicker();
@@ -119,7 +119,7 @@ class Sliders {
                 data: formData
 
             }).done(function (json) {
-                $('#file').val(json.data.file);
+                $(file).val(json.data.file);
                 swalSuccessWithButton(json);
 
             }).fail(function (json) {

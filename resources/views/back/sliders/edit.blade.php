@@ -250,8 +250,8 @@
     <script>
         $(function () {
             let sliders = new Sliders();
-            sliders.update("{!! $slider->front !!}");
             sliders.update("{!! $slider->image !!}");
+            /*sliders.update("{!! $slider->front !!}");*/
         });
     </script>
 @endsection
