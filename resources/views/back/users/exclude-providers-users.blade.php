@@ -18,7 +18,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="agent">{{ _i('Provider') }}</label>
-                                    <select name="provider" id="provider" class="form-control" data-route="{{ route('core.maker') }}">>
+                                    <select name="provider" id="provider" class="form-control provider" data-route="{{ route('core.maker') }}">>
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($providers as $provider)
                                             <option value="{{ $provider['id'] }}">
@@ -31,7 +31,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="maker">{{ _i('Maker') }}</label>
-                                    <select name="maker" id="maker" class="form-control">
+                                    <select name="maker" id="maker" class="form-control maker">
                                         <option value="">{{ _i('Select...') }}</option>
                                     </select>
                                 </div>
@@ -94,7 +94,7 @@
                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="agent">{{ _i('Provider') }}</label>
-                                <select name="provider" id="provider" class="form-control" data-route="{{ route('core.maker') }}">>
+                                <select name="provider_filter" id="provider_filter" class="form-control provider" data-route="{{ route('core.maker') }}">>
                                     <option value="">{{ _i('Select...') }}</option>
                                     @foreach ($providers as $provider)
                                         <option value="{{ $provider['id'] }}">
@@ -106,16 +106,16 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="maker">{{ _i('Maker') }}</label>
-                                <select name="maker" id="maker" class="form-control">
+                                <label for="maker_filter">{{ _i('Maker') }}</label>
+                                <select name="maker_filter" id="maker_filter" class="form-control maker">
                                     <option value="">{{ _i('Select...') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="currency">{{ _i('Currency') }}</label>
-                                <select name="currency" id="currency" class="form-control">
+                                <label for="currency_filter">{{ _i('Currency') }}</label>
+                                <select name="currency_filter" id="currency_filter" class="form-control">
                                     <option value="">{{ _i('Select...') }}</option>
                                     @foreach ($currency_client as $currency)
                                         <option value="{{ $currency }}">

@@ -458,10 +458,10 @@ class Users {
     //Select maker
     selectProvidersMaker(){
         initSelect2();
-        $('#provider').on('change', function () {
+        $('.provider').on('change', function () {
             let provider = $(this).val();
             let route = $(this).data('route');
-            let makers = $('#maker');
+            let makers = $('.maker');
             if (provider !== '') {
                 $.ajax({
                     url: route,
@@ -471,7 +471,7 @@ class Users {
                         provider
                     }
                 }).done(function (json) {
-                    $('#maker option[value!=""]').remove();
+                    $('.maker option[value!=""]').remove();
                     $(json.data.makers).each(function (key, element) {
                         makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
                     })
