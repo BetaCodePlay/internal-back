@@ -247,10 +247,10 @@
 @endsection
 
 @section('scripts')
-    <script>
+    {{--<script>
         $(function () {
             let sliders = new Sliders();
             sliders.update("{!! $slider->image !!}, {!! $slider->front !!}");
         });
-    </script>
+    </script>--}}
 @endsection
