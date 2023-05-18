@@ -392,6 +392,7 @@ class SlidersController extends Controller
      */
     public function update(Request $request)
     {
+        \Log::error(__METHOD__, ['request' => $request->all()]);
         $rules = [
             'image' => 'required',
             'device' => 'required',
@@ -500,6 +501,18 @@ class SlidersController extends Controller
                 Storage::delete($oldFilePath);
                 $sliderData['image'] = $name;
                 $file = $name;
+                $front = $request->file('front');
+                if(!is_null($front)) {
+                    $extensionFront = $front->getClientOriginalExtension();
+                    $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+                    $nameFront = Str::slug($originalNameFront) . time() . mt_rand(1, 100) . '.' . $extensionFront;
+                    $newFilePath = "{$this->filePath}{$nameFront}";
+                    $oldFilePath = "{$this->filePath}{$file}";
+                    Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
+                    Storage::delete($oldFilePath);
+                    $sliderData['front'] = $nameFront;
+                    $file = $nameFront;
+                }
             }
             $this->slidersRepo->update($id, $sliderData);
 
