@@ -3,9 +3,7 @@
         {!! \Core::buildMenu() !!}
     </ul>
 
-    @if(auth()->user()->username === 'wolf')
-        <div class="col-social-navigation">
-            <a class="color-telegram" href="https://t.me/graficascasino" target="_blank"><i class="fa fa-telegram"></i> <span class="social-name">Canal Publicitario</span></a>
-        </div>
-    @endif
+    <div class="col-social-navigation">
+        <a class="color-telegram" href="https://t.me/graficascasino" target="_blank"><i class="fa fa-telegram"></i> <span class="social-name">Canal Publicitario</span></a>
+    </div>
 </div>
