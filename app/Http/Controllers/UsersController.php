@@ -9,6 +9,7 @@ use App\Core\Core;
 use App\Core\Notifications\TransactionNotAllowed;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
 use App\Users\Rules\Email;
@@ -111,6 +112,13 @@ class UsersController extends Controller
     private $countriesRepo;
 
     /**
+     * GamesRepo
+     *
+     * @var GamesRepo
+     */
+    private $gamesRepo;
+
+    /**
      * @var UsersTempRepo
      */
     private $usersTempRepo;
@@ -209,6 +217,7 @@ class UsersController extends Controller
      * @param UsersCollection $usersCollection
      * @param ProfilesRepo $profilesRepo
      * @param CountriesRepo $countriesRepo
+     * @param GamesRepo $GamesRepo
      * @param UsersTempRepo $usersTempRepo
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
      * @param ReportsCollection $reportsCollection
@@ -228,6 +237,7 @@ class UsersController extends Controller
         UsersCollection         $usersCollection,
         ProfilesRepo            $profilesRepo,
         CountriesRepo           $countriesRepo,
+        GamesRepo               $gamesRepo,
         UsersTempRepo           $usersTempRepo,
         ClosuresUsersTotalsRepo $closuresUsersTotalsRepo,
         AgentsRepo              $agentsRepo,
@@ -247,6 +257,7 @@ class UsersController extends Controller
         $this->reportsCollection = $reportsCollection;
         $this->profilesRepo = $profilesRepo;
         $this->countriesRepo = $countriesRepo;
+        $this->gamesRepo = $gamesRepo;
         $this->usersTempRepo = $usersTempRepo;
         $this->betPayURL = env('BETPAY_SERVER') . '/api';
         $this->closuresUsersTotalsRepo = $closuresUsersTotalsRepo;
@@ -1402,9 +1413,11 @@ class UsersController extends Controller
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
+        $makers = $this->gamesRepo->getMakers();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
         $data['providers'] = $providers;
         $data['whitelabel'] = $whitelabel;
+        $data['makers'] = $makers;
         $data['title'] = _i('Exclude users from providers');
         return view('back.users.exclude-providers-users', $data);
     }

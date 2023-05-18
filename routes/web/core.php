@@ -55,12 +55,6 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.makers-by-provider',
         'uses' => 'CoreController@makersByProvider'
     ]);
-
-    // Get makers by providers
-    Route::get('makers', [
-        'as' => 'core.makers',
-        'uses' => 'CoreController@makers'
-    ]);
 });
 
 // Change language

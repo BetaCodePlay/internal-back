@@ -270,21 +270,6 @@ class CoreController extends Controller
     }
 
     /**
-     * Upload makers
-     *
-     */
-    public function makers()
-    {
-        try {
-            $data['makers'] = $this->gamesRepo->getMakers();
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
      * Update exchange rates
      *
      * @param Request $request

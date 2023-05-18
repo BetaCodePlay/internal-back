@@ -94,7 +94,7 @@
                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="agent">{{ _i('Provider') }}</label>
-                                <select name="provider_filter" id="provider_filter" class="form-control provider" data-route="{{ route('core.makers') }}">>
+                                <select name="provider_filter" id="provider_filter" class="form-control">>
                                     <option value="">{{ _i('Select...') }}</option>
                                     @foreach ($providers as $provider)
                                         <option value="{{ $provider['id'] }}">
@@ -107,8 +107,13 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="maker_filter">{{ _i('Maker') }}</label>
-                                <select name="maker_filter" id="maker_filter" class="form-control maker">
+                                <select name="maker_filter" id="maker_filter" class="form-control">
                                     <option value="">{{ _i('Select...') }}</option>
+                                    @foreach ($makers as $maker)
+                                        <option value="{{$maker}}">
+                                            {{ $maker }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
