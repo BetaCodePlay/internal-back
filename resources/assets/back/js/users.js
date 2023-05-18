@@ -405,6 +405,7 @@ class Users {
                 {"data": "user"},
                 {"data": "username"},
                 {"data": "name"},
+                {"data": "makers"},
                 {"data": "currency_iso"},
                 {"data": "date", "className": "text-right"},
                 {"data": "actions", "className": "text-right"},
