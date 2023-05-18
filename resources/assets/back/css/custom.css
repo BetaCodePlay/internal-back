@@ -268,7 +268,7 @@
     color: #fff !important;
 }
 
-body.currency-theme-ARS {
+/*body.currency-theme-ARS {
     background-color: #999 !important;
 }
 
@@ -278,7 +278,7 @@ body.currency-theme-ARS {
 
 .currency-theme-ARS .u-header__section--admin-dark, .currency-theme-ARS .u-sidebar-navigation--dark .has-active, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
     background-color: #5caad0 !important;
-}
+}*/
 
 .currency-theme-ARS .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-ARS .u-sidebar-navigation--dark .has-active > a.active i {
     color: #fff !important;
