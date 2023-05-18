@@ -388,7 +388,7 @@ class Users {
         initSelect2();
         initDateRangePickerEndToday(open = 'right');
         let $table = $('#exclude-providers-users-table');
-        let $button = $('#update-exclude');
+        let $button = $('#update');
         let api;
         let $form = $('#exclude-provider-user-form');
         let $buttonUpdate = $('#save');
@@ -425,12 +425,18 @@ class Users {
         });
         $button.click(function () {
             $button.button('loading');
-            let route = `${$table.data('route')}`;
+            let provider = $('#provider_filter').val();
+            let maker = $('#maker_filter').val();
+            let currency = $('#currency_filter').val();
+            let startDate = $('#start_date').val();
+            let endDate = $('#end_date').val();
+            let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
             });
         });
+
         $buttonUpdate.click(function () {
             $buttonUpdate.button('loading');
             $.ajax({

@@ -1359,17 +1359,28 @@ class UsersController extends Controller
      * @param int $whitelabel Whitelabel
      * @return Factory|View
      */
-    public function excludeProviderUserList()
+    public function excludeProviderUserList(Request $request, $startDate = null, $endDate = null, $provider = null, $maker = null, $currency = null)
     {
         try {
-            $whitelabel = Configurations::getWhitelabel();
-            $users = $this->usersRepo->getExcludeProviderUser($whitelabel);
-            if (!is_null($users)) {
-                $this->usersCollection->formatExcludeProviderUser($users);
-                $data = [
-                    'users' => $users
-                ];
-            } else {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $provider = $request->provider;
+                $maker = $request->maker;
+                $currency = $request->currency;
+                $whitelabel = Configurations::getWhitelabel();
+                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
+                if (!is_null($users)) {
+                    $this->usersCollection->formatExcludeProviderUser($users);
+                    $data = [
+                        'users' => $users
+                    ];
+                } else {
+                    $data = [
+                        'users' => []
+                    ];
+                }
+            }else{
                 $data = [
                     'users' => []
                 ];
