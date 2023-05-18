@@ -5,7 +5,7 @@
 
     @if(auth()->user()->username === 'wolf')
         <div class="col-social-navigation">
-            <a class="color-telegram" href="https://t.me/graficascasino" target="_blank"><i class="fa fa-telegram"></i></a>
+            <a class="color-telegram" href="https://t.me/graficascasino" target="_blank"><i class="fa fa-telegram"></i> <span class="social-name">Telegram</span></a>
         </div>
     @endif
 </div>

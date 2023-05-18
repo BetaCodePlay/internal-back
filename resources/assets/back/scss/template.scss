@@ -83,9 +83,21 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
             padding: 5px;
             font-size: 28px;
             display: inline-block;
+            text-decoration: none;
 
             &.color-telegram {
                 color: #2AABEE;
+            }
+
+            i {
+                vertical-align: middle;
+            }
+
+            .social-name {
+                font-size: 15px;
+                font-weight: 600;
+                display: inline-block;
+                vertical-align: middle;
             }
         }
     }
@@ -93,6 +105,12 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     &.u-sidebar-navigation-v1--mini {
         .col-social-navigation {
             width: 50px;
+
+            a {
+                .social-name {
+                    display: none;
+                }
+            }
         }
     }
 }
