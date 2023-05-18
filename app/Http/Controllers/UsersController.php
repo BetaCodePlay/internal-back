@@ -1426,10 +1426,13 @@ class UsersController extends Controller
                 $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
                 $dataMakers[] = $maker;
                 if (is_null($providerUser)) {
+                    $makersArray = array_filter($dataMakers, function ($value) {
+                        return $value !== null;
+                    });
                     $usersData = [
                         'user_id' => $userData->id,
                         'provider_id' => $provider,
-                        'makers' => json_encode($dataMakers),
+                        'makers' => json_encode($makersArray),
                         'currency_iso' => $currency,
                         'created_at' => $date,
                         'updated_at' => $date
