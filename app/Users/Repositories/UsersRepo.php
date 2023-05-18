@@ -1139,6 +1139,23 @@ class UsersRepo
     }
 
     /**
+     * Update exclude provider user
+     *
+     * @param int $id ExcludeProviderUser ID
+     * @param array $data ExcludeProviderUser data
+     * @return mixed
+     */
+    public function updateExcludeProviderUser($user, $provider, $currency, $data)
+    {
+        $users = \DB::table('exclude_providers_users')
+            ->where('exclude_providers_users.user_id', $user)
+            ->where('exclude_providers_users.provider_id', $provider)
+            ->where('exclude_providers_users.currency_iso', $currency)
+            ->update($data);
+        return $users;
+    }
+
+    /**
      * User charging point find
      *
      * @param int $id User ID

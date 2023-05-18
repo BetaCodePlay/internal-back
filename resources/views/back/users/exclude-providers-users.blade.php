@@ -15,10 +15,10 @@
                 <div class="card-block g-pa-15">
                     <form action="{{ route('users.exclude-providers-users-data') }}" method="post" id="exclude-provider-user-form">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="agent">{{ _i('Provider') }}</label>
-                                    <select name="provider" id="provider" class="form-control">
+                                    <select name="provider" id="provider" class="form-control" data-route="{{ route('core.maker') }}">>
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($providers as $provider)
                                             <option value="{{ $provider['id'] }}">
@@ -28,13 +28,21 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="maker">{{ _i('Maker') }}</label>
+                                    <select name="maker" id="maker" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="username">{{ _i('User') }}</label>
                                     <input type="text" name="username" id="username" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="currency">{{ _i('Currency') }}</label>
                                     <select name="currency" id="currency" class="form-control">
@@ -116,6 +124,7 @@
         $(function () {
             let users = new Users();
             users.excludeProviderUserList();
+            users.selectProvidersMaker();
         });
     </script>
 @endsection

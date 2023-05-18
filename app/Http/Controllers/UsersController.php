@@ -1416,6 +1416,7 @@ class UsersController extends Controller
         try {
             $username = strtolower(trim($request->username));
             $provider = $request->provider;
+            $maker = $request->maker;
             $whitelabel = Configurations::getWhitelabel();
             $currency = $request->currency;
             $userData = $this->usersRepo->getByUsername($username, $whitelabel);
@@ -1423,10 +1424,12 @@ class UsersController extends Controller
             if (!is_null($userData)) {
                 $providerUser = $this->usersRepo->findExcludeProviderUser($provider, $userData->id, $currency);
                 $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
+                $dataMakers[] = $maker;
                 if (is_null($providerUser)) {
                     $usersData = [
                         'user_id' => $userData->id,
                         'provider_id' => $provider,
+                        'makers' => json_encode($dataMakers),
                         'currency_iso' => $currency,
                         'created_at' => $date,
                         'updated_at' => $date
@@ -1439,6 +1442,7 @@ class UsersController extends Controller
                         'user_data' => [
                             'user_id' => $userData->id,
                             'provider_id' => $provider,
+                            'makers' => $dataMakers,
                             'currency_iso' => $currency
                         ]
                     ];
@@ -1452,12 +1456,37 @@ class UsersController extends Controller
 
                     return Utils::successResponse($data);
                 } else {
+                    $makersExclude = isset($providerUser->makers) ? json_decode($providerUser->makers) : [];
+                    $dataMakers = array_merge($dataMakers,$makersExclude);
+                    $listMakers = array_values(array_unique($dataMakers));
+                    $usersData = [
+                        'user_id' => $providerUser->user_id,
+                        'provider_id' => $providerUser->provider_id,
+                        'makers' => json_encode($listMakers),
+                        'currency_iso' => $currency,
+                        'created_at' => $date,
+                        'updated_at' => $date
+                    ];
+                    $this->usersRepo->updateExcludeProviderUser($providerUser->user_id,$providerUser->provider_id,$providerUser->currency_iso,$usersData);
+                    $auditData = [
+                        'ip' => Utils::userIp($request),
+                        'user_id' => auth()->user()->id,
+                        'username' => auth()->user()->username,
+                        'user_data' => [
+                            'user_id' => $userData->id,
+                            'provider_id' => $provider,
+                            'makers' => $listMakers,
+                            'currency_iso' => $currency
+                        ]
+                    ];
+                    //Audits::store($userData->id, AuditTypes::$exclude_provider, Configurations::getWhitelabel(), $auditData);
+
                     $data = [
                         'title' => _i('Excluded user'),
-                        'message' => _i("The user is already excluded to an provider"),
-                        'close' => _i('Close')
+                        'message' => _i('The user has been successfully excluded'),
+                        'close' => _i('Close'),
                     ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
+                    return Utils::successResponse($data);
                 }
             } else {
                 $data = [
