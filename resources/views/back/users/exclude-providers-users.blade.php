@@ -110,8 +110,8 @@
                                 <select name="maker_filter" id="maker_filter" class="form-control">
                                     <option value="">{{ _i('Select...') }}</option>
                                     @foreach ($makers as $maker)
-                                        <option value="{{$maker}}">
-                                            {{ $maker }}
+                                        <option value="{{$maker->maker}}">
+                                            {{ $maker->maker }}
                                         </option>
                                     @endforeach
                                 </select>
