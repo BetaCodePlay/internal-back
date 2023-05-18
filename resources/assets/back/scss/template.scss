@@ -62,12 +62,6 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 }
 
-header {
-    .navbar {
-
-    }
-}
-
 @media screen and (max-width: 575px) {
     #header-search-form {
         .input-group {
