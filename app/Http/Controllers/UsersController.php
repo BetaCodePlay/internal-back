@@ -1426,9 +1426,7 @@ class UsersController extends Controller
                 $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
                 $dataMakers[] = $maker;
                 if (is_null($providerUser)) {
-                    $makersArray = array_filter($dataMakers, function ($value) {
-                        return $value !== null;
-                    });
+                    $makersArray = array_filter($dataMakers);
                     $usersData = [
                         'user_id' => $userData->id,
                         'provider_id' => $provider,
@@ -1460,12 +1458,11 @@ class UsersController extends Controller
                     return Utils::successResponse($data);
                 } else {
                     $makersExclude = isset($providerUser->makers) ? json_decode($providerUser->makers) : [];
-                    $dataMakers = array_merge($dataMakers,$makersExclude);
-                    $listMakers = array_values(array_unique($dataMakers));
+                    $makersArray = array_filter(array_unique(array_merge($dataMakers, $makersExclude)));
                     $usersData = [
                         'user_id' => $providerUser->user_id,
                         'provider_id' => $providerUser->provider_id,
-                        'makers' => json_encode($listMakers),
+                        'makers' => json_encode($makersArray),
                         'currency_iso' => $currency,
                         'created_at' => $date,
                         'updated_at' => $date
