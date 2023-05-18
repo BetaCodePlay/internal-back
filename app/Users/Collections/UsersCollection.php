@@ -261,11 +261,15 @@ class UsersCollection
     {
         $timezone = session('timezone');
         foreach ($users as $user) {
+            $makers = json_decode($user->makers);
             $user->user = sprintf(
                 '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
                 route('users.details', [$user->user_id]),
                 $user->user_id
             );
+            foreach ($makers as $maker) {
+                $user->makers = $maker;
+            }
             $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $user->actions = sprintf(
                 '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
