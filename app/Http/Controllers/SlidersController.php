@@ -406,6 +406,7 @@ class SlidersController extends Controller
 
         try {
             $id = $request->id;
+            $fileFront = $request->file;
             $file = $request->file;
             $image = $request->file('image');
             $timezone = session('timezone');
@@ -507,11 +508,11 @@ class SlidersController extends Controller
                     $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
                     $nameFront = Str::slug($originalNameFront) . time() . mt_rand(1, 100) . '.' . $extensionFront;
                     $newFilePath = "{$this->filePath}{$nameFront}";
-                    $oldFilePath = "{$this->filePath}{$file}";
+                    $oldFilePath = "{$this->filePath}{$fileFront}";
                     Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
                     Storage::delete($oldFilePath);
                     $sliderData['front'] = $nameFront;
-                    $file = $nameFront;
+                    $fileFron = $nameFront;
                 }
             }
             $this->slidersRepo->update($id, $sliderData);
