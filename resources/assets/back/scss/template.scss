@@ -64,8 +64,10 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 
 
 
-.u-side-nav--top-level-menu {
-    padding-bottom: 45px !important;
+.u-sidebar-navigation-v1 {
+    .u-side-nav--top-level-menu {
+        padding-bottom: 45px !important;
+    }
 
     .col-social-navigation {
         background: rgba(255,255,255,.5);
@@ -87,28 +89,9 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
             }
         }
     }
-}
 
-.u-sidebar-navigation-v1--mini {
-    .col-social-navigation {
-        background: rgba(255,255,255,.5);
-        position: fixed;
-        bottom: 0;
-        left: 0;
+    &.u-sidebar-navigation-v1--mini {
         width: 50px;
-        text-align: center;
-        line-height: 1;
-        height: 40px;
-
-        a {
-            padding: 5px;
-            font-size: 28px;
-            display: inline-block;
-
-            &.color-telegram {
-                color: #2AABEE;
-            }
-        }
     }
 }
 
