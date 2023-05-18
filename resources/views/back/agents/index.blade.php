@@ -903,7 +903,7 @@
                                                             <div class="form-group">
                                                                 <label for="agent">{{ _i('Provider') }}</label>
                                                                 <select name="provider" id="provider"
-                                                                        class="form-control" data-route="{{ route('core.maker') }}">
+                                                                        class="form-control" data-route="{{ route('core.makers-by-provider') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                     @foreach ($providers as $provider)
                                                                         <option value="{{ $provider->id }}">

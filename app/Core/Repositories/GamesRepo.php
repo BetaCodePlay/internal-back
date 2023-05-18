@@ -184,6 +184,20 @@ class GamesRepo
     }
 
     /**
+     * Get makers
+     *
+     * @param int $provider
+     * @return mixed
+     */
+    public function getMakers()
+    {
+        $games = Game::select('maker')
+        ->distinct()
+        ->get();
+        return $games;
+    }
+
+    /**
      * Get makers by provider
      *
      * @param int $provider
