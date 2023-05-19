@@ -14,7 +14,6 @@ use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
-use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Core\Repositories\GamesRepo;
 use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Reports\Collections\ReportsCollection;
