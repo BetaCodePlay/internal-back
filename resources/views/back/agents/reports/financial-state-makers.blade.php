@@ -38,6 +38,8 @@
             <div class="input-group">
                 <div class="input-group-append">
                     <button class="btn g-bg-primary" type="button" id="update"
+                            data-route="{{ route('agents.reports.financial-state-data-makers') }}"
+                            data-routetotals="{{ route('agents.reports.financial-state-data-makers-totals') }}"
                             data-loading-text="<i class='hs-admin-reload fa-spin g-color-white'></i>">
                         <i class="hs-admin-search g-color-white"></i>
                     </button>

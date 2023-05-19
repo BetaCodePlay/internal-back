@@ -10,6 +10,9 @@
             color: #e62154 !important;
             font-weight: bold !important;
         }
+        .select2-container .select2-selection--single {
+            height: 2.4rem;
+        }
     </style>
 @endsection
 @section('content')
