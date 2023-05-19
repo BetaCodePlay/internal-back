@@ -1034,7 +1034,7 @@ class AgentsController extends Controller
                 // }
             }else{
                 $data = [
-                    'users' => []
+                    'agents' => []
                 ];
             }
             return Utils::successResponse($data);
