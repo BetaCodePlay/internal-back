@@ -512,7 +512,7 @@ class SlidersController extends Controller
                     Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
                     Storage::delete($oldFilePath);
                     $sliderData['front'] = $nameFront;
-                    $fileFron = $nameFront;
+                    $fileFront = $nameFront;
                 }
             }
             $this->slidersRepo->update($id, $sliderData);

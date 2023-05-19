@@ -479,6 +479,19 @@ class SectionImagesController extends Controller
                 Storage::delete($oldFilePath);
                 $imageData['image'] = $name;
                 $file = $name;
+                $front = $request->file('front');
+                if(!is_null($front)){
+                    $fileFront = $request->file;
+                    $extensionFront = $front->getClientOriginalExtension();
+                    $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+                    $nameFront = Str::slug($originalNameFront) . time() . '.' . $extensionFront;
+                    $newFilePath = "{$filePath}{$nameFront}";
+                    $oldFilePath = "{$filePath}{$fileFront}";
+                    Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
+                    Storage::delete($oldFilePath);
+                    $imageData['front'] = $nameFront;
+                    $fileFront = $nameFront;
+                }
             }
 
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position ==  ImagesPositions::$mobile_light || $position ==  ImagesPositions::$mobile_dark) {
