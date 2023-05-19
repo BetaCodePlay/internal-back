@@ -1011,10 +1011,12 @@ class AgentsController extends Controller
     {
         try {
             if (!is_null($startDate) && !is_null($endDate)) {
+                $agentsBlocked = [];
                 $user = auth()->user()->id;
                 $currency_iso = session('currency');
                 $whitelabel = Configurations::getWhitelabel();
-                $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
+                //$agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
+                $agents = [];
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
                 $provider = $request->provider;
@@ -1023,24 +1025,19 @@ class AgentsController extends Controller
                 $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
                 foreach($users as $user){
                     if(in_array($user->user_id,$agents)){
-                        //$this->usersCollection->formatExcludeProviderUser($users);
-                        \Log::debug("hola");
+                        $agentsBlocked[] = $user;
                     }
                 }
-                $data = [
-                    'agents' => []
-                ];
-
-                // if (!is_null($users)) {
-                //     $this->usersCollection->formatExcludeProviderUser($users);
-                //     $data = [
-                //         'users' => $users
-                //     ];
-                // } else {
-                //     $data = [
-                //         'users' => []
-                //     ];
-                // }
+                if (!is_null($agentsBlocked)) {
+                    $this->usersCollection->formatExcludeProviderUser($agentsBlocked);
+                    $data = [
+                        'agents' => $agentsBlocked
+                    ];
+                } else {
+                    $data = [
+                        'agents' => []
+                    ];
+                }
             }else{
                 $data = [
                     'agents' => []

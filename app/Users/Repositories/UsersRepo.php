@@ -1068,65 +1068,6 @@ class UsersRepo
     }
 
     /**
-     * Get Ids Son by father
-     *
-     * @param string $id User Id Father
-     * @param string $currency Currency Iso
-     * @param int $whitelabel Whitelabel Id
-     * @return mixed
-     */
-    public function arraySonIds($id, $currency, $whitelabel)
-    {
-        $ids = DB::select('
-                        SELECT u.id from site.agent_user as au
-                            inner join site.users as u on u.id = au.user_id
-                            where u.whitelabel_id= ? AND
-                            au.agent_id in (WITH RECURSIVE all_agents AS (
-                            SELECT agents.id, agents.user_id, agents.owner_id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            WHERE agents.user_id = ?
-                            AND currency_iso = ?
-
-                            UNION
-
-                            SELECT agents.id, agents.user_id, agents.owner_id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            JOIN all_agents ON agents.owner_id = all_agents.user_id
-                            where agent_currencies.currency_iso  = ?
-                            ) SELECT all_agents.id FROM all_agents)
-
-                        UNION
-
-                        SELECT u.id from site.users as u
-                            where  u.whitelabel_id= ? AND
-                            id in (with recursive tabla_agent as (
-                            SELECT agents.user_id as id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            WHERE agents.user_id = ?
-                            AND currency_iso = ?
-
-                            UNION
-
-                            SELECT agents.user_id as id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            JOIN tabla_agent ON agents.owner_id = tabla_agent.id
-                            WHERE currency_iso = ?) select id from tabla_agent);
-        ', [$whitelabel,$id, $currency, $currency,$whitelabel,$id, $currency,$currency]);
-        $arrayIds =[];
-        foreach ($ids as $value){
-            //if($id != $value->id){
-                $arrayIds[]=$value->id;
-            //}
-
-        }
-        return $arrayIds;
-    }
-
-    /**
      * Unique DNI by ID
      *
      * @param int $id User ID
