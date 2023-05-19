@@ -1021,6 +1021,9 @@ class AgentsController extends Controller
                 $agents = $this->usersRepo->arraySonIds($user,$currency,$whitelabel);
                 $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
                 \Log::debug($agents);
+                $data = [
+                    'agents' => []
+                ];
 
                 // if (!is_null($users)) {
                 //     $this->usersCollection->formatExcludeProviderUser($users);
