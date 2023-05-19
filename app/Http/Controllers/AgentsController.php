@@ -1020,7 +1020,7 @@ class AgentsController extends Controller
                 $whitelabel = Configurations::getWhitelabel();
                 $agents = $this->usersRepo->arraySonIds($user,$currency,$whitelabel);
                 $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
-                \Log::debug([$agents,$users]);
+                \Log::debug($agents);
 
                 // if (!is_null($users)) {
                 //     $this->usersCollection->formatExcludeProviderUser($users);
