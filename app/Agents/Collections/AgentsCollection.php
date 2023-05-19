@@ -3468,6 +3468,7 @@ class AgentsCollection
                 }
             }
             $listMakers = array_filter(array_values(array_unique($dataMakers)));
+            \Log::debug("listMakers",[$listMakers]);
             $blockUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
