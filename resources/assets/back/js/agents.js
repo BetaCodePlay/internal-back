@@ -612,9 +612,6 @@ class Agents {
     }
     // Financial state Makers
     financialStateMakers() {
-        // $('#financial-state-tab').on('show.bs.tab', function () {
-
-        // })
 
          let picker = initLitepickerEndToday();
          let $table = $('#financial-state-table-makers');
@@ -624,30 +621,15 @@ class Agents {
          let $button = $('#update');
          $button.trigger('click');
          let api;
-        //  if (user == null) {
-        //      $('#financial-state-tab').on('show.bs.tab', function () {
-        //          $table.children().remove();
-        //          user = $('.user').val();
-        //      });
-        //  }
+
         Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
          $button.click(function () {
              $button.button('loading');
-            //  let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
-            //  let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
-
-
-            $button.click(function () {
-                $button.button('loading');
-                let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
-                let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
-                let _hour = $('#_hour').val() === ''?'':'&_hour='+$('#_hour').val();
-                let test = '?test=false'
                 let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                 let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
                 $.ajax({
-                    url: `${$table.data('route')}/${user}/${startDate}/${endDate}${test}${username_like}${provider_id}${_hour}`,
+                    url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}`,
                     type: 'get',
                     dataType: 'json'
 
@@ -659,7 +641,6 @@ class Agents {
                 });
 
                 Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
-            });
         });
     }
 
