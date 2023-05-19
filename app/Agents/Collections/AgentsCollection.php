@@ -819,6 +819,76 @@ class AgentsCollection
     }
 
     /**
+     * closuresTotalsProviderAndMakerGlobal
+     * @param $tableDb
+     * @param $percentage
+     * @return string
+     */
+    public function closuresTotalsProviderAndMakerGlobal($tableDb, $percentage = null)
+    {
+        $htmlProvider = sprintf(
+            '<table class="table table-bordered table-sm table-striped table-hover">',
+        );
+        if (count($tableDb) > 0) {
+            $prov_current = 0;
+            $acum = 0;
+            $salPage = false;
+            foreach ($tableDb as $item) {
+                if ($item->id_provider != $prov_current) {
+                    if ($prov_current != 0) {
+                        $htmlProvider .= '<tr>
+                                    <td colspan="6"></td>
+                                    <td colspan="1"><strong>' . number_format($acum, 2) . '</strong></td>
+                                </tr>';
+                    }
+                    $htmlProvider .= '
+                        <thead>
+                            ' . ($salPage ? '<tr>
+                                <th colspan="7" class="text-center"><br></th>
+                            </tr>' : '') . '
+                            <tr>
+                                <th colspan="7" class="text-center" style="background-color: #' . substr(md5($item->name_provider), 1, 6) . ';color: white;font-size: larger;"><strong>' . $item->name_provider . '</strong></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">' . _i('Whitelabel') . '</th>
+                                <th colspan="2">' . _i('Maker') . '</th>
+                                <th>' . _i('Total Payed') . '</th>
+                                <th>' . _i('Total Won') . '</th>
+                                <th>' . _i('Total Bets') . '</th>
+                                <th>' . _i('Total Profit') . '</th>
+                            </tr>
+                        </thead><tbody>';
+                    $prov_current = $item->id_provider;
+                    $acum = 0;
+                    $salPage = true;
+                }
+                $htmlProvider .= '<tr>
+                                    <td colspan="2">' . $item->name_maker . '</td>
+                                    <td colspan="2">' . $item->name_maker . '</td>
+                                    <td>' . number_format($item->total_played, 2) . '</td>
+                                    <td>' . number_format($item->total_won, 2) . '</td>
+                                    <td>' . $item->total_bet . '</td>
+                                    <td>' . number_format($item->total_profit, 2) . '</td>
+                                </tr>';
+                $acum += $item->total_profit;
+            }
+            if ($prov_current != 0) {
+                $htmlProvider .= '<tr>
+                                   <td colspan="6"></td>
+                                   <td colspan="1"><strong>' . number_format($acum, 2) . '</strong></td>
+                                </tr>';
+            }
+            $htmlProvider .= '</tbody></table>';
+        } else {
+            $htmlProvider .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='6'>" . _i('no records') . "</td></tr></tbody></table>";
+        }
+
+        return $htmlProvider;
+
+
+    }
+
+    /**
      * Dependency select
      *
      * @param array $agents Agents data
@@ -3102,8 +3172,6 @@ class AgentsCollection
     public function formatAgentTransactionsPaginate($transactions, $total, $request)
     {
         $timezone = session('timezone');
-        $totalDebit = 0;
-        $totalCredit = 0;
         $data = array();
 
         foreach ($transactions as $transaction) {
@@ -3112,62 +3180,42 @@ class AgentsCollection
             $transaction->credit = 0;
             $transaction->balance = 0;
 
-            if($transaction->user_id == Auth::user()->id){
 
-                $from = $transaction->data->from;
-                $to = $transaction->data->to;
-                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    $transaction->debit = $amountTmp;
-                    $totalDebit = $totalDebit + $amountTmp;
-                }
-                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-                    $transaction->credit = $amountTmp;
-                    $totalCredit = $totalCredit + $amountTmp;
-                }
-                if (isset($transaction->data->balance)) {
-                    $transaction->balance = number_format($transaction->data->balance, 2);
-                }
-
-                $data[] = [
-                    'id' => null,
-                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
-                    'data' => [
-                        'from' => $from,
-                        'to' => $to,
-                    ],
-                    'debit' => number_format($transaction->credit, 2, ",", "."),
-                    'credit' => number_format($transaction->dedit, 2, ",", "."),
-                    'balance' => $transaction->balance,
-                ];
-
-            }else{
-                $from = $transaction->data->from;
-                $to = $transaction->data->to;
-                if ($transaction->transaction_type_id == TransactionTypes::$debit) {
-                    $transaction->debit = $amountTmp;
-                    $totalDebit = $totalDebit + $amountTmp;
-                }
-                if ($transaction->transaction_type_id == TransactionTypes::$credit) {
-                    $transaction->credit = $amountTmp;
-                    $totalCredit = $totalCredit + $amountTmp;
-                }
-                if (isset($transaction->data->balance)) {
-                    $transaction->balance = number_format($transaction->data->balance, 2);
-                }
-
-                $data[] = [
-                    'id' => null,
-                    'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
-                    'data' => [
-                        'from' => $from,
-                        'to' => $to,
-                    ],
-                    'debit' => number_format($transaction->debit, 2, ",", "."),
-                    'credit' => number_format($transaction->credit, 2, ",", "."),
-                    'balance' => $transaction->balance,
-                ];
+            $from = $transaction->data->from;
+            $to = $transaction->data->to;
+            if ($transaction->transaction_type_id == TransactionTypes::$debit) {
+                $transaction->debit = $amountTmp;
+            }
+            if ($transaction->transaction_type_id == TransactionTypes::$credit) {
+                $transaction->credit = $amountTmp;
+            }
+            if (isset($transaction->data->balance)) {
+                $transaction->balance = number_format($transaction->data->balance, 2);
             }
 
+            $credit = $transaction->credit;
+            $debit = $transaction->debit;
+            //TODO COMENTADO
+//            if($transaction->user_id === Auth::user()->id){
+//                $debit = $transaction->credit;
+//                $credit = $transaction->debit;
+//            }
+//            if($transaction->data->from != Auth::user()->username){
+//                $credit = $transaction->credit;
+//                $debit = $transaction->debit;
+//            }
+
+            $data[] = [
+                'id' => null,
+                'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
+                'data' => [
+                    'from' => $from,
+                    'to' => $to,
+                ],
+                'debit' => number_format($debit, 2, ",", "."),
+                'credit' => number_format($credit, 2, ",", "."),
+                'balance' => $transaction->balance,
+            ];
 
         }
 
@@ -3203,6 +3251,44 @@ class AgentsCollection
         }
     }
 
+    /**
+     * formatAgentDataMakersTotals
+     * @param $credit
+     * @param $debit
+     * @return string
+     */
+    public function formatAgentDataMakersTotals($totals)
+    {
+        $htmlTotals = sprintf(
+            '<table  class="table table-bordered w-100">
+                    <thead>
+                        <tr>
+                            <th>%s</th>
+                            <th class="text-right">' . _i('Total Played') . '</th>
+                            <th class="text-right">' . _i('Total Won') . '</th>
+                            <th class="text-right">' . _i('Total Bet') . '</th>
+                            <th class="text-right">' . _i('Total Profit') . '</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                            <td class="text-right"><strong>%s</strong></td>
+                        </tr>
+                    </tbody>',
+            _i('Totals'),
+            $totals[0]->total_played,
+            number_format($totals[0]->total_won, 2),
+            number_format($totals[0]->total_bet, 2),
+            number_format($totals[0]->total_profit, 2),
+        );
+
+        return $htmlTotals;
+
+    }
     /**
      * Format Total Credit And Debit
      * @param $credit
