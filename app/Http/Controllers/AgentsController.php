@@ -1017,7 +1017,7 @@ class AgentsController extends Controller
         $data['whitelabel'] = $whitelabel;
         $data['makers'] = $makers;
         $data['title'] = _i('Exclude agents from providers');
-        return view('back.agents.report.exclude-providers-agents', $data);
+        return view('back.agents.reports.exclude-providers-agents', $data);
     }
 
 
