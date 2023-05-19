@@ -247,6 +247,7 @@ class SectionImagesController extends Controller
             $data['position'] = $position;
             $data['props'] = $props;
             $data['image'] = $imageData;
+            $data['front'] = $imageData;
             $data['section'] = $section;
             $data['title'] = _i('Update image');
             return view('back.section-images.edit', $data);

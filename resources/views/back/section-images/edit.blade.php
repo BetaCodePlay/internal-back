@@ -31,10 +31,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="image">{{ _i('Image') }}</label>
-                            <input type="file" name="image" id="image" class="opacity-0">
-                        </div>
+                        @if(!is_null($image->front))
+                            <div class="form-group">
+                                <label for="image">{{ _i('Image') }}</label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                            <div class="form-group">
+                                <label for="front">{{ _i('Image') }}</label>
+                                <input type="file" name="front" id="show-front" class="opacity-0">
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label for="image">{{ _i('Image') }}</label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -163,6 +174,7 @@
                                     <input type="hidden" name="id" value="{{ isset($image->id) ? $image->id : null }}">
                                     <input type="hidden" name="file" value="{{ $image->file }}">
                                     <input type="hidden" name="image" value="{{ $image->file }}">
+                                    <input type="hidden" name="front" value="{{ $image->file }}">
                                     <input type="hidden" name="template_element_type"
                                            value="{{ $template_element_type }}">
                                     <input type="hidden" name="section" value="{{ $section }}">
@@ -186,7 +198,8 @@
     <script>
         $(function () {
             let sectionImages = new SectionImages();
-            sectionImages.update("{!! $image->image !!}");
+            sectionImages.update("{!! $image->image !!}", "show-image");
+            sectionImages.update("{!! $image->front !!}", "show-front");
         });
     </script>
 @endsection

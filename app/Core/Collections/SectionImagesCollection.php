@@ -363,6 +363,13 @@ class SectionImagesCollection
                 $url = s3_asset("section-images/{$image->image}");
                 $image->file = $image->image;
                 $image->image = "<img src='$url' class='img-responsive' width='$width'>";
+                if(!is_null($image->front)){
+                    $urlFront = s3_asset("section-images/{$image->front}");
+                    $image->file = $image->front;
+                    $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
+                }else{
+                    $image->front = null;
+                }
             }
         } else {
             $image = new \stdClass();
