@@ -14,7 +14,6 @@ use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
-use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Core\Repositories\GamesRepo;
 use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Reports\Collections\ReportsCollection;
@@ -1067,8 +1066,7 @@ class AgentsController extends Controller
                 $user = auth()->user()->id;
                 $currency_iso = session('currency');
                 $whitelabel = Configurations::getWhitelabel();
-                //$agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
-                $agents = [];
+                $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
                 $provider = $request->provider;
