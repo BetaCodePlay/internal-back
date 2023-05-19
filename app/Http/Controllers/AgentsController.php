@@ -1002,14 +1002,14 @@ class AgentsController extends Controller
 
     /**
      * Show exclude providers agents
-     *
+     * @param ProvidersRepo $providersRepo
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View
      */
-    public function excludeProvidersAgents()
+    public function excludeProvidersAgents(ProvidersRepo $providersRepo)
     {
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
-        $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
+        $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
         $makers = $this->gamesRepo->getMakers();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
         $data['providers'] = $providers;
