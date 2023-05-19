@@ -435,12 +435,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@excludeProvidersAgents'
         ]);
 
-        // Get username
-        Route::post('search-username', [
-            'as' => 'users.search-username',
-            'uses' => 'UsersController@getUsersByUsername'
-        ]);
-
         // Exclude providers users data
         Route::post('exclude-providers-agents-data', [
             'as' => 'agents.reports.exclude-providers-agents-data',

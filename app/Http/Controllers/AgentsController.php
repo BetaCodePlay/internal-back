@@ -1120,6 +1120,123 @@ class AgentsController extends Controller
     }
 
     /**
+     *  Exclude providers agents data
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function excludeProvidersAgentsData(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'currency' => 'required',
+            'provider' => 'required'
+        ]);
+
+        try {
+            $user = auth()->user()->id;
+            $username = strtolower(trim($request->username));
+            $provider = $request->provider;
+            $maker = $request->maker;
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = $request->currency;
+            $userData = $this->usersRepo->getByUsername($username, $whitelabel);
+            $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
+
+            if (!is_null($userData)) {
+                if(in_array($userData->id,$agents)){
+                    $providerUser = $this->usersRepo->findExcludeProviderUser($provider, $userData->id, $currency);
+                    $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
+                    $makers[] = $maker;
+                    if (is_null($providerUser)) {
+                        $makersArray = array_filter($makers);
+                        $usersData = [
+                            'user_id' => $userData->id,
+                            'provider_id' => $provider,
+                            'makers' => json_encode($makersArray),
+                            'currency_iso' => $currency,
+                            'created_at' => $date,
+                            'updated_at' => $date
+                        ];
+                        $this->usersRepo->addExcludeProviderUser($usersData);
+                        $auditData = [
+                            'ip' => Utils::userIp($request),
+                            'user_id' => auth()->user()->id,
+                            'username' => auth()->user()->username,
+                            'user_data' => [
+                                'user_id' => $userData->id,
+                                'provider_id' => $provider,
+                                'makers' => $makersArray,
+                                'currency_iso' => $currency
+                            ]
+                        ];
+                        //Audits::store($userData->id, AuditTypes::$exclude_provider, Configurations::getWhitelabel(), $auditData);
+    
+                        $data = [
+                            'title' => _i('Excluded user'),
+                            'message' => _i('The user has been successfully excluded'),
+                            'close' => _i('Close'),
+                        ];
+    
+                        return Utils::successResponse($data);
+                    } else {
+                        $makersExclude = isset($providerUser->makers) ? json_decode($providerUser->makers) : [];
+                        $dataMakers = array_merge($makers,$makersExclude);
+                        $makersArray = array_values(array_filter(array_unique($dataMakers)));
+                        $usersData = [
+                            'user_id' => $providerUser->user_id,
+                            'provider_id' => $providerUser->provider_id,
+                            'makers' => json_encode($makersArray),
+                            'currency_iso' => $currency,
+                            'created_at' => $date,
+                            'updated_at' => $date
+                        ];
+                        $this->usersRepo->updateExcludeProviderUser($providerUser->user_id,$providerUser->provider_id,$providerUser->currency_iso,$usersData);
+                        $auditData = [
+                            'ip' => Utils::userIp($request),
+                            'user_id' => auth()->user()->id,
+                            'username' => auth()->user()->username,
+                            'user_data' => [
+                                'user_id' => $userData->id,
+                                'provider_id' => $provider,
+                                'makers' => $makersArray,
+                                'currency_iso' => $currency
+                            ]
+                        ];
+                        //Audits::store($userData->id, AuditTypes::$exclude_provider, Configurations::getWhitelabel(), $auditData);
+    
+                        $data = [
+                            'title' => _i('Excluded user'),
+                            'message' => _i('The user has been successfully excluded'),
+                            'close' => _i('Close'),
+                        ];
+                        return Utils::successResponse($data);
+                    }
+                }else{
+                    $data = [
+                        'title' => _i('You cannot block providers for this user'),
+                        'message' => _i("Please check and try again"),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+            } else {
+                $data = [
+                    'title' => _i('The user does not exist'),
+                    'message' => _i("Please check and try again"),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Data Financial State New "for support"
      * @param ProvidersRepo $providersRepo
      * @param $user
