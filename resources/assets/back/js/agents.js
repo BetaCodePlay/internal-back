@@ -621,17 +621,20 @@ class Agents {
          let $button = $('#update');
          $button.trigger('click');
          let api;
-
         Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
          $button.click(function () {
              $button.button('loading');
                 let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                 let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-
+                let currency_iso = $('#currency_id').val();
                 $.ajax({
                     url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}`,
                     type: 'get',
                     dataType: 'json'
+
+                })
+                .done(function (json) {
+                    $table.html(json.data.table);
 
                 }).fail(function (json) {
                     swalError(json);
