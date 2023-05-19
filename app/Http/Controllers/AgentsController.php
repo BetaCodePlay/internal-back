@@ -1001,6 +1001,45 @@ class AgentsController extends Controller
         }
     }
 
+     /**
+     * Get exclude provider agent list
+     *
+     * @param int $whitelabel Whitelabel
+     * @return Factory|View
+     */
+    public function excludeProviderAgentsList(Request $request, $startDate = null, $endDate = null, $provider = null, $maker = null, $currency = null)
+    {
+        try {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $provider = $request->provider;
+                $maker = $request->maker;
+                $currency = $request->currency;
+                $whitelabel = Configurations::getWhitelabel();
+                // $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
+                // if (!is_null($users)) {
+                //     $this->usersCollection->formatExcludeProviderUser($users);
+                //     $data = [
+                //         'users' => $users
+                //     ];
+                // } else {
+                //     $data = [
+                //         'users' => []
+                //     ];
+                // }
+            }else{
+                $data = [
+                    'users' => []
+                ];
+            }
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
     /**
      * Show exclude providers agents
      * @param ProvidersRepo $providersRepo
@@ -1019,7 +1058,6 @@ class AgentsController extends Controller
         $data['title'] = _i('Exclude agents from providers');
         return view('back.agents.reports.exclude-providers-agents', $data);
     }
-
 
     /**
      * Data Financial State New "for support"

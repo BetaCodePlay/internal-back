@@ -74,7 +74,7 @@
                 <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
                     <div class="media">
                         <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 mb-0 title">
-                            {{ _i('Excluded users') }}
+                            {{ _i('Excluded agents') }}
                         </h3>
                         <div class="media-body d-flex justify-content-end" id="table-buttons">
 
