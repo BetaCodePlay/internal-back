@@ -13,6 +13,7 @@ use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
@@ -1005,12 +1006,12 @@ class AgentsController extends Controller
      * @param ProvidersRepo $providersRepo
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View
      */
-    public function excludeProvidersAgents(ProvidersRepo $providersRepo)
+    public function excludeProvidersAgents(ProvidersRepo $providersRepo, GamesRepo $gamesRepo)
     {
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
-        $makers = $this->gamesRepo->getMakers();
+        $makers = $gamesRepo->getMakers();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
         $data['providers'] = $providers;
         $data['whitelabel'] = $whitelabel;
