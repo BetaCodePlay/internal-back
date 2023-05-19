@@ -1012,15 +1012,21 @@ class AgentsController extends Controller
         try {
             if (!is_null($startDate) && !is_null($endDate)) {
                 $user = auth()->user()->id;
+                $currency_iso = session('currency');
+                $whitelabel = Configurations::getWhitelabel();
+                $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
                 $provider = $request->provider;
                 $maker = $request->maker;
                 $currency = $request->currency;
-                $whitelabel = Configurations::getWhitelabel();
-                $agents = $this->usersRepo->arraySonIds($user,$currency,$whitelabel);
                 $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
-                \Log::debug("agentes",[$agents]);
+                foreach($agents as $agent){
+                    if($agent == $users->user_id){
+                        //$this->usersCollection->formatExcludeProviderUser($users);
+                        \Log::debug("hola");
+                    }
+                }
                 $data = [
                     'agents' => []
                 ];
