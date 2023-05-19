@@ -1022,7 +1022,7 @@ class AgentsController extends Controller
                 $currency = $request->currency;
                 $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
                 foreach($users as $user){
-                    if(in_array($user->user_id,$agent)){
+                    if(in_array($user->user_id,$agents)){
                         //$this->usersCollection->formatExcludeProviderUser($users);
                         \Log::debug("hola");
                     }
