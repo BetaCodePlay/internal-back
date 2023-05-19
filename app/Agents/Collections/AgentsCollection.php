@@ -3478,6 +3478,9 @@ class AgentsCollection
             ];
         }
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
+        \Log::debug("Agents",[$dataAngets]);
+        \Log::debug("Users",[$dataUsers]);
+        \Log::debug("Users2",[$blockUsers]);
         return $data;
     }
 
