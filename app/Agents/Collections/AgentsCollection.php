@@ -3468,7 +3468,6 @@ class AgentsCollection
                 }
             }
             $listMakers = array_values(array_filter(array_unique($dataMakers)));
-            \Log::debug("listMakers",[$listMakers]);
             $blockUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
@@ -3479,10 +3478,6 @@ class AgentsCollection
             ];
         }
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
-        \Log::debug("datAAa",[$data]);
-        \Log::debug("Agents",[$dataAngets]);
-        \Log::debug("Users",[$dataUsers]);
-        \Log::debug("Users2",[$blockUsers]);
         return $data;
     }
 
@@ -3532,7 +3527,7 @@ class AgentsCollection
                     }
                 }
             }
-            $listMakers = array_filter(array_values(array_unique($dataMakers)));
+            $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
@@ -3573,7 +3568,7 @@ class AgentsCollection
                     }
                 }
             }
-            $listMakers = array_filter(array_values(array_unique($dataMakers)));
+            $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $dataUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,

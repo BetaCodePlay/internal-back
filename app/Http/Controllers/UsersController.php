@@ -1448,9 +1448,9 @@ class UsersController extends Controller
             if (!is_null($userData)) {
                 $providerUser = $this->usersRepo->findExcludeProviderUser($provider, $userData->id, $currency);
                 $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
-                $dataMakers[] = $maker;
+                $makers[] = $maker;
                 if (is_null($providerUser)) {
-                    $makersArray = array_filter($dataMakers);
+                    $makersArray = array_filter($makers);
                     $usersData = [
                         'user_id' => $userData->id,
                         'provider_id' => $provider,
@@ -1467,7 +1467,7 @@ class UsersController extends Controller
                         'user_data' => [
                             'user_id' => $userData->id,
                             'provider_id' => $provider,
-                            'makers' => $dataMakers,
+                            'makers' => $makersArray,
                             'currency_iso' => $currency
                         ]
                     ];
@@ -1482,7 +1482,8 @@ class UsersController extends Controller
                     return Utils::successResponse($data);
                 } else {
                     $makersExclude = isset($providerUser->makers) ? json_decode($providerUser->makers) : [];
-                    $makersArray = array_filter(array_unique(array_merge($dataMakers, $makersExclude)));
+                    $dataMakers = array_merge($makers,$makersExclude);
+                    $makersArray = array_values(array_filter(array_unique($dataMakers)));
                     $usersData = [
                         'user_id' => $providerUser->user_id,
                         'provider_id' => $providerUser->provider_id,
