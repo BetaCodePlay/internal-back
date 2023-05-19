@@ -102,7 +102,6 @@ class SectionImagesController extends Controller
             } else {
                 $imagesData = $this->sectionImagesCollection->formatAllWithPositions($positions, $templateElementType, $section);
             }
-            \Log::info(__METHOD__, ['images' => $imagesData]);
             $data = [
                 'images' => $imagesData
             ];
@@ -316,13 +315,18 @@ class SectionImagesController extends Controller
             Storage::delete($oldFilePath);
             $front = $request->file('front');
             if(!is_null($front)){
+                $fileFront = $request->file;
+                $filePath = "$s3Directory/section-images/";
                 $extensionFront = $front->getClientOriginalExtension();
                 $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
                 $nameFront = Str::slug($originalNameFront) . time() . '.' . $extensionFront;
+                $newFilePath = "{$filePath}{$nameFront}";
+                $oldFilePath = "{$filePath}{$fileFront}";
+                Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
+                Storage::delete($oldFilePath);
             }else{
                 $nameFront = null;
             }
-            \Log::info(__METHOD__, ['name' => $name, 'namefront' => $nameFront]);
             $imageData = [
                 'title' => $request->title,
                 'button' => $request->button,
