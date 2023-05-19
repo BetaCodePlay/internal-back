@@ -1066,8 +1066,7 @@ class AgentsController extends Controller
                 $user = auth()->user()->id;
                 $currency_iso = session('currency');
                 $whitelabel = Configurations::getWhitelabel();
-                //$agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
-                $agents = [];
+                $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
                 $provider = $request->provider;
