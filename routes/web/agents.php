@@ -399,6 +399,35 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@dataTmp'
         ]);
 
+        // Get exclude providers agents
+        Route::get('exclude-providers-agents', [
+            'as' => 'agents.reports.exclude-providers-agents',
+            'uses' => 'AgentsController@excludeProvidersAgents'
+        ]);
+
+        // Get username
+        Route::post('search-username', [
+            'as' => 'users.search-username',
+            'uses' => 'UsersController@getUsersByUsername'
+        ]);
+
+        // Exclude providers users data
+        Route::post('exclude-providers-agents-data', [
+            'as' => 'agents.reports.exclude-providers-agents-data',
+            'uses' => 'AgentsController@excludeProvidersAgentsData'
+        ]);
+
+        // Exclude providers users delete
+        Route::get('exclude-providers-agents-delete/{user}/{provider}/{currency}', [
+            'as' => 'agents.reports.exclude-providers-agents.delete',
+            'uses' => 'AgentsController@excludeProviderAgentsDelete'
+        ]);
+
+        // Exclude providers users list
+        Route::get('exclude-providers-agents-list/{start_date?}/{end_date?}/{provider?}/{maker?}/{currency?}', [
+            'as' => 'agents.reports.exclude-providers-agents.list',
+            'uses' => 'AgentsController@excludeProviderAgentsList'
+        ]);
 
     });
 });

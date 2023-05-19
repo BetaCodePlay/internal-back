@@ -610,6 +610,84 @@ class Agents {
         });
     }
 
+    excludeProviderUserList(){
+        initSelect2();
+        initDateRangePickerEndToday(open = 'right');
+        let $table = $('#exclude-providers-agents-table');
+        let $button = $('#update');
+        let api;
+        let $form = $('#exclude-provider-agents-form');
+        let $buttonUpdate = $('#save');
+        clearForm($form);
+
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.agents"
+            },
+            "order": [
+                [0, "asc"]
+            ],
+            "columns": [
+                {"data": "user"},
+                {"data": "username"},
+                {"data": "name"},
+                {"data": "makers"},
+                {"data": "currency_iso"},
+                {"data": "date", "className": "text-right"},
+                {"data": "actions", "className": "text-right"},
+            ],
+            "initComplete": function () {
+                api = this.api()
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+                $(document).on('click', '.delete', function () {
+                    let $button = $(this);
+                    swalConfirm($button.data('route'), function () {
+                        $table.DataTable().ajax.url($table.data('route')).load();
+                    });
+                });
+            }
+        });
+        $button.click(function () {
+            $button.button('loading');
+            let provider = $('#provider_filter').val();
+            let maker = $('#maker_filter').val();
+            let currency = $('#currency_filter').val();
+            let startDate = $('#start_date').val();
+            let endDate = $('#end_date').val();
+            let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}`;
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
+                $button.button('reset');
+            });
+        });
+
+        $buttonUpdate.click(function () {
+            $buttonUpdate.button('loading');
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                dataType: 'json',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $button.button('loading');
+                $form.trigger('reset');
+                let route = `${$table.data('route')}`;
+                api.ajax.url(route).load();
+                $table.on('draw.dt', function () {
+                    $button.button('reset');
+                });
+                swalSuccessWithButton(json);
+            }).fail(function (json) {
+                swalError(json);
+            }).always(function () {
+                $buttonUpdate.button('reset');
+            });
+        });
+    }
+
    // Financial state
    financialState(user = null) {
        $('#financial-state-tab').on('show.bs.tab', function () {

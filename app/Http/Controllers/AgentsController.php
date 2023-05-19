@@ -1001,6 +1001,26 @@ class AgentsController extends Controller
     }
 
     /**
+     * Show exclude providers agents
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View
+     */
+    public function excludeProvidersAgents()
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
+        $makers = $this->gamesRepo->getMakers();
+        $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
+        $data['providers'] = $providers;
+        $data['whitelabel'] = $whitelabel;
+        $data['makers'] = $makers;
+        $data['title'] = _i('Exclude agents from providers');
+        return view('back.agents.report.exclude-providers-agents', $data);
+    }
+
+
+    /**
      * Data Financial State New "for support"
      * @param ProvidersRepo $providersRepo
      * @param $user
