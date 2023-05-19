@@ -849,7 +849,6 @@ class AgentsCollection
                                 <th colspan="7" class="text-center" style="background-color: #' . substr(md5($item->name_provider), 1, 6) . ';color: white;font-size: larger;"><strong>' . $item->name_provider . '</strong></th>
                             </tr>
                             <tr>
-                                <th colspan="2">' . _i('Whitelabel') . '</th>
                                 <th colspan="2">' . _i('Maker') . '</th>
                                 <th>' . _i('Total Payed') . '</th>
                                 <th>' . _i('Total Won') . '</th>
@@ -862,7 +861,6 @@ class AgentsCollection
                     $salPage = true;
                 }
                 $htmlProvider .= '<tr>
-                                    <td colspan="2">' . $item->name_maker . '</td>
                                     <td colspan="2">' . $item->name_maker . '</td>
                                     <td>' . number_format($item->total_played, 2) . '</td>
                                     <td>' . number_format($item->total_won, 2) . '</td>
