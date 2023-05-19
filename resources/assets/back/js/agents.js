@@ -632,6 +632,10 @@ class Agents {
                     type: 'get',
                     dataType: 'json'
 
+                })
+                .done(function (json) {
+                    $table.html(json.data.table);
+
                 }).fail(function (json) {
                     swalError(json);
 
