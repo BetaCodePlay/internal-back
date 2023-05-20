@@ -3258,14 +3258,14 @@ class AgentsCollection
     public function formatAgentDataMakersTotals($totals)
     {
         $htmlTotals = sprintf(
-            '<table  class="table table-bordered w-100">
+            '<table  class="table table-bordered table-sm table-striped table-hover"    >
                     <thead>
                         <tr>
-                            <th>%s</th>
-                            <th class="text-right">' . _i('Total Played') . '</th>
-                            <th class="text-right">' . _i('Total Won') . '</th>
-                            <th class="text-right">' . _i('Total Bet') . '</th>
-                            <th class="text-right">' . _i('Total Profit') . '</th>
+                            <th style="width: 20%;">%s</th>
+                            <th style="width: 17.5%;">' . _i('Total Payed') . '</th>
+                            <th style="width: 20%;">' . _i('Total Won') . '</th>
+                            <th style="width: 23%;">' . _i('Total Bets') . '</th>
+                            <th style="width: 20%;">' . _i('Total Profit') . '</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -3541,7 +3541,7 @@ class AgentsCollection
         $whitelabel = Configurations::getWhitelabel();
 
         if (!is_null($agent)) {
-            $dataMakers[] = $maker;  
+            $dataMakers[] = $maker;
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedAgents as $excludedAgent) {
@@ -3604,7 +3604,7 @@ class AgentsCollection
             $dataMakers[] = $maker;
             if(isset($provider)){
                 $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                foreach ($excludedAgents as $excludedAgent) { 
+                foreach ($excludedAgents as $excludedAgent) {
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     if($agent->user_id == $excludedAgent->user_id){
                         $dataMakers = array_merge($dataMakers,$makersExclude);
@@ -3620,7 +3620,7 @@ class AgentsCollection
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
-        
+
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
             }
@@ -3642,7 +3642,7 @@ class AgentsCollection
         $whitelabel = Configurations::getWhitelabel();
         $usersRepo = new UsersRepo();
         foreach ($users as $user) {
-            $dataMakers[] = $maker;  
+            $dataMakers[] = $maker;
             if(isset($provider)){
                 $excludedUsers = $usersRepo->getExcludeProviderUserByProvider($currency, $provider, $whitelabel);
                 foreach ($excludedUsers as $excludedUser) {
