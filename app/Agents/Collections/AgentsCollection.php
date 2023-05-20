@@ -3271,10 +3271,10 @@ class AgentsCollection
                     <tbody>
                         <tr>
                             <td></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
                         </tr>
                     </tbody>',
             _i('Totals'),
