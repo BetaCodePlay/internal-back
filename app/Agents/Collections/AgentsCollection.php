@@ -853,7 +853,7 @@ class AgentsCollection
                                 <th>' . _i('Total Payed') . '</th>
                                 <th>' . _i('Total Won') . '</th>
                                 <th>' . _i('Total Bets') . '</th>
-                                <th>' . _i('Total Profit') . '</th>
+                                <th colspan="2">' . _i('Total Profit') . '</th>
                             </tr>
                         </thead><tbody>';
                     $prov_current = $item->id_provider;
@@ -865,14 +865,14 @@ class AgentsCollection
                                     <td>' . number_format($item->total_played, 2) . '</td>
                                     <td>' . number_format($item->total_won, 2) . '</td>
                                     <td>' . $item->total_bet . '</td>
-                                    <td>' . number_format($item->total_profit, 2) . '</td>
+                                    <td colspan="2">' . number_format($item->total_profit, 2) . '</td>
                                 </tr>';
                 $acum += $item->total_profit;
             }
             if ($prov_current != 0) {
                 $htmlProvider .= '<tr>
-                                   <td colspan="6"></td>
-                                   <td colspan="1"><strong>' . number_format($acum, 2) . '</strong></td>
+                                   <td colspan="5"></td>
+                                   <td colspan="2"><strong>' . number_format($acum, 2) . '</strong></td>
                                 </tr>';
             }
             $htmlProvider .= '</tbody></table>';

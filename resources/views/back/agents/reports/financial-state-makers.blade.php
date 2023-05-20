@@ -13,6 +13,10 @@
         .select2-container .select2-selection--single {
             height: 2.4rem;
         }
+        .p-lr-out {
+            padding-left: 0;
+            padding-right: 0;
+        }
     </style>
 @endsection
 @section('content')
@@ -68,7 +72,7 @@
                  data-routetotals="{{ route('agents.reports.financial-state-data-makers-totals') }}">
 
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 p-lr-out">
                 <br>
                 <div class="table-responsive">
                     <div class="financialStateDataMakersTotals"></div>
