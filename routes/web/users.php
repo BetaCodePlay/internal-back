@@ -139,7 +139,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Exclude providers users list
-    Route::get('exclude-providers-users-list', [
+    Route::get('exclude-providers-users-list/{start_date?}/{end_date?}/{provider?}/{maker?}/{currency?}', [
         'as' => 'users.exclude-providers-users.list',
         'uses' => 'UsersController@excludeProviderUserList'
     ]);
