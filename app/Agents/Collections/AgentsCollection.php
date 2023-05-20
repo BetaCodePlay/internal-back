@@ -3261,7 +3261,7 @@ class AgentsCollection
             '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
-                            <th>%s</th>
+                            <th style="width: 20%">%s</th>
                             <th class="text-right">' . _i('Total Played') . '</th>
                             <th class="text-right">' . _i('Total Won') . '</th>
                             <th class="text-right">' . _i('Total Bet') . '</th>
