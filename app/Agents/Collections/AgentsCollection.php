@@ -3261,11 +3261,11 @@ class AgentsCollection
             '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
-                            <th style="width: 20%;">%s</th>
-                            <th style="width: 17.5%;">' . _i('Total Payed') . '</th>
-                            <th style="width: 20%;">' . _i('Total Won') . '</th>
-                            <th style="width: 23%;">' . _i('Total Bets') . '</th>
-                            <th style="width: 20%;">' . _i('Total Profit') . '</th>
+                            <th>%s</th>
+                            <th class="text-right">' . _i('Total Played') . '</th>
+                            <th class="text-right">' . _i('Total Won') . '</th>
+                            <th class="text-right">' . _i('Total Bet') . '</th>
+                            <th class="text-right">' . _i('Total Profit') . '</th>
                         </tr>
                     </thead>
                     <tbody>
