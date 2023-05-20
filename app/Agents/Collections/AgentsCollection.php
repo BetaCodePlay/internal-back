@@ -3258,7 +3258,7 @@ class AgentsCollection
     public function formatAgentDataMakersTotals($totals)
     {
         $htmlTotals = sprintf(
-            '<table  class="table table-bordered table-sm table-striped table-hover"    >
+            '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
                             <th style="width: 20%;">%s</th>
