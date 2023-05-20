@@ -17,6 +17,15 @@
             padding-left: 0;
             padding-right: 0;
         }
+        .w-th-17-5{
+            width: 17.5%;
+        }
+        .w-th-20{
+            width: 20%;
+        }
+        .w-th-23{
+            width: 23%;
+        }
     </style>
 @endsection
 @section('content')
