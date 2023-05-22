@@ -91,6 +91,21 @@
                                     <input type="text" name="url" id="url" class="form-control">
                                 </div>
                             </div>
+                            @if($section == 'section-7')
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="additional_info">{{ _i('Additional Info') }}</label>
+                                        <select name="additional_info" id="additional_info" class="form-control">
+                                            <option value="">{{ _i('Select...') }}</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category }}">
+                                                    {{ $category }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="start_date">{{ _i('Start date') }}</label>

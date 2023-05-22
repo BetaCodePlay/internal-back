@@ -76,27 +76,6 @@ class ImagesPositions
     public static $center_2 = 'center-2';
 
     /**
-     * New position
-     *
-     * @var string
-     */
-    public static $new = 'new';
-
-    /**
-     * Popular position
-     *
-     * @var string
-     */
-    public static $popular= 'popular';
-
-    /**
-     * Featured position
-     *
-     * @var string
-     */
-    public static $featured= 'featured';
-
-    /**
      * Logo light
      *
      * @var string
@@ -201,18 +180,6 @@ class ImagesPositions
             }
             case self::$center_2: {
                 $description =  _i('Center 2');
-                break;
-            }
-            case self::$new: {
-                $description =  _i('New');
-                break;
-            }
-            case self::$popular: {
-                $description =  _i('Popular');
-                break;
-            }
-            case self::$featured: {
-                $description =  _i('Featured');
                 break;
             }
             case self::$logo_light: {

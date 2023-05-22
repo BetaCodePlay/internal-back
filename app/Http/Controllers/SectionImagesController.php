@@ -72,7 +72,6 @@ class SectionImagesController extends Controller
                 {
                     $configuration = Configurations::getHome();
                     $positions = $configuration->$section->section_images->positions ?? [];
-                    \Log::info(__METHOD__, ['$positions' => $positions]);
                     break;
                 }
                 case TemplateElementTypes::$register_form:
@@ -132,6 +131,8 @@ class SectionImagesController extends Controller
                     $data['front'] = $image;
                 }
             }
+            $categories=['popular','new','featured'];
+            $data['category'] = $categories;
             $data['template_element_type'] = $templateElementType;
             $data['section'] = $section;
             $data['title'] = _i('Upload image');
