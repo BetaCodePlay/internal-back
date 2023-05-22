@@ -1596,6 +1596,8 @@ class Agents {
                     })
                     makers.prop('disabled', false);
                 }).fail(function (json) {});
+            } else {
+                makers.val('');
             }
         }).trigger('change');
     }
