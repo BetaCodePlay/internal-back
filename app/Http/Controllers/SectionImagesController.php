@@ -132,7 +132,7 @@ class SectionImagesController extends Controller
                 }
             }
             $categories=['popular','new','featured'];
-            $data['category'] = $categories;
+            $data['categories'] = $categories;
             $data['template_element_type'] = $templateElementType;
             $data['section'] = $section;
             $data['title'] = _i('Upload image');
