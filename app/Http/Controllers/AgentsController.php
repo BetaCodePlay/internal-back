@@ -1264,16 +1264,14 @@ class AgentsController extends Controller
      * @param int $agent User ID
      * @return Response
      */
-    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null, $currency_iso= null, $provider_id = null, $whitelabel_id = null)
+    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null)
     {
         try {
-            $provider_id = null;
-            $whitelabel_id = null;
             $startDate = Utils::startOfDayUtc($request->has('startDate')?$request->get('startDate'):date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate')?$request->get('endDate'):date('Y-m-d'));
             // $currency = session('currency');
             // $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $request->currency_iso, $provider_id, $whitelabel_id);
+            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $request->currency_iso, $request->provider_id, $request->whitelabel_id);
 
             return response()->json($this->agentsCollection->formatAgentDataMakersTotals($totals));
 

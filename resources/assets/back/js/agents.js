@@ -613,44 +613,43 @@ class Agents {
     // Financial state Makers
     financialStateMakers() {
 
-         let picker = initLitepickerEndToday();
+        initSelect2();
+        initDateRangePickerEndToday(open = 'right');
          let $table = $('#financial-state-table-makers');
-         let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
-         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+        //  let currency_iso = $('#currency').val() === ''? '':$('#currency').val();
+        //  let startDate = $('#start_date').val();
+        //  let endDate = $('#end_date').val();
          let $button = $('#update');
          $button.trigger('click');
-         let api;
-        Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
          $button.click(function () {
-             $button.button('loading');
-                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-                let currency_iso = $('#currency_id').val();
-                $.ajax({
-                    url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}`,
-                    type: 'get',
-                    dataType: 'json'
+            $button.button('loading');
+            let startDate = $('#start_date').val();
+            let endDate = $('#end_date').val();
+            let currency_iso = $('#currency').val() === ''? '':$('#currency').val();
+            $.ajax({
+                url: `${$table.data('route')}/${startDate}/${endDate}?currency_iso=${currency_iso}`,
+                type: 'get',
+                dataType: 'json'
 
-                })
-                .done(function (json) {
-                    $table.html(json.data.table);
+            })
+            .done(function (json) {
+                $table.html(json.data.table);
 
-                }).fail(function (json) {
-                    swalError(json);
+            }).fail(function (json) {
+                swalError(json);
 
-                }).always(function () {
-                    $button.button('reset');
-                });
+            }).always(function () {
+                $button.button('reset');
+            });
 
-                Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
+            Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
         });
     }
 
      // Agents Transactions Paginate Total
-    static financialStateMakersTotal(url_total,start_date,end_date, currency_iso) {
+    static financialStateMakersTotal(url_total,start_date,end_date, currency_iso='', provider_id='', whitelabel_id='') {
         $.ajax({
-            url: url_total+'?startDate='+start_date+'&endDate='+end_date+'&currency_iso='+currency_iso,
+            url: url_total+'?startDate='+start_date+'&endDate='+end_date+'&currency_iso='+currency_iso+'&provider_id='+provider_id+'&whitelabel_id='+whitelabel_id,
             type: 'get',
         }).done(function (response) {
             $('.financialStateDataMakersTotals').empty();
@@ -663,7 +662,7 @@ class Agents {
         initDateRangePickerEndToday(open = 'right');
         let $table = $('#financial-state-table');
         let $button = $('#update');
-        $button.trigger('click')
+        $button.trigger('click');
         $button.click(function () {
             $button.button('loading');
             let whitelabel_id = $('#whitelabel').val() === ''? '':$('#whitelabel').val();
@@ -687,6 +686,7 @@ class Agents {
             }).always(function () {
                 $button.button('reset');
             });
+            Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso, provider_id, whitelabel_id);
         });
      }
 
