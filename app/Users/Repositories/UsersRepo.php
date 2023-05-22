@@ -215,6 +215,61 @@ class UsersRepo
     }
 
     /**
+     * Get exclude provider user by currency, whitelabel and provider
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @param int $provider Provider ID
+     * @return mixed
+     */
+    public function getExcludeProviderUserByProvider($currency, $provider, $whitelabel)
+    {
+        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_providers_users.*')
+            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
+            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('exclude_providers_users.currency_iso', $currency);
+
+            if (!empty($provider)) {
+                $users->where('exclude_providers_users.provider_id', $provider);
+            }
+            $data = $users->orderBy('users.username', 'DESC')->get();
+        return $data;
+    }
+
+    /**
+     * Get exclude provider user by dates, currency, whitelabel and provider
+     *
+     * @param string $currency Currency ISO
+     * @param int $provider Provider ID
+     * @param int $whitelabel Whitelabel ID
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @return mixed
+     */
+    public function getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate)
+    {
+        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_providers_users.*')
+            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
+            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->whereBetween('exclude_providers_users.created_at', [$startDate, $endDate]);
+
+            if (!empty($currency)) {
+                $users->where('exclude_providers_users.currency_iso', $currency);
+            }
+            if (!empty($provider)) {
+                $users->where('exclude_providers_users.provider_id', $provider);
+            }
+            if (!empty($maker)) {
+                $users->whereJsonContains('exclude_providers_users.makers', $maker);
+            }
+
+            $data = $users->orderBy('exclude_providers_users.created_at', 'DESC')->get();
+        return $data;
+    }
+
+    /**
      * Get first deposit users
      *
      * @param int $whitelabel Whitelabel ID
@@ -1113,6 +1168,23 @@ class UsersRepo
             $user->referrals()->attach($referrals);
         }
         return $user;
+    }
+
+    /**
+     * Update exclude provider user
+     *
+     * @param int $id ExcludeProviderUser ID
+     * @param array $data ExcludeProviderUser data
+     * @return mixed
+     */
+    public function updateExcludeProviderUser($user, $provider, $currency, $data)
+    {
+        $users = \DB::table('exclude_providers_users')
+            ->where('exclude_providers_users.user_id', $user)
+            ->where('exclude_providers_users.provider_id', $provider)
+            ->where('exclude_providers_users.currency_iso', $currency)
+            ->update($data);
+        return $users;
     }
 
     /**

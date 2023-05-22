@@ -3,6 +3,7 @@
 namespace App\Agents\Collections;
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Users\Repositories\UsersRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
@@ -849,12 +850,11 @@ class AgentsCollection
                                 <th colspan="7" class="text-center" style="background-color: #' . substr(md5($item->name_provider), 1, 6) . ';color: white;font-size: larger;"><strong>' . $item->name_provider . '</strong></th>
                             </tr>
                             <tr>
-                                <th colspan="2">' . _i('Whitelabel') . '</th>
                                 <th colspan="2">' . _i('Maker') . '</th>
                                 <th>' . _i('Total Payed') . '</th>
                                 <th>' . _i('Total Won') . '</th>
                                 <th>' . _i('Total Bets') . '</th>
-                                <th>' . _i('Total Profit') . '</th>
+                                <th colspan="2">' . _i('Total Profit') . '</th>
                             </tr>
                         </thead><tbody>';
                     $prov_current = $item->id_provider;
@@ -863,18 +863,17 @@ class AgentsCollection
                 }
                 $htmlProvider .= '<tr>
                                     <td colspan="2">' . $item->name_maker . '</td>
-                                    <td colspan="2">' . $item->name_maker . '</td>
                                     <td>' . number_format($item->total_played, 2) . '</td>
                                     <td>' . number_format($item->total_won, 2) . '</td>
                                     <td>' . $item->total_bet . '</td>
-                                    <td>' . number_format($item->total_profit, 2) . '</td>
+                                    <td colspan="2">' . number_format($item->total_profit, 2) . '</td>
                                 </tr>';
                 $acum += $item->total_profit;
             }
             if ($prov_current != 0) {
                 $htmlProvider .= '<tr>
-                                   <td colspan="6"></td>
-                                   <td colspan="1"><strong>' . number_format($acum, 2) . '</strong></td>
+                                   <td colspan="5"></td>
+                                   <td colspan="2"><strong>' . number_format($acum, 2) . '</strong></td>
                                 </tr>';
             }
             $htmlProvider .= '</tbody></table>';
@@ -3252,38 +3251,36 @@ class AgentsCollection
 
     /**
      * formatAgentDataMakersTotals
-     * @param $credit
-     * @param $debit
+     * @param $totals
      * @return string
      */
     public function formatAgentDataMakersTotals($totals)
     {
-
         $htmlTotals = sprintf(
             '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
-                            <th>%s</th>
-                            <th class="text-right">' . _i('Total Played') . '</th>
-                            <th class="text-right">' . _i('Total Won') . '</th>
-                            <th class="text-right">' . _i('Total Bet') . '</th>
-                            <th class="text-right">' . _i('Total Profit') . '</th>
+                            <th class="w-th-20">%s</th>
+                            <th class="w-th-17-5">' . _i('Total Payed') . '</th>
+                            <th class="w-th-20">' . _i('Total Won') . '</th>
+                            <th class="w-th-23">' . _i('Total Bets') . '</th>
+                            <th>' . _i('Total Profit') . '</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
                         </tr>
                     </tbody>',
             _i('Totals'),
-            number_format($totals->total_played, 2),
-            number_format($totals->total_won, 2),
-            number_format($totals->total_bet, 2),
-            number_format($totals->total_profit, 2),
+            $totals[0]->total_played,
+            number_format($totals[0]->total_won, 2),
+            number_format($totals[0]->total_bet, 2),
+            number_format($totals[0]->total_profit, 2),
         );
 
         return $htmlTotals;
@@ -3534,22 +3531,35 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLock($subAgents, $users, $agent, $currency, $provider)
+    public function formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker)
     {
         $blockUsers = [];
-        $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $provider);
-        $dataUsers = $this->formatDataLockUsers($users, $currency, $provider);
+        $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
+        $dataUsers = $this->formatDataLockUsers($users, $currency, $provider, $maker);
+        $agentsRepo = new AgentsRepo();
+        $whitelabel = Configurations::getWhitelabel();
 
         if (!is_null($agent)) {
+            $dataMakers[] = $maker;
+            if(isset($provider)){
+                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                foreach ($excludedAgents as $excludedAgent) {
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    if($agent->id == $excludedAgent->user_id){
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
+                    }
+                }
+            }
+            $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $blockUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
+                'makers' => json_encode($listMakers),
                 'user_id' => $agent->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
         }
-
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
         return $data;
     }
@@ -3562,9 +3572,10 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLockSubAngents($agents, $currency, $provider)
+    public function formatDataLockSubAngents($agents, $currency, $provider, $maker)
     {
         $agentsRepo = new AgentsRepo();
+        $whitelabel = Configurations::getWhitelabel();
         $dataAgents = [];
         foreach ($agents as $agent) {
             $dataChildren = null;
@@ -3572,11 +3583,11 @@ class AgentsCollection
             $users = $agentsRepo->getUsersByAgent($agent->id, $currency);
 
             if (count($subAgents) > 0) {
-                $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $provider);
+                $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
             }
 
             if (count($users) > 0) {
-                $usersChildren = $this->formatDataLockUsers($users, $currency, $provider);
+                $usersChildren = $this->formatDataLockUsers($users, $currency, $provider, $maker);
             }
 
             if (count($subAgents) > 0 && count($users) > 0) {
@@ -3589,9 +3600,21 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
+            $dataMakers[] = $maker;
+            if(isset($provider)){
+                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                foreach ($excludedAgents as $excludedAgent) {
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    if($agent->user_id == $excludedAgent->user_id){
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
+                    }
+                }
+            }
+            $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
+                'makers' => json_encode($listMakers),
                 'user_id' => $agent->user_id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -3612,13 +3635,27 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLockUsers($users, $currency, $provider)
+    public function formatDataLockUsers($users, $currency, $provider, $maker)
     {
         $dataUsers = [];
+        $whitelabel = Configurations::getWhitelabel();
+        $usersRepo = new UsersRepo();
         foreach ($users as $user) {
+            $dataMakers[] = $maker;
+            if(isset($provider)){
+                $excludedUsers = $usersRepo->getExcludeProviderUserByProvider($currency, $provider, $whitelabel);
+                foreach ($excludedUsers as $excludedUser) {
+                    $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
+                    if($user['id'] == $excludedUser->user_id){
+                        $dataMakers = array_merge($dataMakers,$makersExclude);
+                    }
+                }
+            }
+            $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $dataUsers[] = [
                 'currency_iso' => $currency,
                 'provider_id' => $provider,
+                'makers' => json_encode($listMakers),
                 'user_id' => $user['id'],
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
@@ -3645,6 +3682,7 @@ class AgentsCollection
                     $dataUsers[] = [
                         'currency_iso' => $currency,
                         'provider_id' => $excludedUser->provider_id,
+                        'makers' => $excludedUser->makers,
                         'user_id' => $user,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
@@ -3654,6 +3692,7 @@ class AgentsCollection
                     $dataUsers[] = [
                         'currency_iso' => $currency,
                         'provider_id' => $excludedUser->provider_id,
+                        'makers' => $excludedUser->makers,
                         'user_id' => $user,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()

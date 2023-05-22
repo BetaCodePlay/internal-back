@@ -228,7 +228,7 @@ class ClosuresUsersTotals2023Repo
      * @param $provider
      * @return array
      */
-    public function getClosureTotalsByProviderAndMakerGlobal(string $startDate, string $endDate, string $currency, $provider, $whitelabel)
+    public function getClosureTotalsByProviderAndMakerGlobal(string $startDate, string $endDate, $currency, $provider, $whitelabel)
     {
         return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_global(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider]);
     }

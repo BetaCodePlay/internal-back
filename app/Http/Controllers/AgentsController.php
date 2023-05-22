@@ -14,6 +14,7 @@ use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
@@ -625,6 +626,7 @@ class AgentsController extends Controller
             $user = $request->user;
             $currency = session('currency');
             $provider = $request->provider;
+            $maker = $request->maker;
             $type = $request->type;
             $lockUsers = $request->lock_users;
 
@@ -637,13 +639,23 @@ class AgentsController extends Controller
                     'id' => $user
                 ];
             }
-            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider);
-
+            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
-                    $this->agentsRepo->blockAgents($usersToUpdate);
+                    foreach ($usersToUpdate as $userToUpdate) {
+                        $user = $userToUpdate['user_id'];
+                        $data = [
+                            'currency_iso' => $userToUpdate['currency_iso'],
+                            'provider_id' => $userToUpdate['provider_id'],
+                            'makers' => $userToUpdate['makers'],
+                            'user_id' => $user,
+                            'created_at' => $userToUpdate['created_at'],
+                            'updated_at' => $userToUpdate['updated_at']
+                        ];
+                        $this->agentsRepo->updateBlockAgents($currency,$provider,$user,$data);
+                    }
                     $data = [
                         'title' => _i('Locked provider'),
                         'message' => _i('The provider was locked to the agent and his entire tree'),
@@ -656,7 +668,13 @@ class AgentsController extends Controller
                         $currencyIso = $userToUpdate['currency_iso'];
                         $providerId = $userToUpdate['provider_id'];
                         $userId = $userToUpdate['user_id'];
-                        $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
+                        if(is_null($maker)){
+                            $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
+                        }else{
+                            $unBlockMaker = array_values(array_diff(json_decode($userToUpdate['makers']), [$maker]));
+                            $data['makers'] = json_encode($unBlockMaker);
+                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$providerId,$userId,$data);
+                        }
                     }
                     $data = [
                         'title' => _i('Unlocked provider'),
@@ -1038,6 +1056,73 @@ class AgentsController extends Controller
         }
     }
 
+     /**
+     * Get exclude provider agent list
+     *
+     * @param int $whitelabel Whitelabel
+     * @return Factory|View
+     */
+    public function excludeProviderAgentsList(Request $request, $startDate = null, $endDate = null, $provider = null, $maker = null, $currency = null)
+    {
+        try {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $agentsBlocked = [];
+                $user = auth()->user()->id;
+                $currency_iso = session('currency');
+                $whitelabel = Configurations::getWhitelabel();
+                $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $provider = $request->provider;
+                $maker = $request->maker;
+                $currency = $request->currency;
+                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
+                foreach($users as $user){
+                    if(in_array($user->user_id,$agents)){
+                        $agentsBlocked[] = $user;
+                    }
+                }
+                if (!is_null($agentsBlocked)) {
+                    $this->usersCollection->formatExcludeProviderUser($agentsBlocked);
+                    $data = [
+                        'agents' => $agentsBlocked
+                    ];
+                } else {
+                    $data = [
+                        'agents' => []
+                    ];
+                }
+            }else{
+                $data = [
+                    'agents' => []
+                ];
+            }
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Show exclude providers agents
+     * @param ProvidersRepo $providersRepo
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View
+     */
+    public function excludeProvidersAgents(ProvidersRepo $providersRepo, GamesRepo $gamesRepo)
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
+        $makers = $gamesRepo->getMakers();
+        $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
+        $data['providers'] = $providers;
+        $data['whitelabel'] = $whitelabel;
+        $data['makers'] = $makers;
+        $data['title'] = _i('Exclude agents from providers');
+        return view('back.agents.reports.exclude-providers-agents', $data);
+    }
+
     /**
      * Data Financial State New "for support"
      * @param ProvidersRepo $providersRepo
@@ -1152,12 +1237,18 @@ class AgentsController extends Controller
     {
 
         try {
-
+            // dd([$request->currency_iso, $request->whitelabel_id]);
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
             } else {
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
 
             }
             $data = [
@@ -1177,16 +1268,14 @@ class AgentsController extends Controller
      * @param int $agent User ID
      * @return Response
      */
-    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null, $currency_iso= null, $provider_id = null, $whitelabel_id = null)
+    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null)
     {
         try {
-
             $startDate = Utils::startOfDayUtc($request->has('startDate')?$request->get('startDate'):date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate')?$request->get('endDate'):date('Y-m-d'));
-
             // $currency = session('currency');
             // $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $currency_iso, $provider_id, $whitelabel_id);
+            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $request->currency_iso, $request->provider_id, $request->whitelabel_id);
 
             return response()->json($this->agentsCollection->formatAgentDataMakersTotals($totals));
 

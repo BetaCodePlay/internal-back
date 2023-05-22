@@ -55,6 +55,10 @@
             color: white !important;
             background-color: darkorange !important
         }
+        .select2-container {
+            width: 100% !important;
+            text-align: left !important;
+        }
 
     </style>
 <?php $__env->stopSection(); ?>
@@ -560,20 +564,33 @@
                         </div>
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
-                            <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
-                                <div class="input-group">
-                                    <input type="text" id="date_range_new" class="form-control" autocomplete="off"
-                                           placeholder="<?php echo e(_i('Date range')); ?>">
-                                    <div class="input-group-append">
-                                        <button class="btn g-bg-primary" type="button" id="updateNew"
-                                                data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
-                                                data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>"
-                                                data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                            <i class="hs-admin-reload g-color-white"></i>
-                                        </button>
+                            <div class="row">
+                                <div class="offset-md-7"></div>
+                                <div class="col-md-2 text-right">
+                                    <div class="input-group">
+                                        <select name="type_select" id="type_select" class="form-control">
+                                            <option value="all" selected="selected" hidden>Todos</option>
+                                            <option value="agent"><?php echo e(_i('agent')); ?></option>
+                                            <option value="user"><?php echo e(_i('user')); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" id="date_range_new" class="form-control" autocomplete="off"
+                                               placeholder="<?php echo e(_i('Date range')); ?>">
+                                        <div class="input-group-append">
+                                            <button class="btn g-bg-primary" type="button" id="updateNew"
+                                                    data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
+                                                    data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>"
+                                                    data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                                <i class="hs-admin-reload g-color-white"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="media">
                                 <div class="media-body d-flex justify-content-end g-mb-10"
@@ -592,32 +609,42 @@
 
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('From')); ?>
+
+                                            Cuenta origen
 
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                            <?php echo e(_i('Toward')); ?>
 
+                                            Cuenta destino
                                         </th>
-                                        <?php if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('Charged him')); ?>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 
-                                            </th>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('withdrew')); ?>
+                                            Descarga
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 
-                                            </th>
-                                        <?php else: ?>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('Debit')); ?>
+                                            Carga
+                                        </th>
 
-                                            </th>
-                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('Credit')); ?>
 
-                                            </th>
-                                        <?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             <?php echo e(_i('Balance')); ?>
 
@@ -766,6 +793,7 @@
                              aria-labelledby="financial-state-tab">
                             <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
                                 <div class="input-group">
+                                    <input type="hidden" id="_hour" name="_hour" value="_hour">
                                     <input type="hidden" id="username_like" name="username_like">
                                     <input type="text" id="date_range" class="form-control" autocomplete="off"
                                            placeholder="<?php echo e(_i('Date range')); ?>">

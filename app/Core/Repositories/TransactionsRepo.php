@@ -337,7 +337,7 @@ class TransactionsRepo
      */
     public function getFinancialDataMakersTotals(string $startDate, string $endDate, string $currency, $provider, $whitelabel)
     {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_global_total(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider]);
+        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_global_total(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider]);
     }
 
      /**

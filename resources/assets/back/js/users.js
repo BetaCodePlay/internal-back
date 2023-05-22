@@ -386,8 +386,9 @@ class Users {
     // Exclude provider user list
     excludeProviderUserList() {
         initSelect2();
+        initDateRangePickerEndToday(open = 'right');
         let $table = $('#exclude-providers-users-table');
-        let $button = $('#update-exclude');
+        let $button = $('#update');
         let api;
         let $form = $('#exclude-provider-user-form');
         let $buttonUpdate = $('#save');
@@ -405,6 +406,7 @@ class Users {
                 {"data": "user"},
                 {"data": "username"},
                 {"data": "name"},
+                {"data": "makers"},
                 {"data": "currency_iso"},
                 {"data": "date", "className": "text-right"},
                 {"data": "actions", "className": "text-right"},
@@ -423,12 +425,18 @@ class Users {
         });
         $button.click(function () {
             $button.button('loading');
-            let route = `${$table.data('route')}`;
+            let provider = $('#provider_filter').val();
+            let maker = $('#maker_filter').val();
+            let currency = $('#currency_filter').val();
+            let startDate = $('#start_date').val();
+            let endDate = $('#end_date').val();
+            let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
             });
         });
+
         $buttonUpdate.click(function () {
             $buttonUpdate.button('loading');
             $.ajax({
@@ -453,6 +461,36 @@ class Users {
             });
         });
     };
+
+    //Select maker
+    selectProvidersMaker(){
+        initSelect2();
+        $('.provider').on('change', function () {
+            let provider = $(this).val();
+            let route = $(this).data('route');
+            let makers = $('.maker');
+            if (provider !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        provider
+                    }
+                }).done(function (json) {
+                    $('.maker option[value!=""]').remove();
+                    $(json.data.makers).each(function (key, element) {
+                        makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
+                    })
+                    makers.prop('disabled', false);
+                }).fail(function (json) {
+
+                });
+            } else {
+                makers.val('');
+            }
+        }).trigger('change');
+    }
 
     // Login user
     loginUser() {

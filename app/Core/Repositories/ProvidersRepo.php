@@ -131,6 +131,20 @@ class ProvidersRepo
         return $providers;
     }
 
+    /**
+     * Get providers by whitelabel
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @return mixed
+     */
+    public function getProvidersByWhitelabel(int $whitelabel)
+    {
+        return Provider::select('providers.*')
+            ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
+            ->where('client_id', $whitelabel)
+            ->orderBy('name', 'ASC')
+            ->get();
+    }
 
     /**
      * Get by whitelabel

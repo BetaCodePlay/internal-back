@@ -406,6 +406,16 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$locked_providers,
                                 'submenu' => []
                             ],
+                            
+                            'ExcludeAgents' => [
+                                'text' => _i('Exclude agents from providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.exclude-providers-agents',
+                                'params' => [],
+                                'icon' => 'hs-admin-user',
+                                'permission' => Permissions::$locked_providers,
+                                'submenu' => []
+                            ],
 
 //                           'ManualTransactionsAgents' => [
 //                                'text' => _i('Manual transactions'),
