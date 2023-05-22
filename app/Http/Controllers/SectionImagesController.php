@@ -72,6 +72,7 @@ class SectionImagesController extends Controller
                 {
                     $configuration = Configurations::getHome();
                     $positions = $configuration->$section->section_images->positions ?? [];
+                    \Log::info(__METHOD__, ['$positions' => $positions]);
                     break;
                 }
                 case TemplateElementTypes::$register_form:
