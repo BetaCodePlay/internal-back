@@ -439,6 +439,7 @@ class TransactionsRepo
             }
 
         }
+        Log::debug('$countTransactions',[0=>$countTransactions,$totalDebit,$totalCredit]);
 
         return [$totalCredit, $totalDebit];
     }
