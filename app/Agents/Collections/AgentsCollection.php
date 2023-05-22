@@ -3609,10 +3609,10 @@ class AgentsCollection
                 if($excludedAgents){
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     $dataMakers = array_merge($dataMakers,$makersExclude);
-                    \Log::debug([$dataMakers]);
                 }
             }
             $listMakers = array_values(array_filter(array_unique($dataMakers)));
+            \Log::debug([$listMakers]);
             $dataAgents[] = [
                 'currency_iso' => $currency,
                 'user_id' => $agent->user_id,
