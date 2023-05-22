@@ -3251,8 +3251,7 @@ class AgentsCollection
 
     /**
      * formatAgentDataMakersTotals
-     * @param $credit
-     * @param $debit
+     * @param $totals
      * @return string
      */
     public function formatAgentDataMakersTotals($totals)

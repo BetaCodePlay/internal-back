@@ -301,4 +301,21 @@ class CoreController extends Controller
             return Utils::failedResponse();
         }
     }
+
+    /**
+     * Providers by Whitelabel
+     *
+     * @param @param Request $request
+     */
+    public function providersByWhitelabels(Request $request, ProvidersRepo $providersRepo)
+    {
+        try {
+            $whitelabel = $request->whitelabel;
+            $data['providers'] = $providersRepo->getProvidersByWhitelabel($whitelabel);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'provider' => $request->provider]);
+            abort(500);
+        }
+    }
 }

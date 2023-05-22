@@ -1233,12 +1233,18 @@ class AgentsController extends Controller
     {
 
         try {
-
+            // dd([$request->currency_iso, $request->whitelabel_id]);
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
             } else {
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
 
             }
             $data = [

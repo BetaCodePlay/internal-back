@@ -659,46 +659,35 @@ class Agents {
     }
          // Financial state Makers
     financialStateMakersDetails() {
-        // $('#financial-state-tab').on('show.bs.tab', function () {
+        initSelect2();
+        initDateRangePickerEndToday(open = 'right');
+        let $table = $('#financial-state-table');
+        let $button = $('#update');
+        $button.trigger('click')
+        $button.click(function () {
+            $button.button('loading');
+            let whitelabel_id = $('#whitelabel').val() === ''? '':$('#whitelabel').val();
+            let provider_id = $('#provider').val() === ''? '':$('#provider').val();
+            let currency_iso = $('#currency').val() === ''? '':$('#currency').val();
+        //  let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+        //  let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+        let startDate = $('#start_date').val();
+        let endDate = $('#end_date').val();
+            $.ajax({
+                url: `${$table.data('route')}/${startDate}/${endDate}?currency_iso=${currency_iso}&provider_id=${provider_id}&whitelabel_id=${whitelabel_id}`,
+                type: 'get',
+                dataType: 'json'
 
-        // })
+            }).done(function (json) {
+                $table.html(json.data.table);
 
-         let picker = initLitepickerEndToday();
-         let $table = $('#financial-state-table');
-         let $button = $('#update');
-         $button.trigger('click')
-         let api;
-        //  if (user == null) {
-        //      $('#financial-state-tab').on('show.bs.tab', function () {
-        //          $table.children().remove();
-        //          user = $('.user').val();
-        //      });
-        //  }
+            }).fail(function (json) {
+                swalError(json);
 
-         $button.click(function () {
-             $button.button('loading');
-            //  let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
-             let whitelabel_id = $('#whitelabel_id').val() === ''?'':$('#whitelabel_id').val();
-             let provider_id = $('#provider_id').val() === ''?'':$('#provider_id').val();
-             let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
-             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-
-             $.ajax({
-                 url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}/${provider_id}/${whitelabel_id}`,
-                 type: 'get',
-                 dataType: 'json'
-
-             }).done(function (json) {
-                 $table.html(json.data.table);
-
-             }).fail(function (json) {
-                 swalError(json);
-
-             }).always(function () {
-                 $button.button('reset');
-             });
-         });
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
      }
 
    // Financial state
@@ -1643,6 +1632,35 @@ class Agents {
         });
     }
 
+    selectWhitelabelMakers(){
+        initSelect2();
+        $('#whitelabel').on('change', function () {
+            let whitelabel = $(this).val();
+            let route = $(this).data('route');
+            let provider = $('#provider');
+            if (whitelabel !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        whitelabel
+                    }
+                }).done(function (json) {
+                    $('#provider option[value!=""]').remove();
+                    $(json.data.providers).each(function (key, element) {
+                        provider.append("<option value=" + element.id + ">" + element.name + "</option>");
+                    })
+                    provider.prop('disabled', false);
+                }).fail(function (json) {
+
+                });
+            } else {
+                provider.val('');
+            }
+        }).trigger('change');
+    }
+
     // Store users
     storeUsers() {
         initSelect2();
@@ -1927,7 +1945,7 @@ class Agents {
 
     }
 
-    //Exclude Provider 
+    //Exclude Provider
     excludeProviderUserList(){
         initSelect2();
         initDateRangePickerEndToday(open = 'right');

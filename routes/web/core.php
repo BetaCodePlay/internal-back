@@ -49,7 +49,11 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.number-users-connected-by-device',
         'uses' => 'CoreController@numberConnectedDivice'
     ]);
-
+    //Get providers by whitelabels
+    Route::get('providers-by-whitelabel', [
+        'as' => 'core.providers-by-whitelabel',
+        'uses' => 'CoreController@providersByWhitelabels'
+    ]);
     // Get makers by providers
     Route::get('makers-by-provider', [
         'as' => 'core.makers-by-provider',
