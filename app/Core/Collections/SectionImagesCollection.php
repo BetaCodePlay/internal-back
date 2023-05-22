@@ -150,7 +150,6 @@ class SectionImagesCollection
         $sectionImagesRepo = new SectionImagesRepo();
         $imagesData = [];
         foreach ($positions as $key => $size) {
-            \Log::info(__METHOD__, ['key' => $key]);
             switch ($key) {
                 case ImagesPositions::$logo_light:
                 {
