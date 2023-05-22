@@ -92,10 +92,10 @@
                                 </div>
                             </div>
                             @if($section == 'section-7')
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="additional_info">{{ _i('Additional Info') }}</label>
-                                        <select name="additional_info" id="additional_info" class="form-control">
+                                        <label for="category">{{ _i('Category') }}</label>
+                                        <select name="category" id="category" class="form-control">
                                             <option value="">{{ _i('Select...') }}</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category }}">

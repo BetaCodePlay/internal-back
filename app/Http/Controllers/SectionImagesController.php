@@ -295,6 +295,9 @@ class SectionImagesController extends Controller
         if ($section != 'section-3') {
             $validationRules['title'] = 'required';
         }
+        if ($section == 'section-7') {
+            $validationRules['category'] = 'required';
+        }
         if (!is_null($request->start_date) && !is_null($request->end_date)) {
             $validationRules['end_date'] = 'required|date|after:start_date';
         }
@@ -317,6 +320,7 @@ class SectionImagesController extends Controller
             Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
             Storage::delete($oldFilePath);
             $front = $request->file('front');
+            $category = $request->category;
             if(!is_null($front)){
                 $fileFront = $request->file;
                 $filePath = "$s3Directory/section-images/";
@@ -343,6 +347,7 @@ class SectionImagesController extends Controller
                 'section' => $section,
                 'image' => $name,
                 'front' => $nameFront,
+                'category' => $category,
                 'whitelabel_id' => $whitelabel,
                 'start_date' => $startDate,
                 'end_date' => $endDate

@@ -17,6 +17,7 @@ class SectionImages {
                 {"data": "position"},
                 {"data": "size"},
                 {"data": "url"},
+                {"data": "category"},
                 {"data": "status", "className": "text-right"},
                 {"data": "actions", "className": "text-right"},
             ],
