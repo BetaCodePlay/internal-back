@@ -68,7 +68,7 @@ class AgentsRepo
      */
     public function updateBlockAgents($currency, $category, $user, $agents)
     {
-        $agents = \DB::table('exclude_providers_users')->updateOrInsert(
+        $agents = \DB::table('exclude_makers_users')->updateOrInsert(
             ['category' => $category, 'user_id' => $user, 'currency_iso' => $currency],
             $agents
         );
