@@ -3644,9 +3644,9 @@ class AgentsCollection
         foreach ($users as $user) {
             $dataMakers[] = $maker;  
             if(isset($category)){
-                $excludedAgents = $agentsRepo->getAgentLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
-                if($excludedAgents){
-                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
+                if($excludedUsers){
+                    $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
                     $dataMakers = array_merge($dataMakers,$makersExclude);
                 }
             }

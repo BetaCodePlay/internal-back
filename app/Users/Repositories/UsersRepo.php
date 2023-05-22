@@ -215,26 +215,23 @@ class UsersRepo
     }
 
     /**
-     * Get exclude provider user by currency, whitelabel and provider
-     *
+     * Get exclude maker user by user, currency, whitelabel and category
+     * @param int $user User ID
      * @param int $whitelabel Whitelabel ID
      * @param string $currency Currency ISO
      * @param int $provider Provider ID
      * @return mixed
      */
-    public function getExcludeProviderUserByProvider($currency, $provider, $whitelabel)
+    public function getUserLockByUserAndCategory($user, $currency, $provider, $whitelabel)
     {
-        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_providers_users.*')
-            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
-            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
+        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_makers_users.*')
+            ->join('exclude_makers_users', 'exclude_makers_users.user_id', '=', 'users.id')
             ->where('users.whitelabel_id', $whitelabel)
-            ->where('exclude_providers_users.currency_iso', $currency);
-
-            if (!empty($provider)) {
-                $users->where('exclude_providers_users.provider_id', $provider);
-            }
-            $data = $users->orderBy('users.username', 'DESC')->get();
-        return $data;
+            ->where('exclude_makers_users.user_id', $user)
+            ->where('exclude_makers_users.currency_iso', $currency)
+            ->where('exclude_makers_users.category', $category)
+            ->first();
+        return $users;
     }
 
     /**
