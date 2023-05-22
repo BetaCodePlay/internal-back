@@ -3605,10 +3605,9 @@ class AgentsCollection
             }
             $dataMakers[] = $maker;
             if(!is_null($category)){
-                $excludedAgents = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
-                if($excludedAgents){
+                $excludedAgent = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
+                if($excludedAgent){
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    \Log::debug("maker",[$excludedAgents->makers]);
                     $dataMakers = array_merge($dataMakers,$makersExclude);
                 }
             }
