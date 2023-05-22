@@ -18,6 +18,7 @@ use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use App\Reports\Repositories\ReportAgentRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
@@ -90,11 +91,11 @@ class AgentsController extends Controller
     private $transactionsCollection;
 
     /**
-     * UsersRepo
+     * ReportAgentRepo
      *
-     * @var UsersRepo
+     * @var ReportAgentRepo
      */
-    private $usersRepo;
+    private $reportAgentRepo;
 
     /**
      * TransactionsRepo
@@ -169,11 +170,12 @@ class AgentsController extends Controller
      * @param UsersCollection $usersCollection
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
         $this->agentsCollection = $agentsCollection;
+        $this->reportAgentRepo = $reportAgentRepo;
         $this->usersRepo = $usersRepo;
         $this->transactionsRepo = $transactionsRepo;
         $this->agentCurrenciesRepo = $agentCurrenciesRepo;
@@ -497,7 +499,7 @@ class AgentsController extends Controller
      */
     public function agentsTransactionsPaginate($agent, Request $request)
     {
-//        try {
+        try {
 
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit = $request->has('length') ? $request->get('length') : 100;
@@ -516,19 +518,21 @@ class AgentsController extends Controller
 //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
 //            }
 
-            $arraySonIds = $this->usersRepo->arraySonIds($agent, session('currency'), Configurations::getWhitelabel());
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
+            //TODO get ids children from father
+            $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather($agent, session('currency'), Configurations::getWhitelabel());
 
-           //$transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
+            //TODO get transactions with filter
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
 
+            //TODO draw table in collection
            $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
             return response()->json($data);
 
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            return Utils::failedResponse();
-//        }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
