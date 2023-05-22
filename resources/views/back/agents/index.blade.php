@@ -916,7 +916,7 @@
                                                             <div class="form-group">
                                                                 <label for="agent">{{ _i('Categories') }}</label>
                                                                 <select name="category" id="category"
-                                                                        class="form-control">
+                                                                        class="form-control" data-route="{{ route('core.makers-by-category') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                     @foreach ($categories as $category)
                                                                         <option value="{{ $category->category }}">
@@ -1176,6 +1176,7 @@
             agents.menuMobile();
             agents.selectAgentOrUser('{{ _i('Agents search...') }}');
             agents.selectUsernameSearch('{{ _i('Agents search...') }}');
+            agents.selectCategoryMaker();
             agents.statusFilter();
             @if($agent->master)
             agents.changeAgentType();
