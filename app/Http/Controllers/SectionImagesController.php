@@ -321,6 +321,7 @@ class SectionImagesController extends Controller
             Storage::delete($oldFilePath);
             $front = $request->file('front');
             $category = $request->category;
+            \Log::debug(__METHOD__, ['category' => $category]);
             if(!is_null($front)){
                 $fileFront = $request->file;
                 $filePath = "$s3Directory/section-images/";
