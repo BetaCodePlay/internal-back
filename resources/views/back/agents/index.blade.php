@@ -930,7 +930,7 @@
                                                             <div class="form-group">
                                                                 <label for="maker">{{ _i('Maker') }}</label>
                                                                 <select name="maker" id="maker"
-                                                                        class="form-control">
+                                                                        class="form-control" data-route="{{ route('core.makers') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                     <option value="*">{{ _i('All') }}</option>
                                                                     @foreach ($makers as $maker)
