@@ -11,7 +11,6 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
 /**
@@ -439,7 +438,6 @@ class TransactionsRepo
             }
 
         }
-        Log::debug('$countTransactions',[0=>$countTransactions,$totalDebit,$totalCredit]);
 
         return [$totalCredit, $totalDebit];
     }
