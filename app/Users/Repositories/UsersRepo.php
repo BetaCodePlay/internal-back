@@ -913,33 +913,34 @@ class UsersRepo
 
     public function sqlShareTmp($type, $id = null, $typeUser = null)
     {
-        if ($type === 'users_agent') {
-            //limit 1000
-            // order by asc
-            //where type_user = null
-            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
-        }
-
-        if ($type === 'update_rol') {
-            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
-        }
-
-//        if ($type === 'users') {
+//        if ($type === 'users_agent') {
 //            //limit 1000
 //            // order by asc
 //            //where type_user = null
-//            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
-//        }
-//        if ($type === 'agent') {
-//            return DB::select('select master from agents where user_id = ?', [$id]);
-//        }
-//        if ($type === 'agent_user') {
-//            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+//            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
 //        }
 //
-//        if ($type === 'update') {
-//            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+//        if ($type === 'update_rol') {
+//            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
 //        }
+
+        //TODO CHANGE TYPE_USER
+        if ($type === 'users') {
+            //limit 1000
+            // order by asc
+            //where type_user = null
+            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
+        }
+        if ($type === 'agent') {
+            return DB::select('select master from agents where user_id = ?', [$id]);
+        }
+        if ($type === 'agent_user') {
+            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+        }
+
+        if ($type === 'update') {
+            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+        }
 
         return [];
     }
