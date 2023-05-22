@@ -614,15 +614,15 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'provider' => ['required_if:lock_users,false'],
+            'category' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
         try {
             $user = $request->user;
             $currency = session('currency');
-            $provider = $request->provider;
             $maker = $request->maker;
+            $category = $request->category;
             $type = $request->type;
             $lockUsers = $request->lock_users;
 
@@ -635,7 +635,7 @@ class AgentsController extends Controller
                     'id' => $user
                 ];
             }
-            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker);
+            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $category, $maker);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
@@ -644,13 +644,13 @@ class AgentsController extends Controller
                         $user = $userToUpdate['user_id'];
                         $data = [
                             'currency_iso' => $userToUpdate['currency_iso'],
-                            'provider_id' => $userToUpdate['provider_id'],
+                            'category' => $userToUpdate['category'],
                             'makers' => $userToUpdate['makers'],
                             'user_id' => $user,
                             'created_at' => $userToUpdate['created_at'],
                             'updated_at' => $userToUpdate['updated_at']
                         ];
-                        $this->agentsRepo->updateBlockAgents($currency,$provider,$user,$data);
+                        $this->agentsRepo->updateBlockAgents($currency,$category,$user,$data);
                     }
                     $data = [
                         'title' => _i('Locked provider'),
@@ -662,14 +662,14 @@ class AgentsController extends Controller
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $currencyIso = $userToUpdate['currency_iso'];
-                        $providerId = $userToUpdate['provider_id'];
+                        $category = $userToUpdate['category'];
                         $userId = $userToUpdate['user_id'];
                         if(is_null($maker)){
-                            $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
+                            $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
                         }else{
                             $unBlockMaker = array_values(array_diff(json_decode($userToUpdate['makers']), [$maker]));
                             $data['makers'] = json_encode($unBlockMaker);
-                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$providerId,$userId,$data);
+                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$category,$userId,$data);
                         }
                     }
                     $data = [

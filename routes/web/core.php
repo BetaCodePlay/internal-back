@@ -50,12 +50,6 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'CoreController@numberConnectedDivice'
     ]);
 
-    // Get makers
-    Route::get('makers', [
-        'as' => 'core.makers',
-        'uses' => 'CoreController@makers'
-    ]);
-
     // Get makers by providers
     Route::get('makers-by-provider', [
         'as' => 'core.makers-by-provider',

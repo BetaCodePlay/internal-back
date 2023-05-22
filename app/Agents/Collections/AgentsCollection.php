@@ -3531,34 +3531,33 @@ class AgentsCollection
      * @param array $users Users data
      * @param array $subAgents Subagents data
      * @param string $currency Currency iso
-     * @param int $provider Provider id
+     * @param string $category Category name
+     * @param string $maker Maker name
      * @return false|string
      */
-    public function formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker)
+    public function formatDataLock($subAgents, $users, $agent, $currency, $category, $maker)
     {
         $blockUsers = [];
-        $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
-        $dataUsers = $this->formatDataLockUsers($users, $currency, $provider, $maker);
+        $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $category, $maker);
+        $dataUsers = $this->formatDataLockUsers($users, $currency, $category, $maker);
         $agentsRepo = new AgentsRepo();
         $whitelabel = Configurations::getWhitelabel();
 
         if (!is_null($agent)) {
             $dataMakers[] = $maker;  
-            if(isset($provider)){
-                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                foreach ($excludedAgents as $excludedAgent) {
+            if(!is_null($category)){
+                $excludedAgents = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
+                if($excludedAgents){
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    if($agent->id == $excludedAgent->user_id){
-                        $dataMakers = array_merge($dataMakers,$makersExclude);
-                    }
+                    $dataMakers = array_merge($dataMakers,$makersExclude);
                 }
             }
             $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $blockUsers[] = [
                 'currency_iso' => $currency,
-                'provider_id' => $provider,
                 'makers' => json_encode($listMakers),
                 'user_id' => $agent->id,
+                'category' => $category,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -3572,10 +3571,11 @@ class AgentsCollection
      *
      * @param array $agents Agents data
      * @param string $currency Currency iso
-     * @param int $provider Provider id
+     * @param string $category Category name
+     * @param string $maker Maker name
      * @return false|string
      */
-    public function formatDataLockSubAngents($agents, $currency, $provider, $maker)
+    public function formatDataLockSubAngents($agents, $currency, $category, $maker)
     {
         $agentsRepo = new AgentsRepo();
         $whitelabel = Configurations::getWhitelabel();
@@ -3586,11 +3586,11 @@ class AgentsCollection
             $users = $agentsRepo->getUsersByAgent($agent->id, $currency);
 
             if (count($subAgents) > 0) {
-                $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $provider, $maker);
+                $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $category, $maker);
             }
 
             if (count($users) > 0) {
-                $usersChildren = $this->formatDataLockUsers($users, $currency, $provider, $maker);
+                $usersChildren = $this->formatDataLockUsers($users, $currency, $category, $maker);
             }
 
             if (count($subAgents) > 0 && count($users) > 0) {
@@ -3604,21 +3604,19 @@ class AgentsCollection
                 }
             }
             $dataMakers[] = $maker;
-            if(isset($provider)){
-                $excludedAgents = $agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
-                foreach ($excludedAgents as $excludedAgent) { 
+            if(!is_null($category)){
+                $excludedAgents = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
+                if($excludedAgents){
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    if($agent->user_id == $excludedAgent->user_id){
-                        $dataMakers = array_merge($dataMakers,$makersExclude);
-                    }
+                    $dataMakers = array_merge($dataMakers,$makersExclude);
                 }
             }
             $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $dataAgents[] = [
                 'currency_iso' => $currency,
-                'provider_id' => $provider,
-                'makers' => json_encode($listMakers),
                 'user_id' => $agent->user_id,
+                'category' => $category,
+                'makers' => json_encode($listMakers),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -3638,28 +3636,26 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLockUsers($users, $currency, $provider, $maker)
+    public function formatDataLockUsers($users, $currency, $category, $maker)
     {
         $dataUsers = [];
         $whitelabel = Configurations::getWhitelabel();
         $usersRepo = new UsersRepo();
         foreach ($users as $user) {
             $dataMakers[] = $maker;  
-            if(isset($provider)){
-                $excludedUsers = $usersRepo->getExcludeProviderUserByProvider($currency, $provider, $whitelabel);
-                foreach ($excludedUsers as $excludedUser) {
-                    $makersExclude = isset($excludedUser->makers) ? json_decode($excludedUser->makers) : [];
-                    if($user['id'] == $excludedUser->user_id){
-                        $dataMakers = array_merge($dataMakers,$makersExclude);
-                    }
+            if(isset($category)){
+                $excludedAgents = $agentsRepo->getAgentLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
+                if($excludedAgents){
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    $dataMakers = array_merge($dataMakers,$makersExclude);
                 }
             }
             $listMakers = array_values(array_filter(array_unique($dataMakers)));
             $dataUsers[] = [
                 'currency_iso' => $currency,
-                'provider_id' => $provider,
                 'makers' => json_encode($listMakers),
                 'user_id' => $user['id'],
+                'category' => $category,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];

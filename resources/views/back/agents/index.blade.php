@@ -914,7 +914,7 @@
                                                         <input type="hidden" name="user" class="user">
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="agent">{{ _i('Categories') }}</label>
+                                                                <label for="category">{{ _i('Categories') }}</label>
                                                                 <select name="category" id="category"
                                                                         class="form-control" data-route="{{ route('core.makers-by-category') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
@@ -930,14 +930,8 @@
                                                             <div class="form-group">
                                                                 <label for="maker">{{ _i('Maker') }}</label>
                                                                 <select name="maker" id="maker"
-                                                                        class="form-control" data-route="{{ route('core.makers') }}">
+                                                                        class="form-control">
                                                                     <option value="">{{ _i('Select...') }}</option>
-                                                                    <option value="*">{{ _i('All') }}</option>
-                                                                    @foreach ($makers as $maker)
-                                                                        <option value="{{ $maker->maker }}">
-                                                                            {{ $maker->maker }}
-                                                                        </option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
