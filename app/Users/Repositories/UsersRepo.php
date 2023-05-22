@@ -219,12 +219,11 @@ class UsersRepo
      * @param int $user User ID
      * @param int $whitelabel Whitelabel ID
      * @param string $currency Currency ISO
-     * @param int $provider Provider ID
      * @return mixed
      */
     public function getUserLockByUserAndCategory($user, $currency, $category, $whitelabel)
     {
-        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_makers_users.*')
+        $users = User::select('users.id as user_id','users.username','exclude_makers_users.*')
             ->join('exclude_makers_users', 'exclude_makers_users.user_id', '=', 'users.id')
             ->where('users.whitelabel_id', $whitelabel)
             ->where('exclude_makers_users.user_id', $user)
