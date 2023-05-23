@@ -392,6 +392,7 @@ class SectionImagesController extends Controller
         $position = $request->position;
         $category = $request->category;
         $categories=['popular','new','featured'];
+        $data['categories'] = $categories;
         $user_id = auth()->user()->id;
         switch ($templateElementType) {
             case TemplateElementTypes::$home:
