@@ -3547,7 +3547,7 @@ class AgentsCollection
 
         if (!is_null($agent)) {
             $dataMakers[] = $maker;  
-            if ($lockUsers) {
+            if ($lockUsers == 'true') {
                 $blockUsers[] = [
                 'currency_iso' => $currency,
                 'makers' => null,
@@ -3591,6 +3591,8 @@ class AgentsCollection
             }
         }
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
+        
+        \Log::debug([$data]);
         return $data;
     }
 
