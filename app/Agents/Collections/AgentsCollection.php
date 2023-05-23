@@ -3781,7 +3781,9 @@ class AgentsCollection
             
             if (is_null($category)) {
                 $categories = $gamesRepo->getCategoriesByMaker($maker);
+                \Log::debug($categories);
                 foreach ($categories as $categoryElement) {
+                    \Log::debug($categoryElement);
                     $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
                     $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
                     $dataMakers = array_merge($dataMakers, $makersExclude);
