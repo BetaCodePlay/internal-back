@@ -728,7 +728,7 @@ class Agents {
                 callback: function(doc){
                 // Comentado para pruebas
                 // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
-                    doc.save('examen.pdf');
+                    doc.save('makers'+Date.now()+'.pdf');
                     $button.button('reset');
                 }
             });
