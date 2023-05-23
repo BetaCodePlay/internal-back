@@ -3729,7 +3729,7 @@ class AgentsCollection
                     array_push($auxCurrencies, $currency);
                     $dataUsers[] = [
                         'currency_iso' => $currency,
-                        'provider_id' => $excludedUser->provider_id,
+                        'category' => $excludedUser->category,
                         'makers' => $excludedUser->makers,
                         'user_id' => $user,
                         'created_at' => Carbon::now(),
@@ -3739,7 +3739,7 @@ class AgentsCollection
                     array_push($auxCurrencies, $currency);
                     $dataUsers[] = [
                         'currency_iso' => $currency,
-                        'provider_id' => $excludedUser->provider_id,
+                        'category' => $excludedUser->category,
                         'makers' => $excludedUser->makers,
                         'user_id' => $user,
                         'created_at' => Carbon::now(),

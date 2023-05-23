@@ -61,6 +61,18 @@ class AgentsRepo
     }
 
     /**
+     * Block agents and users
+     *
+     * @param array $agents Agent data
+     * @return mixed
+     */
+    public function blockAgentsMakers($agents)
+    {
+        $agents = \DB::table('exclude_makers_users')->insertOrIgnore($agents);
+        return $agents;
+    }
+
+    /**
      * Update Block agents and users
      *
      * @param array $agents Agent data
@@ -328,6 +340,21 @@ class AgentsRepo
         $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.makers', 'exclude_providers_users.currency_iso')
             ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
             ->where('exclude_providers_users.user_id', $user)
+            ->get();
+        return $data;
+    }
+
+    /**
+     * Get exclude user maker
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getExcludeUserMaker($user)
+    {
+        $data = User::select('exclude_makers_users.category', 'exclude_makers_users.makers', 'exclude_makers_users.currency_iso')
+            ->join('exclude_makers_users', 'users.id', '=', 'exclude_makers_users.user_id')
+            ->where('exclude_makers_users.user_id', $user)
             ->get();
         return $data;
     }

@@ -2603,7 +2603,7 @@ class AgentsController extends Controller
             $email = "$username@$domain";
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserProvider($owner);
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -2657,7 +2657,7 @@ class AgentsController extends Controller
 
             foreach ($currencies as $key => $agentCurrency) {
                 $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $agentCurrency);
-                $this->agentsRepo->blockAgents($excludedUser);
+                $this->agentsRepo->blockAgentsMakers($excludedUser);
                 $wallet = Wallet::store($user->id, $user->username, $uuid, $agentCurrency, $whitelabel, session('wallet_access_token'));
                 $userData = [
                     'user_id' => $user->id,
@@ -3052,7 +3052,7 @@ class AgentsController extends Controller
             $timezone = $request->timezone;
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserProvider($owner);
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -3128,7 +3128,7 @@ class AgentsController extends Controller
             ];
             //Audits::store($user, AuditTypes::$player_creation, Configurations::getWhitelabel(), $auditData);
             $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $currency);
-            $this->agentsRepo->blockAgents($excludedUser);
+            $this->agentsRepo->blockAgentsMakers($excludedUser);
             $wallet = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'));
             $this->generateReferenceCode->generateReferenceCode($user->id);
             $userData = [
