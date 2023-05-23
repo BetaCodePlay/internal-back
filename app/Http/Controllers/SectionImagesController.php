@@ -391,8 +391,6 @@ class SectionImagesController extends Controller
         $section = !is_null($request->section) ? $request->section : null;
         $position = $request->position;
         $category = $request->category;
-        $categories=['popular','new','featured'];
-        $data['categories'] = $categories;
         $user_id = auth()->user()->id;
         switch ($templateElementType) {
             case TemplateElementTypes::$home:
@@ -451,6 +449,8 @@ class SectionImagesController extends Controller
 
         if ($section == 'section-7') {
             $validationRules['category'] = 'required';
+            $categories=['popular','new','featured'];
+            $data['categories'] = $categories;
         }
         try {
             $whitelabel = Configurations::getWhitelabel();
