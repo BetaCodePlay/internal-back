@@ -264,6 +264,7 @@ class UsersRepo
     public function getExcludeProviderUserByDates($currency, $category, $maker, $whitelabel, $startDate, $endDate)
     {
         $users = User::select('users.id as user_id','users.username', 'exclude_makers_users.*')
+            ->join('exclude_makers_users', 'exclude_makers_users.user_id', '=', 'users.id')
             ->where('users.whitelabel_id', $whitelabel)
             ->whereBetween('exclude_makers_users.created_at', [$startDate, $endDate]);
 
@@ -276,7 +277,6 @@ class UsersRepo
             if (!empty($maker)) {
                 $users->whereJsonContains('exclude_makers_users.makers', $maker);
             }
-
             $data = $users->orderBy('exclude_makers_users.created_at', 'DESC')->get();
         return $data;
     }
