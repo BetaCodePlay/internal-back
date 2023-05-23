@@ -41,6 +41,10 @@
                                 <input type="file" name="front" id="show-front" class="opacity-0">
                             </div>
                         @else
+                            <div class="form-group">
+                                <label for="image">{{ _i('Image') }}</label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
                             <div class="col-md-6">
                                 <label class="">
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
