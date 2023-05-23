@@ -11,7 +11,6 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
 /**
@@ -327,59 +326,6 @@ class TransactionsRepo
     }
 
     /**
-     * Get transactions list by user and provider With Paginate
-     *
-     * @param int $user User ID
-     * @param array $providers Providers IDS
-     * @param string $currency Currency Iso
-     * @param int $limit Transactions limit
-     * @param int $offset Transactions offset
-     * @return mixed
-     */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null)
-    {
-
-        $countTransactions = Transaction::select('transactions.id')
-            ->where('transactions.user_id', $user)
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC');
-
-        $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
-            ->join('users', 'transactions.user_id', '=', 'users.id')
-            ->where('transactions.user_id', $user)
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC')
-            ->limit($limit)
-            ->offset($offset);
-
-        if (is_null($typeUser) || $typeUser === 'all') {
-
-        }elseif ($typeUser === 'agent'){
-            $countTransactions = $countTransactions->whereNull('data->provider_transaction');
-            $transactions = $transactions->whereNull('data->provider_transaction');
-        } else {
-            $countTransactions = $countTransactions->whereNotNull('data->provider_transaction');
-            $transactions = $transactions->whereNotNull('data->provider_transaction');
-        }
-
-        if (!is_null($username)) {
-            $countTransactions = $countTransactions->where('username', 'ilike', "%$username%");
-            $transactions = $transactions->where('username', 'ilike', "%$username%");
-        }
-
-        $countTransactions = $countTransactions->get();
-        $transactions = $transactions->get();
-
-        return [$transactions, count($countTransactions)];
-
-    }
-
-    /**
      * Totals Data Makers
      * Providers And Currency
      *
@@ -394,7 +340,7 @@ class TransactionsRepo
     }
 
      /**
-     *  Get transactions list by user and provider With Paginate V 1.0
+     *  Get transactions list by user and provider With Paginate
      *
      * @param int $user User ID
      * @param array $providers Providers IDS
@@ -404,15 +350,8 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginateV1($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [])
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [])
     {
-
-        $countTransactions = Transaction::select('transactions.id')
-            ->whereIn('transactions.user_id', $arraySonIds)
-            ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC');
 
        $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
             'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
@@ -421,29 +360,24 @@ class TransactionsRepo
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC')
-            ->limit($limit)
-            ->offset($offset);
+            ->orderBy('transactions.id', 'DESC');
 
         if (is_null($typeUser) || $typeUser === 'all') {
 
         }elseif ($typeUser === 'agent'){
-            $countTransactions = $countTransactions->whereNull('data->provider_transaction');
             $transactions = $transactions->whereNull('data->provider_transaction');
         } else {
-            $countTransactions = $countTransactions->whereNotNull('data->provider_transaction');
             $transactions = $transactions->whereNotNull('data->provider_transaction');
         }
 
         if (!is_null($username)) {
-            $countTransactions = $countTransactions->where('username', 'ilike', "%$username%");
             $transactions = $transactions->where('username', 'ilike', "%$username%");
         }
 
-        $countTransactions = $countTransactions->get();
-        $transactions = $transactions->get();
+        $countTransactions = $transactions->count();
+        $transactions = $transactions->limit($limit)->offset($offset)->get();
 
-        return [$transactions, count($countTransactions)];
+        return [$transactions, $countTransactions];
 
     }
 

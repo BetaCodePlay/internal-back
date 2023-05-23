@@ -913,33 +913,34 @@ class UsersRepo
 
     public function sqlShareTmp($type, $id = null, $typeUser = null)
     {
-        if ($type === 'users_agent') {
-            //limit 1000
-            // order by asc
-            //where type_user = null
-            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
-        }
-
-        if ($type === 'update_rol') {
-            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
-        }
-
-//        if ($type === 'users') {
+//        if ($type === 'users_agent') {
 //            //limit 1000
 //            // order by asc
 //            //where type_user = null
-//            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
-//        }
-//        if ($type === 'agent') {
-//            return DB::select('select master from agents where user_id = ?', [$id]);
-//        }
-//        if ($type === 'agent_user') {
-//            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+//            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
 //        }
 //
-//        if ($type === 'update') {
-//            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+//        if ($type === 'update_rol') {
+//            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);
 //        }
+
+        //TODO CHANGE TYPE_USER
+        if ($type === 'users') {
+            //limit 1000
+            // order by asc
+            //where type_user = null
+            return DB::select('select id from users where type_user is null order by id asc limit ? ', [1000]);
+        }
+        if ($type === 'agent') {
+            return DB::select('select master from agents where user_id = ?', [$id]);
+        }
+        if ($type === 'agent_user') {
+            return DB::select('select agent_id from agent_user where user_id = ?', [$id]);
+        }
+
+        if ($type === 'update') {
+            return DB::select('UPDATE users SET type_user = ? WHERE id = ?', [$typeUser, $id]);
+        }
 
         return [];
     }
@@ -1127,65 +1128,6 @@ class UsersRepo
         $user = DB::select('select u.id from site.users u inner join site.user_currencies uc on u.id = uc.user_id where u.username = ? AND uc.currency_iso = ? AND u.whitelabel_id = ?', [$username,$currency,$whitelabel]);
 
         return $user;
-    }
-
-    /**
-     * Get Ids Son by father
-     *
-     * @param string $id User Id Father
-     * @param string $currency Currency Iso
-     * @param int $whitelabel Whitelabel Id
-     * @return mixed
-     */
-    public function arraySonIds($id, $currency, $whitelabel)
-    {
-        $ids = DB::select('
-                        SELECT u.id from site.agent_user as au
-                            inner join site.users as u on u.id = au.user_id
-                            where u.whitelabel_id= ? AND
-                            au.agent_id in (WITH RECURSIVE all_agents AS (
-                            SELECT agents.id, agents.user_id, agents.owner_id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            WHERE agents.user_id = ?
-                            AND currency_iso = ?
-
-                            UNION
-
-                            SELECT agents.id, agents.user_id, agents.owner_id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            JOIN all_agents ON agents.owner_id = all_agents.user_id
-                            where agent_currencies.currency_iso  = ?
-                            ) SELECT all_agents.id FROM all_agents)
-
-                        UNION
-
-                        SELECT u.id from site.users as u
-                            where  u.whitelabel_id= ? AND
-                            id in (with recursive tabla_agent as (
-                            SELECT agents.user_id as id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            WHERE agents.user_id = ?
-                            AND currency_iso = ?
-
-                            UNION
-
-                            SELECT agents.user_id as id
-                            FROM site.agents as agents
-                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
-                            JOIN tabla_agent ON agents.owner_id = tabla_agent.id
-                            WHERE currency_iso = ?) select id from tabla_agent);
-        ', [$whitelabel,$id, $currency, $currency,$whitelabel,$id, $currency,$currency]);
-        $arrayIds =[];
-        foreach ($ids as $value){
-            //if($id != $value->id){
-                $arrayIds[]=$value->id;
-            //}
-
-        }
-        return $arrayIds;
     }
 
     public function uniqueUsername($username)
