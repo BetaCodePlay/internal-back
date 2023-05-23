@@ -3579,7 +3579,7 @@ class AgentsCollection
             if (is_null($category)) {
                 $categories = $gamesRepo->getCategories();
                 foreach ($categories as $categoryElement) {
-                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement, $whitelabel);
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement->category, $whitelabel);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     $dataMakers = array_merge($dataMakers, $makersExclude);
                     $listMakers = array_values(array_filter(array_unique($dataMakers)));
@@ -3587,7 +3587,7 @@ class AgentsCollection
                         'currency_iso' => $currency,
                         'makers' => json_encode($listMakers),
                         'user_id' => $agent->id,
-                        'category' => $categoryElement,
+                        'category' => $categoryElement->category,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
                     ];
@@ -3709,14 +3709,14 @@ class AgentsCollection
             if (is_null($category)) {
                 $categories = $gamesRepo->getCategories();
                 foreach ($categories as $categoryElement) {
-                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement, $whitelabel);
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement->category, $whitelabel);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     $dataMakers = array_merge($dataMakers, $makersExclude);
                     $listMakers = array_values(array_filter(array_unique($dataMakers)));
                     $dataAgents[] = [
                         'currency_iso' => $currency,
                         'user_id' => $agent->user_id,
-                        'category' => $categoryElement,
+                        'category' => $categoryElement->category,
                         'makers' => json_encode($listMakers),
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
@@ -3782,8 +3782,7 @@ class AgentsCollection
             if (is_null($category)) {
                 $categories = $gamesRepo->getCategoriesByMaker($maker);
                 foreach ($categories as $categoryElement){
-                    \Log::debug($categoryElement->category);
-                    $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
+                    $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $categoryElement->category, $whitelabel);
                     $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
                     $dataMakers = array_merge($dataMakers, $makersExclude);
                     $listMakers = array_values(array_filter(array_unique($dataMakers)));
@@ -3791,7 +3790,7 @@ class AgentsCollection
                         'currency_iso' => $currency,
                         'makers' => json_encode($listMakers),
                         'user_id' => $user['id'],
-                        'category' => $category,
+                        'category' => $categoryElement->category,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
                     ];
