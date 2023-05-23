@@ -3721,29 +3721,15 @@ class AgentsCollection
     public function formatExcluderProvidersUsers($user, $excludedUsers, $currency)
     {
         $dataUsers = [];
-        $auxCurrencies = [];
         foreach ($excludedUsers as $excludedUser) {
-            if ($currency == $excludedUser->currency_iso) {
-                \Log::debug("hola",[$excludedUser]);
-                $dataUsers[] = [
-                    'currency_iso' => $currency,
-                    'category' => $excludedUser->category,
-                    'makers' => $excludedUser->makers,
-                    'user_id' => $user,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-            } else {
-                \Log::debug("hola2",[$excludedUser]);
-                $dataUsers[] = [
-                    'currency_iso' => $currency,
-                    'category' => $excludedUser->category,
-                    'makers' => $excludedUser->makers,
-                    'user_id' => $user,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-            }
+            $dataUsers[] = [
+                'currency_iso' => $currency,
+                'category' => $excludedUser->category,
+                'makers' => $excludedUser->makers,
+                'user_id' => $user,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
         }
         return $dataUsers;
     }
