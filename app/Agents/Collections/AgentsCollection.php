@@ -827,7 +827,7 @@ class AgentsCollection
     public function closuresTotalsProviderAndMakerGlobal($tableDb, $percentage = null)
     {
         $htmlProvider = sprintf(
-            '<table class="table table-bordered table-sm table-striped table-hover">',
+            '<table id="makers-global" class="table table-bordered table-sm table-striped table-hover">',
         );
         if (count($tableDb) > 0) {
             $prov_current = 0;

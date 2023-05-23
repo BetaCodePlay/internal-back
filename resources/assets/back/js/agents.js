@@ -9,7 +9,8 @@ import {
 } from "../../commons/js/core";
 import {clearForm, getCookie, initDateRangePickerEndToday, initLitepickerEndToday,initLitepickerEndTodayNew, initSelect2, refreshRandomPassword} from "./commons";
 import moment from 'moment';
-
+import jsPDF from 'jspdf';
+import { data } from 'jquery';
 class Agents {
 
     // Add users
@@ -660,6 +661,7 @@ class Agents {
     financialStateMakersDetails() {
         initSelect2();
         initDateRangePickerEndToday(open = 'right');
+        let api;
         let $table = $('#financial-state-table');
         let $button = $('#update');
         $button.trigger('click');
@@ -680,6 +682,24 @@ class Agents {
             }).done(function (json) {
                 $table.html(json.data.table);
 
+                // setTimeout(() => {
+                //     var doc = new jsPDF('p', 'pt', 'letter');
+
+                //     var margin = 10;
+                //     var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
+                //     doc.html(document.getElementById('print-document'), {
+                //         x: margin,
+                //         y: margin,
+                //         html2canvas: {
+                //             scale: scale,
+                //         },
+                //         callback: function(doc){
+                //         // Comentado para pruebas
+                //         // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
+                //         doc.save('examen.pdf')
+                //         }
+                //     });
+                // }, 3000);
             }).fail(function (json) {
                 swalError(json);
 
@@ -689,7 +709,31 @@ class Agents {
             Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso, provider_id, whitelabel_id);
         });
      }
+     printDocumentMakers() {
+        let $button = $('#print-pdf-d');
 
+        $button.click(function () {
+            $button.button('loading');
+
+            var doc = new jsPDF('p', 'pt', 'letter');
+
+            var margin = 10;
+            var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
+            doc.html(document.getElementById('print-document'), {
+                x: margin,
+                y: margin,
+                html2canvas: {
+                    scale: scale,
+                },
+                callback: function(doc){
+                // Comentado para pruebas
+                // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
+                    doc.save('makers'+Date.now()+'.pdf');
+                    $button.button('reset');
+                }
+            });
+        });
+     }
    // Financial state
       // Financial state
    financialState(user = null) {

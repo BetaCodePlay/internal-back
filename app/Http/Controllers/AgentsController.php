@@ -833,29 +833,31 @@ class AgentsController extends Controller
 //        }
 //
 //        return $users;
-        return 'no disponible';
-//        $users = $this->usersRepo->sqlShareTmp('users');
-//        foreach ($users as $value) {
-//            $value->type_user = null;
-//            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
-//            if (!is_null($agentTmp)) {
-//                $value->type_user = TypeUser::$agentCajero;
-//                if (isset($agentTmp->master) && $agentTmp->master) {
-//                    $value->type_user = TypeUser::$agentMater;
-//                }
-//            }
-//
-//            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
-//            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
-//                $value->type_user = TypeUser::$player;
-//            }
-//            //TODO UPDATE
-//            if (!is_null($value->type_user)) {
-//                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
-//            }
-//        }
-//
-//        return $users;
+        //return 'no disponible';
+
+        //TODO CHANGE TYPE USER
+        $users = $this->usersRepo->sqlShareTmp('users');
+        foreach ($users as $value) {
+            $value->type_user = null;
+            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
+            if (!is_null($agentTmp)) {
+                $value->type_user = TypeUser::$agentCajero;
+                if (isset($agentTmp->master) && $agentTmp->master) {
+                    $value->type_user = TypeUser::$agentMater;
+                }
+            }
+
+            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
+            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
+                $value->type_user = TypeUser::$player;
+            }
+            //TODO UPDATE
+            if (!is_null($value->type_user)) {
+                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
+            }
+        }
+
+        return $users;
     }
 
     /**

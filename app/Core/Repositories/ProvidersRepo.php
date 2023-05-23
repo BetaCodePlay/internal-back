@@ -142,6 +142,8 @@ class ProvidersRepo
         return Provider::select('providers.*')
             ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
             ->where('client_id', $whitelabel)
+            ->where('providers.status', true)
+            ->groupBy('providers.id')
             ->orderBy('name', 'ASC')
             ->get();
     }

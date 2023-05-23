@@ -277,7 +277,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 
         // Show financial State Makers Details
         Route::get('financial-state-makers-details', [
-            'as' => 'agents.reports.financial-state-makers',
+            'as' => 'agents.reports.financial-state-makers-details',
             'uses' => 'AgentsController@financialStateMakersDetails'
         ]);
 
