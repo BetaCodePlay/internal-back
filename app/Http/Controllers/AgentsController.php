@@ -615,6 +615,7 @@ class AgentsController extends Controller
     {
         $this->validate($request, [
             'category' => ['required_if:lock_users,false'],
+            'maker' => ['required_if:category,*'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
