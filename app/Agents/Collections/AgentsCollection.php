@@ -3722,7 +3722,6 @@ class AgentsCollection
     {
         $dataUsers = [];
         $auxCurrencies = [];
-        \Log::debug([$excludedUsers]);
         foreach ($excludedUsers as $excludedUser) {
             $position = array_search($currency, $auxCurrencies);
             if ($position === false) {
@@ -3736,6 +3735,8 @@ class AgentsCollection
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
                     ];
+                    \Log::debug("hola",[$excludedUser]);
+                    \Log::debug([$dataUsers]);
                 } else {
                     array_push($auxCurrencies, $currency);
                     $dataUsers[] = [
