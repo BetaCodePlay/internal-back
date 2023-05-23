@@ -681,7 +681,26 @@ class Agents {
             }).done(function (json) {
                 $table.html(json.data.table);
                 let $tableData = $('#makers-global');
-                $tableData.DataTable();
+                $tableData.DataTable({
+                    "buttons": {
+                        "buttons": [
+                            {extend: 'excel'},
+                            {extend: 'pdf'},
+                            {
+                                extend: 'print',
+                                text: function (dt) {
+                                    return dt.i18n('buttons.print', 'Print');
+                                }
+                            },
+                            {
+                                extend: 'copy',
+                                text: function (dt) {
+                                    return dt.i18n('buttons.copy', 'Copy');
+                                }
+                            }
+                        ]
+                    },
+                });
 
             }).fail(function (json) {
                 swalError(json);
