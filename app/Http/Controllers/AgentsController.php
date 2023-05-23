@@ -1166,7 +1166,7 @@ class AgentsController extends Controller
                 if(in_array($userData->id,$agents)){
                     if ($category == "*") {
                         $categories = $this->gamesRepo->getCategoriesByMaker($maker);
-                        $categories = array_column($categories, 'category');
+                        $categories = array_column($categories->toArray(), 'category');
                         \Log::debug([$categories]);
                     } else {
                         $categories[] = $category;
@@ -1177,7 +1177,7 @@ class AgentsController extends Controller
                         $dataMakers = array_merge($makers, $makersExclude);
                         $makersArray = array_values(array_filter(array_unique($dataMakers)));
                         $usersData[] = [
-                            'category' => $categoryElement,
+                            'category' => $category,
                             'makers' => json_encode($makersArray),
                             'currency_iso' => $currency
                         ];
