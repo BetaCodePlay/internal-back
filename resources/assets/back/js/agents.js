@@ -1581,7 +1581,7 @@ class Agents {
             let category = $(this).val();
             let makers = $('#maker');
             let route;
-            if (category !== '') {
+            if (category !== '*') {
                 route = $(this).data('route');
             }else{
                 route = makers.data('route');
