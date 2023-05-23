@@ -661,6 +661,7 @@ class Agents {
         initSelect2();
         initDateRangePickerEndToday(open = 'right');
         let $table = $('#financial-state-table');
+
         let $button = $('#update');
         $button.trigger('click');
         $button.click(function () {
@@ -679,6 +680,8 @@ class Agents {
 
             }).done(function (json) {
                 $table.html(json.data.table);
+                let $tableData = $('#makers-global');
+                $tableData.DataTable();
 
             }).fail(function (json) {
                 swalError(json);
