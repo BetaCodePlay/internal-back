@@ -391,6 +391,7 @@ class SectionImagesController extends Controller
         $section = !is_null($request->section) ? $request->section : null;
         $position = $request->position;
         $category = $request->category;
+        $categories=['popular','new','featured'];
         $user_id = auth()->user()->id;
         switch ($templateElementType) {
             case TemplateElementTypes::$home:
