@@ -405,7 +405,7 @@ class Users {
             "columns": [
                 {"data": "user"},
                 {"data": "username"},
-                {"data": "name"},
+                {"data": "category"},
                 {"data": "makers"},
                 {"data": "currency_iso"},
                 {"data": "date", "className": "text-right"},
@@ -425,12 +425,12 @@ class Users {
         });
         $button.click(function () {
             $button.button('loading');
-            let provider = $('#provider_filter').val();
+            let category = $('#category_filter').val();
             let maker = $('#maker_filter').val();
             let currency = $('#currency_filter').val();
             let startDate = $('#start_date').val();
             let endDate = $('#end_date').val();
-            let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}`;
+            let route = `${$table.data('route')}/${startDate}/${endDate}?category=${category}&maker=${maker}&currency=${currency}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
@@ -463,32 +463,31 @@ class Users {
     };
 
     //Select maker
-    selectProvidersMaker(){
+    selectCategoryMaker(){
         initSelect2();
-        $('.provider').on('change', function () {
-            let provider = $(this).val();
-            let route = $(this).data('route');
-            let makers = $('.maker');
-            if (provider !== '') {
-                $.ajax({
-                    url: route,
-                    type: 'get',
-                    dataType: 'json',
-                    data: {
-                        provider
-                    }
-                }).done(function (json) {
-                    $('.maker option[value!=""]').remove();
-                    $(json.data.makers).each(function (key, element) {
-                        makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
-                    })
-                    makers.prop('disabled', false);
-                }).fail(function (json) {
-
-                });
-            } else {
-                makers.val('');
+        $('#category').on('change', function () {
+            let category = $(this).val();
+            let makers = $('#maker');
+            let route;
+            if (category !== '*') {
+                route = $(this).data('route');
+            }else{
+                route = makers.data('route');
             }
+            $.ajax({
+                url: route,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    category
+                }
+            }).done(function (json) {
+                $('#maker option[value!=""]').remove();
+                $(json.data.makers).each(function (key, element) {
+                    makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
+                })
+                makers.prop('disabled', false);
+            }).fail(function (json) {});
         }).trigger('change');
     }
 

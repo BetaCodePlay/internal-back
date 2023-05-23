@@ -1965,12 +1965,12 @@ class Agents {
         });
         $button.click(function () {
             $button.button('loading');
-            let provider = $('#provider_filter').val();
+            let category = $('#category_filter').val();
             let maker = $('#maker_filter').val();
             let currency = $('#currency_filter').val();
             let startDate = $('#start_date').val();
             let endDate = $('#end_date').val();
-            let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}`;
+            let route = `${$table.data('route')}/${startDate}/${endDate}?category=${category}&maker=${maker}&currency=${currency}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');

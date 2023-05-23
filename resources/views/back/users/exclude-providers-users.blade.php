@@ -17,12 +17,14 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="agent">{{ _i('Provider') }}</label>
-                                    <select name="provider" id="provider" class="form-control provider" data-route="{{ route('core.makers-by-provider') }}">>
+                                    <label for="category">{{ _i('Categories') }}</label>
+                                    <select name="category" id="category"
+                                            class="form-control" data-route="{{ route('core.makers-by-category') }}">
                                         <option value="">{{ _i('Select...') }}</option>
-                                        @foreach ($providers as $provider)
-                                            <option value="{{ $provider['id'] }}">
-                                                {{ $provider['name'] }}
+                                        <option value="*">{{ _i('All') }}</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->category }}">
+                                                {{ $category->category }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -93,12 +95,13 @@
                         </div>
                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="agent">{{ _i('Provider') }}</label>
-                                <select name="provider_filter" id="provider_filter" class="form-control">>
+                                <label for="category_filter">{{ _i('Categories') }}</label>
+                                <select name="category_filter" id="category_filter"
+                                        class="form-control">
                                     <option value="">{{ _i('Select...') }}</option>
-                                    @foreach ($providers as $provider)
-                                        <option value="{{ $provider['id'] }}">
-                                            {{ $provider['name'] }}
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->category }}">
+                                            {{ $category->category }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -152,7 +155,7 @@
                                 {{ _i('Username') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Provider') }}
+                                {{ _i('Category') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Maker') }}
@@ -181,7 +184,7 @@
         $(function () {
             let users = new Users();
             users.excludeProviderUserList();
-            users.selectProvidersMaker();
+            users.selectCategoryMaker();
         });
     </script>
 @endsection

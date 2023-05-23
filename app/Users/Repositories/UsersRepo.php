@@ -91,6 +91,23 @@ class UsersRepo
     }
 
     /**
+     * Delete exclude makers user
+     *
+     * @param int $category Category ID
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function deleteExcludeMakersUser($category, $user, $currency)
+    {
+        return \DB::table('exclude_makers_users')
+            ->where('user_id', $user)
+            ->where('category', $category)
+            ->where('currency_iso', $currency)
+            ->delete();
+    }
+
+    /**
      * Find by referral code
      *
      * @param string $code Referral code
@@ -1255,6 +1272,22 @@ class UsersRepo
             ->where('exclude_providers_users.provider_id', $provider)
             ->where('exclude_providers_users.currency_iso', $currency)
             ->update($data);
+        return $users;
+    }
+
+    /**
+     * Update exclude provider user
+     *
+     * @param int $id ExcludeProviderUser ID
+     * @param array $data ExcludeProviderUser data
+     * @return mixed
+     */
+    public function updateExcludeMakersUser($currency, $category, $user, $data)
+    {
+        $users = \DB::table('exclude_makers_users')->updateOrInsert(
+            ['category' => $category, 'user_id' => $user, 'currency_iso' => $currency],
+            $data
+        );
         return $users;
     }
 
