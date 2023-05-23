@@ -1945,7 +1945,6 @@ class Agents {
             "columns": [
                 {"data": "user"},
                 {"data": "username"},
-                {"data": "name"},
                 {"data": "category"},
                 {"data": "makers"},
                 {"data": "currency_iso"},
