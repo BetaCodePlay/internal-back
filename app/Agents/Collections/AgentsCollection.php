@@ -3577,7 +3577,7 @@ class AgentsCollection
             }
             
             if (is_null($category)) {
-                $categories = $gamesRepo->getCategories();
+                $categories = $gamesRepo->getCategoriesByMaker($maker);
                 foreach ($categories as $categoryElement) {
                     $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement->category, $whitelabel);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
@@ -3707,7 +3707,7 @@ class AgentsCollection
             }
             
             if (is_null($category)) {
-                $categories = $gamesRepo->getCategories();
+                $categories = $gamesRepo->getCategoriesByMaker($maker);
                 foreach ($categories as $categoryElement) {
                     $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement->category, $whitelabel);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
