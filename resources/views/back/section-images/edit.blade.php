@@ -210,26 +210,4 @@
             sectionImages.update("{!! $image->front !!}", "show-front");
         });
     </script>
-    <script>
-        $(function () {
-
-            // obtener campos ocultar div
-            var checkbox = $(".checkshow");
-            var hidden = $(".div_a_show");
-            //
-
-            hidden.hide();
-            checkbox.change(function () {
-                if (checkbox.is(':checked')) {
-                    //hidden.show();
-                    $(".div_a_show").fadeIn("200")
-                } else {
-                    //hidden.hide();
-                    $(".div_a_show").fadeOut("200")
-                    $('input[type=checkbox]').prop('checked', false);// limpia los valores de checkbox al ser ocultado
-
-                }
-            });
-        });
-    </script>
 @endsection

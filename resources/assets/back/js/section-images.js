@@ -43,8 +43,6 @@ class SectionImages {
 
         var $button = $('#store');
         var $form = $('#images-form');
-        let $file = $('#image');
-        let $file1 = $('#front');
         $form.on('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(this);
