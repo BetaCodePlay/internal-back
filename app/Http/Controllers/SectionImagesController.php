@@ -391,7 +391,6 @@ class SectionImagesController extends Controller
         $section = !is_null($request->section) ? $request->section : null;
         $position = $request->position;
         $category = $request->category;
-        $categories=['popular','new','featured'];
         $user_id = auth()->user()->id;
         switch ($templateElementType) {
             case TemplateElementTypes::$home:
@@ -459,7 +458,10 @@ class SectionImagesController extends Controller
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
-
+            if ($section == 'section-7') {
+                $categories=['popular','new','featured'];
+                $data['categories'] = $categories;
+            }
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark){
                 $filePath = "$s3Directory/commons/";
 
@@ -504,7 +506,6 @@ class SectionImagesController extends Controller
                     Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
                     Storage::delete($oldFilePath);
                     $imageData['front'] = $nameFront;
-                    $fileFront = $nameFront;
                 }
             }
 
@@ -578,8 +579,7 @@ class SectionImagesController extends Controller
                 'title' => _i('Image updated'),
                 'message' => _i('The image data was updated correctly'),
                 'close' => _i('Close'),
-                'file' => $file,
-                'categories' => $categories
+                'file' => $file
             ];
             return Utils::successResponse($data);
 
