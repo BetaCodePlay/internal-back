@@ -61,6 +61,12 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.makers-by-category',
         'uses' => 'CoreController@makersByCategory'
     ]);
+
+    // Get category by makers
+    Route::get('categories-by-maker', [
+        'as' => 'core.categories-by-maker',
+        'uses' => 'CoreController@categoriesByMaker'
+    ]);
 });
 
 // Change language

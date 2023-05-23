@@ -5,6 +5,7 @@ namespace App\Agents\Collections;
 use App\Agents\Repositories\AgentsRepo;
 use App\Users\Repositories\UsersRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Enums\ActionUser;
@@ -3541,26 +3542,70 @@ class AgentsCollection
         $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $category, $maker);
         $dataUsers = $this->formatDataLockUsers($users, $currency, $category, $maker);
         $agentsRepo = new AgentsRepo();
+        $gamesRepo = new GamesRepo();
         $whitelabel = Configurations::getWhitelabel();
 
         if (!is_null($agent)) {
             $dataMakers[] = $maker;  
-            if(!is_null($category)){
-                $excludedAgents = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
-                if($excludedAgents){
-                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    $dataMakers = array_merge($dataMakers,$makersExclude);
-                }
-            }
-            $listMakers = array_values(array_filter(array_unique($dataMakers)));
-            $blockUsers[] = [
+            // if(!is_null($category)){
+            //     $excludedAgents = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
+            //     if($excludedAgents){
+            //         $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+            //         $dataMakers = array_merge($dataMakers,$makersExclude);
+            //     }
+            // }
+            // $listMakers = array_values(array_filter(array_unique($dataMakers)));
+            // $blockUsers[] = [
+            //     'currency_iso' => $currency,
+            //     'makers' => json_encode($listMakers),
+            //     'user_id' => $agent->id,
+            //     'category' => $category,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now()
+            // ];
+
+            if (is_null($maker)) {
+                $blockUsers[] = [
                 'currency_iso' => $currency,
-                'makers' => json_encode($listMakers),
+                'makers' => null,
                 'user_id' => $agent->id,
-                'category' => $category,
+                'category' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ];
+                ];
+                return;
+            }
+            
+            if (is_null($category)) {
+                $categories = $gamesRepo->getCategories();
+                foreach ($categories as $categoryElement) {
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement, $whitelabel);
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    $dataMakers = array_merge($dataMakers, $makersExclude);
+                    $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                    $blockUsers[] = [
+                        'currency_iso' => $currency,
+                        'makers' => json_encode($listMakers),
+                        'user_id' => $agent->id,
+                        'category' => $categoryElement,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            } else {
+                $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
+                $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                $dataMakers = array_merge($dataMakers, $makersExclude);
+                $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                $blockUsers[] = [
+                    'currency_iso' => $currency,
+                    'makers' => json_encode($listMakers),
+                    'user_id' => $agent->id,
+                    'category' => $category,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }
         }
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
         return $data;
@@ -3578,6 +3623,7 @@ class AgentsCollection
     public function formatDataLockSubAngents($agents, $currency, $category, $maker)
     {
         $agentsRepo = new AgentsRepo();
+        $gamesRepo = new GamesRepo();
         $whitelabel = Configurations::getWhitelabel();
         $dataAgents = [];
         foreach ($agents as $agent) {
@@ -3604,24 +3650,92 @@ class AgentsCollection
                 }
             }
             $dataMakers[] = $maker;
-            if(!is_null($category)){
-                $excludedAgent = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
-                if($excludedAgent){
-                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    $dataMakers = array_merge($dataMakers,$makersExclude);
-                }
+            // if(!is_null($maker)){
+            //     if(!is_null($category)){
+            //         $excludedAgent = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $category, $whitelabel);
+            //         if($excludedAgent){
+            //             $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+            //             $dataMakers = array_merge($dataMakers,$makersExclude);
+            //         }
+            //     }else{
+            //         $categories = $gamesRepo->getCategories();
+            //         foreach($categories as $categoryElement){
+            //             $excludedAgent = $agentsRepo->getAgentLockByUserAndCategory($agent->user_id, $currency, $categoryElement, $whitelabel);
+            //             if($excludedAgent){
+            //                 $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+            //                 $dataMakers = array_merge($dataMakers,$makersExclude);
+            //             }
+            //             $listMakers = array_values(array_filter(array_unique($dataMakers)));
+            //             $dataAgents[] = [
+            //                 'currency_iso' => $currency,
+            //                 'user_id' => $agent->user_id,
+            //                 'category' => $categoryElement,
+            //                 'makers' => json_encode($listMakers),
+            //                 'created_at' => Carbon::now(),
+            //                 'updated_at' => Carbon::now()
+            //             ];
+            //             if (!is_null($dataChildren)) {
+            //                 $dataAgents = array_merge($dataAgents, $dataChildren);
+            //             }
+            //         }
+                    
+            //     }
+            // }else{
+            //     $dataAgents[] = [
+            //         'currency_iso' => $currency,
+            //         'user_id' => $agent->user_id,
+            //         'category' => $category,
+            //         'makers' => null,
+            //         'created_at' => Carbon::now(),
+            //         'updated_at' => Carbon::now()
+            //     ];
+            //     if (!is_null($dataChildren)) {
+            //         $dataAgents = array_merge($dataAgents, $dataChildren);
+            //     }
+            // }            
+
+            if (is_null($maker)) {
+                $dataAgents[] = [
+                    'currency_iso' => $currency,
+                    'user_id' => $agent->user_id,
+                    'category' => null,
+                    'makers' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+                return;
             }
-            $listMakers = array_values(array_filter(array_unique($dataMakers)));
-            \Log::debug([$listMakers]);
-            $dataAgents[] = [
-                'currency_iso' => $currency,
-                'user_id' => $agent->user_id,
-                'category' => $category,
-                'makers' => json_encode($listMakers),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
-        
+            
+            if (is_null($category)) {
+                $categories = $gamesRepo->getCategories();
+                foreach ($categories as $categoryElement) {
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $categoryElement, $whitelabel);
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    $dataMakers = array_merge($dataMakers, $makersExclude);
+                    $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                    $dataAgents[] = [
+                        'currency_iso' => $currency,
+                        'user_id' => $agent->user_id,
+                        'category' => $categoryElement,
+                        'makers' => json_encode($listMakers),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            } else {
+                $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
+                $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                $dataMakers = array_merge($dataMakers, $makersExclude);
+                $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                $dataAgents[] = [
+                    'currency_iso' => $currency,
+                    'user_id' => $agent->user_id,
+                    'category' => $category,
+                    'makers' => json_encode($listMakers),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
             }
@@ -3642,24 +3756,59 @@ class AgentsCollection
         $dataUsers = [];
         $whitelabel = Configurations::getWhitelabel();
         $usersRepo = new UsersRepo();
+        $gamesRepo = new GamesRepo();
         foreach ($users as $user) {
             $dataMakers[] = $maker;  
-            if(isset($category)){
-                $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
-                if($excludedUsers){
-                    $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
-                    $dataMakers = array_merge($dataMakers,$makersExclude);
-                }
+            // if(isset($category)){
+            //     $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
+            //     if($excludedUsers){
+            //         $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
+            //         $dataMakers = array_merge($dataMakers,$makersExclude);
+            //     }
+            // }
+            // $listMakers = array_values(array_filter(array_unique($dataMakers)));
+            if (is_null($maker)) {
+                $dataUsers[] = [
+                    'currency_iso' => $currency,
+                    'makers' => null,
+                    'user_id' => $user['id'],
+                    'category' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+                return;
             }
-            $listMakers = array_values(array_filter(array_unique($dataMakers)));
-            $dataUsers[] = [
-                'currency_iso' => $currency,
-                'makers' => json_encode($listMakers),
-                'user_id' => $user['id'],
-                'category' => $category,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
+            
+            if (is_null($category)) {
+                $categories = $gamesRepo->getCategories();
+                foreach ($categories as $categoryElement) {
+                    $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
+                    $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
+                    $dataMakers = array_merge($dataMakers, $makersExclude);
+                    $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                    $dataUsers[] = [
+                        'currency_iso' => $currency,
+                        'makers' => json_encode($listMakers),
+                        'user_id' => $user['id'],
+                        'category' => $categoryElement,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            } else {
+                $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
+                $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
+                $dataMakers = array_merge($dataMakers, $makersExclude);
+                $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                $dataUsers[] = [
+                    'currency_iso' => $currency,
+                    'makers' => json_encode($listMakers),
+                    'user_id' => $user['id'],
+                    'category' => $category,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }
         }
         return $dataUsers;
     }
@@ -3790,6 +3939,13 @@ class AgentsCollection
                 $user->username = $user->username;
             }
         }
+    }
+
+    /**
+     * Get Exclude Agent
+     */
+    private function getExcludedAgent($agentsRepo, $userId, $currency, $category, $whitelabel) {
+        return $agentsRepo->getAgentLockByUserAndCategory($userId, $currency, $category, $whitelabel);
     }
 
     /**

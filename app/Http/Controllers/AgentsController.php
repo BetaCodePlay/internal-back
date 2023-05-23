@@ -614,7 +614,7 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'category' => ['required_if:lock_users,false'],
+            'maker' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
