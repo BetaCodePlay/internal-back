@@ -1157,7 +1157,7 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency = $request->currency;
             $userData = $this->usersRepo->getByUsername($username, $whitelabel);
-            $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
+            $agents = $this->usersRepo->arraySonIds($user,$currency,$whitelabel);
 
             if (!is_null($userData)) {
                 $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
