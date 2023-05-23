@@ -917,7 +917,7 @@
                                                                 <label for="category">{{ _i('Categories') }}</label>
                                                                 <select name="category" id="category"
                                                                         class="form-control" data-route="{{ route('core.makers-by-category') }}">
-                                                                    <option value="">{{ _i('Select...') }}</option>
+                                                                    <option value="*">{{ _i('Select...') }}</option>
                                                                     @foreach ($categories as $category)
                                                                         <option value="{{ $category->category }}">
                                                                             {{ $category->category }}
