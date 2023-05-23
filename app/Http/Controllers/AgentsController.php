@@ -1122,10 +1122,12 @@ class AgentsController extends Controller
         $whitelabel = Configurations::getWhitelabel();
         $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
         $categories = $this->gamesRepo->getCategories();
+        $makers = $this->gamesRepo->getMakers();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
         $data['providers'] = $providers;
         $data['whitelabel'] = $whitelabel;
         $data['categories'] = $categories;
+        $data['makers'] = $makers;
         $data['title'] = _i('Exclude agents from providers');
         return view('back.agents.reports.exclude-providers-agents', $data);
     }
