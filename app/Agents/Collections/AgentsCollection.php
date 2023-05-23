@@ -3723,6 +3723,7 @@ class AgentsCollection
         $dataUsers = [];
         $auxCurrencies = [];
         foreach ($excludedUsers as $excludedUser) {
+            \Log::debug("hola",[$excludedUser]);
             $position = array_search($currency, $auxCurrencies);
             if ($position === false) {
                 if ($currency == $excludedUser->currency_iso) {
@@ -3735,8 +3736,6 @@ class AgentsCollection
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now()
                     ];
-                    \Log::debug("hola",[$excludedUser]);
-                    \Log::debug([$dataUsers]);
                 } else {
                     array_push($auxCurrencies, $currency);
                     $dataUsers[] = [
@@ -3750,7 +3749,6 @@ class AgentsCollection
                 }
             }
         }
-        \Log::debug([$dataUsers]);
         return $dataUsers;
     }
 
