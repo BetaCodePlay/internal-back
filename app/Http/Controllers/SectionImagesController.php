@@ -274,6 +274,8 @@ class SectionImagesController extends Controller
             $positions = $home->$section->section_images->positions ?? [];
             $data['positions'] = $positions;
         }
+        $categories=['popular','new','featured'];
+        $data['categories'] = $categories;
         $data['template_element_type'] = $templateElementType;
         $data['section'] = $section;
         $data['title'] = _i('List of images');
@@ -321,7 +323,6 @@ class SectionImagesController extends Controller
             Storage::delete($oldFilePath);
             $front = $request->file('front');
             $category = $request->category;
-            \Log::debug(__METHOD__, ['category' => $category]);
             if(!is_null($front)){
                 $fileFront = $request->file;
                 $filePath = "$s3Directory/section-images/";
@@ -449,8 +450,6 @@ class SectionImagesController extends Controller
 
         if ($section == 'section-7') {
             $validationRules['category'] = 'required';
-            $categories=['popular','new','featured'];
-            $data['categories'] = $categories;
         }
         try {
             $whitelabel = Configurations::getWhitelabel();
