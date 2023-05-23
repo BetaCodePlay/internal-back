@@ -390,6 +390,7 @@ class SectionImagesController extends Controller
         $templateElementType = $request->template_element_type;
         $section = !is_null($request->section) ? $request->section : null;
         $position = $request->position;
+        $category = $request->category;
         $user_id = auth()->user()->id;
         switch ($templateElementType) {
             case TemplateElementTypes::$home:
@@ -446,6 +447,9 @@ class SectionImagesController extends Controller
         }
         $this->validate($request, $validationRules);
 
+        if ($section == 'section-7') {
+            $validationRules['category'] = 'required';
+        }
         try {
             $whitelabel = Configurations::getWhitelabel();
             $image = $request->file('image');
@@ -466,6 +470,7 @@ class SectionImagesController extends Controller
                     'description' => $request->description,
                     'element_type_id' => $templateElementType,
                     'position' => $position,
+                    'category' => $category,
                     'url' => $request->url,
                     'language' => '*',
                     'currency_iso' => '*',

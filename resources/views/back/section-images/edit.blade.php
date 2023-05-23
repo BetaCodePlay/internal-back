@@ -104,6 +104,21 @@
                                     </div>
                                 </div>
                             @endif
+                            @if($section == 'section-7')
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="category">{{ _i('Category') }}</label>
+                                        <select name="category" id="category" class="form-control">
+                                            <option value="">{{ _i('Select...') }}</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category }}">
+                                                    {{ $category }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="start_date">{{ _i('Start date') }}</label>
