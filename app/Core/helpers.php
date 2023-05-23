@@ -620,6 +620,7 @@ if (!function_exists('menu')) {
                             ],
                         ]
                 ]
+                ]
             ],
 
             'Operations' => [
