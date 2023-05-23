@@ -390,7 +390,6 @@ class SectionImagesController extends Controller
         $templateElementType = $request->template_element_type;
         $section = !is_null($request->section) ? $request->section : null;
         $position = $request->position;
-        $category = $request->category;
         $user_id = auth()->user()->id;
         switch ($templateElementType) {
             case TemplateElementTypes::$home:
@@ -460,8 +459,9 @@ class SectionImagesController extends Controller
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
             if ($section == 'section-7') {
                 $categories=['popular','new','featured'];
-                $imageData['categories'] = $categories;
+                $imageData['category'] = $categories;
             }
+            $category = $request->category;
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark){
                 $filePath = "$s3Directory/commons/";
 
