@@ -274,8 +274,7 @@ class SectionImagesController extends Controller
             $positions = $home->$section->section_images->positions ?? [];
             $data['positions'] = $positions;
         }
-        $categories=['popular','new','featured'];
-        $data['categories'] = $categories;
+
         $data['template_element_type'] = $templateElementType;
         $data['section'] = $section;
         $data['title'] = _i('List of images');
@@ -392,6 +391,7 @@ class SectionImagesController extends Controller
         $section = !is_null($request->section) ? $request->section : null;
         $position = $request->position;
         $category = $request->category;
+        $categories=['popular','new','featured'];
         $user_id = auth()->user()->id;
         switch ($templateElementType) {
             case TemplateElementTypes::$home:
@@ -578,7 +578,8 @@ class SectionImagesController extends Controller
                 'title' => _i('Image updated'),
                 'message' => _i('The image data was updated correctly'),
                 'close' => _i('Close'),
-                'file' => $file
+                'file' => $file,
+                'categories' => $categories
             ];
             return Utils::successResponse($data);
 
