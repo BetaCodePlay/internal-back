@@ -245,6 +245,8 @@ class SectionImagesController extends Controller
             }
 
             $imageData = $this->sectionImagesCollection->formatDetails($image, $position, $positions);
+            $categories=['popular','new','featured'];
+            $data['categories'] = $categories;
             $data['template_element_type'] = $templateElementType;
             $data['position'] = $position;
             $data['props'] = $props;
@@ -274,7 +276,8 @@ class SectionImagesController extends Controller
             $positions = $home->$section->section_images->positions ?? [];
             $data['positions'] = $positions;
         }
-
+        $categories=['popular','new','featured'];
+        $data['categories'] = $categories;
         $data['template_element_type'] = $templateElementType;
         $data['section'] = $section;
         $data['title'] = _i('List of images');
@@ -457,10 +460,6 @@ class SectionImagesController extends Controller
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
-            if ($section == 'section-7') {
-                $categories=['popular','new','featured'];
-                $imageData['category'] = $categories;
-            }
             $category = $request->category;
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark){
                 $filePath = "$s3Directory/commons/";
