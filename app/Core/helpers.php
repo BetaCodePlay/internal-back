@@ -580,8 +580,8 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'ManualAdjustmentsWhitelabel' => [
-                        'text' => _i('Manual adjustments'),
+                    'ManualAdjustmentsUsers' => [
+                        'text' => _i('Manual adjustments users'),
                         'level_class' => 'second',
                         'route' => 'reports.financial.manual-adjustments-users',
                         'params' => [],
