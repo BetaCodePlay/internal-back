@@ -660,8 +660,8 @@ class Agents {
     financialStateMakersDetails() {
         initSelect2();
         initDateRangePickerEndToday(open = 'right');
+        let api;
         let $table = $('#financial-state-table');
-
         let $button = $('#update');
         $button.trigger('click');
         $button.click(function () {
@@ -682,6 +682,17 @@ class Agents {
                 $table.html(json.data.table);
                 let $tableData = $('#makers-global');
                 $tableData.DataTable({
+                    "lengthMenu": [[25, 50, 100, 250, 500, 1000], [25, 50, 100, 250, 500, 1000]],
+                    "processing": false,
+                    "deferRender": true,
+                    "order": [],
+                    "columns": [
+                        {"data": "Fabricante"},
+                        {"data": "Total pagado"},
+                        {"data": "Total premiado"},
+                        {"data": "Total de apuestas"},
+                        {"data": "Ganancia total"},
+                    ],
                     "buttons": {
                         "buttons": [
                             {extend: 'excel'},
@@ -700,6 +711,11 @@ class Agents {
                             }
                         ]
                     },
+                    "initComplete": function () {
+                        api = this.api();
+                        api.buttons().container()
+                            .appendTo($('#table-buttons'));
+                    }
                 });
 
             }).fail(function (json) {
