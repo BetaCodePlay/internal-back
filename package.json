@@ -82,6 +82,7 @@
         "socket.io-client": "^2.3.0",
         "sweetalert2": "^8.17.6",
         "tinymce": "^5.4.1",
-        "toastr": "^2.1.4"
+        "toastr": "^2.1.4",
+        "glob-parent": ">=5.1.2"
     }
 }
