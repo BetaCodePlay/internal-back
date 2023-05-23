@@ -460,8 +460,7 @@ class SectionImagesController extends Controller
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
             if ($section == 'section-7') {
                 $categories=['popular','new','featured'];
-                $data['categories'] = $categories;
-                return Utils::successResponse($data);
+                $imageData['categories'] = $categories;
             }
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark){
                 $filePath = "$s3Directory/commons/";
