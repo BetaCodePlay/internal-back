@@ -442,7 +442,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         ]);
 
         // Exclude providers users delete
-        Route::get('exclude-providers-agents-delete/{user}/{provider}/{currency}', [
+        Route::get('exclude-providers-agents-delete/{user}/{category}/{currency}', [
             'as' => 'agents.reports.exclude-providers-agents.delete',
             'uses' => 'AgentsController@excludeProviderAgentsDelete'
         ]);

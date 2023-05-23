@@ -1063,6 +1063,31 @@ class AgentsController extends Controller
         }
     }
 
+    /**
+     * Get exclude provider agent delete
+     *
+     * @param int $user User
+     * @param string $category Provider
+     * @param string $currency Currency ISO
+     * @return Factory|View
+     */
+    public function excludeProviderAgentsDelete($user, $category, $currency)
+    {
+        try {
+            $user = (int)$user;
+            $this->agentsRepo->unBlockAgents($currency, $category, $user);
+            $data = [
+                'title' => _i('User activated'),
+                'message' => _i('User was activated correctly'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
      /**
      * Get exclude provider agent list
      *
@@ -1090,7 +1115,7 @@ class AgentsController extends Controller
                     }
                 }
                 if (!is_null($agentsBlocked)) {
-                    $this->usersCollection->formatExcludeProviderUser($agentsBlocked);
+                    $this->agentsCollection->formatExcludeMakersUser($agentsBlocked);
                     $data = [
                         'agents' => $agentsBlocked
                     ];
