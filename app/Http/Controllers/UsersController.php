@@ -1411,10 +1411,10 @@ class UsersController extends Controller
     {
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
-        $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
         $makers = $this->gamesRepo->getMakers();
+        $categories = $this->gamesRepo->getCategories();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
-        $data['providers'] = $providers;
+        $data['categories'] = $categories;
         $data['whitelabel'] = $whitelabel;
         $data['makers'] = $makers;
         $data['title'] = _i('Exclude users from providers');
