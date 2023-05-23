@@ -1545,36 +1545,6 @@ class Agents {
     }
 
     //Select maker
-    selectProvidersMaker(){
-        initSelect2();
-        $('#provider').on('change', function () {
-            let provider = $(this).val();
-            let route = $(this).data('route');
-            let makers = $('#maker');
-            if (provider !== '') {
-                $.ajax({
-                    url: route,
-                    type: 'get',
-                    dataType: 'json',
-                    data: {
-                        provider
-                    }
-                }).done(function (json) {
-                    $('#maker option[value!=""]').remove();
-                    $(json.data.makers).each(function (key, element) {
-                        makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
-                    })
-                    makers.prop('disabled', false);
-                }).fail(function (json) {
-
-                });
-            } else {
-                makers.val('');
-            }
-        }).trigger('change');
-    }
-
-    //Select maker
     selectCategoryMaker(){
         initSelect2();
         $('#category').on('change', function () {

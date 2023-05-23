@@ -933,11 +933,6 @@
                                                                 <select name="maker" id="maker"
                                                                         class="form-control" data-route="{{ route('core.makers') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
-                                                                     @foreach ($makers as $maker)
-                                                                        <option value="{{ $maker->maker }}">
-                                                                            {{ $maker->maker }}
-                                                                        </option>
-                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>

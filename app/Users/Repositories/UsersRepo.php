@@ -123,6 +123,24 @@ class UsersRepo
     }
 
     /**
+     * Find exclude provider user
+     *
+     * @param int $provider Provider ID
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function findExcludeMakerUser($category, $user, $currency)
+    {
+        $users = \DB::table('exclude_makers_users')
+            ->where('exclude_makers_users.user_id', $user)
+            ->where('exclude_makers_users.category', $provider)
+            ->where('exclude_makers_users.currency_iso', $currency)
+            ->first();
+        return $users;
+    }
+
+    /**
      * Get users by IDs
      *
      * @param array $ids Users IDs
