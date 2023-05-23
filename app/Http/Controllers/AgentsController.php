@@ -642,6 +642,7 @@ class AgentsController extends Controller
                 if ($type == 'true') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $user = $userToUpdate['user_id'];
+                        $category = $userToUpdate['category'];
                         $data = [
                             'currency_iso' => $userToUpdate['currency_iso'],
                             'category' => $userToUpdate['category'],
