@@ -134,7 +134,7 @@ class UsersRepo
     {
         $users = \DB::table('exclude_makers_users')
             ->where('exclude_makers_users.user_id', $user)
-            ->where('exclude_makers_users.category', $provider)
+            ->where('exclude_makers_users.category', $category)
             ->where('exclude_makers_users.currency_iso', $currency)
             ->first();
         return $users;
