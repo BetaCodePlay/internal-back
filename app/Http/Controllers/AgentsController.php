@@ -637,6 +637,7 @@ class AgentsController extends Controller
                 ];
             }
             $usersToUpdate = $this->agentsCollection->formatDataLock($lockUsers,$subAgents, $users, $agent, $currency, $category, $maker);
+            \Log::debug([$userToUpdate]);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
