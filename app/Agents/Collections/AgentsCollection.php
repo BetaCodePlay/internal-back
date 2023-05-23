@@ -3723,31 +3723,26 @@ class AgentsCollection
         $dataUsers = [];
         $auxCurrencies = [];
         foreach ($excludedUsers as $excludedUser) {
-            $position = array_search($currency, $auxCurrencies);
-            if ($position === false) {
-                if ($currency == $excludedUser->currency_iso) {
-                    \Log::debug("hola",[$excludedUser]);
-                    array_push($auxCurrencies, $currency);
-                    $dataUsers[] = [
-                        'currency_iso' => $currency,
-                        'category' => $excludedUser->category,
-                        'makers' => $excludedUser->makers,
-                        'user_id' => $user,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now()
-                    ];
-                } else {
-                    \Log::debug("hola2",[$excludedUser]);
-                    array_push($auxCurrencies, $currency);
-                    $dataUsers[] = [
-                        'currency_iso' => $currency,
-                        'category' => $excludedUser->category,
-                        'makers' => $excludedUser->makers,
-                        'user_id' => $user,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now()
-                    ];
-                }
+            if ($currency == $excludedUser->currency_iso) {
+                \Log::debug("hola",[$excludedUser]);
+                $dataUsers[] = [
+                    'currency_iso' => $currency,
+                    'category' => $excludedUser->category,
+                    'makers' => $excludedUser->makers,
+                    'user_id' => $user,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            } else {
+                \Log::debug("hola2",[$excludedUser]);
+                $dataUsers[] = [
+                    'currency_iso' => $currency,
+                    'category' => $excludedUser->category,
+                    'makers' => $excludedUser->makers,
+                    'user_id' => $user,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
             }
         }
         return $dataUsers;
