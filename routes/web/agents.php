@@ -448,7 +448,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         ]);
 
         // Exclude providers users list
-        Route::get('exclude-providers-agents-list/{start_date?}/{end_date?}/{provider?}/{maker?}/{currency?}', [
+        Route::get('exclude-providers-agents-list/{start_date?}/{end_date?}/{category?}/{maker?}/{currency?}', [
             'as' => 'agents.reports.exclude-providers-agents.list',
             'uses' => 'AgentsController@excludeProviderAgentsList'
         ]);

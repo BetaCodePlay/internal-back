@@ -1069,7 +1069,7 @@ class AgentsController extends Controller
      * @param int $whitelabel Whitelabel
      * @return Factory|View
      */
-    public function excludeProviderAgentsList(Request $request, $startDate = null, $endDate = null, $provider = null, $maker = null, $currency = null)
+    public function excludeProviderAgentsList(Request $request, $startDate = null, $endDate = null, $category = null, $maker = null, $currency = null)
     {
         try {
             if (!is_null($startDate) && !is_null($endDate)) {
@@ -1080,10 +1080,10 @@ class AgentsController extends Controller
                 $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
-                $provider = $request->provider;
+                $category = $request->category;
                 $maker = $request->maker;
                 $currency = $request->currency;
-                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
+                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $category, $maker, $whitelabel, $startDate, $endDate);
                 foreach($users as $user){
                     if(in_array($user->user_id,$agents)){
                         $agentsBlocked[] = $user;

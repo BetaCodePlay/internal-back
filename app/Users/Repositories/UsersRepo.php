@@ -255,31 +255,29 @@ class UsersRepo
      * Get exclude provider user by dates, currency, whitelabel and provider
      *
      * @param string $currency Currency ISO
-     * @param int $provider Provider ID
+     * @param string $category Category name
      * @param int $whitelabel Whitelabel ID
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return mixed
      */
-    public function getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate)
+    public function getExcludeProviderUserByDates($currency, $category, $maker, $whitelabel, $startDate, $endDate)
     {
-        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_providers_users.*')
-            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
-            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
+        $users = User::select('users.id as user_id','users.username', 'exclude_makers_users.*')
             ->where('users.whitelabel_id', $whitelabel)
-            ->whereBetween('exclude_providers_users.created_at', [$startDate, $endDate]);
+            ->whereBetween('exclude_makers_users.created_at', [$startDate, $endDate]);
 
             if (!empty($currency)) {
-                $users->where('exclude_providers_users.currency_iso', $currency);
+                $users->where('exclude_makers_users.currency_iso', $currency);
             }
-            if (!empty($provider)) {
-                $users->where('exclude_providers_users.provider_id', $provider);
+            if (!empty($category)) {
+                $users->where('exclude_makers_users.category', $category);
             }
             if (!empty($maker)) {
-                $users->whereJsonContains('exclude_providers_users.makers', $maker);
+                $users->whereJsonContains('exclude_makers_users.makers', $maker);
             }
 
-            $data = $users->orderBy('exclude_providers_users.created_at', 'DESC')->get();
+            $data = $users->orderBy('exclude_makers_users.created_at', 'DESC')->get();
         return $data;
     }
 

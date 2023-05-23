@@ -96,11 +96,10 @@
                         </div>
                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="category">{{ _i('Categories') }}</label>
-                                <select name="category" id="category"
-                                        class="form-control" data-route="{{ route('core.makers-by-category') }}">
+                                <label for="category_filter">{{ _i('Categories') }}</label>
+                                <select name="category_filter" id="category_filter"
+                                        class="form-control">
                                     <option value="">{{ _i('Select...') }}</option>
-                                    <option value="*">{{ _i('All') }}</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->category }}">
                                             {{ $category->category }}
@@ -158,6 +157,9 @@
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Provider') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Category') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Maker') }}
