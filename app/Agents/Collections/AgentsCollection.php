@@ -3722,6 +3722,7 @@ class AgentsCollection
     {
         $dataUsers = [];
         $auxCurrencies = [];
+        \Log::debug([$excludedUsers]);
         foreach ($excludedUsers as $excludedUser) {
             $position = array_search($currency, $auxCurrencies);
             if ($position === false) {
@@ -3748,7 +3749,7 @@ class AgentsCollection
                 }
             }
         }
-        \Log::debug($dataUsers);
+        \Log::debug([$dataUsers]);
         return $dataUsers;
     }
 
