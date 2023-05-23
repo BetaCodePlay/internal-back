@@ -406,7 +406,7 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$locked_providers,
                                 'submenu' => []
                             ],
-                            
+
                             'ExcludeAgents' => [
                                 'text' => _i('Exclude agents from providers'),
                                 'level_class' => 'second',
@@ -588,7 +588,37 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$manual_adjustments_whitelabel,
                         'icon' => 'hs-admin-arrows-vertical',
                         'submenu' => []
-                    ]
+                    ],
+
+                    'AgentsFinancial' => [
+                        'text' => _i('By Agents'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-bar-chart',
+                        'permission' => Permissions::$agents_financial,
+                        'submenu' => [
+
+                            'SalesByWhitelabelsByAgents' => [
+                                'text' => _i('Sales by whitelabels'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers-details',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_whitelabels_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+
+                            'SalesByProvidersByAgents' => [
+                                'text' => _i('Sales by providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_providers_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+                        ]
                 ]
             ],
 
