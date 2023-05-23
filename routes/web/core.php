@@ -62,10 +62,10 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'CoreController@makersByCategory'
     ]);
 
-    // Get category by makers
-    Route::get('categories-by-maker', [
-        'as' => 'core.categories-by-maker',
-        'uses' => 'CoreController@categoriesByMaker'
+    // Get makers
+    Route::get('makers', [
+        'as' => 'core.makers',
+        'uses' => 'CoreController@makers'
     ]);
 });
 

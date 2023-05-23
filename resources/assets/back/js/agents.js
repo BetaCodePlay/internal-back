@@ -1577,28 +1577,29 @@ class Agents {
     //Select maker
     selectCategoryMaker(){
         initSelect2();
-        $('#maker').on('change', function () {
-            let maker = $(this).val();
-            let categories = $('#category');
-            let route = $(this).data('route');
-            if (maker !== '') {
-                $.ajax({
-                    url: route,
-                    type: 'get',
-                    dataType: 'json',
-                    data: {
-                        maker
-                    }
-                }).done(function (json) {
-                    $('#category option[value!=""]').remove();
-                    $(json.data.categories).each(function (key, element) {
-                        categories.append("<option value=" + element.category + ">" + element.category + "</option>");
-                    })
-                    categories.prop('disabled', false);
-                }).fail(function (json) {});
-            } else {
-                categories.val('');
+        $('#category').on('change', function () {
+            let category = $(this).val();
+            let makers = $('#maker');
+            let route;
+            if (category !== '') {
+                route = $(this).data('route');
+            }else{
+                route = makers.data('route');
             }
+            $.ajax({
+                url: route,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    category
+                }
+            }).done(function (json) {
+                $('#maker option[value!=""]').remove();
+                $(json.data.makers).each(function (key, element) {
+                    makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
+                })
+                makers.prop('disabled', false);
+            }).fail(function (json) {});
         }).trigger('change');
     }
 

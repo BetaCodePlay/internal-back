@@ -197,20 +197,6 @@ class GamesRepo
     }
 
     /**
-     * Get categories by maker
-     *
-     * @return mixed
-     */
-    public function getCategoriesByMaker($maker)
-    {
-        $games = Game::select('category')
-        ->distinct()
-        ->where('maker', $maker)
-        ->get();
-        return $games;
-    }
-
-    /**
      * Get makers by category
      *
      * @param int $provider

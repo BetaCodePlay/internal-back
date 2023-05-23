@@ -82,24 +82,6 @@ class CoreController extends Controller
     }
 
     /**
-     * Categories games by maker
-     *
-     * @param @param Request $request
-     */
-    public function categoriesByMaker(Request $request)
-    {
-        try {
-            $maker = $request->maker;
-            $data['categories'] = $this->gamesRepo->getCategoriesByMaker($maker);
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'maker' => $request->maker]);
-            abort(500);
-        }
-    }
-
-
-    /**
      * Change user currency
      *
      * @param string $currency Currency ISO
@@ -267,6 +249,22 @@ class CoreController extends Controller
         }catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'startDate' => $startDate, 'endDate' => $endDate]);
             return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Upload makers
+     *
+     * @param @param Request $request
+     */
+    public function makers(Request $request)
+    {
+        try {
+            $data['makers'] = $this->gamesRepo->getMakers();
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
         }
     }
 

@@ -914,13 +914,13 @@
                                                         <input type="hidden" name="user" class="user">
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="maker">{{ _i('Maker') }}</label>
-                                                                <select name="maker" id="maker"
-                                                                        class="form-control" data-route="{{ route('core.categories-by-maker') }}">
+                                                                <label for="category">{{ _i('Categories') }}</label>
+                                                                <select name="category" id="category"
+                                                                        class="form-control" data-route="{{ route('core.makers-by-category') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
-                                                                    @foreach ($makers as $maker)
-                                                                        <option value="{{ $maker->maker }}">
-                                                                            {{ $maker->maker }}
+                                                                    @foreach ($categories as $category)
+                                                                        <option value="{{ $category->category }}">
+                                                                            {{ $category->category }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -928,10 +928,15 @@
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="category">{{ _i('Categories') }}</label>
-                                                                <select name="category" id="category"
-                                                                        class="form-control">
+                                                                <label for="maker">{{ _i('Maker') }}</label>
+                                                                <select name="maker" id="maker"
+                                                                        class="form-control" data-route="{{ route('core.makers') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
+                                                                     @foreach ($makers as $maker)
+                                                                        <option value="{{ $maker->maker }}">
+                                                                            {{ $maker->maker }}
+                                                                        </option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
