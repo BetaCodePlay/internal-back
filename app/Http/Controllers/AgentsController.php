@@ -614,7 +614,6 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'maker' => ['required_if:lock_users,false'],
             'category' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
@@ -636,7 +635,7 @@ class AgentsController extends Controller
                     'id' => $user
                 ];
             }
-            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $category, $maker);
+            $usersToUpdate = $this->agentsCollection->formatDataLock($lockUsers,$subAgents, $users, $agent, $currency, $category, $maker);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
