@@ -3810,6 +3810,7 @@ class AgentsCollection
                 ];
             }
         }
+        \Log::debug([$dataUsers]);
         return $dataUsers;
     }
 
