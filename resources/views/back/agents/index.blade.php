@@ -600,8 +600,8 @@
                                     <div class="input-group">
                                         <select name="type_select" id="type_select" class="form-control">
                                             <option value="all" selected="selected" hidden>Todos</option>
-                                            <option value="agent">{{_i('agent')}}</option>
-                                            <option value="user">{{_i('user')}}</option>
+                                            <option value="agent">{{_i('Agent')}}</option>
+                                            <option value="user">{{_i('User')}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -660,7 +660,7 @@
 {{--                                                Carga--}}
 {{--                                            </th>--}}
 {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">--}}
-{{--                                                {{ _i('withdrew') }}--}}
+{{--                                                {{ _i('Withdrew') }}--}}
 {{--                                                Retiro--}}
 {{--                                            </th>--}}
 {{--                                        @else--}}
@@ -712,7 +712,7 @@
                                                 {{ _i('Charged him') }}
                                             </th>
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                {{ _i('withdrew') }}
+                                                {{ _i('Withdrew') }}
                                             </th>
                                         @else
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
