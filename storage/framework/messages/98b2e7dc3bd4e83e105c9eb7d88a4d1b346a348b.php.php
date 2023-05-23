@@ -407,6 +407,16 @@ if (!function_exists('menu')) {
                                 'submenu' => []
                             ],
 
+                            'ExcludeAgents' => [
+                                'text' => _i('Exclude agents from providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.exclude-providers-agents',
+                                'params' => [],
+                                'icon' => 'hs-admin-user',
+                                'permission' => Permissions::$locked_providers,
+                                'submenu' => []
+                            ],
+
 //                           'ManualTransactionsAgents' => [
 //                                'text' => _i('Manual transactions'),
 //                                'level_class' => 'third',
@@ -570,15 +580,46 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'ManualAdjustmentsWhitelabel' => [
-                        'text' => _i('Manual adjustments'),
+                    'ManualAdjustmentsUsers' => [
+                        'text' => _i('Manual adjustments users'),
                         'level_class' => 'second',
                         'route' => 'reports.financial.manual-adjustments-users',
                         'params' => [],
                         'permission' => Permissions::$manual_adjustments_whitelabel,
                         'icon' => 'hs-admin-arrows-vertical',
                         'submenu' => []
-                    ]
+                    ],
+
+                    'AgentsFinancial' => [
+                        'text' => _i('By Agents'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-bar-chart',
+                        'permission' => Permissions::$agents_financial,
+                        'submenu' => [
+
+                            'SalesByWhitelabelsByAgents' => [
+                                'text' => _i('Sales by whitelabels'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers-details',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_whitelabels_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+
+                            'SalesByProvidersByAgents' => [
+                                'text' => _i('Sales by providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_providers_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+                        ]
+                ]
                 ]
             ],
 

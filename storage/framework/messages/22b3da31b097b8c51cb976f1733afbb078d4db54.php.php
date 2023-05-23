@@ -1,0 +1,493 @@
+<?php
+
+namespace App\BetPay\Collections;
+
+use Dotworkers\Configurations\Enums\PaymentMethods;
+use Dotworkers\Configurations\Enums\Providers;
+use Dotworkers\Security\Enums\Permissions;
+use Illuminate\Support\Facades\Gate;
+
+/**
+ * Class AccountsCollection
+ *
+ * This class allows to format users accounts data
+ *
+ * @package App\Users\Collections
+ * @author  Eborio Linarez
+ */
+class AccountsCollection
+{
+    /**
+     * Format client account data
+     * @param array $accounts Clients accounts data
+     */
+    public function formatClientAccount($accounts)
+    {
+        foreach ($accounts as $account) {
+            $details = json_decode(json_encode($account->data));
+            switch ($account->payment_method_id) {
+                case PaymentMethods::$airtm:
+                case PaymentMethods::$neteller:
+                case PaymentMethods::$paypal:
+                case PaymentMethods::$skrill:
+                case PaymentMethods::$uphold:
+                case PaymentMethods::$reserve:
+                {
+                    if(!is_null($details->email)){
+                        $account->details = sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Email'),
+                            ': ',
+                            $details->email,
+                        );
+                    }else{
+                        $account->details ="";
+                    }
+                    break;
+                }
+                case PaymentMethods::$cryptocurrencies:
+                {
+                    if(!is_null($details->wallet)){
+                        $account->details = sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Wallet'),
+                            ': ',
+                            $details->wallet,
+                            _i('Cryptocurrency'),
+                            ': ',
+                            $details->cryptocurrency,
+                        );
+                    }else{
+                        $account->details ="";
+                    }
+                    break;
+                }
+                case PaymentMethods::$wire_transfers:
+                case PaymentMethods::$ves_to_usd:
+                {
+                    if(!is_null($details->bank_name)){
+                        $accountType = $details->account_type == 'C' ? _i('Checking') : _i('Saving');;
+                        $account->details = sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><strong>%s</strong>%s%s</li</ul>',
+                            _i('Bank'),
+                            ': ',
+                            $details->bank_name,
+                            _i('Account number'),
+                            ': ',
+                            $details->account_number,
+                            _i('Type'),
+                            ': ',
+                            $accountType,
+                            _i('DNI'),
+                            ': ',
+                            $details->dni,
+                            _i('Social reason'),
+                            ': ',
+                            $details->social_reason,
+                            _i('Title'),
+                            ': ',
+                            $details->title,
+                        );
+                    }else{
+                        $account->details ="";
+                    }
+                    break;
+                }
+                case PaymentMethods::$zelle:
+                {
+                    if(!is_null($details->email)){
+                        $account->details = sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Email'),
+                            ': ',
+                            $details->email,
+                            _i('Full name'),
+                            ': ',
+                            $details->full_name,
+                        );
+                    }else{
+                        $account->details ="";
+                    }
+                    break;
+                }
+                default:
+                    $account->details ="";
+                break;
+            }
+            $account->status = sprintf(
+                '<div class="checkbox checkbox-primary">
+                          <input class="status_checkbox %s" id="status_%s" value="" type="checkbox" %s data-id="%s" data-name="status" data-url="" />
+                                            <label for="status_%s">&nbsp;</label>
+                    </div>', ($account->status ? 'active' : ''), $account->id,  ($account->status ? 'checked' : ''), $account->id, $account->id
+            );
+
+            $account->action = sprintf(
+                '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2" ><i class="hs-admin-pencil"></i> %s</a>',
+                route('betpay.clients.accounts.edit', [$account->id]),
+                _i('Edit')
+            );
+        }
+    }
+
+    /**
+     * Format user accounts
+     *
+     * @param array $accounts User accounts data
+     */
+    public function formatUserAccounts($accounts)
+    {
+        foreach ($accounts as $account) {
+            $account->logo = sprintf(
+                '<img src="%s" class="img-fluid g-width-40">',
+                $account->logo
+            );
+
+            switch ($account->payment_method_id) {
+                case PaymentMethods::$cryptocurrencies:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Wallet'),
+                        $account->data->wallet
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Currency'),
+                        $account->data->cryptocurrency
+                    );
+                    if(isset($account->data->network)){
+                        $account->info .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Network'),
+                            $account->data->network
+                        );
+                        $network = $account->data->network;
+                    } else {
+                       $network = '';
+                    }
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="cryptocurrencies" data-wallet="%s" data-crypto-currency="%s" data-user-account-id="%s" data-network="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->wallet,
+                        $account->data->cryptocurrency,
+                        $account->id,
+                        $network,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$zelle:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $account->data->email
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Full name'),
+                        "{$account->data->first_name} {$account->data->last_name}"
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="zelle" data-email="%s" data-first-name="%s" data-last-name="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->email,
+                        $account->data->first_name,
+                        $account->data->last_name,
+                        $account->id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$wire_transfers:
+                case PaymentMethods::$ves_to_usd:
+                {
+                    $accountType = $account->data->account_type == 'C' ? _i('Checking') : _i('Saving');;
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Bank'),
+                        $account->data->bank_name
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Number'),
+                        $account->data->account_number
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Type'),
+                        $accountType
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Holder'),
+                        $account->data->social_reason
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('DNI'),
+                        strtoupper($account->data->dni)
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="wire-transfers" data-account-number="%s" data-account-type="%s" data-social-reason="%s" data-dni="%s" data-user-account-id="%s" data-bank-name="%s" data-bank-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->account_number,
+                        $account->data->account_type,
+                        $account->data->social_reason,
+                        strtoupper($account->data->dni),
+                        $account->id,
+                        $account->data->bank_name,
+                        $account->data->bank_id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$paypal:
+                case PaymentMethods::$skrill:
+                case PaymentMethods::$neteller:
+                case PaymentMethods::$airtm:
+                case PaymentMethods::$uphold:
+                case PaymentMethods::$reserve:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $account->data->email
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="electronic-wallets" data-email="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->email,
+                        $account->id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$vcreditos_api:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('VCreditos user'),
+                        $account->data->vcreditos_user
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Secure ID'),
+                        $account->data->vcreditos_secure_id
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="vcreditos" data-vcreditos-user="%s" data-vcreditos-secure-id="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->vcreditos_user,
+                        $account->data->vcreditos_secure_id,
+                        $account->id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$bizum:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Name'),
+                        $account->data->name
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Phone'),
+                        $account->data->phone
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="bizum" data-bizum-name="%s" data-bizum-phone="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->name,
+                        $account->data->phone,
+                        $account->id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                           route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$binance:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $account->data->email
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Phone'),
+                        $account->data->phone
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Pay ID'),
+                        $account->data->pay_id
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Binance ID'),
+                        $account->data->binance_id
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="binance" data-binance-email="%s" data-binance-phone="%s" data-binance-pay-id="%s" data-binance-id="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->email,
+                        $account->data->phone,
+                        $account->data->pay_id,
+                        $account->data->binance_id,
+                        $account->id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Format accounts
+     *
+     * @param array $accounts Accounts data
+     */
+    public function formatAccounts($accounts)
+    {
+        foreach ($accounts as $account) {
+            $account->users = sprintf(
+                '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
+                route('users.details', [$account->external_user]),
+                $account->external_user
+            );
+            switch ($account->payment_method_id) {
+                case PaymentMethods::$cryptocurrencies:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Wallet'),
+                        $account->data->wallet
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Currency'),
+                        $account->data->cryptocurrency
+                    );
+                    break;
+                }
+                case PaymentMethods::$zelle:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $account->data->email
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Full name'),
+                        "{$account->data->first_name} {$account->data->first_name}"
+                    );
+                    break;
+                }
+                case PaymentMethods::$wire_transfers:
+                case PaymentMethods::$ves_to_usd:
+                {
+                    $accountType = $account->data->account_type == 'C' ? _i('Checking') : _i('Saving');;
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Bank'),
+                        $account->data->bank_name
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Number'),
+                        $account->data->account_number
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Type'),
+                        $accountType
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Holder'),
+                        $account->data->social_reason
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('DNI'),
+                        $account->data->dni
+                    );
+                    break;
+                }
+                case PaymentMethods::$paypal:
+                case PaymentMethods::$skrill:
+                case PaymentMethods::$neteller:
+                case PaymentMethods::$airtm:
+                case PaymentMethods::$uphold:
+                case PaymentMethods::$reserve:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $account->data->email
+                    );
+                    break;
+                }
+            }
+        }
+    }
+}
