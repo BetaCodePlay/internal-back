@@ -461,6 +461,7 @@ class SectionImagesController extends Controller
             if ($section == 'section-7') {
                 $categories=['popular','new','featured'];
                 $data['categories'] = $categories;
+                return Utils::successResponse($data);
             }
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark){
                 $filePath = "$s3Directory/commons/";
