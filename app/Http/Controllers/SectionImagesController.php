@@ -505,6 +505,8 @@ class SectionImagesController extends Controller
                     Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
                     Storage::delete($oldFilePath);
                     $imageData['front'] = $nameFront;
+                }else{
+                    $imageData['front'] = null;
                 }
             }
 
