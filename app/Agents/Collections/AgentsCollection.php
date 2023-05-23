@@ -3556,7 +3556,6 @@ class AgentsCollection
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
                 ];
-                return;
             }else{
                 if ($category == "*") {
                     $categories = $gamesRepo->getCategoriesByMaker($maker);
