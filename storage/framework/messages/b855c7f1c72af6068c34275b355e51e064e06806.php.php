@@ -901,11 +901,11 @@
                                                       id="lock-agent-form" method="post">
                                                     <div class="row">
                                                         <input type="hidden" name="user" class="user">
-                                                        <div class="col-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="agent"><?php echo e(_i('Provider')); ?></label>
                                                                 <select name="provider" id="provider"
-                                                                        class="form-control">
+                                                                        class="form-control" data-route="<?php echo e(route('core.makers-by-provider')); ?>">
                                                                     <option value=""><?php echo e(_i('Select...')); ?></option>
                                                                     <?php $__currentLoopData = $providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                         <option value="<?php echo e($provider->id); ?>">
@@ -913,6 +913,15 @@
 
                                                                         </option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="maker"><?php echo e(_i('Maker')); ?></label>
+                                                                <select name="maker" id="maker"
+                                                                        class="form-control">
+                                                                    <option value=""><?php echo e(_i('Select...')); ?></option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -1160,6 +1169,7 @@
             agents.menuMobile();
             agents.selectAgentOrUser('<?php echo e(_i('Agents search...')); ?>');
             agents.selectUsernameSearch('<?php echo e(_i('Agents search...')); ?>');
+            agents.selectProvidersMaker();
             agents.statusFilter();
             <?php if($agent->master): ?>
             agents.changeAgentType();

@@ -11,7 +11,6 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
 /**
@@ -327,114 +326,58 @@ class TransactionsRepo
     }
 
     /**
-     * Get transactions list by user and provider With Paginate
+     * Totals Data Makers
+     * Providers And Currency
      *
      * @param int $user User ID
      * @param array $providers Providers IDS
+     * @param string $currency Currency Iso
+     * @return mixed
+     */
+    public function getFinancialDataMakersTotals(string $startDate, string $endDate, string $currency, $provider, $whitelabel)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_global_total(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider]);
+    }
+
+     /**
+     *  Get transactions list by user and provider With Paginate
+     *
+     * @param int $user User ID
+     * @param array $providers Providers IDS
+     * @param array $arraySonIds Ids Son All
      * @param string $currency Currency Iso
      * @param int $limit Transactions limit
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null)
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [])
     {
-        if (is_null($typeUser) || $typeUser == 'all') {
-            $countTransactions = Transaction::select('transactions.id')
-                ->where('transactions.user_id', $user)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', $providers)
-                ->orderBy('transactions.id', 'DESC');
 
-                if (!is_null($username)) {
-                    $countTransactions = $countTransactions->where('username', 'ilike', "%$username%");
-                }
-                $countTransactions = $countTransactions->get();
+       $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->whereIn('transactions.user_id', $arraySonIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers)
+            ->orderBy('transactions.id', 'DESC');
 
-            $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-                'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
-                ->join('users', 'transactions.user_id', '=', 'users.id')
-                ->where('transactions.user_id', $user)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', $providers)
-                ->orderBy('transactions.id', 'DESC')
-                ->limit($limit)
-                ->offset($offset);
+        if (is_null($typeUser) || $typeUser === 'all') {
 
-            if (!is_null($username)) {
-                $transactions = $transactions->where('username', 'ilike', "%$username%");
-            }
-
-            $transactions = $transactions->get();
-            return [$transactions, count($countTransactions)];
-        }elseif ($typeUser == 'agent'){
-            $countTransactions = Transaction::select('transactions.id')
-                ->where('transactions.user_id', $user)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('transactions.currency_iso', $currency)
-                ->whereNull('data->provider_transaction')
-                ->whereIn('transactions.provider_id', $providers)
-                ->orderBy('transactions.id', 'DESC');
-
-            if (!is_null($username)) {
-                $countTransactions = $countTransactions->where('username', 'ilike', "%$username%");
-            }
-            $countTransactions = $countTransactions->get();
-
-            $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-                'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
-                ->join('users', 'transactions.user_id', '=', 'users.id')
-                ->whereNull('data->provider_transaction')
-                ->where('transactions.user_id', $user)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', $providers)
-                ->orderBy('transactions.id', 'DESC')
-                ->limit($limit)
-                ->offset($offset);
-
-            if (!is_null($username)) {
-                $transactions = $transactions->where('username', 'ilike', "%$username%");
-            }
-
-            $transactions = $transactions->get();
-            return [$transactions, count($countTransactions)];
-
+        }elseif ($typeUser === 'agent'){
+            $transactions = $transactions->whereNull('data->provider_transaction');
         } else {
-            $countTransactions = Transaction::select('transactions.id')
-                ->where('transactions.user_id', $user)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('transactions.currency_iso', $currency)
-                ->whereNotNull('data->provider_transaction')
-                ->whereIn('transactions.provider_id', $providers)
-                ->orderBy('transactions.id', 'DESC');
-
-            if (!is_null($username)) {
-                $countTransactions = $countTransactions->where('username', 'ilike', "%$username%");
-            }
-            $countTransactions = $countTransactions->get();
-
-            $transactions = Transaction::select('users.username', 'transactions.user_id','transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-                'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
-                ->join('users', 'transactions.user_id', '=', 'users.id')
-                ->whereNotNull('data->provider_transaction')
-                ->where('transactions.user_id', $user)
-                ->whereBetween('transactions.created_at', [$startDate, $endDate])
-                ->where('transactions.currency_iso', $currency)
-                ->whereIn('transactions.provider_id', $providers)
-                ->orderBy('transactions.id', 'DESC')
-                ->limit($limit)
-                ->offset($offset);
-
-            if (!is_null($username)) {
-                $transactions = $transactions->where('username', 'ilike', "%$username%");
-            }
-
-            $transactions = $transactions->get();
-            return [$transactions, count($countTransactions)];
-
+            $transactions = $transactions->whereNotNull('data->provider_transaction');
         }
+
+        if (!is_null($username)) {
+            $transactions = $transactions->where('username', 'ilike', "%$username%");
+        }
+
+        $countTransactions = $transactions->count();
+        $transactions = $transactions->limit($limit)->offset($offset)->get();
+
+        return [$transactions, $countTransactions];
 
     }
 
@@ -1300,16 +1243,19 @@ class TransactionsRepo
      * @param int $balance Add field "second_balance" in transaction data json
      * @return mixed
      */
-    public function updateData($id, $newId, $balance)
+    public function updateData($id, $newId, $balance = null)
     {
         $transaction = Transaction::find($id);
         $dataTmp = Helper::convertToArray($transaction->data);
         $dataTmp['transaction_id'] = $newId;
-        $dataTmp['second_balance'] = $balance;
+        if(!is_null($balance)){
+            $dataTmp['second_balance'] = $balance;
+        }
         $transaction->data = $dataTmp;
         $transaction->update();
         return $transaction;
     }
+
 
     /**
      * Update transactions

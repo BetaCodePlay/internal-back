@@ -1,0 +1,14776 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Dotpanel\n"
+"POT-Creation-Date: 2023-05-15 10:36-0400\n"
+"PO-Revision-Date: 2023-05-15 17:22-0400\n"
+"Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
+"Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
+"Language: es_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-KeywordsList: _;__;_i;_s;gettext;_n:1,2;ngettext:1,2;dgettext:2\n"
+"X-Poedit-Basepath: ../../../../app\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ../resources/views\n"
+"X-Poedit-SearchPath-1: ../app\n"
+"X-Poedit-SearchPath-2: ../vendor/dotworkers\n"
+"X-Poedit-SearchPath-3: ../lang\n"
+"X-Poedit-SearchPath-4: ../storage/framework/messages\n"
+
+#: ../app/Agents/Collections/AgentsCollection.php:84
+#: ../app/Agents/Collections/AgentsCollection.php:254
+#: ../app/Agents/Collections/AgentsCollection.php:431
+#: ../app/Agents/Collections/AgentsCollection.php:783
+#: ../app/Agents/Collections/AgentsCollection.php:2935
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:20
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:81
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:71
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:84
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:254
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:431
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:783
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2935
+#: ../storage/framework/messages/cffdfaea0d56928eba0e4588282d763052626e85.php.php:33
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:495
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:27
+msgid "Users"
+msgstr "Usuarios"
+
+#: ../app/Agents/Collections/AgentsCollection.php:85
+#: ../app/Agents/Collections/AgentsCollection.php:669
+#: ../app/Agents/Collections/AgentsCollection.php:2936
+#: ../app/DotSuite/Enums/FreeSpinsStatus.php:74
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:166
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:174
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1030
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:211
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:85
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:669
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2936
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:101
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:420
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:631
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:155
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:286
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:484
+msgid "Played"
+msgstr "Jugó"
+
+#: ../app/Agents/Collections/AgentsCollection.php:86
+#: ../app/Agents/Collections/AgentsCollection.php:670
+#: ../app/Agents/Collections/AgentsCollection.php:1714
+#: ../app/Agents/Collections/AgentsCollection.php:2937
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:118
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:267
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:113
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:262
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:113
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:262
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:86
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:670
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1714
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2937
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:74
+msgid "Win"
+msgstr "Ganar"
+
+#: ../app/Agents/Collections/AgentsCollection.php:87
+#: ../app/Agents/Collections/AgentsCollection.php:671
+#: ../app/Agents/Collections/AgentsCollection.php:1298
+#: ../app/Agents/Collections/AgentsCollection.php:1323
+#: ../app/Agents/Collections/AgentsCollection.php:1779
+#: ../app/Agents/Collections/AgentsCollection.php:2938
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1026
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:207
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:87
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:671
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1298
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1323
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1779
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2938
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:89
+msgid "Bets"
+msgstr "Apuestas"
+
+#: ../app/Agents/Collections/AgentsCollection.php:88
+#: ../app/Agents/Collections/AgentsCollection.php:672
+#: ../app/Agents/Collections/AgentsCollection.php:1716
+#: ../app/Agents/Collections/AgentsCollection.php:1966
+#: ../app/Agents/Collections/AgentsCollection.php:2209
+#: ../app/Agents/Collections/AgentsCollection.php:2445
+#: ../app/Agents/Collections/AgentsCollection.php:2743
+#: ../app/Agents/Collections/AgentsCollection.php:2939
+#: ../app/Core/Collections/TransactionsCollection.php:502
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:178
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:990
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1038
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:219
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:88
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:672
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1716
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1966
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2209
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2445
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2743
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2939
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:159
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:502
+msgid "Profit"
+msgstr "Beneficio"
+
+#: ../app/Agents/Collections/AgentsCollection.php:89
+#: ../app/Agents/Collections/AgentsCollection.php:673
+#: ../app/Agents/Collections/AgentsCollection.php:2940
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:89
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:673
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2940
+msgid "Rtp"
+msgstr "RTP"
+
+#: ../app/Agents/Collections/AgentsCollection.php:115
+#: ../app/Agents/Collections/AgentsCollection.php:343
+#: ../app/Agents/Collections/AgentsCollection.php:520
+#: ../app/Agents/Collections/AgentsCollection.php:698
+#: ../app/Agents/Collections/AgentsCollection.php:1312
+#: ../app/Agents/Collections/AgentsCollection.php:1612
+#: ../app/Agents/Collections/AgentsCollection.php:1952
+#: ../app/Agents/Collections/AgentsCollection.php:2096
+#: ../app/Agents/Collections/AgentsCollection.php:2187
+#: ../app/Agents/Collections/AgentsCollection.php:2373
+#: ../app/Agents/Collections/AgentsCollection.php:2429
+#: ../app/Agents/Collections/AgentsCollection.php:2677
+#: ../app/Agents/Collections/AgentsCollection.php:2727
+#: ../app/Agents/Collections/AgentsCollection.php:2844
+#: ../app/Agents/Collections/AgentsCollection.php:3087
+#: ../app/Agents/Collections/AgentsCollection.php:3211
+#: ../app/Core/helpers.php:474
+#: ../app/Http/Controllers/InvoicesController.php:80
+#: ../app/Http/Controllers/ReportsController.php:1383
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:474
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:115
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:343
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:520
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:698
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1312
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1612
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1952
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2096
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2187
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2373
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2429
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2677
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2727
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2844
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3087
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3211
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:210
+msgid "Totals"
+msgstr "Totales"
+
+#: ../app/Agents/Collections/AgentsCollection.php:135
+#: ../app/Agents/Collections/AgentsCollection.php:301
+#: ../app/Agents/Collections/AgentsCollection.php:478
+#: ../app/Agents/Collections/AgentsCollection.php:620
+#: ../app/Agents/Collections/AgentsCollection.php:714
+#: ../app/Agents/Collections/AgentsCollection.php:2127
+#: ../app/Agents/Collections/AgentsCollection.php:2877
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:135
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:301
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:478
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:620
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:714
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2127
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2877
+msgid "Total Comission"
+msgstr "Comisión Total"
+
+#: ../app/Agents/Collections/AgentsCollection.php:144
+#: ../app/Agents/Collections/AgentsCollection.php:310
+#: ../app/Agents/Collections/AgentsCollection.php:487
+#: ../app/Agents/Collections/AgentsCollection.php:580
+#: ../app/Agents/Collections/AgentsCollection.php:621
+#: ../app/Agents/Collections/AgentsCollection.php:723
+#: ../app/Agents/Collections/AgentsCollection.php:2141
+#: ../app/Agents/Collections/AgentsCollection.php:2897
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:144
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:310
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:487
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:580
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:621
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:723
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2141
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2897
+msgid "Total to pay"
+msgstr "Total a pagar"
+
+#: ../app/Agents/Collections/AgentsCollection.php:158
+#: ../app/Agents/Collections/AgentsCollection.php:265
+#: ../app/Agents/Collections/AgentsCollection.php:293
+#: ../app/Agents/Collections/AgentsCollection.php:323
+#: ../app/Agents/Collections/AgentsCollection.php:442
+#: ../app/Agents/Collections/AgentsCollection.php:470
+#: ../app/Agents/Collections/AgentsCollection.php:500
+#: ../app/Agents/Collections/AgentsCollection.php:550
+#: ../app/Agents/Collections/AgentsCollection.php:618
+#: ../app/Agents/Collections/AgentsCollection.php:735
+#: ../app/Agents/Collections/AgentsCollection.php:787
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:158
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:265
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:293
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:323
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:442
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:470
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:500
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:550
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:618
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:735
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:787
+msgid "Total Profit"
+msgstr "Beneficio total"
+
+#: ../app/Agents/Collections/AgentsCollection.php:170
+#: ../app/Agents/Collections/AgentsCollection.php:344
+#: ../app/Agents/Collections/AgentsCollection.php:521
+#: ../app/Agents/Collections/AgentsCollection.php:590
+#: ../app/Agents/Collections/AgentsCollection.php:642
+#: ../app/Agents/Collections/AgentsCollection.php:744
+#: ../app/Agents/Collections/AgentsCollection.php:812
+#: ../app/Agents/Collections/AgentsCollection.php:2837
+#: ../app/Agents/Collections/AgentsCollection.php:2957
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:170
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:344
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:521
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:590
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:642
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:744
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:812
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2837
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2957
+msgid "no records"
+msgstr "Sin registros"
+
+#: ../app/Agents/Collections/AgentsCollection.php:263
+#: ../app/Agents/Collections/AgentsCollection.php:440
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:263
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:440
+msgid "total played"
+msgstr "Total de jugadores"
+
+#: ../app/Agents/Collections/AgentsCollection.php:264
+#: ../app/Agents/Collections/AgentsCollection.php:441
+#: ../app/Agents/Collections/AgentsCollection.php:548
+#: ../app/Agents/Collections/AgentsCollection.php:617
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:43
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:43
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:264
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:441
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:548
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:617
+msgid "Total won"
+msgstr "Total de ganados"
+
+#: ../app/Agents/Collections/AgentsCollection.php:342
+#: ../app/Agents/Collections/AgentsCollection.php:519
+#: ../app/Agents/Collections/AgentsCollection.php:1283
+#: ../app/Agents/Collections/AgentsCollection.php:1947
+#: ../app/Agents/Collections/AgentsCollection.php:2182
+#: ../app/Agents/Collections/AgentsCollection.php:2428
+#: ../app/Agents/Collections/AgentsCollection.php:2726
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:342
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:519
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1283
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1947
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2182
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2428
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2726
+msgid "Agents / Players"
+msgstr "Agentes / Jugadores"
+
+#: ../app/Agents/Collections/AgentsCollection.php:547
+#: ../app/Agents/Collections/AgentsCollection.php:616
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:20
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:20
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:547
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:616
+msgid "Total played"
+msgstr "Total jugado"
+
+#: ../app/Agents/Collections/AgentsCollection.php:549
+#: ../app/Agents/Collections/AgentsCollection.php:786
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:549
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:786
+msgid "Total Bets"
+msgstr "Total de apuestas"
+
+#: ../app/Agents/Collections/AgentsCollection.php:551
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:551
+msgid "Total Rtp"
+msgstr "Total Rtp"
+
+#: ../app/Agents/Collections/AgentsCollection.php:571
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:571
+msgid "Total Comission "
+msgstr "Comisión Total "
+
+#: ../app/Agents/Collections/AgentsCollection.php:619
+#: ../app/Agents/Collections/AgentsCollection.php:1971
+#: ../app/Agents/Collections/AgentsCollection.php:2748
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:619
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1971
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2748
+msgid "Comission"
+msgstr "Comisión"
+
+#: ../app/Agents/Collections/AgentsCollection.php:668
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:20
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:668
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:53
+msgid "Providers"
+msgstr "Proveedores"
+
+#: ../app/Agents/Collections/AgentsCollection.php:782
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:782
+msgid "Maker"
+msgstr "Fabricante"
+
+#: ../app/Agents/Collections/AgentsCollection.php:784
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:784
+msgid "Total Payed"
+msgstr "Total pagado"
+
+#: ../app/Agents/Collections/AgentsCollection.php:785
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:785
+msgid "Total Won"
+msgstr "Total de ganados"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1294
+#: ../app/Agents/Collections/AgentsCollection.php:1319
+#: ../app/Agents/Collections/AgentsCollection.php:1715
+#: ../app/Agents/Collections/AgentsCollection.php:1778
+#: ../app/Store/Enums/Actions.php:37
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1294
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1319
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1715
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1778
+msgid "Bet"
+msgstr "Apostar"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1302
+#: ../app/Agents/Collections/AgentsCollection.php:1327
+#: ../app/Agents/Collections/AgentsCollection.php:1780
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1302
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1327
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1780
+msgid "Netwin"
+msgstr "Netwin"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1333
+#: ../app/Agents/Collections/AgentsCollection.php:1781
+#: ../app/BetPay/Collections/TransactionsCollection.php:429
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1333
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1781
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:48
+msgid "Commission"
+msgstr "Comisión"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1337
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1337
+msgid "To pay"
+msgstr "Para pagar"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1361
+#: ../app/Agents/Collections/AgentsCollection.php:2236
+#: ../app/Agents/Collections/AgentsCollection.php:2483
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1361
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2236
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2483
+msgid "(Agent)"
+msgstr "(Agente)"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1521
+#: ../app/Agents/Collections/AgentsCollection.php:2323
+#: ../app/Agents/Collections/AgentsCollection.php:2642
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1521
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2323
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2642
+msgid "(Player)"
+msgstr "(Jugador)"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1712
+#: ../app/Http/Controllers/AgentsController.php:1300
+#: ../app/Users/Collections/UsersCollection.php:1059
+#: ../app/Users/Collections/UsersCollection.php:1153
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:121
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:162
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:20
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:106
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:152
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:112
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:35
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:84
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1018
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:34
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:96
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:906
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1059
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1153
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:129
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:203
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1712
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:93
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:20
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:20
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:97
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:30
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:94
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:154
+msgid "Provider"
+msgstr "Proveedor"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1713
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:203
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:198
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:170
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:198
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1034
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:215
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1713
+msgid "Won"
+msgstr "Won"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1777
+#: ../app/Core/helpers.php:3311 ../app/Http/Controllers/StoreController.php:474
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3311
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1777
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:49
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:52
+msgid "Categories"
+msgstr "Categorías"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1782
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:71
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1144
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1782
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:71
+msgid "Details"
+msgstr "Detalles"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1958
+#: ../app/Agents/Collections/AgentsCollection.php:2193
+#: ../app/Agents/Collections/AgentsCollection.php:2437
+#: ../app/Agents/Collections/AgentsCollection.php:2735
+#: ../app/Agents/Collections/AgentsCollection.php:3655
+#: ../app/Core/Collections/TransactionsCollection.php:635
+#: ../app/Core/helpers.php:687 ../app/Core/helpers.php:709
+#: ../app/Core/helpers.php:741 ../app/Core/helpers.php:773
+#: ../app/Core/helpers.php:878 ../app/Core/helpers.php:910
+#: ../app/Core/helpers.php:986 ../app/Core/helpers.php:1008
+#: ../app/Core/helpers.php:1039 ../app/Core/helpers.php:1061
+#: ../app/Core/helpers.php:1147 ../app/Core/helpers.php:1169
+#: ../app/Core/helpers.php:1224 ../app/Core/helpers.php:1295
+#: ../app/Core/helpers.php:1372 ../app/Core/helpers.php:1394
+#: ../app/Core/helpers.php:1447 ../app/Core/helpers.php:1510
+#: ../app/Core/helpers.php:1532 ../app/Core/helpers.php:1554
+#: ../app/Core/helpers.php:1586 ../app/Core/helpers.php:1618
+#: ../app/Core/helpers.php:1650 ../app/Core/helpers.php:1682
+#: ../app/Core/helpers.php:1704 ../app/Core/helpers.php:1736
+#: ../app/Core/helpers.php:1768 ../app/Core/helpers.php:1790
+#: ../app/Core/helpers.php:1822 ../app/Core/helpers.php:1854
+#: ../app/Core/helpers.php:1876 ../app/Core/helpers.php:1908
+#: ../app/Core/helpers.php:1940 ../app/Core/helpers.php:1962
+#: ../app/Core/helpers.php:1994 ../app/Core/helpers.php:2026
+#: ../app/Core/helpers.php:2048 ../app/Core/helpers.php:2080
+#: ../app/Core/helpers.php:2112 ../app/Core/helpers.php:2144
+#: ../app/Core/helpers.php:2176 ../app/Core/helpers.php:2208
+#: ../app/Core/helpers.php:2239 ../app/Core/helpers.php:2269
+#: ../app/Core/helpers.php:2299 ../app/Core/helpers.php:2330
+#: ../app/Core/helpers.php:3419
+#: ../app/Users/Collections/UsersCollection.php:880
+#: ../app/Users/Collections/UsersCollection.php:945
+#: ../app/Users/Collections/UsersCollection.php:1001
+#: ../app/Users/Collections/UsersCollection.php:1090
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:687
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:709
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:741
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:773
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:878
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:910
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:986
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1008
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1039
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1061
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1147
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1169
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1224
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1295
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1372
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1394
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1447
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1510
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1532
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1554
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1586
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1618
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1650
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1682
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1704
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1736
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1768
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1790
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1822
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1854
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1876
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1908
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1940
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1962
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1994
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2026
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2048
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2080
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2112
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2144
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2176
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2208
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2239
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2269
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2299
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2330
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3419
+#: ../storage/framework/messages/a8eda1f9d95eac003ef423001bcd3eeb1e2be278.php.php:6
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:74
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:35
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:904
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:969
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1207
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:535
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:700
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1089
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:880
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:945
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1001
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1090
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1958
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2193
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2437
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2735
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3655
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:49
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:50
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:181
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:16
+#: ../storage/framework/messages/dea42d224721ba5881ace86f26775ac1cb5557d1.php.php:33
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:72
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:635
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:97
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:50
+msgid "Credit"
+msgstr "Crédito"
+
+#: ../app/Agents/Collections/AgentsCollection.php:1962
+#: ../app/Agents/Collections/AgentsCollection.php:2197
+#: ../app/Agents/Collections/AgentsCollection.php:2441
+#: ../app/Agents/Collections/AgentsCollection.php:2739
+#: ../app/Agents/Collections/AgentsCollection.php:3655
+#: ../app/Core/Collections/TransactionsCollection.php:635
+#: ../app/Core/helpers.php:719 ../app/Core/helpers.php:751
+#: ../app/Core/helpers.php:783 ../app/Core/helpers.php:814
+#: ../app/Core/helpers.php:835 ../app/Core/helpers.php:856
+#: ../app/Core/helpers.php:888 ../app/Core/helpers.php:920
+#: ../app/Core/helpers.php:942 ../app/Core/helpers.php:964
+#: ../app/Core/helpers.php:1017 ../app/Core/helpers.php:1071
+#: ../app/Core/helpers.php:1103 ../app/Core/helpers.php:1125
+#: ../app/Core/helpers.php:1179 ../app/Core/helpers.php:1234
+#: ../app/Core/helpers.php:1255 ../app/Core/helpers.php:1305
+#: ../app/Core/helpers.php:1328 ../app/Core/helpers.php:1350
+#: ../app/Core/helpers.php:1404 ../app/Core/helpers.php:1425
+#: ../app/Core/helpers.php:1457 ../app/Core/helpers.php:1564
+#: ../app/Core/helpers.php:1596 ../app/Core/helpers.php:1628
+#: ../app/Core/helpers.php:1660 ../app/Core/helpers.php:1714
+#: ../app/Core/helpers.php:1746 ../app/Core/helpers.php:1800
+#: ../app/Core/helpers.php:1832 ../app/Core/helpers.php:1886
+#: ../app/Core/helpers.php:1918 ../app/Core/helpers.php:1972
+#: ../app/Core/helpers.php:2004 ../app/Core/helpers.php:2058
+#: ../app/Core/helpers.php:2090 ../app/Core/helpers.php:2122
+#: ../app/Core/helpers.php:2154 ../app/Core/helpers.php:2186
+#: ../app/Core/helpers.php:2218 ../app/Core/helpers.php:2248
+#: ../app/Core/helpers.php:2278 ../app/Core/helpers.php:2309
+#: ../app/Core/helpers.php:2340 ../app/Core/helpers.php:3429
+#: ../app/Users/Collections/UsersCollection.php:882
+#: ../app/Users/Collections/UsersCollection.php:947
+#: ../app/Users/Collections/UsersCollection.php:1003
+#: ../app/Users/Collections/UsersCollection.php:1092
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:719
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:751
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:783
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:814
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:835
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:856
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:888
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:920
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:942
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:964
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1017
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1071
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1103
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1125
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1179
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1234
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1255
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1305
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1328
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1350
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1404
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1425
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1457
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1564
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1596
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1628
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1660
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1714
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1746
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1800
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1832
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1886
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1918
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1972
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2004
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2058
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2090
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2122
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2154
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2186
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2218
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2248
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2278
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2309
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2340
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3429
+#: ../storage/framework/messages/a8eda1f9d95eac003ef423001bcd3eeb1e2be278.php.php:7
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:75
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:39
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:900
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:965
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1203
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:546
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:696
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1100
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:882
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:947
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1003
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1092
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:1962
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2197
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2441
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2739
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3655
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:51
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:61
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:185
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:17
+#: ../storage/framework/messages/dea42d224721ba5881ace86f26775ac1cb5557d1.php.php:32
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:73
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:635
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:93
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:61
+msgid "Debit"
+msgstr "Débito"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2201
+#: ../app/Http/Controllers/InvoicesController.php:79
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:20
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:42
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:20
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2201
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:20
+msgid "Total"
+msgstr "Total"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2205
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:831
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2205
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:415
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:157
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:157
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3414
+msgid "Bonus"
+msgstr "Sobresueldo"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2214
+#: ../app/Agents/Collections/AgentsCollection.php:2450
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2214
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2450
+msgid "Collect"
+msgstr "Recoger"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2535
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2535
+msgid "(Played)"
+msgstr "(Jugado)"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2972
+#: ../app/Agents/Collections/AgentsCollection.php:2982
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:77
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:274
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:503
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:33
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:78
+#: ../app/Core/Collections/CredentialsCollection.php:58
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:40
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:81
+#: ../app/Notifications/Collections/NotificationsCollection.php:41
+#: ../app/Reports/Collections/ReportsCollection.php:672
+#: ../app/Users/Collections/UsersCollection.php:456
+#: ../app/Users/Collections/UsersCollection.php:507
+#: ../app/Users/Collections/UsersCollection.php:1226
+#: ../app/Whitelabels/Enums/Status.php:68
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:33
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:78
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:255
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:46
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:33
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:85
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:456
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:507
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1226
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2972
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2982
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:502
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:86
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:353
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:62
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:72
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:58
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:45
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:78
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:672
+msgid "Active"
+msgstr "Activo"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2972
+#: ../app/Agents/Collections/AgentsCollection.php:2982
+#: ../app/Reports/Collections/ReportsCollection.php:672
+#: ../app/Users/Collections/UsersCollection.php:456
+#: ../app/Users/Collections/UsersCollection.php:507
+#: ../app/Users/Collections/UsersCollection.php:1226
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:47
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:456
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:507
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1226
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2972
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2982
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:506
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:354
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:46
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:672
+msgid "Blocked"
+msgstr "Bloqueado"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2996
+#: ../app/Agents/Collections/AgentsCollection.php:3282
+#: ../app/Agents/Collections/AgentsCollection.php:3389
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2996
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3282
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3389
+msgid "Master agent"
+msgstr "Agente maestro"
+
+#: ../app/Agents/Collections/AgentsCollection.php:2996
+#: ../app/Agents/Collections/AgentsCollection.php:3282
+#: ../app/Agents/Collections/AgentsCollection.php:3389
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:2996
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3282
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3389
+msgid "Cashier"
+msgstr "Cajero"
+
+#: ../app/Agents/Collections/AgentsCollection.php:3015
+#: ../app/Agents/Collections/AgentsCollection.php:3408
+#: ../app/Http/Controllers/AgentsController.php:1462
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:20
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:20
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:85
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:117
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3015
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3408
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:19
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:71
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:48
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:89
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:31
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:21
+msgid "User"
+msgstr "Usuario"
+
+#: ../app/Agents/Collections/AgentsCollection.php:3200
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:153
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:213
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:263
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:908
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1211
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:35
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:414
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:649
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:705
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:734
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:775
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3200
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:100
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:635
+#: ../storage/framework/messages/d7180da36af108a25afecf8d3f49f6d5c93a3747.php.php:65
+#: ../storage/framework/messages/dea42d224721ba5881ace86f26775ac1cb5557d1.php.php:34
+#: ../storage/framework/messages/dea42d224721ba5881ace86f26775ac1cb5557d1.php.php:35
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:76
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:488
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:45
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:101
+msgid "Balance"
+msgstr "Balance"
+
+#: ../app/Agents/Collections/AgentsCollection.php:3287
+#: ../app/BetPay/Collections/AccountsCollection.php:127
+#: ../app/BetPay/Collections/AccountsCollection.php:175
+#: ../app/BetPay/Collections/AccountsCollection.php:206
+#: ../app/BetPay/Collections/AccountsCollection.php:257
+#: ../app/BetPay/Collections/AccountsCollection.php:286
+#: ../app/BetPay/Collections/AccountsCollection.php:315
+#: ../app/BetPay/Collections/AccountsCollection.php:345
+#: ../app/BetPay/Collections/AccountsCollection.php:387
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:63
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:55
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:95
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:67
+#: ../app/CRM/Collections/SegmentsCollection.php:99
+#: ../app/CRM/Collections/SlidersCollection.php:68
+#: ../app/Core/Collections/EmailConfigurationsCollection.php:29
+#: ../app/Core/Collections/LandingPagesCollection.php:45
+#: ../app/Core/Collections/LobbyGamesCollection.php:36
+#: ../app/Core/Collections/PagesCollection.php:50
+#: ../app/Core/Collections/ProductsLimitsCollection.php:65
+#: ../app/Core/Collections/SectionImagesCollection.php:50
+#: ../app/Core/Collections/SectionImagesCollection.php:88
+#: ../app/Core/Collections/SectionImagesCollection.php:126
+#: ../app/Core/Collections/SectionImagesCollection.php:254
+#: ../app/Notifications/Collections/NotificationsCollection.php:52
+#: ../app/Notifications/Collections/NotificationsCollection.php:93
+#: ../app/Posts/Collections/PostsCollection.php:50
+#: ../app/Reports/Collections/ReportsCollection.php:1239
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:63
+#: ../app/Store/Collections/ActionsCollection.php:30
+#: ../app/Store/Collections/StoreCollection.php:36
+#: ../app/Store/Collections/StoreCollection.php:81
+#: ../app/Store/Collections/StoreCollection.php:151
+#: ../app/Users/Collections/UsersCollection.php:316
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:55
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:95
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:63
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:316
+#: ../storage/framework/messages/ba8a6bf69f353890c99e884bf9a9cd348b1db561.php.php:3287
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:45
+#: ../storage/framework/messages/c2d570d41b9902f657fbd0a7502504170ffbc4d4.php.php:29
+#: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:65
+#: ../storage/framework/messages/db47673041211422a5f64b35421f265a20c0c785.php.php:99
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:36
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:81
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:151
+#: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:36
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:584
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:1239
+msgid "Edit"
+msgstr "Editar"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:112
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:265
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:107
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:260
+#: ../app/Users/Collections/UsersCollection.php:913
+#: ../app/Users/Collections/UsersCollection.php:968
+#: ../app/Users/Collections/UsersCollection.php:1047
+#: ../app/Users/Collections/UsersCollection.php:1141
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:85
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:31
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:36
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:107
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:260
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:59
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:36
+#: ../storage/framework/messages/a664851217dd30440fca7af1a5cdd19f165e1502.php.php:17
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:36
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:27
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:88
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:68
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:36
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:36
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:36
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:36
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:36
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:36
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:36
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:524
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1078
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:913
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:968
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1047
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1141
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:36
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:35
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:123
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:123
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:31
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:59
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:36
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:31
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:59
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:13
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:36
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:21
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:36
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:76
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:70
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:33
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:36
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:36
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:31
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:36
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:36
+msgid "Amount"
+msgstr "Cantidad"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:124
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:165
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:301
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:119
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:160
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:296
+#: ../app/Users/Collections/UsersCollection.php:1056
+#: ../app/Users/Collections/UsersCollection.php:1150
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:116
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:43
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:135
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:87
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:56
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:167
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:64
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:119
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:160
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:296
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:79
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:56
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:52
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:61
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:230
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:56
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:32
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:43
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:101
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:120
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:726
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:973
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1313
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:56
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:52
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:52
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:83
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:52
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:56
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:56
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:51
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:440
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1056
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1150
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:106
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:48
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:51
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:34
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:76
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:83
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:103
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:43
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:79
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:64
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:43
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:79
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:52
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:52
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:96
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:60
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:69
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:100
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:78
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:123
+#: ../storage/framework/messages/e6fdbbcd326cbeb29975b2e67ef6697228f5bfed.php.php:50
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:49
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:134
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:176
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:52
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:52
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:51
+#: ../storage/framework/messages/f474598dceb2646b39be841fc9ac394b39b05233.php.php:48
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:43
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:76
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:56
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:52
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:113
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:112
+msgid "Status"
+msgstr "Estado"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:132
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:127
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:127
+msgid "Selections"
+msgstr "Selecciones"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:141
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:277
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:136
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:272
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:136
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:272
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:107
+msgid "Event"
+msgstr "Evento"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:147
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:283
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:142
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:278
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:142
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:278
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:450
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:111
+msgid "Bet type"
+msgstr "Tipo de apuesta"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:153
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:289
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:148
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:284
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:148
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:284
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:115
+msgid "Selection"
+msgstr "Actualizar la selección"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:159
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:295
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:154
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:290
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:154
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:290
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:119
+msgid "Quota"
+msgstr "Cuota"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:171
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:307
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:166
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:302
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:166
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:302
+msgid "Sport"
+msgstr "Sport"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:177
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:313
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:172
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:308
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:172
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:308
+msgid "League"
+msgstr "Legua"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:198
+#: ../app/BetPay/Collections/TransactionsCollection.php:65
+#: ../app/BetPay/Collections/TransactionsCollection.php:245
+#: ../app/BetPay/Collections/TransactionsCollection.php:644
+#: ../app/BetPay/Collections/TransactionsCollection.php:731
+#: ../app/BetPay/Collections/TransactionsCollection.php:995
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:41
+#: ../app/Core/Collections/TransactionsCollection.php:545
+#: ../app/Core/Collections/TransactionsCollection.php:646
+#: ../app/Core/Collections/TransactionsCollection.php:1386
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:193
+#: ../app/Users/Collections/UsersCollection.php:1020
+#: ../app/Users/Collections/UsersCollection.php:1109
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:193
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1020
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1109
+#: ../storage/framework/messages/e9f2a786448693bbc76e8d522055fd0e29adb5d0.php.php:6
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:545
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:646
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1386
+#: ../storage/framework/messages/f5a787f8be3e49bc850fb6759f6ea785b9cf3342.php.php:6
+msgid "Pending"
+msgstr "Pendiente"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:208
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:203
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:203
+msgid "Lost"
+msgstr "Extraviado"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:213
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:53
+#: ../app/DotSuite/Enums/FreeSpinsStatus.php:79
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:208
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:208
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:218
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:213
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:213
+msgid "Fully cashouted"
+msgstr "Totalmente retirado"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:223
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:218
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:218
+msgid "Returned"
+msgstr "Volvió"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:228
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:223
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:223
+msgid "Not accepted"
+msgstr "No se acepta"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:233
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:228
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:228
+msgid "Partialy cashouted"
+msgstr "Retiro parcial"
+
+#: ../app/Altenar/Collections/AltenarTicketsCollection.php:238
+#: ../app/IQSoft/Collections/IQSoftTicketsCollection.php:233
+#: ../storage/framework/messages/a3dc704b87c802880a51113de09fbb6359453ea2.php.php:233
+msgid "Waiting"
+msgstr "Esperando"
+
+#: ../app/Audits/Collections/AuditsCollection.php:45
+#: ../app/Audits/Collections/AuditsCollection.php:66
+#: ../app/Audits/Collections/AuditsCollection.php:93
+#: ../app/Audits/Collections/AuditsCollection.php:126
+#: ../app/Audits/Collections/AuditsCollection.php:159
+#: ../app/Audits/Collections/AuditsCollection.php:196
+#: ../app/Audits/Collections/AuditsCollection.php:223
+msgid "Ip"
+msgstr "IP"
+
+#: ../app/Audits/Collections/AuditsCollection.php:48
+#: ../app/CRM/Collections/SlidersCollection.php:42
+#: ../app/Core/Collections/SectionGamesCollection.php:29
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:370
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:394
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:452
+#: ../app/Reports/Collections/ReportsCollection.php:150
+#: ../app/Reports/Collections/ReportsCollection.php:178
+#: ../app/Reports/Collections/ReportsCollection.php:202
+#: ../app/Reports/Collections/ReportsCollection.php:261
+#: ../app/Users/Collections/UsersCollection.php:185
+#: ../app/Users/Collections/UsersCollection.php:579
+#: ../app/Users/Collections/UsersCollection.php:615
+#: ../app/Users/Collections/UsersCollection.php:834
+#: ../app/WhitelabelsGames/Collections/WhitelabelsGamesCollection.php:28
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:25
+#: ../storage/framework/messages/b2d23d9d55a3a05a17803e23dddd76b5117322d4.php.php:29
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:185
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:579
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:615
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:834
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:150
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:178
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:202
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:261
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:23
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:72
+msgid "Mobile"
+msgstr "Celular"
+
+#: ../app/Audits/Collections/AuditsCollection.php:69
+#: ../app/Audits/Collections/AuditsCollection.php:96
+#: ../app/Audits/Collections/AuditsCollection.php:129
+#: ../app/Audits/Collections/AuditsCollection.php:162
+#: ../app/Audits/Collections/AuditsCollection.php:199
+#: ../app/Audits/Collections/AuditsCollection.php:226
+msgid "User Id"
+msgstr "ID del usuario"
+
+#: ../app/Audits/Collections/AuditsCollection.php:72
+#: ../app/Audits/Collections/AuditsCollection.php:99
+#: ../app/Audits/Collections/AuditsCollection.php:132
+#: ../app/Audits/Collections/AuditsCollection.php:165
+#: ../app/Audits/Collections/AuditsCollection.php:202
+#: ../app/Audits/Collections/AuditsCollection.php:229
+#: ../app/Users/Collections/UsersCollection.php:746
+#: ../app/Users/Collections/UsersCollection.php:785
+#: ../app/Users/Collections/UsersCollection.php:809
+#: ../app/Users/Collections/UsersCollection.php:829
+#: ../app/Users/Collections/UsersCollection.php:842
+#: ../app/Users/Collections/UsersCollection.php:856
+#: ../app/Users/Collections/UsersCollection.php:907
+#: ../app/Users/Collections/UsersCollection.php:962
+#: ../app/Users/Collections/UsersCollection.php:1041
+#: ../app/Users/Collections/UsersCollection.php:1135
+#: ../lang/en/validation.php:180
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:73
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:23
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:67
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:28
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:55
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:28
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:28
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:184
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:149
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:89
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:80
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:56
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:344
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:28
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:28
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:28
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:28
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:28
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:28
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:15
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:28
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:336
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:730
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:763
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1020
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:746
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:785
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:809
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:829
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:842
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:856
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:907
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:962
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1041
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1135
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:199
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:85
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:28
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:57
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:28
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:180
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:579
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:111
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:28
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:107
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:23
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:55
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:28
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:23
+#: ../storage/framework/messages/d7180da36af108a25afecf8d3f49f6d5c93a3747.php.php:61
+#: ../storage/framework/messages/dac1f599cbb85cde2d37c3e550e647f0a56cb7b8.php.php:27
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:28
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:28
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:68
+#: ../storage/framework/messages/e39775b83e1592ddb68792e759ec4ef02dc89fb7.php.php:33
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:432
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:25
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:58
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:182
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:29
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:124
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:85
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:28
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:28
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:23
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:28
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:28
+msgid "Username"
+msgstr "Usuario"
+
+#: ../app/Audits/Collections/AuditsCollection.php:75
+#: ../app/Audits/Collections/AuditsCollection.php:105
+#: ../app/Audits/Collections/AuditsCollection.php:235
+msgid "User Data"
+msgstr "Datos de usuario"
+
+#: ../app/Audits/Collections/AuditsCollection.php:102
+#: ../app/BetPay/Collections/AccountsCollection.php:155
+#: ../app/BetPay/Collections/AccountsCollection.php:426
+#: ../app/Users/Collections/UsersCollection.php:749
+#: ../app/Users/Collections/UsersCollection.php:916
+#: ../app/Users/Collections/UsersCollection.php:971
+#: ../app/Users/Collections/UsersCollection.php:1050
+#: ../app/Users/Collections/UsersCollection.php:1144
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:101
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:81
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:35
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:80
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:83
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:52
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:136
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:42
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:40
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:63
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:40
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:20
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:108
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:48
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:49
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:46
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:218
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:40
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:42
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:148
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:239
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:42
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:90
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:108
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:35
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:718
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:72
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:35
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1022
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:48
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:100
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:40
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:40
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:40
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:68
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:40
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:40
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:40
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:40
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:749
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:916
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:971
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1050
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1144
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:115
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:20
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:97
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:51
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:39
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:482
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:599
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:119
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:52
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:67
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:37
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:127
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:28
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:35
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:63
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:40
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:20
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:35
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:54
+#: ../storage/framework/messages/dac1f599cbb85cde2d37c3e550e647f0a56cb7b8.php.php:35
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:42
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:40
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:40
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:80
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:337
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:452
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:38
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:53
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:85
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:40
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:37
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:117
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:35
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:93
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:44
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:40
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:40
+#: ../storage/framework/messages/f42db55ab8f6202fc345f535f7dd63c386c02d6a.php.php:40
+#: ../storage/framework/messages/f474598dceb2646b39be841fc9ac394b39b05233.php.php:44
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:20
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:35
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:62
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:40
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:105
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:95
+msgid "Currency"
+msgstr "Moneda"
+
+#: ../app/Audits/Collections/AuditsCollection.php:108
+msgid "Profile Data"
+msgstr "Datos de perfil"
+
+#: ../app/Audits/Collections/AuditsCollection.php:135
+msgid "Old Status"
+msgstr "Estado antiguo"
+
+#: ../app/Audits/Collections/AuditsCollection.php:138
+msgid "New Status"
+msgstr "Nuevo estado"
+
+#: ../app/Audits/Collections/AuditsCollection.php:141
+#: ../app/BetPay/Collections/TransactionsCollection.php:610
+#: ../app/Http/Controllers/InvoicesController.php:77
+#: ../app/Users/Collections/UsersCollection.php:794
+#: ../app/Users/Collections/UsersCollection.php:922
+#: ../app/Users/Collections/UsersCollection.php:977
+#: ../app/Users/Collections/UsersCollection.php:1062
+#: ../app/Users/Collections/UsersCollection.php:1156
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:37
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:37
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:37
+#: ../storage/framework/messages/aaefb29f401fcd11ecf01e9bc3c3b04f8a31e31a.php.php:17
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:45
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:104
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:896
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:961
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:21
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:682
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:794
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:922
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:977
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1062
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1156
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:37
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:77
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:99
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:73
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:131
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:21
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:21
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:37
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:21
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:21
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:31
+#: ../storage/framework/messages/dea42d224721ba5881ace86f26775ac1cb5557d1.php.php:31
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:20
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:21
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:22
+#: ../storage/framework/messages/f42db55ab8f6202fc345f535f7dd63c386c02d6a.php.php:34
+#: ../storage/framework/messages/f5c2c402ac670f77f64a1a39345feaa2d26d4fe3.php.php:38
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:21
+msgid "Description"
+msgstr "Descripción"
+
+#: ../app/Audits/Collections/AuditsCollection.php:168
+#: ../app/Users/Collections/UsersCollection.php:812
+#: ../lang/en/validation.php:181
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:190
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:22
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:453
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:812
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:181
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:32
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:188
+msgid "Password"
+msgstr "Contraseña"
+
+#: ../app/Audits/Collections/AuditsCollection.php:205
+#: ../app/Audits/Collections/AuditsCollection.php:232
+msgid "Transaction"
+msgstr "Transacción"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:39
+#: ../app/BetPay/Collections/AccountsCollection.php:101
+#: ../app/BetPay/Collections/AccountsCollection.php:191
+#: ../app/BetPay/Collections/AccountsCollection.php:278
+#: ../app/BetPay/Collections/AccountsCollection.php:361
+#: ../app/BetPay/Collections/AccountsCollection.php:435
+#: ../app/BetPay/Collections/AccountsCollection.php:485
+#: ../app/BetPay/Collections/TransactionsCollection.php:143
+#: ../app/BetPay/Collections/TransactionsCollection.php:344
+#: ../app/BetPay/Collections/TransactionsCollection.php:854
+#: ../app/BetPay/Collections/TransactionsCollection.php:1157
+#: ../app/BetPay/Collections/TransactionsCollection.php:1176
+#: ../app/BetPay/Collections/TransactionsCollection.php:1186
+#: ../app/BetPay/Collections/TransactionsCollection.php:1286
+#: ../app/BetPay/Collections/TransactionsCollection.php:1354
+#: ../app/Http/Controllers/InvoicesController.php:111
+#: ../app/Http/Controllers/InvoicesController.php:112
+#: ../app/Http/Controllers/InvoicesController.php:114
+#: ../app/Http/Controllers/InvoicesController.php:116
+#: ../app/Users/Collections/UsersCollection.php:701
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:82
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:93
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:408
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:44
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:57
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:701
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:89
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:61
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:75
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:587
+#: ../storage/framework/messages/ce44e08cda55af928521ff1405d06b83dadd9a14.php.php:13
+#: ../storage/framework/messages/dac1f599cbb85cde2d37c3e550e647f0a56cb7b8.php.php:31
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:44
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:440
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:67
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:80
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:128
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:89
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:44
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:44
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:28
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:62
+msgid "Email"
+msgstr "Email"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:53
+#: ../app/BetPay/Collections/AccountsCollection.php:150
+#: ../app/BetPay/Collections/AccountsCollection.php:421
+#: ../app/BetPay/Collections/TransactionsCollection.php:809
+#: ../app/BetPay/Collections/TransactionsCollection.php:1138
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:14
+msgid "Wallet"
+msgstr "Billetera"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:56
+#: ../app/BetPay/Collections/TransactionsCollection.php:320
+#: ../app/BetPay/Collections/TransactionsCollection.php:814
+#: ../app/BetPay/Collections/TransactionsCollection.php:1143
+msgid "Cryptocurrency"
+msgstr "Criptomoneda"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:69
+#: ../app/BetPay/Collections/AccountsCollection.php:221
+#: ../app/BetPay/Collections/AccountsCollection.php:448
+#: ../app/BetPay/Collections/TransactionsCollection.php:770
+#: ../app/BetPay/Collections/TransactionsCollection.php:1029
+msgid "Checking"
+msgstr "Comprobación"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:69
+#: ../app/BetPay/Collections/AccountsCollection.php:221
+#: ../app/BetPay/Collections/AccountsCollection.php:448
+#: ../app/BetPay/Collections/TransactionsCollection.php:770
+#: ../app/BetPay/Collections/TransactionsCollection.php:1029
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:132
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:130
+msgid "Saving"
+msgstr "Ahorro"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:72
+#: ../app/BetPay/Collections/AccountsCollection.php:224
+#: ../app/BetPay/Collections/AccountsCollection.php:451
+#: ../app/BetPay/Collections/TransactionsCollection.php:773
+#: ../app/BetPay/Collections/TransactionsCollection.php:1036
+#: ../app/BetPay/Collections/TransactionsCollection.php:1073
+#: ../app/BetPay/Collections/TransactionsCollection.php:1277
+#: ../app/BetPay/Collections/TransactionsCollection.php:1349
+#: ../app/Http/Controllers/InvoicesController.php:116
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:19
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:48
+msgid "Bank"
+msgstr "Banco"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:75
+#: ../app/BetPay/Collections/TransactionsCollection.php:1267
+#: ../app/BetPay/Collections/TransactionsCollection.php:1339
+#: ../app/Http/Controllers/InvoicesController.php:116
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:122
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:120
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:44
+msgid "Account number"
+msgstr "número de cuenta"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:78
+#: ../app/BetPay/Collections/AccountsCollection.php:234
+#: ../app/BetPay/Collections/AccountsCollection.php:461
+#: ../app/Users/Collections/UsersCollection.php:919
+#: ../app/Users/Collections/UsersCollection.php:974
+#: ../app/Users/Collections/UsersCollection.php:1053
+#: ../app/Users/Collections/UsersCollection.php:1147
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1056
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1148
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:427
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:767
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:919
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:974
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1053
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1147
+msgid "Type"
+msgstr "Tipo"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:81
+#: ../app/BetPay/Collections/AccountsCollection.php:244
+#: ../app/BetPay/Collections/AccountsCollection.php:471
+#: ../app/BetPay/Collections/TransactionsCollection.php:793
+#: ../app/BetPay/Collections/TransactionsCollection.php:1056
+#: ../app/BetPay/Collections/TransactionsCollection.php:1093
+#: ../app/BetPay/Collections/TransactionsCollection.php:1305
+#: ../app/Users/Collections/UsersCollection.php:704
+#: ../lang/en/validation.php:186
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:144
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:422
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:704
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:35
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:186
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:142
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:140
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:56
+msgid "DNI"
+msgstr "DNI"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:84
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:52
+msgid "Social reason"
+msgstr "Razón social"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:87
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:100
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:28
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:150
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:26
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:47
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:63
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:28
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:39
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:62
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:25
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:148
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:36
+#: ../storage/framework/messages/f474598dceb2646b39be841fc9ac394b39b05233.php.php:32
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:35
+msgid "Title"
+msgstr "Título"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:104
+#: ../app/BetPay/Collections/AccountsCollection.php:196
+#: ../app/BetPay/Collections/AccountsCollection.php:440
+#: ../app/BetPay/Collections/TransactionsCollection.php:339
+#: ../app/BetPay/Collections/TransactionsCollection.php:1162
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:136
+msgid "Full name"
+msgstr "Nombre completo"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:161
+#: ../app/BetPay/Collections/TransactionsCollection.php:820
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:22
+msgid "Network"
+msgstr "Red"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:182
+#: ../app/BetPay/Collections/AccountsCollection.php:213
+#: ../app/BetPay/Collections/AccountsCollection.php:264
+#: ../app/BetPay/Collections/AccountsCollection.php:292
+#: ../app/BetPay/Collections/AccountsCollection.php:322
+#: ../app/BetPay/Collections/AccountsCollection.php:352
+#: ../app/BetPay/Collections/AccountsCollection.php:394
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:70
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:60
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:100
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:72
+#: ../app/CRM/Collections/SegmentsCollection.php:117
+#: ../app/CRM/Collections/SlidersCollection.php:73
+#: ../app/Core/Collections/CredentialsCollection.php:91
+#: ../app/Core/Collections/CredentialsCollection.php:1038
+#: ../app/Core/Collections/LandingPagesCollection.php:50
+#: ../app/Core/Collections/SectionGamesCollection.php:42
+#: ../app/DotSuite/Collections/LobbyDotSuiteGamesCollection.php:30
+#: ../app/DotSuite/Collections/LobbyDotSuiteGamesCollection.php:65
+#: ../app/Notifications/Collections/NotificationsCollection.php:70
+#: ../app/Notifications/Collections/NotificationsCollection.php:98
+#: ../app/Notifications/Collections/NotificationsCollection.php:157
+#: ../app/Notifications/Collections/NotificationsCollection.php:192
+#: ../app/Posts/Collections/PostsCollection.php:55
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:68
+#: ../app/Store/Collections/StoreCollection.php:42
+#: ../app/Store/Collections/StoreCollection.php:87
+#: ../app/Store/Collections/StoreCollection.php:272
+#: ../app/Users/Collections/UsersCollection.php:273
+#: ../app/Users/Collections/UsersCollection.php:379
+#: ../app/Users/Collections/UsersCollection.php:544
+#: ../app/Users/Enums/DocumentStatus.php:70
+#: ../app/WhitelabelsGames/Collections/WhitelabelsGamesCollection.php:45
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:60
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:100
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:68
+#: ../storage/framework/messages/b2d23d9d55a3a05a17803e23dddd76b5117322d4.php.php:42
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:273
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:379
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:544
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:50
+#: ../storage/framework/messages/db47673041211422a5f64b35421f265a20c0c785.php.php:117
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:42
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:87
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:272
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:91
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:1038
+msgid "Delete"
+msgstr "Borrar"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:229
+#: ../app/BetPay/Collections/AccountsCollection.php:456
+msgid "Number"
+msgstr "Número"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:239
+#: ../app/BetPay/Collections/AccountsCollection.php:466
+msgid "Holder"
+msgstr "Titular"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:301
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:68
+msgid "VCreditos user"
+msgstr "Usuario de VCreditos"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:306
+msgid "Secure ID"
+msgstr "Identificación segura"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:331
+#: ../app/BetPay/Collections/TransactionsCollection.php:117
+#: ../app/BetPay/Collections/TransactionsCollection.php:128
+#: ../app/BetPay/Collections/TransactionsCollection.php:465
+#: ../app/BetPay/Collections/TransactionsCollection.php:788
+#: ../app/BetPay/Collections/TransactionsCollection.php:839
+#: ../app/BetPay/Collections/TransactionsCollection.php:1051
+#: ../app/BetPay/Collections/TransactionsCollection.php:1088
+#: ../app/BetPay/Collections/TransactionsCollection.php:1233
+#: ../app/BetPay/Collections/TransactionsCollection.php:1247
+#: ../app/BetPay/Collections/TransactionsCollection.php:1310
+#: ../app/BetPay/Collections/TransactionsCollection.php:1324
+#: ../app/Http/Controllers/InvoicesController.php:111
+#: ../app/Http/Controllers/InvoicesController.php:112
+#: ../app/Http/Controllers/InvoicesController.php:116
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:62
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:75
+#: ../storage/framework/messages/aaefb29f401fcd11ecf01e9bc3c3b04f8a31e31a.php.php:13
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:437
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1052
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:20
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:79
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:31
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:31
+#: ../storage/framework/messages/f42db55ab8f6202fc345f535f7dd63c386c02d6a.php.php:28
+#: ../storage/framework/messages/f4a963e2831d0329b14ba547343a9bdd121d320e.php.php:28
+#: ../storage/framework/messages/f519ac262e965f26a5a22a53e0dad28b265f594b.php.php:28
+#: ../storage/framework/messages/f5c2c402ac670f77f64a1a39345feaa2d26d4fe3.php.php:34
+msgid "Name"
+msgstr "Nombre"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:336
+#: ../app/BetPay/Collections/AccountsCollection.php:366
+#: ../app/BetPay/Collections/TransactionsCollection.php:122
+#: ../app/BetPay/Collections/TransactionsCollection.php:133
+#: ../app/BetPay/Collections/TransactionsCollection.php:164
+#: ../app/BetPay/Collections/TransactionsCollection.php:363
+#: ../app/BetPay/Collections/TransactionsCollection.php:470
+#: ../app/BetPay/Collections/TransactionsCollection.php:581
+#: ../app/BetPay/Collections/TransactionsCollection.php:844
+#: ../app/BetPay/Collections/TransactionsCollection.php:875
+#: ../app/BetPay/Collections/TransactionsCollection.php:896
+#: ../app/BetPay/Collections/TransactionsCollection.php:1207
+#: ../app/BetPay/Collections/TransactionsCollection.php:1238
+#: ../app/BetPay/Collections/TransactionsCollection.php:1262
+#: ../app/BetPay/Collections/TransactionsCollection.php:1300
+#: ../app/BetPay/Collections/TransactionsCollection.php:1334
+#: ../app/Users/Collections/UsersCollection.php:728
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:583
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:728
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:65
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:591
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:444
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:156
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:44
+msgid "Phone"
+msgstr "Teléfono"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:371
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:96
+msgid "Pay ID"
+msgstr "ID de pago"
+
+#: ../app/BetPay/Collections/AccountsCollection.php:376
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:100
+msgid "Binance ID"
+msgstr "Binance ID"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:70
+#: ../app/BetPay/Collections/TransactionsCollection.php:250
+#: ../app/BetPay/Collections/TransactionsCollection.php:649
+#: ../app/BetPay/Collections/TransactionsCollection.php:736
+#: ../app/BetPay/Collections/TransactionsCollection.php:1000
+#: ../app/Core/Collections/TransactionsCollection.php:550
+#: ../app/Core/Collections/TransactionsCollection.php:651
+#: ../app/Core/Collections/TransactionsCollection.php:1391
+#: ../app/Users/Collections/UsersCollection.php:1022
+#: ../app/Users/Collections/UsersCollection.php:1111
+#: ../app/Users/Enums/DocumentStatus.php:65
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1022
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1111
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:165
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:173
+#: ../storage/framework/messages/e9f2a786448693bbc76e8d522055fd0e29adb5d0.php.php:7
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:550
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:651
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1391
+#: ../storage/framework/messages/f5a787f8be3e49bc850fb6759f6ea785b9cf3342.php.php:7
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:28
+msgid "Approved"
+msgstr "Aprobado"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:75
+#: ../app/BetPay/Collections/TransactionsCollection.php:255
+#: ../app/BetPay/Collections/TransactionsCollection.php:654
+#: ../app/BetPay/Collections/TransactionsCollection.php:741
+#: ../app/BetPay/Collections/TransactionsCollection.php:1005
+#: ../app/Core/Collections/TransactionsCollection.php:555
+#: ../app/Core/Collections/TransactionsCollection.php:656
+#: ../app/Core/Collections/TransactionsCollection.php:1396
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:555
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:656
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1396
+msgid "Processing"
+msgstr "Procesando"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:80
+#: ../app/BetPay/Collections/TransactionsCollection.php:260
+#: ../app/BetPay/Collections/TransactionsCollection.php:659
+#: ../app/BetPay/Collections/TransactionsCollection.php:746
+#: ../app/BetPay/Collections/TransactionsCollection.php:1010
+#: ../app/Core/Collections/TransactionsCollection.php:560
+#: ../app/Core/Collections/TransactionsCollection.php:661
+#: ../app/Core/Collections/TransactionsCollection.php:1401
+#: ../app/Users/Collections/UsersCollection.php:335
+#: ../app/Users/Collections/UsersCollection.php:1024
+#: ../app/Users/Collections/UsersCollection.php:1113
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:335
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1024
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1113
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:169
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:177
+#: ../storage/framework/messages/e9f2a786448693bbc76e8d522055fd0e29adb5d0.php.php:8
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:560
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:661
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1401
+#: ../storage/framework/messages/f5a787f8be3e49bc850fb6759f6ea785b9cf3342.php.php:8
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:29
+msgid "Rejected"
+msgstr "Rechazado"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:85
+#: ../app/BetPay/Collections/TransactionsCollection.php:265
+#: ../app/BetPay/Collections/TransactionsCollection.php:664
+#: ../app/BetPay/Collections/TransactionsCollection.php:751
+#: ../app/BetPay/Collections/TransactionsCollection.php:1015
+#: ../app/Core/Collections/TransactionsCollection.php:565
+#: ../app/Core/Collections/TransactionsCollection.php:1406
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:565
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1406
+#: ../storage/framework/messages/f5a787f8be3e49bc850fb6759f6ea785b9cf3342.php.php:10
+msgid "Rejected by bank"
+msgstr "Rechazado por el banco"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:90
+#: ../app/BetPay/Collections/TransactionsCollection.php:270
+#: ../app/BetPay/Collections/TransactionsCollection.php:669
+#: ../app/BetPay/Collections/TransactionsCollection.php:756
+#: ../app/BetPay/Collections/TransactionsCollection.php:1020
+#: ../app/Core/Collections/TransactionsCollection.php:570
+#: ../app/Core/Collections/TransactionsCollection.php:1411
+#: ../app/DotSuite/Enums/FreeSpinsStatus.php:84
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:570
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1411
+#: ../storage/framework/messages/f5a787f8be3e49bc850fb6759f6ea785b9cf3342.php.php:9
+msgid "Expired"
+msgstr "Vencido"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:150
+#: ../app/BetPay/Collections/TransactionsCollection.php:861
+#: ../app/BetPay/Collections/TransactionsCollection.php:1193
+msgid "Binance Id"
+msgstr "Binance Id"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:157
+#: ../app/BetPay/Collections/TransactionsCollection.php:868
+#: ../app/BetPay/Collections/TransactionsCollection.php:1200
+msgid "Pay Id"
+msgstr "Identificación de pago"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:173
+#: ../app/BetPay/Collections/TransactionsCollection.php:884
+#: ../app/BetPay/Collections/TransactionsCollection.php:1214
+msgid "Qr"
+msgstr "Qr"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:175
+#: ../app/BetPay/Collections/TransactionsCollection.php:886
+#: ../app/Users/Collections/UsersCollection.php:309
+#: ../app/Users/Collections/UsersCollection.php:369
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:309
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:369
+msgid "View"
+msgstr "Ver"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:187
+#: ../app/BetPay/Collections/TransactionsCollection.php:699
+#: ../app/BetPay/Collections/TransactionsCollection.php:936
+#: ../app/BetPay/Collections/TransactionsCollection.php:946
+#: ../app/BetPay/Collections/TransactionsCollection.php:955
+#: ../app/BetPay/Collections/TransactionsCollection.php:1504
+#: ../app/Users/Collections/UsersCollection.php:1239
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:28
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:52
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:52
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:52
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:36
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1239
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:52
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:90
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:36
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:36
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:52
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:36
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:36
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:35
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:36
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:39
+#: ../storage/framework/messages/f54b3801812071c8982f15caf3d81f67f6c51a59.php.php:28
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:36
+msgid "Process"
+msgstr "Proceso"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:285
+#: ../app/BetPay/Collections/TransactionsCollection.php:1364
+msgid "Betpay ID"
+msgstr "Betpay ID"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:296
+#: ../app/BetPay/Collections/TransactionsCollection.php:315
+#: ../app/BetPay/Collections/TransactionsCollection.php:334
+#: ../app/BetPay/Collections/TransactionsCollection.php:353
+#: ../app/BetPay/Collections/TransactionsCollection.php:372
+#: ../app/BetPay/Collections/TransactionsCollection.php:395
+#: ../app/BetPay/Collections/TransactionsCollection.php:404
+#: ../app/BetPay/Collections/TransactionsCollection.php:440
+#: ../app/BetPay/Collections/TransactionsCollection.php:460
+#: ../app/BetPay/Collections/TransactionsCollection.php:480
+#: ../app/BetPay/Collections/TransactionsCollection.php:498
+#: ../app/BetPay/Collections/TransactionsCollection.php:509
+#: ../app/BetPay/Collections/TransactionsCollection.php:532
+#: ../app/BetPay/Collections/TransactionsCollection.php:554
+#: ../app/BetPay/Collections/TransactionsCollection.php:565
+#: ../app/BetPay/Collections/TransactionsCollection.php:576
+#: ../app/BetPay/Collections/TransactionsCollection.php:592
+#: ../app/BetPay/Collections/TransactionsCollection.php:1224
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:56
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:48
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:88
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:48
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:81
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:884
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:949
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1152
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1195
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1250
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1305
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:48
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:44
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:48
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:48
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:608
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:674
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:44
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:68
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:139
+#: ../storage/framework/messages/cffdfaea0d56928eba0e4588282d763052626e85.php.php:29
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:56
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:119
+#: ../storage/framework/messages/dac1f599cbb85cde2d37c3e550e647f0a56cb7b8.php.php:39
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:44
+#: ../storage/framework/messages/dea42d224721ba5881ace86f26775ac1cb5557d1.php.php:30
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:84
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:62
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:132
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:101
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:48
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:81
+msgid "Date"
+msgstr "Fecha"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:301
+#: ../app/BetPay/Collections/TransactionsCollection.php:409
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:44
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:56
+msgid "Origin bank"
+msgstr "Banco de origen"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:306
+#: ../app/BetPay/Collections/TransactionsCollection.php:358
+#: ../app/BetPay/Collections/TransactionsCollection.php:414
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:48
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:60
+msgid "Destination bank"
+msgstr "Banco de destino"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:325
+#: ../app/BetPay/Collections/TransactionsCollection.php:1148
+msgid "Cryptocurrency amount"
+msgstr "Cantidad de criptomonedas"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:378
+#: ../app/Core/Collections/TransactionsCollection.php:1363
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1363
+msgid "Reason"
+msgstr "Motivo"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:419
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:36
+msgid "VES amount"
+msgstr "Importe VES"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:424
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:44
+msgid "Rate"
+msgstr "Calificar"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:450
+#: ../app/BetPay/Collections/TransactionsCollection.php:1257
+#: ../app/BetPay/Collections/TransactionsCollection.php:1329
+#: ../storage/framework/messages/972d17344d34a1289899806aa53040cfa5f2bf4b.php.php:5
+msgid "Document"
+msgstr "Factura"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:486
+#: ../app/BetPay/Collections/TransactionsCollection.php:515
+msgid "Transaction ID"
+msgstr "ID de la transacción"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:491
+msgid "Payment Key"
+msgstr "Clave de pago"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:520
+msgid "UID"
+msgstr "UID"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:525
+#: ../app/BetPay/Collections/TransactionsCollection.php:543
+#: ../app/BetPay/Collections/TransactionsCollection.php:559
+#: ../app/BetPay/Collections/TransactionsCollection.php:586
+#: ../app/BetPay/Collections/TransactionsCollection.php:1377
+#: ../app/BetPay/Collections/TransactionsCollection.php:1450
+#: ../app/BetPay/Collections/TransactionsCollection.php:1493
+#: ../app/Core/Collections/TransactionsCollection.php:1353
+#: ../app/Core/Collections/TransactionsCollection.php:1369
+#: ../app/Core/Collections/TransactionsCollection.php:1374
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:33
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:52
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:67
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:44
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:33
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:33
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:64
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:44
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:44
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:44
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:33
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:40
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:64
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:52
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:33
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:20
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1353
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1369
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1374
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:40
+msgid "Reference"
+msgstr "Referencia"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:603
+#: ../app/BetPay/Collections/TransactionsCollection.php:1386
+#: ../app/Core/Collections/CredentialsCollection.php:200
+#: ../app/Users/Collections/UsersCollection.php:925
+#: ../app/Users/Collections/UsersCollection.php:1065
+#: ../app/Users/Collections/UsersCollection.php:1159
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:100
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:459
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:925
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1065
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1159
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:111
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:200
+msgid "Operator"
+msgstr "Operador"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:688
+#: ../app/BetPay/Collections/TransactionsCollection.php:918
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:27
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:51
+#: ../storage/framework/messages/a032507eaa6ec1d64ce312099530647ef83b9a1b.php.php:27
+#: ../storage/framework/messages/a664851217dd30440fca7af1a5cdd19f165e1502.php.php:23
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:51
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:51
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:52
+#: ../storage/framework/messages/b3b45dfabdffb82c5caed6b131891b7447f7bc2d.php.php:27
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:35
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:96
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:534
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:545
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:925
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:934
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:990
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:999
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1088
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1099
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:51
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:48
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:89
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:561
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:35
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:35
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:51
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:35
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:35
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:39
+#: ../storage/framework/messages/db218c8ffd3fb0a7c8cb2bf9a9e4e0a98d6b4bb4.php.php:20
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:28
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:34
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:35
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:106
+#: ../storage/framework/messages/e9e4d7eaf95f07b9a78b928fb803ebe6c7b43eb7.php.php:21
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:38
+#: ../storage/framework/messages/f54b3801812071c8982f15caf3d81f67f6c51a59.php.php:27
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:35
+msgid "Please wait..."
+msgstr "Por favor espere..."
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:690
+#: ../app/BetPay/Collections/TransactionsCollection.php:920
+msgid "Lock balance"
+msgstr "Bloquear saldo"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:778
+#: ../app/BetPay/Collections/TransactionsCollection.php:1041
+#: ../app/BetPay/Collections/TransactionsCollection.php:1078
+#: ../app/Http/Controllers/InvoicesController.php:116
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:23
+msgid "Account"
+msgstr "Cuenta"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:783
+#: ../app/BetPay/Collections/TransactionsCollection.php:1046
+#: ../app/BetPay/Collections/TransactionsCollection.php:1083
+#: ../app/BetPay/Collections/TransactionsCollection.php:1272
+#: ../app/BetPay/Collections/TransactionsCollection.php:1344
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:128
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:27
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:126
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:48
+msgid "Account type"
+msgstr "Tipo de cuenta"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:799
+#: ../app/BetPay/Collections/TransactionsCollection.php:1062
+#: ../app/BetPay/Collections/TransactionsCollection.php:1099
+msgid "Interbank transfer code"
+msgstr "Código de transferencia interbancaria"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:830
+#: ../app/BetPay/Collections/TransactionsCollection.php:1371
+#: ../app/Core/Collections/CredentialsCollection.php:197
+#: ../app/Core/Collections/CredentialsCollection.php:692
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:292
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:453
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:376
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:197
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:692
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:45
+msgid "Code"
+msgstr "Código"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1032
+msgid "User account"
+msgstr "Cuenta de usuario"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1069
+msgid "Client account"
+msgstr "Cuenta de cliente"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1106
+msgid "Branch office"
+msgstr "Sucursal"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1113
+msgid "CUIT/CUIL"
+msgstr "CUIT/CUIL"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1120
+msgid "Alias"
+msgstr "Alias"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1127
+msgid "BRU"
+msgstr "BRU"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1252
+#: ../app/BetPay/Collections/TransactionsCollection.php:1315
+#: ../app/Users/Collections/UsersCollection.php:710
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:79
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:94
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:710
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:83
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:92
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:36
+msgid "Last name"
+msgstr "Apellido"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1291
+msgid "Customer ID"
+msgstr "ID de cliente"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1393
+msgid "Uid"
+msgstr "Uid"
+
+#: ../app/BetPay/Collections/TransactionsCollection.php:1445
+#: ../app/BetPay/Collections/TransactionsCollection.php:1488
+msgid "Client Number"
+msgstr "Número de cliente"
+
+#: ../app/BonusSystem/Collections/CampaignParticipationStatusCollection.php:23
+msgid "Assigned"
+msgstr "Asignado"
+
+#: ../app/BonusSystem/Collections/CampaignParticipationStatusCollection.php:28
+msgid "In use"
+msgstr "En uso"
+
+#: ../app/BonusSystem/Collections/CampaignParticipationStatusCollection.php:33
+msgid "Canceled by user"
+msgstr "Cancelado por el usuario"
+
+#: ../app/BonusSystem/Collections/CampaignParticipationStatusCollection.php:38
+msgid "Canceled by administrator"
+msgstr "Cancelado por el administrador"
+
+#: ../app/BonusSystem/Collections/CampaignParticipationStatusCollection.php:43
+msgid "Completed rollover"
+msgstr "Rollover completado"
+
+#: ../app/BonusSystem/Collections/CampaignParticipationStatusCollection.php:48
+msgid "Expired rollover"
+msgstr "Rollover caducado"
+
+#: ../app/BonusSystem/Collections/CampaignParticipationStatusCollection.php:53
+msgid "Canceled by withdrawal"
+msgstr "Cancelado por retiro"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:47
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:33
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:34
+#: ../app/Notifications/Collections/NotificationsCollection.php:84
+#: ../app/Notifications/Collections/NotificationsCollection.php:184
+msgid "Without name"
+msgstr "Sin nombre"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:48
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:31
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:32
+#: ../app/Core/Collections/LandingPagesCollection.php:30
+#: ../app/Core/Collections/LandingPagesCollection.php:31
+#: ../app/Notifications/Collections/NotificationsCollection.php:37
+#: ../app/Notifications/Collections/NotificationsCollection.php:38
+#: ../app/Notifications/Collections/NotificationsCollection.php:86
+#: ../app/Posts/Collections/PostsCollection.php:34
+#: ../app/Posts/Collections/PostsCollection.php:35
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:32
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:33
+#: ../app/Store/Collections/StoreCollection.php:63
+#: ../app/Store/Collections/StoreCollection.php:64
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:32
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:33
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:30
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:31
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:63
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:64
+msgid "Everybody"
+msgstr "Todos"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:49
+msgid "No start date"
+msgstr "Sin fecha de inicio"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:50
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:241
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:476
+#: ../app/CRM/Collections/SlidersCollection.php:32
+#: ../app/Core/Collections/LandingPagesCollection.php:29
+#: ../app/Posts/Collections/PostsCollection.php:30
+#: ../app/Store/Collections/StoreCollection.php:60
+#: ../app/Store/Collections/StoreCollection.php:106
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:29
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:60
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:106
+msgid "No end date"
+msgstr "Sin fecha de finalización"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:77
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:274
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:503
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:33
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:78
+#: ../app/Core/Collections/CredentialsCollection.php:58
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:40
+#: ../app/Notifications/Collections/NotificationsCollection.php:41
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:33
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:78
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:40
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:86
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:90
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:63
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:76
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:58
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:79
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:242
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:477
+msgid "Start"
+msgstr "Comienza"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:243
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:478
+msgid "End"
+msgstr "Fin"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:261
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:275
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:83
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:95
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:172
+msgid "Promo code"
+msgstr "Código promocional"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:265
+msgid "Btag"
+msgstr "Btag"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:553
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:740
+#: ../app/CRM/Collections/SegmentsCollection.php:243
+#: ../app/CRM/Collections/SegmentsCollection.php:274
+#: ../app/Security/Collections/SecurityCollection.php:40
+#: ../app/Security/Collections/SecurityCollection.php:74
+#: ../app/Security/Collections/SecurityCollection.php:91
+#: ../app/Security/Collections/SecurityCollection.php:108
+#: ../app/Security/Collections/SecurityCollection.php:147
+#: ../app/Users/Collections/UsersCollection.php:486
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:486
+#: ../storage/framework/messages/db47673041211422a5f64b35421f265a20c0c785.php.php:243
+#: ../storage/framework/messages/db47673041211422a5f64b35421f265a20c0c785.php.php:274
+msgid "Remove"
+msgstr "Remover"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:636
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:656
+#: ../app/Core/helpers.php:504
+#: ../app/Http/Controllers/ReportsController.php:744
+#: ../app/Reports/Collections/ReportsCollection.php:93
+#: ../app/Users/Collections/UsersCollection.php:866
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:504
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:866
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:151
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:218
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:233
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:93
+msgid "Manual transactions"
+msgstr "Transacciones manuales"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:638
+#: ../app/Core/helpers.php:361 ../app/Http/Controllers/AgentsController.php:436
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:361
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:222
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:237
+msgid "Agents transactions"
+msgstr "Transacciones de agentes"
+
+#: ../app/BonusSystem/Collections/CampaignsCollection.php:658
+msgid "Agent transactions"
+msgstr "Transacciones de agentes"
+
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:29
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:74
+#: ../app/CRM/Collections/SlidersCollection.php:40
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:29
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:74
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:37
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:34
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:37
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:516
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:53
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:362
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:39
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:50
+msgid "All languages"
+msgstr "Todos los idiomas"
+
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:30
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:75
+#: ../app/CRM/Collections/SlidersCollection.php:41
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:30
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:75
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:52
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:49
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:150
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:22
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:54
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:484
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:70
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:39
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:56
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:339
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:56
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:37
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:65
+msgid "All currencies"
+msgstr "Todas las monedas"
+
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:45
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:90
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:45
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:90
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#: ../app/CRM/Collections/EmailTemplatesCollection.php:50
+#: ../app/Whitelabels/Enums/Status.php:84
+#: ../storage/framework/messages/9af319d97ed10081a67a8816a0396c49b505baba.php.php:50
+msgid "Test"
+msgstr "Prueba"
+
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:30
+#: ../app/Notifications/Collections/NotificationsCollection.php:36
+#: ../app/Posts/Collections/PostsCollection.php:33
+msgid "Without title"
+msgstr "Sin título"
+
+#: ../app/CRM/Collections/MarketingCampaignsCollection.php:47
+msgid "Sent"
+msgstr "Enviado"
+
+#: ../app/CRM/Collections/SegmentsCollection.php:198
+#: ../app/Reports/Collections/ReportsCollection.php:739
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:450
+#: ../storage/framework/messages/db47673041211422a5f64b35421f265a20c0c785.php.php:198
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:313
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:739
+msgid "Completed"
+msgstr "Completo"
+
+#: ../app/CRM/Collections/SegmentsCollection.php:198
+#: ../app/Reports/Collections/ReportsCollection.php:741
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:457
+#: ../storage/framework/messages/db47673041211422a5f64b35421f265a20c0c785.php.php:198
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:314
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:741
+msgid "Incomplete"
+msgstr "Incompleto"
+
+#: ../app/CRM/Collections/SlidersCollection.php:31
+#: ../app/Core/Collections/LandingPagesCollection.php:28
+#: ../app/Posts/Collections/PostsCollection.php:29
+#: ../app/Store/Collections/StoreCollection.php:59
+#: ../app/Store/Collections/StoreCollection.php:105
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:28
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:59
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:105
+msgid "No starting date"
+msgstr "Sin fecha de inicio"
+
+#: ../app/CRM/Collections/SlidersCollection.php:37
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:36
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:84
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:68
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:51
+#: ../storage/framework/messages/e6fdbbcd326cbeb29975b2e67ef6697228f5bfed.php.php:46
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:49
+msgid "URL"
+msgstr "URL"
+
+#: ../app/CRM/Collections/SlidersCollection.php:38
+#: ../app/Core/Collections/SectionImagesCollection.php:33
+#: ../app/Core/Collections/SectionImagesCollection.php:70
+#: ../app/Core/Collections/SectionImagesCollection.php:109
+#: ../app/Core/Collections/SectionImagesCollection.php:226
+msgid "Without URL"
+msgstr "Sin URL"
+
+#: ../app/CRM/Collections/SlidersCollection.php:42
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:23
+msgid "All devices"
+msgstr "Todos los dispositivos"
+
+#: ../app/CRM/Collections/SlidersCollection.php:42
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:370
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:394
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:452
+#: ../app/Reports/Collections/ReportsCollection.php:150
+#: ../app/Reports/Collections/ReportsCollection.php:178
+#: ../app/Reports/Collections/ReportsCollection.php:202
+#: ../app/Reports/Collections/ReportsCollection.php:261
+#: ../app/Users/Collections/UsersCollection.php:184
+#: ../app/Users/Collections/UsersCollection.php:589
+#: ../app/Users/Collections/UsersCollection.php:625
+#: ../app/Users/Collections/UsersCollection.php:847
+#: ../app/WhitelabelsGames/Collections/WhitelabelsGamesCollection.php:33
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:24
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:184
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:589
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:625
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:847
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:150
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:178
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:202
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:261
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:24
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:71
+msgid "Desktop"
+msgstr "Escritorio"
+
+#: ../app/CRM/Collections/SlidersCollection.php:45
+#: ../app/Core/Collections/LandingPagesCollection.php:35
+#: ../app/Core/Collections/PagesCollection.php:40
+#: ../app/Core/Collections/SectionImagesCollection.php:35
+#: ../app/Core/Collections/SectionImagesCollection.php:72
+#: ../app/Core/Collections/SectionImagesCollection.php:111
+#: ../app/Core/Collections/SectionImagesCollection.php:228
+#: ../app/Posts/Collections/PostsCollection.php:39
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:37
+#: ../app/Store/Collections/StoreCollection.php:70
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:118
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:138
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:170
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:37
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:63
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:35
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:110
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:119
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:35
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:105
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:82
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:70
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:102
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:137
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:115
+msgid "Published"
+msgstr "Publicado"
+
+#: ../app/CRM/Collections/SlidersCollection.php:45
+#: ../app/Core/Collections/LandingPagesCollection.php:35
+#: ../app/Core/Collections/PagesCollection.php:40
+#: ../app/Core/Collections/SectionImagesCollection.php:35
+#: ../app/Core/Collections/SectionImagesCollection.php:72
+#: ../app/Core/Collections/SectionImagesCollection.php:111
+#: ../app/Core/Collections/SectionImagesCollection.php:228
+#: ../app/Posts/Collections/PostsCollection.php:39
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:37
+#: ../app/Store/Collections/StoreCollection.php:70
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:119
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:142
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:174
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:37
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:64
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:39
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:114
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:123
+#: ../storage/framework/messages/bf5d7d4be2057ccb8ab281eeb47b18a08dca071d.php.php:35
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:106
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:86
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:70
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:103
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:141
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:119
+msgid "Unpublished"
+msgstr "Inédito"
+
+#: ../app/CRM/Collections/SlidersCollection.php:55
+#: ../app/Core/Collections/LobbyGamesCollection.php:53
+#: ../app/DotSuite/Collections/LobbyDotSuiteGamesCollection.php:41
+#: ../app/DotSuite/Collections/LobbyDotSuiteGamesCollection.php:76
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:46
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:50
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:46
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:77
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:89
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:57
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:64
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:115
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:122
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:112
+#: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:53
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:52
+msgid "Home"
+msgstr "Inicio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:40
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:40
+msgid "Client grant secret"
+msgstr "Secreto de concesión de cliente"
+
+#: ../app/Core/Collections/CredentialsCollection.php:51
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:51
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: ../app/Core/Collections/CredentialsCollection.php:51
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:51
+msgid "Activate"
+msgstr "Activar"
+
+#: ../app/Core/Collections/CredentialsCollection.php:107
+#: ../app/Core/Collections/CredentialsCollection.php:713
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:371
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:107
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:713
+msgid "Secure login"
+msgstr "Inicio de sesión seguro"
+
+#: ../app/Core/Collections/CredentialsCollection.php:110
+#: ../app/Core/Collections/CredentialsCollection.php:719
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:318
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:377
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:110
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:719
+msgid "Launch URL"
+msgstr "URL de inicio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:113
+#: ../app/Core/Collections/CredentialsCollection.php:722
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:113
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:722
+msgid "API URL"
+msgstr "API URL"
+
+#: ../app/Core/Collections/CredentialsCollection.php:131
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:391
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:131
+msgid "Partner"
+msgstr "Socio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:149
+#: ../app/Core/Collections/CredentialsCollection.php:504
+#: ../app/Core/Collections/CredentialsCollection.php:522
+#: ../app/Core/Collections/CredentialsCollection.php:546
+#: ../app/Core/Collections/CredentialsCollection.php:873
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:196
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:250
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:264
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:535
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:149
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:504
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:522
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:546
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:873
+msgid "Client ID"
+msgstr "Identificación del cliente"
+
+#: ../app/Core/Collections/CredentialsCollection.php:152
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:405
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:152
+msgid "Client Secret"
+msgstr "Secreto del cliente"
+
+#: ../app/Core/Collections/CredentialsCollection.php:155
+#: ../app/Core/Collections/CredentialsCollection.php:176
+#: ../app/Core/Collections/CredentialsCollection.php:971
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:411
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:439
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:635
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:155
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:176
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:971
+msgid "Partner ID"
+msgstr "ID de socio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:173
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:433
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:173
+msgid "Brand Name"
+msgstr "Nombre de Marca"
+
+#: ../app/Core/Collections/CredentialsCollection.php:179
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:445
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:179
+msgid "Api Key"
+msgstr "Clave de API"
+
+#: ../app/Core/Collections/CredentialsCollection.php:203
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:465
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:203
+msgid "License"
+msgstr "Licencia"
+
+#: ../app/Core/Collections/CredentialsCollection.php:221
+#: ../app/Core/Collections/CredentialsCollection.php:458
+#: ../app/Core/Collections/CredentialsCollection.php:483
+#: ../app/Core/Collections/CredentialsCollection.php:501
+#: ../app/Core/Collections/CredentialsCollection.php:824
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:97
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:127
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:230
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:473
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:529
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:221
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:458
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:483
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:501
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:824
+msgid "Operator ID"
+msgstr "ID del operador"
+
+#: ../app/Core/Collections/CredentialsCollection.php:224
+#: ../app/Core/Collections/CredentialsCollection.php:461
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:236
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:479
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:224
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:461
+msgid "Pass key"
+msgstr "Clave de paso"
+
+#: ../app/Core/Collections/CredentialsCollection.php:242
+#: ../app/Core/Collections/CredentialsCollection.php:386
+#: ../app/Core/Collections/CredentialsCollection.php:758
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:419
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:565
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:607
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:242
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:386
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:758
+msgid "Casino ID"
+msgstr "Casino ID"
+
+#: ../app/Core/Collections/CredentialsCollection.php:245
+#: ../app/Core/Collections/CredentialsCollection.php:389
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:425
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:571
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:245
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:389
+msgid "Token"
+msgstr "Token"
+
+#: ../app/Core/Collections/CredentialsCollection.php:263
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:263
+msgid "Channel"
+msgstr "Canal"
+
+#: ../app/Core/Collections/CredentialsCollection.php:266
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:266
+#, fuzzy
+msgid "Bot"
+msgstr "Bot"
+
+#: ../app/Core/Collections/CredentialsCollection.php:284
+#: ../lang/en/validation.php:211
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:69
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:19
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:63
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:77
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:24
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:51
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:24
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:24
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:227
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:145
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:76
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:495
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:52
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:330
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:888
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:953
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:24
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:24
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:24
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:24
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:24
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:24
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:24
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:191
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:81
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:24
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:53
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:62
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:24
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:67
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:211
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:575
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:107
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:24
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:103
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:19
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:51
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:24
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:85
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:19
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:24
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:24
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:64
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:81
+#: ../storage/framework/messages/e39775b83e1592ddb68792e759ec4ef02dc89fb7.php.php:29
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:428
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:284
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:54
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:25
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:120
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:81
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:24
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:24
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:19
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:24
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:24
+msgid "ID"
+msgstr "ID"
+
+#: ../app/Core/Collections/CredentialsCollection.php:302
+#: ../app/Core/Collections/CredentialsCollection.php:740
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:503
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:599
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:302
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:740
+msgid "Site ID"
+msgstr "ID del sitio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:305
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:509
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:305
+msgid "Wallet Code"
+msgstr "Código de billetera"
+
+#: ../app/Core/Collections/CredentialsCollection.php:308
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:515
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:308
+msgid "Path"
+msgstr "Vía"
+
+#: ../app/Core/Collections/CredentialsCollection.php:311
+#: ../app/Core/Collections/CredentialsCollection.php:589
+#: ../app/Core/Collections/CredentialsCollection.php:608
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:125
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:119
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:521
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:311
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:589
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:608
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:149
+msgid "Url"
+msgstr "Url"
+
+#: ../app/Core/Collections/CredentialsCollection.php:329
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:487
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:329
+msgid "Project Name"
+msgstr "Nombre del proyecto"
+
+#: ../app/Core/Collections/CredentialsCollection.php:347
+#: ../app/Core/Collections/CredentialsCollection.php:876
+#: ../app/Core/Collections/CredentialsCollection.php:920
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:543
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:347
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:876
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:920
+msgid "Secret Key"
+msgstr "Llave secreta"
+
+#: ../app/Core/Collections/CredentialsCollection.php:350
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:549
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:350
+msgid "Project ID"
+msgstr "ID del proyecto"
+
+#: ../app/Core/Collections/CredentialsCollection.php:368
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:557
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:368
+msgid "License ID"
+msgstr "ID de licencia"
+
+#: ../app/Core/Collections/CredentialsCollection.php:392
+#: ../app/Core/Collections/CredentialsCollection.php:716
+#: ../app/Core/Collections/CredentialsCollection.php:950
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:188
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:312
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:392
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:716
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:950
+msgid "Key"
+msgstr "Clave"
+
+#: ../app/Core/Collections/CredentialsCollection.php:410
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:410
+msgid "Portal ID"
+msgstr "Portal ID"
+
+#: ../app/Core/Collections/CredentialsCollection.php:413
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:591
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:413
+msgid "Platform ID"
+msgstr "ID de plataforma"
+
+#: ../app/Core/Collections/CredentialsCollection.php:431
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:71
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:431
+msgid "Client credentials grant ID"
+msgstr "ID de concesión de credenciales de cliente"
+
+#: ../app/Core/Collections/CredentialsCollection.php:434
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:77
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:434
+msgid "Client credentials grant secret"
+msgstr "Secreto de concesión de credenciales de cliente"
+
+#: ../app/Core/Collections/CredentialsCollection.php:437
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:83
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:437
+msgid "Password grant ID"
+msgstr "ID de concesión de contraseña"
+
+#: ../app/Core/Collections/CredentialsCollection.php:440
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:89
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:440
+msgid "Password grant secret"
+msgstr "Secreto de concesión de contraseña"
+
+#: ../app/Core/Collections/CredentialsCollection.php:464
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:242
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:464
+msgid "Server ID"
+msgstr "ID del servidor"
+
+#: ../app/Core/Collections/CredentialsCollection.php:525
+#: ../app/Core/Collections/CredentialsCollection.php:549
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:202
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:256
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:525
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:549
+msgid "Client secret"
+msgstr "Secreto de cliente"
+
+#: ../app/Core/Collections/CredentialsCollection.php:528
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:208
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:528
+msgid "Intermediary ID"
+msgstr "ID de intermediario"
+
+#: ../app/Core/Collections/CredentialsCollection.php:567
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:149
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:567
+msgid "Site"
+msgstr "Sitio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:582
+#: ../app/Core/Collections/CredentialsCollection.php:598
+#: ../app/Core/Collections/CredentialsCollection.php:624
+#: ../app/Core/Collections/CredentialsCollection.php:632
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:105
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:113
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:582
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:598
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:624
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:632
+msgid "Api key"
+msgstr "Clave de API"
+
+#: ../app/Core/Collections/CredentialsCollection.php:650
+#: ../app/Core/Collections/CredentialsCollection.php:854
+#: ../app/Core/Collections/CredentialsCollection.php:968
+#: ../app/Core/Collections/CredentialsCollection.php:992
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:141
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:216
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:629
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:649
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:650
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:854
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:968
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:992
+msgid "Private key"
+msgstr "Private key"
+
+#: ../app/Core/Collections/CredentialsCollection.php:653
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:222
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:653
+msgid "Merchant code"
+msgstr "Código de comerciante"
+
+#: ../app/Core/Collections/CredentialsCollection.php:671
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:278
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:671
+msgid "Partner Name"
+msgstr "Nombre del socio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:674
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:284
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:674
+msgid "Partner Access Key"
+msgstr "Clave de acceso de socio"
+
+#: ../app/Core/Collections/CredentialsCollection.php:695
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:298
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:695
+msgid "Code EGT"
+msgstr "Código EGT"
+
+#: ../app/Core/Collections/CredentialsCollection.php:776
+#: ../app/Core/Collections/CredentialsCollection.php:827
+#: ../app/Core/Collections/CredentialsCollection.php:995
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:178
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:133
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:270
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:363
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:615
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:655
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:776
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:827
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:995
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:176
+msgid "Secret key"
+msgstr "Clave secreta"
+
+#: ../app/Core/Collections/CredentialsCollection.php:779
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:621
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:779
+msgid "Authorization"
+msgstr "Carga de turnos"
+
+#: ../app/Core/Collections/CredentialsCollection.php:798
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:157
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:332
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:798
+msgid "Bank group"
+msgstr "Grupo del Banco"
+
+#: ../app/Core/Collections/CredentialsCollection.php:801
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:163
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:338
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:801
+msgid "Restore policy"
+msgstr "Restaurar directiva"
+
+#: ../app/Core/Collections/CredentialsCollection.php:804
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:174
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:349
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:804
+msgid "Start balance"
+msgstr "Equilibrio inicial"
+
+#: ../app/Core/Collections/CredentialsCollection.php:898
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:55
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:63
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:898
+msgid "Client token"
+msgstr "Token de cliente"
+
+#: ../app/Core/Collections/CredentialsCollection.php:917
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:917
+msgid "Public Key"
+msgstr "Clave pública"
+
+#: ../app/Core/Collections/CredentialsCollection.php:947
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:182
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:947
+msgid "Pn"
+msgstr "Pn"
+
+#: ../app/Core/Collections/CredentialsCollection.php:974
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:974
+msgid "URl Script"
+msgstr "URl Script"
+
+#: ../app/Core/Collections/CredentialsCollection.php:998
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:661
+#: ../storage/framework/messages/e649819ef62472a4f1161ac3aef847ff4a3890a7.php.php:998
+#, fuzzy
+msgid "Script"
+msgstr "Guión"
+
+#: ../app/Core/Collections/GamesCollection.php:27
+msgid "(Mobile)"
+msgstr "(Móvil)"
+
+#: ../app/Core/Collections/GamesCollection.php:32
+msgid "(Desktop)"
+msgstr "(Escritorio)"
+
+#: ../app/Core/Collections/LobbyGamesCollection.php:31
+#: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:31
+msgid "Delete game"
+msgstr "Eliminar juego"
+
+#: ../app/Core/Collections/LobbyGamesCollection.php:40
+#: ../app/DotSuite/Collections/LobbyDotSuiteGamesCollection.php:34
+#: ../app/DotSuite/Collections/LobbyDotSuiteGamesCollection.php:69
+#: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:40
+msgid "Has no order"
+msgstr "No tiene orden"
+
+#: ../app/Core/Collections/LobbyGamesCollection.php:47
+#: ../storage/framework/messages/dfeb62825ba48439423d60601e33abb1cc42bf45.php.php:47
+msgid "Not image"
+msgstr "No es imagen"
+
+#: ../app/Core/Collections/PagesCollection.php:31
+#: ../app/Core/Collections/PagesCollection.php:33
+msgid "Page not configured"
+msgstr "Página no configurada"
+
+#: ../app/Core/Collections/PagesCollection.php:35
+msgid "Date not configured"
+msgstr "Fecha no configurada"
+
+#: ../app/Core/Collections/ProductsLimitsCollection.php:29
+#: ../app/Core/Enums/ProductsLimits.php:68
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:49
+#: ../storage/framework/messages/b75ccc3d5e2ec1828a3b7fb2c23426d528003230.php.php:68
+#: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:29
+msgid "Min bet"
+msgstr "Apuesta mínima"
+
+#: ../app/Core/Collections/ProductsLimitsCollection.php:34
+#: ../app/Core/Enums/ProductsLimits.php:73
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:55
+#: ../storage/framework/messages/b75ccc3d5e2ec1828a3b7fb2c23426d528003230.php.php:73
+#: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:34
+msgid "Max bet"
+msgstr "Apuesta máxima"
+
+#: ../app/Core/Collections/ProductsLimitsCollection.php:39
+#: ../app/Core/Enums/ProductsLimits.php:78
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:61
+#: ../storage/framework/messages/b75ccc3d5e2ec1828a3b7fb2c23426d528003230.php.php:78
+#: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:39
+msgid "Max selections"
+msgstr "Selecciones máximas"
+
+#: ../app/Core/Collections/ProductsLimitsCollection.php:44
+#: ../app/Core/Enums/ProductsLimits.php:83
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:67
+#: ../storage/framework/messages/b75ccc3d5e2ec1828a3b7fb2c23426d528003230.php.php:83
+#: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:44
+msgid "Max selections not favorites"
+msgstr "Selecciones máximas, no favoritos"
+
+#: ../app/Core/Collections/ProductsLimitsCollection.php:49
+#: ../app/Core/Enums/ProductsLimits.php:88
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:73
+#: ../storage/framework/messages/b75ccc3d5e2ec1828a3b7fb2c23426d528003230.php.php:88
+#: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:49
+msgid "Straight bet limit"
+msgstr "Límite de apuesta directa"
+
+#: ../app/Core/Collections/ProductsLimitsCollection.php:54
+#: ../app/Core/Enums/ProductsLimits.php:93
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:79
+#: ../storage/framework/messages/b75ccc3d5e2ec1828a3b7fb2c23426d528003230.php.php:93
+#: ../storage/framework/messages/ca594d4fe0e02148677517e7e3616d7310262fc3.php.php:54
+msgid "Parlay bet limit"
+msgstr "Límite de apuesta de Parlay"
+
+#: ../app/Core/Collections/PushNotificationsCollection.php:30
+#: ../storage/framework/messages/bbcbac6e6794edfcf0a3e0f278037c6ba92ecac2.php.php:30
+#, php-format
+msgid "There are %s pending deposits in %s through %s"
+msgstr "Hay %s depósitos pendientes en %s hasta %s"
+
+#: ../app/Core/Collections/SectionGamesCollection.php:34
+#: ../storage/framework/messages/b2d23d9d55a3a05a17803e23dddd76b5117322d4.php.php:34
+msgid "PC"
+msgstr "PC"
+
+#: ../app/Core/Collections/SectionImagesCollection.php:37
+#: ../app/Core/Collections/SectionImagesCollection.php:74
+#: ../app/Core/Collections/SectionImagesCollection.php:113
+#: ../app/Core/Collections/SectionImagesCollection.php:187
+#: ../app/Core/Collections/SectionImagesCollection.php:194
+#: ../app/Core/Collections/SectionImagesCollection.php:201
+#: ../app/Core/Collections/SectionImagesCollection.php:208
+#: ../app/Core/Collections/SectionImagesCollection.php:217
+msgid "Does not apply to this image"
+msgstr "No se aplica a esta imagen"
+
+#: ../app/Core/Collections/SectionImagesCollection.php:237
+#: ../app/Core/Collections/SectionImagesCollection.php:241
+msgid "Not configured"
+msgstr "No configurado"
+
+#: ../app/Core/Collections/TransactionsCollection.php:500
+#: ../app/Core/helpers.php:484
+#: ../app/Http/Controllers/ReportsController.php:335
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:484
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:152
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:627
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:143
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:110
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:480
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:176
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:72
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:164
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:500
+msgid "Deposits"
+msgstr "Depósitos"
+
+#: ../app/Core/Collections/TransactionsCollection.php:501
+#: ../app/Core/helpers.php:494
+#: ../app/Http/Controllers/ReportsController.php:1924
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:494
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:147
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:501
+msgid "Withdrawals"
+msgstr "Retiros"
+
+#: ../app/Core/Collections/TransactionsCollection.php:1351
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1351
+msgid "BetPay ID"
+msgstr "BetPay ID"
+
+#: ../app/Core/Collections/TransactionsCollection.php:1375
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1375
+msgid "Card number"
+msgstr "Número de tarjeta"
+
+#: ../app/Core/Collections/TransactionsCollection.php:1376
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1376
+msgid "Card brand"
+msgstr "Marca de la tarjeta"
+
+#: ../app/Core/Collections/TransactionsCollection.php:1446
+#: ../app/Core/Collections/TransactionsCollection.php:1450
+#: ../storage/framework/messages/dea42d224721ba5881ace86f26775ac1cb5557d1.php.php:34
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1446
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1450
+msgid "from"
+msgstr "de"
+
+#: ../app/Core/Collections/TransactionsCollection.php:1446
+#: ../app/Core/Collections/TransactionsCollection.php:1450
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1446
+#: ../storage/framework/messages/eb1f318a8bc71b5b9e9dc37220ccf3cd5d8547e7.php.php:1450
+msgid "to"
+msgstr "a"
+
+#: ../app/Core/Core.php:314 ../app/Core/helpers.php:2817
+#: ../app/Core/helpers.php:2847 ../app/Core/helpers.php:2877
+#: ../app/Core/helpers.php:2907
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2817
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2847
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2877
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2907
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:15
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:15
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:185
+#: ../storage/framework/messages/ada0a0c55a6057eeeef6edb2a729700d9f7145ea.php.php:16
+#: ../storage/framework/messages/e6fdbbcd326cbeb29975b2e67ef6697228f5bfed.php.php:16
+msgid "Upload"
+msgstr "Subir"
+
+#: ../app/Core/Core.php:324 ../app/Core/Core.php:387
+#: ../app/Core/helpers.php:200 ../app/Core/helpers.php:2664
+#: ../app/Core/helpers.php:2827 ../app/Core/helpers.php:2857
+#: ../app/Core/helpers.php:2887 ../app/Core/helpers.php:2917
+#: ../app/Core/helpers.php:2960 ../app/Core/helpers.php:2991
+#: ../app/Core/helpers.php:3299 ../app/Core/helpers.php:8256
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:200
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2664
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2827
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2857
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2887
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2917
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2960
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2991
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3299
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8256
+msgid "List"
+msgstr "Listado"
+
+#: ../app/Core/Core.php:377 ../app/Core/helpers.php:32
+#: ../app/Core/helpers.php:3289 ../app/Core/helpers.php:6353
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:32
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3289
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6353
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:98
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:93
+msgid "Create"
+msgstr "Crear"
+
+#: ../app/Core/Enums/ImagesPositions.php:145
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:145
+msgid "Left 1"
+msgstr "Izquierda 1"
+
+#: ../app/Core/Enums/ImagesPositions.php:150
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:150
+msgid "Left 2"
+msgstr "Izquierda 2"
+
+#: ../app/Core/Enums/ImagesPositions.php:155
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:155
+msgid "Left 3"
+msgstr "Izquierda 3"
+
+#: ../app/Core/Enums/ImagesPositions.php:160
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:160
+msgid "Right 1"
+msgstr "Derecha 1"
+
+#: ../app/Core/Enums/ImagesPositions.php:165
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:165
+msgid "Right 2"
+msgstr "Derecha 2"
+
+#: ../app/Core/Enums/ImagesPositions.php:170
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:170
+msgid "Right 3"
+msgstr "Derecha 3"
+
+#: ../app/Core/Enums/ImagesPositions.php:174
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:174
+msgid "Top 1"
+msgstr "Top 1"
+
+#: ../app/Core/Enums/ImagesPositions.php:178
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:178
+msgid "Center 1"
+msgstr "Centro 1"
+
+#: ../app/Core/Enums/ImagesPositions.php:182
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:182
+msgid "Center 2"
+msgstr "Centro 2"
+
+#: ../app/Core/Enums/ImagesPositions.php:186
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:186
+msgid "Logo for light backgrounds"
+msgstr "Logotipo para fondos claros"
+
+#: ../app/Core/Enums/ImagesPositions.php:190
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:190
+msgid "Logo for dark backgrounds"
+msgstr "Logotipo para fondos oscuros"
+
+#: ../app/Core/Enums/ImagesPositions.php:194
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:194
+msgid "Logo mobile for light backgrounds"
+msgstr "Logotipo móvil para fondos claros"
+
+#: ../app/Core/Enums/ImagesPositions.php:198
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:198
+msgid "Logo mobile for dark backgrounds"
+msgstr "Logotipo móvil para fondos oscuros"
+
+#: ../app/Core/Enums/ImagesPositions.php:202
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:202
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:128
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:135
+msgid "Background 1"
+msgstr "Antecedentes 1"
+
+#: ../app/Core/Enums/ImagesPositions.php:206
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:206
+msgid "background 2"
+msgstr "Antecedentes 2"
+
+#: ../app/Core/Enums/ImagesPositions.php:210
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:105
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:210
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:185
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:192
+msgid "Logo"
+msgstr "Logo"
+
+#: ../app/Core/Enums/ImagesPositions.php:214
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:214
+msgid "Favicon"
+msgstr "Ícono de Favoritos"
+
+#: ../app/Core/Enums/ImagesPositions.php:218 ../app/Core/Enums/Pages.php:411
+#: ../app/Core/Enums/ProductsLimits.php:98
+#: ../storage/framework/messages/b75ccc3d5e2ec1828a3b7fb2c23426d528003230.php.php:98
+#: ../storage/framework/messages/d06bc1548b3e74a150c0ac8a848018651273aef9.php.php:218
+msgid "Undefined"
+msgstr "Indefinido"
+
+#: ../app/Core/Enums/Languages.php:82
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:82
+msgid "English"
+msgstr "Inglés"
+
+#: ../app/Core/Enums/Languages.php:88
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:88
+msgid "Spanish"
+msgstr "Español"
+
+#: ../app/Core/Enums/Languages.php:93
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:93
+msgid "Portuguese"
+msgstr "Portugués"
+
+#: ../app/Core/Enums/Languages.php:98
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:98
+msgid "Hebrew"
+msgstr "Hebreo"
+
+#: ../app/Core/Enums/Languages.php:103
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:103
+msgid "French"
+msgstr "Francés"
+
+#: ../app/Core/Enums/Languages.php:108
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:108
+msgid "Turkish"
+msgstr "Turco"
+
+#: ../app/Core/Enums/Languages.php:113
+#: ../storage/framework/messages/d8028ce8c0dd766d6077c17fa6d6cec24cb9bf37.php.php:113
+msgid "Argentinian"
+msgstr "Argentino"
+
+#: ../app/Core/Enums/Pages.php:251
+#: ../storage/framework/messages/bd0ac94756c746d54bae81e7dc6fd93e99631d85.php.php:146
+msgid "About"
+msgstr "Acerca de"
+
+#: ../app/Core/Enums/Pages.php:256
+#: ../storage/framework/messages/bd0ac94756c746d54bae81e7dc6fd93e99631d85.php.php:156
+msgid "Security and Privacy"
+msgstr "Seguridad y privacidad"
+
+#: ../app/Core/Enums/Pages.php:261
+#: ../storage/framework/messages/bd0ac94756c746d54bae81e7dc6fd93e99631d85.php.php:166
+msgid "General Conditions"
+msgstr "Condiciones Generales"
+
+#: ../app/Core/Enums/Pages.php:266
+msgid "Return Policy"
+msgstr "Política de Devolución"
+
+#: ../app/Core/Enums/Pages.php:271
+msgid "FAQ"
+msgstr "FAQ"
+
+#: ../app/Core/Enums/Pages.php:276
+msgid "AML PROGRAM"
+msgstr "PROGRAMA AML"
+
+#: ../app/Core/Enums/Pages.php:281
+msgid "KYC"
+msgstr "KYC"
+
+#: ../app/Core/Enums/Pages.php:286
+msgid "Sports Regulation"
+msgstr "Regulación deportiva"
+
+#: ../app/Core/Enums/Pages.php:291
+msgid "Terms and Conditions"
+msgstr "Terminos y Condiciones"
+
+#: ../app/Core/Enums/Pages.php:296
+msgid "Contact Us"
+msgstr "Contáctenos"
+
+#: ../app/Core/Enums/Pages.php:301
+msgid "Lincense"
+msgstr "Incienso"
+
+#: ../app/Core/Enums/Pages.php:306
+msgid "Merchant of Reference"
+msgstr "Comerciante de referencia"
+
+#: ../app/Core/Enums/Pages.php:311
+msgid "VAT on Winnings"
+msgstr "IVA sobre las ganancias"
+
+#: ../app/Core/Enums/Pages.php:316
+msgid "Responsible Gambling"
+msgstr "Juego responsable"
+
+#: ../app/Core/Enums/Pages.php:321
+msgid "Terms and Conditions of Use"
+msgstr "Términos y condiciones de uso"
+
+#: ../app/Core/Enums/Pages.php:326
+msgid "Treat Customers Fairly"
+msgstr "Tratar a los clientes de manera justa"
+
+#: ../app/Core/Enums/Pages.php:331 ../app/Core/helpers.php:8195
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8195
+msgid "Payments"
+msgstr "Pagos"
+
+#: ../app/Core/Enums/Pages.php:336
+msgid "Cookie Policy"
+msgstr "Política de Cookies"
+
+#: ../app/Core/Enums/Pages.php:341
+msgid "Complaints Policy"
+msgstr "Política de quejas"
+
+#: ../app/Core/Enums/Pages.php:346
+msgid "AML Policy"
+msgstr "Política AML"
+
+#: ../app/Core/Enums/Pages.php:351
+msgid "COPPA Compilance"
+msgstr "Compilación COPPA"
+
+#: ../app/Core/Enums/Pages.php:356
+msgid "Copyright Policy"
+msgstr "Política de derechos de autor"
+
+#: ../app/Core/Enums/Pages.php:361
+msgid "Information Security Policy"
+msgstr "Política de Seguridad de la Información"
+
+#: ../app/Core/Enums/Pages.php:366
+msgid "Piracy Policy"
+msgstr "Política de piratería"
+
+#: ../app/Core/Enums/Pages.php:371
+msgid "OFAC Compilanc"
+msgstr "Compilación de la OFAC"
+
+#: ../app/Core/Enums/Pages.php:376
+msgid "Play Nice Policy"
+msgstr "Política de Play Nice"
+
+#: ../app/Core/Enums/Pages.php:381
+msgid "Privacy Policy"
+msgstr "Política de Privacidad"
+
+#: ../app/Core/Enums/Pages.php:386
+msgid "Lucky Africa"
+msgstr "África afortunada"
+
+#: ../app/Core/Enums/Pages.php:391
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3610
+msgid "Spin Deluxe"
+msgstr "Spin Deluxe"
+
+#: ../app/Core/Enums/Pages.php:396
+msgid "Responsible Gaming"
+msgstr "Juego responsable"
+
+#: ../app/Core/Enums/Pages.php:401
+msgid "Regulations and Terms"
+msgstr "Regulaciones y Términos"
+
+#: ../app/Core/Enums/Pages.php:406
+msgid "Tutorials"
+msgstr "Tutoriales"
+
+#: ../app/Core/helpers.php:14
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:14
+msgid "Statistics"
+msgstr "Estadística"
+
+#: ../app/Core/helpers.php:24
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:24
+msgid "See users"
+msgstr "Ver usuarios"
+
+#: ../app/Core/helpers.php:43
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:43
+msgid "Advanced search"
+msgstr "Búsqueda Avanzada"
+
+#: ../app/Core/helpers.php:53
+#: ../app/Http/Controllers/ReportsController.php:1322
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:53
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:52
+msgid "Registered users"
+msgstr "Usuarios registrados"
+
+#: ../app/Core/helpers.php:63 ../app/Http/Controllers/UsersController.php:2486
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:63
+msgid "Users status"
+msgstr "Estado de los usuarios"
+
+#: ../app/Core/helpers.php:73 ../app/Core/helpers.php:391
+#: ../app/Http/Controllers/AgentsController.php:2921
+#: ../app/Http/Controllers/ReportsController.php:1594
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:73
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:391
+msgid "Users balances"
+msgstr "Saldos de usuarios"
+
+#: ../app/Core/helpers.php:83
+#: ../app/Http/Controllers/ReportsController.php:1670
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:83
+msgid "Users conversion"
+msgstr "Conversión de usuarios"
+
+#: ../app/Core/helpers.php:93
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:93
+#: ../storage/framework/messages/e39775b83e1592ddb68792e759ec4ef02dc89fb7.php.php:37
+msgid "Logins"
+msgstr "Logins"
+
+#: ../app/Core/helpers.php:103 ../app/Http/Controllers/UsersController.php:2534
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:103
+msgid "Temp users"
+msgstr "Usuarios temporales"
+
+#: ../app/Core/helpers.php:113
+#: ../app/Http/Controllers/ReportsController.php:1489
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:113
+msgid "Active users on platforms"
+msgstr "Usuarios activos en plataformas"
+
+#: ../app/Core/helpers.php:123 ../app/Http/Controllers/UsersController.php:1397
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:123
+msgid "Exclude users from providers"
+msgstr "Excluir usuarios de proveedores"
+
+#: ../app/Core/helpers.php:132 ../app/Http/Controllers/UsersController.php:1302
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:132
+msgid "Documents verifications"
+msgstr "Verificación de documentos"
+
+#: ../app/Core/helpers.php:152
+#: ../app/Http/Controllers/ReportsController.php:1632
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:152
+msgid "Users birthdays"
+msgstr "Cumpleaños de los usuarios"
+
+#: ../app/Core/helpers.php:171 ../app/Http/Controllers/UsersController.php:574
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:171
+msgid "Autolocked users"
+msgstr "Usuarios bloqueados automáticamente"
+
+#: ../app/Core/helpers.php:181
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:181
+msgid "Referrals"
+msgstr "Referidos"
+
+#: ../app/Core/helpers.php:190
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:190
+#: ../storage/framework/messages/b3b45dfabdffb82c5caed6b131891b7447f7bc2d.php.php:28
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:119
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:579
+msgid "Add"
+msgstr "Agregar"
+
+#: ../app/Core/helpers.php:214
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:214
+msgid "See agents"
+msgstr "Ver agentes"
+
+#: ../app/Core/helpers.php:223
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:223
+msgid "Dashboar"
+msgstr "Menu principal"
+
+#: ../app/Core/helpers.php:234
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:234
+msgid "Create agent user"
+msgstr "Crear agente"
+
+#: ../app/Core/helpers.php:245
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:245
+msgid "Create player user"
+msgstr "Crear jugador"
+
+#: ../app/Core/helpers.php:255 ../app/Http/Controllers/AgentsController.php:181
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:255
+msgid "Add users"
+msgstr "Agregar usuarios"
+
+#: ../app/Core/helpers.php:266 ../app/Core/helpers.php:1491
+#: ../app/Core/helpers.php:3334 ../app/Core/helpers.php:3472
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:266
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1491
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3334
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3472
+msgid "Reports"
+msgstr "Reportes"
+
+#: ../app/Core/helpers.php:275
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:275
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:244
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:311
+msgid "Financial state"
+msgstr "Estado financiero"
+
+#: ../app/Core/helpers.php:313
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:313
+msgid "Financial state - Summary"
+msgstr "Estado financiero - Resumen"
+
+#: ../app/Core/helpers.php:322
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:322
+msgid "By users"
+msgstr "Por usuarios"
+
+#: ../app/Core/helpers.php:331
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:331
+msgid "By providers"
+msgstr "Por proveedores"
+
+#: ../app/Core/helpers.php:352
+#: ../app/Http/Controllers/AgentsController.php:2994
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:352
+msgid "Transaction Timeline"
+msgstr "Cronograma de transacciones"
+
+#: ../app/Core/helpers.php:371 ../app/Http/Controllers/AgentsController.php:695
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:371
+msgid "Cash flow"
+msgstr "Flujo de caja"
+
+#: ../app/Core/helpers.php:381 ../app/Http/Controllers/AgentsController.php:330
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:381
+msgid "Agents balances"
+msgstr "Saldos de agentes"
+
+#: ../app/Core/helpers.php:401
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:401
+msgid " Locked providers"
+msgstr " Proveedores bloqueados"
+
+#: ../app/Core/helpers.php:455
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:455
+msgid "Financial"
+msgstr "Financiero"
+
+#: ../app/Core/helpers.php:464
+#: ../app/Http/Controllers/ReportsController.php:984
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:464
+msgid "Totals by payment method"
+msgstr "Totales por método de pago"
+
+#: ../app/Core/helpers.php:524
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:524
+msgid "Daily sales"
+msgstr "Ventas diarias"
+
+#: ../app/Core/helpers.php:534
+#: ../app/Http/Controllers/ReportsController.php:787
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:534
+msgid "Monthly sales"
+msgstr "Ventas mensuales"
+
+#: ../app/Core/helpers.php:544
+#: ../app/Http/Controllers/ReportsController.php:1784
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:544
+msgid "Sales by whitelabels"
+msgstr "Ventas por marcas blancas"
+
+#: ../app/Core/helpers.php:554
+#: ../app/Http/Controllers/ReportsController.php:1207
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:554
+msgid "Profit by user"
+msgstr "Beneficio por usuario"
+
+#: ../app/Core/helpers.php:564 ../app/Core/helpers.php:574
+#: ../app/Http/Controllers/ReportsController.php:661
+#: ../app/Http/Controllers/ReportsController.php:703
+#: ../app/Users/Collections/UsersCollection.php:987
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:564
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:574
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:987
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:152
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:152
+msgid "Manual adjustments"
+msgstr "Ajustes manuales"
+
+#: ../app/Core/helpers.php:586
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:586
+msgid "Operations"
+msgstr "Operaciones"
+
+#: ../app/Core/helpers.php:595 ../app/Core/helpers.php:615
+#: ../app/Http/Controllers/ReportsController.php:1115
+#: ../app/Http/Controllers/ReportsController.php:1168
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:595
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:615
+msgid "Products totals"
+msgstr "Totales de productos"
+
+#: ../app/Core/helpers.php:605
+#: ../app/Http/Controllers/ReportsController.php:1861
+#: ../app/Http/Controllers/ReportsController.php:1913
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:605
+msgid "Whitelabels totals"
+msgstr "Totales de whitelabels"
+
+#: ../app/Core/helpers.php:658 ../app/Core/helpers.php:8203
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:658
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8203
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3326
+#, fuzzy
+msgid "BetPay"
+msgstr "BetPay"
+
+#: ../app/Core/helpers.php:667 ../app/Http/Controllers/BetPayController.php:188
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:667
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:188
+msgid "Accounts search"
+msgstr "Búsqueda de cuentas"
+
+#: ../app/Core/helpers.php:677 ../app/Core/helpers.php:1522
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:677
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1522
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:565
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:565
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3750
+#, fuzzy
+msgid "Abitab"
+msgstr "Abitab"
+
+#: ../app/Core/helpers.php:699 ../app/Core/helpers.php:1544
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:699
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1544
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:435
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:435
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3464
+#, fuzzy
+msgid "AirTM"
+msgstr "AirTM"
+
+#: ../app/Core/helpers.php:731 ../app/Core/helpers.php:1576
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:731
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1576
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:605
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:605
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3995
+#, fuzzy
+msgid "Bizum"
+msgstr "Bizum"
+
+#: ../app/Core/helpers.php:763 ../app/Core/helpers.php:1608
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:763
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1608
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:595
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:595
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3985
+msgid "Charging point"
+msgstr "Punto de recarga"
+
+#: ../app/Core/helpers.php:793
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:793
+msgid "Debit by ticket"
+msgstr "Débito por boleto"
+
+#: ../app/Core/helpers.php:805 ../app/Core/helpers.php:2290
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:805
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2290
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:615
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:615
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4015
+msgid "Pronto Paga"
+msgstr "Pronto Paga"
+
+#: ../app/Core/helpers.php:826
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:826
+#, fuzzy
+msgid "PayKu"
+msgstr "PayKu"
+
+#: ../app/Core/helpers.php:847
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:847
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:620
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:620
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4030
+#, fuzzy
+msgid "Pay For Fun Go"
+msgstr "Paga por diversión Go"
+
+#: ../app/Core/helpers.php:868 ../app/Core/helpers.php:2166
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:868
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2166
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:600
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:600
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3990
+#, fuzzy
+msgid "Binance"
+msgstr "Binance"
+
+#: ../app/Core/helpers.php:900 ../app/Core/helpers.php:1640
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:900
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1640
+#: ../storage/framework/messages/b45f930b925212b2ef4cb4ad9c00529b5f57b0ce.php.php:94
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:400
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:400
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethodsCategories.php:94
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3459
+#, fuzzy
+msgid "Cryptocurrencies"
+msgstr "Criptomonedas"
+
+#: ../app/Core/helpers.php:932 ../app/Core/helpers.php:1694
+#: ../app/Core/helpers.php:3410
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:932
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1694
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3410
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:405
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:405
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3372
+#, fuzzy
+msgid "ALPS"
+msgstr "ALPES"
+
+#: ../app/Core/helpers.php:954 ../app/Core/helpers.php:2134
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:954
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2134
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:515
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:515
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3615
+#, fuzzy
+msgid "Monnet"
+msgstr "Monnet"
+
+#: ../app/Core/helpers.php:976 ../app/Core/helpers.php:1898
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:976
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1898
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:415
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:415
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3439
+#, fuzzy
+msgid "Mobile payment"
+msgstr "Pago móvil"
+
+#: ../app/Core/helpers.php:998 ../app/Core/helpers.php:1726
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:998
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1726
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:430
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:430
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3454
+#, fuzzy
+msgid "Neteller"
+msgstr "Neteller"
+
+#: ../app/Core/helpers.php:1030 ../app/Core/helpers.php:1758
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1030
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1758
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:640
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:640
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4060
+#, fuzzy
+msgid "Nequi"
+msgstr "Nequi"
+
+#: ../app/Core/helpers.php:1051 ../app/Core/helpers.php:1780
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1051
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1780
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:420
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:420
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3444
+msgid "PayPal"
+msgstr "Introduzca el nombre del cliente"
+
+#: ../app/Core/helpers.php:1083
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1083
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:545
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:545
+#, fuzzy
+msgid "Pay For Fun"
+msgstr "Paga por diversión"
+
+#: ../app/Core/helpers.php:1115 ../app/Core/helpers.php:1812
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1115
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1812
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:555
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:555
+#, fuzzy
+msgid "Pay Retailers"
+msgstr "Pagar a los minoristas"
+
+#: ../app/Core/helpers.php:1137 ../app/Core/helpers.php:1844
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1137
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1844
+#, fuzzy
+msgid "RedPagos"
+msgstr "RedPagos"
+
+#: ../app/Core/helpers.php:1159 ../app/Core/helpers.php:1866
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1159
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1866
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:425
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:425
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3449
+msgid "Skrill"
+msgstr "Skrill"
+
+#: ../app/Core/helpers.php:1214 ../app/Core/helpers.php:2198
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1214
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2198
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:630
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:630
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4040
+msgid "Reserve"
+msgstr "Reserva"
+
+#: ../app/Core/helpers.php:1246 ../app/Core/helpers.php:2260
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1246
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2260
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:625
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:625
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4035
+msgid "Personal"
+msgstr "Personal"
+
+#: ../app/Core/helpers.php:1264
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1264
+msgid "Search transaction"
+msgstr "Buscar transacción"
+
+#: ../app/Core/helpers.php:1285 ../app/Core/helpers.php:1952
+#: ../app/Http/Controllers/InvoicesController.php:114
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1285
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1952
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:440
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:440
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3469
+#, fuzzy
+msgid "Uphold"
+msgstr "Defender"
+
+#: ../app/Core/helpers.php:1318
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1318
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:540
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:540
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3640
+#, fuzzy
+msgid "VCreditos"
+msgstr "VCreditos"
+
+#: ../app/Core/helpers.php:1340
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1340
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:560
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:560
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3745
+#, fuzzy
+msgid "VCreditos API"
+msgstr "VCreditos API"
+
+#: ../app/Core/helpers.php:1362 ../app/Core/helpers.php:2016
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1362
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2016
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:530
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:530
+#, fuzzy
+msgid "VES to USD"
+msgstr "VES a USD"
+
+#: ../app/Core/helpers.php:1384 ../app/Core/helpers.php:2038
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1384
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2038
+#: ../storage/framework/messages/b45f930b925212b2ef4cb4ad9c00529b5f57b0ce.php.php:74
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:390
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:390
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethodsCategories.php:74
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3337
+#, fuzzy
+msgid "Wire transfers"
+msgstr "Transferencias"
+
+#: ../app/Core/helpers.php:1416
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1416
+#, fuzzy
+msgid "Zampay"
+msgstr "Zampay"
+
+#: ../app/Core/helpers.php:1437 ../app/Core/helpers.php:2070
+#: ../app/Http/Controllers/InvoicesController.php:111
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1437
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2070
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:410
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:410
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3409
+#, fuzzy
+msgid "Zelle"
+msgstr "Zelle"
+
+#: ../app/Core/helpers.php:1500
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1500
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:455
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:455
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3484
+#, fuzzy
+msgid "123Pago"
+msgstr "123Pago"
+
+#: ../app/Core/helpers.php:1672
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1672
+#, fuzzy
+msgid "Coral commerce"
+msgstr "Comercio de coral"
+
+#: ../app/Core/helpers.php:1930
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1930
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:510
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:510
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3590
+#, fuzzy
+msgid "Total Pago"
+msgstr "Total Pago"
+
+#: ../app/Core/helpers.php:1984
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:1984
+#, fuzzy
+msgid "VCreditos Api"
+msgstr "VCreditos Api"
+
+#: ../app/Core/helpers.php:2102
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2102
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:460
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:460
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3494
+#, fuzzy
+msgid "Zippy"
+msgstr "Zippy"
+
+#: ../app/Core/helpers.php:2230
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2230
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:610
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:610
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4000
+#, fuzzy
+msgid "Payku"
+msgstr "Payku"
+
+#: ../app/Core/helpers.php:2321
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2321
+#, fuzzy
+msgid "Pay For Fun Gateway"
+msgstr "Pasarela de pago por diversión"
+
+#: ../app/Core/helpers.php:2356 ../app/Core/helpers.php:8010
+#: ../app/Http/Controllers/ConfigurationsController.php:490
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2356
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8010
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3695
+#, fuzzy
+msgid "Altenar"
+msgstr "Altenar"
+
+#: ../app/Core/helpers.php:2366 ../app/Core/helpers.php:2388
+#: ../app/Http/Controllers/AltenarController.php:63
+#: ../app/Http/Controllers/IQSoftController.php:88
+#: ../app/Http/Controllers/IQSoftController.php:198
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2366
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2388
+#, fuzzy
+msgid "Ticket search"
+msgstr "Búsqueda de entradas"
+
+#: ../app/Core/helpers.php:2378 ../app/Core/helpers.php:5880
+#: ../app/Core/helpers.php:8028
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2378
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5880
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8028
+#, fuzzy
+msgid "IQSoft"
+msgstr "IQSoft"
+
+#: ../app/Core/helpers.php:2636
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2636
+msgid "Sliders"
+msgstr "Sliders"
+
+#: ../app/Core/helpers.php:2645 ../app/Core/helpers.php:2801
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2645
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2801
+#, fuzzy
+msgid "Lobbys"
+msgstr "Vestíbulos"
+
+#: ../app/Core/helpers.php:2654 ../app/Core/helpers.php:2950
+#: ../app/Core/helpers.php:2981 ../app/Core/helpers.php:8246
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2654
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2950
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2981
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8246
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:16
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:15
+#: ../storage/framework/messages/f474598dceb2646b39be841fc9ac394b39b05233.php.php:15
+#: ../storage/framework/messages/f5c2c402ac670f77f64a1a39345feaa2d26d4fe3.php.php:17
+msgid "New"
+msgstr "Nuevo"
+
+#: ../app/Core/helpers.php:2678
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2678
+msgid "Images (Beta)"
+msgstr "Imágenes (Beta)"
+
+#: ../app/Core/helpers.php:2687
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2687
+msgid "Register form"
+msgstr "Formulario de registro"
+
+#: ../app/Core/helpers.php:2697
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2697
+msgid "Login form"
+msgstr "Formulario de inicio de sesión"
+
+#: ../app/Core/helpers.php:2707
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2707
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:96
+msgid "Logo and favicon"
+msgstr "Logotipo y favicon"
+
+#: ../app/Core/helpers.php:2719
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2719
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:62
+msgid "Lobby Games"
+msgstr "Juegos de lobby"
+
+#: ../app/Core/helpers.php:2727
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2727
+msgid "Create Lobby"
+msgstr "Crear lobby"
+
+#: ../app/Core/helpers.php:2809
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2809
+msgid "Featured lobby"
+msgstr "Lobby destacado"
+
+#: ../app/Core/helpers.php:2839
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2839
+msgid "Recommended"
+msgstr "Recomendado"
+
+#: ../app/Core/helpers.php:2869
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2869
+msgid "Info"
+msgstr "Info"
+
+#: ../app/Core/helpers.php:2899
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2899
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:192
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:192
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: ../app/Core/helpers.php:2931
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:162
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2931
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:162
+msgid "Highlights games"
+msgstr "Juegos destacados"
+
+#: ../app/Core/helpers.php:2941
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2941
+msgid "Popups"
+msgstr "Ventanas emergentes"
+
+#: ../app/Core/helpers.php:2972
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:2972
+msgid "Posts"
+msgstr "Publicaciones"
+
+#: ../app/Core/helpers.php:3271
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3271
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:101
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:755
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:167
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:167
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3600
+msgid "Store"
+msgstr "Tienda"
+
+#: ../app/Core/helpers.php:3280
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3280
+msgid "Rewards"
+msgstr "Recompensas"
+
+#: ../app/Core/helpers.php:3320
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3320
+msgid "Manage"
+msgstr "Gestionar"
+
+#: ../app/Core/helpers.php:3343 ../app/Http/Controllers/StoreController.php:508
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3343
+msgid "Redeemed rewards"
+msgstr "Recompensas canjeadas"
+
+#: ../app/Core/helpers.php:3389
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3389
+msgid "Pages"
+msgstr "Páginas"
+
+#: ../app/Core/helpers.php:3481 ../app/Core/helpers.php:7544
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3481
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7544
+#, fuzzy
+msgid "Slots"
+msgstr "Ranuras"
+
+#: ../app/Core/helpers.php:3489 ../app/Core/helpers.php:7552
+#: ../app/Http/Controllers/ConfigurationsController.php:472
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3489
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7552
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3665
+#, fuzzy
+msgid "Belatra"
+msgstr "Belatra"
+
+#: ../app/Core/helpers.php:3499 ../app/Core/helpers.php:3547
+#: ../app/Core/helpers.php:3595 ../app/Core/helpers.php:3643
+#: ../app/Core/helpers.php:3691 ../app/Core/helpers.php:3739
+#: ../app/Core/helpers.php:3787 ../app/Core/helpers.php:3835
+#: ../app/Core/helpers.php:3883 ../app/Core/helpers.php:3931
+#: ../app/Core/helpers.php:3979 ../app/Core/helpers.php:4027
+#: ../app/Core/helpers.php:4075 ../app/Core/helpers.php:4123
+#: ../app/Core/helpers.php:4171 ../app/Core/helpers.php:4219
+#: ../app/Core/helpers.php:4267 ../app/Core/helpers.php:4315
+#: ../app/Core/helpers.php:4363 ../app/Core/helpers.php:4411
+#: ../app/Core/helpers.php:4459 ../app/Core/helpers.php:4507
+#: ../app/Core/helpers.php:4556 ../app/Core/helpers.php:4604
+#: ../app/Core/helpers.php:4652 ../app/Core/helpers.php:4700
+#: ../app/Core/helpers.php:4748 ../app/Core/helpers.php:4796
+#: ../app/Core/helpers.php:4844 ../app/Core/helpers.php:4892
+#: ../app/Core/helpers.php:4940 ../app/Core/helpers.php:4988
+#: ../app/Core/helpers.php:5036 ../app/Core/helpers.php:5084
+#: ../app/Core/helpers.php:5132 ../app/Core/helpers.php:5180
+#: ../app/Core/helpers.php:5228 ../app/Core/helpers.php:5276
+#: ../app/Core/helpers.php:5324 ../app/Core/helpers.php:5372
+#: ../app/Core/helpers.php:5420 ../app/Core/helpers.php:5468
+#: ../app/Core/helpers.php:5516 ../app/Core/helpers.php:5564
+#: ../app/Core/helpers.php:5612 ../app/Core/helpers.php:5660
+#: ../app/Core/helpers.php:5718 ../app/Core/helpers.php:5739
+#: ../app/Core/helpers.php:5760 ../app/Core/helpers.php:5799
+#: ../app/Core/helpers.php:5820 ../app/Core/helpers.php:5869
+#: ../app/Core/helpers.php:5890 ../app/Core/helpers.php:5920
+#: ../app/Core/helpers.php:5941 ../app/Core/helpers.php:5962
+#: ../app/Core/helpers.php:5983 ../app/Core/helpers.php:6014
+#: ../app/Core/helpers.php:6035 ../app/Core/helpers.php:6056
+#: ../app/Core/helpers.php:6087 ../app/Core/helpers.php:6126
+#: ../app/Core/helpers.php:6165 ../app/Core/helpers.php:6214
+#: ../app/Core/helpers.php:6236 ../app/Core/helpers.php:6266
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3499
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3547
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3595
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3643
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3691
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3739
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3787
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3835
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3883
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3931
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3979
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4027
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4075
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4123
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4171
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4219
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4267
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4315
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4363
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4411
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4459
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4507
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4556
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4604
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4652
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4700
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4748
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4796
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4844
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4892
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4940
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4988
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5036
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5084
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5132
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5180
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5228
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5276
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5324
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5372
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5420
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5468
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5516
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5564
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5612
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5660
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5718
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5739
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5760
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5799
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5820
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5869
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5890
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5920
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5941
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5962
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5983
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6014
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6035
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6056
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6087
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6126
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6165
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6214
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6236
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6266
+msgid "Users totals"
+msgstr "Total de usuarios"
+
+#: ../app/Core/helpers.php:3517 ../app/Core/helpers.php:3565
+#: ../app/Core/helpers.php:3613 ../app/Core/helpers.php:3661
+#: ../app/Core/helpers.php:3709 ../app/Core/helpers.php:3757
+#: ../app/Core/helpers.php:3805 ../app/Core/helpers.php:3853
+#: ../app/Core/helpers.php:3901 ../app/Core/helpers.php:3949
+#: ../app/Core/helpers.php:4141 ../app/Core/helpers.php:4189
+#: ../app/Core/helpers.php:4237 ../app/Core/helpers.php:4333
+#: ../app/Core/helpers.php:4429 ../app/Core/helpers.php:4477
+#: ../app/Core/helpers.php:4525 ../app/Core/helpers.php:4574
+#: ../app/Core/helpers.php:4622 ../app/Core/helpers.php:4766
+#: ../app/Core/helpers.php:4814 ../app/Core/helpers.php:4862
+#: ../app/Core/helpers.php:5006 ../app/Core/helpers.php:5054
+#: ../app/Core/helpers.php:5102 ../app/Core/helpers.php:5246
+#: ../app/Core/helpers.php:5342 ../app/Core/helpers.php:5390
+#: ../app/Core/helpers.php:5438 ../app/Core/helpers.php:5486
+#: ../app/Core/helpers.php:5582 ../app/Core/helpers.php:5630
+#: ../app/Core/helpers.php:5778 ../app/Core/helpers.php:5838
+#: ../app/Core/helpers.php:6105 ../app/Core/helpers.php:6144
+#: ../app/Core/helpers.php:6183
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3517
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3565
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3613
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3661
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3709
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3757
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3805
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3853
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3901
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3949
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4141
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4189
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4237
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4333
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4429
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4477
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4525
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4574
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4622
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4766
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4814
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4862
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5006
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5054
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5102
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5246
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5342
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5390
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5438
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5486
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5582
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5630
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5778
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5838
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6105
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6144
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6183
+msgid "Most played games"
+msgstr "Juegos más jugados"
+
+#: ../app/Core/helpers.php:3526 ../app/Core/helpers.php:3574
+#: ../app/Core/helpers.php:3622 ../app/Core/helpers.php:3670
+#: ../app/Core/helpers.php:3718 ../app/Core/helpers.php:3766
+#: ../app/Core/helpers.php:3814 ../app/Core/helpers.php:3862
+#: ../app/Core/helpers.php:3910 ../app/Core/helpers.php:3958
+#: ../app/Core/helpers.php:4150 ../app/Core/helpers.php:4198
+#: ../app/Core/helpers.php:4246 ../app/Core/helpers.php:4342
+#: ../app/Core/helpers.php:4438 ../app/Core/helpers.php:4486
+#: ../app/Core/helpers.php:4534 ../app/Core/helpers.php:4583
+#: ../app/Core/helpers.php:4631 ../app/Core/helpers.php:4775
+#: ../app/Core/helpers.php:4823 ../app/Core/helpers.php:4871
+#: ../app/Core/helpers.php:5015 ../app/Core/helpers.php:5063
+#: ../app/Core/helpers.php:5111 ../app/Core/helpers.php:5255
+#: ../app/Core/helpers.php:5351 ../app/Core/helpers.php:5399
+#: ../app/Core/helpers.php:5447 ../app/Core/helpers.php:5495
+#: ../app/Core/helpers.php:5591 ../app/Core/helpers.php:5639
+#: ../app/Http/Controllers/ReportsController.php:378
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3526
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3574
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3622
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3670
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3718
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3766
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3814
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3862
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3910
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3958
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4150
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4198
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4246
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4342
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4438
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4486
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4534
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4583
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4631
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4775
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4823
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4871
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5015
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5063
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5111
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5255
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5351
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5399
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5447
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5495
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5591
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5639
+msgid "Games played by user"
+msgstr "Juegos jugados por el usuario"
+
+#: ../app/Core/helpers.php:3537
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3537
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4120
+msgid "Bet Connections"
+msgstr "Conexiones de apuestas"
+
+#: ../app/Core/helpers.php:3585 ../app/Core/helpers.php:7561
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3585
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7561
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3554
+#, fuzzy
+msgid "Booming Games"
+msgstr "Juegos en auge"
+
+#: ../app/Core/helpers.php:3633 ../app/Core/helpers.php:7570
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3633
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7570
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:125
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3544
+#, fuzzy
+msgid "Booongo"
+msgstr "Booongo"
+
+#: ../app/Core/helpers.php:3681 ../app/Core/helpers.php:7579
+#: ../app/Http/Controllers/ConfigurationsController.php:508
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3681
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7579
+#, fuzzy
+msgid "Booongo Original"
+msgstr "Booongo Original"
+
+#: ../app/Core/helpers.php:3729 ../app/Core/helpers.php:7588
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3729
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7588
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3620
+#, fuzzy
+msgid "Branka"
+msgstr "Branka"
+
+#: ../app/Core/helpers.php:3777 ../app/Core/helpers.php:7598
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3777
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7598
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3635
+#, fuzzy
+msgid "Branka Originals"
+msgstr "Branka Originales"
+
+#: ../app/Core/helpers.php:3825 ../app/Core/helpers.php:7607
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3825
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7607
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3394
+#, fuzzy
+msgid "Caleta Gaming"
+msgstr "Caleta Juegos"
+
+#: ../app/Core/helpers.php:3873 ../app/Core/helpers.php:7616
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3873
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7616
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3357
+#, fuzzy
+msgid "DLV"
+msgstr "DLV"
+
+#: ../app/Core/helpers.php:3921 ../app/Core/helpers.php:7625
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3921
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7625
+#, fuzzy
+msgid "Espresso Games"
+msgstr "Juegos de Espresso"
+
+#: ../app/Core/helpers.php:3969 ../app/Core/helpers.php:7634
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:3969
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7634
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3785
+#, fuzzy
+msgid "Evolution Slots"
+msgstr "Ranuras Evolution"
+
+#: ../app/Core/helpers.php:4017
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4017
+#, fuzzy
+msgid "EvoPlay"
+msgstr "EvoPlay"
+
+#: ../app/Core/helpers.php:4065 ../app/Core/helpers.php:7652
+#: ../app/Http/Controllers/ConfigurationsController.php:568
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4065
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7652
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3780
+#, fuzzy
+msgid "FBM Gaming"
+msgstr "FBM Juegos"
+
+#: ../app/Core/helpers.php:4113 ../app/Core/helpers.php:7661
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4113
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7661
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3549
+#, fuzzy
+msgid "GameArt"
+msgstr "Arte de juego"
+
+#: ../app/Core/helpers.php:4161 ../app/Core/helpers.php:7670
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4161
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7670
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3524
+#, fuzzy
+msgid "Gamzix"
+msgstr "Gamzix"
+
+#: ../app/Core/helpers.php:4209 ../app/Core/helpers.php:7688
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4209
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7688
+#, fuzzy
+msgid "Hasksaw Gaming"
+msgstr "Hasksaw Juegos"
+
+#: ../app/Core/helpers.php:4257
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4257
+#, fuzzy
+msgid "IsoftBet"
+msgstr "IsoftBet"
+
+#: ../app/Core/helpers.php:4305 ../app/Core/helpers.php:7706
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4305
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7706
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3514
+#, fuzzy
+msgid "Ka Gaming"
+msgstr "Ka Juegos"
+
+#: ../app/Core/helpers.php:4353 ../app/Core/helpers.php:7715
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4353
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7715
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3715
+#, fuzzy
+msgid "Kalamba"
+msgstr "Kalamba"
+
+#: ../app/Core/helpers.php:4401 ../app/Core/helpers.php:7724
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4401
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7724
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3559
+#, fuzzy
+msgid "Kiron Interactive"
+msgstr "Kiron Interactivo"
+
+#: ../app/Core/helpers.php:4449 ../app/Core/helpers.php:7733
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4449
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7733
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3429
+#, fuzzy
+msgid "Lega Jackpot"
+msgstr "Lega Jackpot"
+
+#: ../app/Core/helpers.php:4497
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4497
+#, fuzzy
+msgid "LV SLots"
+msgstr "LV SLots"
+
+#: ../app/Core/helpers.php:4546 ../app/Core/helpers.php:7752
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4546
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7752
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3595
+#, fuzzy
+msgid "Mascot Gaming"
+msgstr "Juegos de mascotas"
+
+#: ../app/Core/helpers.php:4594 ../app/Core/helpers.php:7762
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4594
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7762
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3321
+#, fuzzy
+msgid "OCB Slots"
+msgstr "Ranuras OCB"
+
+#: ../app/Core/helpers.php:4642 ../app/Core/helpers.php:7771
+#: ../app/Http/Controllers/ConfigurationsController.php:574
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4642
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7771
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3790
+#, fuzzy
+msgid "One Touch"
+msgstr "Un toque"
+
+#: ../app/Core/helpers.php:4690
+#: ../app/Http/Controllers/ConfigurationsController.php:526
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4690
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3770
+#, fuzzy
+msgid "Ortiz Gaming"
+msgstr "Ortiz Juegos"
+
+#: ../app/Core/helpers.php:4738 ../app/Core/helpers.php:7808
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4738
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7808
+#, fuzzy
+msgid "Lucky Spins"
+msgstr "Giros de la suerte"
+
+#: ../app/Core/helpers.php:4786 ../app/Core/helpers.php:7781
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4786
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7781
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3534
+#, fuzzy
+msgid "Patagonia"
+msgstr "Patagonia"
+
+#: ../app/Core/helpers.php:4834 ../app/Core/helpers.php:7826
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4834
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7826
+#, fuzzy
+msgid "PGSoft"
+msgstr "PGSoft"
+
+#: ../app/Core/helpers.php:4882
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4882
+#, fuzzy
+msgid "Plati Pus"
+msgstr "Plati Pus"
+
+#: ../app/Core/helpers.php:4930
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4930
+#, fuzzy
+msgid "Plati Pus VG"
+msgstr "Plati Pus VG"
+
+#: ../app/Core/helpers.php:4978 ../app/Core/helpers.php:5810
+#: ../app/Core/helpers.php:7835 ../app/Core/helpers.php:7962
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:4978
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5810
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7835
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7962
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3504
+#, fuzzy
+msgid "Pragmatic Play"
+msgstr "Juego pragmático"
+
+#: ../app/Core/helpers.php:5026
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5026
+#, fuzzy
+msgid "PlaySon"
+msgstr "PlaySon"
+
+#: ../app/Core/helpers.php:5074
+#: ../app/Http/Controllers/ConfigurationsController.php:454
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5074
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3680
+#, fuzzy
+msgid "Mancala Gaming"
+msgstr "Mancala Juegos"
+
+#: ../app/Core/helpers.php:5122
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5122
+#, fuzzy
+msgid "Pari Play"
+msgstr "Pari Play"
+
+#: ../app/Core/helpers.php:5170
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5170
+#, fuzzy
+msgid "Play N Go"
+msgstr "Juega N Go"
+
+#: ../app/Core/helpers.php:5218 ../app/Core/helpers.php:7844
+#: ../app/Http/Controllers/ConfigurationsController.php:466
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5218
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7844
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:137
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3690
+#, fuzzy
+msgid "Red Rake"
+msgstr "Rake rojo"
+
+#: ../app/Core/helpers.php:5266
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5266
+#, fuzzy
+msgid "Salsa gaming"
+msgstr "Juegos de salsa"
+
+#: ../app/Core/helpers.php:5314 ../app/Core/helpers.php:7862
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5314
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7862
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3580
+#, fuzzy
+msgid "Spinmatic"
+msgstr "Espinmática"
+
+#: ../app/Core/helpers.php:5362 ../app/Core/helpers.php:7871
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5362
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7871
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3570
+#, fuzzy
+msgid "Triple Cherry"
+msgstr "Cereza triple"
+
+#: ../app/Core/helpers.php:5410 ../app/Core/helpers.php:7880
+#: ../app/Http/Controllers/ConfigurationsController.php:448
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5410
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7880
+#, fuzzy
+msgid "Triple Cherry Original"
+msgstr "Triple Cereza Original"
+
+#: ../app/Core/helpers.php:5458
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5458
+#, fuzzy
+msgid "Urgent games"
+msgstr "Juegos urgentes"
+
+#: ../app/Core/helpers.php:5506 ../app/Core/helpers.php:7898
+#: ../app/Http/Controllers/ConfigurationsController.php:556
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5506
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7898
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3775
+#, fuzzy
+msgid "Vibra"
+msgstr "Vibra"
+
+#: ../app/Core/helpers.php:5554 ../app/Core/helpers.php:7907
+#: ../app/Http/Controllers/ConfigurationsController.php:460
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5554
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7907
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3660
+#, fuzzy
+msgid "Wazdan"
+msgstr "Wazdan"
+
+#: ../app/Core/helpers.php:5602 ../app/Core/helpers.php:7916
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5602
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7916
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3367
+#, fuzzy
+msgid "WNet Games"
+msgstr "Juegos WNet"
+
+#: ../app/Core/helpers.php:5650
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5650
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3710
+#, fuzzy
+msgid "PariPlay"
+msgstr "PariPlay"
+
+#: ../app/Core/helpers.php:5669
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5669
+#, fuzzy
+msgid "Games totals"
+msgstr "Totales de juegos"
+
+#: ../app/Core/helpers.php:5700
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5700
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:142
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:142
+#, fuzzy
+msgid "Live casino"
+msgstr "Casino en vivo"
+
+#: ../app/Core/helpers.php:5708 ../app/Core/helpers.php:7953
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5708
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7953
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3347
+#, fuzzy
+msgid "Ezugi"
+msgstr "Ezugi"
+
+#: ../app/Core/helpers.php:5729 ../app/Core/helpers.php:7944
+#: ../app/Http/Controllers/ConfigurationsController.php:442
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5729
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7944
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3645
+#, fuzzy
+msgid "Evolution"
+msgstr "Evolución"
+
+#: ../app/Core/helpers.php:5750 ../app/Core/helpers.php:7980
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5750
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7980
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3352
+#, fuzzy
+msgid "VivoGaming"
+msgstr "VivoGaming"
+
+#: ../app/Core/helpers.php:5789 ../app/Core/helpers.php:7971
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5789
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7971
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3342
+#, fuzzy
+msgid "TV Bet"
+msgstr "Apuesta de TV"
+
+#: ../app/Core/helpers.php:5851 ../app/Core/helpers.php:5931
+#: ../app/Core/helpers.php:8046
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5851
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5931
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8046
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:172
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:172
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3306
+#, fuzzy
+msgid "SportBook"
+msgstr "Apuestas deportivas"
+
+#: ../app/Core/helpers.php:5859
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5859
+#, fuzzy
+msgid "Alternar"
+msgstr "Alternar"
+
+#: ../app/Core/helpers.php:5899
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5899
+msgid "Tickets"
+msgstr "Tickets"
+
+#: ../app/Core/helpers.php:5910 ../app/Core/helpers.php:8037
+#: ../app/Http/Controllers/ConfigurationsController.php:496
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5910
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8037
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3740
+#, fuzzy
+msgid "Live Player"
+msgstr "Reproductor en vivo"
+
+#: ../app/Core/helpers.php:5952 ../app/Core/helpers.php:8055
+#: ../app/Http/Controllers/ConfigurationsController.php:478
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5952
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8055
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3685
+#, fuzzy
+msgid "SW3"
+msgstr "SW3"
+
+#: ../app/Core/helpers.php:5973 ../app/Core/helpers.php:8064
+#: ../app/Http/Controllers/ConfigurationsController.php:544
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5973
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8064
+#, fuzzy
+msgid "Vgcsports"
+msgstr "Vgcsports"
+
+#: ../app/Core/helpers.php:5996 ../app/Core/helpers.php:8093
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:5996
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8093
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3725
+#, fuzzy
+msgid "Horses"
+msgstr "Caballos"
+
+#: ../app/Core/helpers.php:6004 ../app/Core/helpers.php:8110
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6004
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8110
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3499
+#, fuzzy
+msgid "El Inmejorable"
+msgstr "El Inmejorable"
+
+#: ../app/Core/helpers.php:6025
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6025
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:177
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:177
+#, fuzzy
+msgid "RaceBook"
+msgstr "Libro de carreras"
+
+#: ../app/Core/helpers.php:6046
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6046
+#, fuzzy
+msgid "UniversalSoft"
+msgstr "UniversalSoft"
+
+#: ../app/Core/helpers.php:6069 ../app/Core/helpers.php:8130
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6069
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8130
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:147
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:147
+msgid "Virtual"
+msgstr "Virtual"
+
+#: ../app/Core/helpers.php:6077 ../app/Core/helpers.php:8138
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6077
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8138
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3419
+#, fuzzy
+msgid "Golden Race"
+msgstr "Carrera Dorada"
+
+#: ../app/Core/helpers.php:6116 ../app/Core/helpers.php:8165
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6116
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8165
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3434
+#, fuzzy
+msgid "Virtual Generation"
+msgstr "Generación Virtual"
+
+#: ../app/Core/helpers.php:6155 ../app/Core/helpers.php:8156
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6155
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8156
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3399
+#, fuzzy
+msgid "Sisvenprol"
+msgstr "Sisvenprol"
+
+#: ../app/Core/helpers.php:6196 ../app/Core/helpers.php:8176
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6196
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8176
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:187
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:187
+#, fuzzy
+msgid "Poker"
+msgstr "Póquer"
+
+#: ../app/Core/helpers.php:6204 ../app/Core/helpers.php:8184
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6204
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8184
+#, fuzzy
+msgid "EventBet"
+msgstr "EventBet"
+
+#: ../app/Core/helpers.php:6227
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6227
+#, fuzzy
+msgid "DotSuite"
+msgstr "DotSuite"
+
+#: ../app/Core/helpers.php:6248
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6248
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:182
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:182
+#, fuzzy
+msgid "Live games"
+msgstr "Juegos en vivo"
+
+#: ../app/Core/helpers.php:6256
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6256
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3655
+#, fuzzy
+msgid "SBL Games"
+msgstr "Juegos SBL"
+
+#: ../app/Core/helpers.php:6302
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6302
+#, fuzzy
+msgid "IQ Soft Totals"
+msgstr "Totales de IQ Soft"
+
+#: ../app/Core/helpers.php:6312
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6312
+msgid "Manage whitelabels"
+msgstr "Administrar whitelabels"
+
+#: ../app/Core/helpers.php:6321
+#: ../app/Http/Controllers/WhitelabelsController.php:464
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6321
+msgid "Whitelabels status"
+msgstr "Status de whitelabels"
+
+#: ../app/Core/helpers.php:6331
+#: ../app/Http/Controllers/ReportsController.php:1744
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6331
+msgid "Active providers"
+msgstr "Proveedores activos"
+
+#: ../app/Core/helpers.php:6344
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6344
+msgid "BetPay Clients"
+msgstr "Clientes de BetPay"
+
+#: ../app/Core/helpers.php:6362
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:6362
+msgid "List Clients"
+msgstr "Lista de clientes"
+
+#: ../app/Core/helpers.php:7535
+#: ../app/Http/Controllers/DotSuiteController.php:384
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7535
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:714
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:384
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:101
+msgid "Credentials"
+msgstr "Credenciales"
+
+#: ../app/Core/helpers.php:7643
+#: ../app/Http/Controllers/ConfigurationsController.php:514
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7643
+#, fuzzy
+msgid "Evoplay"
+msgstr "Evoplay"
+
+#: ../app/Core/helpers.php:7679
+#: ../app/Http/Controllers/ConfigurationsController.php:580
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7679
+#, fuzzy
+msgid "GreenTube"
+msgstr "GreenTube"
+
+#: ../app/Core/helpers.php:7697
+#: ../app/Http/Controllers/ConfigurationsController.php:520
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7697
+#, fuzzy
+msgid "ISoftBet"
+msgstr "ISoftBet"
+
+#: ../app/Core/helpers.php:7742
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7742
+#, fuzzy
+msgid "Mancala"
+msgstr "Mancala"
+
+#: ../app/Core/helpers.php:7790
+#: ../app/Http/Controllers/ConfigurationsController.php:586
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7790
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:121
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3810
+#, fuzzy
+msgid "Platipus"
+msgstr "Platipus"
+
+#: ../app/Core/helpers.php:7799
+#: ../app/Http/Controllers/ConfigurationsController.php:436
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7799
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:141
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3509
+#, fuzzy
+msgid "Playson"
+msgstr "Playson"
+
+#: ../app/Core/helpers.php:7817
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7817
+#, fuzzy
+msgid "Ortiz"
+msgstr "Ortiz"
+
+#: ../app/Core/helpers.php:7853
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7853
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3389
+#, fuzzy
+msgid "Salsa Gaming"
+msgstr "Juegos de Salsa"
+
+#: ../app/Core/helpers.php:7889
+#: ../app/Http/Controllers/ConfigurationsController.php:532
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7889
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3765
+#, fuzzy
+msgid "Urgent Games"
+msgstr "Juegos Urgentes"
+
+#: ../app/Core/helpers.php:7927
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7927
+#, fuzzy
+msgid "Live Casino"
+msgstr "Casino en vivo"
+
+#: ../app/Core/helpers.php:7935
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7935
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3585
+#, fuzzy
+msgid "Color Spin"
+msgstr "Giro de color"
+
+#: ../app/Core/helpers.php:7989
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:7989
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3529
+#, fuzzy
+msgid "VLS"
+msgstr "VLS"
+
+#: ../app/Core/helpers.php:8002
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8002
+#, fuzzy
+msgid "SportBooks"
+msgstr "Apuestas deportivas"
+
+#: ../app/Core/helpers.php:8019
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8019
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3362
+#, fuzzy
+msgid "Andes SportBook"
+msgstr "Andes SportBook"
+
+#: ../app/Core/helpers.php:8073
+#: ../app/Http/Controllers/ConfigurationsController.php:592
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8073
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4020
+#, fuzzy
+msgid "Digitain"
+msgstr "Digitain"
+
+#: ../app/Core/helpers.php:8101
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8101
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3316
+#, fuzzy
+msgid "Center Horses"
+msgstr "Caballos del centro"
+
+#: ../app/Core/helpers.php:8119
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8119
+#, fuzzy
+msgid "Universal Soft"
+msgstr "Universal Soft"
+
+#: ../app/Core/helpers.php:8147
+#: ../app/Http/Controllers/ConfigurationsController.php:538
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8147
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3650
+#, fuzzy
+msgid "Mohio"
+msgstr "Mohio"
+
+#: ../app/Core/helpers.php:8214
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8214
+msgid "Services"
+msgstr "Servicios"
+
+#: ../app/Core/helpers.php:8222
+#: ../app/Http/Controllers/ConfigurationsController.php:484
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8222
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3730
+msgid "Telegram"
+msgstr "Telegrama"
+
+#: ../app/Core/helpers.php:8237
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8237
+msgid "DotSuite credentials"
+msgstr "Credenciales de DotSuite"
+
+#: ../app/Core/helpers.php:8268 ../app/Http/Controllers/CoreController.php:210
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8268
+msgid "Exchange rates"
+msgstr "Tipos de cambio"
+
+#: ../app/Core/helpers.php:8440
+#: ../app/Http/Controllers/ConfigurationsController.php:816
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8440
+msgid "Providers list"
+msgstr "Lista de proveedores"
+
+#: ../app/Core/helpers.php:8450
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8450
+msgid "Main agents"
+msgstr "Principales agentes"
+
+#: ../app/Core/helpers.php:8460
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8460
+msgid "Main users"
+msgstr "Usuarios principales"
+
+#: ../app/Core/helpers.php:8470
+#: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:8470
+msgid "Manual"
+msgstr "Manual"
+
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:114
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:143
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:175
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:195
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:309
+#: ../app/DotSuite/Enums/FreeSpinsStatus.php:89
+msgid "Enable"
+msgstr "Habilitar"
+
+#: ../app/DotSuite/Collections/DotSuiteCollection.php:316
+#: ../app/DotSuite/Enums/FreeSpinsStatus.php:94
+msgid "Disable"
+msgstr "Desabilitar"
+
+#: ../app/DotSuite/Enums/FreeSpinsStatus.php:69
+msgid "Pending to play"
+msgstr "Pendiente de jugar"
+
+#: ../app/Exceptions/Handler.php:60
+#: ../app/Http/Controllers/BonusSystemController.php:1265
+#: ../app/Http/Controllers/BonusSystemController.php:1282
+#: ../app/Http/Controllers/BonusSystemController.php:1290
+#: ../app/Http/Controllers/BonusSystemController.php:1302
+#: ../app/Http/Controllers/BonusSystemController.php:1310
+#: ../app/Http/Controllers/BonusSystemController.php:1320
+#: ../app/Http/Controllers/BonusSystemController.php:1328
+#: ../app/Http/Controllers/BonusSystemController.php:1337
+#: ../app/Http/Controllers/BonusSystemController.php:1345
+#: ../app/Http/Controllers/BonusSystemController.php:1357
+#: ../app/Http/Controllers/BonusSystemController.php:1365
+#: ../app/Http/Controllers/BonusSystemController.php:1662
+#: ../app/Http/Controllers/UsersController.php:815
+msgid "The given data was invalid"
+msgstr "Los datos proporcionados no eran válidos"
+
+#: ../app/Http/Controllers/AgentsController.php:212
+msgid "Added user"
+msgstr "Usuario añadido"
+
+#: ../app/Http/Controllers/AgentsController.php:213
+msgid "The user has been successfully added"
+msgstr "El usuario se ha agregado correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:214
+#: ../app/Http/Controllers/AgentsController.php:221
+#: ../app/Http/Controllers/AgentsController.php:229
+#: ../app/Http/Controllers/AgentsController.php:238
+#: ../app/Http/Controllers/AgentsController.php:617
+#: ../app/Http/Controllers/AgentsController.php:631
+#: ../app/Http/Controllers/AgentsController.php:655
+#: ../app/Http/Controllers/AgentsController.php:677
+#: ../app/Http/Controllers/AgentsController.php:762
+#: ../app/Http/Controllers/AgentsController.php:1781
+#: ../app/Http/Controllers/AgentsController.php:1790
+#: ../app/Http/Controllers/AgentsController.php:1799
+#: ../app/Http/Controllers/AgentsController.php:1811
+#: ../app/Http/Controllers/AgentsController.php:1841
+#: ../app/Http/Controllers/AgentsController.php:1851
+#: ../app/Http/Controllers/AgentsController.php:1892
+#: ../app/Http/Controllers/AgentsController.php:1906
+#: ../app/Http/Controllers/AgentsController.php:1915
+#: ../app/Http/Controllers/AgentsController.php:1938
+#: ../app/Http/Controllers/AgentsController.php:1953
+#: ../app/Http/Controllers/AgentsController.php:1973
+#: ../app/Http/Controllers/AgentsController.php:2012
+#: ../app/Http/Controllers/AgentsController.php:2021
+#: ../app/Http/Controllers/AgentsController.php:2178
+#: ../app/Http/Controllers/AgentsController.php:2187
+#: ../app/Http/Controllers/AgentsController.php:2195
+#: ../app/Http/Controllers/AgentsController.php:2246
+#: ../app/Http/Controllers/AgentsController.php:2257
+#: ../app/Http/Controllers/AgentsController.php:2390
+#: ../app/Http/Controllers/AgentsController.php:2556
+#: ../app/Http/Controllers/AgentsController.php:2565
+#: ../app/Http/Controllers/AgentsController.php:2635
+#: ../app/Http/Controllers/AgentsController.php:2686
+#: ../app/Http/Controllers/AgentsController.php:2703
+#: ../app/Http/Controllers/AgentsController.php:2715
+#: ../app/Http/Controllers/AgentsController.php:2812
+#: ../app/Http/Controllers/AgentsController.php:2841
+#: ../app/Http/Controllers/AltenarController.php:113
+#: ../app/Http/Controllers/AuthController.php:77
+#: ../app/Http/Controllers/AuthController.php:88
+#: ../app/Http/Controllers/AuthController.php:100
+#: ../app/Http/Controllers/AuthController.php:186
+#: ../app/Http/Controllers/AuthController.php:195
+#: ../app/Http/Controllers/BetPayController.php:1287
+#: ../app/Http/Controllers/BetPayController.php:1332
+#: ../app/Http/Controllers/BetPayController.php:1344
+#: ../app/Http/Controllers/BetPayController.php:1352
+#: ../app/Http/Controllers/BetPayController.php:1739
+#: ../app/Http/Controllers/BetPayController.php:1774
+#: ../app/Http/Controllers/BetPayController.php:1785
+#: ../app/Http/Controllers/BetPayController.php:1794
+#: ../app/Http/Controllers/BetPayController.php:2114
+#: ../app/Http/Controllers/BetPayController.php:2125
+#: ../app/Http/Controllers/BetPayController.php:2166
+#: ../app/Http/Controllers/BetPayController.php:2208
+#: ../app/Http/Controllers/BetPayController.php:2236
+#: ../app/Http/Controllers/BetPayController.php:2258
+#: ../app/Http/Controllers/BetPayController.php:2269
+#: ../app/Http/Controllers/BetPayController.php:2278
+#: ../app/Http/Controllers/BetPayController.php:2290
+#: ../app/Http/Controllers/BetPayController.php:2328
+#: ../app/Http/Controllers/BetPayController.php:2367
+#: ../app/Http/Controllers/BetPayController.php:2394
+#: ../app/Http/Controllers/BetPayController.php:2416
+#: ../app/Http/Controllers/BetPayController.php:2424
+#: ../app/Http/Controllers/BetPayController.php:2433
+#: ../app/Http/Controllers/BetPayController.php:2471
+#: ../app/Http/Controllers/BetPayController.php:2513
+#: ../app/Http/Controllers/BetPayController.php:2535
+#: ../app/Http/Controllers/BetPayController.php:2557
+#: ../app/Http/Controllers/BetPayController.php:2565
+#: ../app/Http/Controllers/BetPayController.php:2574
+#: ../app/Http/Controllers/BetPayController.php:2612
+#: ../app/Http/Controllers/BetPayController.php:2651
+#: ../app/Http/Controllers/BetPayController.php:2671
+#: ../app/Http/Controllers/BetPayController.php:2691
+#: ../app/Http/Controllers/BetPayController.php:2699
+#: ../app/Http/Controllers/BetPayController.php:2708
+#: ../app/Http/Controllers/BetPayController.php:2746
+#: ../app/Http/Controllers/BetPayController.php:2784
+#: ../app/Http/Controllers/BetPayController.php:2804
+#: ../app/Http/Controllers/BetPayController.php:2824
+#: ../app/Http/Controllers/BetPayController.php:2832
+#: ../app/Http/Controllers/BetPayController.php:2841
+#: ../app/Http/Controllers/BetPayController.php:2879
+#: ../app/Http/Controllers/BetPayController.php:2942
+#: ../app/Http/Controllers/BetPayController.php:2964
+#: ../app/Http/Controllers/BetPayController.php:2988
+#: ../app/Http/Controllers/BetPayController.php:3009
+#: ../app/Http/Controllers/BetPayController.php:3018
+#: ../app/Http/Controllers/BetPayController.php:3030
+#: ../app/Http/Controllers/BetPayController.php:3068
+#: ../app/Http/Controllers/BetPayController.php:3106
+#: ../app/Http/Controllers/BetPayController.php:3133
+#: ../app/Http/Controllers/BetPayController.php:3155
+#: ../app/Http/Controllers/BetPayController.php:3163
+#: ../app/Http/Controllers/BetPayController.php:3172
+#: ../app/Http/Controllers/BetPayController.php:3210
+#: ../app/Http/Controllers/BetPayController.php:3246
+#: ../app/Http/Controllers/BetPayController.php:3273
+#: ../app/Http/Controllers/BetPayController.php:3295
+#: ../app/Http/Controllers/BetPayController.php:3303
+#: ../app/Http/Controllers/BetPayController.php:3312
+#: ../app/Http/Controllers/BetPayController.php:3349
+#: ../app/Http/Controllers/BetPayController.php:3389
+#: ../app/Http/Controllers/BetPayController.php:3400
+#: ../app/Http/Controllers/BetPayController.php:3409
+#: ../app/Http/Controllers/BetPayController.php:3421
+#: ../app/Http/Controllers/BetPayController.php:3459
+#: ../app/Http/Controllers/BetPayController.php:3497
+#: ../app/Http/Controllers/BetPayController.php:3524
+#: ../app/Http/Controllers/BetPayController.php:3551
+#: ../app/Http/Controllers/BetPayController.php:3562
+#: ../app/Http/Controllers/BetPayController.php:3571
+#: ../app/Http/Controllers/BetPayController.php:3583
+#: ../app/Http/Controllers/BetPayController.php:3621
+#: ../app/Http/Controllers/BetPayController.php:3661
+#: ../app/Http/Controllers/BetPayController.php:3689
+#: ../app/Http/Controllers/BetPayController.php:3716
+#: ../app/Http/Controllers/BetPayController.php:3740
+#: ../app/Http/Controllers/BetPayController.php:3761
+#: ../app/Http/Controllers/BetPayController.php:3770
+#: ../app/Http/Controllers/BetPayController.php:3782
+#: ../app/Http/Controllers/BetPayController.php:3820
+#: ../app/Http/Controllers/BetPayController.php:3859
+#: ../app/Http/Controllers/BetPayController.php:3881
+#: ../app/Http/Controllers/BetPayController.php:3903
+#: ../app/Http/Controllers/BetPayController.php:3911
+#: ../app/Http/Controllers/BetPayController.php:3921
+#: ../app/Http/Controllers/BetPayController.php:3961
+#: ../app/Http/Controllers/BetPayController.php:4015
+#: ../app/Http/Controllers/BetPayController.php:4026
+#: ../app/Http/Controllers/BetPayController.php:4035
+#: ../app/Http/Controllers/BetPayController.php:4047
+#: ../app/Http/Controllers/BetPayController.php:4083
+#: ../app/Http/Controllers/BetPayController.php:4141
+#: ../app/Http/Controllers/BetPayController.php:4177
+#: ../app/Http/Controllers/BetPayController.php:4250
+#: ../app/Http/Controllers/BetPayController.php:4257
+#: ../app/Http/Controllers/BetPayController.php:4264
+#: ../app/Http/Controllers/BetPayController.php:4394
+#: ../app/Http/Controllers/BetPayController.php:4401
+#: ../app/Http/Controllers/BetPayController.php:4408
+#: ../app/Http/Controllers/BetPayController.php:4514
+#: ../app/Http/Controllers/BetPayController.php:4521
+#: ../app/Http/Controllers/BetPayController.php:4670
+#: ../app/Http/Controllers/BetPayController.php:4788
+#: ../app/Http/Controllers/BetPayController.php:4795
+#: ../app/Http/Controllers/BetPayController.php:4954
+#: ../app/Http/Controllers/BetPayController.php:4965
+#: ../app/Http/Controllers/BetPayController.php:4974
+#: ../app/Http/Controllers/BetPayController.php:5033
+#: ../app/Http/Controllers/BetPayController.php:5046
+#: ../app/Http/Controllers/BetPayController.php:5116
+#: ../app/Http/Controllers/BonusSystemController.php:226
+#: ../app/Http/Controllers/BonusSystemController.php:238
+#: ../app/Http/Controllers/BonusSystemController.php:295
+#: ../app/Http/Controllers/BonusSystemController.php:305
+#: ../app/Http/Controllers/BonusSystemController.php:318
+#: ../app/Http/Controllers/BonusSystemController.php:337
+#: ../app/Http/Controllers/BonusSystemController.php:955
+#: ../app/Http/Controllers/BonusSystemController.php:962
+#: ../app/Http/Controllers/BonusSystemController.php:1097
+#: ../app/Http/Controllers/BonusSystemController.php:1170
+#: ../app/Http/Controllers/BonusSystemController.php:1267
+#: ../app/Http/Controllers/BonusSystemController.php:1284
+#: ../app/Http/Controllers/BonusSystemController.php:1292
+#: ../app/Http/Controllers/BonusSystemController.php:1304
+#: ../app/Http/Controllers/BonusSystemController.php:1312
+#: ../app/Http/Controllers/BonusSystemController.php:1322
+#: ../app/Http/Controllers/BonusSystemController.php:1330
+#: ../app/Http/Controllers/BonusSystemController.php:1339
+#: ../app/Http/Controllers/BonusSystemController.php:1347
+#: ../app/Http/Controllers/BonusSystemController.php:1359
+#: ../app/Http/Controllers/BonusSystemController.php:1367
+#: ../app/Http/Controllers/BonusSystemController.php:1555
+#: ../app/Http/Controllers/BonusSystemController.php:1664
+#: ../app/Http/Controllers/BonusSystemController.php:1889
+#: ../app/Http/Controllers/ConfigurationsController.php:690
+#: ../app/Http/Controllers/ConfigurationsController.php:913
+#: ../app/Http/Controllers/ConfigurationsController.php:943
+#: ../app/Http/Controllers/ConfigurationsController.php:978
+#: ../app/Http/Controllers/ConfigurationsController.php:995
+#: ../app/Http/Controllers/ConfigurationsController.php:1072
+#: ../app/Http/Controllers/ConfigurationsController.php:1907
+#: ../app/Http/Controllers/ConfigurationsController.php:2620
+#: ../app/Http/Controllers/ConfigurationsController.php:2657
+#: ../app/Http/Controllers/ConfigurationsController.php:2693
+#: ../app/Http/Controllers/ConfigurationsController.php:2729
+#: ../app/Http/Controllers/ConfigurationsController.php:2768
+#: ../app/Http/Controllers/ConfigurationsController.php:2803
+#: ../app/Http/Controllers/CoreController.php:268
+#: ../app/Http/Controllers/DotSuiteController.php:307
+#: ../app/Http/Controllers/DotSuiteController.php:492
+#: ../app/Http/Controllers/DotSuiteController.php:499
+#: ../app/Http/Controllers/DotSuiteController.php:715
+#: ../app/Http/Controllers/DotSuiteController.php:722
+#: ../app/Http/Controllers/DotSuiteController.php:883
+#: ../app/Http/Controllers/DotSuiteController.php:890
+#: ../app/Http/Controllers/DotSuiteController.php:897
+#: ../app/Http/Controllers/DotSuiteController.php:1008
+#: ../app/Http/Controllers/DotSuiteController.php:1015
+#: ../app/Http/Controllers/DotSuiteController.php:1022
+#: ../app/Http/Controllers/DotSuiteController.php:1133
+#: ../app/Http/Controllers/DotSuiteController.php:1140
+#: ../app/Http/Controllers/DotSuiteController.php:1147
+#: ../app/Http/Controllers/EmailConfigurationsController.php:133
+#: ../app/Http/Controllers/EmailTemplatesController.php:157
+#: ../app/Http/Controllers/EmailTemplatesController.php:180
+#: ../app/Http/Controllers/EmailTemplatesController.php:217
+#: ../app/Http/Controllers/EmailTemplatesController.php:254
+#: ../app/Http/Controllers/EmailTemplatesController.php:499
+#: ../app/Http/Controllers/EmailTemplatesController.php:555
+#: ../app/Http/Controllers/EmailTemplatesController.php:599
+#: ../app/Http/Controllers/FeaturedImagesController.php:190
+#: ../app/Http/Controllers/FeaturedImagesController.php:262
+#: ../app/Http/Controllers/FeaturedSlidersController.php:124
+#: ../app/Http/Controllers/FeaturedSlidersController.php:215
+#: ../app/Http/Controllers/FeaturedSlidersController.php:243
+#: ../app/Http/Controllers/FeaturedSlidersController.php:289
+#: ../app/Http/Controllers/FeaturedSlidersController.php:328
+#: ../app/Http/Controllers/IQSoftController.php:136
+#: ../app/Http/Controllers/LandingPagesController.php:132
+#: ../app/Http/Controllers/LandingPagesController.php:244
+#: ../app/Http/Controllers/LandingPagesController.php:350
+#: ../app/Http/Controllers/LobbyGamesController.php:190
+#: ../app/Http/Controllers/LobbyGamesController.php:303
+#: ../app/Http/Controllers/LobbyGamesController.php:317
+#: ../app/Http/Controllers/LobbyGamesController.php:347
+#: ../app/Http/Controllers/LobbyGamesController.php:360
+#: ../app/Http/Controllers/LobbyGamesController.php:382
+#: ../app/Http/Controllers/LobbyGamesController.php:432
+#: ../app/Http/Controllers/MarketingCampaignsController.php:171
+#: ../app/Http/Controllers/MarketingCampaignsController.php:226
+#: ../app/Http/Controllers/MarketingCampaignsController.php:295
+#: ../app/Http/Controllers/NotificationsController.php:181
+#: ../app/Http/Controllers/NotificationsController.php:301
+#: ../app/Http/Controllers/NotificationsController.php:323
+#: ../app/Http/Controllers/NotificationsController.php:346
+#: ../app/Http/Controllers/NotificationsController.php:419
+#: ../app/Http/Controllers/NotificationsController.php:519
+#: ../app/Http/Controllers/NotificationsController.php:556
+#: ../app/Http/Controllers/NotificationsController.php:680
+#: ../app/Http/Controllers/NotificationsController.php:718
+#: ../app/Http/Controllers/PagesController.php:167
+#: ../app/Http/Controllers/PostsController.php:159
+#: ../app/Http/Controllers/PostsController.php:238
+#: ../app/Http/Controllers/PostsController.php:339
+#: ../app/Http/Controllers/ProvidersLimitsController.php:223
+#: ../app/Http/Controllers/ProvidersLimitsController.php:260
+#: ../app/Http/Controllers/ReferralsController.php:98
+#: ../app/Http/Controllers/ReferralsController.php:105
+#: ../app/Http/Controllers/ReferralsController.php:113
+#: ../app/Http/Controllers/ReferralsController.php:166
+#: ../app/Http/Controllers/ReferralsController.php:173
+#: ../app/Http/Controllers/SectionGamesController.php:171
+#: ../app/Http/Controllers/SectionGamesController.php:242
+#: ../app/Http/Controllers/SectionGamesController.php:258
+#: ../app/Http/Controllers/SectionImagesController.php:345
+#: ../app/Http/Controllers/SectionImagesController.php:536
+#: ../app/Http/Controllers/SectionModalsController.php:153
+#: ../app/Http/Controllers/SectionModalsController.php:204
+#: ../app/Http/Controllers/SectionModalsController.php:274
+#: ../app/Http/Controllers/SecurityController.php:133
+#: ../app/Http/Controllers/SecurityController.php:142
+#: ../app/Http/Controllers/SecurityController.php:211
+#: ../app/Http/Controllers/SecurityController.php:292
+#: ../app/Http/Controllers/SecurityController.php:402
+#: ../app/Http/Controllers/SecurityController.php:446
+#: ../app/Http/Controllers/SecurityController.php:531
+#: ../app/Http/Controllers/SecurityController.php:595
+#: ../app/Http/Controllers/SecurityController.php:640
+#: ../app/Http/Controllers/SecurityController.php:663
+#: ../app/Http/Controllers/SecurityController.php:744
+#: ../app/Http/Controllers/SecurityController.php:864
+#: ../app/Http/Controllers/SegmentsController.php:97
+#: ../app/Http/Controllers/SegmentsController.php:114
+#: ../app/Http/Controllers/SegmentsController.php:180
+#: ../app/Http/Controllers/SegmentsController.php:257
+#: ../app/Http/Controllers/SegmentsController.php:307
+#: ../app/Http/Controllers/SegmentsController.php:411
+#: ../app/Http/Controllers/SlidersController.php:187
+#: ../app/Http/Controllers/SlidersController.php:293
+#: ../app/Http/Controllers/SlidersController.php:304
+#: ../app/Http/Controllers/SlidersController.php:357
+#: ../app/Http/Controllers/SlidersController.php:406
+#: ../app/Http/Controllers/SlidersController.php:416
+#: ../app/Http/Controllers/SlidersController.php:433
+#: ../app/Http/Controllers/SlidersController.php:445
+#: ../app/Http/Controllers/SlidersController.php:499
+#: ../app/Http/Controllers/StoreController.php:315
+#: ../app/Http/Controllers/StoreController.php:338
+#: ../app/Http/Controllers/StoreController.php:364
+#: ../app/Http/Controllers/StoreController.php:646
+#: ../app/Http/Controllers/StoreController.php:679
+#: ../app/Http/Controllers/StoreController.php:760
+#: ../app/Http/Controllers/StoreController.php:883
+#: ../app/Http/Controllers/StoreController.php:918
+#: ../app/Http/Controllers/StoreController.php:1002
+#: ../app/Http/Controllers/UsersController.php:292
+#: ../app/Http/Controllers/UsersController.php:466
+#: ../app/Http/Controllers/UsersController.php:475
+#: ../app/Http/Controllers/UsersController.php:531
+#: ../app/Http/Controllers/UsersController.php:606
+#: ../app/Http/Controllers/UsersController.php:659
+#: ../app/Http/Controllers/UsersController.php:669
+#: ../app/Http/Controllers/UsersController.php:719
+#: ../app/Http/Controllers/UsersController.php:793
+#: ../app/Http/Controllers/UsersController.php:817
+#: ../app/Http/Controllers/UsersController.php:848
+#: ../app/Http/Controllers/UsersController.php:982
+#: ../app/Http/Controllers/UsersController.php:1216
+#: ../app/Http/Controllers/UsersController.php:1255
+#: ../app/Http/Controllers/UsersController.php:1347
+#: ../app/Http/Controllers/UsersController.php:1450
+#: ../app/Http/Controllers/UsersController.php:1458
+#: ../app/Http/Controllers/UsersController.php:1466
+#: ../app/Http/Controllers/UsersController.php:1658
+#: ../app/Http/Controllers/UsersController.php:1720
+#: ../app/Http/Controllers/UsersController.php:1735
+#: ../app/Http/Controllers/UsersController.php:1806
+#: ../app/Http/Controllers/UsersController.php:1908
+#: ../app/Http/Controllers/UsersController.php:1972
+#: ../app/Http/Controllers/UsersController.php:2003
+#: ../app/Http/Controllers/UsersController.php:2026
+#: ../app/Http/Controllers/UsersController.php:2132
+#: ../app/Http/Controllers/UsersController.php:2224
+#: ../app/Http/Controllers/UsersController.php:2232
+#: ../app/Http/Controllers/UsersController.php:2372
+#: ../app/Http/Controllers/UsersController.php:2379
+#: ../app/Http/Controllers/UsersController.php:2387
+#: ../app/Http/Controllers/WalletsController.php:103
+#: ../app/Http/Controllers/WalletsController.php:110
+#: ../app/Http/Controllers/WalletsController.php:118
+#: ../app/Http/Controllers/WhitelabelsController.php:136
+#: ../app/Http/Controllers/WhitelabelsController.php:448
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:140
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:225
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:250
+#: ../app/Users/Import/TransactionsByLotImport.php:95
+#: ../storage/framework/messages/972d17344d34a1289899806aa53040cfa5f2bf4b.php.php:15
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:32
+#: ../storage/framework/messages/9c6e44a7b64d7dab1fc3f9fdeba9e34b603002de.php.php:95
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:56
+#: ../storage/framework/messages/a032507eaa6ec1d64ce312099530647ef83b9a1b.php.php:32
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:133
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:142
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:211
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:292
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:402
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:446
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:531
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:595
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:640
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:663
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:744
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:864
+#: ../storage/framework/messages/a664851217dd30440fca7af1a5cdd19f165e1502.php.php:28
+#: ../storage/framework/messages/a6e25aa43613de89afee2e72bd5b6edd6f8d4a52.php.php:90
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:159
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:238
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:339
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:56
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:56
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1287
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1332
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1344
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1352
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1739
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1774
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1785
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1794
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2114
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2125
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2166
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2208
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2236
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2258
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2269
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2278
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2290
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2328
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2367
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2394
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2416
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2424
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2433
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2471
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2513
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2535
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2557
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2565
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2574
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2612
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2651
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2671
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2691
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2699
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2708
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2746
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2784
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2804
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2824
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2832
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2841
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2879
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2942
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2964
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2988
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3009
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3018
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3030
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3068
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3106
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3133
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3155
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3163
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3172
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3210
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3246
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3273
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3295
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3303
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3312
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3349
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3389
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3400
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3409
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3421
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3459
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3497
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3524
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3551
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3562
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3571
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3583
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3621
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3661
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3689
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3716
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3740
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3761
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3770
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3782
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3820
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3859
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3881
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3903
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3911
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3921
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3961
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4015
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4026
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4035
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4047
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4083
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4141
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4177
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4250
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4257
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4264
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4394
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4401
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4408
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4514
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4521
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4670
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4788
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4795
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4954
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4965
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4974
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5033
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5046
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5116
+#: ../storage/framework/messages/aaefb29f401fcd11ecf01e9bc3c3b04f8a31e31a.php.php:27
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:57
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:307
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:492
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:499
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:715
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:722
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:883
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:890
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:897
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1008
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1015
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1022
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1133
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1140
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1147
+#: ../storage/framework/messages/b3b45dfabdffb82c5caed6b131891b7447f7bc2d.php.php:32
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:103
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:110
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:118
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:40
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:101
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:56
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:53
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:94
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:40
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:40
+#: ../storage/framework/messages/ce44e08cda55af928521ff1405d06b83dadd9a14.php.php:25
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:56
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:40
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:40
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:44
+#: ../storage/framework/messages/db218c8ffd3fb0a7c8cb2bf9a9e4e0a98d6b4bb4.php.php:25
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:33
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:190
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:262
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:98
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:105
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:113
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:166
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:173
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:39
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:40
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:111
+#: ../storage/framework/messages/e9e4d7eaf95f07b9a78b928fb803ebe6c7b43eb7.php.php:26
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:223
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:260
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:140
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:225
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:250
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:43
+#: ../storage/framework/messages/f54b3801812071c8982f15caf3d81f67f6c51a59.php.php:32
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:40
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:114
+#: ../vendor/dotworkers/configurations/src/Configurations/Utils.php:90
+msgid "Close"
+msgstr "Cerrar"
+
+#: ../app/Http/Controllers/AgentsController.php:219
+msgid "Assigned user"
+msgstr "Usuario asignado"
+
+#: ../app/Http/Controllers/AgentsController.php:220
+msgid "The user is already assigned to an agent"
+msgstr "El usuario ya está asignado a un agente"
+
+#: ../app/Http/Controllers/AgentsController.php:227
+msgid "Agent user"
+msgstr "Usuario del agente"
+
+#: ../app/Http/Controllers/AgentsController.php:228
+msgid "The user is an agent, it cannot be associated to another agent."
+msgstr "El usuario es un agente, no se puede asociar a otro agente."
+
+#: ../app/Http/Controllers/AgentsController.php:236
+#: ../app/Http/Controllers/UsersController.php:1464
+msgid "The user does not exist"
+msgstr "El usuario no existe"
+
+#: ../app/Http/Controllers/AgentsController.php:237
+#: ../app/Http/Controllers/UsersController.php:1465
+msgid "Please check and try again"
+msgstr "Compruébalo e inténtalo de nuevo"
+
+#: ../app/Http/Controllers/AgentsController.php:396
+msgid "Agents Payments"
+msgstr "Pagos de Agentes"
+
+#: ../app/Http/Controllers/AgentsController.php:615
+msgid "Locked provider"
+msgstr "Proveedor bloqueado"
+
+#: ../app/Http/Controllers/AgentsController.php:616
+msgid "The provider was locked to the agent and his entire tree"
+msgstr "El proveedor estaba bloqueado al agente y a todo su árbol"
+
+#: ../app/Http/Controllers/AgentsController.php:629
+msgid "Unlocked provider"
+msgstr "Proveedor desbloqueado"
+
+#: ../app/Http/Controllers/AgentsController.php:630
+msgid "The provider was unlocked to the agent and his entire tree"
+msgstr "El proveedor fue desbloqueado para el agente y todo su árbol"
+
+#: ../app/Http/Controllers/AgentsController.php:653
+msgid "Locked users"
+msgstr "Usuarios bloqueados"
+
+#: ../app/Http/Controllers/AgentsController.php:654
+msgid "The agent and his entire tree was locked"
+msgstr "El agente y todo su árbol estaban encerrados"
+
+#: ../app/Http/Controllers/AgentsController.php:675
+msgid "Unlocked users"
+msgstr "Usuarios desbloqueados"
+
+#: ../app/Http/Controllers/AgentsController.php:676
+msgid "The agent and his entire tree was unlocked"
+msgstr "El agente y todo su árbol fueron desbloqueados"
+
+#: ../app/Http/Controllers/AgentsController.php:760
+msgid "Agent type changed"
+msgstr "Tipo de agente cambiado"
+
+#: ../app/Http/Controllers/AgentsController.php:761
+msgid "Agent type was successfully changed"
+msgstr "El tipo de agente se ha cambiado correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:954
+msgid "Deposits withdrawals provider by report"
+msgstr "Proveedor de retiros de depósitos por informe"
+
+#: ../app/Http/Controllers/AgentsController.php:1173
+#: ../app/Http/Controllers/AgentsController.php:1300
+#: ../app/Http/Controllers/AgentsController.php:1462
+#: ../app/Http/Controllers/AgentsController.php:1481
+msgid "Financial state report"
+msgstr "Informe de estado financiero"
+
+#: ../app/Http/Controllers/AgentsController.php:1282
+msgid "Financial statement report details"
+msgstr "Detalles del informe de estados financieros"
+
+#: ../app/Http/Controllers/AgentsController.php:1346
+msgid "Financial state report - Summary (Include bonuses)"
+msgstr "Informe de estado financiero - Resumen (Incluye bonificaciones)"
+
+#: ../app/Http/Controllers/AgentsController.php:1395
+msgid "Financial state report - Summary"
+msgstr "Informe de estado financiero - Resumen"
+
+#: ../app/Http/Controllers/AgentsController.php:1645
+msgid "Agents module"
+msgstr "Módulo de agentes"
+
+#: ../app/Http/Controllers/AgentsController.php:1661
+msgid "Locked providers"
+msgstr "Proveedores bloqueados"
+
+#: ../app/Http/Controllers/AgentsController.php:1701
+msgid "Create main agents"
+msgstr "Crear agentes principales"
+
+#: ../app/Http/Controllers/AgentsController.php:1714
+msgid "Manual transaction"
+msgstr "Transacción manual"
+
+#: ../app/Http/Controllers/AgentsController.php:1779
+#: ../app/Http/Controllers/AgentsController.php:1839
+#: ../app/Http/Controllers/AgentsController.php:1904
+#: ../app/Http/Controllers/AgentsController.php:2010
+#: ../app/Http/Controllers/AuthController.php:75
+#: ../app/Http/Controllers/UsersController.php:2001
+msgid "Blocked by a superior!"
+msgstr "¡Bloqueado por un superior!"
+
+#: ../app/Http/Controllers/AgentsController.php:1780
+#: ../app/Http/Controllers/AgentsController.php:1789
+#: ../app/Http/Controllers/AgentsController.php:1840
+#: ../app/Http/Controllers/AgentsController.php:1905
+#: ../app/Http/Controllers/AgentsController.php:1914
+#: ../app/Http/Controllers/AgentsController.php:2011
+#: ../app/Http/Controllers/AgentsController.php:2020
+#: ../app/Http/Controllers/AuthController.php:76
+#: ../app/Http/Controllers/AuthController.php:87
+#: ../app/Http/Controllers/AuthController.php:99
+#: ../app/Http/Controllers/UsersController.php:2002
+msgid "Contact your superior..."
+msgstr "Póngase en contacto con su superior..."
+
+#: ../app/Http/Controllers/AgentsController.php:1788
+#: ../app/Http/Controllers/AgentsController.php:1839
+#: ../app/Http/Controllers/AgentsController.php:1913
+#: ../app/Http/Controllers/AgentsController.php:2019
+#: ../app/Http/Controllers/AuthController.php:98
+#: ../app/Http/Controllers/UsersController.php:2001
+msgid "Deactivated user"
+msgstr "Usuario desactivado"
+
+#: ../app/Http/Controllers/AgentsController.php:1797
+#: ../app/Http/Controllers/AgentsController.php:1809
+msgid "Agent moved"
+msgstr "Agente movido"
+
+#: ../app/Http/Controllers/AgentsController.php:1798
+msgid "Agent not displaced"
+msgstr "Agente no desplazado"
+
+#: ../app/Http/Controllers/AgentsController.php:1810
+msgid "Agent moved successfully"
+msgstr "El agente se ha movido correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:1849
+msgid "User moved"
+msgstr "Usuario movido"
+
+#: ../app/Http/Controllers/AgentsController.php:1850
+msgid "User moved successfully"
+msgstr "El usuario se ha movido correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:1890
+#: ../app/Http/Controllers/AgentsController.php:1951
+#: ../app/Http/Controllers/AgentsController.php:2185
+#: ../app/Http/Controllers/AgentsController.php:2255
+#: ../app/Http/Controllers/AgentsController.php:2713
+#: ../app/Http/Controllers/BetPayController.php:1285
+#: ../app/Http/Controllers/BetPayController.php:5044
+#: ../app/Http/Controllers/UsersController.php:1733
+#: ../app/Http/Controllers/WalletsController.php:116
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1285
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5044
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:116
+msgid "Insufficient balance"
+msgstr "Saldo insuficiente"
+
+#: ../app/Http/Controllers/AgentsController.php:1891
+#: ../app/Http/Controllers/AgentsController.php:2256
+#: ../app/Http/Controllers/AgentsController.php:2714
+msgid ""
+"The agents's operational balance is insufficient to perform the transaction"
+msgstr ""
+"El saldo operativo de los agentes es insuficiente para realizar la "
+"transacción"
+
+#: ../app/Http/Controllers/AgentsController.php:1936
+#: ../app/Http/Controllers/AgentsController.php:1971
+msgid "An error occurred"
+msgstr "Ocurrió un error"
+
+#: ../app/Http/Controllers/AgentsController.php:1937
+#: ../app/Http/Controllers/AgentsController.php:1972
+msgid "please contact support"
+msgstr "por favor contacte a soporte"
+
+#: ../app/Http/Controllers/AgentsController.php:1952
+#: ../app/Http/Controllers/AgentsController.php:2186
+#: ../app/Http/Controllers/BetPayController.php:1286
+#: ../app/Http/Controllers/BetPayController.php:5045
+#: ../app/Http/Controllers/UsersController.php:1734
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1286
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5045
+msgid "The user's balance is insufficient to perform the transaction"
+msgstr "El saldo del usuario es insuficiente para realizar la transacción"
+
+#: ../app/Http/Controllers/AgentsController.php:2002
+#: ../app/Http/Controllers/AgentsController.php:2122
+msgid "Print ticket"
+msgstr "Imprimir ticket"
+
+#: ../app/Http/Controllers/AgentsController.php:2176
+#: ../app/Http/Controllers/BetPayController.php:1330
+#: ../app/Http/Controllers/BetPayController.php:5114
+#: ../app/Http/Controllers/BonusSystemController.php:1168
+#: ../app/Http/Controllers/UsersController.php:791
+#: ../app/Http/Controllers/UsersController.php:1656
+#: ../app/Http/Controllers/UsersController.php:1804
+#: ../app/Http/Controllers/UsersController.php:1906
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1330
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5114
+msgid "Transaction performed"
+msgstr "Transacción realizada"
+
+#: ../app/Http/Controllers/AgentsController.php:2177
+#: ../app/Http/Controllers/BetPayController.php:1331
+#: ../app/Http/Controllers/BetPayController.php:5115
+#: ../app/Http/Controllers/BonusSystemController.php:1169
+#: ../app/Http/Controllers/UsersController.php:792
+#: ../app/Http/Controllers/UsersController.php:1657
+#: ../app/Http/Controllers/UsersController.php:1805
+#: ../app/Http/Controllers/UsersController.php:1907
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1331
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5115
+msgid "The transaction was successfully made to the user"
+msgstr "La transacción se realizó correctamente al usuario"
+
+#: ../app/Http/Controllers/AgentsController.php:2193
+#: ../app/Http/Controllers/BetPayController.php:2206
+#: ../app/Http/Controllers/BetPayController.php:2234
+#: ../app/Http/Controllers/BetPayController.php:2365
+#: ../app/Http/Controllers/BetPayController.php:2392
+#: ../app/Http/Controllers/BetPayController.php:2511
+#: ../app/Http/Controllers/BetPayController.php:2533
+#: ../app/Http/Controllers/BetPayController.php:2649
+#: ../app/Http/Controllers/BetPayController.php:2669
+#: ../app/Http/Controllers/BetPayController.php:2782
+#: ../app/Http/Controllers/BetPayController.php:2802
+#: ../app/Http/Controllers/BetPayController.php:2940
+#: ../app/Http/Controllers/BetPayController.php:2986
+#: ../app/Http/Controllers/BetPayController.php:3104
+#: ../app/Http/Controllers/BetPayController.php:3131
+#: ../app/Http/Controllers/BetPayController.php:3244
+#: ../app/Http/Controllers/BetPayController.php:3271
+#: ../app/Http/Controllers/BetPayController.php:3495
+#: ../app/Http/Controllers/BetPayController.php:3522
+#: ../app/Http/Controllers/BetPayController.php:3659
+#: ../app/Http/Controllers/BetPayController.php:3687
+#: ../app/Http/Controllers/BetPayController.php:3738
+#: ../app/Http/Controllers/BetPayController.php:3857
+#: ../app/Http/Controllers/BetPayController.php:3879
+#: ../app/Http/Controllers/DotSuiteController.php:895
+#: ../app/Http/Controllers/DotSuiteController.php:1020
+#: ../app/Http/Controllers/DotSuiteController.php:1145
+#: ../app/Http/Controllers/WalletsController.php:108
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2206
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2234
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2365
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2392
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2511
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2533
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2649
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2669
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2782
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2802
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2940
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2986
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3104
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3131
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3244
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3271
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3495
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3522
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3659
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3687
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3738
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3857
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3879
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:895
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1020
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1145
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:108
+msgid "Error"
+msgstr "Error"
+
+#: ../app/Http/Controllers/AgentsController.php:2194
+msgid "You cannot make transactions to yourself"
+msgstr "No puedes hacerte transacciones a ti mismo"
+
+#: ../app/Http/Controllers/AgentsController.php:2244
+#: ../app/Http/Controllers/AgentsController.php:2684
+#: ../app/Http/Controllers/UsersController.php:464
+msgid "Username in use"
+msgstr "Nombre de usuario en uso"
+
+#: ../app/Http/Controllers/AgentsController.php:2245
+#: ../app/Http/Controllers/AgentsController.php:2685
+#: ../app/Http/Controllers/UsersController.php:465
+msgid "The indicated username is already in use"
+msgstr "El nombre de usuario indicado ya está en uso"
+
+#: ../app/Http/Controllers/AgentsController.php:2388
+msgid "Agent created"
+msgstr "Agente creado"
+
+#: ../app/Http/Controllers/AgentsController.php:2389
+msgid "Agent created successfully"
+msgstr "Agente creado correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:2554
+#: ../app/Http/Controllers/AgentsController.php:2563
+#, php-format
+msgid "User %s does not exist"
+msgstr "El %s de usuario no existe"
+
+#: ../app/Http/Controllers/AgentsController.php:2555
+#: ../app/Http/Controllers/AgentsController.php:2564
+#, php-format
+msgid "The %s user has not yet been created. Please create it first"
+msgstr "El usuario %s aún no se ha creado. Por favor, créelo primero"
+
+#: ../app/Http/Controllers/AgentsController.php:2633
+msgid "Agents created"
+msgstr "Agentes creados"
+
+#: ../app/Http/Controllers/AgentsController.php:2634
+msgid "Agents were created successfully"
+msgstr "Los agentes se crearon correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:2701
+#: ../app/Http/Controllers/UsersController.php:473
+#: ../app/Http/Controllers/UsersController.php:2385
+msgid "Email in use"
+msgstr "Correo electrónico en uso"
+
+#: ../app/Http/Controllers/AgentsController.php:2702
+#: ../app/Http/Controllers/UsersController.php:474
+msgid "The indicated email is already in use"
+msgstr "El correo electrónico indicado ya está en uso"
+
+#: ../app/Http/Controllers/AgentsController.php:2810
+msgid "Player created"
+msgstr "Reproductor creado"
+
+#: ../app/Http/Controllers/AgentsController.php:2811
+msgid "Player created successfully"
+msgstr "Reproductor creado correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:2839
+#: ../app/Http/Controllers/ConfigurationsController.php:2801
+msgid "Percentage updated"
+msgstr "Porcentaje actualizado"
+
+#: ../app/Http/Controllers/AgentsController.php:2840
+msgid "Percentage of agent successfully updated"
+msgstr "Porcentaje de agente actualizado correctamente"
+
+#: ../app/Http/Controllers/AgentsController.php:2941
+msgid "Create agent"
+msgstr "Crear agente"
+
+#: ../app/Http/Controllers/AgentsController.php:2967
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:5
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:97
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:107
+msgid "Create player"
+msgstr "Crear jugador"
+
+#: ../app/Http/Controllers/AgentsController.php:2983
+msgid "reports"
+msgstr "informes"
+
+#: ../app/Http/Controllers/AltenarController.php:111
+#: ../app/Http/Controllers/IQSoftController.php:134
+msgid "Ticket not found"
+msgstr "Ticket no encontrado"
+
+#: ../app/Http/Controllers/AltenarController.php:112
+#: ../app/Http/Controllers/IQSoftController.php:135
+msgid "The ticket entered does not exist"
+msgstr "El ticket introducido no existe"
+
+#: ../app/Http/Controllers/AuditsController.php:76
+#: ../storage/framework/messages/bb9f8f5a7fe9386be3bc8826b5fb925d8b4950c0.php.php:76
+msgid "Audits overview"
+msgstr "Descripción general de las auditorías"
+
+#: ../app/Http/Controllers/AuthController.php:86
+msgid "Access denied"
+msgstr "Acceso denegado"
+
+#: ../app/Http/Controllers/AuthController.php:173
+msgid "Welcome!"
+msgstr "¡Bienvenido!"
+
+#: ../app/Http/Controllers/AuthController.php:174
+msgid "We will shortly direct you to the control panel"
+msgstr "En breve lo dirigiremos al panel de control"
+
+#: ../app/Http/Controllers/AuthController.php:184
+msgid "Access denied!"
+msgstr "¡Acceso denegado!"
+
+#: ../app/Http/Controllers/AuthController.php:185
+msgid "You do not have access to the system"
+msgstr "No tiene acceso al sistema"
+
+#: ../app/Http/Controllers/AuthController.php:193
+msgid "Invalid credentials!"
+msgstr "¡Credenciales no válidas!"
+
+#: ../app/Http/Controllers/AuthController.php:194
+msgid "The username or password are incorrect"
+msgstr "El nombre de usuario o la contraseña son incorrectos"
+
+#: ../app/Http/Controllers/BetPayController.php:333
+#: ../app/Http/Controllers/BetPayController.php:946
+#: ../app/Http/Controllers/BetPayController.php:1992
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:333
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:946
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1992
+msgid "Create payment limits"
+msgstr "Crear límites de pago"
+
+#: ../app/Http/Controllers/BetPayController.php:408
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:408
+msgid "Client account list"
+msgstr "Lista de cuentas de cliente"
+
+#: ../app/Http/Controllers/BetPayController.php:503
+#: ../app/Http/Controllers/BetPayController.php:542
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:503
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:542
+msgid "Create client"
+msgstr "Crear cliente"
+
+#: ../app/Http/Controllers/BetPayController.php:577
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:577
+msgid "Create Client Account"
+msgstr "Crear cuenta de cliente"
+
+#: ../app/Http/Controllers/BetPayController.php:614
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:614
+msgid "Pending Abitab credit transactions"
+msgstr "Transacciones de crédito pendientes de Abitab"
+
+#: ../app/Http/Controllers/BetPayController.php:628
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:628
+msgid "Pending AirTM credit transactions"
+msgstr "Transacciones de crédito AirTM pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:642
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:642
+msgid "Pending Bizum credit transactions"
+msgstr "Operaciones de crédito Bizum pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:656
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:656
+msgid "Process charging point credit transactions"
+msgstr "Procesar transacciones de crédito en puntos de recarga"
+
+#: ../app/Http/Controllers/BetPayController.php:670
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:670
+msgid "Pending Binance credit transactions"
+msgstr "Transacciones de crédito pendientes de Binance"
+
+#: ../app/Http/Controllers/BetPayController.php:684
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:684
+msgid "Pending Cryptocurrencies credit transactions"
+msgstr "Transacciones de crédito pendientes de criptomonedas"
+
+#: ../app/Http/Controllers/BetPayController.php:698
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:698
+msgid "Pending mobile payment credit transactions"
+msgstr "Transacciones de crédito de pago móvil pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:712
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:712
+msgid "Pending Neteller credit transactions"
+msgstr "Transacciones de crédito pendientes de Neteller"
+
+#: ../app/Http/Controllers/BetPayController.php:726
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:726
+msgid "Pending Nequi credit transactions"
+msgstr "Operaciones de crédito Nequi pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:740
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:740
+msgid "Pending PayPal credit transactions"
+msgstr "Operaciones de crédito PayPal pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:754
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:754
+msgid "Pending total pago credit transactions"
+msgstr "Total de operaciones de crédito de pago pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:768
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:768
+msgid "Pending Red Pagos credit transactions"
+msgstr "Transacciones de crédito pendientes de Red Pagos"
+
+#: ../app/Http/Controllers/BetPayController.php:781
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:781
+msgid "Credit report"
+msgstr "Informe de crédito"
+
+#: ../app/Http/Controllers/BetPayController.php:865
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:865
+msgid "Pending Skrill credit transactions"
+msgstr "Transacciones de crédito pendientes de Skrill"
+
+#: ../app/Http/Controllers/BetPayController.php:879
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:879
+msgid "Pending Uphold credit transactions"
+msgstr "Operaciones de crédito pendientes de Uphold"
+
+#: ../app/Http/Controllers/BetPayController.php:893
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:893
+msgid "Pending Reserve credit transactions"
+msgstr "Operaciones de crédito de reserva pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:907
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:907
+msgid "Pending VES to USD transfers"
+msgstr "Transferencias pendientes de VES a USD"
+
+#: ../app/Http/Controllers/BetPayController.php:921
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:921
+msgid "Pending credit wire transfers"
+msgstr "Transferencias bancarias de crédito pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:935
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:935
+msgid "Pending Zelle credit transactions"
+msgstr "Transacciones de crédito pendientes de Zelle"
+
+#: ../app/Http/Controllers/BetPayController.php:979
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:979
+msgid "Pending AirTM debit transactions"
+msgstr "Transacciones de débito pendientes de AirTM"
+
+#: ../app/Http/Controllers/BetPayController.php:995
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:995
+msgid "Pending bizum debit transactions"
+msgstr "Operaciones de débito bizum pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:1009
+#: ../app/Http/Controllers/BetPayController.php:1087
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1009
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1087
+msgid "Pending charging point debit transactions"
+msgstr "Transacciones de débito de punto de recarga pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:1025
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1025
+msgid "Pending Binance debit transactions"
+msgstr "Transacciones de débito pendientes de Binance"
+
+#: ../app/Http/Controllers/BetPayController.php:1041
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1041
+msgid "Pending Pronto Paga debit transactions"
+msgstr "Transacciones de débito pendientes de Pronto Paga"
+
+#: ../app/Http/Controllers/BetPayController.php:1057
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1057
+msgid "Pending PayKu debit transactions"
+msgstr "Transacciones de débito pendientes de PayKu"
+
+#: ../app/Http/Controllers/BetPayController.php:1073
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1073
+msgid "Pending Personal debit transactions"
+msgstr "Transacciones de débito personales pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:1099
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1099
+msgid "Search transactions"
+msgstr "Buscar transacciones"
+
+#: ../app/Http/Controllers/BetPayController.php:1159
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1159
+msgid "Cancel transactions"
+msgstr "Cancelar transacciones"
+
+#: ../app/Http/Controllers/BetPayController.php:1342
+#: ../app/Http/Controllers/BetPayController.php:3007
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1342
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3007
+msgid "Transaction rejected"
+msgstr "Transacción rechazada"
+
+#: ../app/Http/Controllers/BetPayController.php:1350
+#: ../app/Http/Controllers/BetPayController.php:2123
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1350
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2123
+msgid "Deposit already processed"
+msgstr "Depósito ya procesado"
+
+#: ../app/Http/Controllers/BetPayController.php:1351
+#: ../app/Http/Controllers/BetPayController.php:2124
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1351
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2124
+msgid ""
+"The deposit is already processed. Please refresh the page to update the list"
+msgstr ""
+"El depósito ya está procesado. Actualice la página para actualizar la lista"
+
+#: ../app/Http/Controllers/BetPayController.php:1374
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1374
+msgid "Pending Cryptocurrencies debit transactions"
+msgstr "Transacciones de débito pendientes de criptomonedas"
+
+#: ../app/Http/Controllers/BetPayController.php:1389
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1389
+msgid "Pending Directa24 debit transactions"
+msgstr "Operaciones de débito pendientes de Directa24"
+
+#: ../app/Http/Controllers/BetPayController.php:1404
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1404
+msgid "Pending ALPS debit transactions"
+msgstr "Transacciones de débito ALPS pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:1419
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1419
+msgid "Pending Monnet debit transactions"
+msgstr "Transacciones de débito pendientes de Monnet"
+
+#: ../app/Http/Controllers/BetPayController.php:1435
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1435
+msgid "Pending Neteller debit transactions"
+msgstr "Transacciones de débito pendientes de Neteller"
+
+#: ../app/Http/Controllers/BetPayController.php:1451
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1451
+msgid "Pending PayPal debit transactions"
+msgstr "Transacciones pendientes de débito PayPal"
+
+#: ../app/Http/Controllers/BetPayController.php:1467
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1467
+msgid "Pending Pay For Fun debit transactions"
+msgstr "Transacciones de débito pendientes de Pay For Fun"
+
+#: ../app/Http/Controllers/BetPayController.php:1483
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1483
+msgid "Pending Pay For Fun Gateway debit transactions"
+msgstr "Transacciones de débito pendientes de Pay For Fun Gateway"
+
+#: ../app/Http/Controllers/BetPayController.php:1498
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1498
+msgid "Pending Pay Retailers debit transactions"
+msgstr "Transacciones de débito pendientes de Pay Retailers"
+
+#: ../app/Http/Controllers/BetPayController.php:1511
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1511
+msgid "Debit report"
+msgstr "Informe de débito"
+
+#: ../app/Http/Controllers/BetPayController.php:1583
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1583
+msgid "Pending Skrill debit transactions"
+msgstr "Transacciones de débito pendientes de Skrill"
+
+#: ../app/Http/Controllers/BetPayController.php:1599
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1599
+msgid "Pending Uphold debit transactions"
+msgstr "Transacciones de débito pendientes de Uphold"
+
+#: ../app/Http/Controllers/BetPayController.php:1615
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1615
+msgid "Pending Reserve debit transactions"
+msgstr "Operaciones de débito pendientes de reserva"
+
+#: ../app/Http/Controllers/BetPayController.php:1630
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1630
+msgid "Pending VCreditos debit transactions"
+msgstr "Transacciones de débito pendientes de VCreditos"
+
+#: ../app/Http/Controllers/BetPayController.php:1645
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1645
+msgid "Pending VCreditos Api debit transactions"
+msgstr "Transacciones de débito pendientes de VCreditos Api"
+
+#: ../app/Http/Controllers/BetPayController.php:1661
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1661
+msgid "Pending debit wire transfers"
+msgstr "Transferencias bancarias pendientes"
+
+#: ../app/Http/Controllers/BetPayController.php:1678
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1678
+msgid "Pending Zampay debit transactions"
+msgstr "Transacciones de débito pendientes de Zampay"
+
+#: ../app/Http/Controllers/BetPayController.php:1696
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1696
+msgid "Pending Zelle debit transactions"
+msgstr "Transacciones de débito pendientes de Zelle"
+
+#: ../app/Http/Controllers/BetPayController.php:1710
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1710
+msgid "Pending debit Zippy"
+msgstr "Pendiente de débito Zippy"
+
+#: ../app/Http/Controllers/BetPayController.php:1737
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1737
+msgid "Deleted Client"
+msgstr "Cliente eliminado"
+
+#: ../app/Http/Controllers/BetPayController.php:1738
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1738
+msgid "Client data was delete correctly"
+msgstr "Los datos del cliente se eliminaron correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:1772
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1772
+msgid "Account deleted"
+msgstr "Cuenta eliminada"
+
+#: ../app/Http/Controllers/BetPayController.php:1773
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1773
+msgid "Account data was delete correctly"
+msgstr "Los datos de la cuenta se eliminaron correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:1783
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1783
+msgid "Account not found"
+msgstr "Cuenta no encontrada"
+
+#: ../app/Http/Controllers/BetPayController.php:1784
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1784
+msgid "The account entered not found in our system"
+msgstr "La cuenta ingresada no se encuentra en nuestro sistema"
+
+#: ../app/Http/Controllers/BetPayController.php:1792
+#: ../app/Http/Controllers/BetPayController.php:4262
+#: ../app/Http/Controllers/BetPayController.php:4406
+#: ../app/Http/Controllers/BetPayController.php:4793
+#: ../app/Http/Controllers/BetPayController.php:4972
+#: ../app/Http/Controllers/DotSuiteController.php:720
+#: ../app/Http/Controllers/DotSuiteController.php:888
+#: ../app/Http/Controllers/DotSuiteController.php:1013
+#: ../app/Http/Controllers/DotSuiteController.php:1138
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1792
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4262
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4406
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4793
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4972
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:720
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:888
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1013
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1138
+msgid "Failed"
+msgstr "Fallo [Estado de Orden]"
+
+#: ../app/Http/Controllers/BetPayController.php:1793
+#: ../app/Http/Controllers/BetPayController.php:4263
+#: ../app/Http/Controllers/BetPayController.php:4407
+#: ../app/Http/Controllers/BetPayController.php:4794
+#: ../app/Http/Controllers/BetPayController.php:4973
+#: ../app/Http/Controllers/DotSuiteController.php:721
+#: ../app/Http/Controllers/DotSuiteController.php:889
+#: ../app/Http/Controllers/DotSuiteController.php:1014
+#: ../app/Http/Controllers/DotSuiteController.php:1139
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1793
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4263
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4407
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4794
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4973
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:721
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:889
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1014
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1139
+msgid "Please reload and try again"
+msgstr "Vuelva a cargar e inténtelo de nuevo"
+
+#: ../app/Http/Controllers/BetPayController.php:1834
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1834
+msgid "Update Client"
+msgstr "Actualizar cliente"
+
+#: ../app/Http/Controllers/BetPayController.php:1850
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1850
+msgid "Client account payment"
+msgstr "Pago de la cuenta del cliente"
+
+#: ../app/Http/Controllers/BetPayController.php:1949
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:1949
+msgid "Edit client account"
+msgstr "Editar cuenta de cliente"
+
+#: ../app/Http/Controllers/BetPayController.php:2020
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2020
+msgid "BetPay clients"
+msgstr "Clientes de BetPay"
+
+#: ../app/Http/Controllers/BetPayController.php:2112
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2112
+msgid "Deposit processed"
+msgstr "Depósito procesado"
+
+#: ../app/Http/Controllers/BetPayController.php:2113
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2113
+msgid "The deposit was processed correctly"
+msgstr "El depósito se procesó correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:2164
+#: ../app/Http/Controllers/BetPayController.php:2326
+#: ../app/Http/Controllers/BetPayController.php:2422
+#: ../app/Http/Controllers/BetPayController.php:2469
+#: ../app/Http/Controllers/BetPayController.php:2563
+#: ../app/Http/Controllers/BetPayController.php:2610
+#: ../app/Http/Controllers/BetPayController.php:2697
+#: ../app/Http/Controllers/BetPayController.php:2744
+#: ../app/Http/Controllers/BetPayController.php:2830
+#: ../app/Http/Controllers/BetPayController.php:2877
+#: ../app/Http/Controllers/BetPayController.php:3066
+#: ../app/Http/Controllers/BetPayController.php:3161
+#: ../app/Http/Controllers/BetPayController.php:3208
+#: ../app/Http/Controllers/BetPayController.php:3301
+#: ../app/Http/Controllers/BetPayController.php:3347
+#: ../app/Http/Controllers/BetPayController.php:3457
+#: ../app/Http/Controllers/BetPayController.php:3619
+#: ../app/Http/Controllers/BetPayController.php:3818
+#: ../app/Http/Controllers/BetPayController.php:3909
+#: ../app/Http/Controllers/BetPayController.php:3959
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2164
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2326
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2422
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2469
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2563
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2610
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2697
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2744
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2830
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2877
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3066
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3161
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3208
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3301
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3347
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3457
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3619
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3818
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3909
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3959
+msgid "Withdrawal not processed"
+msgstr "Desistimiento no procesado"
+
+#: ../app/Http/Controllers/BetPayController.php:2165
+#: ../app/Http/Controllers/BetPayController.php:2327
+#: ../app/Http/Controllers/BetPayController.php:2470
+#: ../app/Http/Controllers/BetPayController.php:2611
+#: ../app/Http/Controllers/BetPayController.php:2745
+#: ../app/Http/Controllers/BetPayController.php:2878
+#: ../app/Http/Controllers/BetPayController.php:3067
+#: ../app/Http/Controllers/BetPayController.php:3209
+#: ../app/Http/Controllers/BetPayController.php:3348
+#: ../app/Http/Controllers/BetPayController.php:3458
+#: ../app/Http/Controllers/BetPayController.php:3620
+#: ../app/Http/Controllers/BetPayController.php:3819
+#: ../app/Http/Controllers/BetPayController.php:3960
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2165
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2327
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2470
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2611
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2745
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2878
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3067
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3209
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3348
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3458
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3620
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3819
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3960
+msgid "Before processing a withdrawal you must lock the user's balance"
+msgstr "Antes de procesar un retiro, debe bloquear el saldo del usuario"
+
+#: ../app/Http/Controllers/BetPayController.php:2207
+#: ../app/Http/Controllers/BetPayController.php:2235
+#: ../app/Http/Controllers/BetPayController.php:2366
+#: ../app/Http/Controllers/BetPayController.php:2393
+#: ../app/Http/Controllers/BetPayController.php:2512
+#: ../app/Http/Controllers/BetPayController.php:2534
+#: ../app/Http/Controllers/BetPayController.php:2650
+#: ../app/Http/Controllers/BetPayController.php:2670
+#: ../app/Http/Controllers/BetPayController.php:2783
+#: ../app/Http/Controllers/BetPayController.php:2803
+#: ../app/Http/Controllers/BetPayController.php:2941
+#: ../app/Http/Controllers/BetPayController.php:2987
+#: ../app/Http/Controllers/BetPayController.php:3105
+#: ../app/Http/Controllers/BetPayController.php:3132
+#: ../app/Http/Controllers/BetPayController.php:3245
+#: ../app/Http/Controllers/BetPayController.php:3272
+#: ../app/Http/Controllers/BetPayController.php:3496
+#: ../app/Http/Controllers/BetPayController.php:3523
+#: ../app/Http/Controllers/BetPayController.php:3660
+#: ../app/Http/Controllers/BetPayController.php:3688
+#: ../app/Http/Controllers/BetPayController.php:3739
+#: ../app/Http/Controllers/BetPayController.php:3858
+#: ../app/Http/Controllers/BetPayController.php:3880
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2207
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2235
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2366
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2393
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2512
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2534
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2650
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2670
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2783
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2803
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2941
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2987
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3105
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3132
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3245
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3272
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3496
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3523
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3660
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3688
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3739
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3858
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3880
+msgid "The amount to be unlock must be the same as the amount locked"
+msgstr "La cantidad a desbloquear debe ser la misma que la cantidad bloqueada"
+
+#: ../app/Http/Controllers/BetPayController.php:2256
+#: ../app/Http/Controllers/BetPayController.php:2414
+#: ../app/Http/Controllers/BetPayController.php:2555
+#: ../app/Http/Controllers/BetPayController.php:2689
+#: ../app/Http/Controllers/BetPayController.php:2822
+#: ../app/Http/Controllers/BetPayController.php:2962
+#: ../app/Http/Controllers/BetPayController.php:3153
+#: ../app/Http/Controllers/BetPayController.php:3293
+#: ../app/Http/Controllers/BetPayController.php:3387
+#: ../app/Http/Controllers/BetPayController.php:3549
+#: ../app/Http/Controllers/BetPayController.php:3714
+#: ../app/Http/Controllers/BetPayController.php:3901
+#: ../app/Http/Controllers/BetPayController.php:4013
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2256
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2414
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2555
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2689
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2822
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2962
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3153
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3293
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3387
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3549
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3714
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3901
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4013
+msgid "Withdrawal processed"
+msgstr "Desistimiento procesado"
+
+#: ../app/Http/Controllers/BetPayController.php:2257
+#: ../app/Http/Controllers/BetPayController.php:2415
+#: ../app/Http/Controllers/BetPayController.php:2556
+#: ../app/Http/Controllers/BetPayController.php:2690
+#: ../app/Http/Controllers/BetPayController.php:2823
+#: ../app/Http/Controllers/BetPayController.php:2963
+#: ../app/Http/Controllers/BetPayController.php:3154
+#: ../app/Http/Controllers/BetPayController.php:3294
+#: ../app/Http/Controllers/BetPayController.php:3388
+#: ../app/Http/Controllers/BetPayController.php:3550
+#: ../app/Http/Controllers/BetPayController.php:3715
+#: ../app/Http/Controllers/BetPayController.php:3902
+#: ../app/Http/Controllers/BetPayController.php:4014
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2257
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2415
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2556
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2690
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2823
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2963
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3154
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3294
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3388
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3550
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3715
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3902
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4014
+msgid "The withdrawal was processed correctly"
+msgstr "El retiro se procesó correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:2267
+#: ../app/Http/Controllers/BetPayController.php:3560
+#: ../app/Http/Controllers/BetPayController.php:4024
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2267
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3560
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4024
+msgid "Bank reference in use"
+msgstr "Referencia bancaria en uso"
+
+#: ../app/Http/Controllers/BetPayController.php:2268
+#: ../app/Http/Controllers/BetPayController.php:3561
+#: ../app/Http/Controllers/BetPayController.php:4025
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2268
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3561
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4025
+msgid "The bank reference entered is already registered in our system"
+msgstr ""
+"La referencia bancaria introducida ya está registrada en nuestro sistema"
+
+#: ../app/Http/Controllers/BetPayController.php:2276
+#: ../app/Http/Controllers/BetPayController.php:3016
+#: ../app/Http/Controllers/BetPayController.php:3407
+#: ../app/Http/Controllers/BetPayController.php:3569
+#: ../app/Http/Controllers/BetPayController.php:3759
+#: ../app/Http/Controllers/BetPayController.php:3768
+#: ../app/Http/Controllers/BetPayController.php:4033
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2276
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3016
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3407
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3569
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3759
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3768
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4033
+msgid "Failed transaction"
+msgstr "Transacción fallida"
+
+#: ../app/Http/Controllers/BetPayController.php:2277
+#: ../app/Http/Controllers/BetPayController.php:3017
+#: ../app/Http/Controllers/BetPayController.php:3408
+#: ../app/Http/Controllers/BetPayController.php:3570
+#: ../app/Http/Controllers/BetPayController.php:3769
+#: ../app/Http/Controllers/BetPayController.php:4034
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2277
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3017
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3408
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3570
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3769
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4034
+msgid "The transaction could not be executed. Please reload and try again"
+msgstr ""
+"No se pudo ejecutar la transacción. Vuelva a cargar e inténtelo de nuevo"
+
+#: ../app/Http/Controllers/BetPayController.php:2288
+#: ../app/Http/Controllers/BetPayController.php:2431
+#: ../app/Http/Controllers/BetPayController.php:2572
+#: ../app/Http/Controllers/BetPayController.php:2706
+#: ../app/Http/Controllers/BetPayController.php:2839
+#: ../app/Http/Controllers/BetPayController.php:3028
+#: ../app/Http/Controllers/BetPayController.php:3170
+#: ../app/Http/Controllers/BetPayController.php:3310
+#: ../app/Http/Controllers/BetPayController.php:3419
+#: ../app/Http/Controllers/BetPayController.php:3581
+#: ../app/Http/Controllers/BetPayController.php:3780
+#: ../app/Http/Controllers/BetPayController.php:3919
+#: ../app/Http/Controllers/BetPayController.php:4045
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2288
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2431
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2572
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2706
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2839
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3028
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3170
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3310
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3419
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3581
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3780
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3919
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4045
+msgid "Withdrawal already processed"
+msgstr "Desistimiento ya procesado"
+
+#: ../app/Http/Controllers/BetPayController.php:2289
+#: ../app/Http/Controllers/BetPayController.php:2432
+#: ../app/Http/Controllers/BetPayController.php:2573
+#: ../app/Http/Controllers/BetPayController.php:2707
+#: ../app/Http/Controllers/BetPayController.php:2840
+#: ../app/Http/Controllers/BetPayController.php:3029
+#: ../app/Http/Controllers/BetPayController.php:3171
+#: ../app/Http/Controllers/BetPayController.php:3311
+#: ../app/Http/Controllers/BetPayController.php:3420
+#: ../app/Http/Controllers/BetPayController.php:3582
+#: ../app/Http/Controllers/BetPayController.php:3781
+#: ../app/Http/Controllers/BetPayController.php:3920
+#: ../app/Http/Controllers/BetPayController.php:4046
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2289
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2432
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2573
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2707
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:2840
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3029
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3171
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3311
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3420
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3582
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3781
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3920
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4046
+msgid ""
+"The withdrawal is already processed. Please refresh the page to update the "
+"list"
+msgstr ""
+"El retiro ya está procesado. Actualice la página para actualizar la lista"
+
+#: ../app/Http/Controllers/BetPayController.php:3398
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:3398
+msgid "Success transaction"
+msgstr "Transacción exitosa"
+
+#: ../app/Http/Controllers/BetPayController.php:4081
+#: ../app/Http/Controllers/BetPayController.php:4139
+#: ../app/Http/Controllers/BetPayController.php:4175
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4081
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4139
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4175
+msgid "Client updated"
+msgstr "Cliente actualizado"
+
+#: ../app/Http/Controllers/BetPayController.php:4082
+#: ../app/Http/Controllers/BetPayController.php:4140
+#: ../app/Http/Controllers/BetPayController.php:4176
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4082
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4140
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4176
+msgid "Client updated successfully"
+msgstr "Cliente actualizado correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:4248
+#: ../app/Http/Controllers/BetPayController.php:4392
+#: ../app/Http/Controllers/BetPayController.php:4512
+#: ../app/Http/Controllers/ConfigurationsController.php:993
+#: ../app/Http/Controllers/ConfigurationsController.php:1905
+#: ../app/Http/Controllers/DotSuiteController.php:490
+#: ../app/Http/Controllers/DotSuiteController.php:497
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4248
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4392
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4512
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:490
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:497
+msgid "Saved credential"
+msgstr "Credencial guardada"
+
+#: ../app/Http/Controllers/BetPayController.php:4249
+#: ../app/Http/Controllers/BetPayController.php:4393
+#: ../app/Http/Controllers/BetPayController.php:4513
+#: ../app/Http/Controllers/ConfigurationsController.php:994
+#: ../app/Http/Controllers/ConfigurationsController.php:1906
+#: ../app/Http/Controllers/DotSuiteController.php:491
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4249
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4393
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4513
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:491
+msgid "Credential data was saved correctly"
+msgstr "Los datos de credenciales se guardaron correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:4255
+#: ../app/Http/Controllers/BetPayController.php:4399
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4255
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4399
+msgid "Used client"
+msgstr "Cliente usado"
+
+#: ../app/Http/Controllers/BetPayController.php:4256
+#: ../app/Http/Controllers/BetPayController.php:4400
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4256
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4400
+msgid "The client data already exists"
+msgstr "Los datos del cliente ya existen"
+
+#: ../app/Http/Controllers/BetPayController.php:4519
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4519
+msgid "Credentials error"
+msgstr "Error de credenciales"
+
+#: ../app/Http/Controllers/BetPayController.php:4520
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4520
+msgid "Customer has no credentials"
+msgstr "El cliente no tiene credenciales"
+
+#: ../app/Http/Controllers/BetPayController.php:4668
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4668
+msgid "Updated client"
+msgstr "Cliente actualizado"
+
+#: ../app/Http/Controllers/BetPayController.php:4669
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4669
+msgid "Client data was updated correctly"
+msgstr "Los datos del cliente se actualizaron correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:4786
+#: ../app/Http/Controllers/BetPayController.php:4951
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4786
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4951
+msgid "Updated account"
+msgstr "Cuenta actualizada"
+
+#: ../app/Http/Controllers/BetPayController.php:4787
+#: ../app/Http/Controllers/BetPayController.php:4952
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4787
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4952
+msgid "Account data was updated correctly"
+msgstr "Los datos de la cuenta se actualizaron correctamente"
+
+#: ../app/Http/Controllers/BetPayController.php:4963
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4963
+msgid "Account in use"
+msgstr "Cuenta en uso"
+
+#: ../app/Http/Controllers/BetPayController.php:4964
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:4964
+msgid "The account entered is already registered in our system"
+msgstr "La cuenta ingresada ya está registrada en nuestro sistema"
+
+#: ../app/Http/Controllers/BetPayController.php:5031
+#: ../app/Http/Controllers/UsersController.php:717
+#: ../app/Http/Controllers/UsersController.php:1718
+#: ../app/Users/Import/TransactionsByLotImport.php:93
+#: ../storage/framework/messages/9c6e44a7b64d7dab1fc3f9fdeba9e34b603002de.php.php:93
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5031
+msgid "Transaction not allowed"
+msgstr "Transacción no permitida"
+
+#: ../app/Http/Controllers/BetPayController.php:5032
+#: ../app/Http/Controllers/UsersController.php:718
+#: ../app/Http/Controllers/UsersController.php:1719
+#: ../app/Users/Import/TransactionsByLotImport.php:94
+#: ../storage/framework/messages/9c6e44a7b64d7dab1fc3f9fdeba9e34b603002de.php.php:94
+#: ../storage/framework/messages/aad7ebd8e9e8afde1ea8486f87721159795aea13.php.php:5032
+#, php-format
+msgid "The amount is higher than the operational balance. Available: %s %s"
+msgstr "El importe es superior al saldo operativo. Disponible: %s %s"
+
+#: ../app/Http/Controllers/BonusSystemController.php:224
+#: ../app/Http/Controllers/BonusSystemController.php:236
+msgid "No deposit"
+msgstr "Sin depósito"
+
+#: ../app/Http/Controllers/BonusSystemController.php:225
+#: ../app/Http/Controllers/BonusSystemController.php:237
+msgid "The user has not deposited"
+msgstr "El usuario no ha depositado"
+
+#: ../app/Http/Controllers/BonusSystemController.php:293
+#: ../app/Http/Controllers/BonusSystemController.php:316
+msgid "Activated bonus"
+msgstr "Bono activado"
+
+#: ../app/Http/Controllers/BonusSystemController.php:294
+#: ../app/Http/Controllers/BonusSystemController.php:317
+msgid "Bonus requested and credited correctly"
+msgstr "Bonificación solicitada y acreditada correctamente"
+
+#: ../app/Http/Controllers/BonusSystemController.php:303
+msgid "Assigned bonus"
+msgstr "Bonificación asignada"
+
+#: ../app/Http/Controllers/BonusSystemController.php:304
+msgid "The bonus is available in the account of user"
+msgstr "El bono está disponible en la cuenta del usuario"
+
+#: ../app/Http/Controllers/BonusSystemController.php:335
+msgid "Bonus active"
+msgstr "Bono activo"
+
+#: ../app/Http/Controllers/BonusSystemController.php:336
+msgid "The user has a bonus already active"
+msgstr "El usuario tiene un bono ya activo"
+
+#: ../app/Http/Controllers/BonusSystemController.php:344
+#: ../app/Http/Controllers/BonusSystemController.php:353
+msgid "Bonus inactive"
+msgstr "Bono inactivo"
+
+#: ../app/Http/Controllers/BonusSystemController.php:345
+#: ../app/Http/Controllers/BonusSystemController.php:354
+msgid "The bonus you are trying to activate is inactive"
+msgstr "El bono que está intentando activar está inactivo"
+
+#: ../app/Http/Controllers/BonusSystemController.php:490
+msgid "Campaigns overview"
+msgstr "Descripción general de las campañas"
+
+#: ../app/Http/Controllers/BonusSystemController.php:571
+msgid "Campaigns by user"
+msgstr "Campañas por usuario"
+
+#: ../app/Http/Controllers/BonusSystemController.php:640
+#: ../app/Http/Controllers/MarketingCampaignsController.php:148
+msgid "New campaign"
+msgstr "Nueva campaña"
+
+#: ../app/Http/Controllers/BonusSystemController.php:735
+#: ../app/Http/Controllers/MarketingCampaignsController.php:124
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:106
+msgid "Update campaign"
+msgstr "Campaña de actualización"
+
+#: ../app/Http/Controllers/BonusSystemController.php:769
+msgid "Update users search"
+msgstr "Actualizar la búsqueda de usuarios"
+
+#: ../app/Http/Controllers/BonusSystemController.php:953
+#: ../app/Http/Controllers/MarketingCampaignsController.php:169
+msgid "Campaign removed"
+msgstr "Campaña eliminada"
+
+#: ../app/Http/Controllers/BonusSystemController.php:954
+#: ../app/Http/Controllers/MarketingCampaignsController.php:170
+msgid "The campaign was successfully removed"
+msgstr "La campaña se eliminó correctamente"
+
+#: ../app/Http/Controllers/BonusSystemController.php:960
+msgid "Campaign not found"
+msgstr "Campaña no encontrada"
+
+#: ../app/Http/Controllers/BonusSystemController.php:961
+msgid "The campaign you are trying to deleted is not found"
+msgstr "No se encuentra la campaña que intentas eliminar"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1095
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1758
+msgid "Bonus canceled"
+msgstr "Bono cancelado"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1096
+msgid "The bonus was successfully canceled"
+msgstr "El bono se canceló con éxito"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1103
+msgid "Bonus not found"
+msgstr "Bono no encontrado"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1104
+msgid "The bonus you are trying to canceled is not found"
+msgstr "No se encuentra el bono que está intentando cancelar"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1266
+#: ../app/Http/Controllers/BonusSystemController.php:1663
+#, php-format
+msgid "The promo code %s is assigned to another campaign"
+msgstr "El código promocional %s se asigna a otra campaña"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1283
+#, php-format
+msgid "You must add a minimum deposit for %s currency"
+msgstr "Debe agregar un depósito mínimo para %s moneda"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1291
+#, php-format
+msgid "The minimum deposit for %s currency must be greater than 0"
+msgstr "El depósito mínimo para %s moneda debe ser mayor que 0"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1303
+#, php-format
+msgid "The bonus to be awarded field is required for %s currency"
+msgstr "El campo de bonificación que se otorgará es obligatorio para %s moneda"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1311
+#, php-format
+msgid "The bonus to be awarded for %s currency must be greater than 0"
+msgstr "El bono que se otorgará por %s moneda debe ser mayor que 0"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1321
+#, php-format
+msgid "The percentage field is required for %s currency"
+msgstr "El campo de porcentaje es obligatorio para %s moneda"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1329
+#, php-format
+msgid "The percentage for %s currency must be greater than 0"
+msgstr "El porcentaje para %s moneda debe ser mayor que 0"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1338
+#, php-format
+msgid "The limit field is required for %s currency"
+msgstr "El campo de límite es obligatorio para %s moneda"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1346
+#, php-format
+msgid "The limit for %s currency must be greater than 0"
+msgstr "El límite para %s moneda debe ser mayor que 0"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1358
+#, php-format
+msgid "You must add a minimum bet for %s currency"
+msgstr "Debe agregar una apuesta mínima para %s moneda"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1366
+#, php-format
+msgid "The minimum bet for %s currency must be greater than 0"
+msgstr "La apuesta mínima para %s moneda debe ser mayor que 0"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1553
+msgid "Campaign published"
+msgstr "Campaña publicada"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1554
+msgid "The campaign was published correctly"
+msgstr "La campaña se publicó correctamente"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1572
+#: ../app/Http/Controllers/MarketingCampaignsController.php:243
+msgid "List of campaigns"
+msgstr "Lista de campañas"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1887
+#: ../app/Http/Controllers/MarketingCampaignsController.php:293
+msgid "Campaign updated"
+msgstr "Campaña actualizada"
+
+#: ../app/Http/Controllers/BonusSystemController.php:1888
+#: ../app/Http/Controllers/MarketingCampaignsController.php:294
+msgid "The campaign data was updated correctly"
+msgstr "Los datos de la campaña se actualizaron correctamente"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:109
+#: ../app/Http/Controllers/ConfigurationsController.php:172
+msgid "Providers Credentials"
+msgstr "Credenciales de proveedores"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:196
+msgid "OCB Slots credentials"
+msgstr "Credenciales de OCB Slots"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:202
+msgid "BetPay credentials"
+msgstr "Credenciales de BetPay"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:208
+msgid "Ezugi credentials"
+msgstr "Credenciales de Ezugi"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:214
+msgid "VivoGaming credentials"
+msgstr "Credenciales de VivoGaming"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:220
+msgid "Lucky Spins credentials"
+msgstr "Credenciales de Lucky Spins"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:226
+msgid "WNet Games credentials"
+msgstr "Credenciales de WNet Games"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:232
+msgid "Golden Race credentials"
+msgstr "Credenciales de la Golden Race"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:238
+msgid "Spinmatic credentials"
+msgstr "Credenciales espinomáticas"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:244
+msgid "Caleta Gaming credentials"
+msgstr "Credenciales de Caleta Gaming"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:250
+msgid "Sisvenprol credentials"
+msgstr "Credenciales de Sisvenprol"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:256
+msgid "XLive credentials"
+msgstr "Credenciales de XLive"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:262
+msgid "TV Bet credentials"
+msgstr "Credenciales de TV Bet"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:268
+msgid "Lega Jackpot credentials"
+msgstr "Credenciales de Lega Jackpot"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:274
+msgid "Virtual Generation credentials"
+msgstr "Credenciales de generación virtual"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:280
+msgid "IQSoft credentials"
+msgstr "Credenciales IQSoft"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:286
+msgid "El Inmejorable credentials"
+msgstr "Credenciales de El Inmejorable"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:292
+msgid "Ka Gaming credentials"
+msgstr "Credenciales de Ka Gaming"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:298
+msgid "Gamzix credentials"
+msgstr "Credenciales de Gamzix"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:304
+msgid "Center Horses credentials"
+msgstr "Credenciales de Center Horses"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:310
+msgid "Andes SportBook credentials"
+msgstr "Credenciales de Andes SportBook"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:316
+msgid "VLS credentials"
+msgstr "Credenciales VLS"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:322
+msgid "DLV credentials"
+msgstr "Credenciales DLV"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:328
+msgid "ColorSpin credentials"
+msgstr "Credenciales de ColorSpin"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:334
+msgid "SportBook credentials"
+msgstr "Credenciales de SportBook"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:340
+msgid "Salsa Gaming credentials"
+msgstr "Credenciales de Salsa Gaming"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:346
+msgid "Patagonia credentials"
+msgstr "Credenciales de Patagonia"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:352
+msgid "PG Soft credentials"
+msgstr "Credenciales de PG Soft"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:358
+msgid "Booongo credentials"
+msgstr "Credenciales de Booongo"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:364
+msgid "GameArt credentials"
+msgstr "Credenciales de GameArt"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:370
+msgid "Booming Games credentials"
+msgstr "Credenciales de Booming Games"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:376
+#, fuzzy
+msgid "Kiron Interactive credentials"
+msgstr "Credenciales de Kiron Interactive"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:382
+#, fuzzy
+msgid "Hacksaw Gaming credentials"
+msgstr "Credenciales de Hacksaw Gaming"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:388
+#, fuzzy
+msgid "Triple Cherry credentials"
+msgstr "Credenciales de Triple Cherry"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:394
+#, fuzzy
+msgid "Espresso Games credentials"
+msgstr "Credenciales de Espresso Games"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:400
+#, fuzzy
+msgid "Pragmatic Play credentials"
+msgstr "Credenciales de Pragmatic Play"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:406
+#, fuzzy
+msgid "Mascot Gaming credentials"
+msgstr "Credenciales de juego de mascotas"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:412
+#, fuzzy
+msgid "Event Bet credentials"
+msgstr "Credenciales de Event Bet"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:418
+#, fuzzy
+msgid "Branka Team credentials"
+msgstr "Credenciales del equipo Branka"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:424
+#, fuzzy
+msgid "Branka Originals credentials"
+msgstr "Credenciales de Branka Originals"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:430
+#, fuzzy
+msgid "Pragmatic Play Live Casino credentials"
+msgstr "Credenciales de Pragmatic Play Live Casino"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:502
+#, fuzzy
+msgid "Universal Soft "
+msgstr "Universal Soft "
+
+#: ../app/Http/Controllers/ConfigurationsController.php:550
+#, fuzzy
+msgid "Evolution Slots credentials"
+msgstr "Credenciales de Evolution Slots"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:562
+#, fuzzy
+msgid "kalamba"
+msgstr "Kalamba"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:598
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3980
+#, fuzzy
+msgid "Beter"
+msgstr "Beter"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:688
+msgid "Deleted credential"
+msgstr "Credencial eliminada"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:689
+msgid "Credential data was delete correctly"
+msgstr "Los datos de credenciales se eliminaron correctamente"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:717
+msgid "Details credentials"
+msgstr "Detalles de las credenciales"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:738
+msgid "Set user levels"
+msgstr "Establecer niveles de usuario"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:777
+msgid "Configure main routes"
+msgstr "Configurar rutas principales"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:851
+msgid "Configure registration and login"
+msgstr "Configurar el registro y el inicio de sesión"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:911
+#: ../app/Http/Controllers/ConfigurationsController.php:941
+msgid "Provider updated"
+msgstr "Proveedor actualizado"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:912
+#: ../app/Http/Controllers/ConfigurationsController.php:942
+msgid "Provider updated successfully"
+msgstr "Proveedor actualizado correctamente"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:976
+#: ../app/Http/Controllers/ConfigurationsController.php:1070
+msgid "Used credential"
+msgstr "Credencial usada"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:977
+#: ../app/Http/Controllers/ConfigurationsController.php:1071
+msgid "The credential data already exists"
+msgstr "Los datos de credenciales ya existen"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:1922
+msgid "Configure template"
+msgstr "Configurar plantilla"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2618
+msgid "Updated credential"
+msgstr "Credencial actualizada"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2619
+msgid "Credential data was updated correctly"
+msgstr "Los datos de credenciales se actualizaron correctamente"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2655
+msgid "Registration and login updated"
+msgstr "Registro e inicio de sesión actualizados"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2656
+msgid "The registration and login data were saved correctly"
+msgstr "Los datos de registro e inicio de sesión se guardaron correctamente"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2691
+#: ../app/Http/Controllers/ConfigurationsController.php:2727
+msgid "Updated levels"
+msgstr "Niveles actualizados"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2692
+#: ../app/Http/Controllers/ConfigurationsController.php:2728
+msgid "Level data was saved correctly"
+msgstr "Los datos de nivel se guardaron correctamente"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2766
+msgid "Updated routes"
+msgstr "Rutas actualizadas"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2767
+msgid "The route data was saved correctly"
+msgstr "Los datos de ruta se guardaron correctamente"
+
+#: ../app/Http/Controllers/ConfigurationsController.php:2802
+msgid "Percentage updated successfully"
+msgstr "Porcentaje actualizado correctamente"
+
+#: ../app/Http/Controllers/CoreController.php:191
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:210
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:267
+msgid "Dashboard"
+msgstr "Escritorio"
+
+#: ../app/Http/Controllers/CoreController.php:266
+msgid "Exchange rate updated"
+msgstr "Tipo de cambio actualizado"
+
+#: ../app/Http/Controllers/CoreController.php:267
+msgid "The exchange rate was updated correctly"
+msgstr "El tipo de cambio se actualizó correctamente"
+
+#: ../app/Http/Controllers/DotSuiteController.php:214
+#: ../app/Http/Controllers/DotSuiteController.php:363
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:214
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:363
+msgid "Cancel free spins "
+msgstr "Cancelar giros gratis "
+
+#: ../app/Http/Controllers/DotSuiteController.php:305
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:305
+msgid "Status change"
+msgstr "Cambio de estado"
+
+#: ../app/Http/Controllers/DotSuiteController.php:306
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:306
+msgid "Status updated successfully"
+msgstr "Estado actualizado correctamente"
+
+#: ../app/Http/Controllers/DotSuiteController.php:413
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:413
+msgid "Create lobby dotsuite"
+msgstr "Crear dotsuite de lobby"
+
+#: ../app/Http/Controllers/DotSuiteController.php:431
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:431
+msgid "List of credentials"
+msgstr "Lista de credenciales"
+
+#: ../app/Http/Controllers/DotSuiteController.php:498
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:498
+#, php-format
+msgid "%s Credentials stored by currency. %s New credentials saved"
+msgstr ""
+"%s Credenciales almacenadas por moneda. %s Nuevas credenciales guardadas"
+
+#: ../app/Http/Controllers/DotSuiteController.php:528
+#: ../app/Http/Controllers/DotSuiteController.php:554
+#: ../app/Http/Controllers/DotSuiteController.php:580
+#: ../app/Http/Controllers/DotSuiteController.php:604
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:528
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:554
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:580
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:604
+msgid "Free spins "
+msgstr "Giros gratis "
+
+#: ../app/Http/Controllers/DotSuiteController.php:713
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:713
+msgid "Free spin"
+msgstr "Giro gratis"
+
+#: ../app/Http/Controllers/DotSuiteController.php:714
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:714
+msgid "The promotion spins have been cancel successfully."
+msgstr "Los giros de promoción se han cancelado con éxito."
+
+#: ../app/Http/Controllers/DotSuiteController.php:881
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:881
+msgid "Free spins"
+msgstr "Giros gratis"
+
+#: ../app/Http/Controllers/DotSuiteController.php:882
+#: ../app/Http/Controllers/DotSuiteController.php:1007
+#: ../app/Http/Controllers/DotSuiteController.php:1132
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:882
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1007
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1132
+msgid "The free spins have been awarded successfully"
+msgstr "Los giros gratis han sido otorgados con éxito"
+
+#: ../app/Http/Controllers/DotSuiteController.php:896
+#: ../app/Http/Controllers/DotSuiteController.php:1021
+#: ../app/Http/Controllers/DotSuiteController.php:1146
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:896
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1021
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1146
+msgid "Could not load save data"
+msgstr "No se pudieron cargar los datos guardados"
+
+#: ../app/Http/Controllers/DotSuiteController.php:1006
+#: ../app/Http/Controllers/DotSuiteController.php:1131
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1006
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1131
+msgid "Free spins assigned"
+msgstr "Giros gratis asignados"
+
+#: ../app/Http/Controllers/DotSuiteController.php:1191
+#: ../app/Http/Controllers/ReportsController.php:1733
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1191
+msgid "Users totals report"
+msgstr "Informe de totales de usuarios"
+
+#: ../app/Http/Controllers/DotSuiteController.php:1260
+#: ../app/Http/Controllers/ReportsController.php:958
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1260
+msgid "Most played games report"
+msgstr "Informe de juegos más jugados"
+
+#: ../app/Http/Controllers/DotSuiteController.php:1327
+#: ../app/Http/Controllers/ReportsController.php:479
+#: ../storage/framework/messages/b0362c3d8c8f717620b19624c76198ab67874acd.php.php:1327
+msgid "Game totals report"
+msgstr "Informe de totales de juegos"
+
+#: ../app/Http/Controllers/EmailConfigurationsController.php:86
+msgid "Update email content"
+msgstr "Actualizar el contenido del correo electrónico"
+
+#: ../app/Http/Controllers/EmailConfigurationsController.php:103
+msgid "Email contents"
+msgstr "Contenido del correo electrónico"
+
+#: ../app/Http/Controllers/EmailConfigurationsController.php:131
+msgid "Updated email content"
+msgstr "Contenido de correo electrónico actualizado"
+
+#: ../app/Http/Controllers/EmailConfigurationsController.php:132
+msgid "Email data was saved correctly"
+msgstr "Los datos de correo electrónico se guardaron correctamente"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:129
+#: ../app/Http/Controllers/EmailTemplatesController.php:140
+msgid "New template"
+msgstr "Nueva plantilla"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:155
+#: ../app/Http/Controllers/EmailTemplatesController.php:178
+msgid "Template removed"
+msgstr "Plantilla eliminada"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:156
+#: ../app/Http/Controllers/EmailTemplatesController.php:179
+msgid "The template was successfully removed"
+msgstr "La plantilla se ha quitado correctamente"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:215
+#: ../app/Http/Controllers/EmailTemplatesController.php:252
+msgid "Template duplicated"
+msgstr "Plantilla duplicada"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:216
+#: ../app/Http/Controllers/EmailTemplatesController.php:253
+msgid "The template was successfully duplicated"
+msgstr "La plantilla se ha duplicado correctamente"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:278
+#: ../app/Http/Controllers/EmailTemplatesController.php:306
+msgid "Edit template"
+msgstr "Editar plantilla"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:361
+#: ../app/Http/Controllers/EmailTemplatesController.php:373
+msgid "List of templates"
+msgstr "Lista de plantillas"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:419
+#: ../app/Http/Controllers/EmailTemplatesController.php:463
+msgid "Template created"
+msgstr "Plantilla creada"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:420
+#: ../app/Http/Controllers/EmailTemplatesController.php:464
+msgid "The template was created successfully"
+msgstr "La plantilla se creó correctamente"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:497
+msgid "Template email test"
+msgstr "Prueba de correo electrónico de plantilla"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:498
+msgid "Test mail has been sent"
+msgstr "Se ha enviado un correo de prueba"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:553
+#: ../app/Http/Controllers/EmailTemplatesController.php:597
+msgid "Template updated"
+msgstr "Plantilla actualizada"
+
+#: ../app/Http/Controllers/EmailTemplatesController.php:554
+#: ../app/Http/Controllers/EmailTemplatesController.php:598
+msgid "The template was updated successfully"
+msgstr "La plantilla se actualizó correctamente"
+
+#: ../app/Http/Controllers/FeaturedImagesController.php:92
+#: ../app/Http/Controllers/SectionImagesController.php:135
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:117
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:92
+msgid "Upload image"
+msgstr "Subir foto"
+
+#: ../app/Http/Controllers/FeaturedImagesController.php:119
+#: ../app/Http/Controllers/SectionImagesController.php:250
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:139
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:119
+msgid "Update image"
+msgstr "Actualizar imagen"
+
+#: ../app/Http/Controllers/FeaturedImagesController.php:137
+#: ../app/Http/Controllers/SectionImagesController.php:275
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:137
+msgid "List of images"
+msgstr "Lista de imágenes"
+
+#: ../app/Http/Controllers/FeaturedImagesController.php:188
+#: ../app/Http/Controllers/SectionImagesController.php:343
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:188
+msgid "Image uploaded"
+msgstr "Imagen cargada"
+
+#: ../app/Http/Controllers/FeaturedImagesController.php:189
+#: ../app/Http/Controllers/SectionImagesController.php:344
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:189
+msgid "The image data was uploaded correctly"
+msgstr "Los datos de la imagen se cargaron correctamente"
+
+#: ../app/Http/Controllers/FeaturedImagesController.php:260
+#: ../app/Http/Controllers/SectionImagesController.php:534
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:260
+msgid "Image updated"
+msgstr "Imagen actualizada"
+
+#: ../app/Http/Controllers/FeaturedImagesController.php:261
+#: ../app/Http/Controllers/SectionImagesController.php:535
+#: ../storage/framework/messages/dd0c3a1a38f8c612bf3160c51ac8ea16671fd9a8.php.php:261
+msgid "The image data was updated correctly"
+msgstr "Los datos de la imagen se actualizaron correctamente"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:99
+#: ../app/Http/Controllers/SlidersController.php:162
+msgid "Upload new slider"
+msgstr "Cargar nuevo control deslizante"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:122
+#: ../app/Http/Controllers/SlidersController.php:185
+msgid "Slider removed"
+msgstr "Control deslizante eliminado"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:123
+#: ../app/Http/Controllers/SlidersController.php:186
+msgid "The slider was successfully removed"
+msgstr "El control deslizante se ha quitado correctamente"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:151
+#: ../app/Http/Controllers/SlidersController.php:223
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:134
+msgid "Update slider"
+msgstr "Control deslizante de actualización"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:174
+#: ../app/Http/Controllers/SlidersController.php:250
+msgid "List of sliders"
+msgstr "Lista de controles deslizantes"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:213
+#: ../app/Http/Controllers/FeaturedSlidersController.php:287
+#: ../app/Http/Controllers/SlidersController.php:291
+#: ../app/Http/Controllers/SlidersController.php:302
+#: ../app/Http/Controllers/SlidersController.php:404
+#: ../app/Http/Controllers/SlidersController.php:414
+#: ../app/Http/Controllers/SlidersController.php:431
+#: ../app/Http/Controllers/SlidersController.php:443
+msgid "Used order"
+msgstr "Orden usada"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:214
+#: ../app/Http/Controllers/FeaturedSlidersController.php:288
+#: ../app/Http/Controllers/SlidersController.php:292
+#: ../app/Http/Controllers/SlidersController.php:303
+#: ../app/Http/Controllers/SlidersController.php:405
+#: ../app/Http/Controllers/SlidersController.php:415
+#: ../app/Http/Controllers/SlidersController.php:432
+#: ../app/Http/Controllers/SlidersController.php:444
+msgid "The order data already exists"
+msgstr "Los datos del pedido ya existen"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:241
+#: ../app/Http/Controllers/SlidersController.php:355
+msgid "Slider loaded"
+msgstr "Control deslizante cargado"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:242
+#: ../app/Http/Controllers/SlidersController.php:356
+msgid "The slider was loaded correctly"
+msgstr "El control deslizante se cargó correctamente"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:326
+#: ../app/Http/Controllers/SlidersController.php:497
+msgid "Slider updated"
+msgstr "Control deslizante actualizado"
+
+#: ../app/Http/Controllers/FeaturedSlidersController.php:327
+#: ../app/Http/Controllers/SlidersController.php:498
+msgid "The slider data was updated correctly"
+msgstr "Los datos del control deslizante se actualizaron correctamente"
+
+#: ../app/Http/Controllers/InvoicesController.php:75
+msgid "Invoices Nº: #######"
+msgstr "Nº de facturas: #######"
+
+#: ../app/Http/Controllers/InvoicesController.php:78
+msgid "Units"
+msgstr "Unidades"
+
+#: ../app/Http/Controllers/InvoicesController.php:84
+msgid "Details client"
+msgstr "Detalles cliente"
+
+#: ../app/Http/Controllers/InvoicesController.php:85
+msgid "Messrs:"
+msgstr "Sres:"
+
+#: ../app/Http/Controllers/InvoicesController.php:86
+msgid "Attention: Carlos"
+msgstr "Atención: Carlos"
+
+#: ../app/Http/Controllers/InvoicesController.php:87
+msgid "Email: carlos.hurtado@dotworkers.net"
+msgstr "Correo electrónico: carlos.hurtado@dotworkers.net"
+
+#: ../app/Http/Controllers/InvoicesController.php:88
+msgid "Phone: 4264331131"
+msgstr "Teléfono: 4264331131"
+
+#: ../app/Http/Controllers/InvoicesController.php:104
+msgid "Sub-total:"
+msgstr "Subtotal:"
+
+#: ../app/Http/Controllers/InvoicesController.php:105
+msgid "total:"
+msgstr "total:"
+
+#: ../app/Http/Controllers/InvoicesController.php:109
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:56
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:56
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:784
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:56
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:54
+msgid "Payment methods"
+msgstr "Payment methods"
+
+#: ../app/Http/Controllers/InvoicesController.php:112
+msgid "Paypal"
+msgstr "PayPal"
+
+#: ../app/Http/Controllers/InvoicesController.php:114
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:475
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:475
+msgid "Bitcoin"
+msgstr "Bitcoin"
+
+#: ../app/Http/Controllers/InvoicesController.php:114
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:166
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:164
+msgid "USDT"
+msgstr "USDT (en inglés)"
+
+#: ../app/Http/Controllers/InvoicesController.php:116
+msgid "RIF"
+msgstr "RIF"
+
+#: ../app/Http/Controllers/InvoicesController.php:116
+msgid "Bank Transfers in Bolivars"
+msgstr "Transferencias bancarias en bolívares"
+
+#: ../app/Http/Controllers/LandingPagesController.php:101
+msgid "Upload new landing pages"
+msgstr "Subir nuevas páginas de destino"
+
+#: ../app/Http/Controllers/LandingPagesController.php:130
+msgid "Landing pages removed"
+msgstr "Páginas de destino eliminadas"
+
+#: ../app/Http/Controllers/LandingPagesController.php:131
+msgid "The landing pages was successfully removed"
+msgstr "Las páginas de destino se han eliminado correctamente"
+
+#: ../app/Http/Controllers/LandingPagesController.php:154
+msgid "Update landing pages"
+msgstr "Actualizar páginas de destino"
+
+#: ../app/Http/Controllers/LandingPagesController.php:170
+msgid "List of Landing Pages"
+msgstr "Lista de páginas de destino"
+
+#: ../app/Http/Controllers/LandingPagesController.php:242
+msgid "Landing pages loaded"
+msgstr "Páginas de destino cargadas"
+
+#: ../app/Http/Controllers/LandingPagesController.php:243
+msgid "The landing was loaded correctly"
+msgstr "El aterrizaje se cargó correctamente"
+
+#: ../app/Http/Controllers/LandingPagesController.php:348
+msgid "Landing pages updated"
+msgstr "Páginas de destino actualizadas"
+
+#: ../app/Http/Controllers/LandingPagesController.php:349
+msgid "Landing pages data was updated correctly"
+msgstr "Los datos de las páginas de destino se actualizaron correctamente"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:166
+msgid "Create lobby"
+msgstr "Crear lobby"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:188
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:138
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:138
+msgid "Deleted game"
+msgstr "Juego eliminado"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:189
+msgid "The game was successfully removed"
+msgstr "El juego se ha eliminado correctamente"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:212
+msgid "Edit games"
+msgstr "Editar juegos"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:301
+#: ../app/Http/Controllers/LobbyGamesController.php:345
+msgid "Used Games"
+msgstr "Juegos usados"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:302
+#: ../app/Http/Controllers/LobbyGamesController.php:346
+msgid "The game data is used in other route"
+msgstr "Los datos del juego se utilizan en otra ruta"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:315
+#: ../app/Http/Controllers/LobbyGamesController.php:358
+msgid "Updated game"
+msgstr "Juego actualizado"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:316
+#: ../app/Http/Controllers/LobbyGamesController.php:359
+msgid "The game was updated successfully"
+msgstr "El juego se actualizó correctamente"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:380
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:248
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:248
+msgid "Saved game"
+msgstr "Partida guardada"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:381
+msgid "The game was saved successfully"
+msgstr "El juego se guardó correctamente"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:430
+msgid "Saved data game"
+msgstr "Juego de datos guardados"
+
+#: ../app/Http/Controllers/LobbyGamesController.php:431
+msgid "The data game was successfully updated"
+msgstr "El juego de datos se actualizó correctamente"
+
+#: ../app/Http/Controllers/MarketingCampaignsController.php:224
+msgid "Campaign created"
+msgstr "Campaña creada"
+
+#: ../app/Http/Controllers/MarketingCampaignsController.php:225
+msgid "The campaign was created successfully"
+msgstr "La campaña fue creada con éxito"
+
+#: ../app/Http/Controllers/NotificationsController.php:158
+msgid "Assign group"
+msgstr "Asignar grupo"
+
+#: ../app/Http/Controllers/NotificationsController.php:179
+msgid "User assign"
+msgstr "Asignación de usuario"
+
+#: ../app/Http/Controllers/NotificationsController.php:180
+msgid "The user was successfully assign"
+msgstr "El usuario se asignó correctamente"
+
+#: ../app/Http/Controllers/NotificationsController.php:209
+msgid "Update notification"
+msgstr "Notificación de actualización"
+
+#: ../app/Http/Controllers/NotificationsController.php:234
+#: ../storage/framework/messages/f42db55ab8f6202fc345f535f7dd63c386c02d6a.php.php:63
+msgid "Update group"
+msgstr "Grupo de actualización"
+
+#: ../app/Http/Controllers/NotificationsController.php:259
+msgid "New notification"
+msgstr "Nueva notificación"
+
+#: ../app/Http/Controllers/NotificationsController.php:275
+msgid "New groups"
+msgstr "Nuevos grupos"
+
+#: ../app/Http/Controllers/NotificationsController.php:299
+msgid "Notification removed"
+msgstr "Notificación eliminada"
+
+#: ../app/Http/Controllers/NotificationsController.php:300
+msgid "The notification was successfully removed"
+msgstr "La notificación se ha eliminado correctamente"
+
+#: ../app/Http/Controllers/NotificationsController.php:321
+msgid "Group removed"
+msgstr "Grupo eliminado"
+
+#: ../app/Http/Controllers/NotificationsController.php:322
+msgid "The group was successfully removed"
+msgstr "El grupo se ha eliminado correctamente"
+
+#: ../app/Http/Controllers/NotificationsController.php:344
+#: ../app/Http/Controllers/NotificationsController.php:417
+#: ../app/Http/Controllers/SegmentsController.php:255
+#: ../app/Http/Controllers/UsersController.php:980
+msgid "User removed"
+msgstr "Usuario eliminado"
+
+#: ../app/Http/Controllers/NotificationsController.php:345
+msgid "The user was successfully removed for group"
+msgstr "El usuario se eliminó correctamente para el grupo"
+
+#: ../app/Http/Controllers/NotificationsController.php:418
+msgid "User has been removed from the messaging system."
+msgstr "El usuario se ha eliminado del sistema de mensajería."
+
+#: ../app/Http/Controllers/NotificationsController.php:501
+msgid ""
+"Excel successfully uploaded, The notification has been successfully "
+"published."
+msgstr ""
+"Excel se cargó correctamente, la notificación se ha publicado correctamente."
+
+#: ../app/Http/Controllers/NotificationsController.php:503
+msgid "The notification was published correctly"
+msgstr "La notificación se publicó correctamente"
+
+#: ../app/Http/Controllers/NotificationsController.php:517
+msgid "Notification published"
+msgstr "Notificación publicada"
+
+#: ../app/Http/Controllers/NotificationsController.php:554
+msgid "Group created"
+msgstr "Grupo creado"
+
+#: ../app/Http/Controllers/NotificationsController.php:555
+msgid "The group was published correctly"
+msgstr "El grupo fue publicado correctamente"
+
+#: ../app/Http/Controllers/NotificationsController.php:572
+msgid "List of notifications"
+msgstr "Lista de notificaciones"
+
+#: ../app/Http/Controllers/NotificationsController.php:583
+msgid "List of groups"
+msgstr "Lista de grupos"
+
+#: ../app/Http/Controllers/NotificationsController.php:678
+msgid "Notification updated"
+msgstr "Notificación actualizada"
+
+#: ../app/Http/Controllers/NotificationsController.php:679
+msgid "The notification data was updated correctly"
+msgstr "Los datos de notificación se actualizaron correctamente"
+
+#: ../app/Http/Controllers/NotificationsController.php:716
+msgid "Group updated"
+msgstr "Grupo actualizado"
+
+#: ../app/Http/Controllers/NotificationsController.php:717
+msgid "The group data was updated correctly"
+msgstr "Los datos del grupo se actualizaron correctamente"
+
+#: ../app/Http/Controllers/PagesController.php:99
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:58
+msgid "Update page"
+msgstr "Página de actualización"
+
+#: ../app/Http/Controllers/PagesController.php:115
+msgid "Pages list"
+msgstr "Lista de páginas"
+
+#: ../app/Http/Controllers/PagesController.php:165
+#: ../app/Http/Controllers/ProvidersLimitsController.php:258
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:258
+msgid "Page updated"
+msgstr "Página actualizada"
+
+#: ../app/Http/Controllers/PagesController.php:166
+#: ../app/Http/Controllers/ProvidersLimitsController.php:259
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:259
+msgid "The page data was updated correctly"
+msgstr "Los datos de la página se actualizaron correctamente"
+
+#: ../app/Http/Controllers/PostsController.php:112
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:112
+msgid "Update promotion"
+msgstr "Actualizar promoción"
+
+#: ../app/Http/Controllers/PostsController.php:134
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:134
+msgid "New promotion"
+msgstr "Nueva promoción"
+
+#: ../app/Http/Controllers/PostsController.php:157
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:157
+msgid "Promotion removed"
+msgstr "Promoción eliminada"
+
+#: ../app/Http/Controllers/PostsController.php:158
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:158
+msgid "The promotion was successfully removed"
+msgstr "La promoción se ha eliminado correctamente"
+
+#: ../app/Http/Controllers/PostsController.php:236
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:236
+msgid "Promotion published"
+msgstr "Promoción publicada"
+
+#: ../app/Http/Controllers/PostsController.php:237
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:237
+msgid "The promotion was published correctly"
+msgstr "La promoción se publicó correctamente"
+
+#: ../app/Http/Controllers/PostsController.php:255
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:255
+msgid "List of promotions"
+msgstr "Lista de promociones"
+
+#: ../app/Http/Controllers/PostsController.php:337
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:337
+msgid "Promotion updated"
+msgstr "Promoción actualizada"
+
+#: ../app/Http/Controllers/PostsController.php:338
+#: ../storage/framework/messages/a7e27239ca5dd3bfaa6e40247a2633d56e140319.php.php:338
+msgid "The promotion data was updated correctly"
+msgstr "Los datos de la promoción se actualizaron correctamente"
+
+#: ../app/Http/Controllers/ProvidersLimitsController.php:110
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:110
+msgid "Create limits"
+msgstr "Crear límites"
+
+#: ../app/Http/Controllers/ProvidersLimitsController.php:129
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:129
+msgid "Update limits"
+msgstr "Límites de actualización"
+
+#: ../app/Http/Controllers/ProvidersLimitsController.php:147
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:147
+msgid "Provider limits"
+msgstr "Límites de proveedores"
+
+#: ../app/Http/Controllers/ProvidersLimitsController.php:221
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:221
+msgid "Limit created"
+msgstr "Límite creado"
+
+#: ../app/Http/Controllers/ProvidersLimitsController.php:222
+#: ../storage/framework/messages/ea344991d4b6d8b9b6c0fa8a75122bd28af7a531.php.php:222
+msgid "Boundary data was stored correctly"
+msgstr "Los datos de límite se almacenaron correctamente"
+
+#: ../app/Http/Controllers/ReferralsController.php:55
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:55
+msgid "List of referred users"
+msgstr "Lista de usuarios referidos"
+
+#: ../app/Http/Controllers/ReferralsController.php:56
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:56
+msgid "filter by user"
+msgstr "Filtrar por usuario"
+
+#: ../app/Http/Controllers/ReferralsController.php:67
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:67
+msgid "Refer user"
+msgstr "Recomendar usuario"
+
+#: ../app/Http/Controllers/ReferralsController.php:96
+#: ../app/Http/Controllers/ReferralsController.php:164
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:96
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:164
+msgid "User referral"
+msgstr "Referencia de usuario"
+
+#: ../app/Http/Controllers/ReferralsController.php:97
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:97
+msgid "User associated with the referred successfully"
+msgstr "Usuario asociado con el referido con éxito"
+
+#: ../app/Http/Controllers/ReferralsController.php:103
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:103
+msgid "Existing user"
+msgstr "Usuario existente"
+
+#: ../app/Http/Controllers/ReferralsController.php:104
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:104
+msgid "The user has already been referred by another user"
+msgstr "El usuario ya ha sido referido por otro usuario"
+
+#: ../app/Http/Controllers/ReferralsController.php:111
+#: ../app/Users/Import/TransactionsByLotImport.php:163
+#: ../storage/framework/messages/9c6e44a7b64d7dab1fc3f9fdeba9e34b603002de.php.php:163
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:111
+msgid "User not found"
+msgstr "Usuario no encontrado"
+
+#: ../app/Http/Controllers/ReferralsController.php:112
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:112
+#, php-format
+msgid "User not found by currency: %s "
+msgstr "Usuario no encontrado por moneda: %s "
+
+#: ../app/Http/Controllers/ReferralsController.php:165
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:165
+msgid "User removed from referral"
+msgstr "Usuario eliminado de la referencia"
+
+#: ../app/Http/Controllers/ReferralsController.php:171
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:171
+msgid "User referrel"
+msgstr "Referencia de usuario"
+
+#: ../app/Http/Controllers/ReferralsController.php:172
+#: ../storage/framework/messages/e1ab2036049e403a222deacaf6cd1b47be9cb5f5.php.php:172
+msgid "The user is not referred"
+msgstr "El usuario no es referido"
+
+#: ../app/Http/Controllers/ReportsController.php:229
+#: ../app/Users/Collections/UsersCollection.php:1076
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1076
+msgid "Bonus transactions"
+msgstr "Transacciones de bonificación"
+
+#: ../app/Http/Controllers/ReportsController.php:271
+msgid "Sales daily"
+msgstr "Ventas diarias"
+
+#: ../app/Http/Controllers/ReportsController.php:490
+msgid "IQ Soft tickets"
+msgstr "Entradas IQ Soft"
+
+#: ../app/Http/Controllers/ReportsController.php:534
+msgid "Credit transactions"
+msgstr "Operaciones de crédito"
+
+#: ../app/Http/Controllers/ReportsController.php:599
+msgid "Debit transactions"
+msgstr "Transacciones de débito"
+
+#: ../app/Http/Controllers/ReportsController.php:893
+msgid "Most played by providers report"
+msgstr "Informe de los proveedores más reproducidos"
+
+#: ../app/Http/Controllers/ReportsController.php:1218
+msgid "Profit General"
+msgstr "Beneficio General"
+
+#: ../app/Http/Controllers/ReportsController.php:1261
+msgid "Referred users"
+msgstr "Usuarios referidos"
+
+#: ../app/Http/Controllers/ReportsController.php:1370
+msgid "Total logins"
+msgstr "Total de inicios de sesión"
+
+#: ../app/Http/Controllers/SectionGamesController.php:147
+msgid "Create games section"
+msgstr "Crear sección de juegos"
+
+#: ../app/Http/Controllers/SectionGamesController.php:169
+msgid "Deleted Games"
+msgstr "Juegos eliminados"
+
+#: ../app/Http/Controllers/SectionGamesController.php:170
+msgid "Games data was delete correctly"
+msgstr "Los datos de los juegos se eliminaron correctamente"
+
+#: ../app/Http/Controllers/SectionGamesController.php:199
+msgid "List of games"
+msgstr "Lista de juegos"
+
+#: ../app/Http/Controllers/SectionGamesController.php:240
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:223
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:223
+msgid "Used games"
+msgstr "Juegos usados"
+
+#: ../app/Http/Controllers/SectionGamesController.php:241
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:224
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:224
+msgid "The games already exists"
+msgstr "Los juegos ya existen"
+
+#: ../app/Http/Controllers/SectionGamesController.php:256
+msgid "Saved games"
+msgstr "Partidas guardadas"
+
+#: ../app/Http/Controllers/SectionGamesController.php:257
+msgid "Games data was saved correctly"
+msgstr "Los datos de los juegos se guardaron correctamente"
+
+#: ../app/Http/Controllers/SectionModalsController.php:106
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:161
+msgid "Update popup"
+msgstr "Ventana emergente de actualización"
+
+#: ../app/Http/Controllers/SectionModalsController.php:128
+msgid "New popup"
+msgstr "Nueva ventana emergente"
+
+#: ../app/Http/Controllers/SectionModalsController.php:151
+msgid "Popup removed"
+msgstr "Ventana emergente eliminada"
+
+#: ../app/Http/Controllers/SectionModalsController.php:152
+msgid "The popup was successfully removed"
+msgstr "La ventana emergente se eliminó correctamente"
+
+#: ../app/Http/Controllers/SectionModalsController.php:202
+msgid "Popup published"
+msgstr "Popup publicado"
+
+#: ../app/Http/Controllers/SectionModalsController.php:203
+msgid "The popup was published correctly"
+msgstr "La ventana emergente se publicó correctamente"
+
+#: ../app/Http/Controllers/SectionModalsController.php:221
+msgid "List of popups"
+msgstr "Lista de ventanas emergentes"
+
+#: ../app/Http/Controllers/SectionModalsController.php:272
+msgid "Popup updated"
+msgstr "Ventana emergente actualizada"
+
+#: ../app/Http/Controllers/SectionModalsController.php:273
+msgid "The popup data was updated correctly"
+msgstr "Los datos emergentes se actualizaron correctamente"
+
+#: ../app/Http/Controllers/SecurityController.php:84
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:84
+msgid "Manage role permissions"
+msgstr "Administrar permisos de rol"
+
+#: ../app/Http/Controllers/SecurityController.php:131
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:131
+msgid "Assigned permission"
+msgstr "Permiso asignado"
+
+#: ../app/Http/Controllers/SecurityController.php:132
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:132
+msgid "Permission is already assigned to this role"
+msgstr "El permiso ya está asignado a este rol"
+
+#: ../app/Http/Controllers/SecurityController.php:140
+#: ../app/Http/Controllers/SecurityController.php:209
+#: ../app/Http/Controllers/SecurityController.php:290
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:140
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:209
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:290
+msgid "Saved role"
+msgstr "Rol guardado"
+
+#: ../app/Http/Controllers/SecurityController.php:141
+#: ../app/Http/Controllers/SecurityController.php:210
+#: ../app/Http/Controllers/SecurityController.php:291
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:141
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:210
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:291
+msgid "The role data was saved correctly"
+msgstr "Los datos de rol se guardaron correctamente"
+
+#: ../app/Http/Controllers/SecurityController.php:162
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:162
+#: ../storage/framework/messages/d8fe78f44c6b2a149eea9d881a12e3e61180a665.php.php:43
+msgid "Exclude role permissions"
+msgstr "Excluir permisos de rol"
+
+#: ../app/Http/Controllers/SecurityController.php:229
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:229
+msgid "Manage role users"
+msgstr "Administrar usuarios de roles"
+
+#: ../app/Http/Controllers/SecurityController.php:400
+#: ../app/Http/Controllers/SecurityController.php:638
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:400
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:638
+msgid "Role removed"
+msgstr "Rol eliminado"
+
+#: ../app/Http/Controllers/SecurityController.php:401
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:401
+msgid " Role was removed from user successfully"
+msgstr " El rol se eliminó correctamente del usuario"
+
+#: ../app/Http/Controllers/SecurityController.php:444
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:444
+msgid "Permission removed"
+msgstr "Permiso eliminado"
+
+#: ../app/Http/Controllers/SecurityController.php:445
+#: ../app/Http/Controllers/SecurityController.php:530
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:445
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:530
+msgid " Permission was removed from campaign successfully"
+msgstr " El permiso se eliminó correctamente de la campaña"
+
+#: ../app/Http/Controllers/SecurityController.php:529
+#: ../app/Http/Controllers/SecurityController.php:661
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:529
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:661
+msgid "Permissions removed"
+msgstr "Permisos eliminados"
+
+#: ../app/Http/Controllers/SecurityController.php:553
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:553
+msgid "Manage Permissions users"
+msgstr "Administrar usuarios de permisos"
+
+#: ../app/Http/Controllers/SecurityController.php:593
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:593
+msgid "Saved permissions"
+msgstr "Permisos guardados"
+
+#: ../app/Http/Controllers/SecurityController.php:594
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:594
+msgid "The permissions data was saved correctly"
+msgstr "Los datos de permisos se guardaron correctamente"
+
+#: ../app/Http/Controllers/SecurityController.php:639
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:639
+msgid " Role was removed from campaign successfully"
+msgstr " El rol se eliminó correctamente de la campaña"
+
+#: ../app/Http/Controllers/SecurityController.php:662
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:662
+msgid " Permissions was removed from campaign successfully"
+msgstr " Los permisos se eliminaron de la campaña correctamente"
+
+#: ../app/Http/Controllers/SecurityController.php:685
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:685
+msgid "Exclude roles from user"
+msgstr "Excluir roles del usuario"
+
+#: ../app/Http/Controllers/SecurityController.php:742
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:742
+msgid "Role exclude to user"
+msgstr "Excluir rol al usuario"
+
+#: ../app/Http/Controllers/SecurityController.php:743
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:743
+msgid " Role was exclude from user successfully"
+msgstr " El rol se excluyó correctamente del usuario"
+
+#: ../app/Http/Controllers/SecurityController.php:806
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:806
+msgid "Exclude permissions from user"
+msgstr "Excluir permisos del usuario"
+
+#: ../app/Http/Controllers/SecurityController.php:862
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:862
+msgid "Permissions exclude to user"
+msgstr "Permisos excluidos para el usuario"
+
+#: ../app/Http/Controllers/SecurityController.php:863
+#: ../storage/framework/messages/a5e93a82a0ead2b104f727b7905585d8e796ca6b.php.php:863
+msgid "Permissions was exclude from user successfully"
+msgstr "Los permisos se excluyeron correctamente del usuario"
+
+#: ../app/Http/Controllers/SegmentsController.php:95
+msgid "Duplicate user"
+msgstr "Usuario duplicado"
+
+#: ../app/Http/Controllers/SegmentsController.php:96
+msgid "User already exists in segment"
+msgstr "El usuario ya existe en el segmento"
+
+#: ../app/Http/Controllers/SegmentsController.php:112
+msgid "Segment updated"
+msgstr "Segmento actualizado"
+
+#: ../app/Http/Controllers/SegmentsController.php:113
+msgid "The user was added to the segment successfully"
+msgstr "El usuario se agregó al segmento correctamente"
+
+#: ../app/Http/Controllers/SegmentsController.php:157
+msgid "Create segment"
+msgstr "Crear segmento"
+
+#: ../app/Http/Controllers/SegmentsController.php:178
+msgid "Segment removed"
+msgstr "Segmento eliminado"
+
+#: ../app/Http/Controllers/SegmentsController.php:179
+msgid "The segment was successfully removed"
+msgstr "El segmento se ha eliminado correctamente"
+
+#: ../app/Http/Controllers/SegmentsController.php:207
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:563
+msgid "Update segment"
+msgstr "Segmento de actualización"
+
+#: ../app/Http/Controllers/SegmentsController.php:226
+msgid "List of segments"
+msgstr "Lista de segmentos"
+
+#: ../app/Http/Controllers/SegmentsController.php:256
+msgid " User was removed from segment successfully"
+msgstr " El usuario se eliminó del segmento correctamente"
+
+#: ../app/Http/Controllers/SegmentsController.php:305
+#: ../app/Http/Controllers/SegmentsController.php:409
+msgid "Segment created"
+msgstr "Segmento creado"
+
+#: ../app/Http/Controllers/SegmentsController.php:306
+#: ../app/Http/Controllers/SegmentsController.php:410
+msgid "The segment was created successfully"
+msgstr "El segmento se creó correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:165
+msgid "List of configurations"
+msgstr "Lista de configuraciones"
+
+#: ../app/Http/Controllers/StoreController.php:271
+msgid "New reward"
+msgstr "Nueva recompensa"
+
+#: ../app/Http/Controllers/StoreController.php:293
+msgid "New action configuration"
+msgstr "Nueva configuración de acción"
+
+#: ../app/Http/Controllers/StoreController.php:313
+msgid "Configuration removed"
+msgstr "Configuración eliminada"
+
+#: ../app/Http/Controllers/StoreController.php:314
+msgid "The configuration was successfully removed"
+msgstr "La configuración se ha quitado correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:336
+msgid "Category removed"
+msgstr "Categoría eliminada"
+
+#: ../app/Http/Controllers/StoreController.php:337
+msgid "The category was successfully removed"
+msgstr "La categoría se ha eliminado correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:362
+msgid "Reward removed"
+msgstr "Recompensa eliminada"
+
+#: ../app/Http/Controllers/StoreController.php:363
+msgid "The reward was successfully removed"
+msgstr "La recompensa se eliminó correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:394
+msgid "Update actions configurations"
+msgstr "Actualizar configuraciones de acciones"
+
+#: ../app/Http/Controllers/StoreController.php:418
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:170
+msgid "Update reward"
+msgstr "Actualizar recompensa"
+
+#: ../app/Http/Controllers/StoreController.php:463
+msgid "List of rewards"
+msgstr "Lista de recompensas"
+
+#: ../app/Http/Controllers/StoreController.php:492
+msgid "Category details"
+msgstr "Detalles de la categoría"
+
+#: ../app/Http/Controllers/StoreController.php:644
+msgid "Configuration loaded"
+msgstr "Configuración cargada"
+
+#: ../app/Http/Controllers/StoreController.php:645
+msgid "The configuration data was loaded correctly"
+msgstr "Los datos de configuración se cargaron correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:677
+msgid "Saved category"
+msgstr "Categoría guardada"
+
+#: ../app/Http/Controllers/StoreController.php:678
+msgid "The category data was saved correctly"
+msgstr "Los datos de categoría se guardaron correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:758
+msgid "Reward loaded"
+msgstr "Recompensa cargada"
+
+#: ../app/Http/Controllers/StoreController.php:759
+msgid "The reward was loaded correctly"
+msgstr "La recompensa se cargó correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:881
+msgid "Configuration updated"
+msgstr "Configuración actualizada"
+
+#: ../app/Http/Controllers/StoreController.php:882
+msgid "The configuration data was updated correctly"
+msgstr "Los datos de configuración se actualizaron correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:916
+msgid "Updated category"
+msgstr "Categoría actualizada"
+
+#: ../app/Http/Controllers/StoreController.php:917
+#, fuzzy
+msgid "The category data was updated correctly"
+msgstr "Los datos de categoría se actualizaron correctamente"
+
+#: ../app/Http/Controllers/StoreController.php:1000
+msgid "Reward updated"
+msgstr "Recompensa actualizada"
+
+#: ../app/Http/Controllers/StoreController.php:1001
+msgid "The reward data was updated correctly"
+msgstr "Los datos de recompensa se actualizaron correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:290
+msgid "Account activate"
+msgstr "Activar cuenta"
+
+#: ../app/Http/Controllers/UsersController.php:291
+msgid "The account was successfully activate"
+msgstr "La cuenta se activó correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:382
+msgid "Advanced user search"
+msgstr "Búsqueda avanzada de usuarios"
+
+#: ../app/Http/Controllers/UsersController.php:529
+msgid "User created"
+msgstr "Usuario creado"
+
+#: ../app/Http/Controllers/UsersController.php:530
+msgid "User created successfully"
+msgstr "Usuario creado correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:603
+msgid "Wrong Parameters"
+msgstr "Parámetros erróneos"
+
+#: ../app/Http/Controllers/UsersController.php:604
+msgid "You need to fill in all the required fields"
+msgstr "Debe completar todos los campos obligatorios"
+
+#: ../app/Http/Controllers/UsersController.php:657
+#: ../app/Http/Controllers/UsersController.php:846
+#: ../app/Http/Controllers/WhitelabelsController.php:134
+msgid "Status updated"
+msgstr "Estado actualizado"
+
+#: ../app/Http/Controllers/UsersController.php:658
+#: ../app/Http/Controllers/UsersController.php:847
+msgid "User status was updated successfully"
+msgstr "El estado del usuario se actualizó correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:668
+msgid "This process requires superior access"
+msgstr "Este proceso requiere un acceso superior"
+
+#: ../app/Http/Controllers/UsersController.php:816
+msgid "The description field is required."
+msgstr "El campo de descripción es obligatorio."
+
+#: ../app/Http/Controllers/UsersController.php:886
+msgid "Description is required"
+msgstr "Se requiere descripción"
+
+#: ../app/Http/Controllers/UsersController.php:887
+msgid "Lock type is required"
+msgstr "Se requiere el tipo de bloqueo"
+
+#: ../app/Http/Controllers/UsersController.php:888
+msgid "ID user is required"
+msgstr "Se requiere ID de usuario"
+
+#: ../app/Http/Controllers/UsersController.php:889
+msgid "ID user does not exist"
+msgstr "ID de usuario no existe"
+
+#: ../app/Http/Controllers/UsersController.php:925
+msgid "Create new user"
+msgstr "Crear nuevo usuario"
+
+#: ../app/Http/Controllers/UsersController.php:981
+msgid "The user was successfully removed"
+msgstr "El usuario se ha eliminado correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:1034
+#: ../app/Http/Controllers/UsersController.php:2230
+msgid "Wallet not found"
+msgstr "Cartera no encontrada"
+
+#: ../app/Http/Controllers/UsersController.php:1214
+#: ../app/Http/Controllers/UsersController.php:1253
+msgid "Success"
+msgstr "Éxito"
+
+#: ../app/Http/Controllers/UsersController.php:1215
+#, php-format
+msgid "The document has been %s and an email has been sent to the user"
+msgstr ""
+"El documento ha sido %s y se ha enviado un correo electrónico al usuario"
+
+#: ../app/Http/Controllers/UsersController.php:1254
+msgid "The document has been successfully edited"
+msgstr "El documento se ha editado correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:1345
+msgid "User activated"
+msgstr "Usuario activado"
+
+#: ../app/Http/Controllers/UsersController.php:1346
+msgid "User was activated correctly"
+msgstr "El usuario se activó correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:1448
+#: ../app/Http/Controllers/UsersController.php:1456
+msgid "Excluded user"
+msgstr "Usuario excluido"
+
+#: ../app/Http/Controllers/UsersController.php:1449
+msgid "The user has been successfully excluded"
+msgstr "El usuario ha sido excluido correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:1457
+msgid "The user is already excluded to an provider"
+msgstr "El usuario ya está excluido a un proveedor"
+
+#: ../app/Http/Controllers/UsersController.php:1523
+msgid "Users search"
+msgstr "Búsqueda de usuarios"
+
+#: ../app/Http/Controllers/UsersController.php:1560
+msgid "Create main users"
+msgstr "Crear usuarios principales"
+
+#: ../app/Http/Controllers/UsersController.php:1970
+#: ../app/Users/Mailers/Activate.php:42
+#: ../storage/framework/messages/d6f1f6c01d494a94f8d9b263d033b894c90bf678.php.php:42
+msgid "Activate account"
+msgstr "Activar cuenta"
+
+#: ../app/Http/Controllers/UsersController.php:1971
+msgid "An email was sent with the activation link for the account."
+msgstr ""
+"Se envió un correo electrónico con el enlace de activación de la cuenta."
+
+#: ../app/Http/Controllers/UsersController.php:2024
+msgid "Password reset"
+msgstr "Restablecimiento de contraseña"
+
+#: ../app/Http/Controllers/UsersController.php:2025
+msgid "Password was successfully reset"
+msgstr "La contraseña se restableció correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:2130
+msgid "Users created"
+msgstr "Usuarios creados"
+
+#: ../app/Http/Controllers/UsersController.php:2131
+msgid "Users were created successfully"
+msgstr "Los usuarios se crearon correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:2171
+msgid "Transactions by lot"
+msgstr "Transacciones por lote"
+
+#: ../app/Http/Controllers/UsersController.php:2222
+msgid "Balance unlock"
+msgstr "Desbloqueo de saldo"
+
+#: ../app/Http/Controllers/UsersController.php:2223
+msgid "The balance has been unlocked"
+msgstr "El saldo ha sido desbloqueado"
+
+#: ../app/Http/Controllers/UsersController.php:2231
+msgid "The wallet not found. Please check and try again"
+msgstr "No se encontró la billetera. Compruébalo e inténtalo de nuevo"
+
+#: ../app/Http/Controllers/UsersController.php:2370
+msgid "Updated profile"
+msgstr "Perfil actualizado"
+
+#: ../app/Http/Controllers/UsersController.php:2371
+msgid "User data was saved correctly"
+msgstr "Los datos de usuario se guardaron correctamente"
+
+#: ../app/Http/Controllers/UsersController.php:2377
+msgid "DNI in use"
+msgstr "DNI en uso"
+
+#: ../app/Http/Controllers/UsersController.php:2378
+msgid "The DNI entered is in use by another user"
+msgstr "El DNI introducido está en uso por otro usuario"
+
+#: ../app/Http/Controllers/UsersController.php:2386
+msgid "The entered email is in use by another user"
+msgstr "El correo electrónico introducido está en uso por otro usuario"
+
+#: ../app/Http/Controllers/WalletsController.php:101
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:101
+msgid "Balance locked"
+msgstr "Saldo bloqueado"
+
+#: ../app/Http/Controllers/WalletsController.php:102
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:102
+msgid "User balance was successfully locked"
+msgstr "El saldo del usuario se bloqueó correctamente"
+
+#: ../app/Http/Controllers/WalletsController.php:109
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:109
+msgid ""
+"It is not allowed to lock balance if the user already has a locked amount"
+msgstr ""
+"No está permitido bloquear el saldo si el usuario ya tiene una cantidad "
+"bloqueada"
+
+#: ../app/Http/Controllers/WalletsController.php:117
+#: ../storage/framework/messages/b73cc0fda7512e54f65f38382e3e24e02fdd2e8e.php.php:117
+msgid "The user's balance is less than the one you want to block"
+msgstr "El saldo del usuario es menor que el que desea bloquear"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:135
+msgid "Whitelabel status was updated successfully"
+msgstr "El estado de la marca blanca se actualizó correctamente"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:153
+msgid "Create whitelabel"
+msgstr "Crear marca blanca"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:185
+#, php-format
+msgid "Edit whitelabel %s"
+msgstr "Editar %s de marca blanca"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:196
+msgid "Operational balances"
+msgstr "Saldos operacionales"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:398
+msgid "Whitelabel created"
+msgstr "Marca blanca creada"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:399
+msgid "Whitelabel created successfully"
+msgstr "Marca blanca creada correctamente"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:446
+msgid "Operational balance updated"
+msgstr "Balance operativo actualizado"
+
+#: ../app/Http/Controllers/WhitelabelsController.php:447
+msgid "Whitelabel operational balance was updated successfully"
+msgstr "El balance operativo de marca blanca se actualizó correctamente"
+
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:139
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:139
+msgid "The game was successfully removed from the category"
+msgstr "El juego se eliminó con éxito de la categoría"
+
+#: ../app/Http/Controllers/WhitelabelsGamesControllers.php:249
+#: ../storage/framework/messages/efda107377ffe497f657e3c686c164d4add62db3.php.php:249
+msgid "The game was assigned to the category selected successfully"
+msgstr "El juego fue asignado a la categoría seleccionada correctamente"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:33
+msgid "Without image"
+msgstr "Sin imagen"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:58
+msgid "List users"
+msgstr "Lista de usuarios"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:63
+msgid "All users"
+msgstr "Todos los usuarios"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:85
+msgid "Without description"
+msgstr "Sin descripción"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:104
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:30
+msgid "Assign"
+msgstr "Asignar"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:154
+msgid "No action"
+msgstr "Sin acción"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:185
+msgid "Without last name"
+msgstr "Sin apellido"
+
+#: ../app/Notifications/Collections/NotificationsCollection.php:186
+msgid "Without email"
+msgstr "Sin email"
+
+#: ../app/Reports/Collections/ReportsCollection.php:751
+#: ../app/Users/Collections/UsersCollection.php:242
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:242
+#: ../storage/framework/messages/fa7afda81a68c0becc090071cc6c2922bbadd48d.php.php:751
+msgid "No access"
+msgstr "Sin acceso"
+
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:34
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:35
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:69
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:79
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:34
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:35
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:404
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:73
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:88
+msgid "Yes"
+msgstr "Si"
+
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:34
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:35
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:70
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:80
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:34
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:35
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:405
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:77
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:92
+msgid "No"
+msgstr "No"
+
+#: ../app/SectionModals/Collections/SectionModalsCollection.php:49
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:58
+#: ../storage/framework/messages/a48f114ec6ff743f23b29f51353efee57f390a31.php.php:49
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:56
+msgid "User panel"
+msgstr "Panel de usuario"
+
+#: ../app/Store/Collections/StoreCollection.php:31
+#: ../app/Store/Collections/StoreCollection.php:62
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:31
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:62
+msgid "Without Name"
+msgstr "Sin nombre"
+
+#: ../app/Store/Collections/StoreCollection.php:67
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:67
+msgid "Without category"
+msgstr "Sin categoría"
+
+#: ../app/Store/Collections/StoreCollection.php:113
+#: ../app/Store/Collections/StoreCollection.php:126
+#: ../app/Store/Collections/StoreCollection.php:135
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:56
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:41
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:113
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:126
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:135
+msgid "Points desktop"
+msgstr "Escritorio de puntos"
+
+#: ../app/Store/Collections/StoreCollection.php:115
+#: ../app/Store/Collections/StoreCollection.php:137
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:62
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:47
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:115
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:137
+msgid "Amount desktop"
+msgstr "Cantidad de escritorio"
+
+#: ../app/Store/Collections/StoreCollection.php:117
+#: ../app/Store/Collections/StoreCollection.php:128
+#: ../app/Store/Collections/StoreCollection.php:139
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:68
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:53
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:117
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:128
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:139
+msgid "Points mobile"
+msgstr "Puntos móviles"
+
+#: ../app/Store/Collections/StoreCollection.php:119
+#: ../app/Store/Collections/StoreCollection.php:141
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:74
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:59
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:119
+#: ../storage/framework/messages/dc2788fa80f4d3dafe03e39e9ca4a118175d38a1.php.php:141
+msgid "Amount mobile"
+msgstr "Cantidad móvil"
+
+#: ../app/Store/Enums/Actions.php:27
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:141
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:414
+msgid "Deposit"
+msgstr "Depositar"
+
+#: ../app/Store/Enums/Actions.php:32
+#: ../app/Users/Collections/UsersCollection.php:568
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:568
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: ../app/Users/Collections/UsersCollection.php:146
+#: ../app/Users/Collections/UsersCollection.php:454
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:480
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:146
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:454
+msgid "Male"
+msgstr "Hombre"
+
+#: ../app/Users/Collections/UsersCollection.php:147
+#: ../app/Users/Collections/UsersCollection.php:454
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:476
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:147
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:454
+msgid "Female"
+msgstr "Hembra"
+
+#: ../app/Users/Collections/UsersCollection.php:148
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:148
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:104
+msgid "Incomplete profiles"
+msgstr "Perfiles incompletos"
+
+#: ../app/Users/Collections/UsersCollection.php:325
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:16
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:16
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:16
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:16
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:16
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:325
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:16
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:46
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:16
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:16
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:16
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:16
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:16
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:16
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:16
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:16
+msgid "Approve"
+msgstr "Aprobar"
+
+#: ../app/Users/Collections/UsersCollection.php:531
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:531
+msgid "Resend email"
+msgstr "Reenviar correo electrónico"
+
+#: ../app/Users/Collections/UsersCollection.php:538
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:538
+msgid "Manual activation"
+msgstr "Activación manual"
+
+#: ../app/Users/Collections/UsersCollection.php:574
+#: ../app/Users/Collections/UsersCollection.php:584
+#: ../app/Users/Collections/UsersCollection.php:595
+#: ../app/Users/Collections/UsersCollection.php:610
+#: ../app/Users/Collections/UsersCollection.php:620
+#: ../app/Users/Collections/UsersCollection.php:631
+#: ../app/Users/Collections/UsersCollection.php:698
+#: ../app/Users/Collections/UsersCollection.php:743
+#: ../app/Users/Collections/UsersCollection.php:782
+#: ../app/Users/Collections/UsersCollection.php:806
+#: ../app/Users/Collections/UsersCollection.php:826
+#: ../app/Users/Collections/UsersCollection.php:839
+#: ../app/Users/Collections/UsersCollection.php:853
+#: ../app/Users/Collections/UsersCollection.php:904
+#: ../app/Users/Collections/UsersCollection.php:959
+#: ../app/Users/Collections/UsersCollection.php:1038
+#: ../app/Users/Collections/UsersCollection.php:1132
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1097
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:574
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:584
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:595
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:610
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:620
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:631
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:698
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:743
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:782
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:806
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:826
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:839
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:853
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:904
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:959
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1038
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1132
+msgid "IP"
+msgstr "IP"
+
+#: ../app/Users/Collections/UsersCollection.php:577
+#: ../app/Users/Collections/UsersCollection.php:587
+#: ../app/Users/Collections/UsersCollection.php:613
+#: ../app/Users/Collections/UsersCollection.php:623
+#: ../app/Users/Collections/UsersCollection.php:832
+#: ../app/Users/Collections/UsersCollection.php:845
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:222
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:577
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:587
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:613
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:623
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:832
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:845
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:166
+msgid "Device"
+msgstr "Dispositivo"
+
+#: ../app/Users/Collections/UsersCollection.php:604
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:604
+msgid "Dotpanel login"
+msgstr "Inicio de sesión de Dotpanel"
+
+#: ../app/Users/Collections/UsersCollection.php:695
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:695
+msgid "User modification"
+msgstr "Modificación del usuario"
+
+#: ../app/Users/Collections/UsersCollection.php:707
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:88
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:707
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:86
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:32
+msgid "First name"
+msgstr "Primer nombre"
+
+#: ../app/Users/Collections/UsersCollection.php:713
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:465
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:713
+msgid "Gender"
+msgstr "Sexo"
+
+#: ../app/Users/Collections/UsersCollection.php:716
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:27
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:32
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:32
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:32
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:32
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:32
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:32
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:32
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:32
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:32
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:32
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:716
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:32
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:32
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:27
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:32
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:34
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:27
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:32
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:32
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:72
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:78
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:148
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:32
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:32
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:27
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:32
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:32
+msgid "Level"
+msgstr "Nivel"
+
+#: ../app/Users/Collections/UsersCollection.php:719
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:719
+msgid "Country ISO"
+msgstr "ISO del país"
+
+#: ../app/Users/Collections/UsersCollection.php:722
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:563
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:79
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:399
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:722
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:89
+msgid "Timezone"
+msgstr "Zona horaria"
+
+#: ../app/Users/Collections/UsersCollection.php:725
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:725
+msgid "Address"
+msgstr "Dirección"
+
+#: ../app/Users/Collections/UsersCollection.php:731
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:731
+msgid "Birth date"
+msgstr "Fecha de nacimiento"
+
+#: ../app/Users/Collections/UsersCollection.php:740
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:740
+msgid "User creation"
+msgstr "Creación de usuarios"
+
+#: ../app/Users/Collections/UsersCollection.php:779
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:779
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:42
+msgid "User status"
+msgstr "Estado del usuario"
+
+#: ../app/Users/Collections/UsersCollection.php:788
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:788
+msgid "Old status"
+msgstr "Estado antiguo"
+
+#: ../app/Users/Collections/UsersCollection.php:791
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:791
+msgid "New status"
+msgstr "Nuevo estado"
+
+#: ../app/Users/Collections/UsersCollection.php:803
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:803
+msgid "User password"
+msgstr "Contraseña de usuario"
+
+#: ../app/Users/Collections/UsersCollection.php:820
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:820
+msgid "Support login"
+msgstr "Inicio de sesión de soporte"
+
+#: ../app/Users/Collections/UsersCollection.php:910
+#: ../app/Users/Collections/UsersCollection.php:965
+#: ../app/Users/Collections/UsersCollection.php:1044
+#: ../app/Users/Collections/UsersCollection.php:1138
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:910
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:965
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1044
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1138
+msgid "User ID"
+msgstr "ID  de usuario"
+
+#: ../app/Users/Collections/UsersCollection.php:928
+#: ../app/Users/Collections/UsersCollection.php:1162
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:928
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1162
+msgid "Wallet transaction"
+msgstr "Transacción de billetera"
+
+#: ../app/Users/Collections/UsersCollection.php:1194
+#: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1194
+msgid "Permanent"
+msgstr "Permanente"
+
+#: ../app/Users/Enums/ActionUser.php:28
+msgid "active"
+msgstr "activo"
+
+#: ../app/Users/Enums/ActionUser.php:33
+msgid "inactive"
+msgstr "inactivo"
+
+#: ../app/Users/Enums/ActionUser.php:38
+msgid "Removed"
+msgstr "Quitado"
+
+#: ../app/Users/Enums/ActionUser.php:43
+msgid "Hidden"
+msgstr "Oculto"
+
+#: ../app/Users/Enums/ActionUser.php:48
+msgid "Blocked for session attempt"
+msgstr "Bloqueado por intento de sesión"
+
+#: ../app/Users/Enums/ActionUser.php:53
+msgid "Blocked by a superior"
+msgstr "Bloqueado por un superior"
+
+#: ../app/Users/Enums/ActionUser.php:58
+msgid "Changed password"
+msgstr "Contraseña cambiada"
+
+#: ../app/Users/Enums/ActionUser.php:63
+msgid "Undefined Action..."
+msgstr "Acción indefinida..."
+
+#: ../app/Users/Enums/DocumentStatus.php:55
+msgid "Pending to upload"
+msgstr "Pendiente de subir"
+
+#: ../app/Users/Enums/DocumentStatus.php:60
+msgid "Awaiting verification"
+msgstr "En espera de verificación"
+
+#: ../app/Users/Enums/TypeUser.php:19
+msgid "Agent Master"
+msgstr "Agente Maestro"
+
+#: ../app/Users/Enums/TypeUser.php:24
+msgid "Cashier Agent"
+msgstr "Agente Cajero"
+
+#: ../app/Users/Enums/TypeUser.php:29
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:230
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:293
+msgid "Players"
+msgstr "Jugadores"
+
+#: ../app/Users/Enums/TypeUser.php:34
+msgid "Undefined type"
+msgstr "Tipo indefinido"
+
+#: ../app/Users/Import/TransactionsByLotImport.php:148
+#: ../storage/framework/messages/9c6e44a7b64d7dab1fc3f9fdeba9e34b603002de.php.php:148
+msgid "Completed transaction"
+msgstr "Transacción completada"
+
+#: ../app/Users/Import/TransactionsByLotImport.php:155
+#: ../storage/framework/messages/9c6e44a7b64d7dab1fc3f9fdeba9e34b603002de.php.php:155
+msgid "Something went wrong"
+msgstr "Algo salió mal"
+
+#: ../app/Users/Mailers/Activate.php:39 ../app/Users/Mailers/Activate.php:61
+#: ../storage/framework/messages/d6f1f6c01d494a94f8d9b263d033b894c90bf678.php.php:39
+#: ../storage/framework/messages/d6f1f6c01d494a94f8d9b263d033b894c90bf678.php.php:61
+msgid "Activate your account"
+msgstr "Activa tu cuenta"
+
+#: ../app/Users/Mailers/Activate.php:40
+#: ../storage/framework/messages/d6f1f6c01d494a94f8d9b263d033b894c90bf678.php.php:40
+#, php-format
+msgid "¡Hello %s, you are one step away from activating your account!"
+msgstr "¡Hola %s, estás a un paso de activar tu cuenta!"
+
+#: ../app/Users/Mailers/Activate.php:41
+#: ../storage/framework/messages/d6f1f6c01d494a94f8d9b263d033b894c90bf678.php.php:41
+msgid ""
+"Thank you for registering on our website. You must complete the activation "
+"process in order to enjoy our services. To proceed to activate the account, "
+"click on the following button. You have a period of 24 hours to activate "
+"your account after having registered otherwise you must perform the process "
+"again"
+msgstr ""
+"Gracias por registrarse en nuestro sitio web. Debe completar el proceso de "
+"activación para poder disfrutar de nuestros servicios. Para proceder a "
+"activar la cuenta, haga clic en el siguiente botón. Tienes un plazo de 24 "
+"horas para activar tu cuenta después de haberte registrado de lo contrario "
+"deberás realizar el proceso de nuevo"
+
+#: ../app/Users/Mailers/Activate.php:43
+#: ../storage/framework/messages/d6f1f6c01d494a94f8d9b263d033b894c90bf678.php.php:43
+msgid ""
+"If the button doesn't show correctly or doesn't work, copy and paste the "
+"following link into your browser:"
+msgstr ""
+"Si el botón no se muestra correctamente o no funciona, copie y pegue el "
+"siguiente enlace en su navegador:"
+
+#: ../app/Users/Mailers/Document.php:39
+msgid "Verification of document"
+msgstr "Verificación del documento"
+
+#: ../app/Users/Mailers/Document.php:40
+#, php-format
+msgid "¡Hello %s, you document %s has been %s!"
+msgstr "¡Hola %s, documentas %s ha sido %s!"
+
+#: ../app/Users/Mailers/Document.php:41
+msgid "If you have any questions, please contact our support team"
+msgstr ""
+"Si tiene alguna pregunta, póngase en contacto con nuestro equipo de soporte"
+
+#: ../app/Users/Mailers/Document.php:57
+msgid "Verifications of documents"
+msgstr "Verificaciones de documentos"
+
+#: ../app/Users/Rules/Age.php:42
+msgid "You do not meet the age to be registered, you must be 18+"
+msgstr "No cumples con la edad para inscribirte, debes tener 18+"
+
+#: ../app/Users/Rules/DNI.php:40
+msgid "The DNI entered does not match the format used in your country"
+msgstr "El DNI introducido no coincide con el formato utilizado en su país"
+
+#: ../app/Users/Rules/Email.php:41
+#: ../storage/framework/messages/f25af261f00b5fc998a800104ab1e908e2e350f8.php.php:41
+msgid "The email must be a valid email address"
+msgstr ""
+"El correo electrónico debe ser una dirección de correo electrónico válida"
+
+#: ../app/Users/Rules/Password.php:38
+msgid "The password entered does not meet the minimum security requirements"
+msgstr ""
+"La contraseña introducida no cumple los requisitos mínimos de seguridad"
+
+#: ../app/Users/Rules/Username.php:38
+#: ../storage/framework/messages/afba782903b37b8aa9098c1e999c437e81770f28.php.php:38
+msgid "The username does not meet the requirements"
+msgstr "El nombre de usuario no cumple los requisitos"
+
+#: ../app/Whitelabels/Collections/OperationalBalancesCollection.php:29
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:217
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:224
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:276
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:285
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:45
+msgid "Transactions"
+msgstr "Transacciones"
+
+#: ../app/Whitelabels/Enums/Status.php:72
+msgid "Suspended"
+msgstr "Suspendido"
+
+#: ../app/Whitelabels/Enums/Status.php:76
+msgid "Whitelabel under maintenance"
+msgstr "Marca blanca en mantenimiento"
+
+#: ../app/Whitelabels/Enums/Status.php:80
+msgid "Development"
+msgstr "Desarrollo"
+
+#: ../app/Whitelabels/Enums/Status.php:88
+msgid "Whitelabel and Dotpanel under maintenance"
+msgstr "Whitelabel y Dotpanel en mantenimiento"
+
+#: ../lang/en/validation.php:16
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:16
+msgid "The :attribute must be accepted"
+msgstr "El atributo :debe ser aceptado"
+
+#: ../lang/en/validation.php:17
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:17
+msgid "The :attribute is not a valid URL"
+msgstr ":attribute no es una URL válida"
+
+#: ../lang/en/validation.php:18
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:18
+msgid "The :attribute must be a date after :date"
+msgstr "El atributo :debe ser una fecha después de :d ate"
+
+#: ../lang/en/validation.php:19
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:19
+msgid "The :attribute must be a date after or equal to :date"
+msgstr "El atributo :debe ser una fecha posterior o igual a :d ate"
+
+#: ../lang/en/validation.php:20
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:20
+msgid "The :attribute may only contain letters"
+msgstr "El atributo :sólo puede contener letras"
+
+#: ../lang/en/validation.php:21
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:21
+msgid ""
+"The :attribute may only contain letters, numbers, dashes and underscores"
+msgstr ""
+"El atributo :solo puede contener letras, números, guiones y guiones bajos"
+
+#: ../lang/en/validation.php:22
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:22
+msgid "The :attribute may only contain letters and numbers"
+msgstr "El atributo :sólo puede contener letras y números"
+
+#: ../lang/en/validation.php:23
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:23
+msgid "The :attribute must be an array"
+msgstr "El atributo :debe ser una matriz"
+
+#: ../lang/en/validation.php:24
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:24
+msgid "The :attribute must be a date before :date"
+msgstr "El atributo :debe ser una fecha anterior a :d ate"
+
+#: ../lang/en/validation.php:25
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:25
+msgid "The :attribute must be a date before or equal to :date"
+msgstr "El atributo :debe ser una fecha anterior o igual a :d ate"
+
+#: ../lang/en/validation.php:27
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:27
+msgid "The :attribute must be between :min and :max"
+msgstr "El atributo :debe estar entre :min y :max"
+
+#: ../lang/en/validation.php:28
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:28
+msgid "The :attribute must be between :min and :max kilobytes"
+msgstr "El atributo :debe estar entre :min y :max kilobytes"
+
+#: ../lang/en/validation.php:29
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:29
+msgid "The :attribute must be between :min and :max characters"
+msgstr "El atributo :debe estar entre los caracteres :min y :max"
+
+#: ../lang/en/validation.php:30
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:30
+msgid "The :attribute must have between :min and :max items"
+msgstr "El atributo :debe tener entre los elementos :min y :max"
+
+#: ../lang/en/validation.php:32
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:32
+msgid "The :attribute field must be true or false"
+msgstr "El campo :attribute debe ser true o false"
+
+#: ../lang/en/validation.php:33
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:33
+msgid "The :attribute confirmation does not match"
+msgstr "La confirmación :attribute no coincide"
+
+#: ../lang/en/validation.php:34
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:34
+msgid "The :attribute is not a valid date"
+msgstr "El atributo :no es una fecha válida"
+
+#: ../lang/en/validation.php:35
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:35
+msgid "The :attribute must be a date equal to :date"
+msgstr "El atributo :debe ser una fecha igual a :d ate"
+
+#: ../lang/en/validation.php:36
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:36
+msgid "The :attribute does not match the format :format"
+msgstr "El atributo :no coincide con el formato :format"
+
+#: ../lang/en/validation.php:37
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:37
+msgid "The :attribute and :other must be different"
+msgstr "El atributo :y :other deben ser diferentes"
+
+#: ../lang/en/validation.php:38
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:38
+msgid "The :attribute must be :digits digits"
+msgstr "El atributo :debe ser :d igits dígitos"
+
+#: ../lang/en/validation.php:39
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:39
+msgid "The :attribute must be between :min and :max digits"
+msgstr "El atributo :debe estar entre los dígitos :min y :max"
+
+#: ../lang/en/validation.php:40
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:40
+msgid "The :attribute has invalid image dimensions"
+msgstr "El atributo :tiene dimensiones de imagen no válidas"
+
+#: ../lang/en/validation.php:41
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:41
+msgid "The :attribute field has a duplicate value"
+msgstr "El campo :attribute tiene un valor duplicado"
+
+#: ../lang/en/validation.php:42
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:42
+msgid "The :attribute must be a valid email address"
+msgstr "El atributo :debe ser una dirección de correo electrónico válida"
+
+#: ../lang/en/validation.php:43
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:43
+msgid "The :attribute must end with one of the following: :values"
+msgstr "El atributo :debe terminar con una de las siguientes opciones: :values"
+
+#: ../lang/en/validation.php:44 ../lang/en/validation.php:60
+#: ../lang/en/validation.php:93
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:44
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:60
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:93
+msgid "The selected :attribute is invalid"
+msgstr "El atributo :seleccionado no es válido"
+
+#: ../lang/en/validation.php:45
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:45
+msgid "The :attribute must be a file"
+msgstr "El atributo :debe ser un archivo"
+
+#: ../lang/en/validation.php:46
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:46
+msgid "The :attribute field must have a value"
+msgstr "El campo :attribute debe tener un valor"
+
+#: ../lang/en/validation.php:48
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:48
+msgid "The :attribute must be greater than :value"
+msgstr "El :attribute debe ser mayor que :value"
+
+#: ../lang/en/validation.php:49
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:49
+msgid "The :attribute must be greater than :value kilobytes"
+msgstr "El atributo :debe ser mayor que :value kilobytes"
+
+#: ../lang/en/validation.php:50
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:50
+msgid "The :attribute must be greater than :value characters"
+msgstr "Los caracteres :attribute deben ser mayores que :value"
+
+#: ../lang/en/validation.php:51
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:51
+msgid "The :attribute must have more than :value items"
+msgstr "El atributo :debe tener más de :value elementos"
+
+#: ../lang/en/validation.php:54
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:54
+msgid "The :attribute must be greater than or equal :value"
+msgstr "El :attribute debe ser mayor o igual que :value"
+
+#: ../lang/en/validation.php:55
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:55
+msgid "The :attribute must be greater than or equal :value kilobytes"
+msgstr "El atributo :attribute debe ser mayor o igual que :value kilobytes"
+
+#: ../lang/en/validation.php:56
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:56
+msgid "The :attribute must be greater than or equal :value characters"
+msgstr "Los caracteres :attribute deben ser mayores o iguales que :value"
+
+#: ../lang/en/validation.php:57
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:57
+msgid "The :attribute must have :value items or more"
+msgstr "El atributo :debe tener elementos :value o más"
+
+#: ../lang/en/validation.php:59
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:59
+msgid "The :attribute must be an image"
+msgstr "El atributo :debe ser una imagen"
+
+#: ../lang/en/validation.php:61
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:61
+msgid "The :attribute field does not exist in :other"
+msgstr "El campo :attribute no existe en :other"
+
+#: ../lang/en/validation.php:62
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:62
+msgid "The :attribute must be an integer number"
+msgstr "El atributo :debe ser un número entero"
+
+#: ../lang/en/validation.php:63
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:63
+msgid "The :attribute must be a valid IP address"
+msgstr "El atributo :debe ser una dirección IP válida"
+
+#: ../lang/en/validation.php:64
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:64
+msgid "The :attribute must be a valid IPv4 address"
+msgstr "El atributo :debe ser una dirección IPv4 válida"
+
+#: ../lang/en/validation.php:65
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:65
+msgid "The :attribute must be a valid IPv6 address"
+msgstr "El atributo :debe ser una dirección IPv6 válida"
+
+#: ../lang/en/validation.php:66
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:66
+msgid "The :attribute must be a valid JSON string"
+msgstr "El atributo :debe ser una cadena JSON válida"
+
+#: ../lang/en/validation.php:68
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:68
+msgid "The :attribute must be less than :value"
+msgstr "El atributo :debe ser menor que :value"
+
+#: ../lang/en/validation.php:69
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:69
+msgid "The :attribute must be less than :value kilobytes"
+msgstr "El atributo :debe ser menor que :value kilobytes"
+
+#: ../lang/en/validation.php:70
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:70
+msgid "The :attribute must be less than :value characters"
+msgstr "Los caracteres :attribute deben ser menores que :value"
+
+#: ../lang/en/validation.php:71
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:71
+msgid "The :attribute must have less than :value items"
+msgstr "Los elementos :attribute deben tener elementos inferiores a :value"
+
+#: ../lang/en/validation.php:74
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:74
+msgid "The :attribute must be less than or equal :value"
+msgstr "El :attribute debe ser menor o igual que :value"
+
+#: ../lang/en/validation.php:75
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:75
+msgid "The :attribute must be less than or equal :value kilobytes"
+msgstr "El atributo :attribute debe ser menor o igual que :value kilobytes"
+
+#: ../lang/en/validation.php:76
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:76
+msgid "The :attribute must be less than or equal :value characters"
+msgstr "Los caracteres :attribute deben ser menores o iguales que :value"
+
+#: ../lang/en/validation.php:77
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:77
+msgid "The :attribute must not have more than :value items"
+msgstr "El atributo :no debe tener más de :value elementos"
+
+#: ../lang/en/validation.php:80
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:80
+msgid "The :attribute may not be greater than :max"
+msgstr "El atributo :no puede ser mayor que :max"
+
+#: ../lang/en/validation.php:81
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:81
+msgid "The :attribute may not be greater than :max kilobytes"
+msgstr "El atributo :no puede ser mayor que :max kilobytes"
+
+#: ../lang/en/validation.php:82
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:82
+msgid "The :attribute may not be greater than :max characters"
+msgstr "El atributo :no puede ser mayor que :max caracteres"
+
+#: ../lang/en/validation.php:83
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:83
+msgid "The :attribute may not have more than :max items"
+msgstr "El atributo :no puede tener más de :max elementos"
+
+#: ../lang/en/validation.php:85 ../lang/en/validation.php:86
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:85
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:86
+msgid "The :attribute must be a file of type: :values"
+msgstr "El atributo :debe ser un archivo de tipo: :values"
+
+#: ../lang/en/validation.php:88
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:88
+msgid "The :attribute must be at least :min"
+msgstr "El atributo :debe ser al menos :min"
+
+#: ../lang/en/validation.php:89
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:89
+msgid "The :attribute must be at least :min kilobytes"
+msgstr "El atributo :debe ser al menos :min kilobytes"
+
+#: ../lang/en/validation.php:90
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:90
+msgid "The :attribute must be at least :min characters"
+msgstr "El atributo :debe tener al menos caracteres :min"
+
+#: ../lang/en/validation.php:91
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:91
+msgid "The :attribute must have at least :min items"
+msgstr "El atributo :debe tener al menos elementos :min"
+
+#: ../lang/en/validation.php:94 ../lang/en/validation.php:98
+#: ../lang/en/validation.php:118
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:94
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:98
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:118
+msgid "The :attribute format is invalid"
+msgstr "El formato :attribute no es válido"
+
+#: ../lang/en/validation.php:95
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:95
+msgid "The :attribute must be a number"
+msgstr "El atributo :debe ser un número"
+
+#: ../lang/en/validation.php:96
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:96
+msgid "The password is incorrect"
+msgstr "La contraseña es incorrecta"
+
+#: ../lang/en/validation.php:97
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:97
+msgid "The :attribute field must be present"
+msgstr "El campo :attribute debe estar presente"
+
+#: ../lang/en/validation.php:99
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:99
+msgid "The :attribute field is required"
+msgstr "El campo :attribute es obligatorio"
+
+#: ../lang/en/validation.php:100
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:100
+msgid "The :attribute field is required when :other is :value"
+msgstr "El campo :attribute es obligatorio cuando :other es :value"
+
+#: ../lang/en/validation.php:101
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:101
+msgid "The :attribute field is required unless :other is in :values"
+msgstr "El campo :attribute es obligatorio a menos que :other esté en :values"
+
+#: ../lang/en/validation.php:102
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:102
+msgid "The :attribute field is required when :values is present"
+msgstr "El campo :attribute es obligatorio cuando :values está presente"
+
+#: ../lang/en/validation.php:103
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:103
+msgid "The :attribute field is required when :values are present"
+msgstr "El campo :attribute es obligatorio cuando :values están presentes"
+
+#: ../lang/en/validation.php:104
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:104
+msgid "The :attribute field is required when :values is not present"
+msgstr "El campo :attribute es obligatorio cuando :values no está presente"
+
+#: ../lang/en/validation.php:105
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:105
+msgid "The :attribute field is required when none of :values are present"
+msgstr ""
+"El campo :attribute es obligatorio cuando ninguno de los valores :está "
+"presente"
+
+#: ../lang/en/validation.php:106
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:106
+msgid "The :attribute and :other must match"
+msgstr ":attribute y :other deben coincidir"
+
+#: ../lang/en/validation.php:108
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:108
+msgid "The :attribute must be :size"
+msgstr "El atributo :debe ser :size"
+
+#: ../lang/en/validation.php:109
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:109
+msgid "The :attribute must be :size kilobytes"
+msgstr "El atributo :debe ser :size kilobytes"
+
+#: ../lang/en/validation.php:110
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:110
+msgid "The :attribute must be :size characters"
+msgstr "El atributo :debe ser :size caracteres"
+
+#: ../lang/en/validation.php:111
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:111
+msgid "The :attribute must contain :size items"
+msgstr "El atributo :debe contener elementos :size"
+
+#: ../lang/en/validation.php:113
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:113
+msgid "The :attribute must start with one of the following: :values"
+msgstr "El atributo :debe comenzar con una de las siguientes opciones: :values"
+
+#: ../lang/en/validation.php:114
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:114
+msgid "The :attribute must be a string"
+msgstr "El atributo :debe ser una cadena"
+
+#: ../lang/en/validation.php:115
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:115
+msgid "The :attribute must be a valid zone"
+msgstr "El atributo :debe ser una zona válida"
+
+#: ../lang/en/validation.php:116
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:116
+msgid "The :attribute has already been taken"
+msgstr "El atributo :ya se ha tomado"
+
+#: ../lang/en/validation.php:117
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:117
+msgid "The :attribute failed to upload"
+msgstr "No se pudo cargar :attribute"
+
+#: ../lang/en/validation.php:119
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:119
+msgid "The :attribute must be a valid UUID"
+msgstr "El atributo :debe ser un UUID válido"
+
+#: ../lang/en/validation.php:134
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:134
+msgid "You must select at least one assignment criteria"
+msgstr "Debe seleccionar al menos un criterio de asignación"
+
+#: ../lang/en/validation.php:137
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:137
+msgid "The bonus to be awarded field is mandatory"
+msgstr "El campo de bonificación para ser otorgado es obligatorio"
+
+#: ../lang/en/validation.php:140
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:140
+msgid "The bonus code field is required"
+msgstr "El campo de código de bono es obligatorio"
+
+#: ../lang/en/validation.php:143
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:143
+msgid "The type of amount field is required"
+msgstr "El campo Tipo de cantidad es obligatorio"
+
+#: ../lang/en/validation.php:146
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:146
+msgid "The minimum deposit field is required"
+msgstr "El campo de depósito mínimo es obligatorio"
+
+#: ../lang/en/validation.php:149
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:149
+msgid "The limit field is required"
+msgstr "El campo de límite es obligatorio"
+
+#: ../lang/en/validation.php:152
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:152
+msgid "The type of provider field is required"
+msgstr "El campo tipo de proveedor es obligatorio"
+
+#: ../lang/en/validation.php:155
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:155
+msgid "The multiplier field is required"
+msgstr "El campo multiplicador es obligatorio"
+
+#: ../lang/en/validation.php:158
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:158
+msgid "The rollover expiration time field is required"
+msgstr "El campo de tiempo de caducidad de rollover es obligatorio"
+
+#: ../lang/en/validation.php:161
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:161
+msgid "The field include deposit of rollovers is required"
+msgstr "El campo incluye depósito de rollovers es obligatorio"
+
+#: ../lang/en/validation.php:164
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:164
+msgid "The field promo code is required"
+msgstr "El código promocional del campo es obligatorio"
+
+#: ../lang/en/validation.php:182
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:182
+msgid "email"
+msgstr "email"
+
+#: ../lang/en/validation.php:183
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:183
+msgid "country"
+msgstr "país"
+
+#: ../lang/en/validation.php:184
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:184
+msgid "timezone"
+msgstr "Zona horaria"
+
+#: ../lang/en/validation.php:185
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:185
+msgid "currency"
+msgstr "moneda"
+
+#: ../lang/en/validation.php:187
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:187
+msgid "first name"
+msgstr "nombre"
+
+#: ../lang/en/validation.php:188
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:188
+msgid "last name"
+msgstr "apellido"
+
+#: ../lang/en/validation.php:189
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:189
+msgid "phone"
+msgstr "teléfono"
+
+#: ../lang/en/validation.php:190
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:190
+msgid "image"
+msgstr "imagen"
+
+#: ../lang/en/validation.php:191
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:191
+msgid "section"
+msgstr "sección"
+
+#: ../lang/en/validation.php:192
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:192
+msgid "language"
+msgstr "Idioma"
+
+#: ../lang/en/validation.php:193
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:193
+msgid "title"
+msgstr "ttulo"
+
+#: ../lang/en/validation.php:194
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:194
+msgid "content"
+msgstr "contenido"
+
+#: ../lang/en/validation.php:195
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:195
+msgid "name"
+msgstr "nombre"
+
+#: ../lang/en/validation.php:196
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:196
+msgid "description"
+msgstr "descripción"
+
+#: ../lang/en/validation.php:197
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:197
+msgid "points"
+msgstr "puntos"
+
+#: ../lang/en/validation.php:198
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:198
+msgid "amount"
+msgstr "cantidad"
+
+#: ../lang/en/validation.php:199
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:199
+msgid "transaction type"
+msgstr "Tipo de transacción"
+
+#: ../lang/en/validation.php:200
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:200
+msgid "convert"
+msgstr "convertir"
+
+#: ../lang/en/validation.php:201
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:201
+msgid "subject"
+msgstr "Asunto"
+
+#: ../lang/en/validation.php:202
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:202
+msgid "year"
+msgstr "año"
+
+#: ../lang/en/validation.php:203
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:203
+msgid "month"
+msgstr "mes"
+
+#: ../lang/en/validation.php:204
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:204
+msgid "allocation criteria"
+msgstr "Criterios de asignación"
+
+#: ../lang/en/validation.php:205
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:205
+msgid "bonus code"
+msgstr "Código de bono"
+
+#: ../lang/en/validation.php:206
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:206
+msgid "complete profile"
+msgstr "Perfil completo"
+
+#: ../lang/en/validation.php:207
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:207
+msgid "complete rollover"
+msgstr "Rollover completo"
+
+#: ../lang/en/validation.php:208
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:208
+msgid "bonus"
+msgstr "sobresueldo"
+
+#: ../lang/en/validation.php:209
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:209
+msgid "internal name"
+msgstr "Nombre interno"
+
+#: ../lang/en/validation.php:210
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:210
+msgid "include deposit"
+msgstr "Incluir depósito"
+
+#: ../lang/en/validation.php:212
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:212
+msgid "wallet ID"
+msgstr "ID de billetera"
+
+#: ../lang/en/validation.php:213
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:213
+msgid "start date"
+msgstr "fecha de inicio"
+
+#: ../lang/en/validation.php:214
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:214
+msgid "days available to claim the bonus"
+msgstr "Días disponibles para reclamar el bono"
+
+#: ../lang/en/validation.php:215
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:215
+msgid "amount that can be converted into real balance"
+msgstr "Cantidad que se puede convertir en saldo real"
+
+#: ../lang/en/validation.php:216
+#: ../storage/framework/messages/c731edcc65b992248cb664a26ecdb35c0fd33e18.php.php:216
+msgid "currencies"
+msgstr "monedas"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:19
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:34
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:32
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:32
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:202
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:19
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:34
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:34
+#: ../storage/framework/messages/e6fdbbcd326cbeb29975b2e67ef6697228f5bfed.php.php:34
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:19
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:32
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:19
+msgid "Image"
+msgstr "Imagen"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:31
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:32
+msgid "Popup details"
+msgstr "Detalles de la ventana emergente"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:37
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:52
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:90
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:19
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:18
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:17
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:17
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:15
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:37
+#: ../storage/framework/messages/b79c0a416c4a48c199c3d8e4f0b8c47cb1472a3f.php.php:17
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:52
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:18
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:50
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:14
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:19
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:52
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:17
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:18
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:14
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:19
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:15
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:38
+#: ../storage/framework/messages/f42db55ab8f6202fc345f535f7dd63c386c02d6a.php.php:19
+#: ../storage/framework/messages/f4a963e2831d0329b14ba547343a9bdd121d320e.php.php:18
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:14
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:38
+msgid "Go to list"
+msgstr "Ir a la lista"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:47
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:50
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:73
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:49
+msgid "Menu where it will be shown"
+msgstr "Menú donde se mostrará"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:49
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:68
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:78
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:88
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:103
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:22
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:15
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:152
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:15
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:23
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:155
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:30
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:44
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:94
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:102
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:22
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:52
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:22
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:36
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:50
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:58
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:36
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:51
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:66
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:80
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:15
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:23
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:22
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:37
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:30
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:44
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:58
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:102
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:130
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:164
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:15
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:23
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:30
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:44
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:58
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:15
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:33
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:29
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:45
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:23
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:36
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:165
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:340
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:23
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:37
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:473
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:537
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:552
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:592
+#: ../storage/framework/messages/b3b45dfabdffb82c5caed6b131891b7447f7bc2d.php.php:15
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:55
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:70
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:94
+#: ../storage/framework/messages/b79c0a416c4a48c199c3d8e4f0b8c47cb1472a3f.php.php:29
+#: ../storage/framework/messages/b79c0a416c4a48c199c3d8e4f0b8c47cb1472a3f.php.php:44
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:15
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:66
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:81
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:909
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:21
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:56
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:63
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:114
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:121
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:15
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:23
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:117
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:35
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:45
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:55
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:22
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:36
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:50
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:27
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:21
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:56
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:68
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:111
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:88
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:108
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:123
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:15
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:15
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:15
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:23
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:22
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:36
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:15
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:22
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:42
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:21
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:23
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:33
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:47
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:73
+#: ../storage/framework/messages/d8fe78f44c6b2a149eea9d881a12e3e61180a665.php.php:22
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:15
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:19
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:30
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:44
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:58
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:72
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:15
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:22
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:15
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:15
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:40
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:48
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:403
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:413
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:424
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:432
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:522
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:536
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:76
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:91
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:72
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:87
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:28
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:42
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:56
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:100
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:128
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:162
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:80
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:15
+#: ../storage/framework/messages/f54b3801812071c8982f15caf3d81f67f6c51a59.php.php:15
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:22
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:27
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:49
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:64
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:15
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:13
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:27
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:41
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:55
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:32
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:46
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:54
+msgid "Select..."
+msgstr "Seleccione…"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:66
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:70
+msgid "Show one time only"
+msgstr "Mostrar una sola vez"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:76
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:85
+msgid "Show when scrolling"
+msgstr "Mostrar al desplazarse"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:86
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:118
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:48
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:119
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:44
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:34
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:31
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:214
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:53
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:34
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:514
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:623
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:50
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:360
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:476
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:36
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:70
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:100
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:40
+#: ../storage/framework/messages/f474598dceb2646b39be841fc9ac394b39b05233.php.php:40
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:47
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:78
+msgid "Language"
+msgstr "Lenguaje"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:89
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:104
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:121
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:122
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:139
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:108
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:22
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:33
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:48
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:75
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:37
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:22
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:36
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:50
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:56
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:71
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:73
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:88
+#: ../storage/framework/messages/e9f2a786448693bbc76e8d522055fd0e29adb5d0.php.php:16
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:103
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:120
+#: ../storage/framework/messages/f42db55ab8f6202fc345f535f7dd63c386c02d6a.php.php:43
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:22
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:96
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:110
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:70
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:81
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:98
+msgid "All"
+msgstr "Todo"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:132
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:133
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:115
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:110
+msgid "Uploading..."
+msgstr "Subiendo…"
+
+#: ../storage/framework/messages/97f70f4f43435c00a4ac2feaef5cca9f52e4d50d.php.php:134
+msgid "Upload popup"
+msgstr "Subir ventana emergente"
+
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:11
+msgid "Search by filter"
+msgstr "Buscar por filtro"
+
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:36
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:121
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:205
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:54
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:27
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:532
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:375
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:24
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:123
+msgid "Searching..."
+msgstr "Buscando..."
+
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:38
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:123
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:56
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:29
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:534
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:24
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:377
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:26
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:125
+msgid "Search"
+msgstr "Buscar"
+
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:77
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:62
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:115
+msgid "Code reference"
+msgstr "Referencia de código"
+
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:89
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:127
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:65
+msgid "Quantity of turns"
+msgstr "Cantidad de vueltas"
+
+#: ../storage/framework/messages/991dc23f09eeca950242cd133d2652128d7011be.php.php:93
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:47
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:91
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:60
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:89
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:68
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:168
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:60
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:120
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:56
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:234
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:60
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:85
+#: ../storage/framework/messages/ada0a0c55a6057eeeef6edb2a729700d9f7145ea.php.php:42
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:730
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1317
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:108
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:60
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:56
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:56
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:56
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:60
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:60
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:55
+#: ../storage/framework/messages/bd3034a668398f152de5c90dc351a86f9b2a952e.php.php:52
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:70
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:55
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:87
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:80
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:47
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:68
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:47
+#: ../storage/framework/messages/dac1f599cbb85cde2d37c3e550e647f0a56cb7b8.php.php:43
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:56
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:56
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:93
+#: ../storage/framework/messages/e6fdbbcd326cbeb29975b2e67ef6697228f5bfed.php.php:54
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:53
+#: ../storage/framework/messages/edbe85615655a06b6232d0e6722dc52fe843b9b4.php.php:56
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:56
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:55
+#: ../storage/framework/messages/f474598dceb2646b39be841fc9ac394b39b05233.php.php:52
+#: ../storage/framework/messages/f519ac262e965f26a5a22a53e0dad28b265f594b.php.php:32
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:47
+#: ../storage/framework/messages/f5c2c402ac670f77f64a1a39345feaa2d26d4fe3.php.php:46
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:60
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:56
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:117
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:170
+msgid "Actions"
+msgstr "Acciones"
+
+#: ../storage/framework/messages/99521f2ed22116c4b9e3484dfc5cefceab745dd6.php.php:107
+#: ../storage/framework/messages/d31d5ee9c46a8989dce6a13918cd7358f1837587.php.php:120
+#: ../storage/framework/messages/f63bd5a31d7e40332d019278cfba3501a81542ea.php.php:120
+msgid "Page :current of :last"
+msgstr "Página :actual de :last"
+
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:66
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:727
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:67
+msgid "Total profit"
+msgstr "Beneficio total"
+
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:89
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:90
+msgid "Total RTP"
+msgstr "Total RTP"
+
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:108
+msgid "Client..."
+msgstr "Cliente..."
+
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:134
+msgid "Currency..."
+msgstr "Divisa..."
+
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:158
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:34
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:100
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:28
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:28
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:27
+#: ../storage/framework/messages/acd259b57f7e9028c8df5cdeefb0586af0a01c56.php.php:97
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:20
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:710
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:60
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:21
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:92
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:19
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:19
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:115
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:19
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:28
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:26
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:11
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:93
+msgid "Whitelabel"
+msgstr "Marca blanca"
+
+#: ../storage/framework/messages/99742ed004e97846386fc6da150b7862d4f6ecc4.php.php:182
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1042
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:223
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:101
+msgid "RTP"
+msgstr "RTP"
+
+#: ../storage/framework/messages/999e1fca3e1e5a0da920f9464b353373b72f372c.php.php:39
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:76
+#: ../storage/framework/messages/b33d1b5f6624a9c16cb395b0cf8a9cf62e253e3f.php.php:48
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:48
+#: ../storage/framework/messages/b837644f52c0471784b95cb6f3533fe8baba670e.php.php:47
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:47
+#: ../storage/framework/messages/cde85d320365384406df999299ac6937ad91d198.php.php:39
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:75
+#: ../storage/framework/messages/d27bc25caf5e44210ca2c1e0f10b819fc55fd1af.php.php:39
+#: ../storage/framework/messages/db485604a06556d4256139115bf626b2abe9cfef.php.php:48
+#: ../storage/framework/messages/e9bc3a2f1a4a138e74e4908a5107822f862f1610.php.php:41
+#: ../storage/framework/messages/ee0810eda6835374ac6e14ea1ed0717cdbbe6c3f.php.php:48
+#: ../storage/framework/messages/f3f42fc2234db6b3dff396586537cf210b221da6.php.php:47
+#: ../storage/framework/messages/f561c5027e4b65dd278a3baa64693ba53ebe8f3b.php.php:39
+#: ../storage/framework/messages/f8918bfff8322d87e0a89139687340aafdcd47ca.php.php:52
+#: ../storage/framework/messages/facb78b2adfe5269f9ca12c5d7f5c858138a6327.php.php:48
+msgid "Requested"
+msgstr "Solicitado"
+
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:6
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:6
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:6
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:6
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:6
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:6
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:6
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:6
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:6
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:6
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:6
+msgid "Process debit"
+msgstr "Procesar débito"
+
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:13
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:13
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:28
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:13
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:13
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:13
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:13
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:43
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:13
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:13
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:13
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:13
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:13
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:13
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:13
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:105
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:13
+#: ../storage/framework/messages/f54b3801812071c8982f15caf3d81f67f6c51a59.php.php:13
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:13
+msgid "Action"
+msgstr "Acción"
+
+#: ../storage/framework/messages/99ca082329e3e6b46557d40e88720ad927506663.php.php:17
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:17
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:17
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:17
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:17
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:17
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:47
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:17
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:17
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:17
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:17
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:17
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:16
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:17
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:17
+#: ../storage/framework/messages/f54b3801812071c8982f15caf3d81f67f6c51a59.php.php:16
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:17
+msgid "Reject"
+msgstr "Rechazar"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:27
+msgid ""
+"The recommended size for the image is 280x280 pixels. Using a different size "
+"can cause misalignments on the page."
+msgstr ""
+"El tamaño recomendado para la imagen es de 280x280 píxeles. El uso de un "
+"tamaño diferente puede causar desalineaciones en la página."
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:46
+msgid "Rewards details"
+msgstr "Detalles de las recompensas"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:68
+msgid "Description to help the user understand the reward"
+msgstr "Descripción para ayudar al usuario a entender la recompensa"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:74
+msgid "Available quantity (optional)"
+msgstr "Cantidad disponible (opcional)"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:93
+msgid "Points needed to get the reward"
+msgstr "Puntos necesarios para obtener la recompensa"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:99
+msgid "Amount that the reward will deliver as a prize"
+msgstr "Cantidad que la recompensa entregará como premio"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:105
+msgid "Start date (optional)"
+msgstr "Fecha de inicio (opcional)"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:112
+msgid "Finish date (optional)"
+msgstr "Fecha de finalización (opcional)"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:150
+msgid "Category (optional)"
+msgstr "Categoría (opcional)"
+
+#: ../storage/framework/messages/9c0d7c84abd61bcbb3982417a37690318fb66535.php.php:168
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:196
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:56
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:317
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:160
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:137
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:104
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:105
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:32
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:150
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:176
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:91
+#: ../storage/framework/messages/eaa502b56013196873b646cb96c229976569f0d8.php.php:159
+#: ../storage/framework/messages/f42db55ab8f6202fc345f535f7dd63c386c02d6a.php.php:61
+#: ../storage/framework/messages/f4a963e2831d0329b14ba547343a9bdd121d320e.php.php:49
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:132
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:109
+msgid "Updating..."
+msgstr "Actualizando..."
+
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:21
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:21
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:21
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:21
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:53
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:21
+msgid "Account from where you made the payment"
+msgstr "Cuenta desde donde realizaste el pago"
+
+#: ../storage/framework/messages/9d4b7a4ff6ac4ba6b3dbb2250479cdff0a61ba34.php.php:40
+#: ../storage/framework/messages/a8e2c4be87842fcc624fb59a9d3135679d5ad35c.php.php:40
+#: ../storage/framework/messages/aa170ed95f6a1aa0cba8b2c347083f832a476359.php.php:40
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:24
+#: ../storage/framework/messages/b98883463098bf59d301810e8ec92652d4c0fc9f.php.php:40
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:76
+#: ../storage/framework/messages/cc89c7385f1ea1510cc66ba32f3d3e2fbc6e1f9f.php.php:24
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:24
+#: ../storage/framework/messages/d0fcf70b84949d894e3a269d49a8eb99520e7e84.php.php:40
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:24
+#: ../storage/framework/messages/d9582cce15cee8dd3fddf68b0ec9904278a27bb7.php.php:24
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:23
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:24
+#: ../storage/framework/messages/f0721377981b8fcf387776e115390d721434bfe4.php.php:25
+#: ../storage/framework/messages/f88af8d0faa1d00db3245d52c2df31c346173d2f.php.php:24
+msgid "This description will be shown to the user"
+msgstr "Esta descripción se mostrará al usuario"
+
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:11
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:97
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:11
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:11
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:13
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:11
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:11
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:11
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:11
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:11
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:85
+msgid "Filters"
+msgstr "Filtros"
+
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:30
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:65
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:160
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:45
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:118
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:58
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:156
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:45
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:71
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:68
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:45
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:49
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:84
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:29
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:93
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:50
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:45
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:62
+msgid "Consulting..."
+msgstr "Consultoría..."
+
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:32
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:67
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:162
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:47
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:207
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:120
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:60
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:158
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:47
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:73
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:70
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:47
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:51
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:86
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:31
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:95
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:52
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:47
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:64
+msgid "Consult data"
+msgstr "Consultar datos"
+
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:71
+msgid "Gmail"
+msgstr "Gmail (en inglés)"
+
+#: ../storage/framework/messages/9d794e178da7aa4ee4d7236446f489a1ed3f2f58.php.php:114
+msgid "Search user"
+msgstr "Buscar usuario"
+
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:36
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:160
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:206
+msgid "Menu"
+msgstr "Menu"
+
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:40
+msgid "Show one time"
+msgstr "Mostrar una vez"
+
+#: ../storage/framework/messages/9db8a6e09945d85ea32a0bcff51f67826c88d502.php.php:44
+msgid "Show in scroll"
+msgstr "Mostrar en scroll"
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:29
+#: ../storage/framework/messages/d8fe78f44c6b2a149eea9d881a12e3e61180a665.php.php:34
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:34
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:89
+msgid "Permissions"
+msgstr "Permisos"
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:43
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:109
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:79
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:45
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:209
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:71
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:669
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:87
+#: ../storage/framework/messages/b79c0a416c4a48c199c3d8e4f0b8c47cb1472a3f.php.php:60
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:27
+#: ../storage/framework/messages/d8fe78f44c6b2a149eea9d881a12e3e61180a665.php.php:41
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:155
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:48
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:207
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:67
+msgid "Saving..."
+msgstr "Guardando..."
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:45
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:111
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:81
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:47
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:211
+#: ../storage/framework/messages/aacf3b9639786372dc51a5171992f99915eb7f76.php.php:73
+#: ../storage/framework/messages/aaefb29f401fcd11ecf01e9bc3c3b04f8a31e31a.php.php:23
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:671
+#: ../storage/framework/messages/b0263353eddb7161d7504c9b96fcb9d417ce3736.php.php:89
+#: ../storage/framework/messages/b79c0a416c4a48c199c3d8e4f0b8c47cb1472a3f.php.php:62
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:29
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:157
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:49
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:209
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:69
+msgid "Save"
+msgstr "Guardar"
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:50
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:676
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:34
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:34
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:103
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:54
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:382
+msgid "Clear"
+msgstr "Limpiar"
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:65
+msgid "Users and Permissions"
+msgstr "Usuarios y permisos"
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:85
+msgid "permissions"
+msgstr "Permisos"
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:116
+#: ../storage/framework/messages/d8fe78f44c6b2a149eea9d881a12e3e61180a665.php.php:60
+msgid "Select permission"
+msgstr "Seleccionar permiso"
+
+#: ../storage/framework/messages/9dd0b7d7fbe676275b881cd9c4286aeaa700404e.php.php:117
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:170
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:108
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:73
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:74
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:124
+msgid "Select user"
+msgstr "Seleccionar usuario"
+
+#: ../storage/framework/messages/a032507eaa6ec1d64ce312099530647ef83b9a1b.php.php:5
+msgid "Relate Roles to User"
+msgstr "Relacionar roles con el usuario"
+
+#: ../storage/framework/messages/a032507eaa6ec1d64ce312099530647ef83b9a1b.php.php:13
+#: ../storage/framework/messages/d8fe78f44c6b2a149eea9d881a12e3e61180a665.php.php:20
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:20
+msgid "Role"
+msgstr "Rol"
+
+#: ../storage/framework/messages/a032507eaa6ec1d64ce312099530647ef83b9a1b.php.php:28
+#: ../storage/framework/messages/a664851217dd30440fca7af1a5cdd19f165e1502.php.php:24
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:53
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:40
+msgid "Accept"
+msgstr "Aceptar"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:12
+msgid "Cover image"
+msgstr "Imagen de portada"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:27
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:27
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:27
+#, php-format
+msgid ""
+"The recommended size for the image is %s pixels. Using a different size can "
+"cause misalignments on the page."
+msgstr ""
+"El tamaño recomendado para la imagen es de %s píxeles. El uso de un tamaño "
+"diferente puede causar desalineaciones en la página."
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:31
+msgid "This image is shown in the list of posts."
+msgstr "Esta imagen se muestra en la lista de publicaciones."
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:47
+msgid "Main image"
+msgstr "Imagen principal"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:62
+#, php-format
+msgid ""
+"The recommended width for the image is %s pixels. Using a different size can "
+"cause misalignment on the page."
+msgstr ""
+"El ancho recomendado para la imagen es de %s píxeles. El uso de un tamaño "
+"diferente puede causar una desalineación en la página."
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:66
+msgid "This image is optional and is shown as the main image within the post."
+msgstr ""
+"Esta imagen es opcional y se muestra como la imagen principal dentro de la "
+"publicación."
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:84
+msgid "Post details"
+msgstr "Detalles de la publicación"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:106
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:80
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:135
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:66
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:74
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:34
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:57
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:55
+msgid "Start date"
+msgstr "Fecha de inicio"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:113
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:81
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:40
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:64
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:62
+msgid "Finish date"
+msgstr "Fecha de finalización"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:153
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:66
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:108
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:162
+msgid "Category"
+msgstr "Categoría"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:182
+#: ../storage/framework/messages/aae11c557b41f85b692883ffa559ae23ea04a9ec.php.php:47
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:141
+msgid "Content"
+msgstr "Contenido"
+
+#: ../storage/framework/messages/a0706d797c65de1ab389007c64c18ad39c79a1b7.php.php:198
+msgid "Update post"
+msgstr "Publicación de actualización"
+
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:86
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:139
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:76
+msgid "End date"
+msgstr "Fecha de finalizacion"
+
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:92
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:48
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:86
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:96
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:422
+msgid "Provider type"
+msgstr "Tipo de proveedor"
+
+#: ../storage/framework/messages/a10ff2ce913b043407b335f7089fe13869f8f187.php.php:100
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:106
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:121
+msgid "Exclude provider"
+msgstr "Excluir proveedor"
+
+#: ../storage/framework/messages/a3bcbf3a242ef9d08f94456477ad33df2e9609b6.php.php:60
+#: ../storage/framework/messages/a42a291bb9fa2099cbbc7a1d2a90b4ef7a7edbbe.php.php:75
+#: ../storage/framework/messages/a5c8739e60bb16bdf5f18c904ad77063de8e83c5.php.php:52
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:52
+#: ../storage/framework/messages/b2c147f9d12d52b647fea291bc4c2db6da592fc8.php.php:52
+#: ../storage/framework/messages/b4c74597b2c3a229ba314e47d10a9f9ab34f3a65.php.php:48
+#: ../storage/framework/messages/b57b83b89422345d0a319fd7b52ac297fbb3df17.php.php:52
+#: ../storage/framework/messages/b791f61a6b00e37e0d77fca05d1df6977b5e015e.php.php:52
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:72
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:60
+#: ../storage/framework/messages/de0c9918f28f3d2995b81ad8055e474ae2190c80.php.php:48
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:88
+msgid "Notified"
+msgstr "Notificado"
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:35
+msgid "Games Personalize: "
+msgstr "Juegos personalizados: "
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:40
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:36
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:32
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:32
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:45
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:42
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:312
+msgid "Select"
+msgstr "Seleccionar"
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:61
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:95
+msgid "Pragmatic Live Casino"
+msgstr "Pragmático Casino en vivo"
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:71
+msgid "Order (optional)"
+msgstr "Pedido (opcional)"
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:137
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:35
+#: ../storage/framework/messages/a9d12ba0f2b8e9d5fc7a4fdcd8339613f0901f9b.php.php:77
+#: ../storage/framework/messages/b79c0a416c4a48c199c3d8e4f0b8c47cb1472a3f.php.php:27
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:71
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:44
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:139
+msgid "Games"
+msgstr "Juegos"
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:156
+#: ../storage/framework/messages/ada0a0c55a6057eeeef6edb2a729700d9f7145ea.php.php:34
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:131
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:81
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:158
+msgid "Game"
+msgstr "Juego"
+
+#: ../storage/framework/messages/a51d695bd0fc81ace0f6feae023f26781bc207a9.php.php:164
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:226
+msgid "Order"
+msgstr "Orden"
+
+#: ../storage/framework/messages/a664851217dd30440fca7af1a5cdd19f165e1502.php.php:5
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:512
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1066
+msgid "Balance adjustments"
+msgstr "Ajustes de saldo"
+
+#: ../storage/framework/messages/a6e25aa43613de89afee2e72bd5b6edd6f8d4a52.php.php:88
+#: ../vendor/dotworkers/configurations/src/Configurations/Utils.php:88
+msgid "Error!"
+msgstr "Error!"
+
+#: ../storage/framework/messages/a6e25aa43613de89afee2e72bd5b6edd6f8d4a52.php.php:89
+#: ../vendor/dotworkers/configurations/src/Configurations/Utils.php:89
+msgid "Could not load/save data"
+msgstr "No se pudieron cargar/guardar datos"
+
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:56
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:430
+msgid "Exclude providers"
+msgstr "Excluir proveedores"
+
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:104
+msgid "Provider Type"
+msgstr "Tipo de proveedor"
+
+#: ../storage/framework/messages/a7085279fd5ca92f7c4542aa9d89aed2f98155d3.php.php:116
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:48
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:722
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:104
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:771
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:194
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:360
+#: ../storage/framework/messages/e9e4d7eaf95f07b9a78b928fb803ebe6c7b43eb7.php.php:13
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:109
+msgid "Percentage"
+msgstr "Porcentaje"
+
+#: ../storage/framework/messages/a7b217a5486a6532ef0d9d63a5df85cc954c457b.php.php:40
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:210
+msgid "Start / End"
+msgstr "Inicio / Fin"
+
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:12
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:12
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:12
+msgid "Campaign details"
+msgstr "Detalles de la campaña"
+
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:64
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:68
+msgid "Segment"
+msgstr "Segmento"
+
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:78
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:81
+msgid "Email template"
+msgstr "Plantilla de correo electrónico"
+
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:92
+#: ../storage/framework/messages/c33c966e8b811886a0c7b722c1c2027108cc2524.php.php:94
+msgid "Scheduled date"
+msgstr "Fecha prevista"
+
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:100
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:148
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:28
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:467
+msgid "Publishing..."
+msgstr "Editorial..."
+
+#: ../storage/framework/messages/a810ced6152d88a407ba8afa6b36b7bf7f772006.php.php:102
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:469
+msgid "Publish campaign"
+msgstr "Publicar campaña"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:20
+#: ../storage/framework/messages/ff9046d32949205a4247ea8b080974d52eff52ce.php.php:20
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:68
+msgid "Devices"
+msgstr "Dispositivos"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:107
+#, fuzzy
+msgid "Vivo Gaming Dotsuite"
+msgstr "Vivo Gaming Dotsuite"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:113
+#, fuzzy
+msgid "Bet Soft"
+msgstr "Apuesta suave"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:117
+#, fuzzy
+msgid "Tom Horn"
+msgstr "Tom Horn"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:129
+#, fuzzy
+msgid "Leap"
+msgstr "Saltar"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:133
+#, fuzzy
+msgid "Arrows Edge"
+msgstr "Borde de flechas"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:145
+#, fuzzy
+msgid "5 Men"
+msgstr "5 Hombres"
+
+#: ../storage/framework/messages/a86e12eb09a250e1267d2bbce46f96b5102a2a00.php.php:149
+msgid "Spinomenal"
+msgstr "Espinomenal"
+
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:22
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:46
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:25
+msgid "Currencies"
+msgstr "Monedas"
+
+#: ../storage/framework/messages/a8969083b81fff24b9e18c47364fbb548b3b2a51.php.php:80
+msgid "Agent"
+msgstr "Agente"
+
+#: ../storage/framework/messages/a8eda1f9d95eac003ef423001bcd3eeb1e2be278.php.php:5
+msgid "Transaction type..."
+msgstr "Tipo de transacción..."
+
+#: ../storage/framework/messages/a8eda1f9d95eac003ef423001bcd3eeb1e2be278.php.php:13
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:195
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:581
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:799
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:137
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:146
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:34
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:57
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:34
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:36
+#: ../storage/framework/messages/e9f2a786448693bbc76e8d522055fd0e29adb5d0.php.php:28
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:20
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:21
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:34
+#: ../storage/framework/messages/f5a787f8be3e49bc850fb6759f6ea785b9cf3342.php.php:16
+#: ../storage/framework/messages/f5f078f39dcf04c5dd6b1e74e8d9b1f5e3c16f8b.php.php:4
+msgid "Date range"
+msgstr "Intervalo de fechas"
+
+#: ../storage/framework/messages/a93f0e7f7006d50e1c38f6b04bf98a0a359d8ad6.php.php:44
+msgid "Origin Account"
+msgstr "Cuenta Origin"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:70
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:31
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:45
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:119
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:13
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:68
+msgid "Transaction type"
+msgstr "Tipo de transacción"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:73
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:71
+msgid "Credit and debit"
+msgstr "Crédito y débito"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:100
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:510
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:64
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:21
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:595
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:21
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:448
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:74
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:98
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:28
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:144
+msgid "Country"
+msgstr "País"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:114
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:112
+msgid "Bank "
+msgstr "Banco "
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:116
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:35
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:114
+msgid "Select ..."
+msgstr "Selecione ..."
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:131
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:129
+msgid "Current"
+msgstr "Publicado"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:138
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:136
+msgid "Social reasons"
+msgstr "Razones sociales"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:156
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:154
+msgid "Wallet "
+msgstr "Billetera "
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:162
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:160
+msgid "Criptocurrency"
+msgstr "Criptomoneda"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:165
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:163
+msgid "BTC"
+msgstr "BTC"
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:172
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:170
+msgid "Public key "
+msgstr "Clave pública "
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:196
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:194
+msgid "Vcreditos user "
+msgstr "Usuario de Vcreditos "
+
+#: ../storage/framework/messages/aa109b08d602d2ce8f2d234772ccb948eb9030c8.php.php:202
+#: ../storage/framework/messages/e9846a5293368d8e1ce5280d6f8c11411251b6d0.php.php:200
+msgid "Vcreditos secure"
+msgstr "Vcreditos seguro"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:20
+msgid "Awarded bonuses"
+msgstr "Bonificaciones otorgadas"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:43
+msgid "Ended bonuses"
+msgstr "Bonificaciones finalizadas"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:66
+msgid "Active bonuses"
+msgstr "Bonificaciones activas"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:89
+msgid "Converted bonuses"
+msgstr "Bonificaciones convertidas"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:112
+msgid "Amount deposited"
+msgstr "Cantidad depositada"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:137
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:17
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:131
+msgid "Allocation criteria"
+msgstr "Criterios de asignación"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:139
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:165
+msgid "All options"
+msgstr "Todas las opciones"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:140
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:146
+msgid "Registration"
+msgstr "Registracion"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:142
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:161
+msgid "Complete profile"
+msgstr "Perfil completo"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:163
+msgid "Campaigns"
+msgstr "Campañas"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:177
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:68
+msgid "Convert to"
+msgstr "Convertir a"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:179
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:70
+msgid "No conversion"
+msgstr "Sin conversión"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:188
+msgid "The currency (VES) will not be converted"
+msgstr "La moneda (VES) no se convertirá"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:231
+msgid "Campaign"
+msgstr "Campaña"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:235
+msgid "Vertical"
+msgstr "Vertical"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:243
+msgid "Awarded"
+msgstr "Premiado"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:247
+msgid "Converted"
+msgstr "Convertido"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:251
+msgid "Ended"
+msgstr "Terminó"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:259
+msgid "Deposited"
+msgstr "Depositado"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:263
+msgid "Criteria met"
+msgstr "Criterios cumplidos"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:267
+msgid "Claimed"
+msgstr "Reclamado"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:271
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:131
+msgid "Active users"
+msgstr "Usuarios activos"
+
+#: ../storage/framework/messages/aa4a6de3bfe80c841960b61e5d187b63c7ec95aa.php.php:279
+msgid "Dates"
+msgstr "Fecha"
+
+#: ../storage/framework/messages/aaefb29f401fcd11ecf01e9bc3c3b04f8a31e31a.php.php:5
+msgid "Add translation"
+msgstr "Agregar traducción"
+
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:20
+#: ../storage/framework/messages/d7180da36af108a25afecf8d3f49f6d5c93a3747.php.php:22
+msgid "Total balances"
+msgstr "Saldos totales"
+
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:65
+msgid "Total balances locked"
+msgstr "Saldos totales bloqueados"
+
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:157
+msgid "Bonus balance"
+msgstr "Saldo de bonificación"
+
+#: ../storage/framework/messages/ab604073b12eecdf227dcfa640214fb9c6e09bf2.php.php:161
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:237
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:287
+msgid "Locked"
+msgstr "Cerrado con llave"
+
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:5
+msgid "Manual adjustment bonus"
+msgstr "Bonificación de ajuste manual"
+
+#: ../storage/framework/messages/ac824fbeaddba61b4085b3edccfd20353373c308.php.php:13
+msgid "Bonus wallets"
+msgstr "Carteras de bonificación"
+
+#: ../storage/framework/messages/ada0a0c55a6057eeeef6edb2a729700d9f7145ea.php.php:38
+#: ../storage/framework/messages/b79c0a416c4a48c199c3d8e4f0b8c47cb1472a3f.php.php:42
+msgid "Additional Info"
+msgstr "Información Adicional"
+
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:15
+msgid ""
+"This report shows the list of deposits made in a certain date range, "
+"allowing them to be filtered by status."
+msgstr ""
+"Este informe muestra la lista de depósitos realizados en un determinado "
+"rango de fechas, lo que permite filtrarlos por estado."
+
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:19
+msgid ""
+"Manual transactions and agent transactions made to players are not taken "
+"into account."
+msgstr ""
+"Las transacciones manuales y las transacciones de agentes realizadas a los "
+"jugadores no se tienen en cuenta."
+
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:84
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:391
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:195
+msgid "Wallet ID"
+msgstr "ID de billetera"
+
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:92
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:619
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:472
+msgid "Registered"
+msgstr "Publicado el"
+
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:96
+msgid "Updated"
+msgstr "Actualizado"
+
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:112
+msgid "Provider transaction"
+msgstr "Transacción de proveedor"
+
+#: ../storage/framework/messages/aded5075cf16a96e144467afaa4bc8c55eb64c16.php.php:116
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:135
+msgid "Method"
+msgstr "Método"
+
+#: ../storage/framework/messages/aebf3ac602f4f3e6edd8edcacd97183aa3350fdf.php.php:6
+msgid "Developed by Betsweet. Operated by"
+msgstr "Desarrollado por Betsweet. Operado por"
+
+#: ../storage/framework/messages/aebf3ac602f4f3e6edd8edcacd97183aa3350fdf.php.php:6
+msgid "Copyright"
+msgstr "Copyright"
+
+#: ../storage/framework/messages/aebf3ac602f4f3e6edd8edcacd97183aa3350fdf.php.php:6
+msgid "All rights reserved"
+msgstr "Todos los derechos reservados"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:306
+msgid "Secure Login"
+msgstr "Inicio de sesión seguro"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:324
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:383
+msgid "Url api"
+msgstr "API de URL"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:357
+msgid "Public key"
+msgstr "Clave Pública"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:399
+msgid "Client DI"
+msgstr "DI de cliente"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:577
+msgid "key"
+msgstr ".key"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:585
+msgid "Portal Key"
+msgstr "Clave del portal"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:641
+msgid "URL Script"
+msgstr "URL Script"
+
+#: ../storage/framework/messages/af1dde1781748d7c74ad9c31fed4c026d050dc2f.php.php:691
+#: ../storage/framework/messages/b0838a152ae0ebf3a329bb7b9759c85d8d3b68da.php.php:20
+msgid "Whitelabels"
+msgstr "Whitelabels"
+
+#: ../storage/framework/messages/afebc759cb577492b9898417df1151477d1daac9.php.php:80
+msgid "Processed"
+msgstr "Procesado"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:31
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:38
+msgid "Updating"
+msgstr "Actualizando"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:47
+msgid "See how"
+msgstr "Vea cómo"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:66
+msgid "Reset password"
+msgstr "Restablecer contraseña"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:82
+msgid "Manual adjustment (Balance corrections)"
+msgstr "Ajuste manual (correcciones de saldo)"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:91
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:352
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1036
+msgid "credit"
+msgstr "crédito"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:96
+msgid "Manual credit transaction"
+msgstr "Transacción de crédito manual"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:103
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:361
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1045
+msgid "debit"
+msgstr "débito"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:108
+msgid "Manual debit transaction"
+msgstr "Transacción de débito manual"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:125
+#: ../storage/framework/messages/da729ea0185f8bd572702ec429ba5091248d0538.php.php:5
+msgid "Assign bonus"
+msgstr "Asignar bonificación"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:125
+msgid "Real money"
+msgstr "Dinero real"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:139
+msgid "Points transactions"
+msgstr "Transacciones de puntos"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:223
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:273
+msgid "Main"
+msgstr "Principal"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:310
+msgid "Personal information"
+msgstr "• Informacion Personal"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:319
+msgid "Update data"
+msgstr "Actualizar datos"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:358
+msgid "Father tree"
+msgstr "Árbol paterno"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:373
+msgid "Referral code"
+msgstr "Código de referencia"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:451
+msgid "Last Name"
+msgstr "Apellido"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:490
+msgid "User level"
+msgstr "Nivel de usuario"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:530
+msgid "State"
+msgstr "Provincia"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:545
+msgid "City"
+msgstr "Ciudad"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:612
+msgid "Date of birth"
+msgstr "Fecha de nacimiento"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:628
+msgid "Registration date"
+msgstr "Fecha de inscripción"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:642
+msgid "Last access"
+msgstr "Ultimo acceso"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:662
+msgid "Financial summary"
+msgstr "Resumen financiero"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:673
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:93
+msgid "Total deposited"
+msgstr "Total depositado"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:686
+msgid "Manual deposits"
+msgstr "Depósitos manuales"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:700
+msgid "Total withdrawn"
+msgstr "Total retirado"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:714
+msgid "Manual withdrawals"
+msgstr "Retiros manuales"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:740
+msgid "Total bonus"
+msgstr "Bonificación total"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:767
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1262
+msgid "Points"
+msgstr "Puntos"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:814
+msgid "This user does not have payment methods"
+msgstr "Este usuario no dispone de métodos de pago"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:861
+msgid "Wallet transactions"
+msgstr "Transacciones de billetera"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:892
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:957
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1199
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:678
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:85
+msgid "Platform"
+msgstr "Plataforma"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:926
+msgid "Deposits and withdrawals"
+msgstr "Depósitos y retiros"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1046
+msgid "Hold"
+msgstr "Sostener"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1073
+msgid "Connections"
+msgstr "Conexiones"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1101
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1120
+msgid "Audits"
+msgstr "Auditorías"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1173
+msgid "Store transactions history"
+msgstr "Historial de transacciones de la tienda"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1228
+msgid "Store claims history"
+msgstr "Historial de notificaciones de la tienda"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1254
+msgid "Reward"
+msgstr "Recompensa"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1258
+msgid "Prize"
+msgstr "Premio"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1283
+msgid "Verification of documents"
+msgstr "Verificación de documentos"
+
+#: ../storage/framework/messages/b075d4bd56ff1e05041c48daf36fda7463feae6f.php.php:1309
+msgid "Document type"
+msgstr "Tipo de documento"
+
+#: ../storage/framework/messages/b3a9873b89389ddb0adb3c5e838a729a041ca15a.php.php:44
+#: ../storage/framework/messages/c4692661366ffbea76d116acce85d90b98544028.php.php:43
+#: ../storage/framework/messages/cf66aefb037777e2e63ac731fc5bcfbd2dd14270.php.php:67
+msgid "Data for withdrawal"
+msgstr "Datos para el desistimiento"
+
+#: ../storage/framework/messages/b3b45dfabdffb82c5caed6b131891b7447f7bc2d.php.php:5
+msgid "Add to segment"
+msgstr "Agregar al segmento"
+
+#: ../storage/framework/messages/b3b45dfabdffb82c5caed6b131891b7447f7bc2d.php.php:13
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:25
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:45
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:496
+msgid "Segments"
+msgstr "Segmentos"
+
+#: ../storage/framework/messages/b3b87534a2b23f2abdb2226d74ce8b10328497ba.php.php:3
+#: ../storage/framework/messages/b3b87534a2b23f2abdb2226d74ce8b10328497ba.php.php:5
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:31
+msgid "Notification details"
+msgstr "Detalles de la notificación"
+
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:92
+msgid "Notification type"
+msgstr "Tipo de notificación"
+
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:135
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:497
+msgid "Excel"
+msgstr "Excel"
+
+#: ../storage/framework/messages/b3e1f5b722bf90ea91c9b5c76c55f8895e62ef6c.php.php:150
+msgid "Publish notification"
+msgstr "Publicar notificación"
+
+#: ../storage/framework/messages/b45f930b925212b2ef4cb4ad9c00529b5f57b0ce.php.php:70
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:465
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:465
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethodsCategories.php:70
+msgid "Cash"
+msgstr "Efectivo"
+
+#: ../storage/framework/messages/b45f930b925212b2ef4cb4ad9c00529b5f57b0ce.php.php:78
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethodsCategories.php:78
+msgid "Credit / Debit cards"
+msgstr "Tarjetas de crédito / débito"
+
+#: ../storage/framework/messages/b45f930b925212b2ef4cb4ad9c00529b5f57b0ce.php.php:82
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethodsCategories.php:82
+msgid "Electronic wallets"
+msgstr "Monederos electrónicos"
+
+#: ../storage/framework/messages/b45f930b925212b2ef4cb4ad9c00529b5f57b0ce.php.php:86
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethodsCategories.php:86
+msgid "Promo codes"
+msgstr "Códigos promocionales"
+
+#: ../storage/framework/messages/b45f930b925212b2ef4cb4ad9c00529b5f57b0ce.php.php:90
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethodsCategories.php:90
+msgid "Prepaid cards"
+msgstr "Tarjetas prepago"
+
+#: ../storage/framework/messages/b66ffd91923121dba0845c23ab2f91ff6982b235.php.php:224
+msgid "Toggle navigation"
+msgstr "Alternar navegación"
+
+#: ../storage/framework/messages/b7e739e701d3703f1fab86d459865c47282e5eba.php.php:6
+#: ../storage/framework/messages/ccfe950e2c857be68ffac2ed677ebef374850564.php.php:6
+#: ../storage/framework/messages/d2c20c14791b1de2a276f20c96ef22d78f24cf37.php.php:6
+#: ../storage/framework/messages/e48d5a762dc5862c3cbfb0d4e4a342736f08147d.php.php:6
+#: ../storage/framework/messages/e4acf46c11745fad41290d3dbacf907f663c7bdb.php.php:6
+msgid "Process credit"
+msgstr "Crédito de proceso"
+
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:17
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:27
+msgid "Only letters and numbers without spaces (4-12 characters)"
+msgstr "Solo letras y números sin espacios (4-12 caracteres)"
+
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:18
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:28
+msgid "The username cannot be changed later"
+msgstr "El nombre de usuario no se puede cambiar más tarde"
+
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:31
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:41
+msgid "Minimum 8 characters, 1 letter and 1 number"
+msgstr "Mínimo 8 caracteres, 1 letra y 1 número"
+
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:38
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:48
+msgid "Available"
+msgstr "Disponible"
+
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:50
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:60
+msgid "Show additional data"
+msgstr "Mostrar datos adicionales"
+
+#: ../storage/framework/messages/b82a89f948fc4a4ef7c8ff2a499515856fa09fcb.php.php:59
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:41
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:373
+#: ../storage/framework/messages/e5ac97b3c2d26c0212a26299cf4748a3feac0606.php.php:69
+msgid "Optional"
+msgstr "Opcional"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:203
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:779
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:71
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:124
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:175
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:229
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:283
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:337
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:391
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:65
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:100
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:133
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:169
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:205
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:240
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:275
+msgid "Options"
+msgstr "Opciones"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:237
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:302
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:33
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:162
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:162
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3384
+msgid "Agents"
+msgstr "Agentes"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:251
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:320
+msgid "Locks"
+msgstr "Cerraduras"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:389
+msgid "Copied"
+msgstr "Copiado"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:460
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:471
+msgid "Move user"
+msgstr "Mover usuario"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:478
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:495
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:49
+msgid "Move"
+msgstr "Mover"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:488
+msgid "Move agent"
+msgstr "Mover agente"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:573
+msgid "agent"
+msgstr "agente"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:574
+msgid "user"
+msgstr "usuario"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:687
+msgid "Charged him"
+msgstr "Le cargó"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:691
+msgid "withdrew"
+msgstr "Le retiró"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:878
+msgid "Providers locking"
+msgstr "Bloqueo de proveedores"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:894
+msgid "The provider lock locks the agent and its entire tree"
+msgstr "El bloqueo del proveedor bloquea el agente y todo su árbol"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:926
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:991
+msgid "Lock"
+msgstr "Cerradura"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:935
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1000
+msgid "Unlock"
+msgstr "Desbloquear"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:950
+msgid "Users locking"
+msgstr "Bloqueo de usuarios"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:966
+msgid "The user locking locks the agent and his entire tree"
+msgstr "El bloqueo del usuario bloquea al agente y a todo su árbol"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:978
+msgid "Description of the lock"
+msgstr "Descripción de la cerradura"
+
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1161
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:1162
+msgid "Agents search..."
+msgstr "Los agentes buscan..."
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:33
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:33
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:33
+msgid "Upload data"
+msgstr "Subir datos"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:45
+msgid "Desktop settings"
+msgstr "Configuración del escritorio"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:54
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:112
+msgid "Main page"
+msgstr "Portada"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:61
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:119
+msgid "Where will the user go when logging in?"
+msgstr "¿A dónde irá el usuario al iniciar sesión?"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:74
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:132
+msgid "Secure Sockets Layer (SSL)?"
+msgstr "¿Capa de sockets seguros (SSL)?"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:89
+msgid "This setting is used when the user accesses from a desktop or laptop"
+msgstr ""
+"Esta configuración se utiliza cuando el usuario accede desde un equipo de "
+"escritorio o portátil"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:103
+msgid "Mobile setup"
+msgstr "Configuración móvil"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:147
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:137
+msgid "This configuration is used when the user accesses from a mobile device"
+msgstr ""
+"Esta configuración se utiliza cuando el usuario accede desde un dispositivo "
+"móvil"
+
+#: ../storage/framework/messages/b92234fee04cf0fd09fa343382df2b0a97182b0c.php.php:162
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:152
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:178
+msgid "Update settings"
+msgstr "Actualizar la configuración"
+
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:46
+#: ../storage/framework/messages/cda4a0cae44def3e52b734fdf0480d33e6541492.php.php:46
+msgid "Image details"
+msgstr "Detalles de la imagen"
+
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:70
+#: ../storage/framework/messages/b9ab8017cac786ff40623f4ba5ef33bd65bb46ab.php.php:91
+msgid "Button text"
+msgstr "Texto del botón"
+
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:106
+#: ../storage/framework/messages/bd0a507ac6bd643bda3d38175dc4daec22bb4f01.php.php:11
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:11
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:11
+msgid "Filter data"
+msgstr "Filtrar datos"
+
+#: ../storage/framework/messages/ba69c34ac5373965e08c4aa9d7fe68ff8dd30fe8.php.php:131
+#: ../storage/framework/messages/ce1bfcaffca7fd8a208a02e266fccd8319789cc8.php.php:22
+msgid "All providers"
+msgstr "Todos los proveedores"
+
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:20
+msgid "Birthday date"
+msgstr "Fecha de cumpleaños"
+
+#: ../storage/framework/messages/bf2914dc32b04c33d932384b263564a9766aacb8.php.php:69
+msgid "Birthday"
+msgstr "Nacimiento"
+
+#: ../storage/framework/messages/c0f170cf21dbf922dc2dd4aadfef72749c025111.php.php:10
+msgid "New category"
+msgstr "Nueva categoría"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:25
+msgid "New users in the day"
+msgstr "Nuevos usuarios en el día"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:79
+msgid "Completed profiles"
+msgstr "Perfiles completados"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:131
+msgid "Amount deposited on the day"
+msgstr "Cantidad depositada el día"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:160
+msgid "Amount withdrawn on the day"
+msgstr "Cantidad retirada el día"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:186
+msgid "Pending deposits"
+msgstr "Depósitos pendientes"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:212
+msgid "Pending withdrawals"
+msgstr "Retiros pendientes"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:238
+msgid "Users connected from desktop"
+msgstr "Usuarios conectados desde el escritorio"
+
+#: ../storage/framework/messages/c26e7a380185e9e8f8b4c7f6c6cde4d320fca03f.php.php:264
+msgid "Users connected from mobile"
+msgstr "Usuarios conectados desde el móvil"
+
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:5
+msgid "Move agents"
+msgstr "Mover agentes"
+
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:23
+msgid "This tool allows you to move the one agent to another agent"
+msgstr "Esta herramienta le permite mover un agente a otro agente"
+
+#: ../storage/framework/messages/c56c507474227c7d1237ba350e8fc715ff3b842f.php.php:44
+msgid "Users of group"
+msgstr "Usuarios del grupo"
+
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:15
+msgid "Bank details of the user"
+msgstr "Datos bancarios del usuario"
+
+#: ../storage/framework/messages/c66fcd6bcbe7e624cf728b448631c02b1dd53299.php.php:67
+msgid "Bank reference"
+msgstr "Referencia bancaria"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:12
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:12
+msgid "Country filter"
+msgstr "Filtro de país"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:23
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:23
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:30
+msgid "All countries"
+msgstr "Todos los países"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:38
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:35
+msgid "Exclude country"
+msgstr "Excluir país"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:62
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:56
+msgid "Balance filter"
+msgstr "Filtro de equilibrio"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:77
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:130
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:181
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:235
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:289
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:343
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:397
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:67
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:102
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:135
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:171
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:207
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:242
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:277
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:64
+msgid "Less than or equal to"
+msgstr "Menor o igual que"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:84
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:137
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:188
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:242
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:296
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:350
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:404
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:68
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:103
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:136
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:172
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:208
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:243
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:278
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:65
+msgid "Greater than or equal to"
+msgstr "Mayor o igual que"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:91
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:144
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:195
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:249
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:303
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:357
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:411
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:69
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:104
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:137
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:173
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:209
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:244
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:279
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:66
+msgid "Same to"
+msgstr "Igual que"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:115
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:91
+msgid "Deposits filter"
+msgstr "Filtro de depósitos"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:166
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:124
+msgid "Last login filter"
+msgstr "Filtro de último inicio de sesión"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:204
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:611
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:108
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:144
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:464
+msgid "Last login"
+msgstr "Último ingreso"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:220
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:160
+msgid "Last deposit filter"
+msgstr "Filtro de último depósito"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:258
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:603
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:180
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:456
+msgid "Last deposit"
+msgstr "Último depósito"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:274
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:196
+msgid "Last withdrawal filter"
+msgstr "Filtro de última retirada"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:312
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:607
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:216
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:460
+msgid "Last withdrawal"
+msgstr "Último retiro"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:328
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:231
+msgid "Registration filter"
+msgstr "Filtro de registro"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:366
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:251
+msgid "Date registration"
+msgstr "Fecha de registro"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:382
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:266
+msgid "Sales filter"
+msgstr "Filtro de ventas"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:435
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:301
+msgid "Complete profile filter"
+msgstr "Filtro de perfil completo"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:444
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:310
+msgid "Full profile"
+msgstr "Perfil completo"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:473
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:328
+msgid "Other filters"
+msgstr "Otros filtros"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:499
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:351
+msgid "Player status"
+msgstr "Estado del jugador"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:552
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:400
+msgid "Search results"
+msgstr "Resultados de Búsqueda"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:583
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:436
+msgid "Full Name"
+msgstr "Nombre completo"
+
+#: ../storage/framework/messages/c7b2a2d29cf7fc238c6fa76f75ec55619edd951f.php.php:615
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:468
+msgid "Profile"
+msgstr "Perfil"
+
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:37
+msgid "Activated"
+msgstr "Activado"
+
+#: ../storage/framework/messages/c86d15b3f5f658be33dc9d5e12414827c3b375ab.php.php:40
+msgid "Desactivate"
+msgstr "Desactivar"
+
+#: ../storage/framework/messages/c978defa91644b5a932a7e90ec6372db86792420.php.php:40
+msgid "USD amount"
+msgstr "Monto en USD"
+
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:25
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:25
+msgid "Email templates"
+msgstr "Plantillas de correo electrónico"
+
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:45
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:31
+#: ../storage/framework/messages/f474598dceb2646b39be841fc9ac394b39b05233.php.php:36
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:41
+msgid "Subject"
+msgstr "Título"
+
+#: ../storage/framework/messages/c9c493b8e765f3976f10bde75be9a4e05e9262b4.php.php:107
+#: ../storage/framework/messages/e544eba62fcb781a91d436f8f27e4e8a5da03fbd.php.php:93
+msgid "Update template"
+msgstr "Actualizar plantilla"
+
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:45
+msgid "Template and theme"
+msgstr "Plantilla y tema"
+
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:54
+msgid "Template"
+msgstr "Plantilla"
+
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:66
+msgid "Theme"
+msgstr "Theme"
+
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:82
+msgid "Here you can select the template and theme to be used on the website"
+msgstr ""
+"Aquí puede seleccionar la plantilla y el tema que se utilizará en el sitio "
+"web"
+
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:109
+msgid "Location of logo?"
+msgstr "¿Ubicación del logotipo?"
+
+#: ../storage/framework/messages/ca4cafdc4bc724215a429f3d164fd59d6f8177be.php.php:122
+msgid "SSL?"
+msgstr "¿SSL?"
+
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:21
+#, fuzzy
+msgid "whitelabel"
+msgstr "marca blanca"
+
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:24
+msgid "All whitelabels"
+msgstr "Todas las marcas blancas"
+
+#: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:47
+msgid "All types"
+msgstr "Todos los tipos"
+
+#: ../storage/framework/messages/cae37d203ad08d1e140bc1444f0c7b8635c69e99.php.php:135
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:29
+#: ../storage/framework/messages/e9e4d7eaf95f07b9a78b928fb803ebe6c7b43eb7.php.php:22
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:110
+msgid "Update"
+msgstr "Actualizar"
+
+#: ../storage/framework/messages/ce44e08cda55af928521ff1405d06b83dadd9a14.php.php:6
+msgid "Test email"
+msgstr "Correo electrónico de prueba"
+
+#: ../storage/framework/messages/ce44e08cda55af928521ff1405d06b83dadd9a14.php.php:19
+msgid "Testing..."
+msgstr "Ensayo..."
+
+#: ../storage/framework/messages/ce44e08cda55af928521ff1405d06b83dadd9a14.php.php:21
+#: ../storage/framework/messages/db218c8ffd3fb0a7c8cb2bf9a9e4e0a98d6b4bb4.php.php:21
+msgid "Send"
+msgstr "Enviar"
+
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:53
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:53
+msgid "Your deposit was approved"
+msgstr "Su depósito fue aprobado"
+
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:54
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:65
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:54
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:65
+msgid "approved"
+msgstr "aprobado"
+
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:57
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:57
+msgid "Your deposit was rejected"
+msgstr "Su depósito fue rechazado"
+
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:58
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:69
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:58
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:69
+msgid "rejected"
+msgstr "rechazado"
+
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:64
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:64
+msgid "Your withdrawal was approved"
+msgstr "Su retiro fue aprobado"
+
+#: ../storage/framework/messages/d07dd00644e2440237466796e8ffb8673f715a63.php.php:68
+#: ../vendor/dotworkers/notifications/src/Notifications/Notifications.php:68
+msgid "Your withdrawal was rejected"
+msgstr "Su retiro fue rechazado"
+
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:44
+msgid "Origin account"
+msgstr "Cuenta de origen"
+
+#: ../storage/framework/messages/d09725057d519cc305b99ecbdb11af02f1ec4eb0.php.php:48
+msgid "Destination account"
+msgstr "Cuenta de destino"
+
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:37
+msgid "Level 1"
+msgstr "Nivel 1"
+
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:38
+msgid "Level 2"
+msgstr "Nivel 2"
+
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:39
+msgid "Level 3"
+msgstr "Nivel 3"
+
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:40
+msgid "Level 4"
+msgstr "Nivel 4"
+
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:41
+msgid "Level 5"
+msgstr "Nivel 5"
+
+#: ../storage/framework/messages/d15e55c1fff4e66a990cce7127a8a289465bba86.php.php:97
+msgid "Total withdrawals"
+msgstr "Total de retiros"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:20
+msgid "Month"
+msgstr "Mes"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:23
+msgid "January"
+msgstr "Enero"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:24
+msgid "February"
+msgstr "Febrero"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:25
+msgid "March"
+msgstr "Marzo"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:26
+msgid "April"
+msgstr "Abril"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:27
+msgid "May"
+msgstr "Mayo"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:28
+msgid "June"
+msgstr "Junio"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:29
+msgid "July"
+msgstr "Julio"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:30
+msgid "August"
+msgstr "Agosto"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:31
+msgid "September"
+msgstr "Septiembre"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:32
+msgid "October"
+msgstr "Octubre"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:33
+msgid "November"
+msgstr "Noviembre"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:34
+msgid "December"
+msgstr "Diciembre"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:40
+msgid "Year"
+msgstr "Año"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:123
+msgid "New registers"
+msgstr "Nuevos registros"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:127
+msgid "Unique depositors"
+msgstr "Depositantes únicos"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:135
+msgid "FTD"
+msgstr "DFT"
+
+#: ../storage/framework/messages/d64c3168d8e992a3ba148a4f0ae3307f897fe259.php.php:139
+msgid "Bonuses"
+msgstr "Bonos"
+
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:45
+msgid "Registration settings"
+msgstr "Configuración de registro"
+
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:60
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:126
+msgid "Allow"
+msgstr "Permitir"
+
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:71
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:137
+msgid "Facebook"
+msgstr "Facebook"
+
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:82
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:148
+msgid "Google"
+msgstr "Google"
+
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:97
+msgid ""
+"These settings allow you to define whether to allow user registration on the "
+"website. You can also specify if you want to enable registration through "
+"social networks"
+msgstr ""
+"Esta configuración le permite definir si desea permitir el registro de "
+"usuarios en el sitio web. También puede especificar si desea habilitar el "
+"registro a través de redes sociales"
+
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:111
+msgid "Login settings"
+msgstr "Configuración de inicio de sesión"
+
+#: ../storage/framework/messages/d780a4f0f3cd569459ab58f396dafe37f1d42ee2.php.php:163
+msgid ""
+"This configuration allows you to define whether to allow user login on the "
+"website. You can also specify if you want to enable login through social "
+"networks"
+msgstr ""
+"Esta configuración le permite definir si desea permitir el inicio de sesión "
+"del usuario en el sitio web. También puede especificar si desea habilitar el "
+"inicio de sesión a través de las redes sociales"
+
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:21
+msgid "Type of user load"
+msgstr "Tipo de carga de usuario"
+
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:86
+msgid "Expiration date"
+msgstr "Fecha Vencimiento"
+
+#: ../storage/framework/messages/d794a31241b974f9732198dd1ec14dde469fe663.php.php:96
+#: ../storage/framework/messages/f7352b8a3cd48277810fe138b7c492facf2e4ebf.php.php:91
+msgid "Creating..."
+msgstr "Crear..."
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:70
+#, fuzzy
+#| msgid "transaction type"
+msgid "transition types"
+msgstr "Tipo de transacción"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:94
+msgid "level 1 min"
+msgstr "Nivel 1 min"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:100
+msgid "level 2 min"
+msgstr "Nivel 2 min"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:106
+msgid "level 3 min"
+msgstr "Nivel 3 min"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:112
+msgid "level 4 min"
+msgstr "Nivel 4 min"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:118
+msgid "level 5 min"
+msgstr "Nivel 5 min"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:124
+msgid "level 1 max"
+msgstr "Nivel 1 Max"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:130
+msgid "level 2 max"
+msgstr "Nivel 2 Máx."
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:136
+msgid "level 3 max"
+msgstr "Nivel 3 Max"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:142
+msgid "level 4 max"
+msgstr "Nivel 4 Max"
+
+#: ../storage/framework/messages/dae1f20691dc651e6ff8c0cd053767f9c834bed5.php.php:148
+msgid "level 5 max"
+msgstr "Nivel 5 Max"
+
+#: ../storage/framework/messages/db218c8ffd3fb0a7c8cb2bf9a9e4e0a98d6b4bb4.php.php:5
+msgid "Send email"
+msgstr "Enviar correo electrónico"
+
+#: ../storage/framework/messages/db218c8ffd3fb0a7c8cb2bf9a9e4e0a98d6b4bb4.php.php:13
+msgid "Send email for activation of account"
+msgstr "Enviar correo electrónico para la activación de la cuenta"
+
+#: ../storage/framework/messages/dbfb89e293dc69e4c09695100aaf1dc9f43f8d97.php.php:6
+msgid "Update operational balance"
+msgstr "Actualizar el balance operativo"
+
+#: ../storage/framework/messages/df637ff3d10172cb5eca512835953c08f4ff7e00.php.php:92
+msgid "Data"
+msgstr "Datos"
+
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:69
+msgid "Roles and Permissions"
+msgstr "Roles y permisos"
+
+#: ../storage/framework/messages/df8d639f3136edf55c884d0e39e20b25da2ba6d2.php.php:85
+msgid "Roles"
+msgstr "Roles"
+
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:409
+msgid "Save segment"
+msgstr "Guardar segmento"
+
+#: ../storage/framework/messages/e3e6f2062cb58a5642b684a1af417570881197cb.php.php:416
+msgid "Create empty segment"
+msgstr "Crear segmento vacío"
+
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:29
+msgid "User to refer"
+msgstr "Usuario a referir"
+
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:53
+msgid "Adding..."
+msgstr "Agregar..."
+
+#: ../storage/framework/messages/e4ae58fcadf052cc330dc3312adc816ad6eef4ea.php.php:55
+msgid "Add user"
+msgstr "Agregar usuario"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:28
+msgid "Internal name (not displayed to user)"
+msgstr "Nombre interno (no se muestra al usuario)"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:69
+msgid "Bonus type"
+msgstr "Tipo de bono"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:71
+msgid "Instant"
+msgstr "Instante"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:101
+msgid "BTag"
+msgstr "BTag"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:194
+msgid "Deposit type"
+msgstr "Tipo de depósito"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:197
+msgid "First"
+msgstr "Primera"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:201
+msgid "Next"
+msgstr "Siguiente"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:209
+msgid "Minimum"
+msgstr "Minimo"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:215
+msgid "Include payment methods"
+msgstr "Incluir métodos de pago"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:230
+msgid "Exclude payment methods"
+msgstr "Excluir métodos de pago"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:311
+msgid "Bonus data"
+msgstr "Datos de bonificación"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:326
+msgid "Fixed bonus"
+msgstr "Bonificación fija"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:336
+msgid "Deposit percentage"
+msgstr "Porcentaje de depósito"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:354
+msgid "Bonus to be awarded"
+msgstr "Bonificación a otorgar"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:366
+msgid "Limit to be awarded"
+msgstr "Límite a conceder"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:372
+msgid "Maximum to convert into real balance"
+msgstr "Máximo para convertir en saldo real"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:392
+msgid "Rollovers data"
+msgstr "Datos de reinversión"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:401
+msgid "Complete rollovers"
+msgstr "Vuelcos completos"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:411
+msgid "Rollover type"
+msgstr "Tipo de rollover"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:416
+msgid "Bonus + deposit"
+msgstr "Bono + depósito"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:438
+msgid "Rollover multiplier"
+msgstr "Multiplicador de rollover"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:444
+msgid "Days to complete rollover"
+msgstr "Días para completar el rollover"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:452
+msgid "Simple and combined"
+msgstr "Simple y combinado"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:453
+msgid "Simple"
+msgstr "Simple"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:454
+msgid "Combined"
+msgstr "Combinado"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:460
+msgid "Quota or Achievement"
+msgstr "Cuota o logro"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:484
+msgid "Users restriction"
+msgstr "Restricción de usuarios"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:492
+msgid "Users restriction type"
+msgstr "Tipo de restricción de usuarios"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:494
+msgid "No restriction"
+msgstr "Sin restricciones"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:504
+msgid "Include users"
+msgstr "Incluir usuarios"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:512
+msgid "Exclude users"
+msgstr "Excluir usuarios"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:520
+msgid "Include segments"
+msgstr "Incluir segmentos"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:534
+msgid "Exclude segments"
+msgstr "Excluir segmentos"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:548
+msgid "Include excel"
+msgstr "Incluir Excel"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:554
+msgid "Exclude excel"
+msgstr "Excluir Excel"
+
+#: ../storage/framework/messages/e4bf1de10bbc60306b020477f4e3bb812ceef842.php.php:566
+msgid "Translations"
+msgstr "Traducciones"
+
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:132
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:132
+msgid "Payment method"
+msgstr "Método de pago"
+
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:137
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:137
+msgid "Casino"
+msgstr "Casino"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:12
+msgid "Landing Pages details"
+msgstr "Detalles de las páginas de destino"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:38
+msgid "Subtitle"
+msgstr "Subtítulo"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:45
+msgid "Text button"
+msgstr "Botón de texto"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:112
+msgid "Upload landing"
+msgstr "Subir aterrizaje"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:147
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:154
+msgid "Background 2"
+msgstr "Antecedentes 2"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:166
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:173
+msgid "Image left"
+msgstr "Imagen izquierda"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:204
+msgid "Steps"
+msgstr "Pasos"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:213
+msgid "Steps Title"
+msgstr "Título de los pasos"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:219
+msgid "Steps Content"
+msgstr "Contenido de los pasos"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:235
+msgid "Terms"
+msgstr "Términos"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:244
+msgid "Terms Title"
+msgstr "Términos Título"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:250
+msgid "Terms Content"
+msgstr "Términos Contenido"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:266
+msgid "Additional"
+msgstr "Adicional"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:275
+msgid "Additional Title"
+msgstr "Título adicional"
+
+#: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:282
+msgid "Additional Content"
+msgstr "Contenido adicional"
+
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:19
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:66
+msgid "Ticket"
+msgstr "Ticket"
+
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:40
+msgid "Ticket details"
+msgstr "Detalles del boleto"
+
+#: ../storage/framework/messages/e68ea6c5141c2ebed0d29b2d0e71a90fd62bb460.php.php:93
+msgid "Ticket selections"
+msgstr "Selección de entradas"
+
+#: ../storage/framework/messages/e6fdbbcd326cbeb29975b2e67ef6697228f5bfed.php.php:38
+msgid "Position"
+msgstr "Posición"
+
+#: ../storage/framework/messages/e6fdbbcd326cbeb29975b2e67ef6697228f5bfed.php.php:42
+msgid "Size"
+msgstr "Tamaño"
+
+#: ../storage/framework/messages/e9e4d7eaf95f07b9a78b928fb803ebe6c7b43eb7.php.php:6
+msgid "Update percentage"
+msgstr "Porcentaje de actualización"
+
+#: ../storage/framework/messages/e9f2a786448693bbc76e8d522055fd0e29adb5d0.php.php:5
+#: ../storage/framework/messages/f5a787f8be3e49bc850fb6759f6ea785b9cf3342.php.php:5
+msgid "Status..."
+msgstr "Status..."
+
+#: ../storage/framework/messages/e9f2a786448693bbc76e8d522055fd0e29adb5d0.php.php:15
+msgid "Payment methods..."
+msgstr "Formas de pago..."
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:395
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:395
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3331
+#, fuzzy
+msgid "Credit codes"
+msgstr "Códigos de crédito"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:445
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:445
+msgid "ApcoPay"
+msgstr "ApcoPay"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:450
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:450
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3479
+#, fuzzy
+msgid "YEiPii"
+msgstr "YEiPii"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:470
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:470
+msgid "Cards"
+msgstr "Tarjetas"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:480
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:480
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3519
+#, fuzzy
+msgid "PayCIPS"
+msgstr "PayCIPS"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:485
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:485
+msgid "Withdrawal"
+msgstr "Retiros"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:490
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:490
+msgid "Cash - PSE - Cards"
+msgstr "Efectivo - PSE - Tarjetas"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:495
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:495
+msgid "Cash - SPEI - Cards"
+msgstr "Efectivo - SPEI - Tarjetas"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:500
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:500
+msgid "Cards - Banks - Cash"
+msgstr "Tarjetas - Bancos - Efectivo"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:505
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:505
+msgid "Cards - Cash"
+msgstr "Tarjetas - Efectivo"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:520
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:520
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3625
+#, fuzzy
+msgid "Oobit"
+msgstr "Oobit"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:525
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:525
+msgid "Cards - Wire transfers - Cash"
+msgstr "Tarjetas - Transferencias bancarias - Efectivo"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:535
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:535
+msgid "Yappy"
+msgstr "Yappy"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:550
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:550
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3735
+#, fuzzy
+msgid "VPOS"
+msgstr "VPOS"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:570
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:570
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3755
+#, fuzzy
+msgid "Red Pagos"
+msgstr "Pagos Rojos"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:575
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:575
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3760
+#, fuzzy
+msgid "Directa24"
+msgstr "Directa24"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:580
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:580
+msgid "Adams Pay"
+msgstr "Pago Adams"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:585
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:585
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3805
+#, fuzzy
+msgid "VPOS Zimple"
+msgstr "VPOS Zimple"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:590
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:590
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3845
+#, fuzzy
+msgid "Coral Commerce"
+msgstr "Comercio de Coral"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:635
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:635
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4055
+#, fuzzy
+msgid "ZamPay"
+msgstr "ZamPay"
+
+#: ../storage/framework/messages/ea201903d98a1b3fdef54c3e186230c362c269aa.php.php:645
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/PaymentMethods.php:645
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4090
+msgid "Pago medios"
+msgstr "Pago medios"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:44
+msgid "All status"
+msgstr "Todos los estados"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:52
+msgid "Registration way"
+msgstr "Forma de registro"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:54
+msgid "All ways"
+msgstr "Todas las formas"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:55
+msgid "Web"
+msgstr "Web"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:56
+msgid "Dotpanel"
+msgstr "Dotpanel"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:62
+msgid "Deposit options"
+msgstr "Opciones de depósito"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:152
+msgid "Registration currency"
+msgstr "Moneda de registro"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:160
+msgid "Where did you meet us?"
+msgstr "¿Dónde nos conociste?"
+
+#: ../storage/framework/messages/eac69167661c106fd3aa3ee54316d14faf1d97ce.php.php:168
+msgid "Referral"
+msgstr "Tipo de recompensa por recomendación"
+
+#: ../storage/framework/messages/eb229cb500c0ea40448b4ecbb25172093db216c7.php.php:97
+msgid "Referred by"
+msgstr "Referido por"
+
+#: ../storage/framework/messages/f4a963e2831d0329b14ba547343a9bdd121d320e.php.php:34
+msgid "End point"
+msgstr "Punto final"
+
+#: ../storage/framework/messages/f4a963e2831d0329b14ba547343a9bdd121d320e.php.php:40
+msgid "Secret"
+msgstr "Secret"
+
+#: ../storage/framework/messages/f4a963e2831d0329b14ba547343a9bdd121d320e.php.php:51
+msgid "Update client"
+msgstr "Actualizar cliente"
+
+#: ../storage/framework/messages/f54b3801812071c8982f15caf3d81f67f6c51a59.php.php:6
+msgid "Process Payment"
+msgstr "Procesar pago"
+
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:85
+msgid "From"
+msgstr "Desde"
+
+#: ../storage/framework/messages/f554c410d94b55277b0cb769b2ea64d91e31468d.php.php:89
+msgid "Toward"
+msgstr "Hacia"
+
+#: ../storage/framework/messages/f5c2c402ac670f77f64a1a39345feaa2d26d4fe3.php.php:42
+msgid "Users quantity"
+msgstr "Cantidad de usuarios"
+
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:39
+msgid "Providers type"
+msgstr "Tipo de proveedores"
+
+#: ../storage/framework/messages/ff1d999da29dada936c562dc96ed73a84f613c3f.php.php:80
+msgid "Credentials list"
+msgstr "Lista de credenciales"
+
+#: ../storage/framework/messages/ffcd655b0f91eae37227d75b60355a1ed09edf99.php.php:32
+msgid "Slider details"
+msgstr "Detalles del control deslizante"
+
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:5
+msgid "Edit account"
+msgstr "Editar cuenta"
+
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:18
+msgid "Cripto Currency"
+msgstr "Criptomoneda"
+
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:72
+msgid "VCreditos secure ID"
+msgstr "Identificación segura de VCreditos"
+
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:78
+msgid "Bizum name"
+msgstr "Nombre Bizum"
+
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:82
+msgid "Bizum phone"
+msgstr "Teléfono Bizum"
+
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:88
+msgid "Binance Email"
+msgstr "Correo electrónico de Binance"
+
+#: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:92
+msgid "Binance Phone"
+msgstr "Teléfono Binance"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:120
+msgid "Welcome bonus with deposit"
+msgstr "Bono de bienvenida con depósito"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:125
+msgid "Welcome bonus without deposit"
+msgstr "Bono de bienvenida sin depósito"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:130
+msgid "Cash back bonus"
+msgstr "Bono de devolución de efectivo"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:135
+msgid "Birthday bonus"
+msgstr "Bono de cumpleaños"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:140
+msgid "Loyalty bonus"
+msgstr "Bono de fidelidad"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:145
+msgid "Contest winner bonus"
+msgstr "Bono de ganador del concurso"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:150
+msgid "Tournament"
+msgstr "Torneo"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:155
+msgid "Login bonus"
+msgstr "Bono de inicio de sesión"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:160
+msgid "Bonus code"
+msgstr "Código de bono"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:165
+msgid "Bonus code with number deposit"
+msgstr "Código de bono con depósito de número"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:170
+msgid "Wallet balance bonus"
+msgstr "Bonificación de saldo de billetera"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:175
+msgid "Bet bonus"
+msgstr "Bono de apuesta"
+
+#: ../vendor/dotworkers/bonus/src/Bonus/Enums/AllocationCriteria.php:180
+msgid "Next deposit bonus"
+msgstr "Bono de próximo depósito"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1244
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1281
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1372
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1603
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1714
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1811
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1942
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1960
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2212
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2293
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2311
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2454
+#, php-format
+msgid "Bet #%s"
+msgstr "Apuesta #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1249
+#, php-format
+msgid "Bet #%s reversed"
+msgstr "Apuesta #%s revertida"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1254
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1291
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1377
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1612
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1712
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1806
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1947
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1958
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2217
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2298
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2316
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2449
+#, php-format
+msgid "Bet #%s won"
+msgstr "Apuesta #%s ganada"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1259
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1296
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1679
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1952
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2459
+#, php-format
+msgid "Bet #%s returned"
+msgstr "Apuesta #%s devuelta"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1264
+#, php-format
+msgid "Cashback for bet #%s"
+msgstr "Cashback para la apuesta #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1269
+#, php-format
+msgid "Bonus for bet #%s"
+msgstr "Bono por apuesta #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1286
+#, php-format
+msgid "Bet reverse #%s"
+msgstr "Apuesta inversa #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1301
+#, php-format
+msgid "Bet #%s canceled"
+msgstr "Apuesta #%s cancelada"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1311
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1448
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1637
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1656
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1983
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2007
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2108
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2186
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2253
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2344
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2365
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2517
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2544
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2650
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2714
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2736
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2798
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2850
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3247
+#, php-format
+msgid "Rollback bet #%s on the game %s"
+msgstr "Apuesta de retroceso #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1314
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1437
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1481
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1499
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1632
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1651
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1845
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1978
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2002
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2053
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2079
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2103
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2248
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2339
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2509
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2536
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2616
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2679
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2706
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2728
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2809
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2830
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2833
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2861
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2882
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2885
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2912
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3239
+#, php-format
+msgid "Bet #%s on the game %s won"
+msgstr "Apuesta #%s en el juego %s ganado"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1318
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2192
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2933
+#, php-format
+msgid "Rollback bet #%s won on the game %s"
+msgstr "Rollback bet #%s ganó en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1321
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1443
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1476
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1494
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1627
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1646
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1840
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1973
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1997
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2048
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2074
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2098
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2243
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2334
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2355
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2504
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2531
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2611
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2637
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2701
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2723
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2814
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2866
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2917
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2943
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2946
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3234
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3261
+#, php-format
+msgid "Bet #%s on the game %s"
+msgstr "Apuesta #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1328
+#, php-format
+msgid "Deposit via credit code %s"
+msgstr "Depósito a través del código de crédito %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1337
+msgid "Deposit via wire transfer"
+msgstr "Depósito mediante transferencia bancaria"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1342
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1526
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1730
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2969
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3004
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3039
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3070
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3101
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3132
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3172
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3221
+msgid "Balance unlocked and returned to wallet due to rejected withdrawal"
+msgstr ""
+"Saldo desbloqueado y devuelto a la billetera debido a un retiro rechazado"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1350
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1534
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3047
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3078
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3109
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3140
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3180
+msgid "Balance locked for withdrawal processing"
+msgstr "Saldo bloqueado para el procesamiento de retiros"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1356
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1744
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2983
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3018
+#, php-format
+msgid "Balance unlocked by approved withdrawal. Reference %s"
+msgstr "Saldo desbloqueado por retiro aprobado. Referencia %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1358
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1539
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1746
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2985
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3020
+msgid "Balance unlocked by approved withdrawal"
+msgstr "Saldo desbloqueado por retiro aprobado"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1382
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1609
+#, php-format
+msgid "Bet #%s refunded"
+msgstr "Apuesta #%s reembolsada"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1387
+#, php-format
+msgid "Payout of jackpot #%s"
+msgstr "Pago del premio mayor #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1398
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1415
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2269
+#, php-format
+msgid "Bet #%s won. Round #%s"
+msgstr "Apuesta #%s ganó. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1401
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1410
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2264
+#, php-format
+msgid "Bet #%s. Round #%s"
+msgstr "Apuesta #%s. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1420
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2274
+#, php-format
+msgid "Bet #%s canceled. Round #%s"
+msgstr "Apuesta #%s cancelada. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1429
+msgid "Bet on the game"
+msgstr "Apuesta en el juego"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1453
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1458
+#, php-format
+msgid "Freespin #%s on the game %s"
+msgstr "Freespin #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1486
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1504
+#, php-format
+msgid "Bet #%s on the game %s refunded"
+msgstr "Apuesta #%s en el juego %s reembolsado"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1518
+msgid "Withdrawal rejected by ALPS"
+msgstr "Retirada rechazada por ALPS"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1520
+#, php-format
+msgid "Deposit via ALPS. Reference %s"
+msgstr "Depósito a través de ALPS. Referencia %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1552
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1570
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1779
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1831
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2129
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2148
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2165
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2194
+#, php-format
+msgid "Bet #%s on the game %s. Round #%s"
+msgstr "Apuesta #%s en el juego %s. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1557
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1575
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1784
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1829
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2127
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2146
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2163
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2188
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3266
+#, php-format
+msgid "Bet #%s on the game %s won. Round #%s"
+msgstr "Apuesta #%s en el juego %s ganado. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1562
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1580
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3271
+#, php-format
+msgid "Bet #%s on the game %s refunded. Round #%s"
+msgstr "La apuesta #%s en el juego %s reembolsada. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1591
+#, php-format
+msgid "Direct agent credit. From: %s. Toward %s"
+msgstr "Crédito de agente directo. De: %s. Hacia %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1593
+#, php-format
+msgid "Direct agent debit. From: %s. Toward %s"
+msgstr "Débito directo del agente. De: %s. Hacia %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1669
+#, php-format
+msgid "Bet #%s on game %s in date %s"
+msgstr "Apuesta #%s en el juego %s en fecha %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1674
+#, php-format
+msgid "Bet #%s won on game %s"
+msgstr "Apuesta #%s ganó en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1691
+#, php-format
+msgid "Rollback bet #%s. Transaction #%s"
+msgstr "Apuesta de retroceso #%s. Transacción #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1696
+#, php-format
+msgid "Bet #%s. Transaction #%s"
+msgstr "Apuesta #%s. Transacción #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1701
+#, php-format
+msgid "Bet #%s won. Transaction #%s"
+msgstr "Apuesta #%s ganó. Transacción #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1706
+#, php-format
+msgid "Bet #%s reversed. Transaction #%s"
+msgstr "Apuesta #%s invertida. Transacción #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1725
+msgid "Deposit via Zelle"
+msgstr "Depósito a través de Zelle"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1738
+msgid "Balance locked for withdrawal processing via zelle"
+msgstr "Saldo bloqueado para el procesamiento de retiros a través de zelle"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1765
+#, php-format
+msgid "Bonus converted to real balance: %s"
+msgstr "Bono convertido a saldo real: %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1789
+#, php-format
+msgid "Bet #%s on the game %s cancelled. Round #%s"
+msgstr "La apuesta #%s en el juego %s cancelada. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1817
+#, php-format
+msgid "Rollback prize #%s"
+msgstr "Premio de reversión #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1819
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2222
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2321
+#, php-format
+msgid "Rollback bet #%s"
+msgstr "Apuesta de retroceso #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1850
+#, php-format
+msgid "Bet #%s canceled on the game %s"
+msgstr "Apuesta #%s cancelada en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1859
+msgid "Deposit via mobile payment"
+msgstr "Depósito a través del pago móvil"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1866
+msgid "Deposit via PayPal"
+msgstr "Depósito a través de PayPal"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1868
+msgid "Withdrawal via PayPal"
+msgstr "Desistimiento a través de PayPal"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1875
+msgid "Deposit via Skrill"
+msgstr "Depósito a través de Skrill"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1877
+msgid "Withdrawal via Skrill"
+msgstr "Retirada a través de Skrill"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1884
+msgid "Deposit via Neteller"
+msgstr "Depósito a través de Neteller"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1886
+msgid "Withdrawal via Neteller"
+msgstr "Retiro a través de Neteller"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1893
+msgid "Deposit via Cryptocurrency"
+msgstr "Depósito a través de criptomoneda"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1895
+msgid "Withdrawal via Cryptocurrency"
+msgstr "Retiro a través de criptomoneda"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1902
+msgid "Deposit via AirTM"
+msgstr "Depósito a través de AirTM"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1904
+msgid "Withdrawal via AirTM"
+msgstr "Retiro a través de AirTM"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1911
+msgid "Deposit via Uphold"
+msgstr "Depósito a través de Uphold"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1913
+msgid "Withdrawal via Uphold"
+msgstr "Retiro a través de Uphold"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1921
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1923
+#, php-format
+msgid "Deposit via 123Pago. Transaction #%s Credit card %s"
+msgstr "Depósito a través de 123Pago. Transacción #%s %s de tarjeta de crédito"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1931
+#, php-format
+msgid "Deposit via Zippy. Transaction #%s"
+msgstr "Deposite a través de Zippy. Transacción #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:1988
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2012
+#, php-format
+msgid "Prize won on the game %s"
+msgstr "Premio ganado en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2025
+#, php-format
+msgid "Bet in round #%s on the game %s"
+msgstr "Apuesta en la ronda #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2030
+#, php-format
+msgid "Bet in round #%s won on the game %s"
+msgstr "Apuesta en la ronda #%s ganó en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2035
+#, php-format
+msgid "Rollback bet in round #%s on the game %s"
+msgstr "Apuesta de retroceso en la ronda #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2058
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2084
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2621
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2804
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2856
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2907
+#, php-format
+msgid "Bet #%s returned on the game %s"
+msgstr "La apuesta #%s regresó en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2063
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2626
+#, php-format
+msgid "Bet #%s on the game: %s"
+msgstr "Apuesta #%s en el juego: %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2124
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2140
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2157
+#, php-format
+msgid "Bet #%s refunded on the game %s. Round #%s"
+msgstr "La apuesta #%s reembolsada en el juego %s. Ronda #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2176
+#, php-format
+msgid "Deposit via Total Pago. Reference %s"
+msgstr "Depósito a través de Total Pago. Referencia %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2178
+msgid "Deposit via Total Pago"
+msgstr "Depósito a través de Total Pago"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2201
+#, php-format
+msgid "Exchange of %s store points for %s"
+msgstr "Intercambio de %s puntos de tienda por %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2231
+msgid "Deposit via VCreditos"
+msgstr "Depósito a través de VCreditos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2233
+msgid "Withdrawal via VCreditos"
+msgstr "Retiro a través de VCreditos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2284
+#, php-format
+msgid "Deposit from VES to USD. VES amount: %s. Rate: %s"
+msgstr "Depósito de VES a USD. Importe VES: %s. Precio: %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2360
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2642
+#, php-format
+msgid "Win a transaction #%s on the game %s"
+msgstr "Gana una transacción #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2378
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2412
+#, php-format
+msgid "Bet #%s won. Reference #%s"
+msgstr "Apuesta #%s ganó. Referencia #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2383
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2418
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2471
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2477
+#, php-format
+msgid "Bet #%s. Reference #%s"
+msgstr "Apuesta #%s. Referencia #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2389
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2424
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2483
+#, php-format
+msgid "Rollback prize #%s. Reference #%s"
+msgstr "Premio de reversión #%s. Referencia #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2391
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2426
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2485
+#, php-format
+msgid "Rollback bet #%s. Reference #%s"
+msgstr "Apuesta de retroceso #%s. Referencia #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2397
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2432
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2491
+#, php-format
+msgid "Bet #%s returned. Reference #%s"
+msgstr "Apuesta #%s devuelta. Referencia #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2402
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2437
+#, php-format
+msgid "Bet #%s withdrawn. Reference #%s"
+msgstr "Apuesta #%s retirada. Referencia #%s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2515
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2542
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2648
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2712
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2734
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3245
+#, php-format
+msgid "Rollback prize #%s on the game %s"
+msgstr "Premio de reversión #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2554
+msgid "Deposit via Pay for Fun"
+msgstr "Deposite a través de Pay for Fun"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2556
+msgid "Withdrawal via Pay for Fun"
+msgstr "Retiro a través de Pay for Fun"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2563
+msgid "Deposit via VCreditos API"
+msgstr "Deposite a través de VCreditos API"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2565
+msgid "Withdrawal via VCreditos API"
+msgstr "Retiro a través de VCreditos API"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2572
+msgid "Deposit via Abitab"
+msgstr "Depositar a través de Abitab"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2574
+msgid "Withdrawal via Abitab"
+msgstr "Retiro a través de Abitab"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2581
+msgid "Deposit via Red Pagos"
+msgstr "Depósito a través de Red Pagos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2583
+msgid "Withdrawal via Red Pagos"
+msgstr "Retiro a través de Red Pagos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2590
+msgid "Deposit via Directa24"
+msgstr "Depósito a través de Directa24"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2592
+msgid "Withdrawal via Directa24"
+msgstr "Desistimiento a través de Directa24"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2599
+msgid "Deposit via Pay Retailers"
+msgstr "Deposite a través de Pay Retailers"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2601
+msgid "Withdrawal via Pay Retailers"
+msgstr "Retiro a través de minoristas de pago"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2660
+msgid "Deposit via Adams Pay"
+msgstr "Depósito a través de Adams Pay"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2662
+msgid "Withdrawal via Adams Pay"
+msgstr "Retiro a través de Adams Pay"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2671
+#, php-format
+msgid "Bet #%s with round %s on the game %s"
+msgstr "Apuesta #%s con ronda %s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2677
+#, php-format
+msgid "Bet #%s with round %s on the game %s won"
+msgstr "Apuesta #%s con la ronda %s en el juego %s ganado"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2686
+#, php-format
+msgid "Rollback prize #%s with round %s on the game %s"
+msgstr "Premio de reversión #%s con %s de ronda en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2688
+#, php-format
+msgid "Rollback bet #%s with round %s on the game %s"
+msgstr "Apuesta de retroceso #%s con ronda %s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2747
+#, php-format
+msgid "Deposit via Coral Commerce. Transaction %s"
+msgstr "Depósito a través de Coral Commerce. Transacción %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2754
+msgid "Deposit via Monnet"
+msgstr "Depósito a través de Monnet"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2756
+msgid "Withdrawal via Monnet"
+msgstr "Desistimiento a través de Monnet"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2795
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2847
+#, php-format
+msgid "Bet rollback on the game %s. Session %s"
+msgstr "Apuesta rollback en el juego %s. Sesión %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2819
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2871
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2922
+#, php-format
+msgid "Buy freeSpins #%s on the game %s"
+msgstr "Comprar freeSpins #%s en el juego %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2824
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2876
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2927
+#, php-format
+msgid "Bet #%s on the game %s won by freeSpins"
+msgstr "Apuesta #%s en el juego %s ganado por freeSpins"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2835
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2887
+#, php-format
+msgid "Bet on the game %s won. Round #%s. Session %s"
+msgstr "Apuesta en el juego %s ganado. Ronda #%s. Sesión %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2901
+#, php-format
+msgid "Bet won rollback on the game %s. Session %s"
+msgstr "Bet ganó el rollback en el juego %s. Sesión %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2948
+#, php-format
+msgid "Bet on the game %s. Round #%s. Session %s"
+msgstr "Apuesta en el juego %s. Ronda #%s. Sesión %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2964
+msgid "Deposit via binance"
+msgstr "Depósito a través de binance"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2977
+msgid "Balance locked for withdrawal processing via binance"
+msgstr "Saldo bloqueado para el procesamiento de retiros a través de binance"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:2999
+msgid "Deposit via bizum"
+msgstr "Depósito vía bizum"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3012
+msgid "Balance locked for withdrawal processing via bizum"
+msgstr "Saldo bloqueado para el procesamiento de retiros a través de bizum"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3034
+msgid "Deposit via payKu"
+msgstr "Depósito a través de payKu"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3052
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3083
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3114
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3145
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3185
+msgid "Balance unlocked by withdrawal"
+msgstr "Saldo desbloqueado por retiro"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3065
+msgid "Deposit via prontopaga"
+msgstr "Depósito vía prontopaga"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3096
+msgid "Deposit via pay for fun go"
+msgstr "Depósito a través de pagar por diversión ir"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3127
+#, fuzzy
+msgid "Deposit via personal"
+msgstr "Depósito a través de personal"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3155
+msgid "Deposit via Reserve"
+msgstr "Depósito a través de Reserva"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3157
+#, fuzzy
+msgid "Withdrawal via Reserve"
+msgstr "Retiro a través de Reserva"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3167
+#, fuzzy
+msgid "Deposit via zampay"
+msgstr "Depósito a través de zampay"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3195
+#, fuzzy
+msgid "Deposit via charging point"
+msgstr "Depósito a través del punto de recarga"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3197
+#, php-format
+msgid "Withdrawal via charging point. Code %s"
+msgstr "Desistimiento a través del punto de recarga. Código %s"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3204
+#, fuzzy
+msgid "Deposit via Nequi"
+msgstr "Depósito vía Nequi"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3206
+#, fuzzy
+msgid "Withdrawal via Nequi"
+msgstr "Desistimiento a través de Nequi"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3216
+#, fuzzy
+msgid "Deposit via Pagomedios"
+msgstr "Depósito a través de Pagomedios"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3311
+#, fuzzy
+msgid "VGC SportBook"
+msgstr "VGC SportBook"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3378
+#, fuzzy
+msgid "Play'n Go"
+msgstr "Play'n Go"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3404
+#, fuzzy
+msgid "XLive"
+msgstr "XLive"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3424
+#, fuzzy
+msgid "IQ Soft"
+msgstr "IQ Soft"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3474
+#, fuzzy
+msgid "Apcopay"
+msgstr "Apcopay"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3489
+msgid "Agency"
+msgstr "Agencia"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3539
+#, fuzzy
+msgid "PG Soft"
+msgstr "PG Soft"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3564
+#, fuzzy
+msgid "Hacksaw Gaming"
+msgstr "Hacksaw Juegos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3575
+#, fuzzy
+msgid "Expresso Games"
+msgstr "Juegos Expresso"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3605
+#, fuzzy
+msgid "Event Bet"
+msgstr "Apuesta de evento"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3630
+#, fuzzy
+msgid "Animals Deluxe"
+msgstr "Animales Deluxe"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3670
+#, fuzzy
+msgid "PragmaticPlay Live Casino"
+msgstr "PragmaticPlay Casino en vivo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3675
+#, fuzzy
+msgid "Booongo original"
+msgstr "Booongo original"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3700
+#, fuzzy
+msgid "Evo Play"
+msgstr "Evo Play"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3705
+#, fuzzy
+msgid "iSoftBet"
+msgstr "iSoftBet"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3720
+#, fuzzy
+msgid "Pay for Fun"
+msgstr "Paga por diversión"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3795
+#, fuzzy
+msgid "Endorphina"
+msgstr "Endorfina"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3800
+#, fuzzy
+msgid "Greentube"
+msgstr "Tubo verde"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3815
+#, fuzzy
+msgid "Versus"
+msgstr "Versus"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3820
+#, fuzzy
+msgid "Smart Soft"
+msgstr "Soft inteligente"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3825
+#, fuzzy
+msgid "Swintt"
+msgstr "Swintt"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3830
+#, fuzzy
+msgid "Sky Wind"
+msgstr "Viento del cielo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3835
+#, fuzzy
+msgid "Ct-Interactive"
+msgstr "CT-Interactivo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3840
+#, fuzzy
+msgid "Dot Suite"
+msgstr "Suite Punto"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3850
+#, fuzzy
+msgid "Fantasy"
+msgstr "Fantasía"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3855
+#, fuzzy
+msgid "Booming Games Origin"
+msgstr "Juegos en auge Origin"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3860
+#, fuzzy
+msgid "DLS"
+msgstr "DLS"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3865
+#, fuzzy
+msgid "Pragmatic Play Virtual"
+msgstr "Juego pragmático virtual"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3870
+#, fuzzy
+msgid "Net Ent"
+msgstr "Ent neto"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3875
+#, fuzzy
+msgid "Skillzz Gaming"
+msgstr "Skillzz Juegos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3880
+#, fuzzy
+msgid "Dragon Gaming"
+msgstr "Juegos de dragones"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3885
+#, fuzzy
+msgid "Eurasian Gaming"
+msgstr "Juegos euroasiáticos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3890
+#, fuzzy
+msgid "Betsoft"
+msgstr "Betsoft"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3895
+#, fuzzy
+msgid "Tangente"
+msgstr "Tangente"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3900
+#, fuzzy
+msgid "Bet By"
+msgstr "Apuesta por"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3905
+#, fuzzy
+msgid "Fresh Deck"
+msgstr "Cubierta fresca"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3910
+#, fuzzy
+msgid "Ainsworth"
+msgstr "Ainsworth"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3915
+#, fuzzy
+msgid "Plexasoft"
+msgstr "Plexasoft"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3920
+#, fuzzy
+msgid "Store Money"
+msgstr "Dinero de la tienda"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3925
+#, fuzzy
+msgid "Ruby Play"
+msgstr "Juego de Rubí"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3930
+msgid "Ezugi Games"
+msgstr "Juegos de Ezugi"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3935
+#, fuzzy
+msgid "Betsoft VG"
+msgstr "Betsoft VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3940
+#, fuzzy
+msgid "Tom Horn VG"
+msgstr "Tom Horn VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3945
+#, fuzzy
+msgid "Platipus VG"
+msgstr "Platipus VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3950
+#, fuzzy
+msgid "Booongo VG"
+msgstr "Booongo VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3955
+#, fuzzy
+msgid "Playson VG"
+msgstr "Playson VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3960
+#, fuzzy
+msgid "Leap VG"
+msgstr "Salto VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3965
+#, fuzzy
+msgid "Arrows Edge VG"
+msgstr "Flechas Edge VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3970
+#, fuzzy
+msgid "Red Rake VG"
+msgstr "Rake rojo VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3975
+#, fuzzy
+msgid "Geet Bet"
+msgstr "Apuesta Geet"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4005
+#, fuzzy
+msgid "Vivo gaming bingo"
+msgstr "Bingo de juegos Vivo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4010
+#, fuzzy
+msgid "Barbara bang"
+msgstr "Bárbara bang"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4025
+#, fuzzy
+msgid "Bgaming"
+msgstr "Bgaming"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4045
+#, fuzzy
+msgid "5Men Gaming"
+msgstr "Juegos de 5Men"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4050
+#, fuzzy
+msgid "TGG Interactive"
+msgstr "TGG interactivo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4065
+#, fuzzy
+msgid "Cockfight"
+msgstr "Pelea de gallos"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4070
+#, fuzzy
+msgid "Beter live casino"
+msgstr "Beter casino en vivo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4075
+#, fuzzy
+msgid "Inbet"
+msgstr "Inbet"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4080
+#, fuzzy
+msgid "Spinomenal VG"
+msgstr "VG espinomenal"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4085
+#, fuzzy
+msgid "5Men VG"
+msgstr "5Hombres VG"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4095
+#, fuzzy
+msgid "LV Slots"
+msgstr "Ranuras LV"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4100
+msgid "Sport bet"
+msgstr "Apuesta deportiva"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4105
+msgid "Ezugi Live"
+msgstr "Ezugi en vivo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4110
+msgid "Vivo Live"
+msgstr "Vivo en vivo"
+
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:4115
+msgid "Lucky Roulette"
+msgstr "Ruleta de la suerte"
+
+#~ msgid "Average bet"
+#~ msgstr "Apuesta media"
+
+#~ msgid "Filter client account"
+#~ msgstr "Filtrar cuenta de cliente"
+
+#~ msgid "All Whitelabel"
+#~ msgstr "Todo Whitelabel"
+
+#~ msgid "All payment methods"
+#~ msgstr "Todos los métodos de pago"
+
+#~ msgid "Limits"
+#~ msgstr "Límites"
+
+#~ msgid "Created"
+#~ msgstr "Creado"
+
+#~ msgid "Levels name"
+#~ msgstr "Nombre de los niveles"
+
+#~ msgid ""
+#~ "The names of the levels are used to show the user and the DotPanel "
+#~ "operator the level that they have on the platform."
+#~ msgstr ""
+#~ "Los nombres de los niveles se utilizan para mostrar al usuario y al "
+#~ "operador de DotPanel el nivel que tienen en la plataforma."
+
+#~ msgid "The name of the level is visible in the user profile."
+#~ msgstr "El nombre del nivel es visible en el perfil de usuario."
+
+#~ msgid "Email templates type"
+#~ msgstr "Tipo de plantillas de correo electrónico"
+
+#~ msgid "Name (Uppercase only without spaces)"
+#~ msgstr "Nombre (solo mayúsculas sin espacios)"
+
+#~ msgid "Description (It will be shown to the client and the user)"
+#~ msgstr "Descripción (Se mostrará al cliente y al usuario)"
+
+#~ msgid "Domain (example.com)"
+#~ msgstr "Dominio (example.com)"
+
+#~ msgid "Amount cryptocurrency"
+#~ msgstr "Cantidad criptomoneda"
+
+#~ msgid "Users and Roles"
+#~ msgstr "Usuarios y roles"
+
+#~ msgid "Internal error"
+#~ msgstr "Error interno"
+
+#~ msgid "BackOffice"
+#~ msgstr "BackOffice"
+
+#~ msgid "Suggested title"
+#~ msgstr "Título sugerido"
+
+#~ msgid "Configured title"
+#~ msgstr "Título configurado"
+
+#~ msgid "Last modification"
+#~ msgstr "Última modificación"
+
+#~ msgid "Exclude user"
+#~ msgstr "Excluir usuario"
+
+#~ msgid "Excluded users"
+#~ msgstr "Usuarios excluidos"
+
+#~ msgid "Tickets data"
+#~ msgstr "Datos de entradas"
+
+#~ msgid "Amount / Win"
+#~ msgstr "Cantidad / Ganar"
+
+#~ msgid "Versions"
+#~ msgstr "Versiones"
+
+#~ msgid "None"
+#~ msgstr "Ninguno"
+
+#~ msgid "Update credentials"
+#~ msgstr "Actualizar credenciales"
+
+#~ msgid "Edit document"
+#~ msgstr "Editar documento"
+
+#~ msgid ""
+#~ "This report shows the list of withdrawals made in a certain date range, "
+#~ "allowing them to be filtered by status."
+#~ msgstr ""
+#~ "Este informe muestra la lista de retiros realizados en un cierto rango de "
+#~ "fechas, lo que permite filtrarlos por estado."
+
+#~ msgid "Remove roles"
+#~ msgstr "Quitar roles"
+
+#~ msgid "The maximum file size is 5mb and the maximum width is 3440px"
+#~ msgstr ""
+#~ "El tamaño máximo de archivo es de 5mb y el ancho máximo es de 3440px"
+
+#~ msgid "Upload slider"
+#~ msgstr "Control deslizante Cargar"
+
+#~ msgid "Historical deposits"
+#~ msgstr "Depósitos históricos"
+
+#~ msgid "Historical withdrawals"
+#~ msgstr "Retiros históricos"
+
+#~ msgid "Gross amount"
+#~ msgstr "Importe bruto"
+
+#~ msgid "% Bonus / Deposits"
+#~ msgstr "% Bono / Depósitos"
+
+#~ msgid " The maximum file size is 5mb"
+#~ msgstr " El tamaño máximo de archivo es de 5 MB"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "Payment"
+#~ msgstr "Pago"
+
+#~ msgid "Users details"
+#~ msgstr "Detalles de los usuarios"
+
+#~ msgid ""
+#~ "For the assignment of users, the excluded will be taken into account as "
+#~ "the first option"
+#~ msgstr ""
+#~ "Para la asignación de usuarios, se tendrán en cuenta los excluidos como "
+#~ "primera opción"
+
+#~ msgid "User search type"
+#~ msgstr "Tipo de búsqueda de usuario"
+
+#~ msgid "Campaign for all users"
+#~ msgstr "Campaña para todos los usuarios"
+
+#~ msgid "Are you sure you want to delete this log file: :date ?"
+#~ msgstr ""
+#~ "¿Está seguro de que desea eliminar este archivo de registro: :d ate ?"
+
+#~ msgid "Verify document"
+#~ msgstr "Verificar documento"
+
+#~ msgid "Are you sure to take the action?"
+#~ msgstr "¿Está seguro de tomar la acción?"
+
+#~ msgid ""
+#~ "This report shows the total deposits and withdrawals, both pending and "
+#~ "approved, for each activated payment method in the selected currency."
+#~ msgstr ""
+#~ "Este informe muestra el total de depósitos y retiros, tanto pendientes "
+#~ "como aprobados, para cada método de pago activado en la moneda "
+#~ "seleccionada."
+
+#~ msgid ""
+#~ "Transactions made through agents or manual transactions are not reflected "
+#~ "in this report."
+#~ msgstr ""
+#~ "Las transacciones realizadas a través de agentes o transacciones manuales "
+#~ "no se reflejan en este informe."
+
+#~ msgid "Total approved deposits"
+#~ msgstr "Total de depósitos aprobados"
+
+#~ msgid "Total pending deposits"
+#~ msgstr "Total de depósitos pendientes"
+
+#~ msgid "Total approved withdrawals"
+#~ msgstr "Total de retiros aprobados"
+
+#~ msgid "Total pending withdrawals"
+#~ msgstr "Total de retiros pendientes"
+
+#~ msgid "Difference"
+#~ msgstr "Diferencia"
+
+#~ msgid "Url Launch"
+#~ msgstr "Inicio de URL"
+
+#, php-format
+#~ msgid "Operational balance (It will be credited in %s)"
+#~ msgstr "Saldo operativo (se acreditará en %s)"
+
+#~ msgid "Rango disponible de 1 - 99"
+#~ msgstr "Rango disponible de 1 - 99"
+
+#~ msgid "Agent type"
+#~ msgstr "Tipo de agente"
+
+#~ msgid "Master agents can have subagents and players dependent on them"
+#~ msgstr ""
+#~ "Los agentes maestros pueden tener subagentes y jugadores dependientes de "
+#~ "ellos"
+
+#~ msgid "Cashiers can only have players dependent on them."
+#~ msgstr "Los cajeros solo pueden tener jugadores que dependan de ellos."
+
+#~ msgid "Transactions file"
+#~ msgstr "Archivo de transacciones"
+
+#~ msgid "Import results"
+#~ msgstr "Importar resultados"
+
+#~ msgid "Attribute"
+#~ msgstr "Atributo"
+
+#~ msgid "Time"
+#~ msgstr "Hora"
+
+#~ msgid "1 month"
+#~ msgstr "1 mes"
+
+#~ msgid "3 month"
+#~ msgstr "3 meses"
+
+#~ msgid "Lock date"
+#~ msgstr "Fecha de bloqueo"
+
+#~ msgid "Auto unlock date"
+#~ msgstr "Fecha de desbloqueo automático"
+
+#~ msgid "Lock time / Months"
+#~ msgstr "Tiempo de bloqueo / Meses"
+
+#~ msgid "Number of locks"
+#~ msgstr "Número de cerraduras"
+
+#~ msgid "Reward name"
+#~ msgstr "Nombre de la recompensa"
+
+#~ msgid "transaction ticket"
+#~ msgstr "Ticket de transacción"
+
+#~ msgid "To"
+#~ msgstr "A"
+
+#~ msgid "Update landing"
+#~ msgstr "Aterrizaje de actualizaciones"
+
+#~ msgid "The maximum file size is 5mb"
+#~ msgstr "El tamaño máximo de archivo es de 5 MB"
+
+#~ msgid "Domain"
+#~ msgstr "Dominio"
+
+#~ msgid "Current status"
+#~ msgstr "Estado actual"
+
+#~ msgid "You do not have credentials for $%, request your credentials."
+#~ msgstr "No tiene credenciales para $%, solicite sus credenciales."
+
+#~ msgid "Logout"
+#~ msgstr "Cerrar Sesión"
+
+#~ msgid "This report makes closings and calculations every hour"
+#~ msgstr "Este informe realiza cierres y cálculos cada hora"
+
+#~ msgid "If you want to see data in real time please use the product reports"
+#~ msgstr ""
+#~ "Si desea ver los datos en tiempo real, utilice los informes de productos"
+
+#~ msgid "Total hold"
+#~ msgstr "Retención total"
+
+#~ msgid "All provider types"
+#~ msgstr "Todos los tipos de proveedores"
+
+#~ msgid "Last 30 days"
+#~ msgstr "Ultimos 30 días"
+
+#~ msgid "Binance QR"
+#~ msgstr "Binance QR"
+
+#~ msgid "Agent / User"
+#~ msgstr "Agente / Usuario"
+
+#~ msgid "Loads (Total)"
+#~ msgstr "Cargas (total)"
+
+#~ msgid "Downloads (Total)"
+#~ msgstr "Descargas (total)"
+
+#~ msgid "Totals 100%"
+#~ msgstr "Totales 100%"
+
+#~ msgid "Commission %"
+#~ msgstr "Comisión %"
+
+#~ msgid "Total to pay %"
+#~ msgstr "Total a pagar %"
+
+#~ msgid "Total receivable %"
+#~ msgstr "% total por cobrar"
+
+#~ msgid "Template preview"
+#~ msgstr "Vista previa de la plantilla"
+
+#~ msgid "Grant secret"
+#~ msgstr "Conceder secreto"
+
+#~ msgid "Unlock balance"
+#~ msgstr "Desbloquear saldo"
+
+#~ msgid "Are you sure you want to unlock the balance?"
+#~ msgstr "¿Estás seguro de que quieres desbloquear el saldo?"
+
+#~ msgid "Relate Permissions to User"
+#~ msgstr "Relacionar permisos con el usuario"
+
+#~ msgid "Permission"
+#~ msgstr "Permiso"
+
+#~ msgid "Code bonus"
+#~ msgstr "Bono de código"
+
+#~ msgid "User password admin"
+#~ msgstr "Administrador de contraseña de usuario"
+
+#~ msgid "Publish group"
+#~ msgstr "Grupo de publicación"
+
+#~ msgid "Confirm Password"
+#~ msgstr "Confirmar Contraseña"
+
+#~ msgid "Remove bonus"
+#~ msgstr "Eliminar bono"
+
+#~ msgid "Manual adjustment"
+#~ msgstr "Ajuste manual"
+
+#~ msgid "Update Limit"
+#~ msgstr "Límite de actualización"
+
+#~ msgid "Min"
+#~ msgstr "Minutos"
+
+#~ msgid "Max"
+#~ msgstr "Max"
+
+#~ msgid "Exclude permissions"
+#~ msgstr "Excluir permisos"
+
+#~ msgid "Excluded permissions users"
+#~ msgstr "Usuarios de permisos excluidos"
+
+#~ msgid "Select Permissions"
+#~ msgstr "Seleccione Permisos"
+
+#~ msgid "Send to processor"
+#~ msgstr "Enviar al procesador"
+
+#~ msgid "Forbidden"
+#~ msgstr "Prohibido"
+
+#~ msgid "Publish post"
+#~ msgstr "Publicar publicación"
+
+#~ msgid ""
+#~ "This report shows the list of manual transactions carried out in a "
+#~ "certain date range, allowing them to be filtered by type of transaction."
+#~ msgstr ""
+#~ "Este informe muestra la lista de transacciones manuales realizadas en un "
+#~ "determinado rango de fechas, lo que permite filtrarlas por tipo de "
+#~ "transacción."
+
+#~ msgid ""
+#~ "Deposits or withdrawals made with payment methods or agent transactions "
+#~ "made to players are not taken into account."
+#~ msgstr ""
+#~ "Los depósitos o retiros realizados con métodos de pago o transacciones de "
+#~ "agentes realizadas a jugadores no se tienen en cuenta."
+
+#~ msgid ""
+#~ "The agent selector is loaded by the session currency, verify that the "
+#~ "user has the session currency."
+#~ msgstr ""
+#~ "El selector de agente se carga por la moneda de sesión, compruebe que el "
+#~ "usuario tiene la moneda de sesión."
+
+#~ msgid "Reward details"
+#~ msgstr "Detalles de la recompensa"
+
+#~ msgid "No active"
+#~ msgstr "No activo"
+
+#~ msgid "Upload reward"
+#~ msgstr "Subir recompensa"
+
+#~ msgid "VES rate"
+#~ msgstr "Tasa VES"
+
+#~ msgid "ARS rate"
+#~ msgstr "Tasa ARS"
+
+#~ msgid "Read"
+#~ msgstr "Leer"
+
+#~ msgid "Remove from segment"
+#~ msgstr "Eliminar del segmento"
+
+#~ msgid "Exclude roles"
+#~ msgstr "Rol exclusivo"
+
+#~ msgid "Excluded roles users"
+#~ msgstr "Usuarios de roles excluidos"
+
+#~ msgid "Select role"
+#~ msgstr "Seleccionar rol"
+
+#~ msgid "Activation"
+#~ msgstr "Activación"
+
+#~ msgid "Activation of account"
+#~ msgstr "Activación de la cuenta"
+
+#~ msgid ""
+#~ "This report shows the total deposits and withdrawals that were approved "
+#~ "in the selected date range."
+#~ msgstr ""
+#~ "Este informe muestra el total de depósitos y retiros que se aprobaron en "
+#~ "el rango de fechas seleccionado."
+
+#~ msgid ""
+#~ "This report includes transactions made with activated payment methods in "
+#~ "the selected currency, manual transactions and agent transactions made to "
+#~ "players."
+#~ msgstr ""
+#~ "Este informe incluye las transacciones realizadas con métodos de pago "
+#~ "activados en la moneda seleccionada, las transacciones manuales y las "
+#~ "transacciones de agentes realizadas a los jugadores."
+
+#~ msgid "Total deposits"
+#~ msgstr "Total depósitos"
+
+#~ msgid "Endpoint"
+#~ msgstr "Punto Final"
+
+#~ msgid "Enter password"
+#~ msgstr "Ingrese la Contraseña"
+
+#~ msgid "Audit type"
+#~ msgstr "Tipo de auditoría"
+
+#~ msgid "Update category"
+#~ msgstr "Actualizar categoría"
+
+#~ msgid "Withdrawal Data"
+#~ msgstr "Datos de desistimiento"
+
+#~ msgid "Edit Permissions to User"
+#~ msgstr "Editar permisos para el usuario"
+
+#~ msgid "Total recharges"
+#~ msgstr "Total de recargas"
+
+#~ msgid "Total discharges"
+#~ msgstr "Vertidos totales"
+
+#~ msgid "Recharge"
+#~ msgstr "Recarga"
+
+#~ msgid "Discharge"
+#~ msgstr "Descargar"
+
+#~ msgid "Send private message"
+#~ msgstr "Enviar mensaje privado"
+
+#~ msgid ""
+#~ "This tool allows you to move the user from one agent to another agent"
+#~ msgstr ""
+#~ "Esta herramienta le permite mover el usuario de un agente a otro agente"
+
+#~ msgid "Rejected document"
+#~ msgstr "Documento rechazado"
+
+#~ msgid "Available balance"
+#~ msgstr "Saldo disponible"
+
+#~ msgid "Last update"
+#~ msgstr "Última actualización"
+
+#~ msgid "Activate bonus"
+#~ msgstr "Activar bono"
+
+#~ msgid "Button"
+#~ msgstr "Botón"
+
+#~ msgid "Footer"
+#~ msgstr "Pie de página"
+
+#, php-format
+#~ msgid ""
+#~ "The user does not have an active wallet in the %s currency. If you want "
+#~ "to create the wallet click on the following button"
+#~ msgstr ""
+#~ "El usuario no tiene una billetera activa en la moneda %s. Si desea crear "
+#~ "la billetera haga clic en el siguiente botón"
+
+#~ msgid "Create wallet"
+#~ msgstr "Crear monedero"
+
+#~ msgid "All genders"
+#~ msgstr "Todos los géneros"
+
+#~ msgid "All levels"
+#~ msgstr "Todos los niveles"
+
+#~ msgid "Initial balance"
+#~ msgstr "Saldo inicial"
+
+#~ msgid "Final balance"
+#~ msgstr "Balance final"
+
+#~ msgid ""
+#~ "This report shows the list of bonus transactions that have been executed "
+#~ "manually to the user or by claiming a bonus by the user."
+#~ msgstr ""
+#~ "Este informe muestra la lista de transacciones de bonificación que se han "
+#~ "ejecutado manualmente al usuario o al reclamar una bonificación por parte "
+#~ "del usuario."
+
+#~ msgid "Percentage of completed profiles"
+#~ msgstr "Porcentaje de perfiles completados"
+
+#~ msgid "Users with deposits"
+#~ msgstr "Usuarios con depósitos"
+
+#~ msgid "Profile complete"
+#~ msgstr "Perfil completo"
+
+#~ msgid ""
+#~ "The country and time zone must be configured correctly so that the dates "
+#~ "shown to the user adjust correctly to their geographical location. These "
+#~ "values ​​can be modified later."
+#~ msgstr ""
+#~ "El país y la zona horaria deben configurarse correctamente para que las "
+#~ "fechas mostradas al usuario se ajusten correctamente a su ubicación "
+#~ "geográfica. Estos valores se pueden modificar más adelante."
+
+#~ msgid "Payed"
+#~ msgstr "Pagado"
+
+#~ msgid "Remove permissions"
+#~ msgstr "Quitar permisos"
+
+#~ msgid "Show users"
+#~ msgstr "Mostrar usuarios"
+
+#~ msgid "Filter client account payment limit"
+#~ msgstr "Filtrar el límite de pago de la cuenta de cliente"
+
+#~ msgid "All transaction type"
+#~ msgstr "Todo tipo de transacción"
+
+#~ msgid "Maximum"
+#~ msgstr "Maximo"
+
+#~ msgid " Player"
+#~ msgstr " Jugador"
+
+#~ msgid " Agent"
+#~ msgstr " Agente"
+
+#~ msgid " Agent "
+#~ msgstr " Agente "
+
+#~ msgid "Id"
+#~ msgstr "ID"
+
+#~ msgid "types transition"
+#~ msgstr "types transition"
