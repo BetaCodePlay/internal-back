@@ -1167,7 +1167,6 @@ class AgentsController extends Controller
                     if ($category == "*") {
                         $categories = $this->gamesRepo->getCategoriesByMaker($maker);
                         $categories = array_column($categories->toArray(), 'category');
-                        \Log::debug([$categories]);
                     } else {
                         $categories[] = $category;
                     }
@@ -1192,44 +1191,7 @@ class AgentsController extends Controller
                             'updated_at' => $date
                         ];
                         $this->agentsRepo->updateBlockAgents($currency, $userToUpdate['category'], $userData->id, $data);
-                    }
-                    // if ($category == "*") {
-                    //     $categories = $this->gamesRepo->getCategoriesByMaker($maker);
-                    //     foreach ($categories as $categoryElement) {
-                    //         $excludeUser = $this->usersRepo->findExcludeMakerUser($categoryElement->category, $userData->id, $currency);
-                    //         $makersExclude = isset($excludeUser->makers) ? json_decode($excludeUser->makers) : [];
-                    //         $dataMakers = array_merge($makers, $makersExclude);
-                    //         $makersArray = array_values(array_filter(array_unique($dataMakers)));
-                    //         $usersData[] = [
-                    //             'category' => $category,
-                    //             'makers' => json_encode($makersArray),
-                    //             'currency_iso' => $currency
-                    //         ];
-                    //     }
-                    // }else{
-                    //     $excludeUser = $this->usersRepo->findExcludeMakerUser($category, $userData->id, $currency);
-                    //     $makersExclude = isset($excludeUser->makers) ? json_decode($excludeUser->makers) : [];
-                    //     $dataMakers = array_merge($makers,$makersExclude);
-                    //     $makersArray = array_values(array_filter(array_unique($dataMakers)));
-                    //     $usersData[] = [
-                    //         'category' => $category,
-                    //         'makers' => json_encode($makersArray),
-                    //         'currency_iso' => $currency
-                    //     ];
-                    // }  
-                    // foreach ($usersData as $userToUpdate) {
-                    //     $user = $userData->id;
-                    //     $category = $userToUpdate['category'];
-                    //     $data = [
-                    //         'currency_iso' => $userToUpdate['currency_iso'],
-                    //         'category' => $userToUpdate['category'],
-                    //         'makers' => $userToUpdate['makers'],
-                    //         'user_id' => $user,
-                    //         'created_at' => $date,
-                    //         'updated_at' => $date
-                    //     ];
-                    //     $this->agentsRepo->updateBlockAgents($currency,$category,$user,$data);
-                    // }            
+                    }   
                     $data = [
                         'title' => _i('Excluded user'),
                         'message' => _i('The user has been successfully excluded'),
