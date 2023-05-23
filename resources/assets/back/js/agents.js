@@ -9,7 +9,8 @@ import {
 } from "../../commons/js/core";
 import {clearForm, getCookie, initDateRangePickerEndToday, initLitepickerEndToday,initLitepickerEndTodayNew, initSelect2, refreshRandomPassword} from "./commons";
 import moment from 'moment';
-
+import jsPDF from 'jspdf';
+import { data } from 'jquery';
 class Agents {
 
     // Add users
@@ -680,44 +681,25 @@ class Agents {
 
             }).done(function (json) {
                 $table.html(json.data.table);
-                let $tableData = $('#makers-global');
-                $tableData.DataTable({
-                    "lengthMenu": [[25, 50, 100, 250, 500, 1000], [25, 50, 100, 250, 500, 1000]],
-                    "processing": false,
-                    "deferRender": true,
-                    "order": [],
-                    "columns": [
-                        {"data": "Fabricante"},
-                        {"data": "Total pagado"},
-                        {"data": "Total premiado"},
-                        {"data": "Total de apuestas"},
-                        {"data": "Ganancia total"},
-                    ],
-                    "buttons": {
-                        "buttons": [
-                            {extend: 'excel'},
-                            {extend: 'pdf'},
-                            {
-                                extend: 'print',
-                                text: function (dt) {
-                                    return dt.i18n('buttons.print', 'Print');
-                                }
-                            },
-                            {
-                                extend: 'copy',
-                                text: function (dt) {
-                                    return dt.i18n('buttons.copy', 'Copy');
-                                }
-                            }
-                        ]
-                    },
-                    "initComplete": function () {
-                        api = this.api();
-                        api.buttons().container()
-                            .appendTo($('#table-buttons'));
-                    }
-                });
 
+                // setTimeout(() => {
+                //     var doc = new jsPDF('p', 'pt', 'letter');
+
+                //     var margin = 10;
+                //     var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
+                //     doc.html(document.getElementById('print-document'), {
+                //         x: margin,
+                //         y: margin,
+                //         html2canvas: {
+                //             scale: scale,
+                //         },
+                //         callback: function(doc){
+                //         // Comentado para pruebas
+                //         // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
+                //         doc.save('examen.pdf')
+                //         }
+                //     });
+                // }, 3000);
             }).fail(function (json) {
                 swalError(json);
 
@@ -727,7 +709,31 @@ class Agents {
             Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso, provider_id, whitelabel_id);
         });
      }
+     printDocumentMakers() {
+        let $button = $('#print-pdf-d');
 
+        $button.click(function () {
+            $button.button('loading');
+
+            var doc = new jsPDF('p', 'pt', 'letter');
+
+            var margin = 10;
+            var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
+            doc.html(document.getElementById('print-document'), {
+                x: margin,
+                y: margin,
+                html2canvas: {
+                    scale: scale,
+                },
+                callback: function(doc){
+                // Comentado para pruebas
+                // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
+                    doc.save('examen.pdf');
+                    $button.button('reset');
+                }
+            });
+        });
+     }
    // Financial state
       // Financial state
    financialState(user = null) {

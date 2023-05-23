@@ -74,7 +74,7 @@
                                 <input type="hidden" id="end_date" name="end_date">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <button type="button" class="btn u-btn-3d u-btn-primary" id="update"
                                         data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Consulting...') }}">
@@ -83,9 +83,18 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="button" class="btn u-btn-3d u-btn-primary" id="print-pdf-d"
+                                        data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Printing...') }}">
+                                    <i class="hs-admin-print"></i>
+                                    {{ _i('Document PDF') }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-block g-pa-15">
+                <div class="card-block g-pa-15" id="print-document">
                     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
                         <header
                             class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
@@ -148,6 +157,7 @@
             let agents = new Agents();
             agents.financialStateMakersDetails();
             agents.selectWhitelabelMakers();
+            agents.printDocumentMakers();
             setTimeout(function (){
                 $('#update').click()
             },1000);
