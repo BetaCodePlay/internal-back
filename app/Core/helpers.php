@@ -119,15 +119,15 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'ExcludeUsers' => [
-                        'text' => _i('Exclude users from providers'),
-                        'level_class' => 'second',
-                        'route' => 'users.exclude-providers-users',
-                        'params' => [],
-                        'icon' => 'hs-admin-user',
-                        'permission' => Permissions::$exclude_users,
-                        'submenu' => []
-                    ],
+                    // 'ExcludeUsers' => [
+                    //     'text' => _i('Exclude users from providers'),
+                    //     'level_class' => 'second',
+                    //     'route' => 'users.exclude-providers-users',
+                    //     'params' => [],
+                    //     'icon' => 'hs-admin-user',
+                    //     'permission' => Permissions::$exclude_users,
+                    //     'submenu' => []
+                    // ],
                     'DocumentsVerifications' => [
                         'text' => _i('Documents verifications'),
                         'level_class' => 'second',
