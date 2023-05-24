@@ -1188,7 +1188,7 @@
             agents.menuMobile();
             agents.selectAgentOrUser('{{ _i('Agents search...') }}');
             agents.selectUsernameSearch('{{ _i('Agents search...') }}');
-            //TODO CONFLICTO CON EL SELECTOR-BUSCADOR
+            //TODO CONFLICTO CON EL INIT SELECT
             agents.selectProvidersMaker();
             agents.statusFilter();
             @if($agent->master)

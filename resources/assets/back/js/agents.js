@@ -1582,7 +1582,7 @@ class Agents {
 
     //Select maker
     selectProvidersMaker(){
-        initSelect2();
+        //initSelect2();
         $('#provider').on('change', function () {
             let provider = $(this).val();
             let route = $(this).data('route');
