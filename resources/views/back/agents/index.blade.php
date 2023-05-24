@@ -1189,7 +1189,7 @@
             agents.selectAgentOrUser('{{ _i('Agents search...') }}');
             agents.selectUsernameSearch('{{ _i('Agents search...') }}');
             //TODO CONFLICTO CON EL SELECTOR-BUSCADOR
-            //agents.selectProvidersMaker();
+            agents.selectProvidersMaker();
             agents.statusFilter();
             @if($agent->master)
             agents.changeAgentType();
