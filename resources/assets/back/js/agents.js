@@ -2067,6 +2067,14 @@ class Agents {
             });
         });
     }
+    detailsUserModal(){
+        $('#details-user-modal').on('show.bs.modal', function (e) {
+            console.log('mostrar')
+        })
+        // $('#details-user-modal').on('hidden.bs.modal', function (e) {
+        //     console.log('cerrar')
+        // })
+    }
 }
 
 window.Agents = Agents;

@@ -457,8 +457,7 @@
                                         </div>
                                     </div>
                                     <div class="row g-mb-15">
-                                        <div
-                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong> {{ _i('Type') }}</strong>
                                             </label>
@@ -532,6 +531,23 @@
                                             </div>
                                         </div>
                                     @endif
+                                    <div class="row g-mb-15 d-none" id="details-user">
+                                        <div
+                                            class="col-2 col-sm-2 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                            <label class="g-mb-0">
+                                               <strong>{{ _i('More information') }}</strong>
+                                            </label>
+                                        </div>
+                                        <div class="col-8 col-sm-8 col-md-9 align-self-center">
+                                            <div class="form-group g-pos-rel g-mb-0">
+                                                <a href="#details-user-modal" id="details-user"
+                                                   class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i> <strong> {{ _i('More information') }}</strong>
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_credit_transactions,  \Dotworkers\Security\Enums\Permissions::$agents_debit_transactions])
                                     <div class="col-md-6">
@@ -1138,6 +1154,7 @@
     @include('back.agents.modals.manual-transaction')
     @include('back.agents.modals.move-agents')
     @include('back.agents.modals.move-agents-users')
+    @include('back.agents.modals.details-user')
     @include('back.agents.modals.add-users')
     @include('back.users.modals.reset-password')
 @endsection
@@ -1149,6 +1166,7 @@
             let users = new Users();
             users.usersIps();
             agents.dashboard();
+            agents.detailsUserModal();
             agents.searchAgentDashboard();
             agents.performTransactions();
             agents.manualTransactionsModal();
