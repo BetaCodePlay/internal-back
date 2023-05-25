@@ -156,10 +156,10 @@ class UsersRepo
     /**
      * Find username user
      *
-     * @param int $user User ID
+     * @param $user User ID
      * @return mixed
      */
-    public function findUsername(int $user)
+    public function findUsername($user)
     {
         return User::where('id', $user)->first(['username']);
 
