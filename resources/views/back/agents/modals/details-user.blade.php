@@ -9,7 +9,7 @@
             </div>
             <form action="{{ route('agents.move-agent') }}" id="move-agent-form" method="post">
                 <div class="modal-body">
-                    <div class="row">
+                    <div class="row row-div">
                         <div class="col-sm-6">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
