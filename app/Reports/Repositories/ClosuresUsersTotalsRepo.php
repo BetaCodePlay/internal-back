@@ -549,11 +549,12 @@ class ClosuresUsersTotalsRepo
      */
     public function whitelabelsTotals($startDate, $endDate, $currency, $provider, $whitelabel)
     {
-
-        $totals = ClosureUserTotal2023Hour::select('whitelabels.description AS whitelabel', 'closures_users_totals_2023_hour.provider_id', \DB::raw('sum(closures_users_totals_2023_hour.played) AS played'), \DB::raw('sum(closures_users_totals_2023_hour.won) AS won'),
+        DB::statement('SET search_path TO public');
+        $totals = ClosureUserTotal2023Hour::select('site.whitelabels.description AS whitelabel', 'closures_users_totals_2023_hour.provider_id', \DB::raw('sum(closures_users_totals_2023_hour.played) AS played'), \DB::raw('sum(closures_users_totals_2023_hour.won) AS won'),
             \DB::raw('sum(closures_users_totals_2023_hour.profit) AS profit'), 'closures_users_totals_2023_hour.currency_iso', 'provider_type_id')
-            ->join('whitelabels', 'closures_users_totals_2023_hour.whitelabel_id', '=', 'whitelabels.id')
-            ->join('providers', 'closures_users_totals_2023_hour.provider_id', '=', 'providers.id')
+            ->from('public.closures_users_totals_2023_hour')
+            ->join('site.whitelabels', 'closures_users_totals_2023_hour.whitelabel_id', '=', 'whitelabels.id')
+            ->join('site.providers', 'closures_users_totals_2023_hour.provider_id', '=', 'providers.id')
             ->where('closures_users_totals_2023_hour.start_date', '>=', $startDate)
             ->where('closures_users_totals_2023_hour.end_date', '<=', $endDate);
 
