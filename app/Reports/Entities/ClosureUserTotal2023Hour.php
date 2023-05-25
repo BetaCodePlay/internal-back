@@ -20,8 +20,8 @@ class ClosureUserTotal2023Hour extends Model
      *
      * @var string
      */
+    protected $schema = 'public';
     protected $table = 'closures_users_totals_2023_hour';
-
     protected $fillable = [
         'id',
         'user_id',

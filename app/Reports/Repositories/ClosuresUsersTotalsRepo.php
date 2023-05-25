@@ -549,7 +549,6 @@ class ClosuresUsersTotalsRepo
      */
     public function whitelabelsTotals($startDate, $endDate, $currency, $provider, $whitelabel)
     {
-        \DB::connection()->setSchemaName('public');
 
         $totals = ClosureUserTotal2023Hour::select('whitelabels.description AS whitelabel', 'closures_users_totals_2023_hour.provider_id', \DB::raw('sum(closures_users_totals_2023_hour.played) AS played'), \DB::raw('sum(closures_users_totals_2023_hour.won) AS won'),
             \DB::raw('sum(closures_users_totals_2023_hour.profit) AS profit'), 'closures_users_totals_2023_hour.currency_iso', 'provider_type_id')
