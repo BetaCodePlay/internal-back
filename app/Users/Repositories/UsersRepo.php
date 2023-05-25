@@ -9,6 +9,8 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Security\Enums\Roles;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -123,6 +125,105 @@ class UsersRepo
     }
 
     /**
+     * Find Type User
+     *
+     * @param int $id User ID
+     * @return mixed
+     */
+    public function findTypeUser($id)
+    {
+        return User::select('users.type_user')
+            ->where('users.id', $id)
+            ->whitelabel()
+            ->first();
+    }
+
+    /**
+     * Sql User By Currency Iso and Whitelabel Id
+     *
+     * @param string $username User username
+     * @param string $currency Currency Iso
+     * @param int $whitelabel Whitelabel Id
+     * @return mixed
+     */
+    public function findUserCurrencyByWhitelabel($username, $currency, $whitelabel)
+    {
+        $user = DB::select('select u.id from site.users u inner join site.user_currencies uc on u.id = uc.user_id where u.username = ? AND uc.currency_iso = ? AND u.whitelabel_id = ?', [$username, $currency, $whitelabel]);
+
+        return $user;
+    }
+
+    /**
+     * Find username user
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function findUsername(int $user)
+    {
+        return User::where('id', $user)->first(['username']);
+
+    }
+    /**
+     * Number of children
+     *
+     * @param int $owner User Id Owner
+     * @return mixed
+     */
+    public function numberChildren(int $owner,string $currency)
+    {
+        $agents = 0;
+        $players = 0;
+
+        $player = DB::select('WITH RECURSIVE all_agents AS (
+                                      SELECT agents.id, agents.user_id, agents.owner_id
+                                      FROM site.agents AS agents
+                                      JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                                      WHERE agents.user_id = ? AND currency_iso = ?
+
+                                      UNION
+
+                                      SELECT agents.id, agents.user_id, agents.owner_id
+                                      FROM site.agents AS agents
+                                      JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                                      JOIN all_agents ON agents.owner_id = all_agents.user_id
+                                      )
+
+                                     SELECT count(au.agent_id) as cant FROM site.agent_user AS au
+                                        WHERE  (au.agent_id IN (SELECT all_agents.id FROM all_agents))',[$owner,$currency]);
+        if(!empty($player)){
+            $players = isset($player[0]->cant)?$player[0]->cant:0;
+        }
+
+        $agent = DB::select('SELECT count(tabla.user_id) as cant from (
+                                    with recursive tabla as (
+                                        SELECT agents.user_id
+                                            FROM site.agents as agents
+                                            join site.users as uso on agents.owner_id= uso.id
+                                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
+                                            WHERE agents.user_id = ?
+                                            AND currency_iso = ?
+
+                                            UNION ALL
+
+                                        SELECT agents.user_id
+                                            FROM site.agents as agents
+                                            join site.agent_currencies as agent_currencies on agents.id = agent_currencies.agent_id
+                                            JOIN tabla ON agents.owner_id = tabla.user_id
+                                            where agent_currencies.currency_iso  = ?
+
+                                    ) select user_id from tabla) tabla',[$owner,$currency,$currency]);
+        if(!empty($agent)){
+            $agents = isset($agent[0]->cant)?$agent[0]->cant:0;
+        }
+
+        return [
+          'agents'=>$agents-1,
+          'players'=>$players,
+        ];
+    }
+
+    /**
      * Get users by IDs
      *
      * @param array $ids Users IDs
@@ -215,29 +316,6 @@ class UsersRepo
     }
 
     /**
-     * Get exclude provider user by currency, whitelabel and provider
-     *
-     * @param int $whitelabel Whitelabel ID
-     * @param string $currency Currency ISO
-     * @param int $provider Provider ID
-     * @return mixed
-     */
-    public function getExcludeProviderUserByProvider($currency, $provider, $whitelabel)
-    {
-        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_providers_users.*')
-            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
-            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
-            ->where('users.whitelabel_id', $whitelabel)
-            ->where('exclude_providers_users.currency_iso', $currency);
-
-            if (!empty($provider)) {
-                $users->where('exclude_providers_users.provider_id', $provider);
-            }
-            $data = $users->orderBy('users.username', 'DESC')->get();
-        return $data;
-    }
-
-    /**
      * Get exclude provider user by dates, currency, whitelabel and provider
      *
      * @param string $currency Currency ISO
@@ -249,23 +327,46 @@ class UsersRepo
      */
     public function getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate)
     {
-        $users = User::select('users.id as user_id','users.username', 'providers.name', 'exclude_providers_users.*')
+        $users = User::select('users.id as user_id', 'users.username', 'providers.name', 'exclude_providers_users.*')
             ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
             ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
             ->where('users.whitelabel_id', $whitelabel)
             ->whereBetween('exclude_providers_users.created_at', [$startDate, $endDate]);
 
-            if (!empty($currency)) {
-                $users->where('exclude_providers_users.currency_iso', $currency);
-            }
-            if (!empty($provider)) {
-                $users->where('exclude_providers_users.provider_id', $provider);
-            }
-            if (!empty($maker)) {
-                $users->whereJsonContains('exclude_providers_users.makers', $maker);
-            }
+        if (!empty($currency)) {
+            $users->where('exclude_providers_users.currency_iso', $currency);
+        }
+        if (!empty($provider)) {
+            $users->where('exclude_providers_users.provider_id', $provider);
+        }
+        if (!empty($maker)) {
+            $users->whereJsonContains('exclude_providers_users.makers', $maker);
+        }
 
-            $data = $users->orderBy('exclude_providers_users.created_at', 'DESC')->get();
+        $data = $users->orderBy('exclude_providers_users.created_at', 'DESC')->get();
+        return $data;
+    }
+
+    /**
+     * Get exclude provider user by currency, whitelabel and provider
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @param int $provider Provider ID
+     * @return mixed
+     */
+    public function getExcludeProviderUserByProvider($currency, $provider, $whitelabel)
+    {
+        $users = User::select('users.id as user_id', 'users.username', 'providers.name', 'exclude_providers_users.*')
+            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
+            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('exclude_providers_users.currency_iso', $currency);
+
+        if (!empty($provider)) {
+            $users->where('exclude_providers_users.provider_id', $provider);
+        }
+        $data = $users->orderBy('users.username', 'DESC')->get();
         return $data;
     }
 
@@ -873,20 +974,6 @@ class UsersRepo
     }
 
     /**
-     * Find Type User
-     *
-     * @param int $id User ID
-     * @return mixed
-     */
-    public function findTypeUser($id)
-    {
-        return User::select('users.type_user')
-            ->where('users.id', $id)
-            ->whitelabel()
-            ->first();
-    }
-
-    /**
      * Search users by username
      *
      * @param string $username User username
@@ -945,6 +1032,20 @@ class UsersRepo
         return [];
     }
 
+    /** Sql Consult Ids Users Son
+     * @param int $user User Id Owner
+     * @param string $currency Currency Iso
+     * @param int $whitelabel Whitelabel Id
+     * @return array
+     */
+    public function sqlTreeAllUsersSon(int $user, string $currency, int $whitelabel)
+    {
+        $arrayUsers = DB::select('SELECT * FROM site.get_users_id_son(?,?,?)', [$user, $currency, $whitelabel]);
+
+        return $arrayUsers;
+
+    }
+
     /**
      * Status users by whitelabel and status
      *
@@ -989,24 +1090,10 @@ class UsersRepo
         return $user;
     }
 
-    /** Sql Consult Ids Users Son
-     * @param int $user User Id Owner
-     * @param string $currency Currency Iso
-     * @param int $whitelabel Whitelabel Id
-     * @return array
-     */
-    public function sqlTreeAllUsersSon(int $user, string $currency, int $whitelabel)
-    {
-            $arrayUsers = DB::select('SELECT * FROM site.get_users_id_son(?,?,?)', [$user, $currency,$whitelabel]);
-
-        return $arrayUsers;
-
-    }
-
     public function treeSqlByUser(int $user, string $currency, int $whitelabel, $arrayIds = true, $userLike = null)
     {
         if (!is_null($userLike)) {
-            $ilikeTmp = '%'.$userLike.'%';
+            $ilikeTmp = '%' . $userLike . '%';
             $arrayUsers = DB::select('(SELECT a.user_id, u.username
                     FROM site.agents a
                     INNER JOIN site.users u ON a.user_id=u.id
@@ -1029,7 +1116,7 @@ class UsersRepo
                      and u.whitelabel_id = ?
                      and username ilike ?
                     )
-                    ORDER BY username ASC', [$user, $whitelabel, $currency,$ilikeTmp, $user, $currency, $whitelabel,$ilikeTmp]);
+                    ORDER BY username ASC', [$user, $whitelabel, $currency, $ilikeTmp, $user, $currency, $whitelabel, $ilikeTmp]);
         } else {
             $arrayUsers = DB::select('(SELECT a.user_id, u.username
                     FROM site.agents a
@@ -1115,21 +1202,6 @@ class UsersRepo
         return $user;
     }
 
-    /**
-     * Sql User By Currency Iso and Whitelabel Id
-     *
-     * @param string $username User username
-     * @param string $currency Currency Iso
-     * @param int $whitelabel Whitelabel Id
-     * @return mixed
-     */
-    public function findUserCurrencyByWhitelabel($username, $currency, $whitelabel)
-    {
-        $user = DB::select('select u.id from site.users u inner join site.user_currencies uc on u.id = uc.user_id where u.username = ? AND uc.currency_iso = ? AND u.whitelabel_id = ?', [$username,$currency,$whitelabel]);
-
-        return $user;
-    }
-
     public function uniqueUsername($username)
     {
         $user = User::where('username', $username)
@@ -1139,6 +1211,22 @@ class UsersRepo
         return $user;
     }
 
+    /**
+     * Update exclude provider user
+     *
+     * @param int $id ExcludeProviderUser ID
+     * @param array $data ExcludeProviderUser data
+     * @return mixed
+     */
+    public function updateExcludeProviderUser($user, $provider, $currency, $data)
+    {
+        $users = \DB::table('exclude_providers_users')
+            ->where('exclude_providers_users.user_id', $user)
+            ->where('exclude_providers_users.provider_id', $provider)
+            ->where('exclude_providers_users.currency_iso', $currency)
+            ->update($data);
+        return $users;
+    }
 
     /**
      * Update user
@@ -1169,23 +1257,6 @@ class UsersRepo
             $user->referrals()->attach($referrals);
         }
         return $user;
-    }
-
-    /**
-     * Update exclude provider user
-     *
-     * @param int $id ExcludeProviderUser ID
-     * @param array $data ExcludeProviderUser data
-     * @return mixed
-     */
-    public function updateExcludeProviderUser($user, $provider, $currency, $data)
-    {
-        $users = \DB::table('exclude_providers_users')
-            ->where('exclude_providers_users.user_id', $user)
-            ->where('exclude_providers_users.provider_id', $provider)
-            ->where('exclude_providers_users.currency_iso', $currency)
-            ->update($data);
-        return $users;
     }
 
     /**

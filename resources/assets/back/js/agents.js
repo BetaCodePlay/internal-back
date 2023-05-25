@@ -488,6 +488,15 @@ class Agents {
                     }
 
                 }).done(function (json) {
+                    //TODO Init Set Modal
+                        $('.userSet').text(json.data.user.username);
+                        $('.fatherSet').text(json.data.father);
+                        $('.typeSet').text(json.data.user.typeSet);
+                        $('.agentsSet').text(json.data.cant_agents);
+                        $('.playersSet').text(json.data.cant_players);
+                        $('.createdSet').text(json.data.user.created);
+                    //TODO Finish Set Modal
+
                     $('#username').text(json.data.user.username);
                     $('#agent_timezone').text(json.data.user.timezone);
                     $('.balance').text(json.data.balance);

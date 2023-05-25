@@ -1737,7 +1737,7 @@ class AgentsController extends Controller
      */
     public function find(Request $request)
     {
-        try {
+//        try {
             if (session('admin_id')) {
                 $userId = session('admin_id');
                 $agent_player = false;
@@ -1751,12 +1751,16 @@ class AgentsController extends Controller
             $walletId = null;
             if ($type == 'agent') {
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+                $father = $this->usersRepo->findUsername($user->owner);
+                $cant = $this->usersRepo->numberChildren($id, $currency);
                 $balance = $user->balance;
                 $master = $user->master;
                 $agent = true;
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
+                $father = $this->usersRepo->findUsername($user->owner_id);
+                $cant = $this->usersRepo->numberChildren($id, $currency);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
                 $balance = $wallet->data->wallet->balance;
@@ -1766,7 +1770,11 @@ class AgentsController extends Controller
             }
 
             $this->agentsCollection->formatAgent($user);
+            $user->created = date('Y-m-d',strtotime($user->created));
             $data = [
+                'cant_agents' => $cant['agents'],
+                'cant_players' => $cant['players'],
+                'father' => $father->username,
                 'user' => $user,
                 'balance' => number_format($balance, 2),
                 'master' => $master,
@@ -1777,10 +1785,10 @@ class AgentsController extends Controller
                 'agent_player' => $agent_player
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**

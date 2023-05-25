@@ -3065,6 +3065,7 @@ class AgentsCollection
             $typeText = $user->master ? _i('Master agent') : _i('Cashier');
 
             if (!$user->master) {
+                $user->typeSet = $typeText;
                 $user->type = sprintf(
                     '<a href="javascript:void(0)" id="change-agent-type" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
                     route('agents.change-agent-type', [$user->agent]),
@@ -3072,6 +3073,7 @@ class AgentsCollection
                     $typeText
                 );
             } else {
+                $user->typeSet = $typeText;
                 $user->type = sprintf(
                     '<span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span>',
                     $typeClass,
@@ -3082,6 +3084,7 @@ class AgentsCollection
         } else {
             $typeClass = 'bluegray';
             $typeText = _i('User');
+            $user->typeSet = $typeText;
             $user->type = sprintf(
                 '<span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span>',
                 $typeClass,

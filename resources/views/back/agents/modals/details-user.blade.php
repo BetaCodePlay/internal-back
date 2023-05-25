@@ -10,20 +10,104 @@
             <form action="{{ route('agents.move-agent') }}" id="move-agent-form" method="post">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <input type="text" name="user" class="user">
-{{--                            <div class="form-group">--}}
-{{--                                <label for="agents">{{ _i('Agents') }}</label>--}}
-{{--                                <select name="agent" id="relocation-agents" class="form-control" style="width: 100%" data-route="{{ route('agents.relocation-agents-data') }}">--}}
-{{--                                    <option value="">{{ _i('Select...') }}</option>--}}
-{{--                                    @foreach ($agents as $agent)--}}
-{{--                                        <option value="{{ $agent['user_id'] }}">--}}
-{{--                                            {{ $agent['username'] }}--}}
-{{--                                        </option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
+                        <div class="col-sm-6">
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('user')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="userSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('father')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="fatherSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('rol')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="typeSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('agents')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="agentsSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('players')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="playersSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('created')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="createdSet"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mb-1">
+                                <div class="offset-md-1 col-md-3">
+                                   <h5><strong> {{_i('Estructura')}}</strong></h5>
+                                </div>
+                            </div>
+{{--                            <div class="row mb-1">--}}
+{{--                                <div class="offset-md-1 col-md-3">--}}
+{{--                                    <strong> {{_i('father')}}: </strong>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-8">--}}
+{{--                                    <span class="fatherSet"></span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row mb-1">--}}
+{{--                                <div class="offset-md-1 col-md-3">--}}
+{{--                                    <strong> {{_i('rol')}}: </strong>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-8">--}}
+{{--                                    <span class="typeSet"></span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row mb-1">--}}
+{{--                                <div class="offset-md-1 col-md-3">--}}
+{{--                                    <strong> {{_i('agents')}}: </strong>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-8">--}}
+{{--                                    <span class="agentsSet"></span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row mb-1">--}}
+{{--                                <div class="offset-md-1 col-md-3">--}}
+{{--                                    <strong> {{_i('players')}}: </strong>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-8">--}}
+{{--                                    <span class="playersSet"></span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="row mb-1">--}}
+{{--                                <div class="offset-md-1 col-md-3">--}}
+{{--                                    <strong> {{_i('created')}}: </strong>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-8">--}}
+{{--                                    <span class="createdSet"></span>--}}
+{{--                                </div>--}}
 {{--                            </div>--}}
                         </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">
