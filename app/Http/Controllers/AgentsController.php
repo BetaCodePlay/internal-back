@@ -1776,7 +1776,7 @@ class AgentsController extends Controller
             $data = [
                 'cant_agents' => $cant['agents'],
                 'cant_players' => $cant['players'],
-                'father' => $father->username,
+                'father' => $father->username ?? '',
                 'fathers' => $fathers,
                 'user' => $user,
                 'balance' => number_format($balance, 2),

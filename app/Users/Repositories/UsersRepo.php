@@ -164,6 +164,7 @@ class UsersRepo
         return User::where('id', $user)->first(['username']);
 
     }
+
     /**
      * Get parents from child by Id
      *
