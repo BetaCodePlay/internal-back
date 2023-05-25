@@ -61,6 +61,34 @@ class AgentsRepo
     }
 
     /**
+     * Update Block agents and users
+     *
+     * @param array $agents Agent data
+     * @return mixed
+     */
+    public function updateBlockAgents($currency, $provider, $user, $agents)
+    {
+        $agents = \DB::table('exclude_providers_users')->updateOrInsert(
+            ['provider_id' => $provider, 'user_id' => $user, 'currency_iso' => $currency],
+            $agents
+        );
+        return $agents;
+    }
+
+    /**
+     * Update unBlock agents and makers
+     *
+     * @param array $agents Agent data
+     * @return mixed
+     */
+    public function unBlockAgentsMaker($currency,$provider,$user,$data)
+    {
+        $agents = \DB::table('exclude_providers_users')->where('currency_iso', $currency)->where('provider_id', $provider)->where('user_id', $user)->update($data);
+        return $agents;
+    }
+
+
+    /**
      * Block users
      *
      * @param int $user User ID
@@ -201,7 +229,7 @@ class AgentsRepo
      */
     public function getAgentLockByProvider($currency, $provider, $whitelabel)
     {
-        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_providers_users.provider_id', 'exclude_providers_users.created_at', 'providers.name')
+        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_providers_users.provider_id', 'exclude_providers_users.makers','exclude_providers_users.created_at', 'providers.name')
             ->join('users', 'agents.user_id', '=', 'users.id')
             ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
             ->join('providers', 'exclude_providers_users.provider_id', '=', 'providers.id')
@@ -276,7 +304,7 @@ class AgentsRepo
      */
     public function getExcludeUserProvider($user)
     {
-        $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.currency_iso')
+        $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.makers', 'exclude_providers_users.currency_iso')
             ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
             ->where('exclude_providers_users.user_id', $user)
             ->get();

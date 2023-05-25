@@ -1582,7 +1582,7 @@ class Agents {
 
     //Select maker
     selectProvidersMaker(){
-        initSelect2();
+        //initSelect2();
         $('#provider').on('change', function () {
             let provider = $(this).val();
             let route = $(this).data('route');
@@ -2066,6 +2066,14 @@ class Agents {
                 $buttonUpdate.button('reset');
             });
         });
+    }
+    detailsUserModal(){
+        $('#details-user-modal').on('show.bs.modal', function (e) {
+            console.log('mostrar')
+        })
+        // $('#details-user-modal').on('hidden.bs.modal', function (e) {
+        //     console.log('cerrar')
+        // })
     }
 }
 
