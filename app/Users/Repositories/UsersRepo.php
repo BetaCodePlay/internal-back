@@ -165,6 +165,32 @@ class UsersRepo
 
     }
     /**
+     * Get parents from child by Id
+     *
+     * @param int $son User Id Son
+     * @param int $userAuth User Id Authenticate
+     * @param string $currency Currency Iso
+     * @return mixed
+     */
+    public function getParentsFromChild(int $son,int$userAuth,string $currency)
+    {
+        return DB::select('WITH RECURSIVE all_agents AS (
+                                  SELECT  agents.owner_id,agents.user_id,0 AS level,u.username
+                                  FROM site.agents AS agents
+                                  JOIN site.users AS u ON agents.user_id = u.id
+                                  JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                                  WHERE agents.user_id = ?
+                                  AND currency_iso = ?
+                                  UNION
+                                  SELECT agents.owner_id,agents.user_id,level+1 AS level,u.username
+                                  FROM site.agents AS agents
+                                  JOIN site.users AS u ON agents.user_id = u.id
+                                  JOIN all_agents a ON agents.user_id = a.owner_id
+                                  where a.user_id <> ?
+                                  ) select * from all_agents order by level desc',[$son,$currency,$userAuth]);
+
+    }
+    /**
      * Number of children
      *
      * @param int $owner User Id Owner

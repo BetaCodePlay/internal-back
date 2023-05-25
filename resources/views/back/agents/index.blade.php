@@ -531,7 +531,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <div class="row g-mb-15" id="details-user">
+                                    <div class="row g-mb-15 d-none" id="details-user">
 {{--                                        <div--}}
 {{--                                            class="col-2 col-sm-2 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">--}}
 {{--                                            <label class="g-mb-0">--}}
