@@ -25,6 +25,7 @@ use Dotworkers\Audits\Audits;
  *
  * @package App\Http\Controllers
  * @author  Eborio Linarez
+ * @author Genesis Perez
  */
 class SlidersController extends Controller
 {
@@ -392,7 +393,6 @@ class SlidersController extends Controller
      */
     public function update(Request $request)
     {
-        \Log::error(__METHOD__, ['request' => $request->all()]);
         $rules = [
             'image' => 'required',
             'device' => 'required',
@@ -512,7 +512,6 @@ class SlidersController extends Controller
                     Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
                     Storage::delete($oldFilePath);
                     $sliderData['front'] = $nameFront;
-                    $fileFront = $nameFront;
                 }
             }
             $this->slidersRepo->update($id, $sliderData);

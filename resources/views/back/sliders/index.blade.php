@@ -17,7 +17,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="device">{{ _i('Devices') }}</label>
-                                <select name="device[]"  id="device" class="form-control" multiple>
+                                <select name="device[]" id="device" class="form-control" multiple>
                                     <option value="">{{ _i('All') }}</option>
                                     <option value="*">{{ _i('All devices') }}</option>
                                     <option value="false">{{ _i('Desktop') }}</option>
@@ -28,7 +28,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="language">{{ _i('Language') }}</label>
-                                <select name="language[]"  id="language" class="form-control" multiple>
+                                <select name="language[]" id="language" class="form-control" multiple>
                                     <option value="">{{ _i('All') }}</option>
                                     <option value="*">{{ _i('All languages') }}</option>
                                     @foreach ($languages as $language)
@@ -46,7 +46,8 @@
                                     <option value="">{{ _i('All') }}</option>
                                     <option value="*">{{ _i('All currencies') }}</option>
                                     @foreach ($whitelabel_currencies as $currency)
-                                        <option value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
+                                        <option
+                                            value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
                                             {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
                                         </option>
                                     @endforeach
@@ -60,7 +61,8 @@
                                     <option value="true">{{ _i('Published') }}</option>
                                     <option value="false">{{ _i('Unpublished') }}</option>
                                 </select>
-                                <input type="hidden" id="template_element_type" name="template_element_type" value="{{$template_element_type}}">
+                                <input type="hidden" id="template_element_type" name="template_element_type"
+                                       value="{{$template_element_type}}">
                                 <input type="hidden" id="section" name="section" value="{{$section}}">
                             </div>
                         </div>
@@ -68,69 +70,17 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="route">{{ _i('Menu where it will be shown') }}</label>
-                                    <select name="routes[]"  id="routes" class="form-control" multiple>
+                                    <select name="routes[]" id="routes" class="form-control" multiple>
                                         <option value="">{{ _i('All') }}</option>
-                                            <option value="core.index">
-                                                {{ _i('Home') }}
-                                            </option>
+                                        <option value="core.index">
+                                            {{ _i('Home') }}
+                                        </option>
 
                                         @foreach ($menu as $item)
                                             <option value="{{ $item->route }}">
                                                 {{ $item->name }}
                                             </option>
                                         @endforeach
-                                        @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 124 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 44)
-                                            <option value="core.index">
-                                                {{ _i('Home') }}
-                                            </option>
-                                        @endif
-                                        @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 2 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 6 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 7 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 8 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 9 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 20 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 27 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 42 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 47 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 50 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 68 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 73 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 74 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 75 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 79 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 81 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 130 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 129 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 130)
-                                            <option value="pragmatic-play.live">
-                                                {{ _i('Pragmatic Live Casino') }}
-                                            </option>
-                                        @endif
-                                        @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 147 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 149 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144)
-                                            <option value="store.index">
-                                                {{ _i('Store') }}
-                                            </option>
-                                        @endif
-                                        @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114)
-                                            <option value="vivo-gaming-dotsuite.lobby">
-                                                {{ _i('Vivo Gaming Dotsuite') }}
-                                            </option>
-                                        @endif
-                                        @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 125 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 153)
-                                            <option value="bet-soft.vg.lobby">
-                                                {{ _i('Bet Soft') }}
-                                            </option>
-                                            <option value="tom-horn.vg.lobby">
-                                                {{ _i('Tom Horn') }}
-                                            </option>
-                                            <option value="platipus.vg.lobby">
-                                                {{ _i('Platipus') }}
-                                            </option>
-                                            <option value="booongo.vg.lobby">
-                                                {{ _i('Booongo') }}
-                                            </option>
-                                            <option value="leap.vg.lobby">
-                                                {{ _i('Leap') }}
-                                            </option>
-                                            <option value="arrows-edge.vg.lobby">
-                                                {{ _i('Arrows Edge') }}
-                                            </option>
-                                            <option value="red-rake.vg.lobby">
-                                                {{ _i('Red Rake') }}
-                                            </option>
-                                            <option value="playson.vg.lobby">
-                                                {{ _i('Playson') }}
-                                            </option>
-                                            <option value="5men.vg.lobby">
-                                                {{ _i('5 Men') }}
-                                            </option>
-                                            <option value="spinomenal.vg.lobby">
-                                                {{ _i('Spinomenal') }}
-                                            </option>
-                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -159,7 +109,8 @@
                             {{ $title }}
                         </h3>
                         <div class="media-body d-flex justify-content-end">
-                            <a href="{{ route('sliders.create', [$template_element_type, $section]) }}" class="btn u-btn-3d u-btn-primary float-right">
+                            <a href="{{ route('sliders.create', [$template_element_type, $section]) }}"
+                               class="btn u-btn-3d u-btn-primary float-right">
                                 <i class="hs-admin-upload"></i>
                                 {{ _i('Upload') }}
                             </a>
@@ -173,7 +124,8 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered w-100" id="sliders-table" data-route="{{ route('sliders.all', [$template_element_type, $section]) }}">
+                        <table class="table table-bordered w-100" id="sliders-table"
+                               data-route="{{ route('sliders.all', [$template_element_type, $section]) }}">
                             <thead>
                             <tr>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

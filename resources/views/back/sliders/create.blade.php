@@ -33,7 +33,7 @@
                             <input type="file" name="image" id="image" class="opacity-0">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label class="">
                             <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                             <span class="glyphicon glyphicon-ok">{{ _i('Enable only for moving sliders: ') }}</span>
@@ -156,7 +156,6 @@
                                     <div class="form-group">
                                         <label for="route">{{ _i('Menu where it will be shown') }}</label>
                                         <select name="route[]" id="route" class="form-control" multiple>
-
                                             <option value="core.index">
                                                 {{ _i('Home') }}
                                             </option>
@@ -165,58 +164,6 @@
                                                     {{ $item->name }}
                                                 </option>
                                             @endforeach
-                                            @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 2 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 6 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 7 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 8 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 9 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 20 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 27 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 42 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 47 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 50 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 68 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 73 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 74 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 75 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 79 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 81 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 130)
-                                                <option value="pragmatic-play.live">
-                                                    {{ _i('Pragmatic Live Casino') }}
-                                                </option>
-                                            @endif
-                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 116)
-                                                <option value="vivo-gaming.lobby">
-                                                    {{ _i('Live Casino') }}
-                                                </option>
-                                            @endif
-                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 147 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 149 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144)
-                                                <option value="store.index">
-                                                    {{ _i('Store') }}
-                                                </option>
-                                            @endif
-                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114)
-                                                <option value="vivo-gaming-dotsuite.lobby">
-                                                    {{ _i('Vivo Gaming Dotsuite') }}
-                                                </option>
-                                            @endif
-                                            @if ( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 125 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 153)
-                                                <option value="bet-soft.vg.lobby">
-                                                    {{ _i('Bet Soft') }}
-                                                </option>
-                                                <option value="tom-horn.vg.lobby">
-                                                    {{ _i('Tom Horn') }}
-                                                </option>
-                                                <option value="platipus.vg.lobby">
-                                                    {{ _i('Platipus') }}
-                                                </option>
-                                                <option value="booongo.vg.lobby">
-                                                    {{ _i('Booongo') }}
-                                                </option>
-                                                <option value="leap.vg.lobby">
-                                                    {{ _i('Leap') }}
-                                                </option>
-                                                <option value="arrows-edge.vg.lobby">
-                                                    {{ _i('Arrows Edge') }}
-                                                </option>
-                                                <option value="red-rake.vg.lobby">
-                                                    {{ _i('Red Rake') }}
-                                                </option>
-                                                <option value="playson.vg.lobby">
-                                                    {{ _i('Playson') }}
-                                                </option>
-                                                <option value="5men.vg.lobby">
-                                                    {{ _i('5 Men') }}
-                                                </option>
-                                                <option value="spinomenal.vg.lobby">
-                                                    {{ _i('Spinomenal') }}
-                                                </option>
-                                            @endif
                                         </select>
                                     </div>
                                 </div>
