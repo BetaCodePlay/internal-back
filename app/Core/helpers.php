@@ -2722,7 +2722,6 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-image',
                 'permission' => Permissions::$section_images_menu,
                 'submenu' => [
-
                 ]
             ],
 
