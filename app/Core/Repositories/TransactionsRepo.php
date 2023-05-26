@@ -384,7 +384,9 @@ class TransactionsRepo
             }elseif ($orderCol['column'] == 'debit' || $orderCol['column'] == 'credit'){
                 $transactions = $transactions->orderBy('transactions.transaction_type_id', $orderCol['order']);
             }elseif ($orderCol['column'] == 'balance'){
-                //$transactions = $transactions->orderBy('transactions.amount', $orderCol['order']);
+
+                $transactions = $transactions->orderBy('transactions.data->balance', $orderCol['order']);
+
             }else{
                 $transactions = $transactions->orderBy('transactions.id', $orderCol['order']);
             }
