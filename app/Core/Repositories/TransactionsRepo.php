@@ -350,7 +350,7 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [])
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [],$orderCol)
     {
 
        $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
@@ -372,6 +372,22 @@ class TransactionsRepo
 
         if (!is_null($username)) {
             $transactions = $transactions->where('username', 'ilike', "%$username%");
+        }
+
+        if (!empty($orderCol)) {
+            if($orderCol['column'] == 'date'){
+                $transactions = $transactions->orderBy('transactions.created_at', $orderCol['order']);
+            }elseif ($orderCol['column'] == 'data.from'){
+                $transactions = $transactions->orderBy('transactions.data->from', $orderCol['order']);
+            }elseif ($orderCol['column'] == 'data.to'){
+                $transactions = $transactions->orderBy('transactions.data->to', $orderCol['order']);
+            }elseif ($orderCol['column'] == 'debit' || $orderCol['column'] == 'credit'){
+                $transactions = $transactions->orderBy('transactions.transaction_type_id', $orderCol['order']);
+            }elseif ($orderCol['column'] == 'balance'){
+                //$transactions = $transactions->orderBy('transactions.amount', $orderCol['order']);
+            }else{
+                $transactions = $transactions->orderBy('transactions.id', $orderCol['order']);
+            }
         }
 
         $countTransactions = $transactions->count();

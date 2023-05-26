@@ -500,7 +500,7 @@ class AgentsController extends Controller
      */
     public function agentsTransactionsPaginate($agent, Request $request)
     {
-        try {
+//        try {
 
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit = $request->has('length') ? $request->get('length') : 100;
@@ -509,6 +509,16 @@ class AgentsController extends Controller
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
             $username = $request->get('search')['value'];
             $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+            $orderCol =[
+                'column'=> 'id',
+                'order'=> 'desc',
+            ];
+            if($request->has('order') && !empty($request->get('order'))){
+                $orderCol=[
+                    'column'=> $request->get('columns')[$request->get('order')[0]['column']]['data'],
+                    'order'=> $request->get('order')[0]['dir']
+                ];
+            }
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
@@ -523,17 +533,17 @@ class AgentsController extends Controller
             $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather($agent, session('currency'), Configurations::getWhitelabel());
 
             //TODO get transactions with filter
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds,$orderCol);
 
             //TODO draw table in collection
            $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
             return response()->json($data);
 
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**
