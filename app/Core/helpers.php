@@ -2714,6 +2714,15 @@ if (!function_exists('menu')) {
                     ]
                 ]
             ],
+            'LobbySections' => [
+                'text' => _i('Lobbys Sections Mega Home'),
+                'level_class' => 'top',
+                'route' => null,
+                'params' => [],
+                'icon' => 'hs-admin-image',
+                'permission' => Permissions::$section_images_menu,
+                'submenu' => []
+            ],
 
             'LobbyGames' => [
                 'text' => _i('Lobby Games'),
@@ -2734,28 +2743,6 @@ if (!function_exists('menu')) {
                     ]
                 ],
             ],
-
-
-            /*'Games' => [
-                'text' => _i('Games section'),
-                'level_class' => 'top',
-                'route' => 'section-games.index',
-                'params' => [],
-                'icon' => 'hs-admin-game',
-                'permission' => Permissions::$manage_section_games,
-                'submenu' => [
-                    'GamesSection' => [
-                        'text' => _i('Games section'),
-                        'level_class' => 'second',
-                        'route' => 'section-games.index',
-                        'params' => [TemplateElementTypes::$home],
-                        'icon' => 'hs-admin-shift-left',
-                        'permission' => Permissions::$manage_section_games,
-                        'submenu' => []
-                    ]
-                ]
-            ],*/
-
 
             /*'Featured' => [
                 'text' => _i('Featured lobby'),

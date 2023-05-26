@@ -202,7 +202,7 @@ class Core
 
 
                 $anchorFlex = ($item->level_class == 'second' || $item->level_class == 'third' || $item->level_class == 'fourth') ? 'd-flex' : '';
-                if (empty($item->submenu) && $key != 'Sliders' && $key != 'Images' && $key  != 'Games' ) {
+                if (empty($item->submenu) && $key != 'Sliders' && $key != 'Images' && $key  != 'Games' && $key != 'LobbySections') {
                     if (isset($item->route)) {
                         if (empty($item->params)) {
                             $route = route($item->route);
@@ -263,7 +263,7 @@ class Core
                     $item->text
                 );
 
-                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection') {
+                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection'|| $key == 'LobbySections') {
                     $html .= '<span class="d-flex align-self-center u-side-nav--control-icon"><i class="hs-admin-angle-right"></i></span>';
                     if ($item->level_class == 'top') {
                         $html .= '<span class="u-side-nav--has-sub-menu__indicator"></span>';
@@ -356,6 +356,29 @@ class Core
                             }
                         }
                         $html .= self::menuItems($imageSections);
+                    }
+
+                    if ($key == 'LobbySections') {
+                        $lobbySections = Configurations::getCasinoLobby()->home;
+                        $lobby = [];
+
+                        if (is_object($lobbySections)) {
+                            foreach ($lobbySections as $sectionKey => $section) {
+                                if (isset($section->section_images)) {
+                                    $lobby[$sectionKey] = json_decode(json_encode([
+                                        'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
+                                        'level_class' => 'second',
+                                        'route' => 'section-images.index',
+                                        'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                        'icon' => 'hs-admin-list',
+                                        'permission' => Permissions::$manage_section_images,
+                                        'submenu' => [
+                                        ],
+                                    ]));
+                                }
+                            }
+                        }
+                        $html .= self::menuItems($lobby);
                     }
 
                     if ($key == 'GamesSection') {
