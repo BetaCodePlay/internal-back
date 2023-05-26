@@ -1171,7 +1171,7 @@ class AgentsController extends Controller
             'username' => 'required',
             'currency' => 'required',
             'category' => 'required',
-            'maker' => ['required_if:category,*'],
+            'maker' => 'required',
         ]);
 
         try {
