@@ -2725,7 +2725,7 @@ if (!function_exists('menu')) {
                     'Sliders' => [
                         'text' => _i('Lobbys sliders'),
                         'level_class' => 'top',
-                        'route' => null,
+                        'route' => 'sliders.create',
                         'params' => [TemplateElementTypes::$lobby_sections_mega_home],
                         'icon' => 'hs-admin-list',
                         'permission' => Permissions::$section_images_list,
