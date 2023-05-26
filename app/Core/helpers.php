@@ -2728,7 +2728,7 @@ if (!function_exists('menu')) {
                         'route' => null,
                         'params' => [],
                         'icon' => 'hs-admin-import',
-                        'permission' => Permissions::$section_images_list,
+                        'permission' => Permissions::$sliders_menu,
                         'submenu' => []
                     ]
                 ]
@@ -2742,15 +2742,15 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-user',
                 'permission' => Permissions::$section_games_menu,
                 'submenu' => [
-                    'CreateLobby' => [
-                        'text' => _i('Create Lobby'),
-                        'level_class' => 'second',
-                        'route' => 'games.create',
-                        'params' => [],
-                        'icon' => 'hs-admin-plus',
-                        'permission' => Permissions::$manage_lobby_games_menu,
+                    'Sliders' => [
+                        'text' => _i('Lobbys sliders'),
+                        'level_class' => 'top',
+                        'route' => null,
+                        'params' => [TemplateElementTypes::$lobby_sections_mega_home],
+                        'icon' => 'hs-admin-list',
+                        'permission' => Permissions::$section_images_list,
                         'submenu' => []
-                    ]
+                    ],
                 ],
             ],
 
