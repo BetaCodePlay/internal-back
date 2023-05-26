@@ -2722,15 +2722,15 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-image',
                 'permission' => Permissions::$section_images_menu,
                 'submenu' => [
-                    'LobbySections' => [
-                        'text' => _i(''),
+                    'Sliders' => [
+                        'text' => _i('Lobbys sliders'),
                         'level_class' => 'top',
                         'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-import',
-                        'permission' => Permissions::$sliders_menu,
+                        'params' => [TemplateElementTypes::$lobby_sections_mega_home],
+                        'icon' => 'hs-admin-list',
+                        'permission' => Permissions::$section_images_list,
                         'submenu' => []
-                    ]
+                    ],
                 ]
             ],
 
@@ -2741,17 +2741,7 @@ if (!function_exists('menu')) {
                 'params' => [],
                 'icon' => 'hs-admin-user',
                 'permission' => Permissions::$section_games_menu,
-                'submenu' => [
-                    'Sliders' => [
-                        'text' => _i('Lobbys sliders'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [TemplateElementTypes::$lobby_sections_mega_home],
-                        'icon' => 'hs-admin-list',
-                        'permission' => Permissions::$section_images_list,
-                        'submenu' => []
-                    ],
-                ],
+                'submenu' => [],
             ],
 
             /*'Featured' => [
