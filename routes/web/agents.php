@@ -435,12 +435,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@excludeProvidersAgents'
         ]);
 
-        // Get username
-        Route::post('search-username', [
-            'as' => 'users.search-username',
-            'uses' => 'UsersController@getUsersByUsername'
-        ]);
-
         // Exclude providers users data
         Route::post('exclude-providers-agents-data', [
             'as' => 'agents.reports.exclude-providers-agents-data',
@@ -448,13 +442,13 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         ]);
 
         // Exclude providers users delete
-        Route::get('exclude-providers-agents-delete/{user}/{provider}/{currency}', [
+        Route::get('exclude-providers-agents-delete/{user}/{category}/{currency}', [
             'as' => 'agents.reports.exclude-providers-agents.delete',
             'uses' => 'AgentsController@excludeProviderAgentsDelete'
         ]);
 
         // Exclude providers users list
-        Route::get('exclude-providers-agents-list/{start_date?}/{end_date?}/{provider?}/{maker?}/{currency?}', [
+        Route::get('exclude-providers-agents-list/{start_date?}/{end_date?}/{category?}/{maker?}/{currency?}', [
             'as' => 'agents.reports.exclude-providers-agents.list',
             'uses' => 'AgentsController@excludeProviderAgentsList'
         ]);

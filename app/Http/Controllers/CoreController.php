@@ -257,6 +257,22 @@ class CoreController extends Controller
      *
      * @param @param Request $request
      */
+    public function makers(Request $request)
+    {
+        try {
+            $data['makers'] = $this->gamesRepo->getMakers();
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Upload makers
+     *
+     * @param @param Request $request
+     */
     public function makersByProvider(Request $request)
     {
         try {
@@ -265,6 +281,23 @@ class CoreController extends Controller
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'provider' => $request->provider]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Upload makers
+     *
+     * @param @param Request $request
+     */
+    public function makersByCategory(Request $request)
+    {
+        try {
+            $category = $request->category;
+            $data['makers'] = $this->gamesRepo->getMakersByCategory($category);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'category' => $request->category]);
             abort(500);
         }
     }

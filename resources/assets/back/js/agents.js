@@ -446,6 +446,8 @@ class Agents {
 
     // Dashboard
     dashboard() {
+        //console.log('test in dashboard fo agent.jd')
+
         initSelect2();
         clipboard();
         let $tree = $('#tree');
@@ -486,24 +488,6 @@ class Agents {
                     }
 
                 }).done(function (json) {
-                    //TODO Init Set Modal
-                        $('.userSet').text(json.data.user.username);
-                        $('.fatherSet').text(json.data.father);
-                        $('.typeSet').text(json.data.user.typeSet);
-                        $('.agentsSet').text(json.data.cant_agents);
-                        $('.playersSet').text(json.data.cant_players);
-                        $('.createdSet').text(json.data.user.created);
-                        $('.appendTreeFather').html('');
-                        let initUl = '';
-                        let finishUl = '';
-                        $.each(json.data.fathers,function(index,val) {
-                            initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
-                            finishUl = finishUl + '</li></ul>'
-                        });
-                        $('.appendTreeFather').append(initUl+finishUl);
-                    //TODO Finish Set Modal
-
-
                     $('#username').text(json.data.user.username);
                     $('#agent_timezone').text(json.data.user.timezone);
                     $('.balance').text(json.data.balance);
@@ -630,43 +614,41 @@ class Agents {
     // Financial state Makers
     financialStateMakers() {
 
-        initSelect2();
-        initDateRangePickerEndToday(open = 'right');
+         let picker = initLitepickerEndToday();
          let $table = $('#financial-state-table-makers');
-        //  let currency_iso = $('#currency').val() === ''? '':$('#currency').val();
-        //  let startDate = $('#start_date').val();
-        //  let endDate = $('#end_date').val();
+         let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
+         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
          let $button = $('#update');
          $button.trigger('click');
+         let api;
+
+        Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
          $button.click(function () {
-            $button.button('loading');
-            let startDate = $('#start_date').val();
-            let endDate = $('#end_date').val();
-            let currency_iso = $('#currency').val() === ''? '':$('#currency').val();
-            $.ajax({
-                url: `${$table.data('route')}/${startDate}/${endDate}?currency_iso=${currency_iso}`,
-                type: 'get',
-                dataType: 'json'
+             $button.button('loading');
+                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
-            })
-            .done(function (json) {
-                $table.html(json.data.table);
+                $.ajax({
+                    url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}`,
+                    type: 'get',
+                    dataType: 'json'
 
-            }).fail(function (json) {
-                swalError(json);
+                }).fail(function (json) {
+                    swalError(json);
 
-            }).always(function () {
-                $button.button('reset');
-            });
+                }).always(function () {
+                    $button.button('reset');
+                });
 
-            Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
+                Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
         });
     }
 
      // Agents Transactions Paginate Total
-    static financialStateMakersTotal(url_total,start_date,end_date, currency_iso='', provider_id='', whitelabel_id='') {
+    static financialStateMakersTotal(url_total,start_date,end_date, currency_iso) {
         $.ajax({
-            url: url_total+'?startDate='+start_date+'&endDate='+end_date+'&currency_iso='+currency_iso+'&provider_id='+provider_id+'&whitelabel_id='+whitelabel_id,
+            url: url_total+'?startDate='+start_date+'&endDate='+end_date+'&currency_iso='+currency_iso,
             type: 'get',
         }).done(function (response) {
             $('.financialStateDataMakersTotals').empty();
@@ -1597,32 +1579,31 @@ class Agents {
     }
 
     //Select maker
-    selectProvidersMaker(){
-        //initSelect2();
-        $('#provider').on('change', function () {
-            let provider = $(this).val();
-            let route = $(this).data('route');
+    selectCategoryMaker(){
+        initSelect2();
+        $('#category').on('change', function () {
+            let category = $(this).val();
             let makers = $('#maker');
-            if (provider !== '') {
-                $.ajax({
-                    url: route,
-                    type: 'get',
-                    dataType: 'json',
-                    data: {
-                        provider
-                    }
-                }).done(function (json) {
-                    $('#maker option[value!=""]').remove();
-                    $(json.data.makers).each(function (key, element) {
-                        makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
-                    })
-                    makers.prop('disabled', false);
-                }).fail(function (json) {
-
-                });
-            } else {
-                makers.val('');
+            let route;
+            if (category !== '*') {
+                route = $(this).data('route');
+            }else{
+                route = makers.data('route');
             }
+            $.ajax({
+                url: route,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    category
+                }
+            }).done(function (json) {
+                $('#maker option[value!=""]').remove();
+                $(json.data.makers).each(function (key, element) {
+                    makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
+                })
+                makers.prop('disabled', false);
+            }).fail(function (json) {});
         }).trigger('change');
     }
 
@@ -2027,7 +2008,7 @@ class Agents {
             "columns": [
                 {"data": "user"},
                 {"data": "username"},
-                {"data": "name"},
+                {"data": "category"},
                 {"data": "makers"},
                 {"data": "currency_iso"},
                 {"data": "date", "className": "text-right"},
@@ -2047,12 +2028,12 @@ class Agents {
         });
         $button.click(function () {
             $button.button('loading');
-            let provider = $('#provider_filter').val();
+            let category = $('#category_filter').val();
             let maker = $('#maker_filter').val();
             let currency = $('#currency_filter').val();
             let startDate = $('#start_date').val();
             let endDate = $('#end_date').val();
-            let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}`;
+            let route = `${$table.data('route')}/${startDate}/${endDate}?category=${category}&maker=${maker}&currency=${currency}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
