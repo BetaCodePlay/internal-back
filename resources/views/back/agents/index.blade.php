@@ -605,20 +605,9 @@
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
                             <div class="row">
-                                <div class="offset-md-5"></div>
+                                <div class="offset-md-7"></div>
                                 <div class="col-md-2 text-right">
                                     <div class="input-group">
-                                        <label for="type_select">asdasdasd</label>
-                                        <select name="type_select" id="type_select" class="form-control">
-                                            <option value="all" selected="selected" hidden>Todos</option>
-                                            <option value="agent">{{_i('Agent')}}</option>
-                                            <option value="user">{{_i('User')}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-right">
-                                    <div class="input-group">
-                                        <label for="type_select">asdasdasd</label>
                                         <select name="type_select" id="type_select" class="form-control">
                                             <option value="all" selected="selected" hidden>Todos</option>
                                             <option value="agent">{{_i('Agent')}}</option>
