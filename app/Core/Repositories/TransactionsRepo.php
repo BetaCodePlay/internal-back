@@ -354,7 +354,7 @@ class TransactionsRepo
     {
 
        $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id','transactions.data->balance AS balance_final')
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $arraySonIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
@@ -385,7 +385,8 @@ class TransactionsRepo
                 $transactions = $transactions->orderBy('transactions.transaction_type_id', $orderCol['order']);
             }elseif ($orderCol['column'] == 'balance'){
 
-                $transactions = $transactions->orderBy('transactions.data->balance', $orderCol['order']);
+                //$transactions = $transactions->orderBy('transactions.data->>balance', $orderCol['order']);
+
 
             }else{
                 $transactions = $transactions->orderBy('transactions.id', $orderCol['order']);

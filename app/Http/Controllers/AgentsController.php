@@ -516,7 +516,7 @@ class AgentsController extends Controller
      */
     public function agentsTransactionsPaginate($agent, Request $request)
     {
-//        try {
+        try {
 
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit = $request->has('length') ? $request->get('length') : 100;
@@ -556,10 +556,10 @@ class AgentsController extends Controller
 
             return response()->json($data);
 
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            return Utils::failedResponse();
-//        }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
