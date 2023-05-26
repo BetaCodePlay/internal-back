@@ -33,7 +33,7 @@
                             <input type="file" name="image" id="image" class="opacity-0">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label class="">
                             <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                             <span class="glyphicon glyphicon-ok">{{ _i('Enable only for moving images: ') }}</span>
@@ -70,7 +70,8 @@
                                 {{ _i('Image details') }}
                             </h3>
                             <div class="media-body d-flex justify-content-end">
-                                <a href="{{ route('section-images.index', [$template_element_type, $section]) }}" class="btn u-btn-3d u-btn-primary float-right">
+                                <a href="{{ route('section-images.index', [$template_element_type, $section]) }}"
+                                   class="btn u-btn-3d u-btn-primary float-right">
                                     <i class="hs-admin-layout-list-thumb"></i>
                                     {{ _i('Go to list') }}
                                 </a>
@@ -120,21 +121,6 @@
                                            class="form-control datetimepicker" autocomplete="off">
                                 </div>
                             </div>
-                            {{--<div class="col-md-12">--}}
-                            {{--   <div class="form-group">--}}
-                            {{--        <label for="language">{{ _i('Language') }}</label>--}}
-                            {{--        <select name="language" id="language" class="form-control">--}}
-                            {{--            <option value="*" {{ $image->language == '*' ? 'selected' : '' }}>--}}
-                            {{--                {{ _i('All') }}--}}
-                            {{--            </option>--}}
-                            {{--           @foreach ($languages as $language)--}}
-                            {{--                <option value="{{ $language['iso'] }}" {{ $image->language == $language['iso'] ? 'selected' : '' }}>--}}
-                            {{--                    {{ $language['name'] }}--}}
-                            {{--               </option>--}}
-                            {{--            @endforeach--}}
-                            {{--        </select>--}}
-                            {{--    </div>--}}
-                            {{--</div>--}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="status">{{ _i('Status') }}</label>
@@ -146,7 +132,8 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input type="hidden" name="template_element_type" value="{{ $template_element_type }}">
+                                    <input type="hidden" name="template_element_type"
+                                           value="{{ $template_element_type }}">
                                     <input type="hidden" name="section" value="{{ $section }}">
                                     <button type="submit" class="btn u-btn-3d u-btn-primary" id="store"
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Uploading...') }}">

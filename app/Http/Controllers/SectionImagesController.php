@@ -18,6 +18,15 @@ use App\Audits\Repositories\AuditsRepo;
 use App\Audits\Enums\AuditTypes;
 use Dotworkers\Audits\Audits;
 
+/**
+ * Class SectionImagesController
+ *
+ * This class allows to manage section images requests
+ *
+ * @package App\Http\Controllers
+ * @author  Eborio Linarez
+ * @author Genesis Perez
+ */
 class SectionImagesController extends Controller
 {
     /**

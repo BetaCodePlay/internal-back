@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Gate;
  *
  * @package App\Core\Collections
  * @author  Eborio Linarez
+ * @author Genesis Perez
  */
 class SectionImagesCollection
 {
@@ -34,11 +35,24 @@ class SectionImagesCollection
             $statusClass = $image->status ? 'teal' : 'lightred';
             $statusText = $image->status ? _i('Published') : _i('Unpublished');
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
-            if(!is_null($image->front)){
-            $urlFront = s3_asset("section-images/{$image->front}");
-            $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
-            }else{
+            if (!is_null($image->front)) {
+                $urlFront = s3_asset("section-images/{$image->front}");
+                $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
+            } else {
                 $image->front = _i('Without front image');
+            }
+            if (!is_null($image->category)) {
+                if ($image->category === 'new') {
+                    $image->category = _i('New');
+                }
+                if ($image->category === 'popular') {
+                    $image->category = _i('Popular');
+                }
+                if ($image->category === 'featured') {
+                    $image->category = _i('Featured');
+                }
+            } else {
+                $image->category = _i('Without category');
             }
             $image->position = _i('Does not apply to this image');
             $image->size = $size;
@@ -128,7 +142,7 @@ class SectionImagesCollection
             if (Gate::allows('access', Permissions::$manage_section_images)) {
                 $image->actions = sprintf(
                     '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                    route('featured-images.edit', [$image->id]) ,
+                    route('featured-images.edit', [$image->id]),
                     _i('Edit')
                 );
             } else {
@@ -249,11 +263,24 @@ class SectionImagesCollection
             }
 
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
-            if(!is_null($image->front)){
+            if (!is_null($image->front)) {
                 $urlFront = s3_asset("section-images/{$image->front}");
                 $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
-            }else{
+            } else {
                 $image->front = _i('Without front image');
+            }
+            if (!is_null($image->category)) {
+                if ($image->category === 'new') {
+                    $image->category = _i('New');
+                }
+                if ($image->category === 'popular') {
+                    $image->category = _i('Popular');
+                }
+                if ($image->category === 'featured') {
+                    $image->category = _i('Featured');
+                }
+            } else {
+                $image->category = _i('Without category');
             }
             $image->position = ImagesPositions::get($key);
             $image->size = $size;
@@ -283,7 +310,7 @@ class SectionImagesCollection
     {
         $imageSize = null;
         $width = $configuration->width < '250' ? $configuration->width : '250';
-        $imageSize= "{$configuration->width}x{$configuration->height}";
+        $imageSize = "{$configuration->width}x{$configuration->height}";
         if (!is_null($image)) {
             $url = s3_asset("section-images/{$image->image}");
             $image->file = $image->image;
@@ -314,7 +341,7 @@ class SectionImagesCollection
     {
         $imageSize = null;
         $width = $configuration->width < '250' ? $configuration->width : '250';
-        $imageSize= "{$configuration->width}x{$configuration->height}";
+        $imageSize = "{$configuration->width}x{$configuration->height}";
         if (!is_null($image)) {
             $url = s3_asset("section-images/{$image->image}");
             $image->file = $image->image;
@@ -359,22 +386,22 @@ class SectionImagesCollection
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark) {
                 $image->file = $image->image;
                 $image->image = "<img src='$image->image' class='img-responsive' width='$width'>";
-                if(!is_null($image->front)){
+                if (!is_null($image->front)) {
                     $urlFront = s3_asset("section-images/{$image->front}");
                     $image->file = $image->front;
                     $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
-                }else{
+                } else {
                     $image->front = null;
                 }
             } else {
                 $url = s3_asset("section-images/{$image->image}");
                 $image->file = $image->image;
                 $image->image = "<img src='$url' class='img-responsive' width='$width'>";
-                if(!is_null($image->front)){
+                if (!is_null($image->front)) {
                     $urlFront = s3_asset("section-images/{$image->front}");
                     $image->file = $image->front;
                     $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
-                }else{
+                } else {
                     $image->front = null;
                 }
             }

@@ -45,7 +45,7 @@
                                 <label for="image">{{ _i('Image') }}</label>
                                 <input type="file" name="image" id="show-image" class="opacity-0">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label class="">
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span
@@ -174,21 +174,6 @@
                                     @endif
                                 </div>
                             </div>
-                            {{--<div class="col-md-12">--}}
-                            {{--   <div class="form-group">--}}
-                            {{--        <label for="language">{{ _i('Language') }}</label>--}}
-                            {{--        <select name="language" id="language" class="form-control">--}}
-                            {{--            <option value="*" {{ $image->language == '*' ? 'selected' : '' }}>--}}
-                            {{--                {{ _i('All') }}--}}
-                            {{--            </option>--}}
-                            {{--           @foreach ($languages as $language)--}}
-                            {{--                <option value="{{ $language['iso'] }}" {{ $image->language == $language['iso'] ? 'selected' : '' }}>--}}
-                            {{--                    {{ $language['name'] }}--}}
-                            {{--               </option>--}}
-                            {{--            @endforeach--}}
-                            {{--        </select>--}}
-                            {{--    </div>--}}
-                            {{--</div>--}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="status">{{ _i('Status') }}</label>
