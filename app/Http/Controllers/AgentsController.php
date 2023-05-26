@@ -624,7 +624,7 @@ class AgentsController extends Controller
     {
         $this->validate($request, [
             'category' => ['required_if:lock_users,false'],
-            'maker' => ['required_if:category,*'],
+            'maker' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
@@ -675,17 +675,13 @@ class AgentsController extends Controller
                         $currencyIso = $userToUpdate['currency_iso'];
                         $category = $userToUpdate['category'];
                         $userId = $userToUpdate['user_id'];
-                        if(is_null($maker)){
+                        $makers = json_decode($userToUpdate['makers']);
+                        $unBlockMaker = array_values(array_diff($makers, [$maker]));
+                        if(empty($unBlockMaker)){
                             $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
                         }else{
-                            $makers = json_decode($userToUpdate['makers']);
-                            $unBlockMaker = array_values(array_diff($makers, [$maker]));
-                            if(empty($unBlockMaker)){
-                                $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
-                            }else{
-                                $data['makers'] = json_encode($unBlockMaker);
-                                $this->agentsRepo->unBlockAgentsMaker($currencyIso,$category,$userId,$data);
-                            }
+                            $data['makers'] = json_encode($unBlockMaker);
+                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$category,$userId,$data);
                         }
                     }
                     $data = [
