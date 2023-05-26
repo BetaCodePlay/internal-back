@@ -359,8 +359,8 @@ class TransactionsRepo
             ->whereIn('transactions.user_id', $arraySonIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC');
+            ->whereIn('transactions.provider_id', $providers);
+            //->orderBy('transactions.id', 'DESC');
 
         if (is_null($typeUser) || $typeUser === 'all') {
 
