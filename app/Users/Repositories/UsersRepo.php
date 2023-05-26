@@ -93,6 +93,23 @@ class UsersRepo
     }
 
     /**
+     * Delete exclude makers user
+     *
+     * @param int $category Category ID
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function deleteExcludeMakersUser($category, $user, $currency)
+    {
+        return \DB::table('exclude_makers_users')
+            ->where('user_id', $user)
+            ->where('category', $category)
+            ->where('currency_iso', $currency)
+            ->delete();
+    }
+
+    /**
      * Find by referral code
      *
      * @param string $code Referral code
@@ -120,6 +137,24 @@ class UsersRepo
             ->where('exclude_providers_users.user_id', $user)
             ->where('exclude_providers_users.provider_id', $provider)
             ->where('exclude_providers_users.currency_iso', $currency)
+            ->first();
+        return $users;
+    }
+
+    /**
+     * Find exclude provider user
+     *
+     * @param int $provider Provider ID
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function findExcludeMakerUser($category, $user, $currency)
+    {
+        $users = \DB::table('exclude_makers_users')
+            ->where('exclude_makers_users.user_id', $user)
+            ->where('exclude_makers_users.category', $category)
+            ->where('exclude_makers_users.currency_iso', $currency)
             ->first();
         return $users;
     }
@@ -264,8 +299,8 @@ class UsersRepo
         }
 
         return [
-          'agents'=>$agents,
-          'players'=>$players,
+            'agents'=>$agents,
+            'players'=>$players,
         ];
     }
 
@@ -362,34 +397,51 @@ class UsersRepo
     }
 
     /**
+     * Get exclude maker user by user, currency, whitelabel and category
+     * @param int $user User ID
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function getUserLockByUserAndCategory($user, $currency, $category, $whitelabel)
+    {
+        $users = User::select('users.id as user_id','users.username','exclude_makers_users.*')
+            ->join('exclude_makers_users', 'exclude_makers_users.user_id', '=', 'users.id')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('exclude_makers_users.user_id', $user)
+            ->where('exclude_makers_users.currency_iso', $currency)
+            ->where('exclude_makers_users.category', $category)
+            ->first();
+        return $users;
+    }
+
+    /**
      * Get exclude provider user by dates, currency, whitelabel and provider
      *
      * @param string $currency Currency ISO
-     * @param int $provider Provider ID
+     * @param string $category Category name
      * @param int $whitelabel Whitelabel ID
      * @param string $startDate Start date to filter
      * @param string $endDate End date to filter
      * @return mixed
      */
-    public function getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate)
+    public function getExcludeProviderUserByDates($currency, $category, $maker, $whitelabel, $startDate, $endDate)
     {
-        $users = User::select('users.id as user_id', 'users.username', 'providers.name', 'exclude_providers_users.*')
-            ->join('exclude_providers_users', 'exclude_providers_users.user_id', '=', 'users.id')
-            ->join('providers', 'providers.id', '=', 'exclude_providers_users.provider_id')
+        $users = User::select('users.id as user_id','users.username', 'exclude_makers_users.*')
+            ->join('exclude_makers_users', 'exclude_makers_users.user_id', '=', 'users.id')
             ->where('users.whitelabel_id', $whitelabel)
-            ->whereBetween('exclude_providers_users.created_at', [$startDate, $endDate]);
+            ->whereBetween('exclude_makers_users.created_at', [$startDate, $endDate]);
 
         if (!empty($currency)) {
-            $users->where('exclude_providers_users.currency_iso', $currency);
+            $users->where('exclude_makers_users.currency_iso', $currency);
         }
-        if (!empty($provider)) {
-            $users->where('exclude_providers_users.provider_id', $provider);
+        if (!empty($category)) {
+            $users->where('exclude_makers_users.category', $category);
         }
         if (!empty($maker)) {
-            $users->whereJsonContains('exclude_providers_users.makers', $maker);
+            $users->whereJsonContains('exclude_makers_users.makers', $maker);
         }
-
-        $data = $users->orderBy('exclude_providers_users.created_at', 'DESC')->get();
+        $data = $users->orderBy('exclude_makers_users.created_at', 'DESC')->get();
         return $data;
     }
 
@@ -1162,7 +1214,7 @@ class UsersRepo
                      and u.whitelabel_id = ?
                      and username ilike ?
                     )
-                    ORDER BY username ASC', [$user, $whitelabel, $currency, $ilikeTmp, $user, $currency, $whitelabel, $ilikeTmp]);
+                    ORDER BY username ASC', [$user, $whitelabel, $currency,$ilikeTmp, $user, $currency, $whitelabel,$ilikeTmp]);
         } else {
             $arrayUsers = DB::select('(SELECT a.user_id, u.username
                     FROM site.agents a
@@ -1303,6 +1355,39 @@ class UsersRepo
             $user->referrals()->attach($referrals);
         }
         return $user;
+    }
+
+    /**
+     * Update exclude provider user
+     *
+     * @param int $id ExcludeProviderUser ID
+     * @param array $data ExcludeProviderUser data
+     * @return mixed
+     */
+    public function updateExcludeProviderUser($user, $provider, $currency, $data)
+    {
+        $users = \DB::table('exclude_providers_users')
+            ->where('exclude_providers_users.user_id', $user)
+            ->where('exclude_providers_users.provider_id', $provider)
+            ->where('exclude_providers_users.currency_iso', $currency)
+            ->update($data);
+        return $users;
+    }
+
+    /**
+     * Update exclude provider user
+     *
+     * @param int $id ExcludeProviderUser ID
+     * @param array $data ExcludeProviderUser data
+     * @return mixed
+     */
+    public function updateExcludeMakersUser($currency, $category, $user, $data)
+    {
+        $users = \DB::table('exclude_makers_users')->updateOrInsert(
+            ['category' => $category, 'user_id' => $user, 'currency_iso' => $currency],
+            $data
+        );
+        return $users;
     }
 
     /**

@@ -924,13 +924,14 @@
                                                         <input type="hidden" name="user" class="user">
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="agent">{{ _i('Provider') }}</label>
-                                                                <select name="provider" id="provider"
-                                                                        class="form-control" data-route="{{ route('core.makers-by-provider') }}">
+                                                                <label for="category">{{ _i('Categories') }}</label>
+                                                                <select name="category" id="category"
+                                                                        class="form-control" data-route="{{ route('core.makers-by-category') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
-                                                                    @foreach ($providers as $provider)
-                                                                        <option value="{{ $provider->id }}">
-                                                                            {{ $provider->name }}
+                                                                    <option value="*">{{ _i('All') }}</option>
+                                                                    @foreach ($categories as $category)
+                                                                        <option value="{{ $category->category }}">
+                                                                            {{ $category->category }}
                                                                         </option>
                                                                     @endforeach
                                                                 </select>
@@ -940,7 +941,7 @@
                                                             <div class="form-group">
                                                                 <label for="maker">{{ _i('Maker') }}</label>
                                                                 <select name="maker" id="maker"
-                                                                        class="form-control">
+                                                                        class="form-control" data-route="{{ route('core.makers') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                 </select>
                                                             </div>
@@ -1181,8 +1182,7 @@
             agents.menuMobile();
             agents.selectAgentOrUser('{{ _i('Agents search...') }}');
             agents.selectUsernameSearch('{{ _i('Agents search...') }}');
-            //TODO CONFLICTO CON EL INIT SELECT
-            agents.selectProvidersMaker();
+            agents.selectCategoryMaker();
             agents.statusFilter();
             @if($agent->master)
             agents.changeAgentType();

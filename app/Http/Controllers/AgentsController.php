@@ -106,6 +106,20 @@ class AgentsController extends Controller
     private $transactionsRepo;
 
     /**
+     * GamesRepo
+     *
+     * @var GamesRepo
+     */
+    private $gamesRepo;
+
+    /**
+     * UsersRepo
+     *
+     * @var UsersRepo
+     */
+    private $usersRepo;
+
+    /**
      * WhitelabelsGamesRepo
      *
      * @var WhitelabelsGamesRepo
@@ -162,6 +176,7 @@ class AgentsController extends Controller
      * @param AgentsCollection $agentsCollection
      * @param CountriesRepo $countriesRepo
      * @param TransactionsRepo $transactionsRepo
+     * @param GamesRepo $gamesRepo
      * @param WhitelabelsGamesRepo $whitelabelsGamesRepo
      * @param UsersTempRepo $usersTempRepo
      * @param AgentCurrenciesRepo $agentCurrenciesRepo
@@ -171,7 +186,7 @@ class AgentsController extends Controller
      * @param UsersCollection $usersCollection
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection, GamesRepo $gamesRepo)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
@@ -182,6 +197,7 @@ class AgentsController extends Controller
         $this->agentCurrenciesRepo = $agentCurrenciesRepo;
         $this->generateReferenceCode = $generateReferenceCode;
         $this->whitelabelsRepo = $whitelabelsRepo;
+        $this->gamesRepo = $gamesRepo;
         $this->whitelabelsGamesRepo = $whitelabelsGamesRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->usersCollection = $usersCollection;
@@ -618,15 +634,16 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'provider' => ['required_if:lock_users,false'],
+            'category' => ['required_if:lock_users,false'],
+            'maker' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
         try {
             $user = $request->user;
             $currency = session('currency');
-            $provider = $request->provider;
             $maker = $request->maker;
+            $category = $request->category;
             $type = $request->type;
             $lockUsers = $request->lock_users;
 
@@ -639,22 +656,23 @@ class AgentsController extends Controller
                     'id' => $user
                 ];
             }
-            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider, $maker);
+            $usersToUpdate = $this->agentsCollection->formatDataLock($lockUsers,$subAgents, $users, $agent, $currency, $category, $maker);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $user = $userToUpdate['user_id'];
+                        $category = $userToUpdate['category'];
                         $data = [
                             'currency_iso' => $userToUpdate['currency_iso'],
-                            'provider_id' => $userToUpdate['provider_id'],
+                            'category' => $userToUpdate['category'],
                             'makers' => $userToUpdate['makers'],
                             'user_id' => $user,
                             'created_at' => $userToUpdate['created_at'],
                             'updated_at' => $userToUpdate['updated_at']
                         ];
-                        $this->agentsRepo->updateBlockAgents($currency,$provider,$user,$data);
+                        $this->agentsRepo->updateBlockAgents($currency,$category,$user,$data);
                     }
                     $data = [
                         'title' => _i('Locked provider'),
@@ -666,14 +684,15 @@ class AgentsController extends Controller
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $currencyIso = $userToUpdate['currency_iso'];
-                        $providerId = $userToUpdate['provider_id'];
+                        $category = $userToUpdate['category'];
                         $userId = $userToUpdate['user_id'];
-                        if(is_null($maker)){
-                            $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
+                        $makers = json_decode($userToUpdate['makers']);
+                        $unBlockMaker = array_values(array_diff($makers, [$maker]));
+                        if(empty($unBlockMaker)){
+                            $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
                         }else{
-                            $unBlockMaker = array_values(array_diff(json_decode($userToUpdate['makers']), [$maker]));
                             $data['makers'] = json_encode($unBlockMaker);
-                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$providerId,$userId,$data);
+                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$category,$userId,$data);
                         }
                     }
                     $data = [
@@ -1058,13 +1077,38 @@ class AgentsController extends Controller
         }
     }
 
+    /**
+     * Get exclude provider agent delete
+     *
+     * @param int $user User
+     * @param string $category Provider
+     * @param string $currency Currency ISO
+     * @return Factory|View
+     */
+    public function excludeProviderAgentsDelete($user, $category, $currency)
+    {
+        try {
+            $user = (int)$user;
+            $this->agentsRepo->unBlockAgents($currency, $category, $user);
+            $data = [
+                'title' => _i('User activated'),
+                'message' => _i('User was activated correctly'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
      /**
      * Get exclude provider agent list
      *
      * @param int $whitelabel Whitelabel
      * @return Factory|View
      */
-    public function excludeProviderAgentsList(Request $request, $startDate = null, $endDate = null, $provider = null, $maker = null, $currency = null)
+    public function excludeProviderAgentsList(Request $request, $startDate = null, $endDate = null, $category = null, $maker = null, $currency = null)
     {
         try {
             if (!is_null($startDate) && !is_null($endDate)) {
@@ -1075,17 +1119,17 @@ class AgentsController extends Controller
                 $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
                 $startDate = Utils::startOfDayUtc($startDate);
                 $endDate = Utils::endOfDayUtc($endDate);
-                $provider = $request->provider;
+                $category = $request->category;
                 $maker = $request->maker;
                 $currency = $request->currency;
-                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
+                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $category, $maker, $whitelabel, $startDate, $endDate);
                 foreach($users as $user){
                     if(in_array($user->user_id,$agents)){
                         $agentsBlocked[] = $user;
                     }
                 }
                 if (!is_null($agentsBlocked)) {
-                    $this->usersCollection->formatExcludeProviderUser($agentsBlocked);
+                    $this->agentsCollection->formatExcludeMakersUser($agentsBlocked);
                     $data = [
                         'agents' => $agentsBlocked
                     ];
@@ -1111,18 +1155,109 @@ class AgentsController extends Controller
      * @param ProvidersRepo $providersRepo
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View
      */
-    public function excludeProvidersAgents(ProvidersRepo $providersRepo, GamesRepo $gamesRepo)
+    public function excludeProvidersAgents(ProvidersRepo $providersRepo)
     {
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
-        $makers = $gamesRepo->getMakers();
+        $categories = $this->gamesRepo->getCategories();
+        $makers = $this->gamesRepo->getMakers();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
         $data['providers'] = $providers;
         $data['whitelabel'] = $whitelabel;
+        $data['categories'] = $categories;
         $data['makers'] = $makers;
         $data['title'] = _i('Exclude agents from providers');
         return view('back.agents.reports.exclude-providers-agents', $data);
+    }
+
+    /**
+     *  Exclude providers agents data
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function excludeProvidersAgentsData(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'currency' => 'required',
+            'category' => 'required',
+            'maker' => 'required',
+        ]);
+
+        try {
+            $usersData = [];
+            $user = auth()->user()->id;
+            $username = strtolower(trim($request->username));
+            $category = $request->category;
+            $maker = $request->maker;
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = $request->currency;
+            $userData = $this->usersRepo->getByUsername($username, $whitelabel);
+            $agents = $this->usersRepo->arraySonIds($user,$currency,$whitelabel);
+
+            if (!is_null($userData)) {
+                $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
+                $makers = [$maker];
+                $categories = [];
+                if(in_array($userData->id,$agents)){
+                    if ($category == "*") {
+                        $categories = $this->gamesRepo->getCategoriesByMaker($maker);
+                        $categories = array_column($categories->toArray(), 'category');
+                    } else {
+                        $categories[] = $category;
+                    }
+                    foreach ($categories as $category) {
+                        $excludeUser = $this->usersRepo->findExcludeMakerUser($category, $userData->id, $currency);
+                        $makersExclude = isset($excludeUser->makers) ? json_decode($excludeUser->makers) : [];
+                        $dataMakers = array_merge($makers, $makersExclude);
+                        $makersArray = array_values(array_filter(array_unique($dataMakers)));
+                        $usersData[] = [
+                            'category' => $category,
+                            'makers' => json_encode($makersArray),
+                            'currency_iso' => $currency
+                        ];
+                    }
+                    foreach ($usersData as $userToUpdate) {
+                        $data = [
+                            'currency_iso' => $userToUpdate['currency_iso'],
+                            'category' => $userToUpdate['category'],
+                            'makers' => $userToUpdate['makers'],
+                            'user_id' => $userData->id,
+                            'created_at' => $date,
+                            'updated_at' => $date
+                        ];
+                        $this->agentsRepo->updateBlockAgents($currency, $userToUpdate['category'], $userData->id, $data);
+                    }
+                    $data = [
+                        'title' => _i('Excluded user'),
+                        'message' => _i('The user has been successfully excluded'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::successResponse($data);
+                }else{
+                    $data = [
+                        'title' => _i('You cannot block providers for this user'),
+                        'message' => _i("Please check and try again"),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+            } else {
+                $data = [
+                    'title' => _i('The user does not exist'),
+                    'message' => _i("Please check and try again"),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
@@ -1887,6 +2022,7 @@ class AgentsController extends Controller
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+            $categories = $this->gamesRepo->getCategories();
             //TODO MOSTRAR EL AGENTE LOGUEADO
             $agent->user_id = $agent->id;
             $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
@@ -1898,6 +2034,7 @@ class AgentsController extends Controller
             $data['timezones'] = \DateTimeZone::listIdentifiers();
             $data['providers'] = $providers;
             $data['agent'] = $agent;
+            $data['categories'] = $categories;
             $data['agents'] = $agentAndSubAgents;
             $data['tree'] = $tree;
             $data['title'] = _i('Agents module');
@@ -2549,7 +2686,7 @@ class AgentsController extends Controller
 
             foreach ($currencies as $key => $agentCurrency) {
                 $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $agentCurrency);
-                $this->agentsRepo->blockAgents($excludedUser);
+                $this->agentsRepo->blockAgentsMakers($excludedUser);
                 $wallet = Wallet::store($user->id, $user->username, $uuid, $agentCurrency, $whitelabel, session('wallet_access_token'));
                 $userData = [
                     'user_id' => $user->id,
@@ -2944,7 +3081,7 @@ class AgentsController extends Controller
             $timezone = $request->timezone;
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserProvider($owner);
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -3020,7 +3157,7 @@ class AgentsController extends Controller
             ];
             //Audits::store($user, AuditTypes::$player_creation, Configurations::getWhitelabel(), $auditData);
             $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $currency);
-            $this->agentsRepo->blockAgents($excludedUser);
+            $this->agentsRepo->blockAgentsMakers($excludedUser);
             $wallet = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'));
             $this->generateReferenceCode->generateReferenceCode($user->id);
             $userData = [
