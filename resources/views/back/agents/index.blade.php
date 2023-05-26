@@ -33,7 +33,9 @@
             color: white !important;
             background-color: #38a7ef !important;
         }
-
+        .flex-items {
+            display: flex;
+        }
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -605,22 +607,40 @@
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
                             <div class="row">
-                                <div class="offset-md-7"></div>
-                                <div class="col-md-2 text-right">
-                                    <div class="input-group">
+                                <div class="offset-md-2"></div>
+                                {{-- <div class="form-group">
+                                    <label for="date_range">{{ _i('Date range') }}</label>
+                                    <input type="text" id="daterange" class="form-control daterange" autocomplete="off" placeholder="{{ _i('Date range') }}">
+                                    <input type="hidden" id="start_date" name="start_date">
+                                    <input type="hidden" id="end_date" name="end_date">
+                                </div> --}}
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <label for="transaction_select">{{ _i('Type Transaction') }}</label>
+                                        <select name="transaction_select" id="transaction_select" class="form-control">
+                                            <option value="all" selected="selected" hidden>{{_i('All')}}</option>
+                                            <option value="credit">{{_i('Charge')}}</option>
+                                            <option value="debit">{{_i('Discharge')}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <label for="type_select">{{ _i('Type User') }}</label>
                                         <select name="type_select" id="type_select" class="form-control">
-                                            <option value="all" selected="selected" hidden>Todos</option>
+                                            <option value="all" selected="selected" hidden>{{_i('All')}}</option>
                                             <option value="agent">{{_i('Agent')}}</option>
                                             <option value="user">{{_i('User')}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-xs-12 col-sm-12">
-                                    <div class="input-group">
-                                        <input type="text" id="date_range_new" class="form-control" autocomplete="off"
+                                <div class="col-md-4 col-xs-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="date_range">{{ _i('Date range') }}</label>
+                                        <div class="flex-items">
+                                            <input type="text" id="date_range_new" class="form-control" autocomplete="off"
                                                placeholder="{{ _i('Date range') }}">
-                                        <div class="input-group-append">
-                                            <button class="btn g-bg-primary" type="button" id="updateNew"
+                                               <button class="btn g-bg-primary" type="button" id="updateNew"
                                                     data-route="{{ route('agents.transactions.paginate') }}"
                                                     data-routetotals="{{ route('agents.transactions.totals') }}"
                                                     data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
