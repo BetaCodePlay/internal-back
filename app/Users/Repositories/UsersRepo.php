@@ -173,7 +173,7 @@ class UsersRepo
      * @param string $currency Currency Iso
      * @return mixed
      */
-    public function getParentsFromChild(int $son,int$userAuth,string $currency)
+    public function getParentsFromChild($son,$currency,$userAuth)
     {
         return DB::select('WITH RECURSIVE all_agents AS (
                                   SELECT  agents.owner_id,agents.user_id,0 AS level,u.username
@@ -191,6 +191,7 @@ class UsersRepo
                                   ) select * from all_agents order by level desc',[$son,$currency,$userAuth]);
 
     }
+
     /**
      * Number of children
      *

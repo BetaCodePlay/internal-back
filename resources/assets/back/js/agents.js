@@ -495,6 +495,11 @@ class Agents {
                         $('.agentsSet').text(json.data.cant_agents);
                         $('.playersSet').text(json.data.cant_players);
                         $('.createdSet').text(json.data.user.created);
+                        $('.appendTreeFather').html('');
+                        $.each(json.data.fathers,function(index,val) {
+                            $('.appendTreeFather').append('<ul><li><strong>'+val.username+'</strong></li></ul>');
+                            log('Indice es ' + index + ' y valor es: ' + val);
+                        });
                     //TODO Finish Set Modal
 
                     $('#username').text(json.data.user.username);

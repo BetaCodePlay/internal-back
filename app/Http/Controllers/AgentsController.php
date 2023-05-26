@@ -1750,11 +1750,12 @@ class AgentsController extends Controller
             $type = $request->type;
             $walletId = null;
             $fathers=[];
+
             if ($type == 'agent') {
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
                 $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::id());
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id);
                 $balance = $user->balance;
                 $master = $user->master;
                 $agent = true;

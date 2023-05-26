@@ -66,7 +66,15 @@
                                    <h5><strong> {{_i('Estructura')}}</strong></h5>
                                 </div>
                             </div>
-{{--                            <div class="row mb-1">--}}
+                            <div class="col-8 appendTreeFather">
+                                <ul>
+                                    <li><strong>blinders001</strong>
+
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {{--                            <div class="row mb-1">--}}
 {{--                                <div class="offset-md-1 col-md-3">--}}
 {{--                                    <strong> {{_i('father')}}: </strong>--}}
 {{--                                </div>--}}
