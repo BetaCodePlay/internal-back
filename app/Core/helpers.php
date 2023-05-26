@@ -2722,15 +2722,7 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-image',
                 'permission' => Permissions::$section_images_menu,
                 'submenu' => [
-                    'Sliders' => [
-                        'text' => _i('Lobbys sliders'),
-                        'level_class' => 'top',
-                        'route' => 'sliders.create',
-                        'params' => [TemplateElementTypes::$lobby_sections_mega_home],
-                        'icon' => 'hs-admin-list',
-                        'permission' => Permissions::$section_images_list,
-                        'submenu' => []
-                    ],
+
                 ]
             ],
 
