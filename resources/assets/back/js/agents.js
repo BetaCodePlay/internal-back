@@ -446,8 +446,6 @@ class Agents {
 
     // Dashboard
     dashboard() {
-        //console.log('test in dashboard fo agent.jd')
-
         initSelect2();
         clipboard();
         let $tree = $('#tree');
@@ -488,6 +486,23 @@ class Agents {
                     }
 
                 }).done(function (json) {
+                    //TODO Init Set Modal
+                    $('.userSet').text(json.data.user.username);
+                    $('.fatherSet').text(json.data.father);
+                    $('.typeSet').text(json.data.user.typeSet);
+                    $('.agentsSet').text(json.data.cant_agents);
+                    $('.playersSet').text(json.data.cant_players);
+                    $('.createdSet').text(json.data.user.created);
+                    $('.appendTreeFather').html('');
+                    let initUl = '';
+                    let finishUl = '';
+                    $.each(json.data.fathers,function(index,val) {
+                        initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
+                        finishUl = finishUl + '</li></ul>'
+                    });
+                    $('.appendTreeFather').append(initUl+finishUl);
+                    //TODO Finish Set Modal
+
                     $('#username').text(json.data.user.username);
                     $('#agent_timezone').text(json.data.user.timezone);
                     $('.balance').text(json.data.balance);
