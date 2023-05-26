@@ -525,6 +525,7 @@ class AgentsController extends Controller
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
             $username = $request->get('search')['value'];
             $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+            $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
             $orderCol =[
                 'column'=> 'id',
                 'order'=> 'desc',
@@ -549,7 +550,7 @@ class AgentsController extends Controller
             $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather($agent, session('currency'), Configurations::getWhitelabel());
 
             //TODO get transactions with filter
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds,$orderCol);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds,$orderCol, $typeTransaction);
 
             //TODO draw table in collection
            $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);

@@ -350,7 +350,7 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [],$orderCol)
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [],$orderCol, $typeTransaction = null)
     {
 
        $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
@@ -370,8 +370,18 @@ class TransactionsRepo
             $transactions = $transactions->whereNotNull('data->provider_transaction');
         }
 
+        if (is_null($typeTransaction) || $typeTransaction === 'all') {
+
+        }elseif ($typeTransaction === 'credit'){
+            $typeTransaction = 1;
+            $transactions = $transactions->where('transactions.transaction_type_id', $typeTransaction);
+        } else {
+            $typeTransaction = 2;
+            $transactions = $transactions->where('transactions.transaction_type_id', $typeTransaction);
+        }
+
         if (!is_null($username)) {
-            $transactions = $transactions->where('username', 'ilike', "%$username%");
+            $transactions = $transactions->where('username', 'like', "%$username%");
         }
 
         if (!empty($orderCol)) {
