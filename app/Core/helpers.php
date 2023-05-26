@@ -2721,7 +2721,17 @@ if (!function_exists('menu')) {
                 'params' => [],
                 'icon' => 'hs-admin-image',
                 'permission' => Permissions::$section_images_menu,
-                'submenu' => []
+                'submenu' => [
+                    'LogoFavicon' => [
+                        'text' => _i(''),
+                        'level_class' => 'second',
+                        'route' => '',
+                        'params' => [],
+                        'icon' => 'hs-admin-import',
+                        'permission' => Permissions::$section_images_list,
+                        'submenu' => []
+                    ]
+                ]
             ],
 
             'LobbyGames' => [
