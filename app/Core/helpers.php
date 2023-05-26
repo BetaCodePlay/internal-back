@@ -2715,32 +2715,13 @@ if (!function_exists('menu')) {
                 ]
             ],
             'LobbySections' => [
-                'text' => _i('Lobbys Sections Mega Home'),
+                'text' => _i('Lobbys Sections'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
                 'icon' => 'hs-admin-image',
                 'permission' => Permissions::$section_images_menu,
-                'submenu' => [
-                    'Images' => [
-                        'text' => _i('Lobby Images'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-image',
-                        'permission' => Permissions::$section_images_menu,
-                        'submenu' => []
-                    ],
-                    'Sliders' => [
-                        'text' => _i('Lobby Sliders'),
-                        'level_class' => 'top',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-gallery',
-                        'permission' => Permissions::$sliders_menu,
-                        'submenu' => []
-                    ]
-                ]
+                'submenu' => []
             ],
 
             'LobbyGames' => [
