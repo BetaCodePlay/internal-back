@@ -681,7 +681,7 @@ class AgentsController extends Controller
                             $makers = json_decode($userToUpdate['makers']);
                             $unBlockMaker = array_values(array_diff($makers, [$maker]));
                             \Log::debug([$unBlockMaker]);
-                            if(is_null($unBlockMaker)){
+                            if(empty($unBlockMaker)){
                                 $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
                             }else{
                                 $data['makers'] = json_encode($unBlockMaker);
