@@ -389,6 +389,7 @@ class TransactionsRepo
             }elseif ($orderCol['column'] == 'balance'){
 
                 //$transactions = $transactions->orderBy('transactions.data->>balance', $orderCol['order']);
+                //$transactions = $transactions->orderByRaw('CAST(transaction.data->"$.balance") as UNSIGNED'.$orderCol['order']);
 
 
             }else{
