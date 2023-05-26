@@ -17,14 +17,13 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="category">{{ _i('Categories') }}</label>
-                                    <select name="category" id="category"
-                                            class="form-control" data-route="{{ route('core.makers-by-category') }}">
+                                    <label for="maker">{{ _i('Maker') }}</label>
+                                    <select name="maker" id="maker"
+                                            class="form-control" data-route="{{ route('core.categories-by-maker') }}">
                                         <option value="">{{ _i('Select...') }}</option>
-                                        <option value="*">{{ _i('All') }}</option>
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->category }}">
-                                                {{ $category->category }}
+                                        @foreach ($makers as $maker)
+                                            <option value="{{ $maker->maker }}">
+                                                {{ $maker->maker }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -32,10 +31,11 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="maker">{{ _i('Maker') }}</label>
-                                    <select name="maker" id="maker"
-                                            class="form-control" data-route="{{ route('core.makers') }}">
+                                    <label for="category">{{ _i('Categories') }}</label>
+                                    <select name="category" id="category"
+                                            class="form-control">
                                         <option value="">{{ _i('Select...') }}</option>
+                                        <option value="*">{{ _i('All') }}</option>
                                     </select>
                                 </div>
                             </div>
