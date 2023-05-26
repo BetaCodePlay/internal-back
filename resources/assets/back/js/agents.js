@@ -1580,7 +1580,7 @@ class Agents {
 
     //Select maker
     selectCategoryMaker(){
-        initSelect2();
+        //initSelect2();
         $('#category').on('change', function () {
             let category = $(this).val();
             let makers = $('#maker');
