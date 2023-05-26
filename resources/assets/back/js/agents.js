@@ -446,8 +446,6 @@ class Agents {
 
     // Dashboard
     dashboard() {
-        //console.log('test in dashboard fo agent.jd')
-
         initSelect2();
         clipboard();
         let $tree = $('#tree');
@@ -496,11 +494,15 @@ class Agents {
                         $('.playersSet').text(json.data.cant_players);
                         $('.createdSet').text(json.data.user.created);
                         $('.appendTreeFather').html('');
+                        let initUl = '';
+                        let finishUl = '';
                         $.each(json.data.fathers,function(index,val) {
-                            $('.appendTreeFather').append('<ul><li><strong>'+val.username+'</strong></li></ul>');
-                            log('Indice es ' + index + ' y valor es: ' + val);
+                            initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
+                            finishUl = finishUl + '</li></ul>'
                         });
+                        $('.appendTreeFather').append(initUl+finishUl);
                     //TODO Finish Set Modal
+
 
                     $('#username').text(json.data.user.username);
                     $('#agent_timezone').text(json.data.user.timezone);
@@ -2080,14 +2082,6 @@ class Agents {
                 $buttonUpdate.button('reset');
             });
         });
-    }
-    detailsUserModal(){
-        $('#details-user-modal').on('show.bs.modal', function (e) {
-            console.log('mostrar')
-        })
-        // $('#details-user-modal').on('hidden.bs.modal', function (e) {
-        //     console.log('cerrar')
-        // })
     }
 }
 

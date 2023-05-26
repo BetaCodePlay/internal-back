@@ -1749,13 +1749,11 @@ class AgentsController extends Controller
             $id = $request->id;
             $type = $request->type;
             $walletId = null;
-            $fathers=[];
-
             if ($type == 'agent') {
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
                 $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $balance = $user->balance;
                 $master = $user->master;
                 $agent = true;
@@ -1764,6 +1762,7 @@ class AgentsController extends Controller
                 $user = $this->agentsRepo->findUser($id);
                 $father = $this->usersRepo->findUsername($user->owner_id);
                 $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
                 $balance = $wallet->data->wallet->balance;

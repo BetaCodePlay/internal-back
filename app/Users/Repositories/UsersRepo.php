@@ -173,9 +173,10 @@ class UsersRepo
      * @param string $currency Currency Iso
      * @return mixed
      */
-    public function getParentsFromChild($son,$currency,$userAuth)
+    public function getParentsFromChild($son,$currency,$userAuth,$type)
     {
-        return DB::select('WITH RECURSIVE all_agents AS (
+        if($type == 'agent'){
+            return DB::select('WITH RECURSIVE all_agents AS (
                                   SELECT  agents.owner_id,agents.user_id,0 AS level,u.username
                                   FROM site.agents AS agents
                                   JOIN site.users AS u ON agents.user_id = u.id
@@ -189,7 +190,24 @@ class UsersRepo
                                   JOIN all_agents a ON agents.user_id = a.owner_id
                                   where a.user_id <> ?
                                   ) select * from all_agents order by level desc',[$son,$currency,$userAuth]);
+        }else{
+            return DB::select('WITH RECURSIVE all_agents AS (
+                                  SELECT  agents.user_id as owner_id,au.user_id,0 AS level,u.username
+                                  FROM site.agents AS agents
+                                  JOIN site.agent_user AS au ON agents.id = au.agent_id
+                                  JOIN site.users AS u ON au.user_id = u.id
+                                  JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                                  WHERE au.user_id = ? AND currency_iso = ?
 
+                                  UNION
+
+                                  SELECT agents.owner_id,agents.user_id,level+1 AS level,u.username
+                                  FROM site.agents AS agents
+                                  JOIN site.users AS u ON agents.user_id = u.id
+                                  JOIN all_agents a ON agents.user_id = a.owner_id
+                                  where a.user_id <> ?
+                                  ) select * from all_agents order by level desc',[$son,$currency,$userAuth]);
+        }
     }
 
     /**
@@ -246,7 +264,7 @@ class UsersRepo
         }
 
         return [
-          'agents'=>$agents-1,
+          'agents'=>$agents,
           'players'=>$players,
         ];
     }

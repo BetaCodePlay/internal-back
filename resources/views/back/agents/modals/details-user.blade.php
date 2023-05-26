@@ -67,55 +67,8 @@
                                 </div>
                             </div>
                             <div class="col-8 appendTreeFather">
-                                <ul>
-                                    <li><strong>blinders001</strong>
-
-                                    </li>
-                                </ul>
                             </div>
-
-                            {{--                            <div class="row mb-1">--}}
-{{--                                <div class="offset-md-1 col-md-3">--}}
-{{--                                    <strong> {{_i('father')}}: </strong>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-8">--}}
-{{--                                    <span class="fatherSet"></span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="row mb-1">--}}
-{{--                                <div class="offset-md-1 col-md-3">--}}
-{{--                                    <strong> {{_i('rol')}}: </strong>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-8">--}}
-{{--                                    <span class="typeSet"></span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="row mb-1">--}}
-{{--                                <div class="offset-md-1 col-md-3">--}}
-{{--                                    <strong> {{_i('agents')}}: </strong>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-8">--}}
-{{--                                    <span class="agentsSet"></span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="row mb-1">--}}
-{{--                                <div class="offset-md-1 col-md-3">--}}
-{{--                                    <strong> {{_i('players')}}: </strong>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-8">--}}
-{{--                                    <span class="playersSet"></span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="row mb-1">--}}
-{{--                                <div class="offset-md-1 col-md-3">--}}
-{{--                                    <strong> {{_i('created')}}: </strong>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-md-8">--}}
-{{--                                    <span class="createdSet"></span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
                         </div>
-
                     </div>
                 </div>
                 <div class="modal-footer">

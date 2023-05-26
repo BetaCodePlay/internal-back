@@ -532,12 +532,6 @@
                                         </div>
                                     @endif
                                     <div class="row g-mb-15 d-none" id="details-user">
-{{--                                        <div--}}
-{{--                                            class="col-2 col-sm-2 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">--}}
-{{--                                            <label class="g-mb-0">--}}
-{{--                                               <strong>{{ _i('More information') }}</strong>--}}
-{{--                                            </label>--}}
-{{--                                        </div>--}}
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
                                                 <a href="#details-user-modal" id="details-user"
@@ -1166,7 +1160,6 @@
             let users = new Users();
             users.usersIps();
             agents.dashboard();
-            agents.detailsUserModal();
             agents.searchAgentDashboard();
             agents.performTransactions();
             agents.manualTransactionsModal();
