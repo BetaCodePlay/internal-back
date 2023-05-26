@@ -2724,8 +2724,8 @@ if (!function_exists('menu')) {
                 'submenu' => [
                     'LogoFavicon' => [
                         'text' => _i(''),
-                        'level_class' => 'second',
-                        'route' => '',
+                        'level_class' => 'top',
+                        'route' => null,
                         'params' => [],
                         'icon' => 'hs-admin-import',
                         'permission' => Permissions::$section_images_list,
