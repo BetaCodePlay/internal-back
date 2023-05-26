@@ -531,7 +531,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <div class="row g-mb-15 d-none" id="details-user">
+                                    <div class="row g-mb-15" id="details-user">
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
                                                 <a href="#details-user-modal" id="details-user"
