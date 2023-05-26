@@ -2721,7 +2721,26 @@ if (!function_exists('menu')) {
                 'params' => [],
                 'icon' => 'hs-admin-image',
                 'permission' => Permissions::$section_images_menu,
-                'submenu' => []
+                'submenu' => [
+                    'Images' => [
+                        'text' => _i('Lobby Images'),
+                        'level_class' => 'top',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-image',
+                        'permission' => Permissions::$section_images_menu,
+                        'submenu' => []
+                    ],
+                    'Sliders' => [
+                        'text' => _i('Sliders'),
+                        'level_class' => 'top',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-gallery',
+                        'permission' => Permissions::$sliders_menu,
+                        'submenu' => []
+                    ]
+                ]
             ],
 
             'LobbyGames' => [

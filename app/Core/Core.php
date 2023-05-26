@@ -376,18 +376,8 @@ class Core
                                         ],
                                     ]));
                                 }
-                            }
-                        }
-                        $html .= self::menuItems($lobby);
-                    }
-
-                    if ($key == 'GamesSection') {
-                        $gameSections = [];
-
-                        if (is_object($sections)) {
-                            foreach ($sections as $sectionKey => $section) {
-                                if (isset($section->games)) {
-                                    $gameSections[$sectionKey] = json_decode(json_encode([
+                                if (isset($section->slider)) {
+                                    $lobby[$sectionKey] = json_decode(json_encode([
                                         'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
                                         'level_class' => 'second',
                                         'route' => null,
@@ -396,23 +386,23 @@ class Core
                                         'permission' => null,
                                         'submenu' => [
 
-                                            'Create' => [
-                                                'text' => _i('Create'),
+                                            'Upload' => [
+                                                'text' => _i('Upload'),
                                                 'level_class' => 'third',
-                                                'route' => 'section-games.create',
-                                                'params' => [$sectionKey],
-                                                'icon' => 'hs-admin-user',
-                                                'permission' => Permissions::$manage_section_games,
+                                                'route' => 'sliders.create',
+                                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                                'icon' => 'hs-admin-upload',
+                                                'permission' => Permissions::$manage_sliders,
                                                 'submenu' => []
                                             ],
 
                                             'List' => [
                                                 'text' => _i('List'),
                                                 'level_class' => 'third',
-                                                'route' => 'section-games.index',
-                                                'params' => [$sectionKey],
+                                                'route' => 'sliders.index',
+                                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
                                                 'icon' => 'hs-admin-list',
-                                                'permission' => Permissions::$manage_section_games,
+                                                'permission' => Permissions::$sliders_list,
                                                 'submenu' => []
                                             ],
                                         ]
@@ -420,7 +410,8 @@ class Core
                                 }
                             }
                         }
-                        $html .= self::menuItems($gameSections);
+                        $html .= self::menuItems($lobby);
+                        \Log::debug(__METHOD__, ['$lobby' => $lobby, 'request']);
                     }
 
                     $html .= self::menuItems($item->submenu);
