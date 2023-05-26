@@ -623,7 +623,6 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'category' => ['required_if:lock_users,false'],
             'maker' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
@@ -1170,7 +1169,6 @@ class AgentsController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'currency' => 'required',
-            'category' => 'required',
             'maker' => 'required',
         ]);
 
@@ -1190,7 +1188,7 @@ class AgentsController extends Controller
                 $makers = [$maker];
                 $categories = [];
                 if(in_array($userData->id,$agents)){
-                    if ($category == "*") {
+                    if (is_null($category)) {
                         $categories = $this->gamesRepo->getCategoriesByMaker($maker);
                         $categories = array_column($categories->toArray(), 'category');
                     } else {

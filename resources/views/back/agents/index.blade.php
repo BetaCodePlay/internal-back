@@ -932,7 +932,6 @@
                                                                 <select name="category" id="category"
                                                                         class="form-control">
                                                                     <option value="">{{ _i('Select...') }}</option>
-                                                                    <option value="*">{{ _i('All') }}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
