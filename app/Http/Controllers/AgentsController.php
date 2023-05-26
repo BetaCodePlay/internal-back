@@ -678,9 +678,15 @@ class AgentsController extends Controller
                         if(is_null($maker)){
                             $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
                         }else{
-                            $unBlockMaker = array_values(array_diff(json_decode($userToUpdate['makers']), [$maker]));
-                            $data['makers'] = json_encode($unBlockMaker);
-                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$category,$userId,$data);
+                            $makers = json_decode($userToUpdate['makers']);
+                            $unBlockMaker = array_values(array_diff($makers, [$maker]));
+                            \Log::debug([$unBlockMaker]);
+                            if(is_null($unBlockMaker)){
+                                $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
+                            }else{
+                                $data['makers'] = json_encode($unBlockMaker);
+                                $this->agentsRepo->unBlockAgentsMaker($currencyIso,$category,$userId,$data);
+                            }
                         }
                     }
                     $data = [
