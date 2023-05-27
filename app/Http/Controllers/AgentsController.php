@@ -645,7 +645,6 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'category' => ['required_if:lock_users,false'],
             'maker' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
@@ -1194,7 +1193,6 @@ class AgentsController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'currency' => 'required',
-            'category' => 'required',
             'maker' => 'required',
         ]);
 
@@ -1214,7 +1212,7 @@ class AgentsController extends Controller
                 $makers = [$maker];
                 $categories = [];
                 if(in_array($userData->id,$agents)){
-                    if ($category == "*") {
+                    if (is_null($category)) {
                         $categories = $this->gamesRepo->getCategoriesByMaker($maker);
                         $categories = array_column($categories->toArray(), 'category');
                     } else {
@@ -2033,7 +2031,7 @@ class AgentsController extends Controller
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
-            $categories = $this->gamesRepo->getCategories();
+            $makers = $this->gamesRepo->getMakers();
             //TODO MOSTRAR EL AGENTE LOGUEADO
             $agent->user_id = $agent->id;
             $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
@@ -2045,7 +2043,7 @@ class AgentsController extends Controller
             $data['timezones'] = \DateTimeZone::listIdentifiers();
             $data['providers'] = $providers;
             $data['agent'] = $agent;
-            $data['categories'] = $categories;
+            $data['makers'] = $makers;
             $data['agents'] = $agentAndSubAgents;
             $data['tree'] = $tree;
             $data['title'] = _i('Agents module');

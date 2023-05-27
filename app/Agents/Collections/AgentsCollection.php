@@ -3557,7 +3557,7 @@ class AgentsCollection
                 'updated_at' => Carbon::now()
                 ];
             }else{
-                if ($category == "*") {
+                if (is_null($category)) {
                     $categories = $gamesRepo->getCategoriesByMaker($maker);
                     $categories = array_column($categories->toArray(), 'category');
                 } else {
@@ -3633,7 +3633,7 @@ class AgentsCollection
                     'updated_at' => Carbon::now()
                 ];
             }else{
-                if ($category == "*") {
+                if (is_null($category)) {
                     $categories = $gamesRepo->getCategoriesByMaker($maker);
                     $categories = array_column($categories->toArray(), 'category');
                 } else {
@@ -3687,7 +3687,7 @@ class AgentsCollection
                     'updated_at' => Carbon::now()
                 ];
             }else{
-                if ($category == "*") {
+                if (is_null($category)) {
                     $categories = $gamesRepo->getCategoriesByMaker($maker);
                     $categories = array_column($categories->toArray(), 'category');
                 } else {

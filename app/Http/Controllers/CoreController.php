@@ -303,6 +303,23 @@ class CoreController extends Controller
     }
 
     /**
+     * Upload categories
+     *
+     * @param @param Request $request
+     */
+    public function categoriesByMaker(Request $request)
+    {
+        try {
+            $maker = $request->maker;
+            $data['categories'] = $this->gamesRepo->getCategoriesByMaker($maker);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'category' => $request->category]);
+            abort(500);
+        }
+    }
+
+    /**
      * Update exchange rates
      *
      * @param Request $request
