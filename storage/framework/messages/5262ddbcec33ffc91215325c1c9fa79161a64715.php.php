@@ -1171,6 +1171,18 @@ class Configurations
     }
 
     /**
+     * Get roulette lobby
+     *
+     * @return mixed
+     */
+    public static function getRouletteLobby()
+    {
+        $configurations = config('whitelabels.configurations');
+        $configuration = $configurations[Components::$design - 1]->data;
+        return $configuration->template->roulette;
+    }
+
+    /**
      * Get S3 directory
      *
      * @return mixed

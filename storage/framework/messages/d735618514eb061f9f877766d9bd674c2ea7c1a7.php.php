@@ -350,17 +350,17 @@ class TransactionsRepo
      * @param int $offset Transactions offset
      * @return mixed
      */
-    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [])
+    public function getByUserAndProvidersPaginate($user, $providers, $currency, $startDate, $endDate, $limit = 2000, $offset = 0,$username = null,$typeUser = null,$arraySonIds = [],$orderCol, $typeTransaction = null)
     {
 
        $transactions = Transaction::select('users.username','transactions.user_id', 'transactions.id', 'transactions.amount', 'transactions.transaction_type_id',
-            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id')
+            'transactions.created_at', 'transactions.provider_id', 'transactions.data', 'transactions.transaction_status_id','transactions.data->balance AS balance_final')
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $arraySonIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers)
-            ->orderBy('transactions.id', 'DESC');
+            ->whereIn('transactions.provider_id', $providers);
+            //->orderBy('transactions.id', 'DESC');
 
         if (is_null($typeUser) || $typeUser === 'all') {
 
@@ -370,8 +370,41 @@ class TransactionsRepo
             $transactions = $transactions->whereNotNull('data->provider_transaction');
         }
 
+        if (is_null($typeTransaction) || $typeTransaction === 'all') {
+
+        }elseif ($typeTransaction === 'credit'){
+            $typeTransaction = 1;
+            $transactions = $transactions->where('transactions.transaction_type_id', $typeTransaction);
+        } else {
+            $typeTransaction = 2;
+            $transactions = $transactions->where('transactions.transaction_type_id', $typeTransaction);
+        }
+
         if (!is_null($username)) {
-            $transactions = $transactions->where('username', 'ilike', "%$username%");
+            $transactions = $transactions->where('username', 'like', "%$username%");
+        }
+
+        if (!empty($orderCol)) {
+            if($orderCol['column'] == 'date'){
+                $transactions = $transactions->orderBy('transactions.created_at', $orderCol['order']);
+            }elseif ($orderCol['column'] == 'data.from'){
+                $transactions = $transactions->orderBy('transactions.data->from', $orderCol['order']);
+            }elseif ($orderCol['column'] == 'data.to'){
+                $transactions = $transactions->orderBy('transactions.data->to', $orderCol['order']);
+            }elseif ($orderCol['column'] == 'debit' || $orderCol['column'] == 'credit'){
+
+                //$transactions = $transactions->orderBy('transactions.amount', $orderCol['order']);
+                $transactions = $transactions->orderBy('transactions.transaction_type_id', $orderCol['order'])->orderBy('transactions.amount', $orderCol['order']);
+
+            }elseif ($orderCol['column'] == 'balance'){
+
+                //$transactions = $transactions->orderBy('transactions.data->>balance', $orderCol['order']);
+                //$transactions = $transactions->orderByRaw('CAST(transaction.data->"$.balance") as UNSIGNED'.$orderCol['order']);
+
+
+            }else{
+                $transactions = $transactions->orderBy('transactions.id', $orderCol['order']);
+            }
         }
 
         $countTransactions = $transactions->count();
