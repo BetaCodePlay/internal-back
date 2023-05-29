@@ -2,6 +2,7 @@
 
 namespace App\Core\Repositories;
 
+use Dotworkers\Configurations\Configurations;
 use App\Core\Entities\LobbyGames;
 use Dotworkers\Configurations\Enums\GamesStatus;
 use Illuminate\Support\Facades\DB;

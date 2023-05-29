@@ -17,13 +17,31 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="change_provider">{{ _i('Provider') }}</label>
-                                    <select name="change_provider" id="change_provider" data-route="{{ route('games.game') }}" class="form-control">
+                                    <select name="change_provider" id="change_provider" data-route="{{ route('core.makers-by-provider') }}" class="form-control">
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($providers as $provider)
                                             <option value="{{ $provider->provider_id }}">
                                                 {{ $provider->name }}
                                             </option>
                                         @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="maker">{{ _i('Maker') }}</label>
+                                    <select name="maker" id="maker" class="form-control"
+                                    data-route="{{ route('core.categories-by-maker') }}">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">{{ _i('Category') }}</label>
+                                    <select name="category" id="category" class="form-control"
+                                    data-route="{{ route('games.game-by-categories') }}">
+                                        <option value="">{{ _i('Select...') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -221,8 +239,10 @@
         $(function () {
             let lobbyGames = new LobbyGames()
             lobbyGames.all();
-            lobbyGames.game();
             lobbyGames.store();
+            lobbyGames.selectProviderMaker();
+            lobbyGames.selectCategoryMaker();
+            lobbyGames.selectGame();
         });
     </script>
     <script>

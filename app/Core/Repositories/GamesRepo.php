@@ -170,6 +170,34 @@ class GamesRepo
         return $games;
     }
 
+        /**
+     * Get games by category
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function getGamesByCategory($whitelabel, $currency, $category)
+    {
+        $games = Game::select('games.id', 'games.name', 'games.slug', 'games.image', 'games.maker',
+            'games.category', 'games.provider_id')
+            ->join('providers', 'games.provider_id', '=', 'providers.id')
+            ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
+            ->where('credentials.client_id', $whitelabel)
+            ->where('credentials.currency_iso', $currency)
+            ->where('games.category', $category)
+            ->where('credentials.status', true)
+            ->where(function($query) use ($whitelabel) {
+                $query->where(function($query) use($whitelabel) {
+                    $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
+                        ->where('games.status', GamesStatus::$active);
+                })
+                    ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
+            })
+            ->get();
+        return $games;
+    }
+
     /**
      * Get dotSuite games by provider
      *

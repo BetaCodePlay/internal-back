@@ -160,6 +160,86 @@ class LobbyGames {
             });
         });
     }
+
+    //Select maker
+    selectProviderMaker(){
+        initSelect2();
+        $('#change_provider').on('change', function () {
+            let provider = $(this).val();
+            let makers = $('#maker');
+            let route = $(this).data('route');
+            $.ajax({
+                url: route,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    provider
+                }
+            }).done(function (json) {
+                $('#maker option[value!=""]').remove();
+                $(json.data.makers).each(function (key, element) {
+                    makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
+                })
+                makers.prop('disabled', false);
+            }).fail(function (json) {});
+        }).trigger('change');
+    }
+
+    //Select categories
+    selectCategoryMaker(){
+        initSelect2();
+        $('#maker').on('change', function () {
+            let maker = $(this).val();
+            let categories = $('#category');
+            let route = $(this).data('route');
+            $.ajax({
+                url: route,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    maker
+                }
+            }).done(function (json) {
+                $('#category option[value!=""]').remove();
+                $(json.data.categories).each(function (key, element) {
+                    categories.append("<option value=" + element.category + ">" + element.category + "</option>");
+                })
+                categories.prop('disabled', false);
+            }).fail(function (json) {});
+        }).trigger('change');
+    }
+
+    //Select games
+    selectGame() {
+        initSelect2();
+        $('#category').on('change', function(){
+            let category = $('#category').val();
+            let route = $(this).data('route');
+            let games = $('#games');
+
+            if(category !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        category
+                    }
+                }).done(function (json) {
+                    games.html('loading');
+                    games.html(json.data.games);
+                    $(json.data.games).each(function(key, element){
+                        games.append("<option value=" + element.id + ">" + element.description + "</option>");
+                    })
+                    games.prop('disabled', false);
+                }).fail(function (json) {
+
+                });
+            }else{
+                games.val('');
+            }
+        });
+    }
 }
 
 window.LobbyGames = LobbyGames;

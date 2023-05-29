@@ -251,6 +251,34 @@ class LobbyGamesController extends Controller
         }
     }
 
+        /**
+     * Game by category
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function gameByCategories(Request $request)
+    {
+        try {
+            $category = $request->category;
+            $games = [];
+            if (!is_null($category)) {
+                $currency = session('currency');
+                $whitelabel = Configurations::getWhitelabel();
+                $games = $this->gamesRepo->getGamesByCategory($whitelabel, $currency, $category);
+                $this->lobbyGamesCollection->formatDotsuiteGames($games);
+            }
+            $data = [
+                'games' => $games
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
 
     /**
      * Store Lobby Games
@@ -268,7 +296,9 @@ class LobbyGamesController extends Controller
         ]);
         if($personalize) {
             $this->validate($request, [
-                'games' => 'required|array|min:1'
+                'games' => 'required|array|min:1',
+                'maker' => 'required',
+                'category' => 'required'
             ]);
         }
         try {
