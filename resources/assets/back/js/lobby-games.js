@@ -218,12 +218,37 @@ class LobbyGames {
     //Select games
     selectGame() {
         initSelect2();
+        let product = $('#product_id').val();
+        let category = $('#category').val();
+        let maker = $('#maker').val();
+        let games = $('#games');
+        let route =  $('#category').data('route');
         $('#category').on('change', function(){
-            let category = $('#category').val();
-            let maker = $('#maker').val();
-            let product = $('#product_id').val();
-            let route = $(this).data('route');
-            let games = $('#games');
+            if(category !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        category,
+                        product,
+                        maker
+                    }
+                }).done(function (json) {
+                    games.html('loading');
+                    games.html(json.data.games);
+                    $(json.data.games).each(function(key, element){
+                        games.append("<option value=" + element.id + ">" + element.description + "</option>");
+                    })
+                    games.prop('disabled', false);
+                }).fail(function (json) {
+
+                });
+            }else{
+                games.val('');
+            }
+        });
+        $('#product_id').on('change', function(){
             if(category !== '') {
                 $.ajax({
                     url: route,
