@@ -189,6 +189,18 @@ class LobbyGames {
         }).trigger('change');
     }
 
+    // show product id
+    products(){
+        $('#provider').on('change', function () {
+            var provider = $("#provider").val();
+            if (provider == 171) {
+                $(".div_a_product_id").fadeIn("200")
+            } else {
+                $(".div_a_product_id").fadeOut("200")
+            }
+        }).trigger('change');
+    }
+
     //get categories
     categoryByMaker(){
         initSelect2();

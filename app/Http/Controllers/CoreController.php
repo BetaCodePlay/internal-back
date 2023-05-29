@@ -381,7 +381,7 @@ class CoreController extends Controller
             $data['providers'] = $this->gamesRepo->getProvidersByMaker($maker);
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'provider' => $request->provider]);
+            Log::error(__METHOD__, ['exception' => $ex, 'maker' => $request->maker]);
             abort(500);
         }
     }

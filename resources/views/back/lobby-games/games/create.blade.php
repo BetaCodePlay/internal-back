@@ -257,6 +257,7 @@
             lobbyGames.categoryByMaker();
             lobbyGames.gamesByCategory();
             lobbyGames.gamesByProducts();
+            lobbyGames.products();
         });
     </script>
     <script>
