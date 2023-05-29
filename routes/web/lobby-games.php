@@ -45,7 +45,7 @@ Route::group(['prefix' => 'lobby-games', 'middleware' => ['auth']], function () 
      //  all games 
      Route::get('games/category', [
         'as' => 'games.game-by-categories',
-        'uses' => 'LobbyGamesController@gameByCategories'
+        'uses' => 'LobbyGamesController@gameByCategoryAndMaker'
     ]);
 
     // Store games

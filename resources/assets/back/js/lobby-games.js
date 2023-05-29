@@ -168,7 +168,8 @@ class LobbyGames {
             let provider = $(this).val();
             let makers = $('#maker');
             let route = $(this).data('route');
-            if(provider == 171){
+            var checkbox = $(".checkshow");
+            if(provider == 171 && checkbox.is(':checked')){
                 $(".div_a_product_id").fadeIn("200")
             }else{
                 $(".div_a_product_id").fadeOut("200")
@@ -219,12 +220,10 @@ class LobbyGames {
         initSelect2();
         $('#category').on('change', function(){
             let category = $('#category').val();
+            let maker = $('#maker').val();
             let product = $('#product_id').val();
             let route = $(this).data('route');
             let games = $('#games');
-            if(product !== ''){
-                route = ('#product_id').data('route');
-            }
             if(category !== '') {
                 $.ajax({
                     url: route,
@@ -232,7 +231,8 @@ class LobbyGames {
                     dataType: 'json',
                     data: {
                         category,
-                        product
+                        product,
+                        maker
                     }
                 }).done(function (json) {
                     games.html('loading');

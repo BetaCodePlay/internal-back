@@ -170,14 +170,17 @@ class GamesRepo
         return $games;
     }
 
-        /**
-     * Get games by category
+    /**
+     * Get games by category and maker
      *
      * @param int $whitelabel Whitelabel ID
      * @param string $currency Currency ISO
+     * @param string $category Games Category
+     * @param string $maker Games Maker
+     * @param int $product Games product_id
      * @return mixed
      */
-    public function getGamesByCategory($whitelabel, $currency, $category)
+    public function getGamesByCategoryAndMaker($whitelabel, $currency, $category, $maker, $product)
     {
         $games = Game::select('games.id', 'games.name', 'games.slug', 'games.image', 'games.maker',
             'games.category', 'games.provider_id')
@@ -185,7 +188,6 @@ class GamesRepo
             ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
             ->where('credentials.client_id', $whitelabel)
             ->where('credentials.currency_iso', $currency)
-            ->where('games.category', $category)
             ->where('credentials.status', true)
             ->where(function($query) use ($whitelabel) {
                 $query->where(function($query) use($whitelabel) {
@@ -193,9 +195,21 @@ class GamesRepo
                         ->where('games.status', GamesStatus::$active);
                 })
                     ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
-            })
-            ->get();
-        return $games;
+            });
+
+            if (!is_null($category)) {
+                $games->where('games.category', $category);
+            }
+
+            if (!is_null($maker)) {
+                $games->where('games.maker',  $maker);
+            }
+            
+            if (!is_null($product_id)) {
+                $games->where('games.product_id', $product);
+            }
+            $data = $games->get();
+        return $data;
     }
 
     /**
