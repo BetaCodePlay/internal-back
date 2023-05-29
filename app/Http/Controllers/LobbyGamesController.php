@@ -262,6 +262,7 @@ class LobbyGamesController extends Controller
     public function gameByCategoryAndMaker(Request $request)
     {
         try {
+            $provider = $request->provider;
             $category = $request->category;
             $maker = $request->maker;
             $product = $request->product;
@@ -269,7 +270,7 @@ class LobbyGamesController extends Controller
             if (!is_null($category)) {
                 $currency = session('currency');
                 $whitelabel = Configurations::getWhitelabel();
-                $games = $this->gamesRepo->getGamesByCategoryAndMaker($whitelabel, $currency, $category, $maker, $product);
+                $games = $this->gamesRepo->getGamesByCategoryAndMaker($whitelabel, $currency, $provider, $category, $maker, $product);
                 $this->lobbyGamesCollection->formatDotsuiteGames($games);
             }
             $data = [
@@ -295,13 +296,13 @@ class LobbyGamesController extends Controller
         $personalize = !is_null($request->personalize) ? $request->personalize : null;
         $route = !is_null($request->route) ? $request->route : null;
         $this->validate($request, [
-            'change_provider' => 'required'
+            'change_provider' => 'required',
+            'maker' => 'required',
+            'category' => 'required'
         ]);
         if($personalize) {
             $this->validate($request, [
                 'games' => 'required|array|min:1',
-                'maker' => 'required',
-                'category' => 'required'
             ]);
         }
         try {
@@ -366,7 +367,9 @@ class LobbyGamesController extends Controller
                 }
             }else{
                 $provider = (string) $request->change_provider;
-                $games = $this->gamesRepo->getDotSuiteGamesByProvider($provider);
+                $maker = (string) $request->maker;
+                $category = (string) $request->category;
+                $games = $this->gamesRepo->getDotSuiteGamesByProviderAndMakerAndCategory($provider,$category,$maker);
                 foreach ($games as $game) {
                     $whitelabelGame = $this->lobbyGamesRepo->searchByDotsuiteGames($game->id, $whitelabel);
                     if (!is_null($whitelabelGame)) {

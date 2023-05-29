@@ -180,7 +180,7 @@ class GamesRepo
      * @param int $product Games product_id
      * @return mixed
      */
-    public function getGamesByCategoryAndMaker($whitelabel, $currency, $category, $maker, $product)
+    public function getGamesByCategoryAndMaker($whitelabel, $currency, $provider, $category, $maker, $product)
     {
         $games = Game::select('games.id', 'games.name', 'games.slug', 'games.image', 'games.maker',
             'games.category', 'games.provider_id')
@@ -196,6 +196,10 @@ class GamesRepo
                 })
                     ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
             });
+
+            if (!is_null($provider)) {
+                $games->where('providers.id', $provider);
+            }
 
             if (!is_null($category)) {
                 $games->where('games.category', $category);
@@ -221,6 +225,21 @@ class GamesRepo
     public function getDotSuiteGamesByProvider($provider)
     {
         $games = Game::where('provider_id', $provider)
+            ->get();
+        return $games;
+    }
+
+    /**
+     * Get dotSuite games by provider, and maker, and category
+     *
+     * @param int $provider
+     * @param string $category
+     * @param string $maker
+     * @return mixed
+     */
+    public function getDotSuiteGamesByProviderAndMakerAndCategory($provider,$category,$maker)
+    {
+        $games = Game::where('provider_id', $provider)->where('category', $category)->where('maker', $maker)
             ->get();
         return $games;
     }

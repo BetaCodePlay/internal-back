@@ -226,6 +226,7 @@ class LobbyGames {
     gamesByCategory() {
         initSelect2();
         $('#category').on('change', function(){
+            let provider = $('#change_provider').val();
             let product = $('#product_id').val();
             let category = $('#category').val();
             let maker = $('#maker').val();
@@ -239,7 +240,8 @@ class LobbyGames {
                     data: {
                         category,
                         product,
-                        maker
+                        maker,
+                        provider
                     }
                 }).done(function (json) {
                     games.html('loading');
@@ -259,6 +261,7 @@ class LobbyGames {
 
     gamesByProducts(){
         $('#product_id').on('change', function(){
+            let provider = $('#change_provider').val();
             let product = $('#product_id').val();
             let category = $('#category').val();
             let maker = $('#maker').val();
@@ -272,7 +275,8 @@ class LobbyGames {
                     data: {
                         category,
                         product,
-                        maker
+                        maker,
+                        provider
                     }
                 }).done(function (json) {
                     games.html('loading');
