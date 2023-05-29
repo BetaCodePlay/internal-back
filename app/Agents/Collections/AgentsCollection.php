@@ -3217,12 +3217,13 @@ class AgentsCollection
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
                 'data' => [
                     'from' => $from,
-                    'to' => $to,
+                    'to' => $nameAffect,
+                    //'to' => $to,
                 ],
                 'debit' => $debitt,
                 'credit' => $creditt,
                 'new_amount' => $transaction->new_amount,
-                'balance' => $transaction->balance.' <br>('.$nameAffect.')',
+                'balance' => $transaction->balance,
             ];
 
         }
