@@ -55,6 +55,10 @@
             color: white !important;
             background-color: darkorange !important
         }
+        .select2-container {
+            width: 100% !important;
+            text-align: left !important;
+        }
 
     </style>
 <?php $__env->stopSection(); ?>
@@ -560,20 +564,33 @@
                         </div>
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
-                            <div class="offset-md-8 col-xs-12 col-sm-12 col-md-4">
-                                <div class="input-group">
-                                    <input type="text" id="date_range_new" class="form-control" autocomplete="off"
-                                           placeholder="<?php echo e(_i('Date range')); ?>">
-                                    <div class="input-group-append">
-                                        <button class="btn g-bg-primary" type="button" id="updateNew"
-                                                data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
-                                                data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>"
-                                                data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                            <i class="hs-admin-reload g-color-white"></i>
-                                        </button>
+                            <div class="row">
+                                <div class="offset-md-7"></div>
+                                <div class="col-md-2 text-right">
+                                    <div class="input-group">
+                                        <select name="type_select" id="type_select" class="form-control">
+                                            <option value="all" selected="selected" hidden>Todos</option>
+                                            <option value="agent"><?php echo e(_i('agent')); ?></option>
+                                            <option value="user"><?php echo e(_i('user')); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-12 col-sm-12">
+                                    <div class="input-group">
+                                        <input type="text" id="date_range_new" class="form-control" autocomplete="off"
+                                               placeholder="<?php echo e(_i('Date range')); ?>">
+                                        <div class="input-group-append">
+                                            <button class="btn g-bg-primary" type="button" id="updateNew"
+                                                    data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
+                                                    data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>"
+                                                    data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                                <i class="hs-admin-reload g-color-white"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="media">
                                 <div class="media-body d-flex justify-content-end g-mb-10"
@@ -884,11 +901,11 @@
                                                       id="lock-agent-form" method="post">
                                                     <div class="row">
                                                         <input type="hidden" name="user" class="user">
-                                                        <div class="col-12">
+                                                        <div class="col-md-6">
                                                             <div class="form-group">
                                                                 <label for="agent"><?php echo e(_i('Provider')); ?></label>
                                                                 <select name="provider" id="provider"
-                                                                        class="form-control">
+                                                                        class="form-control" data-route="<?php echo e(route('core.makers-by-provider')); ?>">
                                                                     <option value=""><?php echo e(_i('Select...')); ?></option>
                                                                     <?php $__currentLoopData = $providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                         <option value="<?php echo e($provider->id); ?>">
@@ -896,6 +913,15 @@
 
                                                                         </option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="maker"><?php echo e(_i('Maker')); ?></label>
+                                                                <select name="maker" id="maker"
+                                                                        class="form-control">
+                                                                    <option value=""><?php echo e(_i('Select...')); ?></option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -1143,6 +1169,7 @@
             agents.menuMobile();
             agents.selectAgentOrUser('<?php echo e(_i('Agents search...')); ?>');
             agents.selectUsernameSearch('<?php echo e(_i('Agents search...')); ?>');
+            agents.selectProvidersMaker();
             agents.statusFilter();
             <?php if($agent->master): ?>
             agents.changeAgentType();

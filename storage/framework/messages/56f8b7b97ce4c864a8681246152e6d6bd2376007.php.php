@@ -9,6 +9,7 @@ use App\Core\Core;
 use App\Core\Notifications\TransactionNotAllowed;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
 use App\Users\Rules\Email;
@@ -111,6 +112,13 @@ class UsersController extends Controller
     private $countriesRepo;
 
     /**
+     * GamesRepo
+     *
+     * @var GamesRepo
+     */
+    private $gamesRepo;
+
+    /**
      * @var UsersTempRepo
      */
     private $usersTempRepo;
@@ -209,6 +217,7 @@ class UsersController extends Controller
      * @param UsersCollection $usersCollection
      * @param ProfilesRepo $profilesRepo
      * @param CountriesRepo $countriesRepo
+     * @param GamesRepo $GamesRepo
      * @param UsersTempRepo $usersTempRepo
      * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
      * @param ReportsCollection $reportsCollection
@@ -228,6 +237,7 @@ class UsersController extends Controller
         UsersCollection         $usersCollection,
         ProfilesRepo            $profilesRepo,
         CountriesRepo           $countriesRepo,
+        GamesRepo               $gamesRepo,
         UsersTempRepo           $usersTempRepo,
         ClosuresUsersTotalsRepo $closuresUsersTotalsRepo,
         AgentsRepo              $agentsRepo,
@@ -247,6 +257,7 @@ class UsersController extends Controller
         $this->reportsCollection = $reportsCollection;
         $this->profilesRepo = $profilesRepo;
         $this->countriesRepo = $countriesRepo;
+        $this->gamesRepo = $gamesRepo;
         $this->usersTempRepo = $usersTempRepo;
         $this->betPayURL = env('BETPAY_SERVER') . '/api';
         $this->closuresUsersTotalsRepo = $closuresUsersTotalsRepo;
@@ -1359,17 +1370,28 @@ class UsersController extends Controller
      * @param int $whitelabel Whitelabel
      * @return Factory|View
      */
-    public function excludeProviderUserList()
+    public function excludeProviderUserList(Request $request, $startDate = null, $endDate = null, $provider = null, $maker = null, $currency = null)
     {
         try {
-            $whitelabel = Configurations::getWhitelabel();
-            $users = $this->usersRepo->getExcludeProviderUser($whitelabel);
-            if (!is_null($users)) {
-                $this->usersCollection->formatExcludeProviderUser($users);
-                $data = [
-                    'users' => $users
-                ];
-            } else {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $provider = $request->provider;
+                $maker = $request->maker;
+                $currency = $request->currency;
+                $whitelabel = Configurations::getWhitelabel();
+                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $provider, $maker, $whitelabel, $startDate, $endDate);
+                if (!is_null($users)) {
+                    $this->usersCollection->formatExcludeProviderUser($users);
+                    $data = [
+                        'users' => $users
+                    ];
+                } else {
+                    $data = [
+                        'users' => []
+                    ];
+                }
+            }else{
                 $data = [
                     'users' => []
                 ];
@@ -1391,9 +1413,11 @@ class UsersController extends Controller
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
+        $makers = $this->gamesRepo->getMakers();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
         $data['providers'] = $providers;
         $data['whitelabel'] = $whitelabel;
+        $data['makers'] = $makers;
         $data['title'] = _i('Exclude users from providers');
         return view('back.users.exclude-providers-users', $data);
     }
@@ -1416,6 +1440,7 @@ class UsersController extends Controller
         try {
             $username = strtolower(trim($request->username));
             $provider = $request->provider;
+            $maker = $request->maker;
             $whitelabel = Configurations::getWhitelabel();
             $currency = $request->currency;
             $userData = $this->usersRepo->getByUsername($username, $whitelabel);
@@ -1423,10 +1448,13 @@ class UsersController extends Controller
             if (!is_null($userData)) {
                 $providerUser = $this->usersRepo->findExcludeProviderUser($provider, $userData->id, $currency);
                 $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
+                $makers[] = $maker;
                 if (is_null($providerUser)) {
+                    $makersArray = array_filter($makers);
                     $usersData = [
                         'user_id' => $userData->id,
                         'provider_id' => $provider,
+                        'makers' => json_encode($makersArray),
                         'currency_iso' => $currency,
                         'created_at' => $date,
                         'updated_at' => $date
@@ -1439,6 +1467,7 @@ class UsersController extends Controller
                         'user_data' => [
                             'user_id' => $userData->id,
                             'provider_id' => $provider,
+                            'makers' => $makersArray,
                             'currency_iso' => $currency
                         ]
                     ];
@@ -1452,12 +1481,37 @@ class UsersController extends Controller
 
                     return Utils::successResponse($data);
                 } else {
+                    $makersExclude = isset($providerUser->makers) ? json_decode($providerUser->makers) : [];
+                    $dataMakers = array_merge($makers,$makersExclude);
+                    $makersArray = array_values(array_filter(array_unique($dataMakers)));
+                    $usersData = [
+                        'user_id' => $providerUser->user_id,
+                        'provider_id' => $providerUser->provider_id,
+                        'makers' => json_encode($makersArray),
+                        'currency_iso' => $currency,
+                        'created_at' => $date,
+                        'updated_at' => $date
+                    ];
+                    $this->usersRepo->updateExcludeProviderUser($providerUser->user_id,$providerUser->provider_id,$providerUser->currency_iso,$usersData);
+                    $auditData = [
+                        'ip' => Utils::userIp($request),
+                        'user_id' => auth()->user()->id,
+                        'username' => auth()->user()->username,
+                        'user_data' => [
+                            'user_id' => $userData->id,
+                            'provider_id' => $provider,
+                            'makers' => $makersArray,
+                            'currency_iso' => $currency
+                        ]
+                    ];
+                    //Audits::store($userData->id, AuditTypes::$exclude_provider, Configurations::getWhitelabel(), $auditData);
+
                     $data = [
                         'title' => _i('Excluded user'),
-                        'message' => _i("The user is already excluded to an provider"),
-                        'close' => _i('Close')
+                        'message' => _i('The user has been successfully excluded'),
+                        'close' => _i('Close'),
                     ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
+                    return Utils::successResponse($data);
                 }
             } else {
                 $data = [

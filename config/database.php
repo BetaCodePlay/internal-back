@@ -77,7 +77,6 @@ return [
             'search_path' => env('DB_SCHEMA'),
             'sslmode' => 'prefer',
         ],
-
         'replica' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

@@ -19,6 +19,7 @@ use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use App\Reports\Repositories\ReportAgentRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
@@ -91,11 +92,11 @@ class AgentsController extends Controller
     private $transactionsCollection;
 
     /**
-     * UsersRepo
+     * ReportAgentRepo
      *
-     * @var UsersRepo
+     * @var ReportAgentRepo
      */
-    private $usersRepo;
+    private $reportAgentRepo;
 
     /**
      * TransactionsRepo
@@ -110,6 +111,13 @@ class AgentsController extends Controller
      * @var GamesRepo
      */
     private $gamesRepo;
+
+    /**
+     * UsersRepo
+     *
+     * @var UsersRepo
+     */
+    private $usersRepo;
 
     /**
      * WhitelabelsGamesRepo
@@ -178,11 +186,12 @@ class AgentsController extends Controller
      * @param UsersCollection $usersCollection
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, GamesRepo $gamesRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection, GamesRepo $gamesRepo)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
         $this->agentsCollection = $agentsCollection;
+        $this->reportAgentRepo = $reportAgentRepo;
         $this->usersRepo = $usersRepo;
         $this->transactionsRepo = $transactionsRepo;
         $this->agentCurrenciesRepo = $agentCurrenciesRepo;
@@ -507,7 +516,7 @@ class AgentsController extends Controller
      */
     public function agentsTransactionsPaginate($agent, Request $request)
     {
-//        try {
+        try {
 
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit = $request->has('length') ? $request->get('length') : 100;
@@ -516,6 +525,17 @@ class AgentsController extends Controller
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
             $username = $request->get('search')['value'];
             $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+            $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+            $orderCol =[
+                'column'=> 'id',
+                'order'=> 'desc',
+            ];
+            if($request->has('order') && !empty($request->get('order'))){
+                $orderCol=[
+                    'column'=> $request->get('columns')[$request->get('order')[0]['column']]['data'],
+                    'order'=> $request->get('order')[0]['dir']
+                ];
+            }
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
@@ -526,19 +546,21 @@ class AgentsController extends Controller
 //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
 //            }
 
-            $arraySonIds = $this->usersRepo->arraySonIds($agent, session('currency'), Configurations::getWhitelabel());
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds);
+            //TODO get ids children from father
+            $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather($agent, session('currency'), Configurations::getWhitelabel());
 
-           //$transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser);
+            //TODO get transactions with filter
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds,$orderCol, $typeTransaction);
 
+            //TODO draw table in collection
            $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
             return response()->json($data);
 
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            return Utils::failedResponse();
-//        }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
@@ -840,29 +862,31 @@ class AgentsController extends Controller
 //        }
 //
 //        return $users;
-        return 'no disponible';
-//        $users = $this->usersRepo->sqlShareTmp('users');
-//        foreach ($users as $value) {
-//            $value->type_user = null;
-//            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
-//            if (!is_null($agentTmp)) {
-//                $value->type_user = TypeUser::$agentCajero;
-//                if (isset($agentTmp->master) && $agentTmp->master) {
-//                    $value->type_user = TypeUser::$agentMater;
-//                }
-//            }
-//
-//            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
-//            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
-//                $value->type_user = TypeUser::$player;
-//            }
-//            //TODO UPDATE
-//            if (!is_null($value->type_user)) {
-//                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
-//            }
-//        }
-//
-//        return $users;
+        //return 'no disponible';
+
+        //TODO CHANGE TYPE USER
+        $users = $this->usersRepo->sqlShareTmp('users');
+        foreach ($users as $value) {
+            $value->type_user = null;
+            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
+            if (!is_null($agentTmp)) {
+                $value->type_user = TypeUser::$agentCajero;
+                if (isset($agentTmp->master) && $agentTmp->master) {
+                    $value->type_user = TypeUser::$agentMater;
+                }
+            }
+
+            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
+            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
+                $value->type_user = TypeUser::$player;
+            }
+            //TODO UPDATE
+            if (!is_null($value->type_user)) {
+                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
+            }
+        }
+
+        return $users;
     }
 
     /**
@@ -1215,7 +1239,7 @@ class AgentsController extends Controller
                             'updated_at' => $date
                         ];
                         $this->agentsRepo->updateBlockAgents($currency, $userToUpdate['category'], $userData->id, $data);
-                    }   
+                    }
                     $data = [
                         'title' => _i('Excluded user'),
                         'message' => _i('The user has been successfully excluded'),
@@ -1359,12 +1383,18 @@ class AgentsController extends Controller
     {
 
         try {
-
+            // dd([$request->currency_iso, $request->whitelabel_id]);
             if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
             } else {
-                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $currency_iso, $provider_id, $whitelabel_id);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
 
             }
             $data = [
@@ -1384,16 +1414,14 @@ class AgentsController extends Controller
      * @param int $agent User ID
      * @return Response
      */
-    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null, $currency_iso= null, $provider_id = null, $whitelabel_id = null)
+    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null)
     {
         try {
-            $provider_id = null;
-            $whitelabel_id = null;
             $startDate = Utils::startOfDayUtc($request->has('startDate')?$request->get('startDate'):date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate')?$request->get('endDate'):date('Y-m-d'));
             // $currency = session('currency');
             // $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $request->currency_iso, $provider_id, $whitelabel_id);
+            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $request->currency_iso, $request->provider_id, $request->whitelabel_id);
 
             return response()->json($this->agentsCollection->formatAgentDataMakersTotals($totals));
 
@@ -1853,7 +1881,7 @@ class AgentsController extends Controller
      */
     public function find(Request $request)
     {
-        try {
+//        try {
             if (session('admin_id')) {
                 $userId = session('admin_id');
                 $agent_player = false;
@@ -1867,12 +1895,18 @@ class AgentsController extends Controller
             $walletId = null;
             if ($type == 'agent') {
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+                $father = $this->usersRepo->findUsername($user->owner);
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $balance = $user->balance;
                 $master = $user->master;
                 $agent = true;
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
+                $father = $this->usersRepo->findUsername($user->owner_id);
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
                 $balance = $wallet->data->wallet->balance;
@@ -1882,7 +1916,12 @@ class AgentsController extends Controller
             }
 
             $this->agentsCollection->formatAgent($user);
+            $user->created = date('Y-m-d',strtotime($user->created));
             $data = [
+                'cant_agents' => $cant['agents'],
+                'cant_players' => $cant['players'],
+                'father' => $father->username ?? '',
+                'fathers' => $fathers,
                 'user' => $user,
                 'balance' => number_format($balance, 2),
                 'master' => $master,
@@ -1893,10 +1932,10 @@ class AgentsController extends Controller
                 'agent_player' => $agent_player
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**
@@ -2602,7 +2641,7 @@ class AgentsController extends Controller
             $email = "$username@$domain";
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+            $userExclude = $this->agentsRepo->getExcludeUserProvider($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [

@@ -9,7 +9,8 @@ import {
 } from "../../commons/js/core";
 import {clearForm, getCookie, initDateRangePickerEndToday, initLitepickerEndToday,initLitepickerEndTodayNew, initSelect2, refreshRandomPassword} from "./commons";
 import moment from 'moment';
-
+import jsPDF from 'jspdf';
+import { data } from 'jquery';
 class Agents {
 
     // Add users
@@ -177,7 +178,8 @@ class Agents {
                let picker = initLitepickerEndTodayNew();
                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-            let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ?'all':$('#type_select').val();
+               let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ?'all':$('#type_select').val();
+               let transaction = $('#transaction_select').val() === '' || $('#transaction_select').val() === undefined ?'all':$('#transaction_select').val();
                let user = $('.user').val();
 
                let api;
@@ -188,7 +190,7 @@ class Agents {
                    serverSide: true,
                    lengthMenu:lengthMenu,
                    ajax: {
-                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+'&typeUser='+type,
+                       url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+'&typeUser='+type+'&typeTransaction='+transaction,
                        dataType: 'json',
                        type: 'get',
                    },
@@ -212,8 +214,9 @@ class Agents {
                    let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                    let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
                    let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ?'all':$('#type_select').val();
+                   let transaction = $('#transaction_select').val() === '' || $('#transaction_select').val() === undefined ?'all':$('#transaction_select').val();
                    let user = $('.user').val();
-                   let route = `${$tableTransaction.data('route')}/${user}?startDate=${startDate}&endDate=${endDate}&typeUser=${type}`;
+                   let route = `${$tableTransaction.data('route')}/${user}?startDate=${startDate}&endDate=${endDate}&typeUser=${type}&typeTransaction=${transaction}`;
                    api.ajax.url(route).load();
                    $tableTransaction.on('draw.dt', function () {
                        $button.button('reset');
@@ -445,8 +448,6 @@ class Agents {
 
     // Dashboard
     dashboard() {
-        //console.log('test in dashboard fo agent.jd')
-
         initSelect2();
         clipboard();
         let $tree = $('#tree');
@@ -487,6 +488,23 @@ class Agents {
                     }
 
                 }).done(function (json) {
+                    //TODO Init Set Modal
+                    $('.userSet').text(json.data.user.username);
+                    $('.fatherSet').text(json.data.father);
+                    $('.typeSet').text(json.data.user.typeSet);
+                    $('.agentsSet').text(json.data.cant_agents);
+                    $('.playersSet').text(json.data.cant_players);
+                    $('.createdSet').text(json.data.user.created);
+                    $('.appendTreeFather').html('');
+                    let initUl = '';
+                    let finishUl = '';
+                    $.each(json.data.fathers,function(index,val) {
+                        initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
+                        finishUl = finishUl + '</li></ul>'
+                    });
+                    $('.appendTreeFather').append(initUl+finishUl);
+                    //TODO Finish Set Modal
+
                     $('#username').text(json.data.user.username);
                     $('#agent_timezone').text(json.data.user.timezone);
                     $('.balance').text(json.data.balance);
@@ -656,48 +674,81 @@ class Agents {
     }
          // Financial state Makers
     financialStateMakersDetails() {
-        // $('#financial-state-tab').on('show.bs.tab', function () {
+        initSelect2();
+        initDateRangePickerEndToday(open = 'right');
+        let api;
+        let $table = $('#financial-state-table');
+        let $button = $('#update');
+        $button.trigger('click');
+        $button.click(function () {
+            $button.button('loading');
+            let whitelabel_id = $('#whitelabel').val() === ''? '':$('#whitelabel').val();
+            let provider_id = $('#provider').val() === ''? '':$('#provider').val();
+            let currency_iso = $('#currency').val() === ''? '':$('#currency').val();
+        //  let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+        //  let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+        let startDate = $('#start_date').val();
+        let endDate = $('#end_date').val();
+            $.ajax({
+                url: `${$table.data('route')}/${startDate}/${endDate}?currency_iso=${currency_iso}&provider_id=${provider_id}&whitelabel_id=${whitelabel_id}`,
+                type: 'get',
+                dataType: 'json'
 
-        // })
+            }).done(function (json) {
+                $table.html(json.data.table);
 
-         let picker = initLitepickerEndToday();
-         let $table = $('#financial-state-table');
-         let $button = $('#update');
-         $button.trigger('click')
-         let api;
-        //  if (user == null) {
-        //      $('#financial-state-tab').on('show.bs.tab', function () {
-        //          $table.children().remove();
-        //          user = $('.user').val();
-        //      });
-        //  }
+                // setTimeout(() => {
+                //     var doc = new jsPDF('p', 'pt', 'letter');
 
-         $button.click(function () {
-             $button.button('loading');
-            //  let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
-             let whitelabel_id = $('#whitelabel_id').val() === ''?'':$('#whitelabel_id').val();
-             let provider_id = $('#provider_id').val() === ''?'':$('#provider_id').val();
-             let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
-             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+                //     var margin = 10;
+                //     var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
+                //     doc.html(document.getElementById('print-document'), {
+                //         x: margin,
+                //         y: margin,
+                //         html2canvas: {
+                //             scale: scale,
+                //         },
+                //         callback: function(doc){
+                //         // Comentado para pruebas
+                //         // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
+                //         doc.save('examen.pdf')
+                //         }
+                //     });
+                // }, 3000);
+            }).fail(function (json) {
+                swalError(json);
 
-             $.ajax({
-                 url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}/${provider_id}/${whitelabel_id}`,
-                 type: 'get',
-                 dataType: 'json'
-
-             }).done(function (json) {
-                 $table.html(json.data.table);
-
-             }).fail(function (json) {
-                 swalError(json);
-
-             }).always(function () {
-                 $button.button('reset');
-             });
-         });
+            }).always(function () {
+                $button.button('reset');
+            });
+            Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso, provider_id, whitelabel_id);
+        });
      }
+     printDocumentMakers() {
+        let $button = $('#print-pdf-d');
 
+        $button.click(function () {
+            $button.button('loading');
+
+            var doc = new jsPDF('p', 'pt', 'letter');
+
+            var margin = 10;
+            var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
+            doc.html(document.getElementById('print-document'), {
+                x: margin,
+                y: margin,
+                html2canvas: {
+                    scale: scale,
+                },
+                callback: function(doc){
+                // Comentado para pruebas
+                // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
+                    doc.save('makers'+Date.now()+'.pdf');
+                    $button.button('reset');
+                }
+            });
+        });
+     }
    // Financial state
       // Financial state
    financialState(user = null) {
@@ -1568,6 +1619,7 @@ class Agents {
         }).trigger('change');
     }
 
+
     // select username search
     selectUsernameSearch(placeholder) {
         $('.username_search').select2();
@@ -1632,6 +1684,35 @@ class Agents {
                 return markup;
             }
         });
+    }
+
+    selectWhitelabelMakers(){
+        initSelect2();
+        $('#whitelabel').on('change', function () {
+            let whitelabel = $(this).val();
+            let route = $(this).data('route');
+            let provider = $('#provider');
+            if (whitelabel !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        whitelabel
+                    }
+                }).done(function (json) {
+                    $('#provider option[value!=""]').remove();
+                    $(json.data.providers).each(function (key, element) {
+                        provider.append("<option value=" + element.id + ">" + element.name + "</option>");
+                    })
+                    provider.prop('disabled', false);
+                }).fail(function (json) {
+
+                });
+            } else {
+                provider.val('');
+            }
+        }).trigger('change');
     }
 
     // Store users
@@ -1918,7 +1999,7 @@ class Agents {
 
     }
 
-    //Exclude Provider 
+    //Exclude Provider
     excludeProviderUserList(){
         initSelect2();
         initDateRangePickerEndToday(open = 'right');

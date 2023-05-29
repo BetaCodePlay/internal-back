@@ -828,7 +828,7 @@ class AgentsCollection
     public function closuresTotalsProviderAndMakerGlobal($tableDb, $percentage = null)
     {
         $htmlProvider = sprintf(
-            '<table class="table table-bordered table-sm table-striped table-hover">',
+            '<table id="makers-global" class="table table-bordered table-sm table-striped table-hover">',
         );
         if (count($tableDb) > 0) {
             $prov_current = 0;
@@ -851,12 +851,11 @@ class AgentsCollection
                                 <th colspan="7" class="text-center" style="background-color: #' . substr(md5($item->name_provider), 1, 6) . ';color: white;font-size: larger;"><strong>' . $item->name_provider . '</strong></th>
                             </tr>
                             <tr>
-                                <th colspan="2">' . _i('Whitelabel') . '</th>
                                 <th colspan="2">' . _i('Maker') . '</th>
                                 <th>' . _i('Total Payed') . '</th>
                                 <th>' . _i('Total Won') . '</th>
                                 <th>' . _i('Total Bets') . '</th>
-                                <th>' . _i('Total Profit') . '</th>
+                                <th colspan="2">' . _i('Total Profit') . '</th>
                             </tr>
                         </thead><tbody>';
                     $prov_current = $item->id_provider;
@@ -865,18 +864,17 @@ class AgentsCollection
                 }
                 $htmlProvider .= '<tr>
                                     <td colspan="2">' . $item->name_maker . '</td>
-                                    <td colspan="2">' . $item->name_maker . '</td>
                                     <td>' . number_format($item->total_played, 2) . '</td>
                                     <td>' . number_format($item->total_won, 2) . '</td>
                                     <td>' . $item->total_bet . '</td>
-                                    <td>' . number_format($item->total_profit, 2) . '</td>
+                                    <td colspan="2">' . number_format($item->total_profit, 2) . '</td>
                                 </tr>';
                 $acum += $item->total_profit;
             }
             if ($prov_current != 0) {
                 $htmlProvider .= '<tr>
-                                   <td colspan="6"></td>
-                                   <td colspan="1"><strong>' . number_format($acum, 2) . '</strong></td>
+                                   <td colspan="5"></td>
+                                   <td colspan="2"><strong>' . number_format($acum, 2) . '</strong></td>
                                 </tr>';
             }
             $htmlProvider .= '</tbody></table>';
@@ -3068,6 +3066,7 @@ class AgentsCollection
             $typeText = $user->master ? _i('Master agent') : _i('Cashier');
 
             if (!$user->master) {
+                $user->typeSet = $typeText;
                 $user->type = sprintf(
                     '<a href="javascript:void(0)" id="change-agent-type" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
                     route('agents.change-agent-type', [$user->agent]),
@@ -3075,6 +3074,7 @@ class AgentsCollection
                     $typeText
                 );
             } else {
+                $user->typeSet = $typeText;
                 $user->type = sprintf(
                     '<span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span>',
                     $typeClass,
@@ -3085,6 +3085,7 @@ class AgentsCollection
         } else {
             $typeClass = 'bluegray';
             $typeText = _i('User');
+            $user->typeSet = $typeText;
             $user->type = sprintf(
                 '<span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span>',
                 $typeClass,
@@ -3254,8 +3255,7 @@ class AgentsCollection
 
     /**
      * formatAgentDataMakersTotals
-     * @param $credit
-     * @param $debit
+     * @param $totals
      * @return string
      */
     public function formatAgentDataMakersTotals($totals)
@@ -3264,20 +3264,20 @@ class AgentsCollection
             '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
-                            <th>%s</th>
-                            <th class="text-right">' . _i('Total Played') . '</th>
-                            <th class="text-right">' . _i('Total Won') . '</th>
-                            <th class="text-right">' . _i('Total Bet') . '</th>
-                            <th class="text-right">' . _i('Total Profit') . '</th>
+                            <th class="w-th-20">%s</th>
+                            <th class="w-th-17-5">' . _i('Total Payed') . '</th>
+                            <th class="w-th-20">' . _i('Total Won') . '</th>
+                            <th class="w-th-23">' . _i('Total Bets') . '</th>
+                            <th>' . _i('Total Profit') . '</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
-                            <td class="text-right"><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
                         </tr>
                     </tbody>',
             _i('Totals'),
@@ -3546,7 +3546,7 @@ class AgentsCollection
         $whitelabel = Configurations::getWhitelabel();
 
         if (!is_null($agent)) {
-            $dataMakers[] = $maker;  
+            $dataMakers[] = $maker;
             if ($lockUsers == 'true') {
                 $blockUsers[] = [
                 'currency_iso' => $currency,
@@ -3578,7 +3578,7 @@ class AgentsCollection
                         'updated_at' => Carbon::now()
                     ];
                 }
-            }         
+            }
         }
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
         return $data;
@@ -3676,7 +3676,7 @@ class AgentsCollection
         $usersRepo = new UsersRepo();
         $gamesRepo = new GamesRepo();
         foreach ($users as $user) {
-            $dataMakers[] = $maker;  
+            $dataMakers[] = $maker;
             if ($lockUsers == 'true') {
                 $dataUsers[] = [
                     'currency_iso' => $currency,

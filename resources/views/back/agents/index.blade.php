@@ -33,7 +33,9 @@
             color: white !important;
             background-color: #38a7ef !important;
         }
-
+        .flex-items {
+            display: flex;
+        }
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -457,8 +459,7 @@
                                         </div>
                                     </div>
                                     <div class="row g-mb-15">
-                                        <div
-                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong> {{ _i('Type') }}</strong>
                                             </label>
@@ -532,6 +533,17 @@
                                             </div>
                                         </div>
                                     @endif
+                                    <div class="row g-mb-15" id="details-user">
+                                        <div class="col-12 col-sm-8 col-md-9 align-self-center">
+                                            <div class="form-group g-pos-rel g-mb-0">
+                                                <a href="#details-user-modal" id="details-user"
+                                                   class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i> <strong> {{ _i('More information') }}</strong>
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_credit_transactions,  \Dotworkers\Security\Enums\Permissions::$agents_debit_transactions])
                                     <div class="col-md-6">
@@ -595,22 +607,40 @@
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
                             <div class="row">
-                                <div class="offset-md-7"></div>
-                                <div class="col-md-2 text-right">
-                                    <div class="input-group">
-                                        <select name="type_select" id="type_select" class="form-control">
-                                            <option value="all" selected="selected" hidden>Todos</option>
-                                            <option value="agent">{{_i('agent')}}</option>
-                                            <option value="user">{{_i('user')}}</option>
+                                <div class="offset-md-2"></div>
+                                {{-- <div class="form-group">
+                                    <label for="date_range">{{ _i('Date range') }}</label>
+                                    <input type="text" id="daterange" class="form-control daterange" autocomplete="off" placeholder="{{ _i('Date range') }}">
+                                    <input type="hidden" id="start_date" name="start_date">
+                                    <input type="hidden" id="end_date" name="end_date">
+                                </div> --}}
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <label for="transaction_select">{{ _i('Type Transaction') }}</label>
+                                        <select name="transaction_select" id="transaction_select" class="form-control">
+                                            <option value="all" selected="selected" hidden>{{_i('All')}}</option>
+                                            <option value="credit">{{_i('Charge')}}</option>
+                                            <option value="debit">{{_i('Discharge')}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-xs-12 col-sm-12">
-                                    <div class="input-group">
-                                        <input type="text" id="date_range_new" class="form-control" autocomplete="off"
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <label for="type_select">{{ _i('Type User') }}</label>
+                                        <select name="type_select" id="type_select" class="form-control">
+                                            <option value="all" selected="selected" hidden>{{_i('All')}}</option>
+                                            <option value="agent">{{_i('Agent')}}</option>
+                                            <option value="user">{{_i('User')}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="date_range">{{ _i('Date range') }}</label>
+                                        <div class="flex-items">
+                                            <input type="text" id="date_range_new" class="form-control" autocomplete="off"
                                                placeholder="{{ _i('Date range') }}">
-                                        <div class="input-group-append">
-                                            <button class="btn g-bg-primary" type="button" id="updateNew"
+                                               <button class="btn g-bg-primary" type="button" id="updateNew"
                                                     data-route="{{ route('agents.transactions.paginate') }}"
                                                     data-routetotals="{{ route('agents.transactions.totals') }}"
                                                     data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
@@ -660,7 +690,7 @@
 {{--                                                Carga--}}
 {{--                                            </th>--}}
 {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">--}}
-{{--                                                {{ _i('withdrew') }}--}}
+{{--                                                {{ _i('Withdrew') }}--}}
 {{--                                                Retiro--}}
 {{--                                            </th>--}}
 {{--                                        @else--}}
@@ -712,7 +742,7 @@
                                                 {{ _i('Charged him') }}
                                             </th>
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                {{ _i('withdrew') }}
+                                                {{ _i('Withdrew') }}
                                             </th>
                                         @else
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -1138,6 +1168,7 @@
     @include('back.agents.modals.manual-transaction')
     @include('back.agents.modals.move-agents')
     @include('back.agents.modals.move-agents-users')
+    @include('back.agents.modals.details-user')
     @include('back.agents.modals.add-users')
     @include('back.users.modals.reset-password')
 @endsection

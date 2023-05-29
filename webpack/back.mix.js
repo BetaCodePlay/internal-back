@@ -45,6 +45,8 @@ mix.autoload({
         'resources/assets/back/js/dotsuite.js',
         'resources/assets/back/js/referrals.js',
         'resources/assets/back/js/invoices.js',
+        'resources/assets/back/js/commons.js',
+
     ],
     'public/back/js/custom.min.js')
     .extract()

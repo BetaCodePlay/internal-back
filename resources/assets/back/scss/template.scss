@@ -62,6 +62,79 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 }
 
+.row-div {
+    position: relative;
+
+    &::before {
+        content: "";
+        background: #dee2e6;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        display: none;
+
+        @media (min-width: 576px) {
+            display: block;
+        }
+    }
+}
+
+
+
+.u-sidebar-navigation-v1 {
+    .u-side-nav--top-level-menu {
+        padding-bottom: 45px !important;
+    }
+
+    .col-social-navigation {
+        background: #172031;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 250px;
+        text-align: center;
+        line-height: 1;
+        height: 40px;
+
+        a {
+            padding: 5px;
+            font-size: 28px;
+            display: inline-block;
+            text-decoration: none;
+
+            &.color-telegram {
+                color: #2AABEE;
+            }
+
+            i {
+                vertical-align: middle;
+            }
+
+            .social-name {
+                font-size: 15px;
+                font-weight: 600;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    &.u-sidebar-navigation-v1--mini {
+        .col-social-navigation {
+            width: 50px;
+
+            a {
+                .social-name {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 575px) {
     #header-search-form {
         .input-group {

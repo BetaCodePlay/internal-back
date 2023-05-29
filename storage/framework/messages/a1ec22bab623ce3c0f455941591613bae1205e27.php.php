@@ -219,6 +219,21 @@ class ClosuresUsersTotals2023Repo
     }
 
     /**
+     * Get Closures Totals By Provider And Maker Global
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param $provider
+     * @return array
+     */
+    public function getClosureTotalsByProviderAndMakerGlobal(string $startDate, string $endDate, $currency, $provider, $whitelabel)
+    {
+        return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker_global(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider]);
+    }
+
+    /**
      * @param int $whitelabel Whitelabel Id
      * @param string $currency Iso Currency
      * @param string $startDate Date Start
@@ -492,6 +507,18 @@ class ClosuresUsersTotals2023Repo
                             AND c.status = ?
                             AND c.client_id = ?
                             order by p.id desc ', [$currency, $active, $whitelabel]);
+    }
+
+    /**
+     * Get Provider Active The Client And Credentials
+     * @param bool $active Status By Providers
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @return array
+     */
+    public function getProvidersByCurrencyAndCredentials(bool $active, $currency, $whitelabel)
+    {
+        return DB::select('SELECT * FROM site.get_providers(?,?,?)', [$currency, $active, $whitelabel]);
     }
 
     /**
