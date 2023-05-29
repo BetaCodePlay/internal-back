@@ -45,7 +45,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 div_a_product_id">
                                 <div class="form-group">
                                     <label for="product_id">{{ _i('Product ID') }}</label>
                                     <select name="product_id" id="product_id" class="form-control">
