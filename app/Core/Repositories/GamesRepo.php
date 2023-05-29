@@ -251,7 +251,7 @@ class GamesRepo
         if(!is_null($product)){
             $games->where('product_id', $product);
         }
-        $data = $game->get();
+        $data = $games->get();
         return $data;
     }
 
