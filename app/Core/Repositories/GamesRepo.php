@@ -345,7 +345,7 @@ class GamesRepo
      */
     public function getProvidersByMaker($maker)
     {
-        $games = Game::select('providers.id, providers.name')
+        $games = Game::select('providers.id', 'providers.name')
         ->join('providers', 'games.provider_id', '=', 'providers.id')
         ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
         ->where('games.maker', $maker)
