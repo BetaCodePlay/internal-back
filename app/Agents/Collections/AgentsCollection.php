@@ -3187,11 +3187,11 @@ class AgentsCollection
             $to = $transaction->data->to;
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
-                $transaction->new_amount = '<span class="badge badge-pill badge-info">-'.number_format($amountTmp,2).'</span>';
+                $transaction->new_amount = '<span class="badge badge-pill badge-danger">-'.number_format($amountTmp,2).'</span>';
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
-                $transaction->new_amount = '<span class="badge badge-pill badge-danger">+'.number_format($amountTmp,2).'</span>';
+                $transaction->new_amount = '<span class="badge badge-pill badge-info">+'.number_format($amountTmp,2).'</span>';
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
