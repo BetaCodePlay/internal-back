@@ -168,8 +168,6 @@ class LobbyGames {
             let provider = $(this).val();
             let makers = $('#maker');
             let route = $(this).data('route');
-            var hidden = $(".div_a_product_id");
-            hidden.hide();
             if(provider == 171){
                 $(".div_a_product_id").fadeIn("200")
             }else{
