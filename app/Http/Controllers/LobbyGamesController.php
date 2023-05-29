@@ -367,9 +367,9 @@ class LobbyGamesController extends Controller
                 }
             }else{
                 $provider = (string) $request->provider;
-                $maker = (string) $request->maker;
-                $category = (string) $request->category;
-                $product = (string) $request->product_id;
+                $maker = $request->maker;
+                $category = $request->category;
+                $product = $request->product_id;
                 $games = $this->gamesRepo->getDotSuiteGamesByProviderAndMakerAndCategoryAndProduct($provider, $category, $maker, $product);
                 foreach ($games as $game) {
                     $whitelabelGame = $this->lobbyGamesRepo->searchByDotsuiteGames($game->id, $whitelabel);
