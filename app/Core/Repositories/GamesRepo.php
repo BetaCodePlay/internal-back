@@ -205,7 +205,7 @@ class GamesRepo
                 $games->where('games.maker',  $maker);
             }
             
-            if (!is_null($product_id)) {
+            if (!is_null($product)) {
                 $games->where('games.product_id', $product);
             }
             $data = $games->get();
