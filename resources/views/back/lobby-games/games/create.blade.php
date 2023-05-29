@@ -32,6 +32,15 @@
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span class="glyphicon glyphicon-ok">{{ _i('Games Personalize: ') }}</span>
                                 </label>
+                                <div class="div_a_show">
+                                    <div class="form-group">
+                                        <label for="maker">{{ _i('Maker') }}</label>
+                                        <select name="maker" id="maker" class="form-control"
+                                        data-route="{{ route('core.categories-by-maker') }}">
+                                            <option value="">{{ _i('Select...') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             @isset($route)
                                 <div class="col-md-6">
@@ -48,15 +57,6 @@
                                     </div>
                                 </div>
                             @endisset
-                            <div class="div_a_show col-md-6">
-                                <div class="form-group">
-                                    <label for="maker">{{ _i('Maker') }}</label>
-                                    <select name="maker" id="maker" class="form-control"
-                                    data-route="{{ route('core.categories-by-maker') }}">
-                                        <option value="">{{ _i('Select...') }}</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="div_a_show col-md-6">
                                 <div class="form-group">
                                     <label for="category">{{ _i('Category') }}</label>
