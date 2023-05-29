@@ -3198,14 +3198,14 @@ class AgentsCollection
             $credit = $transaction->credit;
             $debit = $transaction->debit;
             //TODO COMENTADO
-//            if($transaction->user_id === Auth::user()->id){
-//                $debit = $transaction->credit;
-//                $credit = $transaction->debit;
-//            }
-//            if($transaction->data->from != Auth::user()->username){
-//                $credit = $transaction->credit;
-//                $debit = $transaction->debit;
-//            }
+            if($transaction->user_id === Auth::user()->id){
+                $debit = $transaction->credit;
+                $credit = $transaction->debit;
+            }
+            if($transaction->data->from != Auth::user()->username){
+                $credit = $transaction->credit;
+                $debit = $transaction->debit;
+            }
 
             $debitt = $debit > 0 ? '-'.number_format($debit, 2, ",", "."):'0,00';
             $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ",", "."):'0,00';
