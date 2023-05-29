@@ -168,8 +168,7 @@ class LobbyGames {
             let provider = $(this).val();
             let makers = $('#maker');
             let route = $(this).data('route');
-            var checkbox = $(".checkshow");
-            if(provider == 171 && checkbox.is(':checked')){
+            if(provider == 171){
                 $(".div_a_product_id").fadeIn("200")
             }else{
                 $(".div_a_product_id").fadeOut("200")

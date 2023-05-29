@@ -28,12 +28,22 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label style="padding-top: 33px;">
+                                <label>
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span class="glyphicon glyphicon-ok">{{ _i('Games Personalize: ') }}</span>
                                 </label>
+                                <div class="div_a_show">
+                                    <div>
+                                        <label for="games">{{ _i('Games') }}</label>
+                                        <select name="games[]" id="games" class="form-control"
+                                                data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
+                                                multiple>
+                                            <option value="">{{ _i('Select') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="div_a_show col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="maker">{{ _i('Maker') }}</label>
                                     <select name="maker" id="maker" class="form-control"
@@ -42,7 +52,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="div_a_show col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="category">{{ _i('Category') }}</label>
                                     <select name="category" id="category" class="form-control"
@@ -51,7 +61,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="div_a_product_id col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="product_id">{{ _i('Product ID') }}</label>
                                     <select name="product_id" id="product_id" class="form-control">
@@ -61,16 +71,6 @@
                                                 {{ $product->product_id }}
                                             </option>
                                         @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="div_a_show col-md-6">
-                                <div>
-                                    <label for="games">{{ _i('Games') }}</label>
-                                    <select name="games[]" id="games" class="form-control"
-                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
-                                            multiple>
-                                        <option value="">{{ _i('Select') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -266,22 +266,15 @@
             // obtener campos ocultar div
             var checkbox = $(".checkshow");
             var hidden = $(".div_a_show");
-            var products = $(".div_a_product_id");
-            var provider = $('#change_provider').val();
-            products.hide();
             //
 
             hidden.hide();
             checkbox.change(function() {
                 if (checkbox.is(':checked')) {
-                    if(provider == 171){
-                        $(".div_a_product_id").fadeIn("200");
-                    }
                     //hidden.show();
                     $(".div_a_show").fadeIn("200")
                 } else {
                     //hidden.hide();
-                    $(".div_a_product_id").fadeOut("200");
                     $(".div_a_show").fadeOut("200")
                     $('input[type=checkbox]').prop('checked',false);// limpia los valores de checkbox al ser ocultado
 
