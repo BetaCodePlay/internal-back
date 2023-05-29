@@ -378,7 +378,7 @@ class CoreController extends Controller
     {
         try {
             $maker = $request->maker;
-            $data['maker'] = $this->gamesRepo->getProvidersByMaker($maker);
+            $data['providers'] = $this->gamesRepo->getProvidersByMaker($maker);
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'provider' => $request->provider]);
