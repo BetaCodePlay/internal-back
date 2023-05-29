@@ -28,9 +28,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="">
-                                    <input type="hidden">
-                                </label>
+                                <div><label></label></div>
                                 <label class="">
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span class="glyphicon glyphicon-ok">{{ _i('Games Personalize: ') }}</span>
