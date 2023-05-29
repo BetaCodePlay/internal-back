@@ -3211,7 +3211,7 @@ class AgentsCollection
 
             $debitt = $debit > 0 ? '-'.number_format($debit, 2, ",", "."):'0,00';
             $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ",", "."):'0,00';
-
+            $nameAffect = $transaction->data->from === $transaction->username?$transaction->data->from:$transaction->data->to;
             $data[] = [
                 'id' => null,
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
@@ -3222,7 +3222,7 @@ class AgentsCollection
                 'debit' => $debitt,
                 'credit' => $creditt,
                 'new_amount' => $transaction->new_amount,
-                'balance' => $transaction->balance,
+                'balance' => $transaction->balance.' <br>('.$nameAffect.')',
             ];
 
         }
