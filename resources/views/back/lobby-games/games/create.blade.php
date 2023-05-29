@@ -33,11 +33,11 @@
                                     <span class="glyphicon glyphicon-ok">{{ _i('Games Personalize: ') }}</span>
                                 </label>
                                 <div class="div_a_show">
-                                    <div class="form-group">
-                                        <label for="maker">{{ _i('Maker') }}</label>
-                                        <select name="maker" id="maker" class="form-control"
-                                        data-route="{{ route('core.categories-by-maker') }}">
-                                            <option value="">{{ _i('Select...') }}</option>
+                                    <div>
+                                        <select name="games[]" id="games" class="form-control"
+                                                data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
+                                                multiple>
+                                            <option value="">{{ _i('Select') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -59,19 +59,19 @@
                             @endisset
                             <div class="div_a_show col-md-6">
                                 <div class="form-group">
-                                    <label for="category">{{ _i('Category') }}</label>
-                                    <select name="category" id="category" class="form-control"
-                                    data-route="{{ route('games.game-by-categories') }}">
+                                    <label for="maker">{{ _i('Maker') }}</label>
+                                    <select name="maker" id="maker" class="form-control"
+                                    data-route="{{ route('core.categories-by-maker') }}">
                                         <option value="">{{ _i('Select...') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="div_a_show col-md-6">
-                                <div>
-                                    <select name="games[]" id="games" class="form-control"
-                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
-                                            multiple>
-                                        <option value="">{{ _i('Select') }}</option>
+                                <div class="form-group">
+                                    <label for="category">{{ _i('Category') }}</label>
+                                    <select name="category" id="category" class="form-control"
+                                    data-route="{{ route('games.game-by-categories') }}">
+                                        <option value="">{{ _i('Select...') }}</option>
                                     </select>
                                 </div>
                             </div>
