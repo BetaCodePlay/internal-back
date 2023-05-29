@@ -256,7 +256,8 @@
             lobbyGames.store();
             lobbyGames.selectProviderMaker();
             lobbyGames.selectCategoryMaker();
-            lobbyGames.selectGame();
+            lobbyGames.gamesByCategory();
+            lobbyGames.gamesByProducts();
         });
     </script>
     <script>

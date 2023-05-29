@@ -216,14 +216,14 @@ class LobbyGames {
     }
 
     //Select games
-    selectGame() {
+    gamesByCategory() {
         initSelect2();
-        let product = $('#product_id').val();
-        let category = $('#category').val();
-        let maker = $('#maker').val();
-        let games = $('#games');
-        let route =  $('#category').data('route');
         $('#category').on('change', function(){
+            let product = $('#product_id').val();
+            let category = $('#category').val();
+            let maker = $('#maker').val();
+            let games = $('#games');
+            let route =  $('#category').data('route');
             if(category !== '') {
                 $.ajax({
                     url: route,
@@ -248,8 +248,16 @@ class LobbyGames {
                 games.val('');
             }
         });
+    }
+
+    gamesByProducts(){
         $('#product_id').on('change', function(){
-            if(category !== '') {
+            let product = $('#product_id').val();
+            let category = $('#category').val();
+            let maker = $('#maker').val();
+            let route =  $('#category').data('route');
+            let games = $('#games');
+            if(product !== '') {
                 $.ajax({
                     url: route,
                     type: 'get',
