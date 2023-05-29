@@ -32,31 +32,7 @@
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span class="glyphicon glyphicon-ok">{{ _i('Games Personalize: ') }}</span>
                                 </label>
-                                <div class="div_a_show">
-                                    <div>
-                                        <select name="games[]" id="games" class="form-control"
-                                                data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
-                                                multiple>
-                                            <option value="">{{ _i('Select') }}</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
-                            @isset($route)
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="route">{{ _i('Menu where it will be shown') }}</label>
-                                        <select select name="route" id="route" class="form-control">
-                                            <option value="">{{ _i('Select...') }}</option>
-                                            @foreach ($route as $item)
-                                                <option value="{{ $item->route }}">
-                                                    {{ $item->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            @endisset
                             <div class="div_a_show col-md-6">
                                 <div class="form-group">
                                     <label for="maker">{{ _i('Maker') }}</label>
@@ -76,11 +52,36 @@
                                 </div>
                             </div>
                             <div class="div_a_show col-md-6">
+                                <div>
+                                    <label for="games">{{ _i('Games') }}</label>
+                                    <select name="games[]" id="games" class="form-control"
+                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
+                                            multiple>
+                                        <option value="">{{ _i('Select') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="div_a_show col-md-6">
                                 <div class="form-group">
                                     <label for="order">{{ _i('Order (optional)') }}</label>
                                     <input type="number" name="order" id="order" value="0" class="form-control" min="0">
                                 </div>
                             </div>
+                            @isset($route)
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="route">{{ _i('Menu where it will be shown') }}</label>
+                                    <select select name="route" id="route" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($route as $item)
+                                            <option value="{{ $item->route }}">
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                           @endisset
                             <div class="div_a_show card-block g-pa-15">
                                 <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
                                     <div class="noty_body">
