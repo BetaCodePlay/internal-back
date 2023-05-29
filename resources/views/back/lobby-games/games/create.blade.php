@@ -266,16 +266,21 @@
             var checkbox = $(".checkshow");
             var hidden = $(".div_a_show");
             var products = $(".div_a_product_id");
+            var provider = $('#change_provider').val();
             products.hide();
             //
 
             hidden.hide();
             checkbox.change(function() {
                 if (checkbox.is(':checked')) {
+                    if(provider == 171){
+                        $(".div_a_product_id").fadeIn("200");
+                    }
                     //hidden.show();
                     $(".div_a_show").fadeIn("200")
                 } else {
                     //hidden.hide();
+                    $(".div_a_product_id").fadeOut("200");
                     $(".div_a_show").fadeOut("200")
                     $('input[type=checkbox]').prop('checked',false);// limpia los valores de checkbox al ser ocultado
 
