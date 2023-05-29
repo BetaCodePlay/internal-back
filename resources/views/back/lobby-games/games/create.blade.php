@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label style="padding-top: 1cm;">
+                                <label style="padding-top: 33px;">
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span class="glyphicon glyphicon-ok">{{ _i('Games Personalize: ') }}</span>
                                 </label>
@@ -48,6 +48,19 @@
                                     <select name="category" id="category" class="form-control"
                                     data-route="{{ route('games.game-by-categories') }}">
                                         <option value="">{{ _i('Select...') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="div_a_product_id col-md-6">
+                                <div class="form-group">
+                                    <label for="product_id">{{ _i('Product ID') }}</label>
+                                    <select name="product_id" id="product_id" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->product_id }}">
+                                                {{ $product->product_id }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

@@ -168,6 +168,13 @@ class LobbyGames {
             let provider = $(this).val();
             let makers = $('#maker');
             let route = $(this).data('route');
+            var hidden = $(".div_a_product_id");
+            hidden.hide();
+            if(provider == 171){
+                $(".div_a_product_id").fadeIn("200")
+            }else{
+                $(".div_a_product_id").fadeOut("200")
+            }
             $.ajax({
                 url: route,
                 type: 'get',
@@ -214,16 +221,20 @@ class LobbyGames {
         initSelect2();
         $('#category').on('change', function(){
             let category = $('#category').val();
+            let product = $('#product_id').val();
             let route = $(this).data('route');
             let games = $('#games');
-
+            if(product !== ''){
+                route = ('#product_id').data('route');
+            }
             if(category !== '') {
                 $.ajax({
                     url: route,
                     type: 'get',
                     dataType: 'json',
                     data: {
-                        category
+                        category,
+                        product
                     }
                 }).done(function (json) {
                     games.html('loading');

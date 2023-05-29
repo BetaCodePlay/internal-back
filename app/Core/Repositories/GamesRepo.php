@@ -282,4 +282,19 @@ class GamesRepo
         return $games;
     }
 
+     /**
+     * Get products
+     *
+     * @param int 
+     * @return mixed
+     */
+    public function getProducts()
+    {
+        $games = Game::select('product_id')
+        ->distinct()
+        ->where('provider_id', 171)
+        ->get();
+        return $games;
+    }
+
 }

@@ -160,7 +160,9 @@ class LobbyGamesController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $games = $this->lobbyGamesRepo->searchGamesByWhitelabel($whitelabel);
+            $products = $this->gamesRepo->getProducts();
             $data['image'] = $image;
+            $data['products'] = $products;
             $data['providers'] = $provider;
             $data['games'] = $games;
             $data['title'] = _i('Create lobby');
