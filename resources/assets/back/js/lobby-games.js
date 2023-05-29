@@ -19,6 +19,8 @@ class LobbyGames {
                 {"data": "image"},
                 {"data": "provider"},
                 {"data": "game"},
+                {"data": "maker"},
+                {"data": "category"},
                 {"data": "route"},
                 {"data": "order", "className": "text-right"},
                 {"data": "actions", "className": "text-right"},
