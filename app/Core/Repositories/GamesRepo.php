@@ -231,21 +231,25 @@ class GamesRepo
     }
 
     /**
-     * Get dotSuite games by provider, and maker, and category
+     * Get dotSuite games by provider, maker, category and product
      *
      * @param int $provider
      * @param string $category
      * @param string $maker
+     * @param string $product
      * @return mixed
      */
-    public function getDotSuiteGamesByProviderAndMakerAndCategory($provider,$category,$maker)
+    public function getDotSuiteGamesByProviderAndMakerAndCategoryAndProduct($provider, $category, $maker, $product)
     {
         $games = Game::where('maker', $maker);
         if(!is_null($provider)){
-            $game->where('provider_id', $provider);
+            $games->where('provider_id', $provider);
         }
         if(!is_null($category)){
-            $game->where('category', $category);
+            $games->where('category', $category);
+        }
+        if(!is_null($product)){
+            $games->where('product_id', $product);
         }
         $data = $game->get();
         return $data;
