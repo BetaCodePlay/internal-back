@@ -174,20 +174,24 @@ class LobbyGames {
             }else{
                 $(".div_a_product_id").fadeOut("200")
             }
-            $.ajax({
-                url: route,
-                type: 'get',
-                dataType: 'json',
-                data: {
-                    provider
-                }
-            }).done(function (json) {
-                $('#maker option[value!=""]').remove();
-                $(json.data.makers).each(function (key, element) {
-                    makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
-                })
-                makers.prop('disabled', false);
-            }).fail(function (json) {});
+            if(provider !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        provider
+                    }
+                }).done(function (json) {
+                    $('#maker option[value!=""]').remove();
+                    $(json.data.makers).each(function (key, element) {
+                        makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
+                    })
+                    makers.prop('disabled', false);
+                }).fail(function (json) {});
+            }else{
+                makers.val('');
+            }
         }).trigger('change');
     }
 
@@ -198,20 +202,24 @@ class LobbyGames {
             let maker = $(this).val();
             let categories = $('#category');
             let route = $(this).data('route');
-            $.ajax({
-                url: route,
-                type: 'get',
-                dataType: 'json',
-                data: {
-                    maker
-                }
-            }).done(function (json) {
-                $('#category option[value!=""]').remove();
-                $(json.data.categories).each(function (key, element) {
-                    categories.append("<option value=" + element.category + ">" + element.category + "</option>");
-                })
-                categories.prop('disabled', false);
-            }).fail(function (json) {});
+            if(maker !== '') {
+                $.ajax({
+                    url: route,
+                    type: 'get',
+                    dataType: 'json',
+                    data: {
+                        maker
+                    }
+                }).done(function (json) {
+                    $('#category option[value!=""]').remove();
+                    $(json.data.categories).each(function (key, element) {
+                        categories.append("<option value=" + element.category + ">" + element.category + "</option>");
+                    })
+                    categories.prop('disabled', false);
+                }).fail(function (json) {});
+            }else{
+                categories.val('');
+            }
         }).trigger('change');
     }
 
