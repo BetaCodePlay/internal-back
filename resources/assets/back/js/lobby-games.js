@@ -54,8 +54,8 @@ class LobbyGames {
     // Games Dotsuite
     game() {
         initSelect2();
-        $('#change_provider').on('change', function(){
-            let provider = $('#change_provider').val();
+        $('#provider').on('change', function(){
+            let provider = $('#provider').val();
             let route = $(this).data('route');
             let games = $('#games');
 
@@ -65,7 +65,7 @@ class LobbyGames {
                     type: 'get',
                     dataType: 'json',
                     data: {
-                        change_provider: provider
+                        provider: provider
                     }
                 }).done(function (json) {
                     games.html('loading');
@@ -161,46 +161,41 @@ class LobbyGames {
         });
     }
 
-    //Select maker
-    selectProviderMaker(){
+    // get providers
+    providersByMaker(){
         initSelect2();
-        $('#change_provider').on('change', function () {
-            let provider = $(this).val();
-            let makers = $('#maker');
+        $('#maker').on('change', function () {
+            let maker = $(this).val();
+            let providers = $('#provider');
             let route = $(this).data('route');
-            if(provider == 171){
-                $(".div_a_product_id").fadeIn("200")
-            }else{
-                $(".div_a_product_id").fadeOut("200")
-            }
-            if(provider !== '') {
+            if(maker !== '') {
                 $.ajax({
                     url: route,
                     type: 'get',
                     dataType: 'json',
                     data: {
-                        provider
+                        maker
                     }
                 }).done(function (json) {
-                    $('#maker option[value!=""]').remove();
-                    $(json.data.makers).each(function (key, element) {
-                        makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
+                    $('#provider option[value!=""]').remove();
+                    $(json.data.providers).each(function (key, element) {
+                        providers.append("<option value=" + element.id + ">" + element.name + "</option>");
                     })
-                    makers.prop('disabled', false);
+                    providers.prop('disabled', false);
                 }).fail(function (json) {});
             }else{
-                makers.val('');
+                providers.val('');
             }
         }).trigger('change');
     }
 
-    //Select categories
-    selectCategoryMaker(){
+    //get categories
+    categoryByMaker(){
         initSelect2();
         $('#maker').on('change', function () {
             let maker = $(this).val();
             let categories = $('#category');
-            let route = $(this).data('route');
+            let route = $(this).data('categories');
             if(maker !== '') {
                 $.ajax({
                     url: route,
@@ -226,7 +221,7 @@ class LobbyGames {
     gamesByCategory() {
         initSelect2();
         $('#category').on('change', function(){
-            let provider = $('#change_provider').val();
+            let provider = $('#provider').val();
             let product = $('#product_id').val();
             let category = $('#category').val();
             let maker = $('#maker').val();
@@ -261,7 +256,7 @@ class LobbyGames {
 
     gamesByProducts(){
         $('#product_id').on('change', function(){
-            let provider = $('#change_provider').val();
+            let provider = $('#provider').val();
             let product = $('#product_id').val();
             let category = $('#category').val();
             let maker = $('#maker').val();

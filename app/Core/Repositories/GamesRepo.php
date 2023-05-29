@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\Game;
 use Dotworkers\Configurations\Enums\GamesStatus;
+use Dotworkers\Configurations\Enums\Providers;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -239,9 +240,15 @@ class GamesRepo
      */
     public function getDotSuiteGamesByProviderAndMakerAndCategory($provider,$category,$maker)
     {
-        $games = Game::where('provider_id', $provider)->where('category', $category)->where('maker', $maker)
-            ->get();
-        return $games;
+        $games = Game::where('maker', $maker);
+        if(!is_null($provider)){
+            $game->where('provider_id', $provider);
+        }
+        if(!is_null($category)){
+            $game->where('category', $category);
+        }
+        $data = $game->get();
+        return $data;
     }
 
     /**
@@ -325,7 +332,23 @@ class GamesRepo
     {
         $games = Game::select('product_id')
         ->distinct()
-        ->where('provider_id', 171)
+        ->where('provider_id', Providers::$bet_connections)
+        ->get();
+        return $games;
+    }
+
+     /**
+     * Get providers by maker
+     *
+     * @param int 
+     * @return mixed
+     */
+    public function getProvidersByMaker($maker)
+    {
+        $games = Game::select('providers.id, providers.name')
+        ->join('providers', 'games.provider_id', '=', 'providers.id')
+        ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
+        ->where('games.maker', $maker)
         ->get();
         return $games;
     }

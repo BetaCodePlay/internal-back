@@ -368,4 +368,21 @@ class CoreController extends Controller
             abort(500);
         }
     }
+
+    /**
+     * Providers by Maker
+     *
+     * @param @param Request $request
+     */
+    public function providersByMaker(Request $request)
+    {
+        try {
+            $maker = $request->maker;
+            $data['maker'] = $this->gamesRepo->getProvidersByMaker($maker);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'provider' => $request->provider]);
+            abort(500);
+        }
+    }
 }

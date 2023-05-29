@@ -161,7 +161,9 @@ class LobbyGamesController extends Controller
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $games = $this->lobbyGamesRepo->searchGamesByWhitelabel($whitelabel);
             $products = $this->gamesRepo->getProducts();
+            $makers = $this->gamesRepo->getMakers();
             $data['image'] = $image;
+            $data['makers'] = $makers;
             $data['products'] = $products;
             $data['providers'] = $provider;
             $data['games'] = $games;
@@ -296,9 +298,7 @@ class LobbyGamesController extends Controller
         $personalize = !is_null($request->personalize) ? $request->personalize : null;
         $route = !is_null($request->route) ? $request->route : null;
         $this->validate($request, [
-            'change_provider' => 'required',
             'maker' => 'required',
-            'category' => 'required'
         ]);
         if($personalize) {
             $this->validate($request, [
@@ -366,7 +366,7 @@ class LobbyGamesController extends Controller
                     $this->lobbyGamesRepo->store($whitelabelGameData);
                 }
             }else{
-                $provider = (string) $request->change_provider;
+                $provider = (string) $request->provider;
                 $maker = (string) $request->maker;
                 $category = (string) $request->category;
                 $games = $this->gamesRepo->getDotSuiteGamesByProviderAndMakerAndCategory($provider,$category,$maker);
