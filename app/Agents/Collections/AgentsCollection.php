@@ -3181,15 +3181,17 @@ class AgentsCollection
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
-
+            $transaction->new_amount = 0;
 
             $from = $transaction->data->from;
             $to = $transaction->data->to;
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
+                $transaction->new_amount = '-'.number_format($amountTmp,2);
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
+                $transaction->new_amount = '+'.number_format($amountTmp,2);
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
@@ -3202,10 +3204,10 @@ class AgentsCollection
 //                $debit = $transaction->credit;
 //                $credit = $transaction->debit;
 //            }
-            if($transaction->data->to != Auth::user()->username){
-                $credit = $transaction->credit;
-                $debit = $transaction->debit;
-            }
+//            if($transaction->data->from != Auth::user()->username){
+//                $credit = $transaction->credit;
+//                $debit = $transaction->debit;
+//            }
 
             $debitt = $debit > 0 ? '-'.number_format($debit, 2, ",", "."):'0,00';
             $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ",", "."):'0,00';
@@ -3219,6 +3221,7 @@ class AgentsCollection
                 ],
                 'debit' => $debitt,
                 'credit' => $creditt,
+                'new_amount' => $transaction->new_amount,
                 'balance' => $transaction->balance,
             ];
 

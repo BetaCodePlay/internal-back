@@ -198,8 +198,9 @@ class Agents {
                        {"data": "date"},
                        {"data": "data.from"},
                        {"data": "data.to"},
-                       {"data": "debit", "type": "num-fmt"},
-                       {"data": "credit", "type": "num-fmt"},
+                       {"data": "new_amount"},
+                       // {"data": "debit", "type": "num-fmt"},
+                       // {"data": "credit", "type": "num-fmt"},
                        {"data": "balance", "type": "num-fmt"}
                    ],
                    initComplete: function () {

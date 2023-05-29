@@ -676,13 +676,17 @@
 {{--                                            {{ _i('Toward') }}--}}
                                             Cuenta destino
                                         </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
 {{--                                            {{ _i('Debit') }}--}}
-                                            Descarga
-                                        </th>
+{{--                                            Descarga--}}
+{{--                                        </th>--}}
+{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                            {{ _i('Credit') }}--}}
+{{--                                            Carga--}}
+{{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('Credit') }}--}}
-                                            Carga
+                                            {{_i('Amount')}}
                                         </th>
 {{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
 {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
