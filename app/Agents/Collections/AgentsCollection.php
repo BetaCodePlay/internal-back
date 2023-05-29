@@ -3207,6 +3207,9 @@ class AgentsCollection
 //                $debit = $transaction->debit;
 //            }
 
+            $debitt = $debit > 0 ? '-'.number_format($debit, 2, ",", "."):'0,00';
+            $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ",", "."):'0,00';
+
             $data[] = [
                 'id' => null,
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
@@ -3214,8 +3217,8 @@ class AgentsCollection
                     'from' => $from,
                     'to' => $to,
                 ],
-                'debit' => number_format($debit, 2, ",", "."),
-                'credit' => number_format($credit, 2, ",", "."),
+                'debit' => $debitt,
+                'credit' => $creditt,
                 'balance' => $transaction->balance,
             ];
 
