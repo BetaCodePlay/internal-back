@@ -403,6 +403,14 @@ class TransactionsRepo
                     $transactions = $transactions->orderByRaw("(site.transactions.data::json->>'balance')::numeric DESC");
                 }
 
+            }elseif ($orderCol['column'] == 'new_amount'){
+
+                if($orderCol['order'] == 'asc'){
+                    $transactions = $transactions->orderByRaw("(site.transactions.amount)::numeric ASC");
+                }else{
+                    $transactions = $transactions->orderByRaw("(site.transactions.amount)::numeric DESC");
+                }
+
             }else{
                 $transactions = $transactions->orderBy('transactions.id', $orderCol['order']);
             }
