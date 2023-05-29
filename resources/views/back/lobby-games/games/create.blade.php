@@ -266,6 +266,8 @@
             // obtener campos ocultar div
             var checkbox = $(".checkshow");
             var hidden = $(".div_a_show");
+            var products = $(".div_a_product_id");
+            products.hide();
             //
 
             hidden.hide();
