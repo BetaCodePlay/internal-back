@@ -2714,14 +2714,24 @@ if (!function_exists('menu')) {
                     ]
                 ]
             ],
-            'LobbySections' => [
-                'text' => _i('Lobbys Sections'),
+            'Sections' => [
+                'text' => _i('Menu Sections'),
                 'level_class' => 'top',
                 'route' => null,
                 'params' => [],
                 'icon' => 'hs-admin-image',
                 'permission' => Permissions::$section_images_menu,
-                'submenu' => []
+                'submenu' => [
+                    'Images' => [
+                        'text' => _i('Images (Beta)'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-image',
+                        'permission' => Permissions::$section_images_menu,
+                        'submenu' => []
+                    ]
+                ]
             ],
 
             'LobbyGames' => [

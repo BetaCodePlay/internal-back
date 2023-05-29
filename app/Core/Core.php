@@ -92,13 +92,11 @@ class Core
         $whitelabel = Configurations::getWhitelabel();
         $currency = session('currency');
         $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-        \Log::debug(__METHOD__, ['$providerTypes' => $providerTypes]);
         $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
         $paymentMethods = session('payment_methods');
         $providersIds = [];
         $paymentMethodsIds = [];
         $sections = Configurations::getHome();
-        \Log::info(__METHOD__, ['$sections' => $sections]);
         //$agent = '';
         //if (auth()->check()) {
         //    $user = auth()->user()->id;
