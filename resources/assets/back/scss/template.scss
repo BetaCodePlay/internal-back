@@ -83,7 +83,6 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 }
 
 
-
 .u-sidebar-navigation-v1 {
     .u-side-nav--top-level-menu {
         padding-bottom: 45px !important;
@@ -136,6 +135,8 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 }
 
 .opt-footer {
+    display: inline-block;
+
     .dropdown {
         display: inline-block;
 
@@ -143,6 +144,16 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
             &::after {
                 display: none;
             }
+        }
+    }
+
+    .btn {
+        background: #333;
+        border-color: #333;
+
+        &:hover, &:focus {
+            background: #444;
+            border-color: #444;
         }
     }
 }
