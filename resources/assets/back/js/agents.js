@@ -198,8 +198,9 @@ class Agents {
                        {"data": "date"},
                        {"data": "data.from"},
                        {"data": "data.to"},
-                       {"data": "debit", "type": "num-fmt"},
-                       {"data": "credit", "type": "num-fmt"},
+                       {"data": "new_amount"},
+                       // {"data": "debit", "type": "num-fmt"},
+                       // {"data": "credit", "type": "num-fmt"},
                        {"data": "balance", "type": "num-fmt"}
                    ],
                    initComplete: function () {
@@ -1597,7 +1598,7 @@ class Agents {
 
     //Select maker
     selectCategoryMaker(){
-        initSelect2();
+        // initSelect2();
         $('#maker').on('change', function () {
             let maker = $(this).val();
             let categories = $('#category');
@@ -1913,7 +1914,7 @@ class Agents {
     }
 
     // Users transactions
-    usersTransactions() {
+    usersTransactions(lengthMenu) {
         $('#users-transactions-tab').on('show.bs.tab', function () {
             let $table = $('#users-transactions-table');
             //let wallet = $('#wallet').val();
@@ -1925,9 +1926,10 @@ class Agents {
 
             $table.DataTable({
                 "responsive": true,
-                "bFilter": false,
+                "bFilter": true,
                 "bInfo": false,
-                "ordering": false,
+                "ordering": true,
+                "lengthMenu":lengthMenu,
                 "ajax": {
                     "url": $table.data('route') + '/' + wallet,
                     "dataSrc": "data.transactions"
