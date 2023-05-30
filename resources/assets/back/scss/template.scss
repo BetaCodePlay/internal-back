@@ -151,6 +151,12 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
         background: #333;
         border-color: #333;
         color: #eee;
+        font-size: 14px;
+        font-weight: 600;
+
+        i {
+            margin-left: 5px;
+        }
 
         &:hover, &:focus {
             background: #444;

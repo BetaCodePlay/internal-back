@@ -34,7 +34,7 @@
                     </div>
                 @endif
             </div>
-            <small class="d-block g-font-size-default">
+            <small class="g-font-size-default">
                 {{ $whitelabel_info->copyright ? _i('Developed by Betsweet. Operated by') : '' }} {{ $whitelabel_description }} © {{ _i('Copyright') }} - {{ date('Y') }}. {{ _i('All rights reserved') }}
             </small>
         </div>
