@@ -150,6 +150,15 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
         }
     }
 
+    .opt-footer-form-group {
+        display: inline-block;
+        margin-right: 3px;
+
+        .form-group {
+            width: 220px;
+            text-align: left;
+        }
+    }
 
     .dropdown {
         display: inline-block;

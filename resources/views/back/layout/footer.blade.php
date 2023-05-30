@@ -7,15 +7,18 @@
         <div class="col-md-12 opt-footer">
             <div class="opt-footer-ex">
                 {{--            @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
-                <div class="form-group">
-                    <select name="timezone" class="form-control change-timezone" data-route="{{ route('core.change-timezone') }}">
-                        @foreach ($global_timezones as $global_timezone)
-                            <option value="{{ $global_timezone['timezone'] }}" {{ $global_timezone['timezone'] == session()->get('timezone') ? 'selected' : '' }}>
-                                {{ $global_timezone['text'] }}
-                            </option>
-                        @endforeach
-                    </select>
+                <div class="opt-footer-form-group">
+                    <div class="form-group">
+                        <select name="timezone" class="form-control change-timezone" data-route="{{ route('core.change-timezone') }}">
+                            @foreach ($global_timezones as $global_timezone)
+                                <option value="{{ $global_timezone['timezone'] }}" {{ $global_timezone['timezone'] == session()->get('timezone') ? 'selected' : '' }}>
+                                    {{ $global_timezone['text'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
+
                 {{--            @endif--}}
                 @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
                     <div class="dropdown">
