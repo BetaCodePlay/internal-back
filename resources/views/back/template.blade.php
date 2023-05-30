@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('BackOffice') }}</title>
-    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.35">
+    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.39">
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
