@@ -142,7 +142,9 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 
     .opt-footer-ex {
-        display: inline-block;
+        display: block;
+        margin-bottom: 7.5px;
+        padding-bottom: 7.5px;
 
         @media screen and (max-width: 991px) {
             display: block;
@@ -157,6 +159,12 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
         .form-group {
             width: 220px;
             text-align: left;
+            display: inline-block;
+        }
+
+        @media screen and (max-width: 767px) {
+            display: block;
+            margin-bottom: 15px;
         }
     }
 
