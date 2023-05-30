@@ -124,4 +124,11 @@ class TemplateElementTypes
      * @var int
      */
     public static $lobby_notifications = 16;
+
+    /**
+     * Lobby Sections Mega Home
+     *
+     * @var int
+     */
+    public static $lobby_sections_mega_home = 17;
 }

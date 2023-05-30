@@ -18,12 +18,14 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="agent"><?php echo e(_i('Provider')); ?></label>
-                                    <select name="provider" id="provider" class="form-control provider" data-route="<?php echo e(route('core.makers-by-provider')); ?>">>
+                                    <label for="category"><?php echo e(_i('Categories')); ?></label>
+                                    <select name="category" id="category"
+                                            class="form-control" data-route="<?php echo e(route('core.makers-by-category')); ?>">
                                         <option value=""><?php echo e(_i('Select...')); ?></option>
-                                        <?php $__currentLoopData = $providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($provider['id']); ?>">
-                                                <?php echo e($provider['name']); ?>
+                                        <option value="*"><?php echo e(_i('All')); ?></option>
+                                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($category->category); ?>">
+                                                <?php echo e($category->category); ?>
 
                                             </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -33,7 +35,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="maker"><?php echo e(_i('Maker')); ?></label>
-                                    <select name="maker" id="maker" class="form-control maker">
+                                    <select name="maker" id="maker"
+                                            class="form-control" data-route="<?php echo e(route('core.makers')); ?>">
                                         <option value=""><?php echo e(_i('Select...')); ?></option>
                                     </select>
                                 </div>
@@ -98,12 +101,13 @@
                         </div>
                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="agent"><?php echo e(_i('Provider')); ?></label>
-                                <select name="provider_filter" id="provider_filter" class="form-control">>
+                                <label for="category_filter"><?php echo e(_i('Categories')); ?></label>
+                                <select name="category_filter" id="category_filter"
+                                        class="form-control">
                                     <option value=""><?php echo e(_i('Select...')); ?></option>
-                                    <?php $__currentLoopData = $providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($provider['id']); ?>">
-                                            <?php echo e($provider['name']); ?>
+                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($category->category); ?>">
+                                            <?php echo e($category->category); ?>
 
                                         </option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -163,7 +167,7 @@
 
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                <?php echo e(_i('Provider')); ?>
+                                <?php echo e(_i('Category')); ?>
 
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -197,7 +201,7 @@
         $(function () {
             let users = new Users();
             users.excludeProviderUserList();
-            users.selectProvidersMaker();
+            users.selectCategoryMaker();
         });
     </script>
 <?php $__env->stopSection(); ?>

@@ -83,7 +83,6 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 }
 
 
-
 .u-sidebar-navigation-v1 {
     .u-side-nav--top-level-menu {
         padding-bottom: 45px !important;
@@ -131,6 +130,38 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
                     display: none;
                 }
             }
+        }
+    }
+}
+
+.opt-footer {
+    display: inline-block;
+
+    .dropdown {
+        display: inline-block;
+
+        .dropdown-toggle {
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    .btn {
+        background: #333;
+        border-color: #333;
+        color: #eee;
+        font-size: 14px;
+        font-weight: 600;
+
+        i {
+            margin-left: 5px;
+        }
+
+        &:hover, &:focus {
+            background: #444;
+            border-color: #444;
+            color: #fff;
         }
     }
 }

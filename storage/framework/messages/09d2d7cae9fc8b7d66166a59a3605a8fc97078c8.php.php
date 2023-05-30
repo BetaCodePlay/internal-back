@@ -106,6 +106,33 @@ class AllocationCriteria
     public static $next_deposit_bonus = 13;
 
     /**
+     * Register Check
+     *
+     * @var int
+     */
+    public static $registration = false;
+
+    /**
+     * Complete profile check
+     *
+     * @var int
+     */
+    public static $complete_profile = false;
+
+    /**
+     * Deposit check
+     *
+     * @var int
+     */
+    public static $deposit = false;
+
+     /**
+     * Bet
+     *
+     * @var string
+     */
+    public static $bet = 'bet';
+    /**
      * Get name
      *
      * @param int $allocationCriteria Allocation criteria ID

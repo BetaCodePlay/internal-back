@@ -669,20 +669,24 @@
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('From') }}--}}
-                                            Cuenta origen
+                                            Agente
 {{--                                            {{ _i('User') }}--}}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('Toward') }}--}}
                                             Cuenta destino
                                         </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
 {{--                                            {{ _i('Debit') }}--}}
-                                            Descarga
-                                        </th>
+{{--                                            Descarga--}}
+{{--                                        </th>--}}
+{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                            {{ _i('Credit') }}--}}
+{{--                                            Carga--}}
+{{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('Credit') }}--}}
-                                            Carga
+                                            {{_i('Amount')}}
                                         </th>
 {{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
 {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
@@ -1185,7 +1189,7 @@
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
             agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
-            agents.usersTransactions();
+            agents.usersTransactions([10, 20, 50, 100, 500, 1000, 2000]);
             agents.users();
             agents.agents();
             agents.storeAgents();

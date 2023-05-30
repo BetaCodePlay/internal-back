@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="<?php echo e($favicon); ?>">
     <link rel="apple-touch-icon" sizes="114x114" href="<?php echo e($favicon); ?>">
     <title><?php echo e($title ?? _i('BackOffice')); ?></title>
-    <link rel="stylesheet" href="<?php echo e(asset('commons/css/template.min.css')); ?>?v=0.29">
+    <link rel="stylesheet" href="<?php echo e(asset('commons/css/template.min.css')); ?>?v=0.30">
     <?php echo $__env->yieldContent('styles'); ?>
     <style>
         li.has-active .u-side-nav-opened {
