@@ -160,6 +160,23 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
                 display: none;
             }
         }
+
+        .dropdown-menu {
+            box-shadow: 0 0 5px #3e4551;
+            background-color: #fff !important;
+            padding: .5rem 0 !important;
+            min-width: 160px;
+
+            .dropdown-item {
+                color: #555 !important;
+                font-size: 14px;
+                font-weight: 600;
+                display: inline-block;
+                width: 100%;
+                position: relative;
+                padding: 3px 8px !important;
+            }
+        }
     }
 
     .btn {
