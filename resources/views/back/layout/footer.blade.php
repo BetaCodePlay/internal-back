@@ -65,6 +65,20 @@
 
                 </div>
             </div>--}}
+            @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span><i class="fa fa-database"></i> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}</span>
+                    </button>
+
+                    <div class="dropdown-menu">
+                        @foreach ($whitelabel_currencies as $currency)
+                            <a class="dropdown-item" href="{{ route('core.change-currency', [$currency->iso]) }}"><i class="fa fa-database"></i> {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}</a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             @if(count($languages) > 1)
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
