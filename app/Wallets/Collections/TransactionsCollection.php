@@ -46,9 +46,10 @@ class TransactionsCollection
                         $totalBalance += $balance->balance;
                     }
                 }
+
                 if($transaction->provider_id ==  Providers::$agents_users){
-//                    $transaction->debit = $transaction->credit;
-//                    $transaction->credit = $transaction->debit;
+                    $transaction->debit = $transaction->transaction_type_id == TransactionTypes::$debit ?  '-':$transaction->amount;
+                    $transaction->credit = $transaction->transaction_type_id == TransactionTypes::$credit ?  '-':$transaction->amount;
                 }
 
                 $transaction->balance = number_format($totalBalance, 2);
