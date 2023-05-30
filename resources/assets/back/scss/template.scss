@@ -139,6 +139,7 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 
     .dropdown {
         display: inline-block;
+        margin-right: 2px;
 
         .dropdown-toggle {
             &::after {
@@ -153,6 +154,7 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
         color: #eee;
         font-size: 14px;
         font-weight: 600;
+
 
         i {
             margin-left: 5px;
