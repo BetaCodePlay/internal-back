@@ -366,7 +366,7 @@ class LobbyGamesController extends Controller
                     $this->lobbyGamesRepo->store($whitelabelGameData);
                 }
             }else{
-                $provider = (string) $request->provider;
+                $provider = $request->provider;
                 $maker = $request->maker;
                 $category = $request->category;
                 $product = $request->product_id;
