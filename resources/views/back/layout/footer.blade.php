@@ -2,7 +2,7 @@
         class="u-footer--bottom-sticky g-bg-white g-color-gray-dark-v6 g-brd-top g-brd-gray-light-v7 g-pa-20">
     <div class="row">
         <div class="offset-md-8 col-md-4 text-right">
-            <div class="col-auto d-flex g-py-12 ml-auto">
+            {{--<div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
                         @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
@@ -37,7 +37,7 @@
                         <span class="balanceAuth_{{\Illuminate\Support\Facades\Auth::id()}}"></span>
                     </div>
                 </div>
-            </div>
+            </div>--}}
             {{--<div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     @if(count($languages) > 1)
