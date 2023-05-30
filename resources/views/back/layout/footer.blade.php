@@ -73,7 +73,7 @@
 
                     <div class="dropdown-menu">
                         @foreach ($languages as $language)
-                            <a class="dropdown-item" href="{{ route('core.change-language', [$language['iso']]) }}" data-locale="{{ $language['iso'] }}"><img class="lang-flag" src="{{ $language['flag'] }}" alt="{{ $language['name'] }}"> {{ $language['name'] }}</a>
+                            <a class="dropdown-item" href="{{ route('core.change-language', [$language['iso']]) }}" class="change-language" data-locale="{{ $language['iso'] }}"><img class="lang-flag" src="{{ $language['flag'] }}" alt="{{ $language['name'] }}"> {{ $language['name'] }}</a>
                         @endforeach
                     </div>
                 </div>
