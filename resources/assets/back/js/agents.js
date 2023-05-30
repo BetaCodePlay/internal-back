@@ -1914,7 +1914,7 @@ class Agents {
     }
 
     // Users transactions
-    usersTransactions() {
+    usersTransactions(lengthMenu) {
         $('#users-transactions-tab').on('show.bs.tab', function () {
             let $table = $('#users-transactions-table');
             //let wallet = $('#wallet').val();
@@ -1926,9 +1926,10 @@ class Agents {
 
             $table.DataTable({
                 "responsive": true,
-                "bFilter": false,
+                "bFilter": true,
                 "bInfo": false,
-                "ordering": false,
+                "ordering": true,
+                "lengthMenu":lengthMenu,
                 "ajax": {
                     "url": $table.data('route') + '/' + wallet,
                     "dataSrc": "data.transactions"
