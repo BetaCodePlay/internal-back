@@ -1543,7 +1543,7 @@ class AgentsController extends Controller
                 //TODO STATUS OF PROVIDERS IN PROD
                 $arrayProviderTmp = array_map(function ($val) {
                     return $val->id;
-                }, $closureRepo->getProvidersByCredentials(true, session('currency'), Configurations::getWhitelabel()));
+                }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'), Configurations::getWhitelabel()));
 
                 $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
 

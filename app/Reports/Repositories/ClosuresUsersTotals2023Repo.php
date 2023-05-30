@@ -508,21 +508,6 @@ class ClosuresUsersTotals2023Repo
                             AND c.client_id = ?
                             order by p.id desc ', [$currency, $active, $whitelabel]);
     }
-    /**
-     * Get Provider Active The Client And Credentials
-     * @param bool $active Status By Providers
-     * @param int $whitelabel Whitelabel Id
-     * @param string $currency Iso Currency
-     * @return array
-     */
-    public function getProvidersByCredentials(string $currency, int $whitelabel)
-    {
-        return DB::select('select p.id,p.name from site.providers p
-                            inner join site.credentials c on c.provider_id = p.id
-                            where c.currency_iso = ?
-                            AND c.client_id = ?
-                            order by p.id desc ', [$currency, $whitelabel]);
-    }
 
     /**
      * Get Provider Active The Client And Credentials
