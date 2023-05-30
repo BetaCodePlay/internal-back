@@ -137,8 +137,17 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 .opt-footer {
     text-align: right;
 
+    @media screen and (max-width: 991px) {
+        text-align: center;
+    }
+
     .opt-footer-ex {
         display: inline-block;
+
+        @media screen and (max-width: 991px) {
+            display: block;
+            margin-bottom: 15px;
+        }
     }
 
 
@@ -154,8 +163,8 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 
     .btn {
-        background: #2e3c56;
-        border-color: #2e3c56;
+        background: #424d62;
+        border-color: #424d62;
         color: #eee;
         font-size: 14px;
         font-weight: 600;
@@ -166,8 +175,8 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
         }
 
         &:hover, &:focus {
-            background: #405273;
-            border-color: #405273;
+            background: #586682;
+            border-color: #586682;
             color: #fff;
         }
     }
