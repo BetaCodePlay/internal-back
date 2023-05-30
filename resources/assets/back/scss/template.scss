@@ -150,10 +150,12 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     .btn {
         background: #333;
         border-color: #333;
+        color: #eee;
 
         &:hover, &:focus {
             background: #444;
             border-color: #444;
+            color: #fff;
         }
     }
 }
