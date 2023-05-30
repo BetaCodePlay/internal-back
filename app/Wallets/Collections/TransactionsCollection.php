@@ -47,10 +47,10 @@ class TransactionsCollection
                     }
                 }
 
-                if($transaction->provider_id ==  Providers::$agents_users){
-                    $transaction->debit = $transaction->transaction_type_id == TransactionTypes::$debit ?  '-':$transaction->amount;
-                    $transaction->credit = $transaction->transaction_type_id == TransactionTypes::$credit ?  '-':$transaction->amount;
-                }
+//                if($transaction->provider_id ==  Providers::$agents_users){
+//                    $transaction->debit = $transaction->transaction_type_id == TransactionTypes::$debit ?  '-':$transaction->amount;
+//                    $transaction->credit = $transaction->transaction_type_id == TransactionTypes::$credit ?  '-':$transaction->amount;
+//                }
 
                 $transaction->balance = number_format($totalBalance, 2);
             } catch (\Exception $ex) {
