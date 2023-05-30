@@ -135,7 +135,12 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 }
 
 .opt-footer {
-    display: inline-block;
+    text-align: right;
+
+    .opt-footer-ex {
+        display: inline-block;
+    }
+
 
     .dropdown {
         display: inline-block;

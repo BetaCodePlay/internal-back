@@ -4,8 +4,8 @@
         <div class="offset-md-8 col-md-4 opt-footer">
 
         </div>
-        <div class="col-md-12 text-right">
-            <div class="opt-footer">
+        <div class="col-md-12 opt-footer">
+            <div class="opt-footer-ex">
                 @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
