@@ -47,8 +47,8 @@ class TransactionsCollection
                     }
                 }
                 if($transaction->provider_id ==  Providers::$agents_users){
-                    $transaction->debit = $transaction->credit;
-                    $transaction->credit = $transaction->debit;
+//                    $transaction->debit = $transaction->credit;
+//                    $transaction->credit = $transaction->debit;
                 }
 
                 $transaction->balance = number_format($totalBalance, 2);
