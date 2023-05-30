@@ -148,8 +148,8 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
     }
 
     .btn {
-        background: #333;
-        border-color: #333;
+        background: #2e3c56;
+        border-color: #2e3c56;
         color: #eee;
         font-size: 14px;
         font-weight: 600;
@@ -159,8 +159,8 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
         }
 
         &:hover, &:focus {
-            background: #444;
-            border-color: #444;
+            background: #405273;
+            border-color: #405273;
             color: #fff;
         }
     }
