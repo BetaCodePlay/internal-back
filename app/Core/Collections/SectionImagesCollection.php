@@ -266,14 +266,11 @@ class SectionImagesCollection
                 } else {
                     $image->category = _i('Without category');
                 }
-                if(!is_null($image->front)) {
-                    $image->front = "<img src='$urlFront' class='img-responsive'>";
-                }      
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
                 $url = "https://www.frankschoonover.org/0-1000/1-100/25a-landscape/";
-                $urlFront = "https://www.frankschoonover.org/0-1000/1-100/25a-landscape/";
+                $urlFront = "https://icon-library.com/icon/no-photo-available-icon-8.html";
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')
@@ -420,8 +417,10 @@ class SectionImagesCollection
             }
         } else {
             $image = new \stdClass();
-            $url = "https://via.placeholder.com/$imageSize";
-            $image->image = "<img src='$url' class='img-responsive' width='$width'>";
+            $url = "https://www.frankschoonover.org/0-1000/1-100/25a-landscape/";
+            $urlFront = "https://icon-library.com/icon/no-photo-available-icon-8.html";
+            $image->image = "<img src='$url' class='img-responsive'>";
+            $image->front = "<img src='$urlFront' class='img-responsive'>";
             $image->title = null;
             $image->button = null;
             $image->description = null;
