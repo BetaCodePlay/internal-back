@@ -255,7 +255,8 @@ class SectionImagesCollection
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
-                $url = "https://via.placeholder.com/$size";
+                /*$url = "https://via.placeholder.com/$size";*/
+                $url = "https://placehold.jp/$size.png";
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')

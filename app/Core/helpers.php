@@ -2714,6 +2714,7 @@ if (!function_exists('menu')) {
                     ]
                 ]
             ],
+            /*
             'Sections' => [
                 'text' => _i('Menu Sections'),
                 'level_class' => 'top',
@@ -2732,7 +2733,7 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ]
                 ]
-            ],
+            ],*/
 
             'LobbyGames' => [
                 'text' => _i('Lobby Games'),
