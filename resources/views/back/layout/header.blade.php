@@ -88,7 +88,7 @@
                             </a>
                         @endif--}}
 
-                        <span class="balanceAuth_{{\Illuminate\Support\Facades\Auth::id()}}">{{ _i('Please wait...') }}</span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                        <span class="balanceAuth_{{\Illuminate\Support\Facades\Auth::id()}}"></span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
                     </div>
                 </div>
             </div>
