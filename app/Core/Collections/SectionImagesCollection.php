@@ -266,6 +266,9 @@ class SectionImagesCollection
                 } else {
                     $image->category = _i('Without category');
                 }
+                if(!is_null($image->front)) {
+                    $image->front = "<img src='$urlFront' class='img-responsive'>";
+                }      
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
