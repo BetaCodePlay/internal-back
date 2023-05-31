@@ -59,87 +59,10 @@
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
-                        {{--@if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
-                            <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
-                               data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                            <span class="g-pos-rel">
-                                <span class="g-hidden-sm-down"><i class="fa fa-database"></i></span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
-                                <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i>
-                            </span>
-                            </a>
-                            <ul id="currency-menu" class="currency-menu-pro g-pos-abs g-left-0 g-nowrap g-font-size-14 g-py-20 g-mt-10 rounded" aria-labelledby="currency-menu-invoker">
-                                @foreach ($whitelabel_currencies as $currency)
-                                    <li class="mb-0">
-                                        <a class="{{ $currency->iso == session('currency') ? 'active' : '' }} media g-color-primary--hover g-py-5 g-px-20" href="{{ route('core.change-currency', [$currency->iso]) }}">
-                                        <span class="media-body align-self-center">
-                                            {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
-                                        </span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
-                               data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                                <span class="g-pos-rel">
-                                    <span class="g-hidden-sm-down"><i class="fa fa-database"></i></span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
-                                    <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i>
-                                </span>
-                            </a>
-                        @endif--}}
-
                         <span class="balanceAuth_{{\Illuminate\Support\Facades\Auth::id()}}"></span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
                     </div>
                 </div>
             </div>
-            {{--<div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
-                    @if(count($languages) > 1)
-                        <div class="g-pos-rel">
-                            <a id="languages-menu-invoker" class="d-block" href="#!" aria-controls="languages-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#languages-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
-                               data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                            <span class="g-pos-rel">
-                                <span class="g-hidden-sm-down"  {{ $selected_language['iso'] }}><i class="fa fa-globe"></i></span>
-                                {{ $selected_language['name'] }}
-                                <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i>
-                            </span>
-                            </a>
-                            <ul id="languages-menu" class="languages-menu-pro g-pos-abs g-left-0 g-nowrap g-font-size-14 g-py-20 g-mt-10 rounded" aria-labelledby="currency-menu-invoker">
-                                @foreach ($languages as $language)
-                                    <li class="mb-0">
-                                        <a href="{{ route('core.change-language', [$language['iso']]) }}" class="change-language" data-locale="{{ $language['iso'] }}">
-                                            <img class="lang-flag" src="{{ $language['flag'] }}" alt="{{ $language['name'] }}">
-                                            {{ $language['name'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                </div>
-            </div>--}}
-            {{--<div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="g-pos-rel g-hidden-sm-down">
-                    <a id="notifications-menu-invoker" class="d-block text-uppercase u-header-icon-v1 g-pos-rel g-width-40 g-height-40 rounded-circle g-font-size-20" href="#!" aria-controls="notifications-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click"
-                       data-dropdown-target="#notifications-menu" data-dropdown-type="css-animation" data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                        <span class="u-badge-v1 g-top-7 g-right-7 g-width-18 g-height-18 g-bg-primary g-font-size-10 g-color-white rounded-circle p-0" id="notifications-quantity">
-                            {{ $push_notifications_quantity }}
-                        </span>
-                        <i class="hs-admin-bell g-absolute-centered"></i>
-                    </a>
-                    <div id="notifications-menu" class="js-custom-scroll g-absolute-centered--x g-width-340 g-max-width-400 g-height-400 g-mt-17 rounded" aria-labelledby="notifications-menu-invoker">
-                        <div class="media text-uppercase u-header-dropdown-bordered-v1 g-pa-20">
-                            <h4 class="d-flex align-self-center g-font-size-default g-letter-spacing-0_5 g-mr-20 g-mb-0">
-                                {{ _i('Notifications') }}
-                            </h4>
-                        </div>
-                        <ul class="p-0 mb-0" id="notifications-container">
-                            {!! $push_notifications !!}
-                        </ul>
-                    </div>
-                </div>
-            </div>--}}
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">
