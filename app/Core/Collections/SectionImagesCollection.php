@@ -264,7 +264,7 @@ class SectionImagesCollection
                 );
             }
             $image->image = "<img src='$url' class='img-responsive'>";
-            \Log::info(__METHOD__, ['imageFront' => $image->front]);
+            \Log::info(__METHOD__, ['imageFront' => $urlFront]);
             /*if (!is_null($image->front)) {
                 $urlFront = s3_asset("section-images/{$image->front}");
                 $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
