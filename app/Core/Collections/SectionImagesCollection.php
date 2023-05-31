@@ -199,7 +199,6 @@ class SectionImagesCollection
             $sizes = explode('x', $size);
             $width = $sizes[0] < '250' ? $sizes[0] : '250';
             if (!is_null($image)) {
-                \Log::info(__METHOD__, ['image' => $image]);
                 switch ($key) {
                     case ImagesPositions::$logo_light:
                     {
@@ -241,11 +240,6 @@ class SectionImagesCollection
                     default:
                     {
                         $url = s3_asset("section-images/{$image->image}");
-                        if (!is_null($image->front)) {
-                            $urlFront = s3_asset("section-images/{$image->front}");
-                        } else {
-                            $urlFront = null;
-                        }
                     }
                 }
 
@@ -261,7 +255,8 @@ class SectionImagesCollection
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
-                $url = "http://atrilco.com/wp-content/uploads/2017/11/ef3-placeholder-image.jpg";
+                $url = "https://via.placeholder.com/$size";
+                \Log::info(__METHOD__, ['url' => $url]);
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')
