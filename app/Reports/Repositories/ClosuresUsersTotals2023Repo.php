@@ -504,9 +504,9 @@ class ClosuresUsersTotals2023Repo
         return DB::select('select p.id,p.name from site.providers p
                             inner join site.credentials c on c.provider_id = p.id
                             where c.currency_iso = ?
-                            AND c.status = ?
+                            --AND c.status = ?
                             AND c.client_id = ?
-                            order by p.id desc ', [$currency, $active, $whitelabel]);
+                            order by p.id desc ', [$currency, $whitelabel]);
     }
 
     /**
