@@ -268,7 +268,7 @@ class SectionImagesCollection
                 $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
             } else {
                 $image->front = _i('Without front image');
-            }*/
+            
             if (!is_null($image->category)) {
                 if ($image->category === 'new') {
                     $image->category = _i('New');
@@ -281,7 +281,7 @@ class SectionImagesCollection
                 }
             } else {
                 $image->category = _i('Without category');
-            }
+            }}*/
             $image->position = ImagesPositions::get($key);
             $image->size = $size;
 
