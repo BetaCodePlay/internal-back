@@ -255,14 +255,14 @@ class SectionImagesCollection
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
-                $url = "https://via.placeholder.com/$size";
+                $url = "http://atrilco.com/wp-content/uploads/2017/11/ef3-placeholder-image.jpg";
                 \Log::info(__METHOD__, ['url' => $url]);
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')
                 );
             }
-            $image->image = "<img src='$url' class='img-responsive' width='$width'>";
+            $image->image = "<img src='$url' class='img-responsive'>";
             if (!is_null($image->front)) {
                 $urlFront = s3_asset("section-images/{$image->front}");
                 $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
