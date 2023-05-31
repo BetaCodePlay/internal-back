@@ -265,9 +265,9 @@ class SectionImagesCollection
             }
             $image->image = "<img src='$url' class='img-responsive'>";
             \Log::info(__METHOD__, ['imageFront' => $urlFront]);
-            /*if (!is_null($image->front)) {
+            if (!is_null($image->front)) {
                 $urlFront = s3_asset("section-images/{$image->front}");
-                $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
+                $image->front = "<img src='$urlFront' class='img-responsive'>";
             } else {
                 $image->front = _i('Without front image');
             
@@ -283,7 +283,7 @@ class SectionImagesCollection
                 }
             } else {
                 $image->category = _i('Without category');
-            }}*/
+            }}
             $image->position = ImagesPositions::get($key);
             $image->size = $size;
 
