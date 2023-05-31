@@ -269,8 +269,8 @@ class SectionImagesCollection
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
-                $url = s3_asset("positions/{$image->image}");
-                $urlFront = "https://icon-library.com/icon/no-photo-available-icon-8.html";
+                $url = "https://www.frankschoonover.org/0-1000/1-100/25a-landscape/";
+                $urlFront = "https://www.frankschoonover.org/0-1000/1-100/25a-landscape/";
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')
