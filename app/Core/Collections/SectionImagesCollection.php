@@ -263,12 +263,12 @@ class SectionImagesCollection
                 );
             }
             $image->image = "<img src='$url' class='img-responsive'>";
-            if (!is_null($image->front)) {
+            /*if (!is_null($image->front)) {
                 $urlFront = s3_asset("section-images/{$image->front}");
                 $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
             } else {
                 $image->front = _i('Without front image');
-            }
+            }*/
             if (!is_null($image->category)) {
                 if ($image->category === 'new') {
                     $image->category = _i('New');
