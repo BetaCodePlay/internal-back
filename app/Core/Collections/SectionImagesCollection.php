@@ -256,7 +256,7 @@ class SectionImagesCollection
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
                 /*$url = "https://via.placeholder.com/$size";*/
-                $url = "https://www.google.com/search?q=placeholder+image&tbm=isch&hl=es-419&sa=X&ved=2ahUKEwj8neGwvqD_AhXQcTABHe7PCnwQrNwCKAB6BAgBEGU&biw=1349&bih=657#imgrc=Mh4RAUlXV108FM";
+                $url = "https://stonegatesl.com/wp-content/uploads/2021/04/placeholder.jpg";
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')
@@ -318,7 +318,7 @@ class SectionImagesCollection
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
         } else {
             $image = new \stdClass();
-            $url = "https://via.placeholder.com/$imageSize";
+            $url = "https://stonegatesl.com/wp-content/uploads/2021/04/placeholder.jpg";
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
             $image->title = null;
             $image->button = null;
@@ -349,7 +349,7 @@ class SectionImagesCollection
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
         } else {
             $image = new \stdClass();
-            $url = "https://via.placeholder.com/$imageSize";
+            $url = "https://stonegatesl.com/wp-content/uploads/2021/04/placeholder.jpg";
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
             $image->title = null;
             $image->button = null;
@@ -408,7 +408,7 @@ class SectionImagesCollection
             }
         } else {
             $image = new \stdClass();
-            $url = "https://via.placeholder.com/$imageSize";
+            $url = "https://stonegatesl.com/wp-content/uploads/2021/04/placeholder.jpg";
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
             $image->title = null;
             $image->button = null;
