@@ -269,8 +269,8 @@ class SectionImagesCollection
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
-                $url = "http://atrilco.com/wp-content/uploads/2017/11/ef3-placeholder-image.jpg";
-                $urlFront = "http://atrilco.com/wp-content/uploads/2017/11/ef3-placeholder-image.jpg";
+                $url = "https://icon-library.com/icon/no-photo-available-icon-8.html";
+                $urlFront = "https://icon-library.com/icon/no-photo-available-icon-8.html";
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')
