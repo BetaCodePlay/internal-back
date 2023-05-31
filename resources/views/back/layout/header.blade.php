@@ -59,7 +59,7 @@
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
-                        @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
+                        {{--@if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
                             <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
                                data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
                             <span class="g-pos-rel">
@@ -86,13 +86,13 @@
                                     <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i>
                                 </span>
                             </a>
-                        @endif
+                        @endif--}}
 
                         <span class="balanceAuth_{{\Illuminate\Support\Facades\Auth::id()}}"></span>
                     </div>
                 </div>
             </div>
-            <div class="col-auto d-flex g-py-12 ml-auto">
+            {{--<div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     @if(count($languages) > 1)
                         <div class="g-pos-rel">
@@ -118,7 +118,7 @@
                     @endif
 
                 </div>
-            </div>
+            </div>--}}
             {{--<div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="g-pos-rel g-hidden-sm-down">
                     <a id="notifications-menu-invoker" class="d-block text-uppercase u-header-icon-v1 g-pos-rel g-width-40 g-height-40 rounded-circle g-font-size-20" href="#!" aria-controls="notifications-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click"
