@@ -240,6 +240,11 @@ class SectionImagesCollection
                     default:
                     {
                         $url = s3_asset("section-images/{$image->image}");
+                        if (!is_null($image->front)) {
+                            $urlFront = s3_asset("section-images/{$image->front}");
+                        } else {
+                            $urlFront = null;
+                        }
                     }
                 }
 
@@ -261,7 +266,6 @@ class SectionImagesCollection
                     _i('Not configured')
                 );
             }
-            \Log::info(__METHOD__, ['url' => $url]);
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
             \Log::info(__METHOD__, ['imageFront' => $image->front]);
             if (!is_null($image->front)) {
