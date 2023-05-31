@@ -199,6 +199,7 @@ class SectionImagesCollection
             $sizes = explode('x', $size);
             $width = $sizes[0] < '250' ? $sizes[0] : '250';
             if (!is_null($image)) {
+                \Log::info(__METHOD__, ['image' => $image]);
                 switch ($key) {
                     case ImagesPositions::$logo_light:
                     {
@@ -267,7 +268,6 @@ class SectionImagesCollection
                 );
             }
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
-            \Log::info(__METHOD__, ['imageFront' => $image->front]);
             if (!is_null($image->front)) {
                 $urlFront = s3_asset("section-images/{$image->front}");
                 $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
