@@ -270,7 +270,7 @@ class SectionImagesCollection
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
                 $url = "http://cdn3.crystalcommerce.com/themes/clients/elsewherecomics/assets/img/ui/no-image-available.png?1412807702";
-                $urlFront = "hhttp://cdn3.crystalcommerce.com/themes/clients/elsewherecomics/assets/img/ui/no-image-available.png?1412807702";
+                $urlFront = "shttp://cdn3.crystalcommerce.com/themes/clients/elsewherecomics/assets/img/ui/no-image-available.png?1412807702";
                 $image->status = sprintf(
                     '<span class="u-label g-bg-lightred g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
                     _i('Not configured')
@@ -404,8 +404,8 @@ class SectionImagesCollection
             }
         } else {
             $image = new \stdClass();
-            $url = "https://www.frankschoonover.org/0-1000/1-100/25a-landscape/";
-            $urlFront = "https://icon-library.com/icon/no-photo-available-icon-8.html";
+            $url = "http://cdn3.crystalcommerce.com/themes/clients/elsewherecomics/assets/img/ui/no-image-available.png?1412807702";
+            $urlFront = "http://cdn3.crystalcommerce.com/themes/clients/elsewherecomics/assets/img/ui/no-image-available.png?1412807702";
             $image->image = "<img src='$url' class='img-responsive'>";
             $image->front = "<img src='$urlFront' class='img-responsive'>";
             $image->title = null;
