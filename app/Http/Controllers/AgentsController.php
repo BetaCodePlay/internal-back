@@ -1895,8 +1895,8 @@ class AgentsController extends Controller
             if ($type == 'agent') {
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
-                $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+//                $cant = $this->usersRepo->numberChildren($id, $currency);
+//                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $balance = $user->balance;
                 $master = $user->master;
                 $agent = true;
@@ -1904,8 +1904,8 @@ class AgentsController extends Controller
             } else {
                 $user = $this->agentsRepo->findUser($id);
                 $father = $this->usersRepo->findUsername($user->owner_id);
-                $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+//                $cant = $this->usersRepo->numberChildren($id, $currency);
+//                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
                 $balance = $wallet->data->wallet->balance;
@@ -1917,10 +1917,10 @@ class AgentsController extends Controller
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d',strtotime($user->created));
             $data = [
-                'cant_agents' => $cant['agents'],
-                'cant_players' => $cant['players'],
-                'father' => $father->username ?? '',
-                'fathers' => $fathers,
+                'cant_agents' => 0,
+                'cant_players' => 0,
+                'father' => $father->username ?? '---',
+                'fathers' => [],
                 'user' => $user,
                 'balance' => number_format($balance, 2),
                 'master' => $master,
@@ -1930,6 +1930,41 @@ class AgentsController extends Controller
                 'myself' => $myself,
                 'agent_player' => $agent_player
             ];
+            return Utils::successResponse($data);
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+//            return Utils::failedResponse();
+//        }
+    }
+
+
+    /**
+     * Find tree agents father
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getFatherAndCant(Request $request)
+    {
+//        try {
+            $currency = session('currency');
+            $id = $request->id;
+            $type = $request->type;
+
+            if ($type == 'agent') {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+            } else {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+            }
+
+            $data = [
+                'cant_agents' => $cant['agents'],
+                'cant_players' => $cant['players'],
+                'fathers' => $fathers,
+            ];
+
             return Utils::successResponse($data);
 //        } catch (\Exception $ex) {
 //            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);

@@ -35,7 +35,7 @@
                                     <span class="typeSet"></span>
                                 </div>
                             </div>
-                            <div class="row mb-1">
+                            <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> {{_i('agents')}}: </strong>
                                 </div>
@@ -43,7 +43,7 @@
                                     <span class="agentsSet"></span>
                                 </div>
                             </div>
-                            <div class="row mb-1">
+                            <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> {{_i('players')}}: </strong>
                                 </div>
@@ -67,6 +67,7 @@
                                 </div>
                             </div>
                             <div class="col-8 appendTreeFather">
+                                <h5 style="text-align: center;"><strong> {{_i('Loading')}}...</strong></h5>
                             </div>
                         </div>
                     </div>
