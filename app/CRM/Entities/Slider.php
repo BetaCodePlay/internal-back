@@ -28,7 +28,7 @@ class Slider extends Model
      *
      * @var array
      */
-    protected $fillable = ['whitelabel_id', 'image', 'url','route', 'start_date', 'end_date', 'language', 'currency_iso', 'status', 'order', 'element_type_id', 'mobile', 'section'];
+    protected $fillable = ['whitelabel_id', 'image', 'url','route', 'start_date', 'end_date', 'language', 'currency_iso', 'status', 'order', 'element_type_id', 'mobile', 'section', 'front'];
 
     /**
      * The attributes that should be mutated to dates.

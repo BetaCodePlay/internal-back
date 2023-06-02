@@ -202,7 +202,7 @@ class Core
 
 
                 $anchorFlex = ($item->level_class == 'second' || $item->level_class == 'third' || $item->level_class == 'fourth') ? 'd-flex' : '';
-                if (empty($item->submenu) && $key != 'Sliders' && $key != 'Images' && $key  != 'Games' ) {
+                if (empty($item->submenu) && $key != 'Sliders' && $key != 'Images' && $key  != 'Games' && $key != 'LobbySections') {
                     if (isset($item->route)) {
                         if (empty($item->params)) {
                             $route = route($item->route);
@@ -263,7 +263,7 @@ class Core
                     $item->text
                 );
 
-                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection') {
+                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection'|| $key == 'LobbySections') {
                     $html .= '<span class="d-flex align-self-center u-side-nav--control-icon"><i class="hs-admin-angle-right"></i></span>';
                     if ($item->level_class == 'top') {
                         $html .= '<span class="u-side-nav--has-sub-menu__indicator"></span>';
@@ -358,13 +358,26 @@ class Core
                         $html .= self::menuItems($imageSections);
                     }
 
-                    if ($key == 'GamesSection') {
-                        $gameSections = [];
+                    if ($key == 'LobbySections') {
+                        $lobbySections = Configurations::getCasinoLobby()->home;
+                        $lobby = [];
 
-                        if (is_object($sections)) {
-                            foreach ($sections as $sectionKey => $section) {
-                                if (isset($section->games)) {
-                                    $gameSections[$sectionKey] = json_decode(json_encode([
+                        if (is_object($lobbySections)) {
+                            foreach ($lobbySections as $sectionKey => $section) {
+                                if (isset($section->section_images)) {
+                                    $lobby[$sectionKey] = json_decode(json_encode([
+                                        'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
+                                        'level_class' => 'second',
+                                        'route' => 'section-images.index',
+                                        'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                        'icon' => 'hs-admin-list',
+                                        'permission' => Permissions::$manage_section_images,
+                                        'submenu' => [
+                                        ],
+                                    ]));
+                                }
+                                if (isset($section->slider)) {
+                                    $lobby[$sectionKey] = json_decode(json_encode([
                                         'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
                                         'level_class' => 'second',
                                         'route' => null,
@@ -373,23 +386,23 @@ class Core
                                         'permission' => null,
                                         'submenu' => [
 
-                                            'Create' => [
-                                                'text' => _i('Create'),
+                                            'Upload' => [
+                                                'text' => _i('Upload'),
                                                 'level_class' => 'third',
-                                                'route' => 'section-games.create',
-                                                'params' => [$sectionKey],
-                                                'icon' => 'hs-admin-user',
-                                                'permission' => Permissions::$manage_section_games,
+                                                'route' => 'sliders.create',
+                                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                                'icon' => 'hs-admin-upload',
+                                                'permission' => Permissions::$manage_sliders,
                                                 'submenu' => []
                                             ],
 
                                             'List' => [
                                                 'text' => _i('List'),
                                                 'level_class' => 'third',
-                                                'route' => 'section-games.index',
-                                                'params' => [$sectionKey],
+                                                'route' => 'sliders.index',
+                                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
                                                 'icon' => 'hs-admin-list',
-                                                'permission' => Permissions::$manage_section_games,
+                                                'permission' => Permissions::$sliders_list,
                                                 'submenu' => []
                                             ],
                                         ]
@@ -397,7 +410,7 @@ class Core
                                 }
                             }
                         }
-                        $html .= self::menuItems($gameSections);
+                        $html .= self::menuItems($lobby);
                     }
 
                     $html .= self::menuItems($item->submenu);
