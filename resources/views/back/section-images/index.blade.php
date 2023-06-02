@@ -10,7 +10,8 @@
                 </h3>
                 @if (isset($positions) && empty($positions))
                     <div class="media-body d-flex justify-content-end">
-                        <a href="{{ route('section-images.create', [$template_element_type, $section]) }}" class="btn u-btn-3d u-btn-primary float-right">
+                        <a href="{{ route('section-images.create', [$template_element_type, $section]) }}"
+                           class="btn u-btn-3d u-btn-primary float-right">
                             <i class="hs-admin-upload"></i>
                             {{ _i('Upload') }}
                         </a>
@@ -25,11 +26,15 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered w-100" id="images-table" data-route="{{ route('section-images.all', [$template_element_type, $section]) }}">
+                <table class="table table-bordered w-100" id="images-table"
+                       data-route="{{ route('section-images.all', [$template_element_type, $section]) }}">
                     <thead>
                     <tr>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('Image') }}
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            {{ _i('Front') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('Position') }}
@@ -39,6 +44,9 @@
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('URL') }}
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            {{ _i('Category') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('Status') }}

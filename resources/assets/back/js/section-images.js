@@ -13,9 +13,11 @@ class SectionImages {
             "order": [],
             "columns": [
                 {"data": "image"},
+                {"data": "front"},
                 {"data": "position"},
                 {"data": "size"},
                 {"data": "url"},
+                {"data": "category"},
                 {"data": "status", "className": "text-right"},
                 {"data": "actions", "className": "text-right"},
             ],
@@ -41,7 +43,6 @@ class SectionImages {
 
         var $button = $('#store');
         var $form = $('#images-form');
-
         $form.on('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(this);
@@ -71,8 +72,8 @@ class SectionImages {
     }
 
     // Update
-    update(preview) {
-        initFileInput(preview);
+    update(preview, field) {
+        initFileInput(preview, field);
         initSelect2();
         initDateTimePicker();
 

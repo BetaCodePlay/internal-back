@@ -11,8 +11,9 @@ use Dotworkers\Wallet\Enums\Actions;
  * This class allows to define static providers
  *
  * @package Dotworkers\Configurations\Enums
- * @author  Eborio Linarez
  * @author  Gabriel Santiago
+ * @author  Genesis Perez
+ * @author  Orlando Bravo
  */
 class Providers
 {
@@ -1214,6 +1215,27 @@ class Providers
      * @var int
      */
     public static $bet_connections = 171;
+
+    /**
+     * SW3 Sports
+     *
+     * @var int
+     */
+    public static $sw3_sports = 172;
+
+    /**
+     * SW3 Sports
+     *
+     * @var int
+     */
+    public static $gbs_games = 173;
+
+    /**
+     * Lucky gamble ca
+     *
+     * @var int
+     */
+    public static $gamble_ca = 174;
 
     /**
      * Get transaction description
@@ -2785,6 +2807,10 @@ class Providers
             case self::$spinomenal_vg:
             case self::$five_men_vg:
             case self::$bet_connections:
+            case self::$lucky_roulette:
+            case self::$gbs_games:
+            case self::$sw3_sports:
+            case self::$gamble_ca:
             {
                 if ($transactionType == TransactionTypes::$credit) {
                     if (isset($data->bet_type)) {
@@ -2805,11 +2831,13 @@ class Providers
                                 break;
                             }
                             case 'win':
+                            case 'credit':
                             {
                                 $description = _i('Bet #%s on the game %s won', [$data->provider_transaction, $data->game]);
                                 break;
                             }
                             case 'bet':
+                            case 'debit':
                             {
                                 $description = _i('Bet #%s on the game %s', [$data->provider_transaction, $data->game]);
                                 break;
@@ -2857,11 +2885,13 @@ class Providers
                                     break;
                                 }
                                 case 'win':
+                                case 'credit':
                                 {
                                     $description = _i('Bet #%s on the game %s won', [$data->provider_transaction, $data->game]);
                                     break;
                                 }
                                 case 'bet':
+                                case 'debit':
                                 {
                                     $description = _i('Bet #%s on the game %s', [$data->provider_transaction, $data->game]);
                                     break;
@@ -2908,11 +2938,13 @@ class Providers
                                 break;
                             }
                             case 'win':
+                            case 'credit':
                             {
                                 $description = _i('Bet #%s on the game %s won', [$data->provider_transaction, $data->game]);
                                 break;
                             }
                             case 'bet':
+                            case 'debit':
                             {
                                 $description = _i('Bet #%s on the game %s', [$data->provider_transaction, $data->game]);
                                 break;
@@ -4118,6 +4150,21 @@ class Providers
             case self::$bet_connections:
             {
                 $name = _i('Bet Connections');
+                break;
+            }
+            case self::$sw3_sports:
+            {
+                $name = _i('SW3 Sports');
+                break;
+            }
+            case self::$gbs_games:
+            {
+                $name = _i('GBS Games');
+                break;
+            }
+            case self::$gamble_ca:
+            {
+                $name = _i('Gamble CA');
                 break;
             }
             default:

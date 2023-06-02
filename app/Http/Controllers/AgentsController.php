@@ -1534,7 +1534,7 @@ class AgentsController extends Controller
     {
         try {
             $percentage = null;
-            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (in_array(Roles::$support, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProviders(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate));
             } else {
@@ -1550,7 +1550,6 @@ class AgentsController extends Controller
                 $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
                 $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id, $providersString);
-                //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourByWhitelabelAndProvidersWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id, $providersString);
             }
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsProvider($table, $percentage)
@@ -1576,7 +1575,7 @@ class AgentsController extends Controller
     {
         try {
             $percentage = null;
-            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (in_array(Roles::$support, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 if ($request->has('username_like') && !is_null($request->get('username_like'))) {
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsername(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%');
@@ -1881,7 +1880,7 @@ class AgentsController extends Controller
      */
     public function find(Request $request)
     {
-//        try {
+        try {
             if (session('admin_id')) {
                 $userId = session('admin_id');
                 $agent_player = false;
@@ -1896,8 +1895,6 @@ class AgentsController extends Controller
             if ($type == 'agent') {
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
-                $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $balance = $user->balance;
                 $master = $user->master;
                 $agent = true;
@@ -1905,8 +1902,6 @@ class AgentsController extends Controller
             } else {
                 $user = $this->agentsRepo->findUser($id);
                 $father = $this->usersRepo->findUsername($user->owner_id);
-                $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
                 $balance = $wallet->data->wallet->balance;
@@ -1918,10 +1913,10 @@ class AgentsController extends Controller
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d',strtotime($user->created));
             $data = [
-                'cant_agents' => $cant['agents'],
-                'cant_players' => $cant['players'],
-                'father' => $father->username ?? '',
-                'fathers' => $fathers,
+                'cant_agents' => 0,
+                'cant_players' => 0,
+                'father' => $father->username ?? '---',
+                'fathers' => [],
                 'user' => $user,
                 'balance' => number_format($balance, 2),
                 'master' => $master,
@@ -1932,10 +1927,45 @@ class AgentsController extends Controller
                 'agent_player' => $agent_player
             ];
             return Utils::successResponse($data);
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-//            return Utils::failedResponse();
-//        }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+
+    /**
+     * Find tree agents father
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getFatherAndCant(Request $request)
+    {
+        try {
+            $currency = session('currency');
+            $id = $request->id;
+            $type = $request->type;
+
+            if ($type == 'agent') {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+            } else {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+            }
+
+            $data = [
+                'cant_agents' => $cant['agents'],
+                'cant_players' => $cant['players'],
+                'fathers' => $fathers,
+            ];
+
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
     }
 
     /**

@@ -61,15 +61,27 @@ class AgentsRepo
     }
 
     /**
+     * Block agents and users
+     *
+     * @param array $agents Agent data
+     * @return mixed
+     */
+    public function blockAgentsMakers($agents)
+    {
+        $agents = \DB::table('exclude_makers_users')->insertOrIgnore($agents);
+        return $agents;
+    }
+
+    /**
      * Update Block agents and users
      *
      * @param array $agents Agent data
      * @return mixed
      */
-    public function updateBlockAgents($currency, $provider, $user, $agents)
+    public function updateBlockAgents($currency, $category, $user, $agents)
     {
-        $agents = \DB::table('exclude_providers_users')->updateOrInsert(
-            ['provider_id' => $provider, 'user_id' => $user, 'currency_iso' => $currency],
+        $agents = \DB::table('exclude_makers_users')->updateOrInsert(
+            ['category' => $category, 'user_id' => $user, 'currency_iso' => $currency],
             $agents
         );
         return $agents;
@@ -81,9 +93,9 @@ class AgentsRepo
      * @param array $agents Agent data
      * @return mixed
      */
-    public function unBlockAgentsMaker($currency,$provider,$user,$data)
+    public function unBlockAgentsMaker($currency,$category,$user,$data)
     {
-        $agents = \DB::table('exclude_providers_users')->where('currency_iso', $currency)->where('provider_id', $provider)->where('user_id', $user)->update($data);
+        $agents = \DB::table('exclude_makers_users')->where('currency_iso', $currency)->where('category', $category)->where('user_id', $user)->update($data);
         return $agents;
     }
 
@@ -182,7 +194,7 @@ class AgentsRepo
     public function findByUserIdAndCurrency(int $user, string $currency)
     {
         return Agent::on('replica')
-            ->select('users.id', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
+            ->select('users.id','users.created_at as created', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
                 'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance', 'agent_currencies.currency_iso')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('users', 'agents.user_id', '=', 'users.id')
@@ -208,7 +220,7 @@ class AgentsRepo
     public function findUser($user)
     {
         $user = Agent::on('replica')
-            ->select('users.id', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agent_user.agent_id as owner', 'users.referral_code')
+            ->select('users.id','users.created_at as created', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.user_id as owner_id', 'agent_user.agent_id as owner', 'users.referral_code')
             ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
             ->join('users', 'agent_user.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
@@ -242,6 +254,27 @@ class AgentsRepo
 
         $data = $agents->get();
         return $data;
+    }
+
+    /**
+     * get agent lock by user
+     *
+     * @param int $user User ID
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function getAgentLockByUserAndCategory($user, $currency, $category, $whitelabel)
+    {
+        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_makers_users.makers','exclude_makers_users.category')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('exclude_makers_users', 'users.id', '=', 'exclude_makers_users.user_id')
+            ->where('exclude_makers_users.user_id', $user)
+            ->where('exclude_makers_users.category', $category)
+            ->where('exclude_makers_users.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabel)
+            ->first();
+        return $agents;
     }
 
     /**
@@ -307,6 +340,21 @@ class AgentsRepo
         $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.makers', 'exclude_providers_users.currency_iso')
             ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
             ->where('exclude_providers_users.user_id', $user)
+            ->get();
+        return $data;
+    }
+
+    /**
+     * Get exclude user maker
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getExcludeUserMaker($user)
+    {
+        $data = User::select('exclude_makers_users.category', 'exclude_makers_users.makers', 'exclude_makers_users.currency_iso')
+            ->join('exclude_makers_users', 'users.id', '=', 'exclude_makers_users.user_id')
+            ->where('exclude_makers_users.user_id', $user)
             ->get();
         return $data;
     }
@@ -469,9 +517,9 @@ class AgentsRepo
      * @param array $agents Agent data
      * @return mixed
      */
-    public function unBlockAgents($currencyIso, $providerId, $userId)
+    public function unBlockAgents($currencyIso, $category, $userId)
     {
-        \DB::table('exclude_providers_users')->where('currency_iso', $currencyIso)->where('provider_id', $providerId)->where('user_id', $userId)->delete();
+        \DB::table('exclude_makers_users')->where('currency_iso', $currencyIso)->where('category', $category)->where('user_id', $userId)->delete();
     }
 
     /**
