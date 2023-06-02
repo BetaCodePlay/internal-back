@@ -6,18 +6,18 @@
                    class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-0">
                     <?php if(!empty($logo)): ?>
                         <?php if(!is_null($logo->img_dark)): ?>
-                            <img src="<?php echo e($logo->img_dark); ?>" alt="Bloko" width="180" height="37">
+                            <img src="<?php echo e($logo->img_dark); ?>" alt="Bloko" width="180" height="37" class="img-logo">
                         <?php endif; ?>
                     <?php endif; ?>
-
-
-
-
-
-
-
-
-
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 </a>
                 <a class="js-side-nav u-header__nav-toggler d-flex align-self-center ml-auto" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
@@ -26,25 +26,29 @@
                     <i class="hs-admin-align-left"></i>
                 </a>
             </div>
-            <form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
-                  aria-labelledby="searchInvoker" action="<?php echo e(route('users.search')); ?>" method="get">
-                <div class="input-group g-max-width-450">
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_search])): ?>
-                        <input class="form-control form-control-md g-rounded-4" type="text" name="username"
-                               placeholder="<?php echo e(_i('Search user')); ?>" value="<?php echo e(isset($username) ? $username : ''); ?>">
-                        <button type="submit"
-                                class="btn u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
-                            <i class="hs-admin-search"></i>
-                        </button>
-                    <?php endif; ?>
-                </div>
-            </form>
-            <a id="searchInvoker" class="g-hidden-sm-up text-uppercase u-header-icon-v1 g-pos-rel g-width-40 g-height-40 rounded-circle g-font-size-20" href="#!" aria-controls="header-search-form" aria-haspopup="true" aria-expanded="false" data-is-mobile-only="true" data-dropdown-event="click"
-               data-dropdown-target="#header-search-form" data-dropdown-type="css-animation" data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                <i class="hs-admin-search g-absolute-centered"></i>
-            </a>
+            <div hidden><?php echo $iphone; ?></div>
+            <?php if(isset($iphone)): ?>
+                <?php if(!$iphone): ?>
+                    <form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
+                          aria-labelledby="searchInvoker" action="<?php echo e(route('users.search')); ?>" method="get">
+                        <div class="input-group g-max-width-450">
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_search])): ?>
+                                <input class="form-control form-control-md g-rounded-4" type="text" name="username" placeholder="<?php echo e(_i('Search user')); ?>" value="<?php echo e(isset($username) ? $username : ''); ?>">
+                                <button type="submit"
+                                        class="btn u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
+                                    <i class="hs-admin-search"></i>
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    </form>
+                    <a id="searchInvoker" class="g-hidden-sm-up text-uppercase u-header-icon-v1 g-pos-rel g-width-40 g-height-40 rounded-circle g-font-size-20" href="#!" aria-controls="header-search-form" aria-haspopup="true" aria-expanded="false" data-is-mobile-only="true" data-dropdown-event="click"
+                       data-dropdown-target="#header-search-form" data-dropdown-type="css-animation" data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
+                        <i class="hs-admin-search g-absolute-centered"></i>
+                    </a>
+                <?php endif; ?>
+            <?php endif; ?>
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
                         <a class="btn btn-info text-white btn-header-chat btn-header-auth g-pl-10 g-pr-10" href="javascript:void(0)" style="border-radius: 50px">
                             <i class="fa fa-comment" aria-hidden="true"></i>
@@ -53,9 +57,9 @@
                 </div>
             </div>
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
-                        <?php if(count($whitelabel_currencies)>1): ?>
+                        <?php if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1): ?>
                             <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
                                data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
                             <span class="g-pos-rel">
@@ -92,7 +96,7 @@
                 </div>
             </div>
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-10 g-pr-10">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <?php if(count($languages) > 1): ?>
                         <div class="g-pos-rel">
                             <a id="languages-menu-invoker" class="d-block" href="#!" aria-controls="languages-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#languages-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
@@ -122,7 +126,7 @@
             </div>
             
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm">
+                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">
                         <a id="profile-menu-invoker" class="d-block" href="#!" aria-controls="profile-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#profile-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
                            data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">

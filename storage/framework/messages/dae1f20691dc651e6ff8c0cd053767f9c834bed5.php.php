@@ -67,7 +67,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="payment"><?php echo e(_i('types transition')); ?></label>
+                                    <label for="payment"><?php echo e(_i('transition types')); ?></label>
                                     <select name="payment" id="payment" class="form-control">
                                         <option value=""><?php echo e(_i('Select...')); ?></option>
 

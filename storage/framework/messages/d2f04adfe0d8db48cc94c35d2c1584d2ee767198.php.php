@@ -41,6 +41,9 @@
         $(function () {
             let agents = new Agents();
             agents.totalFinancial(<?php echo e($user); ?>);
+            setTimeout(function (){
+                $('#update').click()
+            },1000)
         });
     </script>
 <?php $__env->stopSection(); ?>

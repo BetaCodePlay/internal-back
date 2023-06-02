@@ -61,6 +61,13 @@ class Languages
     private static $es_CL = 'es_CL';
 
     /**
+     * Argentinian Spanish
+     *
+     * @var string
+     */
+    private static $es_AR = 'es_AR';
+
+    /**
      * Get language name
      *
      * @param string $iso Language ISO
@@ -99,6 +106,11 @@ class Languages
             case self::$tr_TR:
             {
                 return _i('Turkish');
+                break;
+            }
+            case self::$es_AR:
+            {
+                return _i('Argentinian');
                 break;
             }
         }

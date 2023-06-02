@@ -130,5 +130,27 @@
                 "firstDay": 1
             }
         }
+    },
+    "es_AR": {
+        "translation": {
+            "today": "Hoy",
+            "yesterday": "Ayer",
+            "tomorrow": "Mañana",
+            "last_7_days": "Últimos 7 días",
+            "last_30_days": "Últimos 30 días",
+            "this_month": "Este mes",
+            "last_month": "Último mes",
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "applyLabel": "Aceptar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "Desde",
+                "toLabel": "Hasta",
+                "customRangeLabel": "Rango personalizado",
+                "daysOfWeek": ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                "monthNames": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                "firstDay": 1
+            }
+        }
     }
 }

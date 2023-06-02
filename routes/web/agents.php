@@ -4,7 +4,6 @@
  * Agents routes
  */
 Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
-
     // Show add user
     Route::get('add-users', [
         'as' => 'agents.add-users',
@@ -35,6 +34,21 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@index'
     ]);
 
+    Route::get('create-user', [
+        'as' => 'agents.create.user',
+        'uses' => 'AgentsController@viewCreateUser'
+    ]);
+
+    Route::get('create-agent', [
+        'as' => 'agents.create.agent',
+        'uses' => 'AgentsController@viewCreateAgent'
+    ]);
+
+    Route::get('consult-balance-by-type', [
+        'as' => 'agents.consult.balance.by.type',
+        'uses' => 'AgentsController@consultBalanceByType'
+    ]);
+
     // Agents sub agents
     Route::get('agents/{user?}', [
         'as' => 'agents.agents',
@@ -51,6 +65,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     Route::get('find', [
         'as' => 'agents.find',
         'uses' => 'AgentsController@find'
+    ]);
+
+    // Get father and cant
+    Route::get('get/father/cant', [
+        'as' => 'agents.get.father.cant',
+        'uses' => 'AgentsController@getFatherAndCant'
     ]);
 
     // Find agent
@@ -127,6 +147,18 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@agentsTransactions'
     ]);
 
+    // Agents transactions paginate
+    Route::get('transactions/paginate/{agent?}', [
+        'as' => 'agents.transactions.paginate',
+        'uses' => 'AgentsController@agentsTransactionsPaginate'
+    ]);
+
+    // Agents transactions totals
+    Route::get('transactions/totals/{agent?}', [
+        'as' => 'agents.transactions.totals',
+        'uses' => 'AgentsController@agentsTransactionsTotals'
+    ]);
+
     // Agents transactions
     Route::get('ticket/{id?}', [
         'as' => 'agents.ticket',
@@ -145,12 +177,11 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updatePercentage'
     ]);
 
-    //TODO Change Type user in users where type_user in null
+    // Change Type user in users where type_user in null
     Route::get('change/type/user/in_null/temp', [
         'as' => 'agents.change.type.user.in_null.temp',
         'uses' => 'AgentsController@changeTypeUser'
     ]);
-
 
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
@@ -165,6 +196,18 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         Route::get('agents-balances-data', [
             'as' => 'agents.reports.agents-balances-data',
             'uses' => 'AgentsController@agentsBalancesData'
+        ]);
+
+        // Show agents payments
+        Route::get('agents-payments', [
+            'as' => 'agents.reports.agents-payments',
+            'uses' => 'AgentsController@agentsPayments'
+        ]);
+
+        // Show agents transactions by dates
+        Route::get('find-user-payment/{startDate?}/{endDate?}/{user_id?}', [
+            'as' => 'agents.reports.find-user-payment',
+            'uses' => 'AgentsController@findUserPayment'
         ]);
 
         // Show agents transactions report
@@ -208,46 +251,91 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state',
             'uses' => 'AgentsController@financialState'
         ]);
+        // Show financial state details report
+        Route::get('financial-state-details', [
+            'as' => 'agents.reports.financial-state-details',
+            'uses' => 'AgentsController@financialStateDetails'
+        ]);
 
-        //TODO VIEW OF EXAMPLE
+        //Details Financial State
+        Route::get('details/financial-state/{user?}/{startDate?}/{endDate?}', [
+            'as' => 'agents.reports.details.financial-state',
+            'uses' => 'AgentsController@financialStateDataDetails'
+        ]);
+
+        // Show financial State Makers
+        Route::get('financial-state-makers', [
+            'as' => 'agents.reports.financial-state-makers',
+            'uses' => 'AgentsController@financialStateMakers'
+        ]);
+
+        //Financial State Makers
+        Route::get('financial-state-data-makers/{startDate?}/{endDate?}/{currency_iso?}/{provider_id?}/{whitelabel_id?}', [
+            'as' => 'agents.reports.financial-state-data-makers',
+            'uses' => 'AgentsController@financialStateDataMakers'
+        ]);
+
+        //Financial State Makers Totals
+        Route::get('financial-state-data-makers-totals', [
+            'as' => 'agents.reports.financial-state-data-makers-totals',
+            'uses' => 'AgentsController@financialStateDataMakersTotals'
+        ]);
+
+        // Show financial State Makers Details
+        Route::get('financial-state-makers-details', [
+            'as' => 'agents.reports.financial-state-makers-details',
+            'uses' => 'AgentsController@financialStateMakersDetails'
+        ]);
+
+        //Financial State Makers Details
+        Route::get('financial-state-data-makers-details/{startDate?}/{endDate?}/{currency_iso?}/{provider_id?}/{whitelabel_id?}', [
+            'as' => 'agents.reports.financial-state-data-makers-details',
+            'uses' => 'AgentsController@financialStateDataMakers'
+        ]);
+
+        //Financial State
         Route::get('financial-state/view1', [
             'as' => 'agents.reports.financial-state.new',
             'uses' => 'AgentsController@financialState_view1'
         ]);
 
+        //Financial State By Username
         Route::get('financial-state/username', [
             'as' => 'agents.reports.financial.state.username',
             'uses' => 'AgentsController@financialStateUsername'
         ]);
 
+        //Financial State By Provider
         Route::get('financial-state/provider', [
             'as' => 'agents.reports.financial.state.provider',
             'uses' => 'AgentsController@financialStateProvider'
         ]);
 
+        //Financial State By Provider
         Route::get('financial-state-data/username/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data.username',
             'uses' => 'AgentsController@financialStateData_username'
         ]);
 
+        //Financial State Data By Provider
         Route::get('financial-state-data/provider/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data.provider',
             'uses' => 'AgentsController@financialStateData_provider'
         ]);
-//        Route::get('financial-state/view2', [
-//            'as' => 'agents.reports.financial-state.view2',
-//            'uses' => 'AgentsController@financialState_view2'
-//        ]);
 
         // Get financial state data
         Route::get('financial-state-data/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data',
             'uses' => 'AgentsController@financialStateData'
         ]);
+
+        //Financial State Data Details
         Route::get('financial-state-data-detail/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data-detail',
             'uses' => 'AgentsController@financialStateDataDetails2023'
         ]);
+
+        //Financial State Data
         Route::get('financial-state-data/row2/{user?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data.row2',
             'uses' => 'AgentsController@financialStateDataRow2'
@@ -322,6 +410,53 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         Route::get('users-balances-data', [
             'as' => 'reports.users.users-balances-data',
             'uses' => 'AgentsController@usersBalancesData'
+        ]);
+
+        // Get Transactions Timeline
+        Route::get('transactions-timeline', [
+            'as' => 'reports.view.transaction.timeline',
+            'uses' => 'AgentsController@viewTransactionTimeline'
+        ]);
+
+        // Get Transactions Timeline Data
+        Route::get('transactions-timeline-data', [
+            'as' => 'reports.data.transaction.timeline',
+            'uses' => 'AgentsController@dataTransactionTimeline'
+        ]);
+        // Get Tmp
+        Route::get('tmp', [
+            'as' => 'reports.view.tmp',
+            'uses' => 'AgentsController@viewTmp'
+        ]);
+
+        // Get Data Tmp
+        Route::get('data-tmp', [
+            'as' => 'reports.data.tmp',
+            'uses' => 'AgentsController@dataTmp'
+        ]);
+
+        // Get exclude providers agents
+        Route::get('exclude-providers-agents', [
+            'as' => 'agents.reports.exclude-providers-agents',
+            'uses' => 'AgentsController@excludeProvidersAgents'
+        ]);
+
+        // Exclude providers users data
+        Route::post('exclude-providers-agents-data', [
+            'as' => 'agents.reports.exclude-providers-agents-data',
+            'uses' => 'AgentsController@excludeProvidersAgentsData'
+        ]);
+
+        // Exclude providers users delete
+        Route::get('exclude-providers-agents-delete/{user}/{category}/{currency}', [
+            'as' => 'agents.reports.exclude-providers-agents.delete',
+            'uses' => 'AgentsController@excludeProviderAgentsDelete'
+        ]);
+
+        // Exclude providers users list
+        Route::get('exclude-providers-agents-list/{start_date?}/{end_date?}/{category?}/{maker?}/{currency?}', [
+            'as' => 'agents.reports.exclude-providers-agents.list',
+            'uses' => 'AgentsController@excludeProviderAgentsList'
         ]);
 
     });

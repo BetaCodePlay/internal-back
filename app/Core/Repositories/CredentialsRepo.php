@@ -127,7 +127,7 @@ class CredentialsRepo
     {
         $credentials = Credential::where('client_id', $whitelabel)
             ->join('providers', 'credentials.provider_id', '=', 'providers.id')
-            ->where('providers.provider_type_id', 3)
+            ->whereIn('providers.provider_type_id', [3, 4, 5])
             ->where('currency_iso', $currency)
             ->orderBy('providers.name', 'ASC')
             ->get();

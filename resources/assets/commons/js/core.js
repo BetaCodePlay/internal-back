@@ -134,6 +134,63 @@ let swalInput = (route, resolve) => {
     })
 }
 
+// Swal input Massage Info
+let swalInputInfo = (route, resolve) => {
+    let locale = getCookie('language-js');
+    locale = (locale === null || locale === '') ? 'en_US' : locale;
+
+    i18next.use(Backend)
+        .init({
+            lng: locale,
+            resources: swalLocale
+        });
+
+    Swal.fire({
+        title: i18next.t('Description'),
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: i18next.t('Confirm'),
+        cancelButtonText: '<i class="hs-admin-close"></i> ' + i18next.t('cancel'),
+        showLoaderOnConfirm: true,
+        preConfirm: (description) => {
+            return fetch(`${route}/${description}`)
+                .then(response => {
+                    return response.json()
+                })
+                .catch(error => {
+                    console.log(error,'error')
+                    Swal.showValidationMessage(
+                        `Request failed: ${error}`
+                    )
+                })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        console.log(result,'result')
+        if (result.dismiss == 'cancel') {
+            $('.change-status').button('reset');
+        } else {
+            if (result.value.data.status !== '') {
+                $('#status').val(result.value.data.status);
+
+                if (result.value.data.type == "0"){
+                    setTimeout(() => {
+                        window.location.href = '';
+                    }, 1000);
+                    swalSuccessNoButton(result.value);
+                }else if (result.value.data.type === 'info' || result.value.data.type === 'basic'){
+                    swalInfoNoButton(result.value);
+                } else {
+                    swalSuccessWithButton(result.value, resolve);
+                }
+            }
+        }
+    })
+}
+
 // Swal error
 let swalError = json => {
     const swal = Swal.mixin({
@@ -189,6 +246,15 @@ let swalSuccessNoButton = json => {
         showConfirmButton: false
     });
 };
+// Swal info no button
+let swalInfoNoButton = json => {
+    Swal.fire({
+        title: json.data.title,
+        text: json.data.message,
+        type: "info",
+        showConfirmButton: false
+    });
+};
 
 // Swal success with button
 let swalSuccessWithButton = (json, resolve) => {
@@ -235,7 +301,9 @@ export {
     clipboard,
     swalConfirm,
     swalInput,
+    swalInputInfo,
     swalSuccessNoButton,
+    swalInfoNoButton,
     swalSuccessWithButton,
     swalError,
     swalValidation

@@ -18,6 +18,15 @@ use App\Audits\Repositories\AuditsRepo;
 use App\Audits\Enums\AuditTypes;
 use Dotworkers\Audits\Audits;
 
+/**
+ * Class SectionImagesController
+ *
+ * This class allows to manage section images requests
+ *
+ * @package App\Http\Controllers
+ * @author  Eborio Linarez
+ * @author Genesis Perez
+ */
 class SectionImagesController extends Controller
 {
     /**
@@ -128,8 +137,11 @@ class SectionImagesController extends Controller
                     $image = new \stdClass();
                     $image->size = "{$home->$section->section_images->width}x{$home->$section->section_images->height}";
                     $data['image'] = $image;
+                    $data['front'] = $image;
                 }
             }
+            $categories=['popular','new','featured'];
+            $data['categories'] = $categories;
             $data['template_element_type'] = $templateElementType;
             $data['section'] = $section;
             $data['title'] = _i('Upload image');
@@ -242,10 +254,13 @@ class SectionImagesController extends Controller
             }
 
             $imageData = $this->sectionImagesCollection->formatDetails($image, $position, $positions);
+            $categories=['popular','new','featured'];
+            $data['categories'] = $categories;
             $data['template_element_type'] = $templateElementType;
             $data['position'] = $position;
             $data['props'] = $props;
             $data['image'] = $imageData;
+            $data['front'] = $imageData;
             $data['section'] = $section;
             $data['title'] = _i('Update image');
             return view('back.section-images.edit', $data);
@@ -270,6 +285,8 @@ class SectionImagesController extends Controller
             $positions = $home->$section->section_images->positions ?? [];
             $data['positions'] = $positions;
         }
+        $categories=['popular','new','featured'];
+        $data['categories'] = $categories;
         $data['template_element_type'] = $templateElementType;
         $data['section'] = $section;
         $data['title'] = _i('List of images');
@@ -290,6 +307,9 @@ class SectionImagesController extends Controller
         $validationRules['image'] = 'required';
         if ($section != 'section-3') {
             $validationRules['title'] = 'required';
+        }
+        if ($section == 'section-7') {
+            $validationRules['category'] = 'required';
         }
         if (!is_null($request->start_date) && !is_null($request->end_date)) {
             $validationRules['end_date'] = 'required|date|after:start_date';
@@ -312,6 +332,21 @@ class SectionImagesController extends Controller
             $oldFilePath = "{$filePath}{$file}";
             Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
             Storage::delete($oldFilePath);
+            $front = $request->file('front');
+            $category = $request->category;
+            if(!is_null($front)){
+                $fileFront = $request->file;
+                $filePath = "$s3Directory/section-images/";
+                $extensionFront = $front->getClientOriginalExtension();
+                $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+                $nameFront = Str::slug($originalNameFront) . time() . '.' . $extensionFront;
+                $newFilePath = "{$filePath}{$nameFront}";
+                $oldFilePath = "{$filePath}{$fileFront}";
+                Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
+                Storage::delete($oldFilePath);
+            }else{
+                $nameFront = null;
+            }
             $imageData = [
                 'title' => $request->title,
                 'button' => $request->button,
@@ -324,6 +359,8 @@ class SectionImagesController extends Controller
                 'status' => $request->status,
                 'section' => $section,
                 'image' => $name,
+                'front' => $nameFront,
+                'category' => $category,
                 'whitelabel_id' => $whitelabel,
                 'start_date' => $startDate,
                 'end_date' => $endDate
@@ -421,6 +458,9 @@ class SectionImagesController extends Controller
         }
         $this->validate($request, $validationRules);
 
+        if ($section == 'section-7') {
+            $validationRules['category'] = 'required';
+        }
         try {
             $whitelabel = Configurations::getWhitelabel();
             $image = $request->file('image');
@@ -429,7 +469,7 @@ class SectionImagesController extends Controller
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
-
+            $category = $request->category;
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark){
                 $filePath = "$s3Directory/commons/";
 
@@ -441,6 +481,7 @@ class SectionImagesController extends Controller
                     'description' => $request->description,
                     'element_type_id' => $templateElementType,
                     'position' => $position,
+                    'category' => $category,
                     'url' => $request->url,
                     'language' => '*',
                     'currency_iso' => '*',
@@ -462,6 +503,18 @@ class SectionImagesController extends Controller
                 Storage::delete($oldFilePath);
                 $imageData['image'] = $name;
                 $file = $name;
+                $front = $request->file('front');
+                if(!is_null($front)){
+                    $fileFront = $request->file;
+                    $extensionFront = $front->getClientOriginalExtension();
+                    $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+                    $nameFront = Str::slug($originalNameFront) . time() . '.' . $extensionFront;
+                    $newFilePath = "{$filePath}{$nameFront}";
+                    $oldFilePath = "{$filePath}{$fileFront}";
+                    Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
+                    Storage::delete($oldFilePath);
+                    $imageData['front'] = $nameFront;
+                }
             }
 
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position ==  ImagesPositions::$mobile_light || $position ==  ImagesPositions::$mobile_dark) {

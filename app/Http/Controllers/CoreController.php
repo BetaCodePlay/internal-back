@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Xinax\LaravelGettext\Facades\LaravelGettext;
 use App\Core\Collections\ProviderTypesCollection;
 use App\Core\Repositories\ProvidersRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
@@ -45,6 +46,13 @@ class CoreController extends Controller
     private $usersRepo;
 
     /**
+     * GamesRepo
+     *
+     * @var GamesRepo
+     */
+    private $gamesRepo;
+
+    /**
      * ManualExchangesRepo
      *
      * @var ManualExchangesRepo
@@ -65,11 +73,12 @@ class CoreController extends Controller
      * @param ManualExchangesRepo $manualExchangesRepo
      * @param CoreCollection $coreCollection
      */
-    public function __construct(UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection)
+    public function __construct(UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection, GamesRepo $gamesRepo)
     {
         $this->usersRepo = $usersRepo;
         $this->manualExchangesRepo = $manualExchangesRepo;
         $this->coreCollection = $coreCollection;
+        $this->gamesRepo = $gamesRepo;
     }
 
     /**
@@ -244,6 +253,73 @@ class CoreController extends Controller
     }
 
     /**
+     * Upload makers
+     *
+     * @param @param Request $request
+     */
+    public function makers(Request $request)
+    {
+        try {
+            $data['makers'] = $this->gamesRepo->getMakers();
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Upload makers
+     *
+     * @param @param Request $request
+     */
+    public function makersByProvider(Request $request)
+    {
+        try {
+            $provider = $request->provider;
+            $data['makers'] = $this->gamesRepo->getMakersByProvider($provider);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'provider' => $request->provider]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Upload makers
+     *
+     * @param @param Request $request
+     */
+    public function makersByCategory(Request $request)
+    {
+        try {
+            $category = $request->category;
+            $data['makers'] = $this->gamesRepo->getMakersByCategory($category);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'category' => $request->category]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Upload categories
+     *
+     * @param @param Request $request
+     */
+    public function categoriesByMaker(Request $request)
+    {
+        try {
+            $maker = $request->maker;
+            $data['categories'] = $this->gamesRepo->getCategoriesByMaker($maker);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'category' => $request->category]);
+            abort(500);
+        }
+    }
+
+    /**
      * Update exchange rates
      *
      * @param Request $request
@@ -273,6 +349,23 @@ class CoreController extends Controller
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Providers by Whitelabel
+     *
+     * @param @param Request $request
+     */
+    public function providersByWhitelabels(Request $request, ProvidersRepo $providersRepo)
+    {
+        try {
+            $whitelabel = $request->whitelabel;
+            $data['providers'] = $providersRepo->getProvidersByWhitelabel($whitelabel);
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'provider' => $request->provider]);
+            abort(500);
         }
     }
 }

@@ -54,6 +54,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@changeStatus'
     ]);
 
+    // Block user status
+    Route::get('block-user-status/{user}/{status}/{type}/{description?}', [
+        'as' => 'users.block.status',
+        'uses' => 'UsersController@blockAgent'
+    ]);
+
     // Get completed profiles
     Route::get('completed-profiles', [
         'as' => 'users.completed-profiles',
@@ -127,13 +133,13 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Exclude providers users delete
-    Route::get('exclude-providers-users-delete/{user}/{provider}/{currency}', [
+    Route::get('exclude-providers-users-delete/{user}/{category}/{currency}', [
         'as' => 'users.exclude-providers-users.delete',
         'uses' => 'UsersController@excludeProviderUserDelete'
     ]);
 
     // Exclude providers users list
-    Route::get('exclude-providers-users-list', [
+    Route::get('exclude-providers-users-list/{start_date?}/{end_date?}/{category?}/{maker?}/{currency?}', [
         'as' => 'users.exclude-providers-users.list',
         'uses' => 'UsersController@excludeProviderUserList'
     ]);

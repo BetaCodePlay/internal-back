@@ -33,7 +33,7 @@
 
                 <div class="wrap-input100 validate-input" data-validate="<?php echo e(_i('Enter password')); ?>">
 						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
+							<i class="fa fa-eye"></i>
 						</span>
                     <input class="input100" type="password" name="password" id="password" autocomplete="off" required>
                     <span class="focus-input100" data-placeholder="<?php echo e(_i('Password')); ?>"></span>

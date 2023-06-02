@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\ServiceProvider;
+use Jenssegers\Agent\Agent;
 use Xinax\LaravelGettext\Facades\LaravelGettext;
 
 class DotpanelServiceProvider extends ServiceProvider
@@ -27,12 +28,15 @@ class DotpanelServiceProvider extends ServiceProvider
      * @param PushNotificationsRepo $pushNotificationsRepo
      * @param PushNotificationsCollection $pushNotificationsCollection
      * @param CurrenciesRepo $currenciesRepo
+     * @param Agent $agent
      */
-    public function boot(Request $request, CoreCollection $coreCollection, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection)
+    public function boot(Request $request, CoreCollection $coreCollection, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
     {
+
         if (isset($_SERVER['HTTP_HOST'])) {
             $regex = '/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/';
             $domain = strtolower($_SERVER['HTTP_HOST']);
+            $iphone = 0;
 
             if ($request->path() == 'elb-health-check') {
                 $domain = 'dotworkers.net';
@@ -43,7 +47,7 @@ class DotpanelServiceProvider extends ServiceProvider
             }
 
             if($domain == 'back-office-v1.co' || $domain == 'back-office.co'){
-                $domain = 'back-office-v1.co';
+                $domain = 'back-office.co';
             }
 
             $configurations = Configurations::getConfigurationsByURL($domain);
@@ -83,11 +87,15 @@ class DotpanelServiceProvider extends ServiceProvider
                     }
 
                     $whitelabel = Configurations::getWhitelabel();
-                    $whitelabels = [45, 7];
+                    $whitelabels = [45];
                     if (!in_array($whitelabel, $whitelabels)) {
                         if ((env('APP_ENV') == 'production') || (env('APP_ENV') == 'testing') ) {
                             URL::forceScheme('https');
                         }
+                    }
+                    $browser = $agent->browser();
+                    if(($browser== "Safari") && ($agent->isMobile() || $agent->isPhone() || $agent->isTablet())){
+                        $iphone = 1;
                     }
 
                     $languagesData = $coreCollection->formatLanguages($languages);
@@ -111,6 +119,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['global_timezones'] = $timezones;
                     $data['free_currency'] = Configurations::getFreeCurrency();
                     $data['logo'] = Configurations::getLogo($mobile = true);
+                    $data['iphone'] = $iphone;
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {

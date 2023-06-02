@@ -49,6 +49,34 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.number-users-connected-by-device',
         'uses' => 'CoreController@numberConnectedDivice'
     ]);
+    //Get providers by whitelabels
+    Route::get('providers-by-whitelabel', [
+        'as' => 'core.providers-by-whitelabel',
+        'uses' => 'CoreController@providersByWhitelabels'
+    ]);
+    // Get makers by providers
+    Route::get('makers-by-provider', [
+        'as' => 'core.makers-by-provider',
+        'uses' => 'CoreController@makersByProvider'
+    ]);
+
+    // Get makers by category
+    Route::get('makers-by-category', [
+        'as' => 'core.makers-by-category',
+        'uses' => 'CoreController@makersByCategory'
+    ]);
+
+    // Get categories by maker
+    Route::get('categories-by-maker', [
+        'as' => 'core.categories-by-maker',
+        'uses' => 'CoreController@categoriesByMaker'
+    ]);
+
+    // Get makers
+    Route::get('makers', [
+        'as' => 'core.makers',
+        'uses' => 'CoreController@makers'
+    ]);
 });
 
 // Change language

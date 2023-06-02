@@ -129,7 +129,7 @@
                         <div class="col-xs-12 col-md-4">
                             <div class="form-group">
                                 <label for="daterange">{{ _i('Date range') }}</label>
-                                @if (auth()->user()->username == 'support')
+                                @if (auth()->user()->username == 'wolf')
                                     <div class="form-group">
                                         <input type="text" id="daterange" class="form-control daterange g-pr-80 g-pl-15 g-py-9" autocomplete="off">
                                         <input type="hidden" id="start_date" name="start_date">
@@ -222,7 +222,7 @@
     <script>
         $(function () {
             let dotSuite = new DotSuite();
-            @if (auth()->user()->username == 'support')
+            @if (auth()->user()->username == 'wolf')
             dotSuite.usersTotals(true);
             @else
             dotSuite.usersTotals(false);

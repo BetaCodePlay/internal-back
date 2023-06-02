@@ -28,6 +28,7 @@ let activeMenu = () => {
     let $item = $(`a[href="${url}"]`);
     $item.addClass('active');
     $item.parents('li').addClass('has-active u-side-nav-opened');
+    $item.parents('li').find('.collapse').eq(0).addClass('show');
 };
 
 // Clear form
@@ -107,6 +108,45 @@ let initDateTimePicker = () => {
     });
 };
 
+// Init date range picker end today
+let initDateRangePickerEndMonth = (open = 'left') => {
+    let locale = getCookie('language-js');
+    locale = (locale === null || locale === '') ? 'en_US' : locale;
+    let $dateRange = $('.daterange');
+    let $startDate = $('#start_date');
+    let $endDate = $('#end_date');
+    let localeAbbreviation = locale.substr(0, 2);
+
+    i18next.use(Backend)
+        .init({
+            lng: locale,
+            resources: dateRangepickerLocale
+        });
+
+    $dateRange.daterangepicker({
+        opens: open,
+        autoUpdateInput: false,
+        showDropdowns: true,
+        maxDate: moment(),
+        locale: i18next.t('locale', {returnObjects: true}),
+        ranges: {
+            [i18next.t('last_30_days')]: [moment().subtract(29, 'days'), moment()],
+            [i18next.t('this_month')]: [moment().startOf('month'), moment().endOf('month')],
+            [i18next.t('last_month')]: [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, (start, end) => {
+        $('#daterange').val(start.locale(localeAbbreviation).format('D MMM YYYY') + ' - ' + end.locale(localeAbbreviation).format('D MMM YYYY'));
+    });
+
+    $('#daterange').val(moment().locale(localeAbbreviation).format('D MMM YYYY') + ' - ' + moment().locale(localeAbbreviation).format('D MMM YYYY'));
+    $startDate.val(moment().format('YYYY-MM-DD'));
+    $endDate.val(moment().format('YYYY-MM-DD'));
+
+    $dateRange.on('apply.daterangepicker', (event, picker) => {
+        $startDate.val(picker.startDate.format('YYYY-MM-DD'));
+        $endDate.val(picker.endDate.format('YYYY-MM-DD'));
+    });
+};
 // Init date range picker end today
 let initDateRangePickerEndToday = (open = 'left') => {
     let locale = getCookie('language-js');
@@ -232,6 +272,25 @@ let initLitepickerEndToday = () => {
 
     return new Litepicker({
         element: document.getElementById('date_range'),
+        format: 'DD/MM/YYYY',
+        singleMode: false,
+        startDate: moment(),
+        endDate: moment(),
+        maxDate: moment(),
+        numberOfMonths: 2,
+        numberOfColumns: 2,
+        showTooltip: false,
+        lang: locale
+    });
+};
+
+// Init lite picker end today with class
+let initLitepickerEndTodayNew = () => {
+    let locale = getCookie('language-js');
+    locale = locale.replace('_', '-');
+
+    return new Litepicker({
+        element: document.getElementById('date_range_new'),
         format: 'DD/MM/YYYY',
         singleMode: false,
         startDate: moment(),
@@ -412,7 +471,9 @@ export {
     initDatepickerEndToday,
     initDatepickerStartToday,
     initDateRangePickerEndToday,
+    initDateRangePickerEndMonth,
     initLitepickerEndToday,
+    initLitepickerEndTodayNew,
     initFileInput,
     initSelect2,
     initTinyMCE,

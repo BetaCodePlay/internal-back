@@ -28,5 +28,10 @@
         "translation": {
             "loading": "Chargement..."
         }
+    },
+    "es_AR": {
+        "translation": {
+            "loading": "Cargando..."
+        }
     }
 }

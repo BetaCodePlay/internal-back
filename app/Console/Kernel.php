@@ -10,6 +10,8 @@ use App\Reports\Commands\UsersTotalsManual;
 use App\Store\Commands\PointsCashback;
 use App\Store\Commands\PointsCashbackManual;
 use Illuminate\Console\Scheduling\Schedule;
+use App\Reports\Commands\FinancesTotals;
+use App\Reports\Commands\FinancesTotalsManual;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -20,14 +22,15 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-
         UsersTotals::class,
         UsersTotalsManual::class,
         SendEmailTemplate::class,
         PermissionsStorage::class,
         UpdateSegments::class,
         PointsCashback::class,
-        PointsCashbackManual::class
+        PointsCashbackManual::class,
+        FinancesTotals::class,
+        FinancesTotalsManual::class
     ];
 
     /**
@@ -39,10 +42,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('permissions:file-storage')->everyThreeMinutes()->withoutOverlapping();
-        $schedule->command('closure:users-totals')->hourly()->withoutOverlapping();
+       // $schedule->command('closure:users-totals')->hourly()->withoutOverlapping();
         $schedule->command('crm:send-emails')->everyMinute()->withoutOverlapping();
         $schedule->command('crm:update-segments')->twiceDaily(0, 12)->withoutOverlapping();
         $schedule->command('points:cashback')->dailyAt('00:00');
+      //  $schedule->command('closure:finances-totals')->hourly()->withoutOverlapping();
     }
 
     /**

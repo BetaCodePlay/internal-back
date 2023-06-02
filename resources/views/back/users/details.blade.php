@@ -1,5 +1,12 @@
 @extends('back.template')
 
+@section('styles')
+    <style>
+        .list_disclosure{
+            list-style: disclosure-closed!important;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-md-3">
@@ -30,30 +37,34 @@
                             <i class="hs-admin-close"></i>
                             {{ _i('Inactive') }}
                         </button>
-                        @can('access', [\Dotworkers\Security\Enums\Permissions::$user_login])
-                            <a type="button" class="btn u-btn-3d u-btn-blue g-mr-10" href="{{ $login_user }}" data-route="{{ route('users.audit-users') }}" target="_blank" id="login_user">
-                                <i class="hs-admin-user"></i>
-                                {{ _i('See how') }}
-                            </a>
-                        @endcan
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            @can('access', [\Dotworkers\Security\Enums\Permissions::$user_login])
+                                <a type="button" class="btn u-btn-3d u-btn-blue g-mr-10" href="{{ $login_user }}" data-route="{{ route('users.audit-users') }}" target="_blank" id="login_user">
+                                    <i class="hs-admin-user"></i>
+                                    {{ _i('See how') }}
+                                </a>
+                            @endcan
+                        @endif
                     </div>
                     <br>
                 </section>
                 <section>
                     <ul class="list-unstyled g-mb-0">
-                        @can('access', [\Dotworkers\Security\Enums\Permissions::$reset_users_password])
-                            <li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
-                                <a href="#reset-password-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
-                                   data-toggle="modal">
-                                <span class="g-font-size-18 g-color-gray-light-v6 g-color-primary--parent-hover g-color-primary--parent-active g-mr-15">
-						            <i class="hs-admin-lock"></i>
-					            </span>
-                                    <span class="g-color-gray-dark-v6 g-color-primary--parent-hover g-color-primary--parent-active">
-                                    {{ _i('Reset password') }}
-                                </span>
-                                </a>
-                            </li>
-                        @endcan
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            @can('access', [\Dotworkers\Security\Enums\Permissions::$reset_users_password])
+                                <li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
+                                    <a href="#reset-password-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
+                                       data-toggle="modal">
+                                    <span class="g-font-size-18 g-color-gray-light-v6 g-color-primary--parent-hover g-color-primary--parent-active g-mr-15">
+                                        <i class="hs-admin-lock"></i>
+                                    </span>
+                                        <span class="g-color-gray-dark-v6 g-color-primary--parent-hover g-color-primary--parent-active">
+                                        {{ _i('Reset password') }}
+                                    </span>
+                                    </a>
+                                </li>
+                            @endcan
+                        @endif
                         {{--<li class="g-brd-top g-brd-gray-light-v7 g-mb-0 g-pl-10">
                             <a href="#send-message-modal" class="d-flex align-items-center u-link-v5 g-parent g-py-5"
                                data-toggle="modal">
@@ -375,55 +386,58 @@
                     </header>
                     <div class="card-block g-pa-15">
                         <div class="row g-mb-15">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                            <div class="col-md-3 align-self-end g-mb-5 g-mb-0--md">
                                 <label class="g-mb-0" for="id">
                                     {{ _i('ID') }}
                                 </label>
                             </div>
-                            <div class="col-md-10 align-self-center">
+                            <div class="col-md-9 align-self-start">
                                 <div class="form-group g-pos-rel g-mb-0">
                                     {{ $user->id }}
                                 </div>
                             </div>
                         </div>
                         <div class="row g-mb-15">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                            <div class="col-md-3 align-self-end g-mb-5 g-mb-0--md">
                                 <label class="g-mb-0" for="id">
                                     {{ _i('Username') }}
                                 </label>
                             </div>
-                            <div class="col-md-10 align-self-center">
+                            <div class="col-md-9 align-self-start">
                                 <div class="form-group g-pos-rel g-mb-0">
                                     {{ $user->username }}
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-mb-15">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="id">
-                                    {{ _i('Referral code') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    {{ $user->referral_code }}
-                                </div>
-                            </div>
-                        </div>
-                        @if(isset($agent))
+                        @if(isset($agent) && $agent != '')
                             <div class="row g-mb-15">
-                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                    <label class="g-mb-0" for="id">
-                                        {{ _i('Parent agent') }}
-                                    </label>
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md" style="padding-right: 0%;padding-top: 0%;padding-left: 3%;padding-bottom: 5%;">
+                                    <label>{{ _i('Father tree') }}</label>
+{{--                                    <label class="">{{ _i('Parent agent') }}</label>--}}
                                 </div>
-                                <div class="col-md-10 align-self-center">
+                                <div class="col-md-10 align-self-start" style="padding-left: 0;">
                                     <div class="form-group g-pos-rel g-mb-0">
                                         {!! $agent !!}
                                     </div>
                                 </div>
                             </div>
                         @endif
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            <div class="row g-mb-15">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="id">
+                                        {{ _i('Referral code') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        {{ $user->referral_code }}
+                                    </div>
+                                </div>
+                            </div>
+
+                        @endif
+
                         @can('access', [\Dotworkers\Security\Enums\Permissions::$show_wallet_id])
                             <div class="row g-mb-15">
                                 <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
@@ -438,207 +452,211 @@
                                 </div>
                             </div>
                         @endcan
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="email">
-                                    {{ _i('Email') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="email" name="email" class="form-control" type="email"
-                                           value="{{ $user->email }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="dni">
-                                    {{ _i('DNI') }}
-                                </label>
-                            </div>
 
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="dni" name="dni" class="form-control" type="text"
-                                           value="{{ $user->dni }}">
+                        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="email">
+                                        {{ _i('Email') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="email" name="email" class="form-control" type="email"
+                                               value="{{ $user->email }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="first_name">
-                                    {{ _i('Name') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="first_name" name="first_name" class="form-control" type="text"
-                                           value="{{ $user->first_name }}">
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="dni">
+                                        {{ _i('DNI') }}
+                                    </label>
+                                </div>
+
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="dni" name="dni" class="form-control" type="text"
+                                               value="{{ $user->dni }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="last_name">
-                                    {{ _i('Last Name') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="last_name" name="last_name" class="form-control" type="text"
-                                           value="{{ $user->last_name }}">
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="first_name">
+                                        {{ _i('Name') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="first_name" name="first_name" class="form-control" type="text"
+                                               value="{{ $user->first_name }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="gender">
-                                    {{ _i('Gender') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="gender" id="gender" class="form-control">
-                                        @if (is_null($user->gender))
-                                            <option value="" selected>{{ _i('Select...') }}</option>
-                                        @endif
-                                        <option value="F" {{ $user->gender == 'F' ? 'selected' : '' }}>
-                                            {{ _i('Female') }}
-                                        </option>
-                                        <option value="M" {{ $user->gender == 'M' ? 'selected' : '' }}>
-                                            {{ _i('Male') }}
-                                        </option>
-                                    </select>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="last_name">
+                                        {{ _i('Last Name') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="last_name" name="last_name" class="form-control" type="text"
+                                               value="{{ $user->last_name }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="level">
-                                    {{ _i('User level') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="level" id="level" class="form-control">
-                                        @foreach ($levels as $level)
-                                            <option value="{{ $level->id }}" {{ $level->id == $user->level ? 'selected' : '' }}>
-                                                {{ $level->{$selected_language['iso']} }}
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="gender">
+                                        {{ _i('Gender') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="gender" id="gender" class="form-control">
+                                            @if (is_null($user->gender))
+                                                <option value="" selected>{{ _i('Select...') }}</option>
+                                            @endif
+                                            <option value="F" {{ $user->gender == 'F' ? 'selected' : '' }}>
+                                                {{ _i('Female') }}
                                             </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="country">
-                                    {{ _i('Country') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="country" id="country" class="form-control" data-route="{{ route('core.states') }}">
-                                        @foreach ($countries as $country)
-                                            <option value="{{ $country->iso }}" {{ $country->iso == $user->country_iso ? 'selected' : '' }}>
-                                                {{ $country->name }}
+                                            <option value="M" {{ $user->gender == 'M' ? 'selected' : '' }}>
+                                                {{ _i('Male') }}
                                             </option>
-                                        @endforeach
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="state">
-                                    {{ _i('State') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="state" id="state" class="form-control" data-route="{{ route('core.city') }}">
-                                        <option value="">{{ _i('Select...') }}</option>
-                                    </select>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="level">
+                                        {{ _i('User level') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="level" id="level" class="form-control">
+                                            @foreach ($levels as $level)
+                                                <option value="{{ $level->id }}" {{ $level->id == $user->level ? 'selected' : '' }}>
+                                                    {{ $level->{$selected_language['iso']} }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="city">
-                                    {{ _i('City') }}
-                                </label>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="country">
+                                        {{ _i('Country') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="country" id="country" class="form-control" data-route="{{ route('core.states') }}">
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->iso }}" {{ $country->iso == $user->country_iso ? 'selected' : '' }}>
+                                                    {{ $country->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="city" id="city" class="form-control" >
-                                        <option value="">{{ _i('Select...') }}</option>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="state">
+                                        {{ _i('State') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="state" id="state" class="form-control" data-route="{{ route('core.city') }}">
+                                            <option value="">{{ _i('Select...') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="city">
+                                        {{ _i('City') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="city" id="city" class="form-control" >
+                                            <option value="">{{ _i('Select...') }}</option>
                                             @if($user->city)
                                                 <option value="{{$user->city}}" selected>{{$user->city}}</option>
                                             @endif
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="timezone">
-                                    {{ _i('Timezone') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <select name="timezone" id="timezone" class="form-control">
-                                        @foreach ($timezones as $timezone)
-                                            <option value="{{ $timezone }}" {{ $timezone == $user->timezone ? 'selected' : '' }}>
-                                                {{ $timezone }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="timezone">
+                                        {{ _i('Timezone') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <select name="timezone" id="timezone" class="form-control">
+                                            @foreach ($timezones as $timezone)
+                                                <option value="{{ $timezone }}" {{ $timezone == $user->timezone ? 'selected' : '' }}>
+                                                    {{ $timezone }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="phone">
-                                    {{ _i('Phone') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <select name="calling_code" class="form-control">
-                                                <option value="">{{ _i('Select...') }}</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country->calling_code }}" {{ $country->calling_code == $user->calling_code ? 'selected' : '' }}>
-                                                        {{ $country->name }} (+{{ $country->calling_code }})
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="phone">
+                                        {{ _i('Phone') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <select name="calling_code" class="form-control">
+                                                    <option value="">{{ _i('Select...') }}</option>
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->calling_code }}" {{ $country->calling_code == $user->calling_code ? 'selected' : '' }}>
+                                                            {{ $country->name }} (+{{ $country->calling_code }})
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
 
-                                        <div class="col-md-8">
-                                            <input id="phone" name="phone" class="form-control" type="text"
-                                                   value="{{ $user->phone }}">
+                                            <div class="col-md-8">
+                                                <input id="phone" name="phone" class="form-control" type="text"
+                                                       value="{{ $user->phone }}">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row g-mb-10">
-                            <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
-                                <label class="g-mb-0" for="birth_date">
-                                    {{ _i('Date of birth') }}
-                                </label>
-                            </div>
-                            <div class="col-md-10 align-self-center">
-                                <div class="form-group g-pos-rel g-mb-0">
-                                    <input id="birth_date" name="birth_date" class="form-control datepicker" type="text"
-                                           value="{{ !is_null($user->birth_date) ? $user->birth_date : '' }}">
+                            <div class="row g-mb-10">
+                                <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
+                                    <label class="g-mb-0" for="birth_date">
+                                        {{ _i('Date of birth') }}
+                                    </label>
+                                </div>
+                                <div class="col-md-10 align-self-center">
+                                    <div class="form-group g-pos-rel g-mb-0">
+                                        <input id="birth_date" name="birth_date" class="form-control datepicker" type="text"
+                                               value="{{ !is_null($user->birth_date) ? $user->birth_date : '' }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
+
                         <div class="row g-mb-10">
                             <div class="col-md-2 align-self-center g-mb-5 g-mb-0--md">
                                 <label class="g-mb-0" for="registration_date">
@@ -772,46 +790,49 @@
                     </div>
                 </div>
             @endif
-            <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-15">
-                <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+            @if($payments)
+                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-15">
+                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
 
-                    <div class="media">
-                        <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                            {{ _i('Payment methods') }}
-                        </h3>
+                        <div class="media">
+                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                {{ _i('Payment methods') }}
+                            </h3>
+                        </div>
+                    </header>
+                    <div class="card-block g-pa-15">
+                        @if ($user_accounts)
+                            @foreach ($user_accounts as $account)
+                                <div class="media-md align-items-center g-parent g-brd-around g-brd-gray-light-v2 g-rounded-4 g-px-20 g-py-5 g-mb-3">
+                                    <div class="d-flex-md text-center g-mb-20 g-mb-0--md">
+                                        <div class="d-inline-block u-icon-v3 u-icon-size--lg g-bg-gray-light-v3 g-font-size-24 g-color-secondary rounded-circle">
+                                            <i class="g-font-size-0">
+                                                {!! $account->logo !!}
+                                            </i>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
+                                        <div>
+                                            {!! $account->info !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <label class="js-check g-pos-rel d-block g-mb-20">
+                                <div class="media-md align-items-center g-parent g-bg-gray-light-v8--sibling-checked g-brd-around g-brd-gray-light-v7 g-rounded-4 g-px-10 g-py-15">
+                                    <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
+                                        <div>
+                                            {{ _i('This user does not have payment methods') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        @endif
                     </div>
-                </header>
-                <div class="card-block g-pa-15">
-                    @if ($user_accounts)
-                        @foreach ($user_accounts as $account)
-                            <div class="media-md align-items-center g-parent g-brd-around g-brd-gray-light-v2 g-rounded-4 g-px-20 g-py-5 g-mb-3">
-                                <div class="d-flex-md text-center g-mb-20 g-mb-0--md">
-                                    <div class="d-inline-block u-icon-v3 u-icon-size--lg g-bg-gray-light-v3 g-font-size-24 g-color-secondary rounded-circle">
-                                        <i class="g-font-size-0">
-                                            {!! $account->logo !!}
-                                        </i>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
-                                    <div>
-                                        {!! $account->info !!}
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <label class="js-check g-pos-rel d-block g-mb-20">
-                            <div class="media-md align-items-center g-parent g-bg-gray-light-v8--sibling-checked g-brd-around g-brd-gray-light-v7 g-rounded-4 g-px-10 g-py-15">
-                                <div class="d-flex align-items-center g-font-size-12 g-font-size-default--md g-mb-10 g-mb-0--md g-mx-10--md">
-                                    <div>
-                                        {{ _i('This user does not have payment methods') }}
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                    @endif
                 </div>
-            </div>
+            @endif
+
             @if(isset($wallets_bonuses))
                 @if (count($wallets_bonuses) > 0)
                     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-15">
@@ -1123,53 +1144,55 @@
                 </div>
             </div>
         </div>
-        @can('access', [\Dotworkers\Security\Enums\Permissions::$users_audits])
-            <div class="col-md-12">
-                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
-                        <div class="media">
-                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                                {{ _i('Audits') }}
-                            </h3>
+        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+            @can('access', [\Dotworkers\Security\Enums\Permissions::$users_audits])
+                <div class="col-md-12">
+                    <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
+                        <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                            <div class="media">
+                                <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                    {{ _i('Audits') }}
+                                </h3>
 
-                            <div class="media-body d-flex justify-content-end g-mb-10" id="audit-table-buttons">
+                                <div class="media-body d-flex justify-content-end g-mb-10" id="audit-table-buttons">
 
+                                </div>
+                                <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                                    <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                                    <button class="btn u-btn-3d u-btn-primary" type="button" id="update-audit"
+                                            data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                        <i class="hs-admin-reload g-color-white"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                        </header>
+                        <div class="card-block g-pa-15">
+                            <div class="table-responsive">
                                 <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-                                <button class="btn u-btn-3d u-btn-primary" type="button" id="update-audit"
-                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                    <i class="hs-admin-reload g-color-white"></i>
-                                </button>
+                                <table class="table table-bordered w-100" id="audit-table"
+                                       data-route="{{ route('users.users-audit-data') }}">
+                                    <thead>
+                                    <tr>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Details') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Type') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Date') }}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </header>
-                    <div class="card-block g-pa-15">
-                        <div class="table-responsive">
-                            <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-                            <table class="table table-bordered w-100" id="audit-table"
-                                   data-route="{{ route('users.users-audit-data') }}">
-                                <thead>
-                                <tr>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Details') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Type') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Date') }}
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endcan
+            @endcan
+        @endif
 
         @if ($store)
             <div class="col-md-12">
@@ -1268,53 +1291,56 @@
                 </div>
             </div>
         @endif
-        @if($document_verification)
-            <div class="col-md-12">
-                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-                    <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
-                        <div class="media">
-                            <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
-                                {{ _i('Verification of documents') }}
-                            </h3>
-                            <div class="media-body d-flex justify-content-end g-mb-10" id="verification-document-table-buttons">
 
+        @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+            @if($document_verification)
+                <div class="col-md-12">
+                    <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
+                        <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                            <div class="media">
+                                <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 g-mb-0">
+                                    {{ _i('Verification of documents') }}
+                                </h3>
+                                <div class="media-body d-flex justify-content-end g-mb-10" id="verification-document-table-buttons">
+
+                                </div>
+                                <div class="justify-content-end g-ml-10" style="padding-left: 10px">
+                                    <button class="btn u-btn-3d u-btn-primary" type="button" id="verification-document-update"
+                                            data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
+                                        <i class="hs-admin-reload g-color-white"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="justify-content-end g-ml-10" style="padding-left: 10px">
-                                <button class="btn u-btn-3d u-btn-primary" type="button" id="verification-document-update"
-                                        data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
-                                    <i class="hs-admin-reload g-color-white"></i>
-                                </button>
+                        </header>
+                        <div class="card-block g-pa-15">
+                            <div class="table-responsive">
+                                <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                                <table class="table table-bordered w-100" id="verification-document-table"
+                                       data-route="{{ route('store.documents-user') }}">
+                                    <thead>
+                                    <tr>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Date') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Document type') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            {{ _i('Status') }}
+                                        </th>
+                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none text-right">
+                                            {{ _i('Actions') }}
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                    </header>
-                    <div class="card-block g-pa-15">
-                        <div class="table-responsive">
-                            <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-                            <table class="table table-bordered w-100" id="verification-document-table"
-                                   data-route="{{ route('store.documents-user') }}">
-                                <thead>
-                                <tr>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Date') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Document type') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                        {{ _i('Status') }}
-                                    </th>
-                                    <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none text-right">
-                                        {{ _i('Actions') }}
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         @endif
     </div>
     @include('back.users.modals.reset-password')

@@ -39,6 +39,9 @@
         $(function () {
             let agents = new Agents();
             agents.financialState({{ $user }});
+            setTimeout(function (){
+                $('#update').click()
+            },1000)
         });
     </script>
 @endsection

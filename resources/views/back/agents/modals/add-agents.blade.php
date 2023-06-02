@@ -67,6 +67,19 @@
                                     </small>
                                 </div>
                             </div>
+                        <div class="col-12 col-sm-6 option_data_agent">
+                            <div class="form-group">
+                                <label for="timezone">{{ _i('Timezone') }}</label>
+                                <select name="timezone" class="form-control" style="width: 100%">
+                                    <option value="">{{ _i('Select...') }}</option>
+                                    @foreach ($timezones as $timezone)
+                                        <option value="{{ $timezone }}" {{ $timezone == session()->get('timezone') ? 'selected' : '' }}>
+                                            {{ $timezone }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
 {{--                        <div class="col-12 col-sm-12">--}}
 {{--                            <div class="form-group">--}}
@@ -85,19 +98,6 @@
                         @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
                             <div class="col-12 col-sm-6 option_data_agent">
                                 <div class="form-group">
-                                    <label for="timezone">{{ _i('Timezone') }}</label>
-                                    <select name="timezone" class="form-control" style="width: 100%">
-                                        <option value="">{{ _i('Select...') }}</option>
-                                        @foreach ($timezones as $timezone)
-                                            <option value="{{ $timezone }}" {{ $timezone == session()->get('timezone') ? 'selected' : '' }}>
-                                                {{ $timezone }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 option_data_agent">
-                                <div class="form-group">
                                     <label for="currencies">{{ _i('Currencies') }}</label>
                                     <select name="currencies[]" class="form-control" multiple style="width: 100%">
                                         <option value="">{{ _i('Select...') }}</option>
@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                         @else
-                            <input name="timezone" value="{{session('timezone')}}" type="hidden">
+{{--                            <input name="timezone" value="{{session('timezone')}}" type="hidden">--}}
                             <input name="currencies[]" value="{{session('currency')}}" type="hidden">
                         @endif
                     </div>

@@ -268,28 +268,6 @@
     color: #fff !important;
 }
 
-
-.currency-theme-ARS .u-sidebar-navigation--dark, .currency-theme-ARS .u-header__section--admin-dark .u-header-logo-toggler {
-    background-color: #6639b6 !important;
-}
-
-.currency-theme-ARS .u-header__section--admin-dark, .currency-theme-ARS .u-sidebar-navigation--dark .has-active, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
-    background-color: #4f2d8c !important;
-}
-
-.currency-theme-ARS .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-ARS .u-sidebar-navigation--dark .has-active > a.active i {
-    color: #fff !important;
-}
-
-.currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link:hover {
-    color: #fff !important;
-}
-
-.currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link i, .currency-theme-ARS .u-sidebar-navigation--dark .u-side-nav--top-level-menu-link, .u-side-nav--second-level-menu-link i, .u-side-nav--third-level-menu-link i, .u-side-nav--fourth-level-menu-link i {
-    color: #fff !important;
-}
-
-
 .currency-theme-COP .u-sidebar-navigation--dark, .currency-theme-COP .u-header__section--admin-dark .u-header-logo-toggler {
     background-color: #ebc71d !important;
 }
@@ -331,13 +309,16 @@
     color: #ddd !important;
 }
 
+body.currency-theme-USD {
+    background-color: #999 !important;
+}
 
 .currency-theme-USD .u-sidebar-navigation--dark, .currency-theme-USD .u-header__section--admin-dark .u-header-logo-toggler {
-    background-color: #008f39 !important;
+    background-color: #81d0f6 !important;
 }
 
 .currency-theme-USD .u-header__section--admin-dark, .currency-theme-USD .u-sidebar-navigation--dark .has-active, .currency-theme-USD .u-sidebar-navigation--dark .u-side-nav--top-level-menu-item:hover, .currency-theme-USD .u-sidebar-navigation--dark .u-side-nav--has-sub-menu.u-side-nav-opened {
-    background-color: #006f2c !important;
+    background-color: #5caad0 !important;
 }
 
 .currency-theme-USD .u-sidebar-navigation--dark .has-active > a.active, .currency-theme-USD .u-sidebar-navigation--dark .has-active > a.active i {
