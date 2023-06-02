@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Agents\Collections\AgentsCollection;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
+use App\Audits\Enums\AuditTypes;
 use App\Core\Collections\TransactionsCollection;
 use App\Core\Entities\Transaction;
 use App\Core\Notifications\TransactionNotAllowed;
@@ -13,9 +14,12 @@ use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Core\Repositories\GamesRepo;
+use App\Core\Repositories\WhitelabelsGamesRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use App\Reports\Repositories\ReportAgentRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
@@ -29,6 +33,7 @@ use App\Users\Users as GenerateReferenceCode;
 use App\Whitelabels\Repositories\WhitelabelsRepo;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use Dotworkers\Audits\Audits;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
@@ -52,7 +57,6 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\DataTables;
-use Yajra\DataTables\Utilities\Helper;
 use function GuzzleHttp\Promise\all;
 
 /**
@@ -80,6 +84,34 @@ class AgentsController extends Controller
      */
     private $agentsCollection;
 
+     /**
+     * TransactionsCollection
+     *
+     * @var TransactionsCollection
+     */
+    private $transactionsCollection;
+
+    /**
+     * ReportAgentRepo
+     *
+     * @var ReportAgentRepo
+     */
+    private $reportAgentRepo;
+
+    /**
+     * TransactionsRepo
+     *
+     * @var TransactionsRepo
+     */
+    private $transactionsRepo;
+
+    /**
+     * GamesRepo
+     *
+     * @var GamesRepo
+     */
+    private $gamesRepo;
+
     /**
      * UsersRepo
      *
@@ -88,11 +120,11 @@ class AgentsController extends Controller
     private $usersRepo;
 
     /**
-     * TransactionsRepo
+     * WhitelabelsGamesRepo
      *
-     * @var TransactionsRepo
+     * @var WhitelabelsGamesRepo
      */
-    private $transactionsRepo;
+    private $whitelabelsGamesRepo;
 
     /**
      * AgentCurrenciesRepo
@@ -144,6 +176,8 @@ class AgentsController extends Controller
      * @param AgentsCollection $agentsCollection
      * @param CountriesRepo $countriesRepo
      * @param TransactionsRepo $transactionsRepo
+     * @param GamesRepo $gamesRepo
+     * @param WhitelabelsGamesRepo $whitelabelsGamesRepo
      * @param UsersTempRepo $usersTempRepo
      * @param AgentCurrenciesRepo $agentCurrenciesRepo
      * @param GenerateReferenceCode $generateReferenceCode
@@ -152,16 +186,19 @@ class AgentsController extends Controller
      * @param UsersCollection $usersCollection
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection)
+    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection,AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo,AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection, GamesRepo $gamesRepo)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
         $this->agentsCollection = $agentsCollection;
+        $this->reportAgentRepo = $reportAgentRepo;
         $this->usersRepo = $usersRepo;
         $this->transactionsRepo = $transactionsRepo;
         $this->agentCurrenciesRepo = $agentCurrenciesRepo;
         $this->generateReferenceCode = $generateReferenceCode;
         $this->whitelabelsRepo = $whitelabelsRepo;
+        $this->gamesRepo = $gamesRepo;
+        $this->whitelabelsGamesRepo = $whitelabelsGamesRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->usersCollection = $usersCollection;
         $this->transactionsCollection = $transactionsCollection;
@@ -486,12 +523,37 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $username = $request->get('search')['value'];
+            $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+            $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+            $orderCol =[
+                'column'=> 'id',
+                'order'=> 'desc',
+            ];
+            if($request->has('order') && !empty($request->get('order'))){
+                $orderCol=[
+                    'column'=> $request->get('columns')[$request->get('order')[0]['column']]['data'],
+                    'order'=> $request->get('order')[0]['dir']
+                ];
+            }
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset);
 
-            $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
+//            $user = auth()->user()->id ? Auth::id() : null;
+//            if (is_null(Auth::user()->username) == 'romeo') {
+//                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+//                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+//            }
+
+            //TODO get ids children from father
+            $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather($agent, session('currency'), Configurations::getWhitelabel());
+
+            //TODO get transactions with filter
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$arraySonIds,$orderCol, $typeTransaction);
+
+            //TODO draw table in collection
+           $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
 
             return response()->json($data);
 
@@ -534,10 +596,11 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
             $currency = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency, $startDate, $endDate);
+            $totals = $this->transactionsRepo->getByUserAndProvidersTotales($agent, $providers, $currency, $startDate, $endDate, $typeUser);
 
             return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0], $totals[1]));
 
@@ -582,14 +645,15 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'provider' => ['required_if:lock_users,false'],
+            'maker' => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
         try {
             $user = $request->user;
             $currency = session('currency');
-            $provider = $request->provider;
+            $maker = $request->maker;
+            $category = $request->category;
             $type = $request->type;
             $lockUsers = $request->lock_users;
 
@@ -602,13 +666,24 @@ class AgentsController extends Controller
                     'id' => $user
                 ];
             }
-            $usersToUpdate = $this->agentsCollection->formatDataLock($subAgents, $users, $agent, $currency, $provider);
-
+            $usersToUpdate = $this->agentsCollection->formatDataLock($lockUsers,$subAgents, $users, $agent, $currency, $category, $maker);
             $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
-                    $this->agentsRepo->blockAgents($usersToUpdate);
+                    foreach ($usersToUpdate as $userToUpdate) {
+                        $user = $userToUpdate['user_id'];
+                        $category = $userToUpdate['category'];
+                        $data = [
+                            'currency_iso' => $userToUpdate['currency_iso'],
+                            'category' => $userToUpdate['category'],
+                            'makers' => $userToUpdate['makers'],
+                            'user_id' => $user,
+                            'created_at' => $userToUpdate['created_at'],
+                            'updated_at' => $userToUpdate['updated_at']
+                        ];
+                        $this->agentsRepo->updateBlockAgents($currency,$category,$user,$data);
+                    }
                     $data = [
                         'title' => _i('Locked provider'),
                         'message' => _i('The provider was locked to the agent and his entire tree'),
@@ -619,9 +694,16 @@ class AgentsController extends Controller
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $currencyIso = $userToUpdate['currency_iso'];
-                        $providerId = $userToUpdate['provider_id'];
+                        $category = $userToUpdate['category'];
                         $userId = $userToUpdate['user_id'];
-                        $this->agentsRepo->unBlockAgents($currencyIso, $providerId, $userId);
+                        $makers = json_decode($userToUpdate['makers']);
+                        $unBlockMaker = array_values(array_diff($makers, [$maker]));
+                        if(empty($unBlockMaker)){
+                            $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
+                        }else{
+                            $data['makers'] = json_encode($unBlockMaker);
+                            $this->agentsRepo->unBlockAgentsMaker($currencyIso,$category,$userId,$data);
+                        }
                     }
                     $data = [
                         'title' => _i('Unlocked provider'),
@@ -780,29 +862,73 @@ class AgentsController extends Controller
 //        }
 //
 //        return $users;
-        return 'no disponible';
-//        $users = $this->usersRepo->sqlShareTmp('users');
-//        foreach ($users as $value) {
-//            $value->type_user = null;
-//            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
-//            if (!is_null($agentTmp)) {
-//                $value->type_user = TypeUser::$agentCajero;
-//                if (isset($agentTmp->master) && $agentTmp->master) {
-//                    $value->type_user = TypeUser::$agentMater;
-//                }
-//            }
-//
-//            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
-//            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
-//                $value->type_user = TypeUser::$player;
-//            }
-//            //TODO UPDATE
-//            if (!is_null($value->type_user)) {
-//                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
-//            }
-//        }
-//
-//        return $users;
+        //return 'no disponible';
+
+        //TODO CHANGE TYPE USER
+        $users = $this->usersRepo->sqlShareTmp('users');
+        foreach ($users as $value) {
+            $value->type_user = null;
+            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
+            if (!is_null($agentTmp)) {
+                $value->type_user = TypeUser::$agentCajero;
+                if (isset($agentTmp->master) && $agentTmp->master) {
+                    $value->type_user = TypeUser::$agentMater;
+                }
+            }
+
+            $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
+            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
+                $value->type_user = TypeUser::$player;
+            }
+            //TODO UPDATE
+            if (!is_null($value->type_user)) {
+                $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
+            }
+        }
+
+        return $users;
+    }
+
+    /**
+     * Consult Balance by Type
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function consultBalanceByType(Request $request)
+    {
+
+        try {
+
+            $id = $request->has('user') ? $request->get('user') : Auth::id();
+            $type = $request->has('type') ? $request->get('type') : 'agent';
+            $currency = session('currency');
+            $balance = 0;
+            if ($type == 'agent') {
+                $agent = $this->agentsRepo->balanceCurrentAgent($id, $currency);
+                $balance = isset($agent->balance) ? number_format($agent->balance, 2) : 0;
+
+            }/* else {
+                $user = $this->agentsRepo->findUser($id);
+                $master = false;
+                $wallet = Wallet::getByClient($id, $currency);
+                $balance = $wallet->data->wallet->balance;
+                $agent = false;
+                $walletId = $wallet->data->wallet->id;
+                $myself = false;
+            }*/
+
+            $json_data = array(
+                "status" => true,
+                "balance" => $balance
+            );
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            $json_data = array(
+                "status" => false,
+            );
+        }
+
+        return response()->json($json_data);
     }
 
     /**
@@ -813,9 +939,34 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
+        $currency = session('currency');
+        $agent=76;
 
-//        try {
+        //TODO PROBAR TRANSACCION DE SUPERIOR A UN 3er INFERIOR
+        $offset = $request->has('start') ? $request->get('start') : 0;
+        $limit = $request->has('length') ? $request->get('length') : 100;
 
+        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('2020-m-d'));
+        $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $username = $request->has('search') ? $request->get('search')['value']:null;
+        $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+
+        $providers = [Providers::$agents, Providers::$agents_users];
+
+        $agents = $this->agentsRepo->getAgentsByOwner($agent, $currency);
+        $users = $this->agentsCollection->formatAgentsId($agents, $currency);
+        if (!in_array($agent, $users)) {
+            $users[] = $agent;
+        }
+
+        $users = [76,81,82,83,84];
+        $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser,$users);
+
+        $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
+
+        return response()->json($data);
+
+        //TODO DATA_TMP PAGIANTE
         $currency = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         $providers = [Providers::$agents, Providers::$agents_users];
@@ -849,10 +1000,6 @@ class AgentsController extends Controller
 
         return response()->json($json_data);
 
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            return Utils::failedResponse();
-//        }
     }
 
     /**
@@ -941,6 +1088,188 @@ class AgentsController extends Controller
     }
 
     /**
+     * Get exclude provider agent delete
+     *
+     * @param int $user User
+     * @param string $category Provider
+     * @param string $currency Currency ISO
+     * @return Factory|View
+     */
+    public function excludeProviderAgentsDelete($user, $category, $currency)
+    {
+        try {
+            $user = (int)$user;
+            $this->agentsRepo->unBlockAgents($currency, $category, $user);
+            $data = [
+                'title' => _i('User activated'),
+                'message' => _i('User was activated correctly'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+     /**
+     * Get exclude provider agent list
+     *
+     * @param int $whitelabel Whitelabel
+     * @return Factory|View
+     */
+    public function excludeProviderAgentsList(Request $request, $startDate = null, $endDate = null, $category = null, $maker = null, $currency = null)
+    {
+        try {
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $agentsBlocked = [];
+                $user = auth()->user()->id;
+                $currency_iso = session('currency');
+                $whitelabel = Configurations::getWhitelabel();
+                $agents = $this->usersRepo->arraySonIds($user,$currency_iso,$whitelabel);
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $category = $request->category;
+                $maker = $request->maker;
+                $currency = $request->currency;
+                $users = $this->usersRepo->getExcludeProviderUserByDates($currency, $category, $maker, $whitelabel, $startDate, $endDate);
+                foreach($users as $user){
+                    if(in_array($user->user_id,$agents)){
+                        $agentsBlocked[] = $user;
+                    }
+                }
+                if (!is_null($agentsBlocked)) {
+                    $this->agentsCollection->formatExcludeMakersUser($agentsBlocked);
+                    $data = [
+                        'agents' => $agentsBlocked
+                    ];
+                } else {
+                    $data = [
+                        'agents' => []
+                    ];
+                }
+            }else{
+                $data = [
+                    'agents' => []
+                ];
+            }
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Show exclude providers agents
+     * @param ProvidersRepo $providersRepo
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|View
+     */
+    public function excludeProvidersAgents(ProvidersRepo $providersRepo)
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
+        $categories = $this->gamesRepo->getCategories();
+        $makers = $this->gamesRepo->getMakers();
+        $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
+        $data['providers'] = $providers;
+        $data['whitelabel'] = $whitelabel;
+        $data['categories'] = $categories;
+        $data['makers'] = $makers;
+        $data['title'] = _i('Exclude agents from providers');
+        return view('back.agents.reports.exclude-providers-agents', $data);
+    }
+
+    /**
+     *  Exclude providers agents data
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function excludeProvidersAgentsData(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'currency' => 'required',
+            'maker' => 'required',
+        ]);
+
+        try {
+            $usersData = [];
+            $user = auth()->user()->id;
+            $username = strtolower(trim($request->username));
+            $category = $request->category;
+            $maker = $request->maker;
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = $request->currency;
+            $userData = $this->usersRepo->getByUsername($username, $whitelabel);
+            $agents = $this->usersRepo->arraySonIds($user,$currency,$whitelabel);
+
+            if (!is_null($userData)) {
+                $date = Carbon::now('UTC')->format('Y-m-d H:i:s');
+                $makers = [$maker];
+                $categories = [];
+                if(in_array($userData->id,$agents)){
+                    if (is_null($category)) {
+                        $categories = $this->gamesRepo->getCategoriesByMaker($maker);
+                        $categories = array_column($categories->toArray(), 'category');
+                    } else {
+                        $categories[] = $category;
+                    }
+                    foreach ($categories as $category) {
+                        $excludeUser = $this->usersRepo->findExcludeMakerUser($category, $userData->id, $currency);
+                        $makersExclude = isset($excludeUser->makers) ? json_decode($excludeUser->makers) : [];
+                        $dataMakers = array_merge($makers, $makersExclude);
+                        $makersArray = array_values(array_filter(array_unique($dataMakers)));
+                        $usersData[] = [
+                            'category' => $category,
+                            'makers' => json_encode($makersArray),
+                            'currency_iso' => $currency
+                        ];
+                    }
+                    foreach ($usersData as $userToUpdate) {
+                        $data = [
+                            'currency_iso' => $userToUpdate['currency_iso'],
+                            'category' => $userToUpdate['category'],
+                            'makers' => $userToUpdate['makers'],
+                            'user_id' => $userData->id,
+                            'created_at' => $date,
+                            'updated_at' => $date
+                        ];
+                        $this->agentsRepo->updateBlockAgents($currency, $userToUpdate['category'], $userData->id, $data);
+                    }
+                    $data = [
+                        'title' => _i('Excluded user'),
+                        'message' => _i('The user has been successfully excluded'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::successResponse($data);
+                }else{
+                    $data = [
+                        'title' => _i('You cannot block providers for this user'),
+                        'message' => _i("Please check and try again"),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+            } else {
+                $data = [
+                    'title' => _i('The user does not exist'),
+                    'message' => _i("Please check and try again"),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Data Financial State New "for support"
      * @param ProvidersRepo $providersRepo
      * @param $user
@@ -948,7 +1277,7 @@ class AgentsController extends Controller
      * @param $endDate
      * @return Response
      */
-    public function financialStateData(ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
+    public function financialStateData(Request $request, ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
 
         try {
@@ -970,8 +1299,22 @@ class AgentsController extends Controller
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
             $data = [
+                //ADD startOfDayUtc to Date
+                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
             ];
+
+            //TODO ENVIAR CAMPO _hour para consultar la otra tabla
+            if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
+//                Log::debug('financialStateData:field _hour',[
+//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+//                ]);
+
+                $data = [
+                    'table' => $this->agentsCollection->closuresTotalsByAgentGroupProviderHour($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
+                ];
+            }
+
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
@@ -1022,6 +1365,68 @@ class AgentsController extends Controller
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Data Financial State Makers
+     * @param Request $request
+     * @param $startDate
+     * @param $endDate
+     * @param $currency_iso
+     * @param $provider_id
+     * @param $whitelabel_id
+     * @return Response
+     */
+    public function financialStateDataMakers(Request $request, $startDate = null, $endDate = null, $currency_iso= null, $provider_id = null, $whitelabel_id = null)
+    {
+
+        try {
+            // dd([$request->currency_iso, $request->whitelabel_id]);
+            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+                //TODO TODOS => EJE:SUPPORT
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
+            } else {
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate),
+                                                                                                    $request->currency_iso,
+                                                                                                    $request->provider_id,
+                                                                                                    $request->whitelabel_id);
+
+            }
+            $data = [
+                'table' => $this->agentsCollection->closuresTotalsProviderAndMakerGlobal($table)
+            ];
+
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Data Financial State Makers Totals
+     *
+     * @param int $agent User ID
+     * @return Response
+     */
+    public function financialStateDataMakersTotals(Request $request, $startDate = null, $endDate = null)
+    {
+        try {
+            $startDate = Utils::startOfDayUtc($request->has('startDate')?$request->get('startDate'):date('Y-m-d'));
+            $endDate = Utils::endOfDayUtc($request->has('endDate')?$request->get('endDate'):date('Y-m-d'));
+            // $currency = session('currency');
+            // $providers = [Providers::$agents, Providers::$agents_users];
+            $totals = $this->transactionsRepo->getFinancialDataMakersTotals($startDate, $endDate, $request->currency_iso, $request->provider_id, $request->whitelabel_id);
+
+            return response()->json($this->agentsCollection->formatAgentDataMakersTotals($totals));
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }
@@ -1129,7 +1534,7 @@ class AgentsController extends Controller
     {
         try {
             $percentage = null;
-            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (in_array(Roles::$support, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelAndProviders(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate));
             } else {
@@ -1170,7 +1575,7 @@ class AgentsController extends Controller
     {
         try {
             $percentage = null;
-            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (in_array(Roles::$support, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 if ($request->has('username_like') && !is_null($request->get('username_like'))) {
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsername(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%');
@@ -1186,8 +1591,10 @@ class AgentsController extends Controller
                 if ($request->has('username_like') && !is_null($request->get('username_like'))) {
                     //TODO validar user_id para tener dinamismo
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsernameWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%', Auth::user()->id);
+                    //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourByUsernameWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), '%' . $request->get('username_like') . '%', Auth::user()->id);
                 } else {
                     $table = $this->closuresUsersTotals2023Repo->getClosureTotalsWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id);
+                    //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsHourWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id);
                 }
             }
 
@@ -1220,6 +1627,50 @@ class AgentsController extends Controller
         $data['providers'] = $this->closuresUsersTotals2023Repo->getProvidersActiveByCredentials(true, $currency, $whitelabel);
         $data['title'] = _i('Financial statement report details');
         return view('back.agents.reports.financial-state-details', $data);
+    }
+
+
+    /**
+     * View Financial State Makers
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function financialStateMakers()
+    {
+        $whitelabel = null;
+        $currency = null;
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['currencies'] = Configurations::getCurrencies();
+        // $data['currencies'] = $this->currenciesRepo->all();
+        // $data['whitelabels'] = $this->whitelabelsGamesRepo->all();
+        $data['providers'] = $this->closuresUsersTotals2023Repo->getProvidersByCurrencyAndCredentials(true, $currency, $whitelabel);
+        $data['title'] = _i('Financial statement report makers');
+        return view('back.agents.reports.financial-state-makers', $data);
+    }
+
+    /**
+     * View Financial State Makers Details
+     * @return Application|Factory|\Illuminate\Contracts\View\View
+     */
+    public function financialStateMakersDetails()
+    {
+        $whitelabel = null;
+        $currency = null;
+        if (session('admin_id')) {
+            $data['user'] = session('admin_id');
+        } else {
+            $data['user'] = auth()->user()->id;
+        }
+        $data['currencies'] = Configurations::getCurrencies();
+        // $data['currencies'] = $this->currenciesRepo->all();
+        $data['whitelabel'] = $this->whitelabelsGamesRepo->all();
+        // dd($data);
+        $data['providers'] = $this->closuresUsersTotals2023Repo->getProvidersByCurrencyAndCredentials(true, $currency, $whitelabel);
+        $data['title'] = _i('Financial statement report makers details');
+        return view('back.agents.reports.financial-state-makers-details', $data);
     }
 
     /**
@@ -1336,12 +1787,13 @@ class AgentsController extends Controller
     }
 
     /**
+     * Summary State Financial New
      * @param $user
      * @param $startDate
      * @param $endDate
      * @return Response
      */
-    public function financialStateSummaryDataNew($user = null, $startDate = null, $endDate = null)
+    public function financialStateSummaryDataNew(Request $request, $user = null, $startDate = null, $endDate = null)
     {
         try {
             if (is_null($user)) {
@@ -1357,6 +1809,16 @@ class AgentsController extends Controller
             $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
 
             $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
+
+            //TODO ENVIAR CAMPO _hour para consultar la otra tabla
+            if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
+//                Log::debug('financialStateSummaryDataNew:field _hour',[
+//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+//                ]);
+                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSonHour(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
+
+            }
+
 //            }
             //TODO AGENT
             //return $table;
@@ -1438,6 +1900,7 @@ class AgentsController extends Controller
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
+                $father = $this->usersRepo->findUsername($user->owner_id);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
                 $balance = $wallet->data->wallet->balance;
@@ -1447,7 +1910,12 @@ class AgentsController extends Controller
             }
 
             $this->agentsCollection->formatAgent($user);
+            $user->created = date('Y-m-d',strtotime($user->created));
             $data = [
+                'cant_agents' => 0,
+                'cant_players' => 0,
+                'father' => $father->username ?? '---',
+                'fathers' => [],
                 'user' => $user,
                 'balance' => number_format($balance, 2),
                 'master' => $master,
@@ -1457,6 +1925,41 @@ class AgentsController extends Controller
                 'myself' => $myself,
                 'agent_player' => $agent_player
             ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+
+    /**
+     * Find tree agents father
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getFatherAndCant(Request $request)
+    {
+        try {
+            $currency = session('currency');
+            $id = $request->id;
+            $type = $request->type;
+
+            if ($type == 'agent') {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+            } else {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency,Auth::user()->id,$type);
+            }
+
+            $data = [
+                'cant_agents' => $cant['agents'],
+                'cant_players' => $cant['players'],
+                'fathers' => $fathers,
+            ];
+
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
@@ -1540,13 +2043,6 @@ class AgentsController extends Controller
      */
     public function index(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
-
-//        $result =  $this->agentsRepo->getAndUpdateBalance('ARS',70,76,50);
-//
-//        if($result[0]->status){
-//            return ['ok',$result];
-//        }
-//        return $result;
         try {
             if (session('admin_id')) {
                 $user = session('admin_id');
@@ -1564,6 +2060,7 @@ class AgentsController extends Controller
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+            $makers = $this->gamesRepo->getMakers();
             //TODO MOSTRAR EL AGENTE LOGUEADO
             $agent->user_id = $agent->id;
             $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
@@ -1575,6 +2072,7 @@ class AgentsController extends Controller
             $data['timezones'] = \DateTimeZone::listIdentifiers();
             $data['providers'] = $providers;
             $data['agent'] = $agent;
+            $data['makers'] = $makers;
             $data['agents'] = $agentAndSubAgents;
             $data['tree'] = $tree;
             $data['title'] = _i('Agents module');
@@ -1768,19 +2266,10 @@ class AgentsController extends Controller
             $agent = $request->agent;
 
             $agent = $this->agentsRepo->existAgent($agent);
-            $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
-            if ($userData->action == ActionUser::$locked_higher) {
+            $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
+            if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => _i('Blocked by a superior!'),
-                    'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$not_found, $data);
-
-            }
-            if ($userData->status == false) {
-                $data = [
-                    'title' => _i('Deactivated user'),
+                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!') : _i('Deactivated user'),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2327,7 +2816,7 @@ class AgentsController extends Controller
             'timezone' => 'required'
         ]);
 
-        try {
+        //try {
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
             $currency = session('currency');
@@ -2396,7 +2885,7 @@ class AgentsController extends Controller
 
             foreach ($currencies as $key => $agentCurrency) {
                 $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $agentCurrency);
-                $this->agentsRepo->blockAgents($excludedUser);
+                $this->agentsRepo->blockAgentsMakers($excludedUser);
                 $wallet = Wallet::store($user->id, $user->username, $uuid, $agentCurrency, $whitelabel, session('wallet_access_token'));
                 $userData = [
                     'user_id' => $user->id,
@@ -2444,7 +2933,7 @@ class AgentsController extends Controller
                     'to' => $user->username,
                     'balance' => $ownerBalance
                 ];
-                $transactionData = [
+                $transactionData1 = [
                     'user_id' => $ownerAgent->id,
                     'amount' => $balance,
                     'currency_iso' => $currency,
@@ -2454,17 +2943,11 @@ class AgentsController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
-                $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-                $auditData = [
-                    'ip' => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
-                    'transaction_data' => $transactionData
-                ];
-                //Audits::store($user, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditData);
+                $transactionTmp1 = $this->transactionsRepo->store($transactionData1, TransactionStatus::$approved, []);
 
                 $additionalData['balance'] = $balance;
-                $transactionData = [
+                $additionalData['transaction_id'] = $transactionTmp1->id;
+                $transactionData2 = [
                     'user_id' => $user->id,
                     'amount' => $balance,
                     'currency_iso' => $currency,
@@ -2474,14 +2957,29 @@ class AgentsController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
-                $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-                $auditData = [
+                $transactionTmp2 = $this->transactionsRepo->store($transactionData2, TransactionStatus::$approved, []);
+
+                //TODO AUDIT 2 CREDIT
+                $auditDataTransaction2 = [
                     'ip' => Utils::userIp(),
                     'user_id' => auth()->user()->id,
                     'username' => auth()->user()->username,
-                    'transaction_data' => $transactionData
+                    'transaction_data' => $transactionData2
                 ];
-                //Audits::store($user, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditData);
+                Audits::store($user->id, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
+
+                //TODO UPDATE TRANSACTION 1 DATA = transaction_id
+                $transactionData1_updated = $this->transactionsRepo->updateData($transactionTmp1->id, $transactionTmp2->id);
+
+                 //TODO AUDIT 1 DEBIT
+                $auditDataTransaction1 = [
+                    'ip' => Utils::userIp(),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'transaction_data' => $transactionData1_updated
+                ];
+                Audits::store($user->id, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
+
             } else {
                 $ownerBalance = $ownerAgent->balance;
             }
@@ -2497,10 +2995,10 @@ class AgentsController extends Controller
                 'route' => route('agents.index'),
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**
@@ -2782,7 +3280,7 @@ class AgentsController extends Controller
             $timezone = $request->timezone;
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserProvider($owner);
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -2858,7 +3356,7 @@ class AgentsController extends Controller
             ];
             //Audits::store($user, AuditTypes::$player_creation, Configurations::getWhitelabel(), $auditData);
             $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $currency);
-            $this->agentsRepo->blockAgents($excludedUser);
+            $this->agentsRepo->blockAgentsMakers($excludedUser);
             $wallet = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'));
             $this->generateReferenceCode->generateReferenceCode($user->id);
             $userData = [
@@ -3025,6 +3523,58 @@ class AgentsController extends Controller
     {
         $data['title'] = _i('Users balances');
         return view('back.agents.reports.users-balances', $data);
+    }
+
+    /**
+     * View Create Agent
+     * @param CountriesRepo $countriesRepo
+     * @param ProvidersRepo $providersRepo
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|\Illuminate\Contracts\View\View|void
+     */
+    public function viewCreateAgent(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+        try {
+
+            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency(auth()->user()->id, session('currency'));
+            $data['countries'] = $countriesRepo->all();
+            $data['timezones'] = \DateTimeZone::listIdentifiers();
+
+            $data['title'] = _i('Create agent');
+
+            return view('back.agents.user-and-agent.create-agent', $data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * View Create User
+     * @param CountriesRepo $countriesRepo
+     * @param ProvidersRepo $providersRepo
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|\Illuminate\Contracts\View\View|void
+     */
+    public function viewCreateUser(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+        try {
+
+            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency(auth()->user()->id, session('currency'));
+            $data['countries'] = $countriesRepo->all();
+            $data['timezones'] = \DateTimeZone::listIdentifiers();
+
+            $data['title'] = _i('Create player');
+
+            return view('back.agents.user-and-agent.create-user', $data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
     }
 
     /**

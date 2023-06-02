@@ -1,5 +1,7 @@
 
-
+<?php $__env->startSection('styles'); ?>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="row">
         <div class="col-md-12">
@@ -70,7 +72,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered w-100" id="locked-providers-table"
+                        <table class="table table-bordered display nowrap"  style="width:100%" id="locked-providers-table"
                                data-route="<?php echo e(route('agents.reports.locked-providers-data')); ?>">
                             <thead>
                             <tr>

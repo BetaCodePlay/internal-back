@@ -28,7 +28,6 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-user',
                 'permission' => Permissions::$users_menu,
                 'submenu' => [
-
                     'Create' => [
                         'text' => _i('Create'),
                         'level_class' => 'second',
@@ -120,15 +119,15 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'ExcludeUsers' => [
-                        'text' => _i('Exclude users from providers'),
-                        'level_class' => 'second',
-                        'route' => 'users.exclude-providers-users',
-                        'params' => [],
-                        'icon' => 'hs-admin-user',
-                        'permission' => Permissions::$exclude_users,
-                        'submenu' => []
-                    ],
+                    // 'ExcludeUsers' => [
+                    //     'text' => _i('Exclude users from providers'),
+                    //     'level_class' => 'second',
+                    //     'route' => 'users.exclude-providers-users',
+                    //     'params' => [],
+                    //     'icon' => 'hs-admin-user',
+                    //     'permission' => Permissions::$exclude_users,
+                    //     'submenu' => []
+                    // ],
                     'DocumentsVerifications' => [
                         'text' => _i('Documents verifications'),
                         'level_class' => 'second',
@@ -221,11 +220,33 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Statistics'),
+                        'text' => _i('Dashboar'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
                         'params' => [],
                         'icon' => 'hs-admin-dashboard',
+                        'permission' => Permissions::$agents_dashboard,
+                        'submenu' => []
+                    ],
+
+                    //Create Agent
+                    'AgentsCreateAgent' => [
+                        'text' => _i('Create agent user'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.agent',
+                        'params' => [],
+                        'icon' => 'hs-admin-user',
+                        'permission' => Permissions::$create_user_agent,
+                        'submenu' => []
+                    ],
+
+                    //Create Player
+                    'AgentsCreateUser' => [
+                        'text' => _i('Create player user'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.user',
+                        'params' => [],
+                        'icon' => 'hs-admin-user',
                         'permission' => Permissions::$agents_dashboard,
                         'submenu' => []
                     ],
@@ -259,6 +280,16 @@ if (!function_exists('menu')) {
                                 'permission' => Permissions::$agents_financial_report,
                                 'submenu' => []
                             ],
+                            //TODO REPORTE QUEDO A MEDIA
+//                           'AgentsPayments' => [
+//                               'text' => _i('Agents Payments'),
+//                               'level_class' => 'third',
+//                               'route' => 'agents.reports.agents-payments',
+//                               'params' => [],
+//                               'icon' => 'hs-admin-pie-chart',
+//                               'permission' => Permissions::$agents_financial_report,
+//                               'submenu' => []
+//                           ],
 //                            'AgentsFinancialStateDetails' => [
 //                                'text' => _i('Financial state details'),
 //                                'level_class' => 'third',
@@ -372,6 +403,16 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.locked-providers',
                                 'params' => [],
                                 'icon' => 'hs-admin-lock',
+                                'permission' => Permissions::$locked_providers,
+                                'submenu' => []
+                            ],
+
+                            'ExcludeAgents' => [
+                                'text' => _i('Exclude agents from providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.exclude-providers-agents',
+                                'params' => [],
+                                'icon' => 'hs-admin-user',
                                 'permission' => Permissions::$locked_providers,
                                 'submenu' => []
                             ],
@@ -539,15 +580,46 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'ManualAdjustmentsWhitelabel' => [
-                        'text' => _i('Manual adjustments'),
+                    'ManualAdjustmentsUsers' => [
+                        'text' => _i('Manual adjustments users'),
                         'level_class' => 'second',
                         'route' => 'reports.financial.manual-adjustments-users',
                         'params' => [],
                         'permission' => Permissions::$manual_adjustments_whitelabel,
                         'icon' => 'hs-admin-arrows-vertical',
                         'submenu' => []
-                    ]
+                    ],
+
+                    'AgentsFinancial' => [
+                        'text' => _i('By Agents'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-bar-chart',
+                        'permission' => Permissions::$agents_financial,
+                        'submenu' => [
+
+                            'SalesByWhitelabelsByAgents' => [
+                                'text' => _i('Sales by whitelabels'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers-details',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_whitelabels_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+
+                            'SalesByProvidersByAgents' => [
+                                'text' => _i('Sales by providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_providers_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+                        ]
+                ]
                 ]
             ],
 
@@ -4710,14 +4782,14 @@ if (!function_exists('menu')) {
                                 'params' => [],
                                 'icon' => 'hs-admin-control-shuffle',
                                 'permission' => Permissions::$products_reports_menu,
-                                'provider' => Providers::$lucky_spins,
+                                'provider' => Providers::$lucky_roulette,
                                 'submenu' => [
 
                                     'Users' => [
                                         'text' => _i('Users totals'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.users-totals',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-user',
                                         'submenu' => []
                                     ],
@@ -4735,7 +4807,7 @@ if (!function_exists('menu')) {
                                         'text' => _i('Most played games'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.most-played-games',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-stats-up',
                                         'submenu' => []
                                     ],
@@ -4744,7 +4816,7 @@ if (!function_exists('menu')) {
                                         'text' => _i('Games played by user'),
                                         'level_class' => 'fourth',
                                         'route' => 'reports.games-played-by-user',
-                                        'params' => [Providers::$lucky_spins],
+                                        'params' => [Providers::$lucky_roulette],
                                         'icon' => 'hs-admin-stats-up',
                                         'submenu' => []
                                     ],

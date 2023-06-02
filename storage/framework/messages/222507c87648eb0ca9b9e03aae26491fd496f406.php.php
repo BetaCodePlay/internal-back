@@ -1744,5 +1744,33 @@ class Permissions
      * @var int
      */
     public static $add_whitelabel_franchise = 263;
-    
+    /**
+     * Create user agent
+     *
+     * @var int
+     */
+    public static $create_user_agent = 264;
+
+    /**
+     *  Agents financial
+     *
+     * @var int
+     */
+    public static $agents_financial = 265;
+
+
+    /**
+     *  Sales by whitelabels by agents
+     *
+     * @var int
+     */
+    public static $sales_by_whitelabels_by_agents = 266;
+
+    /**
+     *  Sales by providers by agents
+     *
+     * @var int
+     */
+    public static $sales_by_providers_by_agents = 267;
+
 }

@@ -58,5 +58,15 @@
             "added_translation": "Traduction ajoutée",
             "add_translation": "Vous devez ajouter au moins une traduction"
         }
+    },
+    "es_AR": {
+        "translation": {
+            "title": "El campo título es obligatorio",
+            "content": "El campo descripción es obligatorio",
+            "validation_title": "La información proporcionada es inválida",
+            "close": "Cerrar",
+            "added_translation": "Traducción agregada",
+            "add_translation": "Debe agregar al menos una traducción"
+        }
     }
 }

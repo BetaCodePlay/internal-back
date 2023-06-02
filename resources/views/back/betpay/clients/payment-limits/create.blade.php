@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="payment">{{ _i('types transition') }}</label>
+                                    <label for="payment">{{ _i('transition types') }}</label>
                                     <select name="payment" id="payment" class="form-control">
                                         <option value="">{{ _i('Select...') }}</option>
 

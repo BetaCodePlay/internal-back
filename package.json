@@ -68,6 +68,7 @@
         "jquery.cookie": "^1.4.1",
         "jquery.easing": "^1.4.1",
         "jquery.repeater": "^1.2.1",
+        "jspdf": "^2.5.1",
         "jstree": "^3.3.9",
         "jszip": "^3.2.2",
         "laravel-echo": "^1.8.1",
@@ -81,6 +82,7 @@
         "socket.io-client": "^2.3.0",
         "sweetalert2": "^8.17.6",
         "tinymce": "^5.4.1",
-        "toastr": "^2.1.4"
+        "toastr": "^2.1.4",
+        "glob-parent": ">=5.1.2"
     }
 }

@@ -28,7 +28,6 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-user',
                 'permission' => Permissions::$users_menu,
                 'submenu' => [
-
                     'Create' => [
                         'text' => _i('Create'),
                         'level_class' => 'second',
@@ -120,15 +119,15 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'ExcludeUsers' => [
-                        'text' => _i('Exclude users from providers'),
-                        'level_class' => 'second',
-                        'route' => 'users.exclude-providers-users',
-                        'params' => [],
-                        'icon' => 'hs-admin-user',
-                        'permission' => Permissions::$exclude_users,
-                        'submenu' => []
-                    ],
+                    // 'ExcludeUsers' => [
+                    //     'text' => _i('Exclude users from providers'),
+                    //     'level_class' => 'second',
+                    //     'route' => 'users.exclude-providers-users',
+                    //     'params' => [],
+                    //     'icon' => 'hs-admin-user',
+                    //     'permission' => Permissions::$exclude_users,
+                    //     'submenu' => []
+                    // ],
                     'DocumentsVerifications' => [
                         'text' => _i('Documents verifications'),
                         'level_class' => 'second',
@@ -221,11 +220,33 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Statistics'),
+                        'text' => _i('Dashboar'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
                         'params' => [],
                         'icon' => 'hs-admin-dashboard',
+                        'permission' => Permissions::$agents_dashboard,
+                        'submenu' => []
+                    ],
+
+                    //Create Agent
+                    'AgentsCreateAgent' => [
+                        'text' => _i('Create agent user'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.agent',
+                        'params' => [],
+                        'icon' => 'hs-admin-user',
+                        'permission' => Permissions::$create_user_agent,
+                        'submenu' => []
+                    ],
+
+                    //Create Player
+                    'AgentsCreateUser' => [
+                        'text' => _i('Create player user'),
+                        'level_class' => 'second',
+                        'route' => 'agents.create.user',
+                        'params' => [],
+                        'icon' => 'hs-admin-user',
                         'permission' => Permissions::$agents_dashboard,
                         'submenu' => []
                     ],
@@ -382,6 +403,16 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.locked-providers',
                                 'params' => [],
                                 'icon' => 'hs-admin-lock',
+                                'permission' => Permissions::$locked_providers,
+                                'submenu' => []
+                            ],
+
+                            'ExcludeAgents' => [
+                                'text' => _i('Exclude agents from providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.exclude-providers-agents',
+                                'params' => [],
+                                'icon' => 'hs-admin-user',
                                 'permission' => Permissions::$locked_providers,
                                 'submenu' => []
                             ],
@@ -549,15 +580,46 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'ManualAdjustmentsWhitelabel' => [
-                        'text' => _i('Manual adjustments'),
+                    'ManualAdjustmentsUsers' => [
+                        'text' => _i('Manual adjustments users'),
                         'level_class' => 'second',
                         'route' => 'reports.financial.manual-adjustments-users',
                         'params' => [],
                         'permission' => Permissions::$manual_adjustments_whitelabel,
                         'icon' => 'hs-admin-arrows-vertical',
                         'submenu' => []
-                    ]
+                    ],
+
+                    'AgentsFinancial' => [
+                        'text' => _i('By Agents'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-bar-chart',
+                        'permission' => Permissions::$agents_financial,
+                        'submenu' => [
+
+                            'SalesByWhitelabelsByAgents' => [
+                                'text' => _i('Sales by whitelabels'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers-details',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_whitelabels_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+
+                            'SalesByProvidersByAgents' => [
+                                'text' => _i('Sales by providers'),
+                                'level_class' => 'second',
+                                'route' => 'agents.reports.financial-state-makers',
+                                'params' => [],
+                                'permission' => Permissions::$sales_by_providers_by_agents,
+                                'icon' => 'hs-admin-control-shuffle',
+                                'submenu' => []
+                            ],
+                        ]
+                ]
                 ]
             ],
 
@@ -2693,6 +2755,26 @@ if (!function_exists('menu')) {
                     ]
                 ]
             ],
+            /*
+            'Sections' => [
+                'text' => _i('Menu Sections'),
+                'level_class' => 'top',
+                'route' => null,
+                'params' => [],
+                'icon' => 'hs-admin-image',
+                'permission' => Permissions::$section_images_menu,
+                'submenu' => [
+                    'Images' => [
+                        'text' => _i('Images (Beta)'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-image',
+                        'permission' => Permissions::$section_images_menu,
+                        'submenu' => []
+                    ]
+                ]
+            ],*/
 
             'LobbyGames' => [
                 'text' => _i('Lobby Games'),
@@ -2713,28 +2795,6 @@ if (!function_exists('menu')) {
                     ]
                 ],
             ],
-
-
-            /*'Games' => [
-                'text' => _i('Games section'),
-                'level_class' => 'top',
-                'route' => 'section-games.index',
-                'params' => [],
-                'icon' => 'hs-admin-game',
-                'permission' => Permissions::$manage_section_games,
-                'submenu' => [
-                    'GamesSection' => [
-                        'text' => _i('Games section'),
-                        'level_class' => 'second',
-                        'route' => 'section-games.index',
-                        'params' => [TemplateElementTypes::$home],
-                        'icon' => 'hs-admin-shift-left',
-                        'permission' => Permissions::$manage_section_games,
-                        'submenu' => []
-                    ]
-                ]
-            ],*/
-
 
             /*'Featured' => [
                 'text' => _i('Featured lobby'),

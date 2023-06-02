@@ -34,6 +34,21 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@index'
     ]);
 
+    Route::get('create-user', [
+        'as' => 'agents.create.user',
+        'uses' => 'AgentsController@viewCreateUser'
+    ]);
+
+    Route::get('create-agent', [
+        'as' => 'agents.create.agent',
+        'uses' => 'AgentsController@viewCreateAgent'
+    ]);
+
+    Route::get('consult-balance-by-type', [
+        'as' => 'agents.consult.balance.by.type',
+        'uses' => 'AgentsController@consultBalanceByType'
+    ]);
+
     // Agents sub agents
     Route::get('agents/{user?}', [
         'as' => 'agents.agents',
@@ -50,6 +65,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     Route::get('find', [
         'as' => 'agents.find',
         'uses' => 'AgentsController@find'
+    ]);
+
+    // Get father and cant
+    Route::get('get/father/cant', [
+        'as' => 'agents.get.father.cant',
+        'uses' => 'AgentsController@getFatherAndCant'
     ]);
 
     // Find agent
@@ -242,6 +263,36 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@financialStateDataDetails'
         ]);
 
+        // Show financial State Makers
+        Route::get('financial-state-makers', [
+            'as' => 'agents.reports.financial-state-makers',
+            'uses' => 'AgentsController@financialStateMakers'
+        ]);
+
+        //Financial State Makers
+        Route::get('financial-state-data-makers/{startDate?}/{endDate?}/{currency_iso?}/{provider_id?}/{whitelabel_id?}', [
+            'as' => 'agents.reports.financial-state-data-makers',
+            'uses' => 'AgentsController@financialStateDataMakers'
+        ]);
+
+        //Financial State Makers Totals
+        Route::get('financial-state-data-makers-totals', [
+            'as' => 'agents.reports.financial-state-data-makers-totals',
+            'uses' => 'AgentsController@financialStateDataMakersTotals'
+        ]);
+
+        // Show financial State Makers Details
+        Route::get('financial-state-makers-details', [
+            'as' => 'agents.reports.financial-state-makers-details',
+            'uses' => 'AgentsController@financialStateMakersDetails'
+        ]);
+
+        //Financial State Makers Details
+        Route::get('financial-state-data-makers-details/{startDate?}/{endDate?}/{currency_iso?}/{provider_id?}/{whitelabel_id?}', [
+            'as' => 'agents.reports.financial-state-data-makers-details',
+            'uses' => 'AgentsController@financialStateDataMakers'
+        ]);
+
         //Financial State
         Route::get('financial-state/view1', [
             'as' => 'agents.reports.financial-state.new',
@@ -384,6 +435,29 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@dataTmp'
         ]);
 
+        // Get exclude providers agents
+        Route::get('exclude-providers-agents', [
+            'as' => 'agents.reports.exclude-providers-agents',
+            'uses' => 'AgentsController@excludeProvidersAgents'
+        ]);
+
+        // Exclude providers users data
+        Route::post('exclude-providers-agents-data', [
+            'as' => 'agents.reports.exclude-providers-agents-data',
+            'uses' => 'AgentsController@excludeProvidersAgentsData'
+        ]);
+
+        // Exclude providers users delete
+        Route::get('exclude-providers-agents-delete/{user}/{category}/{currency}', [
+            'as' => 'agents.reports.exclude-providers-agents.delete',
+            'uses' => 'AgentsController@excludeProviderAgentsDelete'
+        ]);
+
+        // Exclude providers users list
+        Route::get('exclude-providers-agents-list/{start_date?}/{end_date?}/{category?}/{maker?}/{currency?}', [
+            'as' => 'agents.reports.exclude-providers-agents.list',
+            'uses' => 'AgentsController@excludeProviderAgentsList'
+        ]);
 
     });
 });

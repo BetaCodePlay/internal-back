@@ -12,6 +12,7 @@ use App\Audits\Enums\AuditTypes;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Security\Enums\Permissions;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Xinax\LaravelGettext\Facades\LaravelGettext;
 
 
@@ -55,22 +56,58 @@ class UsersCollection
     /**
      * Parent Tree
      * @param int $userId User Id
+     * @param int $userIdAuth User Id Authenticated
      * @return string
      */
-    public function treeFatherFormat($userId){
+    public function treeFatherFormat($userId,$userIdAuth){
 
         $agent = $this->agentsRepo->existsUser($userId);
         $link = '';
         if(isset($agent->user_id)){
-            $link .= '<ul class="list" id="ul_'.$agent->user_id.'">
+            if($agent->user_id == $userIdAuth){
+                $link .= '<ul class="list_disclosure" id="ul_'.$agent->user_id.'">
+                         <li  class="" id="li_'.$agent->user_id.'">'.$agent->username.'</li></ul>';
+            }else{
+                $link .= '<ul class="list_disclosure" id="ul_'.$agent->user_id.'">
                         <li  class="" id="li_'.$agent->user_id.'">'.$agent->username.'</li>';
-            if(isset($agent->user_id)){
-                $link .= $this->treeFatherFormat($agent->user_id);
+                if(isset($agent->user_id)){
+                    $link .= $this->treeFatherFormat($agent->user_id,$userIdAuth);
+                }
+                $link .= '</ul>';
             }
-            $link .= '</ul>';
         }
 
         return $link;
+
+    }
+
+    /**
+     * Validate Parent Tree
+     * @param int $userId User Id
+     * @param int $userIdAuth User Id Authenticated
+     * @return string
+     */
+    public function treeFatherValidate($userId,$userIdAuth){
+
+        $statusFather = false;
+        $userIdTmp = $userId;
+        do{
+
+            $status = false;
+            if(!is_null($userIdTmp)){
+                $agent = $this->agentsRepo->existsUser($userIdTmp);
+                $userIdTmp = is_null($agent) && !isset($agent->user_id)?null:$agent->user_id;
+                $status = true;
+
+                if($userIdTmp === $userIdAuth){
+                    $statusFather = true;
+                    $status = false;
+                }
+            }
+
+        }while($status);
+
+        return $statusFather;
 
     }
 
@@ -224,15 +261,58 @@ class UsersCollection
     {
         $timezone = session('timezone');
         foreach ($users as $user) {
+            $makers = json_decode($user->makers);
             $user->user = sprintf(
                 '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
                 route('users.details', [$user->user_id]),
                 $user->user_id
             );
+            $user->makers = '';
+            foreach ($makers as $maker) {
+                if(!is_null($maker)){
+                    $user->makers .= sprintf(
+                        '<li>%s</li>',
+                        $maker
+                    );
+                }
+            }
             $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $user->actions = sprintf(
                 '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
                 route('users.exclude-providers-users.delete', [$user->user_id, $user->provider_id, $user->currency_iso]),
+                _i('Delete')
+            );
+        }
+    }
+
+    /**
+     * Format search
+     *
+     * @param array $users Users data
+     */
+    public function formatExcludeMakersUser($users)
+    {
+        $timezone = session('timezone');
+        foreach ($users as $user) {
+            $makers = json_decode($user->makers);
+            $user->user = sprintf(
+                '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
+                route('users.details', [$user->user_id]),
+                $user->user_id
+            );
+            $user->makers = '';
+            foreach ($makers as $maker) {
+                if(!is_null($maker)){
+                    $user->makers .= sprintf(
+                        '<li>%s</li>',
+                        $maker
+                    );
+                }
+            }
+            $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $user->actions = sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('users.exclude-providers-users.delete', [$user->user_id, $user->category, $user->currency_iso]),
                 _i('Delete')
             );
         }

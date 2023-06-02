@@ -3,7 +3,9 @@
 namespace App\Agents\Collections;
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Users\Repositories\UsersRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Enums\ActionUser;
@@ -12,8 +14,10 @@ use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -222,6 +226,183 @@ class AgentsCollection
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSon($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUser($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                }
+                $arrayTmpClosures[$value->user_id] = $closures;
+
+                if (count($closures) > 0) {
+                    $providerDB = [];
+                    foreach ($closures as $index => $closure) {
+                        $providerDB[$closure->id_provider] = [
+                            'total_played' => $closure->total_played,
+                            'total_won' => $closure->total_won,
+                            'total_profit' => $closure->total_profit,
+                        ];
+                    }
+                    foreach ($arrayProviderTmp as $index => $provider) {
+                        if (!isset($providerDB[$provider])) {
+                            $providerDB[$provider] = [
+                                'total_played' => 0,
+                                'total_won' => 0,
+                                'total_profit' => 0,
+                            ];
+                        }
+                    }
+                    $arrayTmp[$value->user_id]['providers'] = $providerDB;
+                } else {
+                    $arrayTmp[$value->user_id]['providers'] = $providerNull;
+                }
+            }
+
+            $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
+            foreach ($arrayProviderTmp as $item => $value) {
+                $name = $closureRepo->nameProvider($value);
+                $htmlProvider .= "<th  class='text-center' colspan='3'>" . $name . "</th>";
+            }
+            $htmlProvider .= "</tr></thead>";
+
+            $htmlProvider .= "<tbody><th></th>";
+            foreach ($arrayProviderTmp as $item => $value) {
+                $htmlProvider .= "<th  class=''>" . _i('total played') . "</th>";
+                $htmlProvider .= "<th  class=''>" . _i('Total won') . "</th>";
+                $htmlProvider .= "<th  class=''>" . _i('Total Profit') . "</th>";
+            }
+            $htmlProvider .= "</tr>";
+
+            foreach ($arrayTmp as $item => $value) {
+                $htmlProvider .= "<tr>";
+                $htmlProvider .= "<td class='" . $value['type'] . "'>" . $value['username'] . "</td>";
+                foreach ($value['providers'] as $i => $provider) {
+                    $totalProfit += $provider['total_profit'];
+                    $totalDebit += $provider['total_played'];
+                    $totalCredit += $provider['total_won'];
+                    $htmlProvider .= "<td>" . number_format($provider['total_played'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($provider['total_won'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($provider['total_profit'], 2) . "</td>";
+                }
+                $htmlProvider .= "</tr>";
+
+            }
+
+            //TODO TOTALES
+            if (!is_null($percentage)) {
+                $totalComission = $totalProfit * ($percentage / 100);
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3) . "'><br></td>
+                                      <td class='text-center'><br></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . _i('Total Profit') . "</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . number_format(($totalProfit), 2) . "</strong>  </td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . _i('Total Comission') . "</strong> &nbsp;(" . number_format(($percentage), 2) . "%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #92ff678c;'><strong>" . number_format(($totalComission), 2) . "</strong>  </td>
+                                  </tr>
+                                  <!--TODO TOTAL A PAGAR-->
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" . _i('Total to pay') . " </strong> &nbsp;(" . number_format((100 - $percentage), 2) . "%)</td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #ff588373;'><strong>" . number_format(($totalProfit - $totalComission), 2) . "</strong>  </td>
+                                  </tr>";
+            } else {
+                $htmlProvider .= "<tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3) . "'><br></td>
+                                      <td class='text-center'><br></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . _i('Total Profit') . "</strong></td>
+                                  </tr>
+                                  <tr>
+                                      <td class='text-center' colspan='" . (count($arrayProviderTmp) * 3 - 1) . "' style='border: 1px solid #ffffff;background-color: rgb(255,255,255);'></td>
+                                      <td class='text-center' colspan='2' style='background-color: #81d0f6;'><strong>" . number_format(($totalProfit), 2) . "</strong>  </td>
+                                  </tr>
+                                  ";
+            }
+
+            $htmlProvider .= "</tbody>";
+
+
+        } else {
+            $htmlProvider = sprintf(
+                '<table class="table table-bordered table-sm table-striped table-hover"><thead>
+                    <tr>
+                        <th>%s</th>
+                        <th colspan="3" class="text-center">%s</th>
+                    </tr></thead><tbody><tr><td class="text-center" colspan="4">%s</td></tr></tbody>',
+                _i('Agents / Players'),
+                _i('Totals'),
+                _i('no records')
+            );
+        }
+
+        return $htmlProvider;
+
+    }
+
+    /**
+     * MODO TEST NEW TABLE _HOUR
+     * Closures Totals By Agent Group Provider
+     * @param $tableDb
+     * @param $whitelabel
+     * @param $currency
+     * @param $startDate
+     * @param $endDate
+     * @param $percentage
+     * @return string
+     */
+    public function closuresTotalsByAgentGroupProviderHour($tableDb, $whitelabel, $currency, $startDate, $endDate, $percentage = null)
+    {
+        $closureRepo = new ClosuresUsersTotals2023Repo();
+        $htmlProvider = "";
+        $totalProfit = 0;
+        $totalCredit = 0;
+        $totalDebit = 0;
+        if (!empty($tableDb)) {
+
+            //TODO STATUS OF PROVIDERS IN PROD
+            $arrayProviderTmp = array_map(function ($val) {
+                return $val->id;
+            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));
+
+            $providerNull = [];
+            foreach ($arrayProviderTmp as $index => $provider) {
+                $providerNull[$provider] = [
+                    'total_played' => 0,
+                    'total_won' => 0,
+                    'total_profit' => 0,
+                ];
+            }
+
+            $arrayTmp = [];
+            $arrayTmpClosures = [];
+            //$transactions = 0;
+            foreach ($tableDb as $item => $value) {
+
+                $arrayTmp[$value->user_id] = [
+                    'id' => $value->user_id,
+                    'type' => $value->type_user == 5 ? 'init_user' : 'init_agent',
+                    'username' => $value->username,
+                    'providers' => []
+                ];
+
+                $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
+
+                if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSonHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                } else {
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUserHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 }
                 $arrayTmpClosures[$value->user_id] = $closures;
 
@@ -626,6 +807,74 @@ class AgentsCollection
                 $htmlProvider .= '<tr>
                                    <td colspan="6"></td>
                                    <td colspan="1"><strong>' . number_format($acum, 2) . '</strong></td>
+                                </tr>';
+            }
+            $htmlProvider .= '</tbody></table>';
+        } else {
+            $htmlProvider .= "<tbody><tr class='table-secondary'><td class='text-center' colspan='6'>" . _i('no records') . "</td></tr></tbody></table>";
+        }
+
+        return $htmlProvider;
+
+
+    }
+
+    /**
+     * closuresTotalsProviderAndMakerGlobal
+     * @param $tableDb
+     * @param $percentage
+     * @return string
+     */
+    public function closuresTotalsProviderAndMakerGlobal($tableDb, $percentage = null)
+    {
+        $htmlProvider = sprintf(
+            '<table id="makers-global" class="table table-bordered table-sm table-striped table-hover">',
+        );
+        if (count($tableDb) > 0) {
+            $prov_current = 0;
+            $acum = 0;
+            $salPage = false;
+            foreach ($tableDb as $item) {
+                if ($item->id_provider != $prov_current) {
+                    if ($prov_current != 0) {
+                        $htmlProvider .= '<tr>
+                                    <td colspan="6"></td>
+                                    <td colspan="1"><strong>' . number_format($acum, 2) . '</strong></td>
+                                </tr>';
+                    }
+                    $htmlProvider .= '
+                        <thead>
+                            ' . ($salPage ? '<tr>
+                                <th colspan="7" class="text-center"><br></th>
+                            </tr>' : '') . '
+                            <tr>
+                                <th colspan="7" class="text-center" style="background-color: #' . substr(md5($item->name_provider), 1, 6) . ';color: white;font-size: larger;"><strong>' . $item->name_provider . '</strong></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">' . _i('Maker') . '</th>
+                                <th>' . _i('Total Payed') . '</th>
+                                <th>' . _i('Total Won') . '</th>
+                                <th>' . _i('Total Bets') . '</th>
+                                <th colspan="2">' . _i('Total Profit') . '</th>
+                            </tr>
+                        </thead><tbody>';
+                    $prov_current = $item->id_provider;
+                    $acum = 0;
+                    $salPage = true;
+                }
+                $htmlProvider .= '<tr>
+                                    <td colspan="2">' . $item->name_maker . '</td>
+                                    <td>' . number_format($item->total_played, 2) . '</td>
+                                    <td>' . number_format($item->total_won, 2) . '</td>
+                                    <td>' . $item->total_bet . '</td>
+                                    <td colspan="2">' . number_format($item->total_profit, 2) . '</td>
+                                </tr>';
+                $acum += $item->total_profit;
+            }
+            if ($prov_current != 0) {
+                $htmlProvider .= '<tr>
+                                   <td colspan="5"></td>
+                                   <td colspan="2"><strong>' . number_format($acum, 2) . '</strong></td>
                                 </tr>';
             }
             $htmlProvider .= '</tbody></table>';
@@ -2817,6 +3066,7 @@ class AgentsCollection
             $typeText = $user->master ? _i('Master agent') : _i('Cashier');
 
             if (!$user->master) {
+                $user->typeSet = $typeText;
                 $user->type = sprintf(
                     '<a href="javascript:void(0)" id="change-agent-type" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
                     route('agents.change-agent-type', [$user->agent]),
@@ -2824,6 +3074,7 @@ class AgentsCollection
                     $typeText
                 );
             } else {
+                $user->typeSet = $typeText;
                 $user->type = sprintf(
                     '<span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span>',
                     $typeClass,
@@ -2834,6 +3085,7 @@ class AgentsCollection
         } else {
             $typeClass = 'bluegray';
             $typeText = _i('User');
+            $user->typeSet = $typeText;
             $user->type = sprintf(
                 '<span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span>',
                 $typeClass,
@@ -2922,8 +3174,6 @@ class AgentsCollection
     public function formatAgentTransactionsPaginate($transactions, $total, $request)
     {
         $timezone = session('timezone');
-        $totalDebit = 0;
-        $totalCredit = 0;
         $data = array();
 
         foreach ($transactions as $transaction) {
@@ -2931,27 +3181,51 @@ class AgentsCollection
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
+            $transaction->new_amount = 0;
 
+            $from = $transaction->data->from;
+            $to = $transaction->data->to;
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
-                $totalDebit = $totalDebit + $amountTmp;
+                $transaction->new_amount = '<span class="badge badge-pill badge-danger">-'.number_format($amountTmp,2).'</span>';
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
-                $totalCredit = $totalCredit + $amountTmp;
+                $transaction->new_amount = '<span class="badge badge-pill badge-info">+'.number_format($amountTmp,2).'</span>';
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
             }
+
+            $credit = $transaction->credit;
+            $debit = $transaction->debit;
+            //TODO COMENTADO
+//            if($transaction->user_id === Auth::user()->id){
+//                $debit = $transaction->credit;
+//                $credit = $transaction->debit;
+//            }
+//            if($transaction->data->from != Auth::user()->username){
+//                $credit = $transaction->credit;
+//                $debit = $transaction->debit;
+//            }
+
+            $debitt = $debit > 0 ? '-'.number_format($debit, 2, ",", "."):'0,00';
+            $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ",", "."):'0,00';
+            $nameAffect = $transaction->data->from === $transaction->username?$transaction->data->from:$transaction->data->to;
+//            if($from != $nameAffect){
+//
+//            }
             $data[] = [
                 'id' => null,
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
                 'data' => [
-                    'from' => isset($transaction->data->from) ? $transaction->data->from : null,
-                    'to' => isset($transaction->data->to) ? $transaction->data->to : null,
+                    'from' => $from,
+                    'to' => $nameAffect,
+                    //'to' => $to,
                 ],
-                'debit' => number_format($transaction->debit, 2, ",", "."),
-                'credit' => number_format($transaction->credit, 2, ",", "."),
+                'debit' => $debitt,
+                'credit' => $creditt,
+                'new_amount' => $transaction->new_amount,
                 'balance' => $transaction->balance,
             ];
 
@@ -2990,6 +3264,43 @@ class AgentsCollection
     }
 
     /**
+     * formatAgentDataMakersTotals
+     * @param $totals
+     * @return string
+     */
+    public function formatAgentDataMakersTotals($totals)
+    {
+        $htmlTotals = sprintf(
+            '<table  class="table table-bordered w-100">
+                    <thead>
+                        <tr>
+                            <th class="w-th-20">%s</th>
+                            <th class="w-th-17-5">' . _i('Total Payed') . '</th>
+                            <th class="w-th-20">' . _i('Total Won') . '</th>
+                            <th class="w-th-23">' . _i('Total Bets') . '</th>
+                            <th>' . _i('Total Profit') . '</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                        </tr>
+                    </tbody>',
+            _i('Totals'),
+            $totals[0]->total_played,
+            number_format($totals[0]->total_won, 2),
+            number_format($totals[0]->total_bet, 2),
+            number_format($totals[0]->total_profit, 2),
+        );
+
+        return $htmlTotals;
+
+    }
+    /**
      * Format Total Credit And Debit
      * @param $credit
      * @param $debit
@@ -2997,14 +3308,16 @@ class AgentsCollection
      */
     public function formatAgentTransactionsTotals($credit, $debit)
     {
-
+        $balance = $credit - $debit;
+        //' . _i('Debit') . '
+        //' . _i('Credit') . '
         $htmlTotals = sprintf(
             '<table  class="table table-bordered w-100">
                     <thead>
                         <tr>
                             <th>%s</th>
-                            <th class="text-right">' . _i('Debit') . '</th>
-                            <th class="text-right">' . _i('Credit') . '</th>
+                            <th class="text-right">Descarga</th>
+                            <th class="text-right">Carga</th>
                             <th class="text-right">' . _i('Balance') . '</th>
                         </tr>
                     </thead>
@@ -3019,7 +3332,7 @@ class AgentsCollection
             _i('Totals'),
             number_format($debit, 2),
             number_format($credit, 2),
-            number_format(($credit - $debit), 2),
+            number_format($balance, 2),
         );
 
         return $htmlTotals;
@@ -3229,25 +3542,54 @@ class AgentsCollection
      * @param array $users Users data
      * @param array $subAgents Subagents data
      * @param string $currency Currency iso
-     * @param int $provider Provider id
+     * @param string $category Category name
+     * @param string $maker Maker name
      * @return false|string
      */
-    public function formatDataLock($subAgents, $users, $agent, $currency, $provider)
+    public function formatDataLock($lockUsers, $subAgents, $users, $agent, $currency, $category, $maker)
     {
         $blockUsers = [];
-        $dataAngets = $this->formatDataLockSubAngents($subAgents, $currency, $provider);
-        $dataUsers = $this->formatDataLockUsers($users, $currency, $provider);
+        $dataAngets = $this->formatDataLockSubAngents($lockUsers, $subAgents, $currency, $category, $maker);
+        $dataUsers = $this->formatDataLockUsers($lockUsers, $users, $currency, $category, $maker);
+        $agentsRepo = new AgentsRepo();
+        $gamesRepo = new GamesRepo();
+        $whitelabel = Configurations::getWhitelabel();
 
         if (!is_null($agent)) {
-            $blockUsers[] = [
+            $dataMakers[] = $maker;
+            if ($lockUsers == 'true') {
+                $blockUsers[] = [
                 'currency_iso' => $currency,
-                'provider_id' => $provider,
+                'makers' => null,
                 'user_id' => $agent->id,
+                'category' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
-            ];
-        }
+                ];
+            }else{
+                if (is_null($category)) {
+                    $categories = $gamesRepo->getCategoriesByMaker($maker);
+                    $categories = array_column($categories->toArray(), 'category');
+                } else {
+                    $categories[] = $category;
+                }
 
+                foreach ($categories as $category) {
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    $dataMakers = array_merge($dataMakers, $makersExclude);
+                    $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                    $blockUsers[] = [
+                        'currency_iso' => $currency,
+                        'makers' => json_encode($listMakers),
+                        'user_id' => $agent->id,
+                        'category' => $category,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            }
+        }
         $data = array_merge($dataAngets, $dataUsers, $blockUsers);
         return $data;
     }
@@ -3257,12 +3599,15 @@ class AgentsCollection
      *
      * @param array $agents Agents data
      * @param string $currency Currency iso
-     * @param int $provider Provider id
+     * @param string $category Category name
+     * @param string $maker Maker name
      * @return false|string
      */
-    public function formatDataLockSubAngents($agents, $currency, $provider)
+    public function formatDataLockSubAngents($lockUsers, $agents, $currency, $category, $maker)
     {
         $agentsRepo = new AgentsRepo();
+        $gamesRepo = new GamesRepo();
+        $whitelabel = Configurations::getWhitelabel();
         $dataAgents = [];
         foreach ($agents as $agent) {
             $dataChildren = null;
@@ -3270,11 +3615,11 @@ class AgentsCollection
             $users = $agentsRepo->getUsersByAgent($agent->id, $currency);
 
             if (count($subAgents) > 0) {
-                $agentsChildren = $this->formatDataLockSubAngents($subAgents, $currency, $provider);
+                $agentsChildren = $this->formatDataLockSubAngents($lockUsers, $subAgents, $currency, $category, $maker);
             }
 
             if (count($users) > 0) {
-                $usersChildren = $this->formatDataLockUsers($users, $currency, $provider);
+                $usersChildren = $this->formatDataLockUsers($lockUsers, $users, $currency, $category, $maker);
             }
 
             if (count($subAgents) > 0 && count($users) > 0) {
@@ -3287,14 +3632,38 @@ class AgentsCollection
                     $dataChildren = $usersChildren;
                 }
             }
-            $dataAgents[] = [
-                'currency_iso' => $currency,
-                'provider_id' => $provider,
-                'user_id' => $agent->user_id,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
-
+            $dataMakers[] = $maker;
+            if ($lockUsers == 'true') {
+                $dataAgents[] = [
+                    'currency_iso' => $currency,
+                    'user_id' => $agent->user_id,
+                    'category' => null,
+                    'makers' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }else{
+                if (is_null($category)) {
+                    $categories = $gamesRepo->getCategoriesByMaker($maker);
+                    $categories = array_column($categories->toArray(), 'category');
+                } else {
+                    $categories[] = $category;
+                }
+                foreach ($categories as $category) {
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
+                    $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
+                    $dataMakers = array_merge($dataMakers, $makersExclude);
+                    $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                    $dataAgents[] = [
+                        'currency_iso' => $currency,
+                        'user_id' => $agent->user_id,
+                        'category' => $category,
+                        'makers' => json_encode($listMakers),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            }
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
             }
@@ -3310,17 +3679,45 @@ class AgentsCollection
      * @param int $provider Provider id
      * @return false|string
      */
-    public function formatDataLockUsers($users, $currency, $provider)
+    public function formatDataLockUsers($lockUsers, $users, $currency, $category, $maker)
     {
         $dataUsers = [];
+        $whitelabel = Configurations::getWhitelabel();
+        $usersRepo = new UsersRepo();
+        $gamesRepo = new GamesRepo();
         foreach ($users as $user) {
-            $dataUsers[] = [
-                'currency_iso' => $currency,
-                'provider_id' => $provider,
-                'user_id' => $user['id'],
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ];
+            $dataMakers[] = $maker;
+            if ($lockUsers == 'true') {
+                $dataUsers[] = [
+                    'currency_iso' => $currency,
+                    'makers' => null,
+                    'user_id' => $user['id'],
+                    'category' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ];
+            }else{
+                if (is_null($category)) {
+                    $categories = $gamesRepo->getCategoriesByMaker($maker);
+                    $categories = array_column($categories->toArray(), 'category');
+                } else {
+                    $categories[] = $category;
+                }
+                foreach ($categories as $category){
+                    $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
+                    $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
+                    $dataMakers = array_merge($dataMakers, $makersExclude);
+                    $listMakers = array_values(array_filter(array_unique($dataMakers)));
+                    $dataUsers[] = [
+                        'currency_iso' => $currency,
+                        'makers' => json_encode($listMakers),
+                        'user_id' => $user['id'],
+                        'category' => $category,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ];
+                }
+            }
         }
         return $dataUsers;
     }
@@ -3334,32 +3731,50 @@ class AgentsCollection
     public function formatExcluderProvidersUsers($user, $excludedUsers, $currency)
     {
         $dataUsers = [];
-        $auxCurrencies = [];
         foreach ($excludedUsers as $excludedUser) {
-            $position = array_search($currency, $auxCurrencies);
-            if ($position === false) {
-                if ($currency == $excludedUser->currency_iso) {
-                    array_push($auxCurrencies, $currency);
-                    $dataUsers[] = [
-                        'currency_iso' => $currency,
-                        'provider_id' => $excludedUser->provider_id,
-                        'user_id' => $user,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now()
-                    ];
-                } else {
-                    array_push($auxCurrencies, $currency);
-                    $dataUsers[] = [
-                        'currency_iso' => $currency,
-                        'provider_id' => $excludedUser->provider_id,
-                        'user_id' => $user,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now()
-                    ];
-                }
-            }
+            $dataUsers[] = [
+                'currency_iso' => $currency,
+                'category' => $excludedUser->category,
+                'makers' => $excludedUser->makers,
+                'user_id' => $user,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
         }
         return $dataUsers;
+    }
+
+    /**
+     * Format search
+     *
+     * @param array $users Users data
+     */
+    public function formatExcludeMakersUser($users)
+    {
+        $timezone = session('timezone');
+        foreach ($users as $user) {
+            $makers = json_decode($user->makers);
+            $user->user = sprintf(
+                '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
+                route('users.details', [$user->user_id]),
+                $user->user_id
+            );
+            $user->makers = '';
+            foreach ($makers as $maker) {
+                if(!is_null($maker)){
+                    $user->makers .= sprintf(
+                        '<li>%s</li>',
+                        $maker
+                    );
+                }
+            }
+            $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $user->actions = sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('agents.reports.exclude-providers-agents.delete', [$user->user_id, $user->category, $user->currency_iso]),
+                _i('Delete')
+            );
+        }
     }
 
     /**
@@ -3449,6 +3864,13 @@ class AgentsCollection
                 $user->username = $user->username;
             }
         }
+    }
+
+    /**
+     * Get Exclude Agent
+     */
+    private function getExcludedAgent($agentsRepo, $userId, $currency, $category, $whitelabel) {
+        return $agentsRepo->getAgentLockByUserAndCategory($userId, $currency, $category, $whitelabel);
     }
 
     /**

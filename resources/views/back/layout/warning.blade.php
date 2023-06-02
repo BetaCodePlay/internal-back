@@ -7,8 +7,8 @@
                 <div class="msg">La página prohíbe que sus agentes establezcan reglas como apuestas mínimas o maximas con el fin de limitar a los usuarios, evite sanciones.</div>
             </div>
             {{--<div class="warning-general-template-ex">
-                <div class="msg">Miércoles 29 de Marzo desde las 9AM ( Hora Argentina ) realizaremos tareas de mantenimiento ( tiempo estimado 120 minutos ).</div>
-                <div class="msg">Miércoles 29 de Marzo desde las 9AM ( Hora Argentina ) realizaremos tareas de mantenimiento ( tiempo estimado 120 minutos ).</div>
+                <div class="msg">Miércoles 17 de Mayo desde las 8AM ( Hora Argentina ) realizaremos tareas de mantenimiento ( tiempo estimado 300 minutos ).</div>
+                <div class="msg">Miércoles 17 de Mayo desde las 8AM ( Hora Argentina ) realizaremos tareas de mantenimiento ( tiempo estimado 300 minutos ).</div>
             </div>--}}
         </div>
     </div>

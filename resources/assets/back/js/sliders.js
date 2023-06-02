@@ -18,6 +18,7 @@ class Sliders {
             "order": [[6, "asc"]],
             "columns": [
                 {"data": "image"},
+                {"data": "front"},
                 {"data": "route"},
                 {"data": "dates", "className": "text-right"},
                 {"data": "language"},
@@ -65,6 +66,7 @@ class Sliders {
         let $button = $('#store');
         let $form = $('#sliders-form');
         let $file = $('#image');
+        let $file1 = $('#front');
         $form.on('submit', function (event) {
             event.preventDefault();
             var formData = new FormData(this);
@@ -94,8 +96,8 @@ class Sliders {
     }
 
     // Update
-    update(preview) {
-        initFileInput(preview);
+    update(preview, field) {
+        initFileInput(preview, field);
         initSelect2();
         initDateTimePicker();
 

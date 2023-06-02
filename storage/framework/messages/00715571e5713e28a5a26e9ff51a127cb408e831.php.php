@@ -2,6 +2,8 @@
 
 namespace App\Core\Repositories;
 
+use App\Whitelabels\Entities\Whitelabel;
+
 /**
  * Class WhitelabelsGamesRepo
  *
@@ -9,8 +11,20 @@ namespace App\Core\Repositories;
  *
  * @package App\Core\Repositories
  * @author  Eborio Linarez
+ * @author  Jhonattan Bullones
  */
 class WhitelabelsGamesRepo
 {
+    /**
+     * Get all whitelabels
+     *
+     * @return mixed
+     */
+    public function all()
+    {
+        return Whitelabel::on('replica')
+            ->orderBy('name', 'ASC')
+            ->get();
+    }
 
 }

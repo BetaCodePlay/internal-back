@@ -261,15 +261,58 @@ class UsersCollection
     {
         $timezone = session('timezone');
         foreach ($users as $user) {
+            $makers = json_decode($user->makers);
             $user->user = sprintf(
                 '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
                 route('users.details', [$user->user_id]),
                 $user->user_id
             );
+            $user->makers = '';
+            foreach ($makers as $maker) {
+                if(!is_null($maker)){
+                    $user->makers .= sprintf(
+                        '<li>%s</li>',
+                        $maker
+                    );
+                }
+            }
             $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $user->actions = sprintf(
                 '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
                 route('users.exclude-providers-users.delete', [$user->user_id, $user->provider_id, $user->currency_iso]),
+                _i('Delete')
+            );
+        }
+    }
+
+    /**
+     * Format search
+     *
+     * @param array $users Users data
+     */
+    public function formatExcludeMakersUser($users)
+    {
+        $timezone = session('timezone');
+        foreach ($users as $user) {
+            $makers = json_decode($user->makers);
+            $user->user = sprintf(
+                '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
+                route('users.details', [$user->user_id]),
+                $user->user_id
+            );
+            $user->makers = '';
+            foreach ($makers as $maker) {
+                if(!is_null($maker)){
+                    $user->makers .= sprintf(
+                        '<li>%s</li>',
+                        $maker
+                    );
+                }
+            }
+            $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $user->actions = sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('users.exclude-providers-users.delete', [$user->user_id, $user->category, $user->currency_iso]),
                 _i('Delete')
             );
         }

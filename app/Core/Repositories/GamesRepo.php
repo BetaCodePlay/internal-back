@@ -183,4 +183,75 @@ class GamesRepo
         return $games;
     }
 
+    /**
+     * Get categories 
+     *
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        $games = Game::select('category')
+        ->distinct()
+        ->get();
+        return $games;
+    }
+
+    /**
+     * Get categories by makers
+     *
+     * @return mixed
+     */
+    public function getCategoriesByMaker($maker)
+    {
+        $games = Game::select('category')
+        ->distinct()
+        ->where('maker', $maker)
+        ->get();
+        return $games;
+    }
+
+    /**
+     * Get makers by category
+     *
+     * @param int $provider
+     * @return mixed
+     */
+    public function getMakersByCategory($category)
+    {
+        $games = Game::select('maker')
+        ->distinct()
+        ->where('category', $category)
+        ->get();
+        return $games;
+    }
+
+    /**
+     * Get makers
+     *
+     * @param int $provider
+     * @return mixed
+     */
+    public function getMakers()
+    {
+        $games = Game::select('maker')
+        ->distinct()
+        ->get();
+        return $games;
+    }
+
+    /**
+     * Get makers by provider
+     *
+     * @param int $provider
+     * @return mixed
+     */
+    public function getMakersByProvider($provider)
+    {
+        $games = Game::select('maker')
+        ->distinct()
+        ->where('provider_id', $provider)
+        ->get();
+        return $games;
+    }
+
 }
