@@ -33,7 +33,9 @@
             color: white !important;
             background-color: #38a7ef !important;
         }
-
+        .flex-items {
+            display: flex;
+        }
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -421,8 +423,7 @@
                                         </div>
                                     </div>
                                     <div class="row g-mb-15">
-                                        <div
-                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong> <?php echo e(_i('Type')); ?></strong>
                                             </label>
@@ -499,6 +500,17 @@
                                             </div>
                                         </div>
                                     <?php endif; ?>
+                                    <div class="row g-mb-15" id="details-user">
+                                        <div class="col-12 col-sm-8 col-md-9 align-self-center">
+                                            <div class="form-group g-pos-rel g-mb-0">
+                                                <a href="#details-user-modal" id="details-user"
+                                                   class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i> <strong> <?php echo e(_i('More information')); ?></strong>
+
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$agents_credit_transactions,  \Dotworkers\Security\Enums\Permissions::$agents_debit_transactions])): ?>
                                     <div class="col-md-6">
@@ -565,22 +577,35 @@
                         <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents-transactions" role="tabpanel"
                              aria-labelledby="agents-transactions-tab">
                             <div class="row">
-                                <div class="offset-md-7"></div>
-                                <div class="col-md-2 text-right">
-                                    <div class="input-group">
-                                        <select name="type_select" id="type_select" class="form-control">
-                                            <option value="all" selected="selected" hidden>Todos</option>
-                                            <option value="agent"><?php echo e(_i('agent')); ?></option>
-                                            <option value="user"><?php echo e(_i('user')); ?></option>
+                                <div class="offset-md-2"></div>
+                                
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <label for="transaction_select"><?php echo e(_i('Type Transaction')); ?></label>
+                                        <select name="transaction_select" id="transaction_select" class="form-control">
+                                            <option value="all" selected="selected" hidden><?php echo e(_i('All')); ?></option>
+                                            <option value="credit"><?php echo e(_i('Charge')); ?></option>
+                                            <option value="debit"><?php echo e(_i('Discharge')); ?></option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-xs-12 col-sm-12">
-                                    <div class="input-group">
-                                        <input type="text" id="date_range_new" class="form-control" autocomplete="off"
+                                <div class="col-md-3 ">
+                                    <div class="form-group">
+                                        <label for="type_select"><?php echo e(_i('Type User')); ?></label>
+                                        <select name="type_select" id="type_select" class="form-control">
+                                            <option value="all" selected="selected" hidden><?php echo e(_i('All')); ?></option>
+                                            <option value="agent"><?php echo e(_i('Agent')); ?></option>
+                                            <option value="user"><?php echo e(_i('User')); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="date_range"><?php echo e(_i('Date range')); ?></label>
+                                        <div class="flex-items">
+                                            <input type="text" id="date_range_new" class="form-control" autocomplete="off"
                                                placeholder="<?php echo e(_i('Date range')); ?>">
-                                        <div class="input-group-append">
-                                            <button class="btn g-bg-primary" type="button" id="updateNew"
+                                               <button class="btn g-bg-primary" type="button" id="updateNew"
                                                     data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
                                                     data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>"
                                                     data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
@@ -688,7 +713,7 @@
 
                                             </th>
                                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                                <?php echo e(_i('withdrew')); ?>
+                                                <?php echo e(_i('Withdrew')); ?>
 
                                             </th>
                                         <?php else: ?>
@@ -903,13 +928,13 @@
                                                         <input type="hidden" name="user" class="user">
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="agent"><?php echo e(_i('Provider')); ?></label>
-                                                                <select name="provider" id="provider"
-                                                                        class="form-control" data-route="<?php echo e(route('core.makers-by-provider')); ?>">
+                                                                <label for="maker"><?php echo e(_i('Maker')); ?></label>
+                                                                <select name="maker" id="maker"
+                                                                        class="form-control" data-route="<?php echo e(route('core.categories-by-maker')); ?>">
                                                                     <option value=""><?php echo e(_i('Select...')); ?></option>
-                                                                    <?php $__currentLoopData = $providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                        <option value="<?php echo e($provider->id); ?>">
-                                                                            <?php echo e($provider->name); ?>
+                                                                    <?php $__currentLoopData = $makers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $maker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                        <option value="<?php echo e($maker->maker); ?>">
+                                                                            <?php echo e($maker->maker); ?>
 
                                                                         </option>
                                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -918,8 +943,8 @@
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group">
-                                                                <label for="maker"><?php echo e(_i('Maker')); ?></label>
-                                                                <select name="maker" id="maker"
+                                                                <label for="category"><?php echo e(_i('Categories')); ?></label>
+                                                                <select name="category" id="category"
                                                                         class="form-control">
                                                                     <option value=""><?php echo e(_i('Select...')); ?></option>
                                                                 </select>
@@ -1137,6 +1162,7 @@
     <?php echo $__env->make('back.agents.modals.manual-transaction', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.move-agents', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.move-agents-users', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('back.agents.modals.details-user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.add-users', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.users.modals.reset-password', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
@@ -1169,7 +1195,7 @@
             agents.menuMobile();
             agents.selectAgentOrUser('<?php echo e(_i('Agents search...')); ?>');
             agents.selectUsernameSearch('<?php echo e(_i('Agents search...')); ?>');
-            agents.selectProvidersMaker();
+            agents.selectCategoryMaker();
             agents.statusFilter();
             <?php if($agent->master): ?>
             agents.changeAgentType();

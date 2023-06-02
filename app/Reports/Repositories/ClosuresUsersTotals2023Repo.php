@@ -378,21 +378,6 @@ class ClosuresUsersTotals2023Repo
     }
 
     /**
-     * FOR ADMIN STATE FINANCIAL Hour
-     * @param int $whitelabel Whitelabel Id
-     * @param string $currency Iso Currency
-     * @param string $startDate Date Start
-     * @param string $endDate Date End
-     * @param int $ownerId User Id Owner
-     * @param array $arrayProvider Array Provider Id
-     * @return array
-     */
-    public function getClosureTotalsHourByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
-    {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
-    }
-
-    /**
      * SCHEMA -> PUBLIC
      * FOR ADMIN STATE FINANCIAL FOR HOUR
      * @param int $whitelabel Whitelabel Id
@@ -407,10 +392,6 @@ class ClosuresUsersTotals2023Repo
     {
         return DB::select('SELECT * FROM public.get_closure_totals_hour_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
     }
-
-
-
-
 
 
     /** FOR AGENT STATE FINANCIAL
@@ -504,9 +485,9 @@ class ClosuresUsersTotals2023Repo
         return DB::select('select p.id,p.name from site.providers p
                             inner join site.credentials c on c.provider_id = p.id
                             where c.currency_iso = ?
-                            AND c.status = ?
+                            --AND c.status = ?
                             AND c.client_id = ?
-                            order by p.id desc ', [$currency, $active, $whitelabel]);
+                            order by p.id desc ', [$currency, $whitelabel]);
     }
 
     /**

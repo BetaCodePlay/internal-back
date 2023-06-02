@@ -37,6 +37,19 @@ class SlidersCollection
                 _i('URL'),
                 !is_null($slider->url) ? $slider->url : _i('Without URL')
             );
+            $front = $slider->front;
+            if (!is_null($front)) {
+                $urlFront = s3_asset("sliders/static/{$slider->front}");
+                $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";
+                $slider->front .= sprintf(
+                    '<strong>%s:</strong> %s',
+                    _i('URL'),
+                    !is_null($slider->url) ? $slider->url : _i('Without URL')
+                );
+            }else{
+                $slider->front = _i('Without front image');
+            }
+
             $slider->language = $slider->language == '*' ? _i('All languages') : Languages::getName($slider->language);
             $slider->currency_iso = $slider->currency_iso == '*' ? _i('All currencies') : $slider->currency_iso;
             $slider->mobile = $slider->mobile == '*' ? _i('All devices') : ($slider->mobile == 'true' ? _i('Mobile') : _i('Desktop'));
@@ -64,12 +77,12 @@ class SlidersCollection
             if (Gate::allows('access', Permissions::$manage_sliders)) {
                 $slider->actions = sprintf(
                     '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                    route('sliders.edit', [$slider->id]),
+                    route('sliders.edit', [$slider->id, $front]),
                     _i('Edit')
                 );
                 $slider->actions .= sprintf(
                     '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
-                    route('sliders.delete', [$slider->id, $file]),
+                    route('sliders.delete', [$slider->id, $file, $front]),
                     _i('Delete')
                 );
             }
@@ -85,8 +98,11 @@ class SlidersCollection
     {
         $timezone = session('timezone');
         $url = s3_asset("sliders/static/{$slider->image}");
-        $slider->file = $slider->image;
         $slider->image = "<img src='$url' class='img-responsive' width='600'>";
+        if (!is_null($slider->front)) {
+            $urlFront = s3_asset("sliders/static/{$slider->front}");
+            $slider->front = "<img src='$urlFront' class='img-responsive' width='600'>";
+        }
         $start = !is_null($slider->start_date) ? $slider->start_date->setTimezone($timezone)->format('d-m-Y h:i a') : null;
         $end = !is_null($slider->end_date) ? $slider->end_date->setTimezone($timezone)->format('d-m-Y h:i a') : null;
         $slider->start = $start;

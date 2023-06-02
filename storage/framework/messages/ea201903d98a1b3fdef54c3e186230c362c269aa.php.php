@@ -375,6 +375,68 @@ class PaymentMethods
      */
     public static $pago_medios = 52;
 
+    /**
+     * Paguelofacil
+     *
+     * @var int
+     */
+    public static $paguelo_facil = 53;
+
+    /**
+     * Pagsmile
+     *
+     * @var int
+     */
+    public static $pagsmile = 54;
+
+    /**
+     * MercadoPago
+     *
+     * @var int
+     */
+    public static $mercado_pago = 55;
+
+    /**
+     * Primepag
+     *
+     * @var int
+     */
+    public static $primepag = 56;
+
+    /**
+     * Niubiz
+     *
+     * @var int
+     */
+    public static $niubiz = 57;
+
+    /**
+     * Nulink
+     *
+     * @var int
+     */
+    public static $nulink = 58;
+
+    /**
+     * Feenicia
+     *
+     * @var int
+     */
+    public static $feenicia = 59;
+
+    /**
+     * 4on
+     *
+     * @var int
+     */
+    public static $four_on = 60;
+
+    /**
+     * Vippo
+     *
+     * @var int
+     */
+    public static $vippo = 61;
 
     /**
      * Get payment method name
@@ -643,6 +705,51 @@ class PaymentMethods
             case self::$pago_medios:
             {
                 $name = _i('Pago medios');
+                break;
+            }
+            case self::$paguelo_facil:
+            {
+                $name = _i('Paguelo Facil');
+                break;
+            }
+            case self::$pagsmile:
+            {
+                $name = _i('Pagsmile');
+                break;
+            }
+            case self::$mercado_pago:
+            {
+                $name = _i('MercadoPago');
+                break;
+            }
+            case self::$primepag:
+            {
+                $name = _i('Primepag');
+                break;
+            }
+            case self::$niubiz:
+            {
+                $name = _i('Niubiz');
+                break;
+            }
+            case self::$nulink:
+            {
+                $name = _i('Nulink');
+                break;
+            }
+            case self::$feenicia:
+            {
+                $name = _i('Feenicia');
+                break;
+            }
+            case self::$four_on:
+            {
+                $name = _i('4On');
+                break;
+            }
+            case self::$vippo:
+            {
+                $name = _i('Vippo');
                 break;
             }
         }

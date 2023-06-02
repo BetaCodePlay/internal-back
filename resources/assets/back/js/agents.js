@@ -198,8 +198,9 @@ class Agents {
                        {"data": "date"},
                        {"data": "data.from"},
                        {"data": "data.to"},
-                       {"data": "debit", "type": "num-fmt"},
-                       {"data": "credit", "type": "num-fmt"},
+                       {"data": "new_amount"},
+                       // {"data": "debit", "type": "num-fmt"},
+                       // {"data": "credit", "type": "num-fmt"},
                        {"data": "balance", "type": "num-fmt"}
                    ],
                    initComplete: function () {
@@ -446,6 +447,27 @@ class Agents {
         });
     }
 
+    static getFatherRecursive(route,id,type){
+        $.ajax({
+            url: route,
+            type: 'get',
+            data: {
+                id, type
+            }
+        }).done(function (response) {
+            $('.agentsSet').text(response.data.cant_agents);
+            $('.playersSet').text(response.data.cant_players);
+            $('.appendTreeFather').html('');
+            let initUl = '';
+            let finishUl = '';
+            $.each(response.data.fathers,function(index,val) {
+                initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
+                finishUl = finishUl + '</li></ul>'
+            });
+            $('.appendTreeFather').append(initUl+finishUl);
+        });
+    }
+
     // Dashboard
     dashboard() {
         initSelect2();
@@ -457,7 +479,10 @@ class Agents {
             }
         });
 
-        $tree.on('changed.jstree', function (event, data) {
+    $tree.on('changed.jstree', function (event, data) {
+        console.log(event,data)
+        if(data.action == "ready" || data.action == "select_node"){
+
             $('#dashboard-tab').tab('show');
             $('#option_country').addClass('d-none');
             $('#option_timezone_agent').addClass('d-none');
@@ -492,17 +517,26 @@ class Agents {
                     $('.userSet').text(json.data.user.username);
                     $('.fatherSet').text(json.data.father);
                     $('.typeSet').text(json.data.user.typeSet);
-                    $('.agentsSet').text(json.data.cant_agents);
-                    $('.playersSet').text(json.data.cant_players);
                     $('.createdSet').text(json.data.user.created);
-                    $('.appendTreeFather').html('');
-                    let initUl = '';
-                    let finishUl = '';
-                    $.each(json.data.fathers,function(index,val) {
-                        initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
-                        finishUl = finishUl + '</li></ul>'
-                    });
-                    $('.appendTreeFather').append(initUl+finishUl);
+                    $('.cantA_P').show();
+                    $('.cantA_P').show();
+                    if(json.data.type != "agent"){
+                         $('.cantA_P').hide();
+                         $('.cantA_P').hide();
+                    }
+                    // $('.agentsSet').text(json.data.cant_agents);
+                    // $('.playersSet').text(json.data.cant_players);
+                    // let initUl = '';
+                    // let finishUl = '';
+                    // $.each(json.data.fathers,function(index,val) {
+                    //     initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
+                    //     finishUl = finishUl + '</li></ul>'
+                    // });
+                    // $('.appendTreeFather').append(initUl+finishUl);
+
+                    setTimeout(function () {
+                        Agents.getFatherRecursive($('#details-user-get').data('route'),id,type);
+                    },500)
                     //TODO Finish Set Modal
 
                     $('#username').text(json.data.user.username);
@@ -579,7 +613,10 @@ class Agents {
                     swalError(json);
                 });
             }
-        })
+        }
+
+    })
+
     }
 
     //Deposits withdrawals provider
@@ -1597,7 +1634,7 @@ class Agents {
 
     //Select maker
     selectCategoryMaker(){
-        initSelect2();
+        // initSelect2();
         $('#maker').on('change', function () {
             let maker = $(this).val();
             let categories = $('#category');
@@ -1915,7 +1952,7 @@ class Agents {
     }
 
     // Users transactions
-    usersTransactions() {
+    usersTransactions(lengthMenu) {
         $('#users-transactions-tab').on('show.bs.tab', function () {
             let $table = $('#users-transactions-table');
             //let wallet = $('#wallet').val();
@@ -1927,9 +1964,10 @@ class Agents {
 
             $table.DataTable({
                 "responsive": true,
-                "bFilter": false,
+                "bFilter": true,
                 "bInfo": false,
-                "ordering": false,
+                "ordering": true,
+                "lengthMenu":lengthMenu,
                 "ajax": {
                     "url": $table.data('route') + '/' + wallet,
                     "dataSrc": "data.transactions"
@@ -2079,6 +2117,15 @@ class Agents {
             });
         });
     }
+    detailsUserModal(){
+        $('#details-user-modal').on('show.bs.modal', function (e) {
+            console.log('mostrar')
+        })
+        // $('#details-user-modal').on('hidden.bs.modal', function (e) {
+        //     console.log('cerrar')
+        // })
+    }
+
 }
 
 window.Agents = Agents;

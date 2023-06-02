@@ -536,10 +536,9 @@
                                     <div class="row g-mb-15" id="details-user">
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
-                                                <a href="#details-user-modal" id="details-user"
+                                                <a href="#details-user-modal" id="details-user-get" data-route="{{route('agents.get.father.cant')}}"
                                                    class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
-                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i> <strong> {{ _i('More information') }}</strong>
-
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i><strong> {{ _i('More information') }}</strong>
                                                 </a>
                                             </div>
                                         </div>
@@ -669,20 +668,24 @@
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('From') }}--}}
-                                            Cuenta origen
+                                            Agente
 {{--                                            {{ _i('User') }}--}}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('Toward') }}--}}
                                             Cuenta destino
                                         </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
 {{--                                            {{ _i('Debit') }}--}}
-                                            Descarga
-                                        </th>
+{{--                                            Descarga--}}
+{{--                                        </th>--}}
+{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+{{--                                            {{ _i('Credit') }}--}}
+{{--                                            Carga--}}
+{{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
 {{--                                            {{ _i('Credit') }}--}}
-                                            Carga
+                                            {{_i('Amount')}}
                                         </th>
 {{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
 {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
@@ -1185,7 +1188,7 @@
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
             agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
-            agents.usersTransactions();
+            agents.usersTransactions([10, 20, 50, 100, 500, 1000, 2000]);
             agents.users();
             agents.agents();
             agents.storeAgents();
@@ -1207,6 +1210,7 @@
             agents.changeAgentType();
             @endif
             agents.relocationAgents();
+            //agents.detailsUserModal();
         });
     </script>
 @endsection

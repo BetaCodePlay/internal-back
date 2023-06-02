@@ -3181,15 +3181,17 @@ class AgentsCollection
             $transaction->debit = 0;
             $transaction->credit = 0;
             $transaction->balance = 0;
-
+            $transaction->new_amount = 0;
 
             $from = $transaction->data->from;
             $to = $transaction->data->to;
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
+                $transaction->new_amount = '<span class="badge badge-pill badge-danger">-'.number_format($amountTmp,2).'</span>';
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
+                $transaction->new_amount = '<span class="badge badge-pill badge-info">+'.number_format($amountTmp,2).'</span>';
             }
             if (isset($transaction->data->balance)) {
                 $transaction->balance = number_format($transaction->data->balance, 2);
@@ -3207,15 +3209,23 @@ class AgentsCollection
 //                $debit = $transaction->debit;
 //            }
 
+            $debitt = $debit > 0 ? '-'.number_format($debit, 2, ",", "."):'0,00';
+            $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ",", "."):'0,00';
+            $nameAffect = $transaction->data->from === $transaction->username?$transaction->data->from:$transaction->data->to;
+//            if($from != $nameAffect){
+//
+//            }
             $data[] = [
                 'id' => null,
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
                 'data' => [
                     'from' => $from,
-                    'to' => $to,
+                    'to' => $nameAffect,
+                    //'to' => $to,
                 ],
-                'debit' => number_format($debit, 2, ",", "."),
-                'credit' => number_format($credit, 2, ",", "."),
+                'debit' => $debitt,
+                'credit' => $creditt,
+                'new_amount' => $transaction->new_amount,
                 'balance' => $transaction->balance,
             ];
 
