@@ -6387,7 +6387,7 @@ if (!function_exists('menu')) {
                 'route' => null,
                 'params' => [],
                 'icon' => 'hs-admin-settings',
-                'permission' => Permissions::$manage_betpay_menu,
+                //'permission' => Permissions::$manage_betpay_menu,
                 'submenu' => [
 
                     'ClientBetPay' => [
