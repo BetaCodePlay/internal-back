@@ -67,6 +67,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@find'
     ]);
 
+    // Get father and cant
+    Route::get('get/father/cant', [
+        'as' => 'agents.get.father.cant',
+        'uses' => 'AgentsController@getFatherAndCant'
+    ]);
+
     // Find agent
     Route::get('find-user', [
         'as' => 'agents.find-user',

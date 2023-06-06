@@ -31,10 +31,48 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="image">{{ _i('Image') }}</label>
-                            <input type="file" name="image" id="image" class="opacity-0">
-                        </div>
+                        @if(!is_null($image->front))
+                            <div class="form-group">
+                                <label for="image">{{ _i('Image') }}</label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                            <div class="form-group">
+                                <label for="front">{{ _i('Image') }}</label>
+                                <input type="file" name="front" id="show-front" class="opacity-0">
+                            </div>
+                        @else
+                            <div class="form-group">
+                                <label for="image">{{ _i('Image') }}</label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="">
+                                    <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
+                                    <span
+                                        class="glyphicon glyphicon-ok">{{ _i('Enable only for moving images: ') }}</span>
+                                </label>
+                                <div class="div_a_show">
+                                    <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
+                                        <div class="noty_body">
+                                            <div class="g-mr-20">
+                                                <div class="noty_body__icon">
+                                                    <i class="hs-admin-info"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p>
+                                                    {{ _i('This image is only if you want to activate images with movement.The maximum file size is 5mb and the maximum width is 3440px') }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="front">{{ _i('Image') }}</label>
+                                        <input type="file" name="front" id="show-front" class="opacity-0">
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -93,6 +131,21 @@
                                     </div>
                                 </div>
                             @endif
+                            @if($section == 'section-7')
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="category">{{ _i('Category') }}</label>
+                                        <select name="category" id="category" class="form-control">
+                                            <option value="">{{ _i('Select...') }}</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category }}">
+                                                    {{ $category }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="start_date">{{ _i('Start date') }}</label>
@@ -121,21 +174,6 @@
                                     @endif
                                 </div>
                             </div>
-                            {{--<div class="col-md-12">--}}
-                            {{--   <div class="form-group">--}}
-                            {{--        <label for="language">{{ _i('Language') }}</label>--}}
-                            {{--        <select name="language" id="language" class="form-control">--}}
-                            {{--            <option value="*" {{ $image->language == '*' ? 'selected' : '' }}>--}}
-                            {{--                {{ _i('All') }}--}}
-                            {{--            </option>--}}
-                            {{--           @foreach ($languages as $language)--}}
-                            {{--                <option value="{{ $language['iso'] }}" {{ $image->language == $language['iso'] ? 'selected' : '' }}>--}}
-                            {{--                    {{ $language['name'] }}--}}
-                            {{--               </option>--}}
-                            {{--            @endforeach--}}
-                            {{--        </select>--}}
-                            {{--    </div>--}}
-                            {{--</div>--}}
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="status">{{ _i('Status') }}</label>
@@ -163,6 +201,7 @@
                                     <input type="hidden" name="id" value="{{ isset($image->id) ? $image->id : null }}">
                                     <input type="hidden" name="file" value="{{ $image->file }}">
                                     <input type="hidden" name="image" value="{{ $image->file }}">
+                                    <input type="hidden" name="front" value="{{ $image->file }}">
                                     <input type="hidden" name="template_element_type"
                                            value="{{ $template_element_type }}">
                                     <input type="hidden" name="section" value="{{ $section }}">
@@ -186,7 +225,30 @@
     <script>
         $(function () {
             let sectionImages = new SectionImages();
-            sectionImages.update("{!! $image->image !!}");
+            sectionImages.update("{!! $image->image !!}", "show-image");
+            sectionImages.update("{!! $image->front !!}", "show-front");
+        });
+    </script>
+    <script>
+        $(function () {
+
+            // obtener campos ocultar div
+            var checkbox = $(".checkshow");
+            var hidden = $(".div_a_show");
+            //
+
+            hidden.hide();
+            checkbox.change(function () {
+                if (checkbox.is(':checked')) {
+                    //hidden.show();
+                    $(".div_a_show").fadeIn("200")
+                } else {
+                    //hidden.hide();
+                    $(".div_a_show").fadeOut("200")
+                    $('input[type=checkbox]').prop('checked', false);// limpia los valores de checkbox al ser ocultado
+
+                }
+            });
         });
     </script>
 @endsection

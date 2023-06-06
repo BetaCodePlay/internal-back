@@ -536,10 +536,9 @@
                                     <div class="row g-mb-15" id="details-user">
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
-                                                <a href="#details-user-modal" id="details-user"
+                                                <a href="#details-user-modal" id="details-user-get" data-route="{{route('agents.get.father.cant')}}"
                                                    class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
-                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i> <strong> {{ _i('More information') }}</strong>
-
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i><strong> {{ _i('More information') }}</strong>
                                                 </a>
                                             </div>
                                         </div>
@@ -1211,6 +1210,7 @@
             agents.changeAgentType();
             @endif
             agents.relocationAgents();
+            //agents.detailsUserModal();
         });
     </script>
 @endsection

@@ -25,6 +25,7 @@ use Dotworkers\Audits\Audits;
  *
  * @package App\Http\Controllers
  * @author  Eborio Linarez
+ * @author Genesis Perez
  */
 class SlidersController extends Controller
 {
@@ -173,6 +174,7 @@ class SlidersController extends Controller
      *
      * @param int $id Slider ID
      * @param string $file File name
+     * @param string $front File name
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function delete($id, $file)
@@ -203,7 +205,6 @@ class SlidersController extends Controller
     public function edit($id)
     {
         $slider = $this->slidersRepo->find($id);
-
         if (!is_null($slider)) {
             try {
 
@@ -275,6 +276,11 @@ class SlidersController extends Controller
             $image = $request->file('image');
             $extension = $image->getClientOriginalExtension();
             $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+            $front = $request->file('front');
+            if(!is_null($front)){
+                $extensionFront = $front->getClientOriginalExtension();
+                $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+            }
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
@@ -332,6 +338,15 @@ class SlidersController extends Controller
                     Storage::put($path, file_get_contents($image->getRealPath()), 'public');
                     $sliderData['image'] = $name;
                     $sliderData['route'] = $route;
+                    if(!is_null($front)){
+                        $nameFront = Str::slug($originalNameFront) . time() . mt_rand(1, 100) . '.' . $extensionFront;
+                        $path = "{$this->filePath}{$nameFront}";
+                        Storage::put($path, file_get_contents($front->getRealPath()), 'public');
+                        $sliderData['front'] = $nameFront;
+                        $sliderData['route'] = $route;
+                    }else{
+                        $sliderData['front'] = null;
+                    }
                     $this->slidersRepo->store($sliderData);
                 }
             } else {
@@ -339,6 +354,12 @@ class SlidersController extends Controller
                 $path = "{$this->filePath}{$name}";
                 Storage::put($path, file_get_contents($image->getRealPath()), 'public');
                 $sliderData['image'] = $name;
+                if(!is_null($front)){
+                    $nameFront = Str::slug($originalNameFront) . time() . mt_rand(1, 100) . '.' . $extensionFront;
+                    $path = "{$this->filePath}{$nameFront}";
+                    Storage::put($path, file_get_contents($front->getRealPath()), 'public');
+                    $sliderData['front'] = $nameFront;
+                }
                 $this->slidersRepo->store($sliderData);
             }
             $user_id = auth()->user()->id;
@@ -385,6 +406,7 @@ class SlidersController extends Controller
 
         try {
             $id = $request->id;
+            $fileFront = $request->file;
             $file = $request->file;
             $image = $request->file('image');
             $timezone = session('timezone');
@@ -480,6 +502,17 @@ class SlidersController extends Controller
                 Storage::delete($oldFilePath);
                 $sliderData['image'] = $name;
                 $file = $name;
+                $front = $request->file('front');
+                if(!is_null($front)) {
+                    $extensionFront = $front->getClientOriginalExtension();
+                    $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
+                    $nameFront = Str::slug($originalNameFront) . time() . mt_rand(1, 100) . '.' . $extensionFront;
+                    $newFilePath = "{$this->filePath}{$nameFront}";
+                    $oldFilePath = "{$this->filePath}{$fileFront}";
+                    Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
+                    Storage::delete($oldFilePath);
+                    $sliderData['front'] = $nameFront;
+                }
             }
             $this->slidersRepo->update($id, $sliderData);
 
