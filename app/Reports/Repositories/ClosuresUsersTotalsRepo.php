@@ -585,41 +585,43 @@ class ClosuresUsersTotalsRepo
                 //     $provider ? $provider : 'NULL',
                 //     $provider ? $provider : 'NULL',
                 // ]);
-        $data = DB::select("
-        SELECT
-        site.whitelabels.description AS whitelabel,
-        closures_users_totals_2023_hour.provider_id,
-        SUM(closures_users_totals_2023_hour.played) AS played,
-        SUM(closures_users_totals_2023_hour.won) AS won,
-        SUM(closures_users_totals_2023_hour.profit) AS profit,
-        closures_users_totals_2023_hour.currency_iso,
-        providers.provider_type_id
-    FROM public.closures_users_totals_2023_hour
-    JOIN site.whitelabels ON closures_users_totals_2023_hour.whitelabel_id = whitelabels.id
-    JOIN site.providers ON closures_users_totals_2023_hour.provider_id = providers.id
-    WHERE closures_users_totals_2023_hour.start_date >= ?
-        AND closures_users_totals_2023_hour.end_date <= ?
-        AND (closures_users_totals_2023_hour.whitelabel_id = ? OR closures_users_totals_2023_hour.whitelabel_id IS NULL)
-        AND (closures_users_totals_2023_hour.currency_iso = ? OR closures_users_totals_2023_hour.currency_iso IS NULL)
-        AND (closures_users_totals_2023_hour.provider_id = ? OR closures_users_totals_2023_hour.provider_id IS NULL)
-    GROUP BY
-        site.whitelabels.description,
-        closures_users_totals_2023_hour.provider_id,
-        closures_users_totals_2023_hour.currency_iso,
-        providers.provider_type_id,
-        closures_users_totals_2023_hour.whitelabel_id
-    ORDER BY
-        site.whitelabels.description ASC,
-        closures_users_totals_2023_hour.provider_id ASC,
-        closures_users_totals_2023_hour.currency_iso ASC;
-        ", [
-            $startDate,
-            $endDate,
-            $whitelabel,
-            $currency,
-            $provider
-        ]);
-        return $data;
+                $data = DB::select("
+                    SELECT
+                    site.whitelabels.description AS whitelabel,
+                    closures_users_totals_2023_hour.provider_id,
+                    SUM(closures_users_totals_2023_hour.played) AS played,
+                    SUM(closures_users_totals_2023_hour.won) AS won,
+                    SUM(closures_users_totals_2023_hour.profit) AS profit,
+                    closures_users_totals_2023_hour.currency_iso,
+                    providers.provider_type_id
+                    FROM public.closures_users_totals_2023_hour
+                    JOIN site.whitelabels ON closures_users_totals_2023_hour.whitelabel_id = whitelabels.id
+                    JOIN site.providers ON closures_users_totals_2023_hour.provider_id = providers.id
+                    WHERE closures_users_totals_2023_hour.start_date >= ?
+                        AND closures_users_totals_2023_hour.end_date <= ?
+                        AND closures_users_totals_2023_hour.whitelabel_id = COALESCE(?, closures_users_totals_2023_hour.whitelabel_id)
+                        AND closures_users_totals_2023_hour.currency_iso = COALESCE(?, closures_users_totals_2023_hour.currency_iso)
+                        AND closures_users_totals_2023_hour.provider_id = COALESCE(?, closures_users_totals_2023_hour.provider_id)
+                    GROUP BY
+                    site.whitelabels.description,
+                    closures_users_totals_2023_hour.provider_id,
+                    closures_users_totals_2023_hour.currency_iso,
+                    providers.provider_type_id,
+                    closures_users_totals_2023_hour.whitelabel_id
+                    ORDER BY
+                    site.whitelabels.description ASC,
+                    closures_users_totals_2023_hour.provider_id ASC,
+                    closures_users_totals_2023_hour.currency_iso ASC;
+                ", [
+                    $startDate,
+                    $endDate,
+                    $whitelabel,
+                    $currency,
+                    $provider
+                ]);
+
+                return $data;
+
     }
 
     /**
