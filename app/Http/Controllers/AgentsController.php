@@ -523,7 +523,7 @@ class AgentsController extends Controller
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $username = $request->get('search')['value'];
+            $username = $request->get('search')['value'] ?? null;
             $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
             $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
             $orderCol =[
@@ -1021,7 +1021,7 @@ class AgentsController extends Controller
             $timezone = session('timezone');
 
             $offset = $request->has('start') ? $request->get('start') : 0;
-            $limit = $request->has('length') ? $request->get('length') : 100;
+            $limit = $request->has('length') ? $request->get('length') : 2000;
             //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
             $user = Auth::id();
 

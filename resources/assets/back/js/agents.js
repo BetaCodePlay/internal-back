@@ -185,9 +185,13 @@ class Agents {
                let api;
 
                $tableTransaction.DataTable({
-                   destroy: true,
-                   processing: true,
-                   serverSide: true,
+                   responsive: true,
+                   bFilter: false,
+                   bInfo: false,
+                   searching:true,
+                   ordering: true,
+                   processing: false,
+                   serverSide: false,
                    lengthMenu:lengthMenu,
                    ajax: {
                        url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+'&typeUser='+type+'&typeTransaction='+transaction,
@@ -480,7 +484,6 @@ class Agents {
         });
 
     $tree.on('changed.jstree', function (event, data) {
-        console.log(event,data)
         if(data.action == "ready" || data.action == "select_node"){
 
             $('#dashboard-tab').tab('show');
@@ -798,12 +801,13 @@ class Agents {
      let $button = $('#update');
      $button.trigger('click')
      let api;
-     if (user == null) {
-         $('#financial-state-tab').on('show.bs.tab', function () {
-             $table.children().remove();
-             user = $('.user').val();
-         });
-     }
+       if (user == null) {
+
+           $('#financial-state-tab').on('show.bs.tab', function () {
+               $table.children().remove();
+               user = $('.user').val();
+           });
+       }
 
      $button.click(function () {
          $button.button('loading');
@@ -2002,9 +2006,10 @@ class Agents {
                 responsive: true,
                 bFilter: false,
                 bInfo: false,
-                ordering: false,
-                processing: true,
-                serverSide: true,
+                ordering: true,
+                processing: false,
+                searching:true,
+                serverSide: false,
                 bAutoWidth: false,
                 lengthMenu:lengthMenu,
                 ajax: {

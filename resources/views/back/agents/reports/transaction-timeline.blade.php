@@ -58,7 +58,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.transactionTimeline('{{route('reports.data.transaction.timeline')}}','#exampleTable',[10,20,50,100]);
+            agents.transactionTimeline('{{route('reports.data.transaction.timeline')}}','#exampleTable',[50,100,500,1000,2000]);
         });
 
     </script>
