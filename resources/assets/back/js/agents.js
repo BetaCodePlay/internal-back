@@ -189,6 +189,7 @@ class Agents {
                    bFilter: false,
                    bInfo: false,
                    searching:true,
+                   order: [[ 0, 'desc' ]],
                    ordering: true,
                    processing: false,
                    serverSide: false,
@@ -2012,6 +2013,7 @@ class Agents {
                 serverSide: false,
                 bAutoWidth: false,
                 lengthMenu:lengthMenu,
+                order: [[ 0, 'desc' ]],
                 ajax: {
                     url: route+dateFinal,
                     dataType: 'json',
