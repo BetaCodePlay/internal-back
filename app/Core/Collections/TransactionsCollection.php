@@ -1506,7 +1506,7 @@ class TransactionsCollection
             $data[] = [
                 'id'=>'',
                 'date'=>'',
-                'names'=>'',
+                'names'=>'<strong>'._i('Totals').' </strong>',
                 'from'=>'',
                 'to'=>'',
                 'data'=>'',
