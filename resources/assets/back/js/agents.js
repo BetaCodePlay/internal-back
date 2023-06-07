@@ -808,7 +808,7 @@ class Agents {
      $button.click(function () {
          $button.button('loading');
          let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
-         let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
+         let provider_id = $('#provider_id').val() === undefined || $('#provider_id').val() === '' ? '' : '&provider_id=' + $('#provider_id').val();
          let _hour = $('#_hour').val() === ''?'':'&_hour='+$('#_hour').val();
          let test = '?test=false'
          let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
