@@ -1450,7 +1450,6 @@ class TransactionsCollection
                     $name = '<strong>'._i('from').' '.$dataTmp->from .' </strong>'._i('to').' '.$dataTmp->to;
                 }
 
-
                 $newData['id'] = $transaction->id;
                 $newData['names'] =  $name;
                 $newData['from'] = $dataTmp->from;
@@ -1507,7 +1506,7 @@ class TransactionsCollection
             $data[] = [
                 'id'=>'',
                 'date'=>'',
-                'names'=>'',
+                'names'=>'<strong>'._i('Totals').' </strong>',
                 'from'=>'',
                 'to'=>'',
                 'data'=>'',

@@ -185,9 +185,14 @@ class Agents {
                let api;
 
                $tableTransaction.DataTable({
-                   destroy: true,
-                   processing: true,
-                   serverSide: true,
+                   responsive: true,
+                   bFilter: false,
+                   bInfo: false,
+                   searching:true,
+                   order: [[ 0, 'desc' ]],
+                   ordering: true,
+                   processing: false,
+                   serverSide: false,
                    lengthMenu:lengthMenu,
                    ajax: {
                        url: $tableTransaction.data('route') + '/' + user+'?startDate='+startDate+'&endDate='+endDate+'&typeUser='+type+'&typeTransaction='+transaction,
@@ -480,7 +485,6 @@ class Agents {
         });
 
     $tree.on('changed.jstree', function (event, data) {
-        console.log(event,data)
         if(data.action == "ready" || data.action == "select_node"){
 
             $('#dashboard-tab').tab('show');
@@ -798,17 +802,18 @@ class Agents {
      let $button = $('#update');
      $button.trigger('click')
      let api;
-     if (user == null) {
-         $('#financial-state-tab').on('show.bs.tab', function () {
-             $table.children().remove();
-             user = $('.user').val();
-         });
-     }
+       if (user == null) {
+
+           $('#financial-state-tab').on('show.bs.tab', function () {
+               $table.children().remove();
+               user = $('.user').val();
+           });
+       }
 
      $button.click(function () {
          $button.button('loading');
          let username_like = $('#username_like').val() === ''?'':'&username_like='+$('#username_like').val();
-         let provider_id = $('#provider_id').val() === ''?'':'&provider_id='+$('#provider_id').val();
+         let provider_id = $('#provider_id').val() === undefined || $('#provider_id').val() === '' ? '' : '&provider_id=' + $('#provider_id').val();
          let _hour = $('#_hour').val() === ''?'':'&_hour='+$('#_hour').val();
          let test = '?test=false'
          let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
@@ -2002,11 +2007,13 @@ class Agents {
                 responsive: true,
                 bFilter: false,
                 bInfo: false,
-                ordering: false,
-                processing: true,
-                serverSide: true,
+                ordering: true,
+                processing: false,
+                searching:true,
+                serverSide: false,
                 bAutoWidth: false,
                 lengthMenu:lengthMenu,
+                order: [[ 0, 'desc' ]],
                 ajax: {
                     url: route+dateFinal,
                     dataType: 'json',
