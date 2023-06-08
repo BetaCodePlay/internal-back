@@ -682,7 +682,6 @@ class Agents {
          $button.trigger('click');
          let api;
 
-        Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
          $button.click(function () {
              $button.button('loading');
                 let startDate = $('#start_date').val();
