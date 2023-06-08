@@ -198,6 +198,10 @@ class Agents {
             let api;
 
             $tableTransaction.DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'excel', 'pdf'
+                ],
                 responsive: true,
                 bFilter: false,
                 bInfo: false,
