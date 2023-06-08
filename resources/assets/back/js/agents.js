@@ -690,7 +690,7 @@ class Agents {
          initDateRangePickerEndToday(open = 'right');
         //  let picker = initLitepickerEndToday();
          let $table = $('#financial-state-table-makers');
-         let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
+        //  let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
         //  let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
         //  let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
          let $button = $('#update');
@@ -701,6 +701,7 @@ class Agents {
              $button.button('loading');
                 let startDate = $('#start_date').val();
                 let endDate = $('#end_date').val();
+                let currency_iso = $('#currency').val() === '' ? '' : $('#currency').val();
 
             $.ajax({
                 url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}`,
