@@ -197,6 +197,8 @@ class Agents {
 
             let api;
 
+            console.log('estas en la funcion correcto->agentsTransactionsPaginate()')
+
             $tableTransaction.DataTable({
                 dom: 'Bfrtip',
                 buttons: [
