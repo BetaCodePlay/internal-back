@@ -223,7 +223,7 @@ class Agents {
                     {"data": "data.from"},
                     {"data": "data.to"},
                     {"data": "new_amount"},
-                    {"data": "balance", "type": "numeric" }
+                    {"data": "balance"}
                 ],
                 initComplete: function () {
                     api = this.api();
