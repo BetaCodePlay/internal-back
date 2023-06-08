@@ -3235,7 +3235,7 @@ class AgentsCollection
             $amountTmp = $transaction->amount;
             $transaction->debit = 0;
             $transaction->credit = 0;
-            $transaction->balance = 0;
+            $transaction->balance =  number_format(0, 2,'.','.');
             $transaction->new_amount = 0;
 
             $from = $transaction->data->from;
