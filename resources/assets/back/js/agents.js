@@ -221,9 +221,7 @@ class Agents {
                     {"data": "data.from"},
                     {"data": "data.to"},
                     {"data": "new_amount"},
-                    // {"data": "debit", "type": "num-fmt"},
-                    // {"data": "credit", "type": "num-fmt"},
-                    {"data": "balance", "type": "num-fmt"}
+                    {"data": "balance",type: 'numeric-comma'}
                 ],
                 initComplete: function () {
                     api = this.api();
