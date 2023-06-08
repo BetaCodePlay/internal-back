@@ -692,6 +692,9 @@ class Agents {
                     type: 'get',
                     dataType: 'json'
 
+                }).done(function (json) {
+                    $table.html(json.data.table);
+
                 }).fail(function (json) {
                     swalError(json);
 
@@ -738,24 +741,6 @@ class Agents {
             }).done(function (json) {
                 $table.html(json.data.table);
 
-                // setTimeout(() => {
-                //     var doc = new jsPDF('p', 'pt', 'letter');
-
-                //     var margin = 10;
-                //     var scale = (doc.internal.pageSize.width - margin * 2) / document.body.scrollWidth;
-                //     doc.html(document.getElementById('print-document'), {
-                //         x: margin,
-                //         y: margin,
-                //         html2canvas: {
-                //             scale: scale,
-                //         },
-                //         callback: function(doc){
-                //         // Comentado para pruebas
-                //         // doc.output('dataurlnewwindow', {filename: 'examen.pdf'});
-                //         doc.save('examen.pdf')
-                //         }
-                //     });
-                // }, 3000);
             }).fail(function (json) {
                 swalError(json);
 
