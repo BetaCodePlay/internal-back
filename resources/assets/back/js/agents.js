@@ -197,13 +197,11 @@ class Agents {
 
             let api;
 
-            console.log('estas en la funcion correcto->agentsTransactionsPaginate()')
-
             $tableTransaction.DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'excel', 'pdf'
-                ],
+                // dom: 'Bfrtip',
+                // buttons: [
+                //     'excel', 'pdf', 'print'
+                // ],
                 responsive: true,
                 bFilter: false,
                 bInfo: false,
@@ -863,7 +861,7 @@ class Agents {
             bFilter: false,
             bInfo: false,
             searching: true,
-            order: [[1, 'desc']],
+            order: [[0, 'asc']],
             ordering: true,
             processing: false,
             serverSide: false,
