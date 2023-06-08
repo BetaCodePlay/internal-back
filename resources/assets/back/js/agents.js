@@ -723,9 +723,9 @@ class Agents {
     }
 
     // Agents Transactions Paginate Total
-    static financialStateMakersTotal(url_total, start_date, end_date, currency_iso) {
+    static financialStateMakersTotal(url_total, start_date, end_date, currency_iso, provider_id, whitelabel_id) {
         $.ajax({
-            url: url_total + '?startDate=' + start_date + '&endDate=' + end_date + '&currency_iso=' + currency_iso,
+            url: url_total + '?startDate=' + start_date + '&endDate=' + end_date + '&currency_iso=' + currency_iso+ '&provider_id=' + provider_id+ '&whitelabel_id=' + whitelabel_id,
             type: 'get',
         }).done(function (response) {
             $('.financialStateDataMakersTotals').empty();
