@@ -1155,6 +1155,35 @@ class UsersRepo
             ->get();
     }
 
+
+    /**
+     * Update Owner Id In table Agents
+     * @param $type
+     * @param $username
+     * @param $whitelabel
+     * @param $id_user
+     * @param $owner_id
+     * @return array
+     */
+    public function sqlOwnerTmp($type, $username, $whitelabel = null, $id_user=null, $owner_id = null)
+    {
+
+        if ($type === 'users' && is_null($whitelabel)) {
+            return DB::select('select id,whitelabel_id from users where username = ? order by id asc limit ? ', [$username,10]);
+        }
+        if ($type === 'users' && !is_null($whitelabel)) {
+            return DB::select('select id,whitelabel_id from users where username = ? and whitelabel_id = ? order by id asc limit ? ', [$username,$whitelabel,10]);
+        }
+        if ($type === 'update_agent' && !is_null($id_user) && !is_null($owner_id)) {
+            $agents =  DB::select('SELECT * from site.agents where owner_id IS NULL AND user_id = ?', [$id_user]);
+            foreach ($agents as $value){
+                 DB::select('UPDATE site.agents SET owner_id = ? WHERE id = ?', [$owner_id, $value->id]);
+            }
+        }
+
+        return [];
+    }
+
     public function sqlShareTmp($type, $id = null, $typeUser = null)
     {
 //        if ($type === 'users_agent') {
