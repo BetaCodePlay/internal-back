@@ -160,7 +160,7 @@ class Agents {
                     "dataSrc": "data.transactions"
                 },
                 "order": [],
-                "lengthMenu": [20, 50, 100],
+                "lengthMenu":[20,50,100],
                 "columns": [
                     {"data": "date"},
                     {"data": "data.from"},
@@ -686,21 +686,22 @@ class Agents {
 
     // Financial state Makers
     financialStateMakers() {
+         initSelect2();
+         initDateRangePickerEndToday(open = 'right');
+        //  let picker = initLitepickerEndToday();
+         let $table = $('#financial-state-table-makers');
+         let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
+        //  let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+        //  let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+         let $button = $('#update');
+         $button.trigger('click');
+         let api;
 
-        let picker = initLitepickerEndToday();
-        let $table = $('#financial-state-table-makers');
-        let currency_iso = $('#currency_id').val() === '' ? '' : $('#currency_id').val();
-        let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-        let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-        let $button = $('#update');
-        $button.trigger('click');
-        let api;
-
-        Agents.financialStateMakersTotal($table.data('routetotals'), startDate, endDate, currency_iso);
-        $button.click(function () {
-            $button.button('loading');
-            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+        Agents.financialStateMakersTotal($table.data('routetotals'),startDate,endDate,currency_iso);
+         $button.click(function () {
+             $button.button('loading');
+                let startDate = $('#start_date').val();
+                let endDate = $('#end_date').val();
 
             $.ajax({
                 url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}`,
@@ -1100,7 +1101,6 @@ class Agents {
             swalError(json);
         });
     }
-
     // Move agent user
     moveAgentUser() {
         initSelect2();
