@@ -2071,8 +2071,8 @@ class Agents {
     }
 
     // Table Transaction Timeline
-    transactionTimeline(route, lengthMenu) {
-        let route2 = route;
+    transactionTimeline(lengthMenu) {
+
         let $tableTransaction = $('#tableTimeline');
         let $button = $('#update');
         let picker = initLitepickerEndToday();
@@ -2093,7 +2093,7 @@ class Agents {
              serverSide: false,
              lengthMenu: lengthMenu,
             ajax: {
-                url: route2 + dateFinal,
+                url: $tableTransaction.data('route') + dateFinal,
                 dataType: 'json',
                 type: 'get',
             },
@@ -2128,12 +2128,10 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
-            startDate = ''
-            endDate = ''
-            startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-            endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-            dateFinal = '?start_date=' + startDate + '&end_date=' + endDate
-            $tableTransaction.ajax.url(route2 + dateFinal).load();
+            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let dateFinal = '?start_date=' + startDate + '&end_date=' + endDate
+            $tableTransaction.ajax.url($tableTransaction.data('route') + dateFinal).load();
             $tableTransaction.on('draw.dt', function () {
                 $button.button('reset');
             });

@@ -1,19 +1,5 @@
 @extends('back.template')
-@section('styles')
-{{--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">--}}
 
-{{-- <style>
-    table.display {
-        table-layout: fixed; /* Establecer el diseño de la tabla en fijo */
-    }
-
-    th, td {
-        word-wrap: break-word; /* Permitir que las palabras se ajusten en las celdas */
-        overflow: auto; /* Ocultar el contenido que se desborda */
-        text-overflow: ellipsis; /* Mostrar puntos suspensivos para el contenido que se desborda */
-    }
-</style> --}}
-@endsection
 @section('content')
     @include('back.layout.litepicker')
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -31,7 +17,7 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered table-hover dt-responsive" id="tableTimeline"  width="100%">
+                <table class="table table-bordered table-hover dt-responsive" id="tableTimeline" data-route="{{ route('reports.data.transaction.timeline') }}" width="100%">
                     <thead>
                         <tr>
                             <th> {{ _i('Date') }}</th>
@@ -45,9 +31,6 @@
                     </thead>
                 </table>
         </div>
-{{--            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}">--}}
-
-{{--            </div>--}}
         </div>
     </div>
 @endsection
@@ -56,7 +39,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.transactionTimeline('{{route('reports.data.transaction.timeline')}}',[50,100,500,1000,2000]);
+            agents.transactionTimeline([50,100,500,1000,2000]);
         });
 
     </script>
