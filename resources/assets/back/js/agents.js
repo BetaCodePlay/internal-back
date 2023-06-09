@@ -159,7 +159,6 @@ class Agents {
                     "url": $table.data('route') + '/' + user,
                     "dataSrc": "data.transactions"
                 },
-                "order": [],
                 "lengthMenu":[20,50,100],
                 "columns": [
                     {"data": "date"},
@@ -168,6 +167,9 @@ class Agents {
                     {"data": "debit", "type": "num-fmt"},
                     {"data": "credit", "type": "num-fmt"},
                     {"data": "balance", "type": "num-fmt"}
+                ],
+                buttons: [
+                    'excel', 'pdf'
                 ],
                 "initComplete": function () {
                     api = this.api();
@@ -198,10 +200,6 @@ class Agents {
             let api;
 
             $tableTransaction.DataTable({
-                // dom: 'Bfrtip',
-                // buttons: [
-                //     'excel', 'pdf', 'print'
-                // ],
                 responsive: true,
                 bFilter: false,
                 bInfo: false,
@@ -223,8 +221,13 @@ class Agents {
                     {"data": "new_amount"},
                     {"data": "balance"}
                 ],
+                buttons: [
+                    'excel', 'pdf'
+                ],
                 initComplete: function () {
                     api = this.api();
+                    api.buttons().container()
+                        .appendTo($('#table-buttons'));
                 }
             });
 
@@ -856,6 +859,8 @@ class Agents {
         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
+        let api;
+
         $tableTransaction.DataTable({
             responsive: true,
             bFilter: false,
@@ -879,6 +884,9 @@ class Agents {
                 {"data": "profit"},
                 {"data": "rpt"}
             ],
+            buttons: [
+                'excel', 'pdf'
+            ],
             initComplete: function () {
                 api = this.api();
                 api.buttons().container()
@@ -886,7 +894,6 @@ class Agents {
             }
         });
 
-        let api;
         $button.click(function () {
             $button.button('loading');
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
@@ -2064,26 +2071,29 @@ class Agents {
     }
 
     // Table Transaction Timeline
-    transactionTimeline(route, id, lengthMenu) {
+    transactionTimeline(route, lengthMenu) {
         let route2 = route;
+        let $tableTransaction = $('#tableTimeline');
         let $button = $('#update');
         let picker = initLitepickerEndToday();
         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
         let dateFinal = '?start_date=' + startDate + '&end_date=' + endDate;
-        let table = $(id).DataTable({
-            responsive: true,
-            bFilter: false,
-            bInfo: false,
-            ordering: true,
-            processing: false,
-            searching: true,
-            serverSide: false,
-            bAutoWidth: false,
-            lengthMenu: lengthMenu,
-            order: [[0, 'desc']],
+
+        let api;
+
+        $tableTransaction.DataTable({
+             responsive: true,
+             bFilter: false,
+             bInfo: false,
+             searching: true,
+             order: [[0, 'asc']],
+             ordering: true,
+             processing: false,
+             serverSide: false,
+             lengthMenu: lengthMenu,
             ajax: {
-                url: route + dateFinal,
+                url: route2 + dateFinal,
                 dataType: 'json',
                 type: 'get',
             },
@@ -2093,12 +2103,27 @@ class Agents {
                 {data: 'debit'},
                 {data: 'credit'},
                 {data: 'balance'},
-                {data: 'balanceFrom'},
+                {data: 'balanceFrom'}
             ],
-        });
-
-        table.on('draw.dt', function () {
-            $button.button('reset');
+             buttons: [
+                 { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                 { extend: 'pdfHtml5', text:'PDF-5',className: 'pdfButton' },
+                 { extend: 'excel', text:'EXCEL', className: 'excelButton' },
+                 { extend: 'pdfHtml5',
+                     text: 'Save current page',
+                     download: 'open',
+                     exportOptions: {
+                         modifier: {
+                             page: 'current'
+                         }
+                     }
+                 }
+             ],
+             initComplete: function () {
+                 api = this.api();
+                 api.buttons().container()
+                     .appendTo($('#table-buttons'));
+             }
         });
 
         $button.click(function () {
@@ -2108,8 +2133,10 @@ class Agents {
             startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             dateFinal = '?start_date=' + startDate + '&end_date=' + endDate
-            table.ajax.url(route2 + dateFinal).load();
-            $button.button('reset');
+            $tableTransaction.ajax.url(route2 + dateFinal).load();
+            $tableTransaction.on('draw.dt', function () {
+                $button.button('reset');
+            });
         });
 
     }

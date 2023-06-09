@@ -12,7 +12,7 @@
         </header>
         <div class="card-block g-pa-15">
             <div class="media">
-                <div class="media-body d-flex justify-content-end g-mb-10" id="table-buttons">
+                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
 
                 </div>
             </div>
