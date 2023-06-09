@@ -2131,7 +2131,8 @@ class Agents {
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             let dateFinal = '?start_date=' + startDate + '&end_date=' + endDate
-            $tableTransaction.ajax.url($tableTransaction.data('route') + dateFinal).load();
+            let route = $tableTransaction.data('route') + dateFinal;
+            api.ajax.url(route).load();
             $tableTransaction.on('draw.dt', function () {
                 $button.button('reset');
             });
