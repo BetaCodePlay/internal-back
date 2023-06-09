@@ -169,7 +169,8 @@ class Agents {
                     {"data": "balance", "type": "num-fmt"}
                 ],
                 buttons: [
-                    'excel', 'pdf'
+                    { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                    { extend: 'excel', text:'EXCEL', className: 'excelButton' },
                 ],
                 "initComplete": function () {
                     api = this.api();
@@ -222,7 +223,8 @@ class Agents {
                     {"data": "balance"}
                 ],
                 buttons: [
-                    'excel', 'pdf'
+                    { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                    { extend: 'excel', text:'EXCEL', className: 'excelButton' },
                 ],
                 initComplete: function () {
                     api = this.api();
@@ -885,7 +887,8 @@ class Agents {
                 {"data": "rpt"}
             ],
             buttons: [
-                'excel', 'pdf'
+                { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                { extend: 'excel', text:'EXCEL', className: 'excelButton' },
             ],
             initComplete: function () {
                 api = this.api();
@@ -2107,17 +2110,17 @@ class Agents {
             ],
              buttons: [
                  { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                 { extend: 'pdfHtml5', text:'PDF-5',className: 'pdfButton' },
                  { extend: 'excel', text:'EXCEL', className: 'excelButton' },
-                 { extend: 'pdfHtml5',
-                     text: 'Save current page',
-                     download: 'open',
-                     exportOptions: {
-                         modifier: {
-                             page: 'current'
-                         }
-                     }
-                 }
+                 // { extend: 'pdfHtml5', text:'PDF-5',className: 'pdfButton' },
+                 // { extend: 'pdfHtml5',
+                 //     text: 'Save current page',
+                 //     download: 'open',
+                 //     exportOptions: {
+                 //         modifier: {
+                 //             page: 'current'
+                 //         }
+                 //     }
+                 // }
              ],
              initComplete: function () {
                  api = this.api();
