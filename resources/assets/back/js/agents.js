@@ -170,8 +170,8 @@ class Agents {
                 ],
                 buttons: [
                     { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                    { extend: 'copy', text:'Copy',className: 'copyButton' },
-                    { extend: 'excel', text:'Excel', className: 'excelButton' },
+                    { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                    { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
                 ],
                 "initComplete": function () {
                     api = this.api();
@@ -225,8 +225,8 @@ class Agents {
                 ],
                 buttons: [
                     { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                    { extend: 'copy', text:'Copy',className: 'copyButton' },
-                    { extend: 'excel', text:'Excel', className: 'excelButton' },
+                    { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                    { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
                 ],
                 initComplete: function () {
                     api = this.api();
@@ -890,8 +890,8 @@ class Agents {
             ],
             buttons: [
                 { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                { extend: 'copy', text:'Copy',className: 'copyButton' },
-                { extend: 'excel', text:'Excel', className: 'excelButton' },
+                { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
             ],
             initComplete: function () {
                 api = this.api();
@@ -2113,8 +2113,8 @@ class Agents {
             ],
              buttons: [
                  { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                 { extend: 'copy', text:'Copy',className: 'copyButton' },
-                 { extend: 'excel', text:'Excel', className: 'excelButton' },
+                 { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                 { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
                  // { extend: 'pdfHtml5', text:'PDF-5',className: 'pdfButton' },
                  // { extend: 'pdfHtml5',
                  //     text: 'Save current page',
