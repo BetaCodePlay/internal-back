@@ -1,21 +1,7 @@
 @extends('back.template')
-@section('styles')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">
 
-{{-- <style>
-    table.display {
-        table-layout: fixed; /* Establecer el diseño de la tabla en fijo */
-    }
-
-    th, td {
-        word-wrap: break-word; /* Permitir que las palabras se ajusten en las celdas */
-        overflow: auto; /* Ocultar el contenido que se desborda */
-        text-overflow: ellipsis; /* Mostrar puntos suspensivos para el contenido que se desborda */
-    }
-</style> --}}
-@endsection
 @section('content')
-
+    @include('back.layout.litepicker')
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
         <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
             <div class="media">
@@ -26,30 +12,25 @@
         </header>
         <div class="card-block g-pa-15">
             <div class="media">
-                <div class="media-body d-flex justify-content-end g-mb-10" id="table-buttons">
+                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
 
                 </div>
             </div>
-            <div class="table-reponsive">
-
-            <table id="exampleTable" class="table table-bordered display nowrap"  style="width:100%">
-                @include('back.layout.litepicker')
-                <thead>
-                <tr>
-                    <th> {{ _i('Date') }}</th>
-                    <th> {{ _i('Description') }}</th>
-                    <th> {{ _i('Debit') }}</th>
-                    <th> {{ _i('Credit') }}</th>
-                    <th> {{ _i('Balance')}} <strong>{{'('._i('from').')'}}</strong></th>
-                    <th> {{ _i('Balance')}}</th>
-{{--                    <th> {{ _i('Balance'). ' ('._i('to').')'}}</th>--}}
-                </tr>
-                </thead>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover dt-responsive" id="tableTimeline" data-route="{{ route('reports.data.transaction.timeline') }}" width="100%">
+                    <thead>
+                        <tr>
+                            <th> {{ _i('Date') }}</th>
+                            <th> {{ _i('Description') }}</th>
+                            <th> {{ _i('Debit') }}</th>
+                            <th> {{ _i('Credit') }}</th>
+                            <th> {{ _i('Balance')}} <strong>{{'('._i('from').')'}}</strong></th>
+                            <th> {{ _i('Balance')}}</th>
+            {{--                    <th> {{ _i('Balance'). ' ('._i('to').')'}}</th>--}}
+                        </tr>
+                    </thead>
+                </table>
         </div>
-{{--            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data') }}">--}}
-
-{{--            </div>--}}
         </div>
     </div>
 @endsection
@@ -58,7 +39,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.transactionTimeline('{{route('reports.data.transaction.timeline')}}','#exampleTable',[50,100,500,1000,2000]);
+            agents.transactionTimeline([50,100,500,1000,2000]);
         });
 
     </script>

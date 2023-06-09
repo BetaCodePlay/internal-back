@@ -159,7 +159,6 @@ class Agents {
                     "url": $table.data('route') + '/' + user,
                     "dataSrc": "data.transactions"
                 },
-                "order": [],
                 "lengthMenu":[20,50,100],
                 "columns": [
                     {"data": "date"},
@@ -168,6 +167,11 @@ class Agents {
                     {"data": "debit", "type": "num-fmt"},
                     {"data": "credit", "type": "num-fmt"},
                     {"data": "balance", "type": "num-fmt"}
+                ],
+                buttons: [
+                    { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                    { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                    { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
                 ],
                 "initComplete": function () {
                     api = this.api();
@@ -217,12 +221,17 @@ class Agents {
                     {"data": "data.from"},
                     {"data": "data.to"},
                     {"data": "new_amount"},
-                    // {"data": "debit", "type": "num-fmt"},
-                    // {"data": "credit", "type": "num-fmt"},
-                    {"data": "balance", "type": "num-fmt"}
+                    {"data": "balance"}
+                ],
+                buttons: [
+                    { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                    { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                    { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
                 ],
                 initComplete: function () {
                     api = this.api();
+                    api.buttons().container()
+                        .appendTo($('#table-buttons'));
                 }
             });
 
@@ -690,7 +699,7 @@ class Agents {
          initDateRangePickerEndToday(open = 'right');
         //  let picker = initLitepickerEndToday();
          let $table = $('#financial-state-table-makers');
-         let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
+        //  let currency_iso = $('#currency_id').val() === ''?'':$('#currency_id').val();
         //  let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
         //  let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
          let $button = $('#update');
@@ -701,6 +710,7 @@ class Agents {
              $button.button('loading');
                 let startDate = $('#start_date').val();
                 let endDate = $('#end_date').val();
+                let currency_iso = $('#currency').val() === '' ? '' : $('#currency').val();
 
             $.ajax({
                 url: `${$table.data('route')}/${startDate}/${endDate}/${currency_iso}`,
@@ -722,9 +732,9 @@ class Agents {
     }
 
     // Agents Transactions Paginate Total
-    static financialStateMakersTotal(url_total, start_date, end_date, currency_iso) {
+    static financialStateMakersTotal(url_total, start_date, end_date, currency_iso, provider_id, whitelabel_id) {
         $.ajax({
-            url: url_total + '?startDate=' + start_date + '&endDate=' + end_date + '&currency_iso=' + currency_iso,
+            url: url_total + '?startDate=' + start_date + '&endDate=' + end_date + '&currency_iso=' + currency_iso+ '&provider_id=' + provider_id+ '&whitelabel_id=' + whitelabel_id,
             type: 'get',
         }).done(function (response) {
             $('.financialStateDataMakersTotals').empty();
@@ -853,12 +863,14 @@ class Agents {
         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
+        let api;
+
         $tableTransaction.DataTable({
             responsive: true,
             bFilter: false,
             bInfo: false,
             searching: true,
-            order: [[1, 'desc']],
+            order: [[0, 'asc']],
             ordering: true,
             processing: false,
             serverSide: false,
@@ -876,6 +888,11 @@ class Agents {
                 {"data": "profit"},
                 {"data": "rpt"}
             ],
+            buttons: [
+                { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
+            ],
             initComplete: function () {
                 api = this.api();
                 api.buttons().container()
@@ -883,7 +900,6 @@ class Agents {
             }
         });
 
-        let api;
         $button.click(function () {
             $button.button('loading');
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
@@ -2061,26 +2077,29 @@ class Agents {
     }
 
     // Table Transaction Timeline
-    transactionTimeline(route, id, lengthMenu) {
-        let route2 = route;
+    transactionTimeline(lengthMenu) {
+
+        let $tableTransaction = $('#tableTimeline');
         let $button = $('#update');
         let picker = initLitepickerEndToday();
         let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
         let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
         let dateFinal = '?start_date=' + startDate + '&end_date=' + endDate;
-        let table = $(id).DataTable({
-            responsive: true,
-            bFilter: false,
-            bInfo: false,
-            ordering: true,
-            processing: false,
-            searching: true,
-            serverSide: false,
-            bAutoWidth: false,
-            lengthMenu: lengthMenu,
-            order: [[0, 'desc']],
+
+        let api;
+
+        $tableTransaction.DataTable({
+             responsive: true,
+             bFilter: false,
+             bInfo: false,
+             searching: true,
+             order: [[0, 'asc']],
+             ordering: true,
+             processing: false,
+             serverSide: false,
+             lengthMenu: lengthMenu,
             ajax: {
-                url: route + dateFinal,
+                url: $tableTransaction.data('route') + dateFinal,
                 dataType: 'json',
                 type: 'get',
             },
@@ -2090,23 +2109,40 @@ class Agents {
                 {data: 'debit'},
                 {data: 'credit'},
                 {data: 'balance'},
-                {data: 'balanceFrom'},
+                {data: 'balanceFrom'}
             ],
-        });
-
-        table.on('draw.dt', function () {
-            $button.button('reset');
+             buttons: [
+                 { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                 { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                 { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
+                 // { extend: 'pdfHtml5', text:'PDF-5',className: 'pdfButton' },
+                 // { extend: 'pdfHtml5',
+                 //     text: 'Save current page',
+                 //     download: 'open',
+                 //     exportOptions: {
+                 //         modifier: {
+                 //             page: 'current'
+                 //         }
+                 //     }
+                 // }
+             ],
+             initComplete: function () {
+                 api = this.api();
+                 api.buttons().container()
+                     .appendTo($('#table-buttons'));
+             }
         });
 
         $button.click(function () {
             $button.button('loading');
-            startDate = ''
-            endDate = ''
-            startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-            endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
-            dateFinal = '?start_date=' + startDate + '&end_date=' + endDate
-            table.ajax.url(route2 + dateFinal).load();
-            $button.button('reset');
+            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let dateFinal = '?start_date=' + startDate + '&end_date=' + endDate
+            let route = $tableTransaction.data('route') + dateFinal;
+            api.ajax.url(route).load();
+            $tableTransaction.on('draw.dt', function () {
+                $button.button('reset');
+            });
         });
 
     }
