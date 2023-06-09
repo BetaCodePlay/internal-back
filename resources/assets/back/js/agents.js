@@ -170,7 +170,8 @@ class Agents {
                 ],
                 buttons: [
                     { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                    { extend: 'excel', text:'EXCEL', className: 'excelButton' },
+                    { extend: 'copy', text:'Copy',className: 'copyButton' },
+                    { extend: 'excel', text:'Excel', className: 'excelButton' },
                 ],
                 "initComplete": function () {
                     api = this.api();
@@ -224,7 +225,8 @@ class Agents {
                 ],
                 buttons: [
                     { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                    { extend: 'excel', text:'EXCEL', className: 'excelButton' },
+                    { extend: 'copy', text:'Copy',className: 'copyButton' },
+                    { extend: 'excel', text:'Excel', className: 'excelButton' },
                 ],
                 initComplete: function () {
                     api = this.api();
@@ -888,7 +890,8 @@ class Agents {
             ],
             buttons: [
                 { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                { extend: 'excel', text:'EXCEL', className: 'excelButton' },
+                { extend: 'copy', text:'Copy',className: 'copyButton' },
+                { extend: 'excel', text:'Excel', className: 'excelButton' },
             ],
             initComplete: function () {
                 api = this.api();
@@ -2110,7 +2113,8 @@ class Agents {
             ],
              buttons: [
                  { extend: 'pdf', text:'PDF',className: 'pdfButton' },
-                 { extend: 'excel', text:'EXCEL', className: 'excelButton' },
+                 { extend: 'copy', text:'Copy',className: 'copyButton' },
+                 { extend: 'excel', text:'Excel', className: 'excelButton' },
                  // { extend: 'pdfHtml5', text:'PDF-5',className: 'pdfButton' },
                  // { extend: 'pdfHtml5',
                  //     text: 'Save current page',
