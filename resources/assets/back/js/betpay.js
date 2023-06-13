@@ -230,7 +230,7 @@ class BetPay {
     }
 
     // Credit report
-    creditReport() {
+    creditTransactionsReport() {
         let picker = initLitepickerEndToday();
         let $table = $('#credit-table');
         let $button = $('#update');
