@@ -157,9 +157,11 @@ class TransactionsCollection
                 $transaction->external_user
             );
 
+            $transaction->cryptocurrency = $transaction->data->cryptocurrency;
             $transaction->created = Carbon::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->data->date = Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y');
             $transaction->amount = number_format($transaction->amount, 2);
+            $transaction->crypto_amount = number_format($transaction->data->crypto_amount, 2);
         }
     }
 
@@ -239,6 +241,16 @@ class TransactionsCollection
                     '<li><strong>%s</strong>: %s</li>',
                     _i('Betpay ID'),
                     $transaction->data->betpay_transaction
+                );
+                $transaction->details .= sprintf(
+                    '<li><strong>%s</strong>: %s</li>',
+                    _i('Cryptocurrency'),
+                    $transaction->data->cryptocurrency
+                );
+                $transaction->details .= sprintf(
+                    '<li><strong>%s</strong>: %s</li>',
+                    _i('Amount in Cryptocurrency'),
+                    number_format($transaction->data->crypto_amount, 2)
                 );
             }
 
@@ -418,6 +430,8 @@ class TransactionsCollection
                 $transaction->external_user
             );
 
+            $transaction->cryptocurrency = $transaction->data->cryptocurrency;
+            $transaction->crypto_amount = number_format($transaction->data->crypto_amount, 2);
             $transaction->created = Carbon::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->amount = number_format($transaction->amount, 2);
         }
@@ -525,6 +539,16 @@ class TransactionsCollection
                 '<li><strong>%s</strong>: %s</li>',
                 _i('Betpay ID'),
                 $transaction->id
+            );
+            $transaction->details .= sprintf(
+                '<li><strong>%s</strong>: %s</li>',
+                _i('Cryptocurrency'),
+                $transaction->data->cryptocurrency
+            );
+            $transaction->details .= sprintf(
+                '<li><strong>%s</strong>: %s</li>',
+                _i('Amount in Cryptocurrency'),
+                number_format($transaction->data->crypto_amount, 2)
             );
             if ($status == TransactionStatus::$approved || $status == TransactionStatus::$processing) {
                 if ($paymentMethod == PaymentMethods::$charging_point)   {
