@@ -242,16 +242,6 @@ class TransactionsCollection
                     _i('Betpay ID'),
                     $transaction->data->betpay_transaction
                 );
-                $transaction->details .= sprintf(
-                    '<li><strong>%s</strong>: %s</li>',
-                    _i('Cryptocurrency'),
-                    $transaction->data->cryptocurrency
-                );
-                $transaction->details .= sprintf(
-                    '<li><strong>%s</strong>: %s</li>',
-                    _i('Amount in Cryptocurrency'),
-                    number_format($transaction->data->crypto_amount, 2)
-                );
             }
 
             if (Configurations::getWhitelabel() != 68) {
@@ -262,6 +252,16 @@ class TransactionsCollection
                             '<li><strong>%s</strong>: %s</li>',
                             _i('Date'),
                             Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                        );
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('Cryptocurrency'),
+                            $transaction->data->cryptocurrency
+                        );
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('Amount in Cryptocurrency'),
+                            number_format($transaction->data->crypto_amount, 2)
                         );
                         break;
                     }
@@ -492,6 +492,13 @@ class TransactionsCollection
             }
             $transaction->status = $statusText;
 
+            $transaction->details = '<ul>';
+            $transaction->details .= sprintf(
+                '<li><strong>%s</strong>: %s</li>',
+                _i('Betpay ID'),
+                $transaction->id
+            );
+
             switch ($paymentMethod) {
                 case PaymentMethods::$binance:
                 {
@@ -530,26 +537,20 @@ class TransactionsCollection
                             $transaction->user_account->qr
                         );
                     }
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency'),
+                        $transaction->data->cryptocurrency
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Amount in Cryptocurrency'),
+                        number_format($transaction->data->crypto_amount, 2)
+                    );
                     break;
                 }
             }
 
-            $transaction->details = '<ul>';
-            $transaction->details .= sprintf(
-                '<li><strong>%s</strong>: %s</li>',
-                _i('Betpay ID'),
-                $transaction->id
-            );
-            $transaction->details .= sprintf(
-                '<li><strong>%s</strong>: %s</li>',
-                _i('Cryptocurrency'),
-                $transaction->data->cryptocurrency
-            );
-            $transaction->details .= sprintf(
-                '<li><strong>%s</strong>: %s</li>',
-                _i('Amount in Cryptocurrency'),
-                number_format($transaction->data->crypto_amount, 2)
-            );
             if ($status == TransactionStatus::$approved || $status == TransactionStatus::$processing) {
                 if ($paymentMethod == PaymentMethods::$charging_point)   {
                     $transaction->details .= sprintf(
