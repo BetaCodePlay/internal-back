@@ -229,7 +229,7 @@ class BetPay {
         });
     }
 
-    // Credit report
+    // Credit transactions report
     creditTransactionsReport() {
         let picker = initLitepickerEndToday();
         let $table = $('#credit-table');
@@ -247,9 +247,8 @@ class BetPay {
                 {"data": "username"},
                 {"data": "amount", "className": "text-right", "type": "num-fmt"},
                 {"data": "currency_iso"},
-                {"data": "full_name"},
-                {"data": "user_account.email"},
-                {"data": "data.date", "className": "text-right"},
+                {"data": "reference"},
+                {"data": "details"},
                 {"data": "created", "className": "text-right"},
                 {"data": "status", "className": "text-right"}
             ],
@@ -257,7 +256,6 @@ class BetPay {
                 api = this.api();
                 api.buttons().container()
                     .appendTo($('#table-buttons'));
-
             }
         });
 
@@ -275,6 +273,7 @@ class BetPay {
         });
 
         $table.on('xhr.dt', function (event, settings, json, xhr) {
+            $('#total').text(json.data.totals.total)
             if (xhr.status === 500) {
                 swalError(xhr);
             }
