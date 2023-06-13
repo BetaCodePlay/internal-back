@@ -49,6 +49,11 @@
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
 <script src="{{ asset('back/js/scripts.min.js') }}?v=21"></script>
+
+{{--TODO AGREGAR CDN PARA EXPORTAR PDF--}}
+{{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}
+{{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>--}}
+
 @yield('scripts')
 @can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
     @include('back.layout.tawk')

@@ -652,12 +652,12 @@
 
 
                             <div class="media">
-                                <div class="media-body d-flex justify-content-end g-mb-10"
-                                     id="table-buttons-agents-transactions">
+                                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
+
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered display nowrap" style="width:100%"
+                                <table class="table table-bordered table-hover dt-responsive"
                                        id="agents-transactions-table"
                                        data-route="{{ route('agents.transactions.paginate') }}"
                                        data-routetotals="{{ route('agents.transactions.totals') }}">
@@ -1187,8 +1187,8 @@
             agents.performTransactions();
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
-            agents.usersTransactions([10, 20, 50, 100, 500, 1000, 2000]);
+            agents.agentsTransactionsPaginate([50, 100, 500, 1000, 2000]);
+            agents.usersTransactions([50, 100, 500, 1000, 2000]);
             agents.users();
             agents.agents();
             agents.storeAgents();

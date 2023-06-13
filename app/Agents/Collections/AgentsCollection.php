@@ -649,6 +649,61 @@ class AgentsCollection
     }
 
     /**
+     * Format agents transactions Paginate
+     *
+     * @param array $transactions Transactions data
+     */
+    public function formatClosuresTotalsProviderPaginate($transactions, $total,$percentage, $request)
+    {
+        $timezone = session('timezone');
+        $data = array();
+        $total_played = 0;
+        $total_won = 0;
+        $total_bet = 0;
+        $total_profit = 0;
+        $rtp = 0;
+        $i = 1;
+        foreach ($transactions as $transaction) {
+            $total_played = $total_played + $transaction->total_played;
+            $total_won = $total_won+$transaction->total_won;
+            $total_bet = $total_bet+$transaction->total_bet;
+            $total_profit = $total_profit+$transaction->total_profit;
+            $rtp = $rtp+$transaction->rtp;
+
+            $data[] = [
+                'id' => $i++,
+                'name' => $transaction->provider_name,
+                'played' => number_format($transaction->total_played,2,'.','.'),
+                'won' => number_format($transaction->total_won,2,'.','.'),
+                'bet' => number_format($transaction->total_bet,0,'.','.'),
+                'profit' => number_format($transaction->total_profit,2,'.','.'),
+                'rpt' => number_format($transaction->rtp,2,'.','.'),
+            ];
+        }
+
+        $data[] = [
+            'id' => 999999999,
+            'name' => '<strong>'._i('Totals').'</strong>',
+            'played' => '<strong>'.number_format($total_played,2,'.','.').'</strong>',
+            'won' => '<strong>'.number_format($total_won,2,'.','.').'</strong>',
+            'bet' => '<strong>'.number_format($total_bet,0,'.','.').'</strong>',
+            'profit' => '<strong>'.number_format($total_profit,2,'.','.').'</strong>',
+            'rpt' => '<strong>'.number_format($rtp,2,'.','.').'</strong>',
+        ];
+
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($total),
+            "recordsFiltered" => intval($total),
+            "data" => $data
+        );
+
+        return $json_data;
+
+    }
+
+
+    /**
      * @param $tableDb
      * @param $percentage
      * @return string
@@ -3180,21 +3235,21 @@ class AgentsCollection
             $amountTmp = $transaction->amount;
             $transaction->debit = 0;
             $transaction->credit = 0;
-            $transaction->balance = 0;
+            $transaction->balance =  number_format(0, 2,'.','.');
             $transaction->new_amount = 0;
 
             $from = $transaction->data->from;
             $to = $transaction->data->to;
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
-                $transaction->new_amount = '<span class="badge badge-pill badge-danger">-'.number_format($amountTmp,2).'</span>';
+                $transaction->new_amount = '<span class="badge badge-pill badge-danger">-'.number_format($amountTmp,2,'.','.').'</span>';
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
-                $transaction->new_amount = '<span class="badge badge-pill badge-info">+'.number_format($amountTmp,2).'</span>';
+                $transaction->new_amount = '<span class="badge badge-pill badge-info">+'.number_format($amountTmp,2,'.','.').'</span>';
             }
             if (isset($transaction->data->balance)) {
-                $transaction->balance = number_format($transaction->data->balance, 2);
+                $transaction->balance = number_format($transaction->data->balance, 2,'.','.');
             }
 
             $credit = $transaction->credit;
@@ -3209,8 +3264,8 @@ class AgentsCollection
 //                $debit = $transaction->debit;
 //            }
 
-            $debitt = $debit > 0 ? '-'.number_format($debit, 2, ",", "."):'0,00';
-            $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ",", "."):'0,00';
+            $debitt = $debit > 0 ? '-'.number_format($debit, 2, ".", "."):'0,00';
+            $creditt = $credit > 0 ?  '+'.number_format($credit, 2, ".", "."):'0,00';
             $nameAffect = $transaction->data->from === $transaction->username?$transaction->data->from:$transaction->data->to;
 //            if($from != $nameAffect){
 //

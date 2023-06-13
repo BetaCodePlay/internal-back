@@ -183,6 +183,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@changeTypeUser'
     ]);
 
+    // update Owner User
+    Route::get('update/owner/user/temp', [
+        'as' => 'agents.update.owner.user.temp',
+        'uses' => 'AgentsController@updateOwnerUser'
+    ]);
+
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
 
