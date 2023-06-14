@@ -298,6 +298,25 @@ class AgentsRepo
     }
 
     /**
+     * Get agents children by owner
+     *
+     * @param int $owner Owner ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function getAgentsChildrenByOwner($owner, $currency)
+    {
+        return Agent::select('agents.user_id', 'users.username')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.owner_id', $owner)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->whitelabel()
+            ->orderBy('users.username', 'ASC')
+            ->get();
+    }
+
+    /**
      * Format Json Tree V1.0
      * Get user and agents son (first generation)
      * @param int $owner Owner ID
@@ -305,7 +324,7 @@ class AgentsRepo
      * @param int $whitelabel Whitelabel ID
      * @return mixed
      */
-    public function getChildrenByOwner($owner, $currency,$whitelabel)
+    public function getChildrenByOwner(int $owner,string $currency,int $whitelabel)
     {
         $response = DB::select('SELECT * FROM site.get_users_agents_son(?,?,?)', [$owner, $currency,$whitelabel]);
         $treeItem =[];
