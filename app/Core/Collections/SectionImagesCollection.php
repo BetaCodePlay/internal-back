@@ -240,7 +240,6 @@ class SectionImagesCollection
                     default:
                     {
                         $url = s3_asset("section-images/{$image->image}");
-                        $urlFront = s3_asset("section-images/{$image->front}");
                     }
                 }
 
