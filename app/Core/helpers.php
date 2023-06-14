@@ -751,56 +751,55 @@ if (!function_exists('menu')) {
                                 'submenu' => []
                             ],
 
-                            'CreatePaymentBetPay' => [
-                                'text' => _i('Create Payment Limits'),
-                                'level_class' => 'third',
-                                'route' => 'betpay.clients.accounts.payment-limits.create',
-                                'payment_method' => PaymentMethods::$binance,
-                                'params' => [],
-                                'icon' => 'hs-admin-list',
-                                'submenu' => []
-                            ],
+                            // 'CreatePaymentBetPay' => [
+                            //     'text' => _i('Create Payment Limits'),
+                            //     'level_class' => 'third',
+                            //     'route' => 'betpay.clients.accounts.payment-limits.create',
+                            //     'payment_method' => PaymentMethods::$binance,
+                            //     'params' => [],
+                            //     'icon' => 'hs-admin-list',
+                            //     'submenu' => []
+                            // ],
 
-                            'EditAccounts' => [
-                                'text' => _i('Edit Accounts'),
-                                'level_class' => 'third',
-                                'route' => 'betpay.clients.accounts.edit',
-                                'params' => [],
-                                'payment_method' => PaymentMethods::$binance,
-                                'icon' => 'hs-admin-user',
-                                'submenu' => []
-                            ],
+                            // 'EditAccounts' => [
+                            //     'text' => _i('Edit Accounts'),
+                            //     'level_class' => 'third',
+                            //     'route' => 'betpay.clients.accounts.edit',
+                            //     'params' => [],
+                            //     'payment_method' => PaymentMethods::$binance,
+                            //     'icon' => 'hs-admin-user',
+                            //     'submenu' => []
+                            // ],
 
-                            'EditPaymentLimits' => [
-                                'text' => _i('Edit Payment Limits'),
-                                'level_class' => 'third',
-                                'route' => 'betpay.clients.accounts.payment-limits.edit',
-                                'params' => [],
-                                'payment_method' => PaymentMethods::$binance,
-                                'icon' => 'hs-admin-user',
-                                'submenu' => []
-                            ],
+                            // 'EditPaymentLimits' => [
+                            //     'text' => _i('Edit Payment Limits'),
+                            //     'level_class' => 'third',
+                            //     'route' => 'betpay.clients.accounts.payment-limits.edit',
+                            //     'params' => [],
+                            //     'payment_method' => PaymentMethods::$binance,
+                            //     'icon' => 'hs-admin-user',
+                            //     'submenu' => []
+                            // ],
 
-                            'ListAccounts' => [
-                                'text' => _i('List Accounts'),
-                                'level_class' => 'third',
-                                'route' => 'betpay.clients.accounts',
-                                'params' => [],
-                                'payment_method' => PaymentMethods::$binance,
-                                'icon' => 'hs-admin-list',
-                                'submenu' => []
-                            ],
+                            // 'ListAccounts' => [
+                            //     'text' => _i('List Accounts'),
+                            //     'level_class' => 'third',
+                            //     'route' => 'betpay.clients.accounts',
+                            //     'params' => [],
+                            //     'payment_method' => PaymentMethods::$binance,
+                            //     'icon' => 'hs-admin-list',
+                            //     'submenu' => []
+                            // ],
 
-                            'ListPaymentLimits' => [
-                                'text' => _i('List Payment Limits'),
-                                'level_class' => 'third',
-                                'route' => 'betpay.clients.accounts.payment-limits',
-                                'params' => [],
-                                'payment_method' => PaymentMethods::$binance,
-                                'icon' => 'hs-admin-list',
-                                'submenu' => []
-                            ],
-
+                            // 'ListPaymentLimits' => [
+                            //     'text' => _i('List Payment Limits'),
+                            //     'level_class' => 'third',
+                            //     'route' => 'betpay.clients.accounts.payment-limits',
+                            //     'params' => [],
+                            //     'payment_method' => PaymentMethods::$binance,
+                            //     'icon' => 'hs-admin-list',
+                            //     'submenu' => []
+                            // ],
                         ]
                     ],
                     'BetPayReports' => [
