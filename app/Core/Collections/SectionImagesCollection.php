@@ -253,19 +253,6 @@ class SectionImagesCollection
                     $statusClass,
                     $statusText
                 );
-                if (!is_null($image->category)) {
-                    if ($image->category === 'new') {
-                        $image->category = _i('New');
-                    }
-                    if ($image->category === 'popular') {
-                        $image->category = _i('Popular');
-                    }
-                    if ($image->category === 'featured') {
-                        $image->category = _i('Featured');
-                    }
-                } else {
-                    $image->category = _i('Without category');
-                }
             } else {
                 $image = new \stdClass();
                 $image->url = _i('Not configured');
