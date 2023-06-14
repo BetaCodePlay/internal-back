@@ -2098,15 +2098,11 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            //$agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            //$users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            //$tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
-
-
-            $makers = $this->gamesRepo->getMakers();
             //TODO MOSTRAR EL AGENTE LOGUEADO
             $agent->user_id = $agent->id;
-            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
+
+            //$agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
+            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgentsNew($this->agentsRepo,$currency,[$agent]);
 
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
             $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
@@ -2115,13 +2111,13 @@ class AgentsController extends Controller
             $data['timezones'] = [];//\DateTimeZone::listIdentifiers();
             $data['providers'] = $providers;
             $data['agent'] = $agent;
-            $data['makers'] = $makers;
+            $data['makers'] = $this->gamesRepo->getMakers();
             $data['agents'] = $agentAndSubAgents;
-            //$data['tree'] = $tree;
-            $data['tree'] = $this->childrenTree($user);
+            $data['tree'] = $this->agentsCollection->childrenTree($agent,$user);
             $data['title'] = _i('Agents module');
 
             return view('back.agents.index', $data);
+
 //        } catch (\Exception $ex) {
 //            \Log::error(__METHOD__, ['exception' => $ex]);
 //            abort(500);
@@ -2137,36 +2133,6 @@ class AgentsController extends Controller
     {
         $data['title'] = _i('Locked providers');
         return view('back.agents.reports.locked-providers', $data);
-    }
-
-    /**
-     * Show children of the father
-     *
-     */
-    public function childrenTree($user)
-    {
-        $currency = session('currency');
-        $whitelabel = Configurations::getWhitelabel();
-        $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-        $tree = [
-            'id' => $agent->id,
-            'text' => $agent->username,
-            'status' => $agent->status,
-            'icon' => 'fa fa-diamond',
-            'type' => 'agent',
-            'state' => [
-                'opened' => true,
-                'selected' => true,
-            ],
-            'li_attr' => [
-                'data_type' => 'agent',
-                'class' => 'init_tree'
-            ],
-            'children'=>$this->agentsRepo->getChildrenByOwner($user, $currency,$whitelabel)
-        ];
-
-        return json_encode($tree);
-
     }
 
     /**
