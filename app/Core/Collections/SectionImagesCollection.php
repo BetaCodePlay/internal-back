@@ -204,6 +204,7 @@ class SectionImagesCollection
                     {
                         $url = $image->img_light;
                         $urlFront = s3_asset("section-images/{$image->front}");
+                        $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -212,6 +213,7 @@ class SectionImagesCollection
                     {
                         $url = $image->img_dark;
                         $urlFront = s3_asset("section-images/{$image->front}");
+                        $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -220,6 +222,7 @@ class SectionImagesCollection
                     {
                         $url = $image->img_light;
                         $urlFront = s3_asset("section-images/{$image->front}");
+                        $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -228,6 +231,7 @@ class SectionImagesCollection
                     {
                         $url = $image->img_dark;
                         $urlFront = s3_asset("section-images/{$image->front}");
+                        $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -238,6 +242,7 @@ class SectionImagesCollection
                         $url = $favicon;
                         $urlFront = s3_asset("section-images/{$image->front}");
                         $image = new \stdClass();
+                        $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
