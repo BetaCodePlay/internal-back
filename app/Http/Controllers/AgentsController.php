@@ -2106,7 +2106,7 @@ class AgentsController extends Controller
             $makers = $this->gamesRepo->getMakers();
             //TODO MOSTRAR EL AGENTE LOGUEADO
             $agent->user_id = $agent->id;
-            //$agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
+            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
 
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
             $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
@@ -2116,7 +2116,7 @@ class AgentsController extends Controller
             $data['providers'] = $providers;
             $data['agent'] = $agent;
             $data['makers'] = $makers;
-            $data['agents'] = [];//$agentAndSubAgents;
+            $data['agents'] = $agentAndSubAgents;
             //$data['tree'] = $tree;
             $data['tree'] = $this->childrenTree($user);
             $data['title'] = _i('Agents module');
