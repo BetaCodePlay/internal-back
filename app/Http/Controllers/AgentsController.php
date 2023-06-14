@@ -1575,7 +1575,7 @@ class AgentsController extends Controller
 //
 //                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
 //                $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
-                $table = $this->closuresUsersTotals2023Repo->getClosureByProviders(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::id(), 2000,0);
+                $table = $this->closuresUsersTotals2023Repo->getClosureByProviders(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::id(), 1000,0);
 
             }
             $total_items = isset($table[0]->total_items)?$table[0]->total_items:0;
@@ -1601,7 +1601,20 @@ class AgentsController extends Controller
      */
     public function financialStateData_username(Request $request, ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, $user = null, $startDate = null, $endDate = null)
     {
-        try {
+//        try {
+//             TODO NEW CONSULT para el reporte
+//            $username = $request->has('username_like') ? '%' . $request->get('username_like') . '%':null;
+//            $table = $this->closuresUsersTotals2023Repo->getClosureByUsername(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id,$username,1000,0);
+//
+//            $percentage=null;
+//            $total_items = isset($table[0]->total_items)?$table[0]->total_items:0;
+//            $data = [
+//                'table' => $this->agentsCollection->closuresByUsername($table, $total_items,$percentage, $request),
+//            ];
+//
+//            return response()->json($data);
+
+
             $percentage = null;
             if (in_array(Roles::$support, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
@@ -1632,10 +1645,10 @@ class AgentsController extends Controller
 
             return Utils::successResponse($data);
 
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**
@@ -2071,7 +2084,7 @@ class AgentsController extends Controller
      */
     public function index(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
-        try {
+        //try {
             if (session('admin_id')) {
                 $user = session('admin_id');
             } else {
@@ -2085,9 +2098,11 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+            //$agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            //$users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            //$tree = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+
+
             $makers = $this->gamesRepo->getMakers();
             //TODO MOSTRAR EL AGENTE LOGUEADO
             $agent->user_id = $agent->id;
@@ -2096,20 +2111,21 @@ class AgentsController extends Controller
             $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
             $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
             $data['currencies'] = Configurations::getCurrencies();
-            $data['countries'] = $countriesRepo->all();
-            $data['timezones'] = \DateTimeZone::listIdentifiers();
+            $data['countries'] = [];//$countriesRepo->all();
+            $data['timezones'] = [];//\DateTimeZone::listIdentifiers();
             $data['providers'] = $providers;
             $data['agent'] = $agent;
             $data['makers'] = $makers;
             $data['agents'] = $agentAndSubAgents;
-            $data['tree'] = $tree;
+            //$data['tree'] = $tree;
+            $data['tree'] = $this->childrenTree($user);
             $data['title'] = _i('Agents module');
 
             return view('back.agents.index', $data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
+//        } catch (\Exception $ex) {
+//            \Log::error(__METHOD__, ['exception' => $ex]);
+//            abort(500);
+//        }
     }
 
     /**
@@ -2121,6 +2137,36 @@ class AgentsController extends Controller
     {
         $data['title'] = _i('Locked providers');
         return view('back.agents.reports.locked-providers', $data);
+    }
+
+    /**
+     * Show children of the father
+     *
+     */
+    public function childrenTree($user)
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+        $tree = [
+            'id' => $agent->id,
+            'text' => $agent->username,
+            'status' => $agent->status,
+            'icon' => 'fa fa-diamond',
+            'type' => 'agent',
+            'state' => [
+                'opened' => true,
+                'selected' => true,
+            ],
+            'li_attr' => [
+                'data_type' => 'agent',
+                'class' => 'init_tree'
+            ],
+            'children'=>$this->agentsRepo->getChildrenByOwner($user, $currency,$whitelabel)
+        ];
+
+        return json_encode($tree);
+
     }
 
     /**

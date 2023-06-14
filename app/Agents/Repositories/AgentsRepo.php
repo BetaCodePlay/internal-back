@@ -4,6 +4,7 @@ namespace App\Agents\Repositories;
 
 use App\Agents\Entities\Agent;
 use App\Users\Entities\User;
+use App\Users\Enums\TypeUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -98,7 +99,6 @@ class AgentsRepo
         $agents = \DB::table('exclude_makers_users')->where('currency_iso', $currency)->where('category', $category)->where('user_id', $user)->update($data);
         return $agents;
     }
-
 
     /**
      * Block users
@@ -295,6 +295,43 @@ class AgentsRepo
             ->whitelabel()
             ->orderBy('users.username', 'ASC')
             ->get();
+    }
+
+    /**
+     * Format Json Tree V1.0
+     * Get user and agents son (first generation)
+     * @param int $owner Owner ID
+     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel ID
+     * @return mixed
+     */
+    public function getChildrenByOwner($owner, $currency,$whitelabel)
+    {
+        $response = DB::select('SELECT * FROM site.get_users_agents_son(?,?,?)', [$owner, $currency,$whitelabel]);
+        $treeItem =[];
+        foreach ($response as $item => $value){
+
+            $icon = $value->type_user == 1 ? 'star' : ($value->type_user == 2 ? 'users' : 'user');
+            $type = $value->type_user == 5 ? 'user':'agent';
+            $datTmp = [
+                'id' => $value->user_id,
+                'text' => $value->username,
+                'status' => $value->status,
+                'icon' => "fa fa-{$icon}",
+                'li_attr' => [
+                    'data_type' => $type,
+                    'class' => 'init_'.$type
+                ],
+                //'children'=>[]
+            ];
+            if(in_array($value->type_user,[TypeUser::$agentMater,TypeUser::$agentCajero])){
+                $datTmp['children']=$this->getChildrenByOwner($value->user_id, $currency,$whitelabel);
+            }
+            $treeItem[] = $datTmp;
+        }
+
+        return $treeItem;
+
     }
 
     /**

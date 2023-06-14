@@ -176,6 +176,65 @@ class AgentsCollection
     }
 
     /**
+     * Json Format
+     * @param $tableDb
+     * @param $percentage
+     * @return string
+     */
+    public function closuresByUsername($closures, $total,$percentage, $request)
+    {
+        $timezone = session('timezone');
+        $data = array();
+
+        $i = 1;
+        $total_played = 0;
+        $total_won = 0;
+        $total_bet = 0;
+        $total_profit = 0;
+        $rtp = 0;
+        foreach ($closures as $value) {
+
+            $total_played = $total_played +$value->total_played;
+            $total_won = $total_won +$value->total_won;
+            $total_bet = $total_bet +$value->total_bet;
+            $total_profit = $total_profit +$value->total_profit;
+            //$rtp = $rtp +$value->rtp;
+
+            $data[] = [
+                'id' => $i++,
+                'username' => $value->user_name,
+                'total_played' => $value->total_played,
+                'total_won' => $value->total_won,
+                'total_bet' => $value->total_bet,
+                'total_profit' => $value->total_profit,
+                'rtp' => $value->rtp.'%'
+            ];
+
+        }
+
+        $total_rtp = ($total_won / $total_played) * 100;
+        $data[] = [
+            'id' => 999999999,
+            'username' => _i('Totals'),
+            'total_played' => number_format($total_played,2,'.','.'),
+            'total_won' => number_format($total_won,2,'.','.'),
+            'total_bet' => number_format($total_bet,2,'.','.'),
+            'total_profit' => number_format($total_profit,2,'.','.'),
+            'rtp' => number_format($total_rtp,2,'.').'%'
+        ];
+
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($total),
+            "recordsFiltered" => intval($total),
+            "data" => $data
+        );
+
+        return $json_data;
+
+    }
+
+    /**
      * Closures Totals By Agent Group Provider
      * @param $tableDb
      * @param $whitelabel
