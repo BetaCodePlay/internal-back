@@ -264,7 +264,6 @@ class SectionImagesCollection
                 $image->category = _i('Without category');
             }
             $image->image = "<img src='$url' class='img-responsive'>";
-            $image->front = "<img src='$urlFront' class='img-responsive'>";
             $image->position = ImagesPositions::get($key);
             $image->size = $size;
 
