@@ -203,7 +203,7 @@ class SectionImagesCollection
                     case ImagesPositions::$logo_light:
                     {
                         $url = $image->img_light;
-                        $urlFront = s3_asset("section-images/{$image->front}");
+                        $urlFront = null;
                         $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
@@ -212,7 +212,7 @@ class SectionImagesCollection
                     case ImagesPositions::$logo_dark:
                     {
                         $url = $image->img_dark;
-                        $urlFront = s3_asset("section-images/{$image->front}");
+                        $urlFront = null;
                         $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
@@ -221,7 +221,7 @@ class SectionImagesCollection
                     case ImagesPositions::$mobile_light:
                     {
                         $url = $image->img_light;
-                        $urlFront = s3_asset("section-images/{$image->front}");
+                        $urlFront = null;
                         $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
@@ -230,7 +230,7 @@ class SectionImagesCollection
                     case ImagesPositions::$mobile_dark:
                     {
                         $url = $image->img_dark;
-                        $urlFront = s3_asset("section-images/{$image->front}");
+                        $urlFront = null;
                         $image->category = _i('Without category');
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
@@ -240,7 +240,7 @@ class SectionImagesCollection
                     {
                         $favicon = $image;
                         $url = $favicon;
-                        $urlFront = s3_asset("section-images/{$image->front}");
+                        $urlFront = null;
                         $image = new \stdClass();
                         $image->category = _i('Without category');
                         $image->status = true;
