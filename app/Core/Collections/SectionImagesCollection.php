@@ -203,6 +203,7 @@ class SectionImagesCollection
                     case ImagesPositions::$logo_light:
                     {
                         $url = $image->img_light;
+                        $urlFront = s3_asset("section-images/{$image->front}");
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -210,6 +211,7 @@ class SectionImagesCollection
                     case ImagesPositions::$logo_dark:
                     {
                         $url = $image->img_dark;
+                        $urlFront = s3_asset("section-images/{$image->front}");
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -217,6 +219,7 @@ class SectionImagesCollection
                     case ImagesPositions::$mobile_light:
                     {
                         $url = $image->img_light;
+                        $urlFront = s3_asset("section-images/{$image->front}");
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -224,6 +227,7 @@ class SectionImagesCollection
                     case ImagesPositions::$mobile_dark:
                     {
                         $url = $image->img_dark;
+                        $urlFront = s3_asset("section-images/{$image->front}");
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
                         break;
@@ -232,6 +236,7 @@ class SectionImagesCollection
                     {
                         $favicon = $image;
                         $url = $favicon;
+                        $urlFront = s3_asset("section-images/{$image->front}");
                         $image = new \stdClass();
                         $image->status = true;
                         $image->url = _i('Does not apply to this image');
@@ -240,6 +245,7 @@ class SectionImagesCollection
                     default:
                     {
                         $url = s3_asset("section-images/{$image->image}");
+                        $urlFront = s3_asset("section-images/{$image->front}");
                     }
                 }
 
@@ -264,6 +270,7 @@ class SectionImagesCollection
                 $image->category = _i('Without category');
             }
             $image->image = "<img src='$url' class='img-responsive'>";
+            $image->front = "<img src='$urlFront' class='img-responsive'>";
             $image->position = ImagesPositions::get($key);
             $image->size = $size;
 
