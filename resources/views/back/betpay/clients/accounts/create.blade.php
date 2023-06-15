@@ -21,23 +21,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="client">{{ _i('Whitelabel') }}</label>
-                            <select name="client" id="client" class="form-control">
-                                <option value="">{{ _i('Select...') }}</option>
-                                @foreach ($whitelabels as $whitelabel)
-                                    <option value="{{ $whitelabel->id }}">
-                                        {{ $whitelabel->description }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
                             <label for="currency">{{ _i('Currency') }}</label>
                             <select name="currency" id="currency" class="form-control">
                                 <option value="">{{ _i('Select...') }}</option>
-                                @foreach ($currency_client as $currency)
+                                @foreach ($whitelabel_currencies as $currency)
                                     <option value="{{ $currency->iso }}">
                                         {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
                                     </option>

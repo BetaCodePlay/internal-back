@@ -712,6 +712,14 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$check_user_accounts,
                         'submenu' => []
                     ],
+                    'CreateAccounts' => [
+                        'text' => _i('Create Accounts'),
+                        'level_class' => 'third',
+                        'route' => 'betpay.clients.accounts.create',
+                        'params' => [],
+                        'icon' => 'hs-admin-user',
+                        'submenu' => []
+                    ],
                     'Binance' => [
                         'text' => _i('Binance'),
                         'level_class' => 'second',
@@ -738,16 +746,6 @@ if (!function_exists('menu')) {
                                 'params' => [],
                                 'icon' => 'hs-admin-shift-right',
                                 'permission' => Permissions::$debit_binance_menu,
-                                'submenu' => []
-                            ],
-
-                            'CreateAccounts' => [
-                                'text' => _i('Create Accounts'),
-                                'level_class' => 'third',
-                                'route' => 'betpay.clients.accounts.create',
-                                'params' => [],
-                                'payment_method' => PaymentMethods::$binance,
-                                'icon' => 'hs-admin-user',
                                 'submenu' => []
                             ],
 

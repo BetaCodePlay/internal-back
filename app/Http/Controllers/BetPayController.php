@@ -575,12 +575,11 @@ class BetPayController extends Controller
     {
         try {
             $data['title'] = _i('Create Client Account');
-            $data['currency_client'] = $this->currenciesRepo->all();
             $data['countries'] = $this->countriesRepo->all();
             $data['whitelabels'] = $this->whitelabelsRepo->all();
             $paymentMethods = [];
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
