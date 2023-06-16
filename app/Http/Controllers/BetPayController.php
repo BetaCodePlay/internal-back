@@ -1768,7 +1768,6 @@ class BetPayController extends Controller
             'payments' => 'required',
         ]);
         //$this->getRulesClientAccountData($request->payments, $request);
-        $rules['email'] = 'required';
         $this->validate($request, $rules);
     
         try {
@@ -1904,7 +1903,7 @@ class BetPayController extends Controller
      *
      * @return array
      */
-    private function getRulesClientAccountData($paymentMethod, $request)
+    private function getRulesClientAccountData($paymentMethod)
     {
 
         $rulesClientAccountDataFunctions = [
@@ -1916,10 +1915,7 @@ class BetPayController extends Controller
                 $rules['binance_id'] = 'required'
             ]
         ];
-        $rulesClientAccountDataFunctions = $this->validate($request, $rulesClientAccountDataFunctions[$paymentMethod]) ?? function () {
-            return [];
-        };
-        return $rulesClientAccountDataFunctions();
+        return $rulesClientAccountDataFunctions($paymentMethod);
     }
 
     /**
