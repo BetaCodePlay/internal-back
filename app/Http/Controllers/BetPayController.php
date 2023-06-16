@@ -1907,13 +1907,15 @@ class BetPayController extends Controller
     {
 
         $rulesClientAccountDataFunctions = [
-            PaymentMethods::$binance => [
-                $rules['cryptocurrency'] = 'required',
-                $rules['email'] = 'required',
-                $rules['phone'] = 'required',
-                $rules['pay_id'] = 'required',
-                $rules['binance_id'] = 'required'
-            ]
+            PaymentMethods::$binance => function () {
+                return [
+                    $rules['cryptocurrency'] = 'required',
+                    $rules['email'] = 'required',
+                    $rules['phone'] = 'required',
+                    $rules['pay_id'] = 'required',
+                    $rules['binance_id'] = 'required'
+                ];
+            },
         ];
         $rulesClientAccountDataFunctions = $rulesClientAccountDataFunctions[$paymentMethod] ?? function () {
             return [];
