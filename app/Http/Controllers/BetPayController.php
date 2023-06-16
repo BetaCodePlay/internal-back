@@ -1911,11 +1911,11 @@ class BetPayController extends Controller
             PaymentMethods::$binance => 
             [
                 'cryptocurrency' => 'required',
-                'email' => 'required_without:phone,pay_id,qr,binance_id',
-                'phone' => 'required_without:email,pay_id,qr,binance_id',
-                'pay_id' => 'required_without:phone,email,qr,binance_id',
-                'qr' => 'required_without:phone,pay_id,binance_id,email',
-                'binance_id' => 'required_without:phone,pay_id,qr,email',
+                'email' => 'required_without_all:phone,pay_id,qr,binance_id',
+                'phone' => 'required_without_all:email,pay_id,qr,binance_id',
+                'pay_id' => 'required_without_all:phone,email,qr,binance_id',
+                'qr' => 'required_without_all:phone,pay_id,binance_id,email',
+                'binance_id' => 'required_without_all:phone,pay_id,qr,email',
             ]
         ];
 
