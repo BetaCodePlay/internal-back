@@ -229,6 +229,18 @@ class BetPay {
         });
     }
 
+     // Account required
+     changeClientAccount(){
+        $(document).on('change', '#payments',function () {
+            let payment = $(this).val();
+            switch (payment) {
+                case '43':
+                    $('.binance').removeClass('d-none');
+                break;
+            }
+        });
+    }
+
     // Credit report
     creditReport() {
         let picker = initLitepickerEndToday();

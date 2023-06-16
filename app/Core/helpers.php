@@ -703,6 +703,14 @@ if (!function_exists('menu')) {
                 'icon' => 'hs-admin-credit-card',
                 'permission' => Permissions::$betpay_menu,
                 'submenu' => [
+                    'CreateAccounts' => [
+                        'text' => _i('Activate Payment Methods'),
+                        'level_class' => 'third',
+                        'route' => 'betpay.clients.accounts.create',
+                        'params' => [],
+                        'icon' => 'hs-admin-user',
+                        'submenu' => []
+                    ],
                     'AccountsSearch' => [
                         'text' => _i('Accounts search'),
                         'level_class' => 'second',
@@ -710,14 +718,6 @@ if (!function_exists('menu')) {
                         'params' => [],
                         'icon' => 'hs-admin-search',
                         'permission' => Permissions::$check_user_accounts,
-                        'submenu' => []
-                    ],
-                    'CreateAccounts' => [
-                        'text' => _i('Create Accounts'),
-                        'level_class' => 'third',
-                        'route' => 'betpay.clients.accounts.create',
-                        'params' => [],
-                        'icon' => 'hs-admin-user',
                         'submenu' => []
                     ],
                     'Binance' => [

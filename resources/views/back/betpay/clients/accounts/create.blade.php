@@ -38,7 +38,7 @@
                             <select name="payments" id="payments" class="form-control">
                                 <option value="">{{ _i('Select...') }}</option>
                                 @foreach ($payment_methods as $payment)
-                                    <option value="{{ $payment->id }}" data-account-required="{{$payment->account_required}}">
+                                    <option value="{{ $payment->id }}">
                                         {{ $payment->name }}
                                     </option>
                                 @endforeach
@@ -57,131 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-none email-account col-md-4">
-                        <div class="form-group">
-                            <label for="email">{{ _i('Email') }}</label>
-                            <input type="email" name="account_email" id="account_email" class="form-control" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="d-none full-name col-md-4">
-                        <div class="form-group">
-                            <label for="first_name">{{ _i('First name') }}</label>
-                            <input type="text" name="first_name" id="first_name" class="form-control" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="d-none full-name col-md-4">
-                        <div class="form-group">
-                            <label for="last_name">{{ _i('Last name') }}</label>
-                            <input type="text" name="last_name" id="last_name" class="form-control" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none wire-transfers">
-                        <div class="form-group">
-                            <label for="country">{{ _i('Country') }}</label>
-                            <select name="country" class="form-control country"  data-route="{{ route('betpay.banks.data') }}">
-                                <option value="">{{ _i('Select...') }}</option>
-                                @foreach ($countries as $country)
-                                    <option value="{{ $country->iso }}">
-                                        {{ $country->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none wire-transfers">
-                        <div class="form-group">
-                            <label for="back">{{ _i('Bank ') }}</label>
-                            <select name="bank" class="form-control select2 bank">
-                                <option value="">{{ _i('Select ...') }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none wire-transfers">
-                        <div class="form-group">
-                            <label for="account_number">{{ _i('Account number') }}</label>
-                            <input type="text" name="account_number" class="form-control" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none wire-transfers">
-                        <div class="form-group">
-                            <label for="account_type">{{ _i('Account type') }}</label>
-                            <select name="account_type" class="form-control">
-                                <option value="">{{ _i('Select...') }}</option>
-                                <option value="C">{{ _i('Current') }}</option>
-                                <option value="S">{{ _i('Saving') }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none wire-transfers">
-                        <div class="form-group">
-                            <label for="account_type">{{ _i('Social reasons') }}</label>
-                            <input type="text" name="social_reason" class="form-control" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none wire-transfers">
-                        <div class="form-group">
-                            <label for="dni">{{ _i('DNI') }}</label>
-                            <input name="account_dni" class="form-control" type="text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none wire-transfers">
-                        <div class="form-group">
-                            <label for="title">{{ _i('Title') }}</label>
-                            <input type="text" name="title" class="form-control" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none criptocurrency">
-                        <div class="form-group">
-                            <label for="crypto_wallet">{{ _i('Wallet ') }}</label>
-                            <input id="crypto_wallet" name="crypto_wallet" class="form-control" type="text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none criptocurrency">
-                        <div class="form-group">
-                            <label for="crypto_currencies">{{ _i('Criptocurrency') }}</label>
-                            <select name="crypto_currencies" class="form-control">
-                                <option value="">{{ _i('Select...') }}</option>
-                                <option value="BTC">{{ _i('BTC') }}</option>
-                                <option value="USDT">{{ _i('USDT') }}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none alps">
-                        <div class="form-group">
-                            <label for="public_key">{{ _i('Public key ') }}</label>
-                            <input id="public_key" name="public_key" class="form-control" type="text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none alps">
-                        <div class="form-group">
-                            <label for="secret_key">{{ _i('Secret key') }}</label>
-                            <input id="secret_key" name="secret_key" class="form-control" type="text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none alps">
-                        <div class="form-group">
-                            <label for="username">{{ _i('Username') }}</label>
-                            <input id="username" name="username" class="form-control" type="text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none alps">
-                        <div class="form-group">
-                            <label for="password">{{ _i('Password') }}</label>
-                            <input id="password" name="password" class="form-control" type="password" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none vcreditos_api">
-                        <div class="form-group">
-                            <label for="vcreditos_user">{{ _i('Vcreditos user ') }}</label>
-                            <input id="vcreditos_user" name="vcreditos_user" class="form-control" type="text" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="col-md-4 d-none vcreditos_api">
-                        <div class="form-group">
-                            <label for="vcreditos_secure_id">{{ _i('Vcreditos secure') }}</label>
-                            <input id="vcreditos_secure_id" name="vcreditos_secure_id" class="form-control" type="text" autocomplete="off">
-                        </div>
-                    </div>
+                    @include('back.betpay.clients.payment-methods.binance')
                     <div class="col-md-12">
                         <div class="form-group">
                             <button type="button" class="btn u-btn-3d u-btn-primary" id="save"
@@ -201,6 +77,7 @@
     <script>
         $(function () {
             let betpay = new BetPay();
+            betpay.changeClientAccount();
             betpay.accountRequired();
             betpay.storeAccountClient();
         });
