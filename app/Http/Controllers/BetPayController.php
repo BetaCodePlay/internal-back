@@ -1786,7 +1786,7 @@ class BetPayController extends Controller
                 $responsePayment = json_decode($curlPayment);
                 \Log::debug($curlPayment);
                 if ($responsePayment->status == Status::$ok) {
-                    if (empty($responsePayment->data->payment_methods)) {
+                    if (count($responsePayment->data->payment_methods) == 0) {
                         \Log::debug('HOLA');
                     }else{
                         \Log::debug('noHOLA');
