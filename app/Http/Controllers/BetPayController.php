@@ -1787,7 +1787,7 @@ class BetPayController extends Controller
                 $responsePayment = json_decode($curlPayment);
                 \Log::debug($curlPayment);
                 if ($responsePayment->status == Status::$ok) {
-                    $payment = $responsePayment->data->payment_methods;
+                    $payment = (array) $responsePayment->data->payment_methods;
                 }
                 if (!is_null($payment)) {
                     $transactionType = $request->transaction_type;
