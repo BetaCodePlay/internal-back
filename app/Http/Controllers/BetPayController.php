@@ -1783,13 +1783,12 @@ class BetPayController extends Controller
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
                     ->get();
-                $responsePayment = json_decode($curlPayment, true);
+                $responsePayment = json_decode($curlPayment);
                 \Log::debug($curlPayment);
                 if ($responsePayment->status == Status::$ok) {
                     $payment = $responsePayment->data->payment_methods;
                 }   
-                \Log::debug([$payment]);
-                if (!empty($payment)) {
+                if (!is_null($payment)) {
                     $transactionType = $request->transaction_type;
                     $paymentStatusCredit = $payment->credit;
                     $paymentStatusDebit = $payment->debit;
