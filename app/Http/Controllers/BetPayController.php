@@ -1915,7 +1915,10 @@ class BetPayController extends Controller
                 $rules['binance_id'] = 'required'
             ]
         ];
-        return $rulesClientAccountDataFunctions([$paymentMethod]);
+        $rulesClientAccountDataFunctions = $rulesClientAccountDataFunctions[$paymentMethod] ?? function () {
+            return [];
+        };
+        return $rulesClientAccountDataFunctions();
     }
 
     /**
