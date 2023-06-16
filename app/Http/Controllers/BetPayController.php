@@ -1768,13 +1768,7 @@ class BetPayController extends Controller
             'payments' => 'required',
         ]);
         //$this->getRulesClientAccountData($request->payments, $request);
-        switch ($request->payments) {
-            case 43:
-            {
-                $rules['email'] = 'required';
-                break;
-            }
-        }
+        $rules['email'] = 'required';
         $this->validate($request, $rules);
     
         try {
