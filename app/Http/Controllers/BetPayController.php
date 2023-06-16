@@ -1767,10 +1767,8 @@ class BetPayController extends Controller
             'currency' => 'required',
             'payments' => 'required',
         ]);
-        $rules = $this->getRulesClientAccountData($request->payments);
-        \Log::debug([$rules]);
-        $this->validate($request, $rules);
-
+        $this->getRulesClientAccountData($request->payments, $request);
+    
         try {
             $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
             if (!is_null($credential)) {
@@ -1904,7 +1902,7 @@ class BetPayController extends Controller
      *
      * @return array
      */
-    private function getRulesClientAccountData($paymentMethod)
+    private function getRulesClientAccountData($paymentMethod, $request)
     {
 
         $rulesClientAccountDataFunctions = [
@@ -1921,6 +1919,7 @@ class BetPayController extends Controller
         $rulesClientAccountDataFunctions = $rulesClientAccountDataFunctions[$paymentMethod] ?? function () {
             return [];
         };
+        $this->validate($request, $rules);
         return $rulesClientAccountDataFunctions();
     }
 
