@@ -15,14 +15,14 @@
     </div>
     <div class="col-md-4 d-none binance">
         <div class="form-group">
-            <label for="pay_id">{{ _i('Pay Id') }}</label>
-                <input type="number" name="pay_id" id="pay_id" class="form-control" autocomplete="off">
+            <label for="qr">{{ _i('QR') }}</label>
+                <input type="file" name="qr" id="qr" class="form-control" autocomplete="off">
         </div>
     </div>
     <div class="col-md-4 d-none binance">
         <div class="form-group">
-            <label for="qr">{{ _i('QR') }}</label>
-                <input type="file" name="qr" id="qr" class="form-control" autocomplete="off">
+            <label for="pay_id">{{ _i('Pay Id') }}</label>
+                <input type="number" name="pay_id" id="pay_id" class="form-control" autocomplete="off">
         </div>
     </div>
     <div class="col-md-4 d-none binance">
