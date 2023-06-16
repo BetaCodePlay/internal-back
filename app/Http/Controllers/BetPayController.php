@@ -1773,13 +1773,13 @@ class BetPayController extends Controller
             if (!is_null($credential)) {
                 $paymentMethod = $request->payments;
                 $betPayToken = session('betpay_client_access_token');
-                $data = [
+                $dataPayment = [
                     'payment_method' => $paymentMethod,
                     'currency_iso' => $request->currency
                 ];
                 $urlPayment = "{$this->betPayURL}/payment-methods/payment-and-currency";
                 $curlPayment = Curl::to($urlPayment)
-                    ->withData($accountsData)
+                    ->withData($dataPayment)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
                     ->get();
