@@ -1789,7 +1789,7 @@ class BetPayController extends Controller
                     $payment = $responsePayment->data->payment_methods;
                 }   
                 \Log::debug([$payment]);
-                if (!is_null($payment)) {
+                if (!empty($payment)) {
                     $transactionType = $request->transaction_type;
                     $paymentStatusCredit = $payment->credit;
                     $paymentStatusDebit = $payment->debit;
