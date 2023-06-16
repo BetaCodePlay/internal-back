@@ -560,6 +560,7 @@ class BetPay {
     //storeAccountClient
     storeAccountClient(){
         initSelect2();
+        initFileInput();
         let $form = $('#client-account-form');
         let $button = $('#save');
 

@@ -1764,7 +1764,6 @@ class BetPayController extends Controller
     public function storeClientAccount(Request $request)
     {
         $this->validate($request, [
-            'client' => 'required',
             'currency' => 'required',
             'payments' => 'required'
         ]);

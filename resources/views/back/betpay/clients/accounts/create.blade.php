@@ -78,7 +78,6 @@
         $(function () {
             let betpay = new BetPay();
             betpay.changeClientAccount();
-            betpay.accountRequired();
             betpay.storeAccountClient();
         });
     </script>
