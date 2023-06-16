@@ -1768,7 +1768,6 @@ class BetPayController extends Controller
             'payments' => 'required',
         ]);
         $rules = $this->getRulesClientAccountData($request->payments);
-        \Log::debug($rules);
         $this->validate($request, $rules);
     
         try {
@@ -1911,10 +1910,11 @@ class BetPayController extends Controller
             PaymentMethods::$binance => 
             [
                 'cryptocurrency' => 'required',
-                'email' => 'required',
-                'phone' => 'required',
-                'pay_id' => 'required',
-                'binance_id' => 'required'
+                'email' => 'required_without:phone,pay_id,qr,binance_id',
+                'phone' => 'required_without:email,pay_id,qr,binance_id',
+                'pay_id' => 'required_without:phone,email,qr,binance_id',
+                'qr' => 'required_without:phone,pay_id,binance_id,email',
+                'binance_id' => 'required_without:phone,pay_id,qr,email',
             ]
         ];
 
