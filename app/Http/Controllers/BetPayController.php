@@ -1791,9 +1791,10 @@ class BetPayController extends Controller
                 }
                 if (!empty($payment)) {
                     $transactionType = $request->transaction_type;
-                    $paymentStatusCredit = $payment['credit'];
-                    $paymentStatusDebit = $payment->debit;
-
+                    foreach($payment as $paymentStatus){
+                        $paymentStatusCredit = $paymentStatus->credit;
+                        $paymentStatusDebit = $paymentStatus->debit;
+                    }
                     if ($transactionType == TransactionTypes::$credit) {
                         if (!$paymentStatusCredit) {
                             $data = [
