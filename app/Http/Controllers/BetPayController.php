@@ -1787,6 +1787,11 @@ class BetPayController extends Controller
                 \Log::debug($curlPayment);
                 if ($responsePayment->status == Status::$ok) {
                     $payment = $responsePayment->data->payment_methods;
+                    if (!empty($payment)) {
+                        \Log::debug('holis');
+                    }else{
+                        \Log::debug('no funciona');
+                    }
                 }   
                 if (!empty($payment)) {
                     $transactionType = $request->transaction_type;
