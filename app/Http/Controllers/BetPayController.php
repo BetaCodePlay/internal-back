@@ -1788,7 +1788,7 @@ class BetPayController extends Controller
                 if ($responsePayment->status == Status::$ok) {
                     $payment = $responsePayment->data->payment_methods;
                 }   
-                if (isset($payment)) {
+                if ($payment !== null) {
                     $transactionType = $request->transaction_type;
                     $paymentStatusCredit = $payment->credit;
                     $paymentStatusDebit = $payment->debit;
