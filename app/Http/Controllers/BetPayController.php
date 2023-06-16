@@ -1771,6 +1771,7 @@ class BetPayController extends Controller
         try {
             $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
             if (!is_null($credential)) {
+                $payment = [];
                 $paymentMethod = $request->payments;
                 $betPayToken = session('betpay_client_access_token');
                 $dataPayment = [
@@ -1787,13 +1788,8 @@ class BetPayController extends Controller
                 \Log::debug($curlPayment);
                 if ($responsePayment->status == Status::$ok) {
                     $payment = $responsePayment->data->payment_methods;
-                    if (!empty($payment)) {
-                        \Log::debug('holis');
-                    }else{
-                        \Log::debug('no funciona');
-                    }
-                }   
-                if (!empty($payment)) {
+                }
+                if (!is_null($payment)) {
                     $transactionType = $request->transaction_type;
                     $paymentStatusCredit = $payment->credit;
                     $paymentStatusDebit = $payment->debit;
