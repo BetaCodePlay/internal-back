@@ -41,8 +41,8 @@ class Core
     public static function buildMenu()
     {
         $menu = menu();
-        //return self::menuItems($menu);
-        return self::menuItemsNew($menu);
+        return self::menuItems($menu);
+        //return self::menuItemsNew($menu);
     }
 
     /**
