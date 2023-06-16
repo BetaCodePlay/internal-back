@@ -8,6 +8,7 @@ use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
+use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
@@ -27,6 +28,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
+use App\Users\Rules\Password;
 
 /**
  * Class AuthController
@@ -67,7 +69,7 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-
+                // dd(auth()->user());
                 if(auth()->user()->action == ActionUser::$locked_higher){
                     session()->flush();
                     auth()->logout();
@@ -79,7 +81,7 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
-                if(auth()->user()->action == ActionUser::$locked_login_attempts || auth()->user()->action == ActionUser::$changed_password){
+                if(auth()->user()->action == ActionUser::$locked_login_attempts) {
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -89,6 +91,19 @@ class AuthController extends Controller
                     ];
                     return Utils::errorResponse(Codes::$not_found, $data);
 
+                }
+
+                if(auth()->user()->action == ActionUser::$changed_password) {
+                    $data = [
+                        'title' => _i('Access denied'),
+                        'message' => _i('Please Change Password...'),
+                        'close' => _i('Close'),
+                        'changePassword' => true,
+                        'username' => auth()->user()->username
+                    ];
+                    session()->flush();
+                    auth()->logout();
+                    return Utils::errorResponse(Codes::$not_found, $data);
                 }
 
                 if(auth()->user()->status == false){
@@ -202,6 +217,60 @@ class AuthController extends Controller
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->except(['password'])]);
             session()->flush();
             auth()->logout();
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Change Password User
+     */
+    public function changePassword(Request $request, UsersRepo $usersRepo) {
+        $this->validate($request, [
+            'newPassword' => ['required', new Password()],
+        ]);
+        try {
+
+            $whitelabel = Configurations::getWhitelabel();
+            $credentials = [
+                'username' => strtolower($request->pUsername),
+                'password' => $request->oldPassword,
+                'whitelabel_id' => $whitelabel,
+                //'status' => true
+            ];
+            if (auth()->attempt($credentials)) {
+                if($request->newPassword != $request->repeatNewPassword) {
+                    $data = [
+                        'title' => _i('Invalid Passwords!'),
+                        'message' => _i('Passwords do not match'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$not_found, $data);
+                }
+                $user = auth()->user();
+
+                $usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$active);
+                // dd($usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$active));
+                $data = [
+                    'title' => _i('Password changed'),
+                    'message' => _i('Your password has been changed successfully'),
+                    'close' => _i('Close')
+                ];
+                //Cerramos la sesión del usuario para que ingrese con el nuevo password
+                session()->flush();
+                auth()->logout();
+                return Utils::successResponse($data);
+
+            } else {
+                $data = [
+                    'title' => _i('Invalid credentials!'),
+                    'message' => _i('The old password are incorrect'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+            }
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }
