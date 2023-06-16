@@ -1778,7 +1778,7 @@ class BetPayController extends Controller
                     'currency_iso' => $request->currency
                 ];
                 $urlPayment = "{$this->betPayURL}/payment-methods/payment-and-currency";
-                $curlPayment = Curl::to($urlAccounts)
+                $curlPayment = Curl::to($urlPayment)
                     ->withData($accountsData)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
