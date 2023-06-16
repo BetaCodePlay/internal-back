@@ -1767,7 +1767,7 @@ class BetPayController extends Controller
             'currency' => 'required',
             'payments' => 'required',
         ]);
-        $this->getRulesClientAccountData($request->payments);
+        $rules = $this->getRulesClientAccountData($request->payments);
         $this->validate($request, $rules);
     
         try {
@@ -1907,20 +1907,17 @@ class BetPayController extends Controller
     {
 
         $rulesClientAccountDataFunctions = [
-            PaymentMethods::$binance => function () {
-                return [
-                    $rules['cryptocurrency'] = 'required',
-                    $rules['email'] = 'required',
-                    $rules['phone'] = 'required',
-                    $rules['pay_id'] = 'required',
-                    $rules['binance_id'] = 'required'
-                ];
-            },
+            PaymentMethods::$binance => 
+            [
+                $rules['cryptocurrency'] = 'required',
+                $rules['email'] = 'required',
+                $rules['phone'] = 'required',
+                $rules['pay_id'] = 'required',
+                $rules['binance_id'] = 'required'
+            ]
         ];
-        $rulesClientAccountDataFunctions = $rulesClientAccountDataFunctions[$paymentMethod] ?? function () {
-            return [];
-        };
-        return $rulesClientAccountDataFunctions();
+
+        return $rulesClientAccountDataFunctions[$paymentMethod];
     }
 
     /**
