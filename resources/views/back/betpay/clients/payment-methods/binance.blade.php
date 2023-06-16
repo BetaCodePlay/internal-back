@@ -1,7 +1,7 @@
     <div class="col-md-4 d-none binance">
         <div class="form-group">
-            <label for="criptocurrency">{{ _i('Criptocurrency') }}</label>
-            <select name="criptocurrency" class="form-control criptocurrency">
+            <label for="cryptocurrency">{{ _i('Cryptocurrency') }}</label>
+            <select name="cryptocurrency" class="form-control cryptocurrency">
                 <option value="">{{ _i('Select...') }}</option>
                 <option value="USDT">{{ _i('USDT') }}</option>
             </select>
