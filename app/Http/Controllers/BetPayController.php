@@ -1769,7 +1769,7 @@ class BetPayController extends Controller
         ]);
 
         try {
-            $credential = $this->credentialsRepo->searchByCredential($request->client, Providers::$betpay, $request->currency);
+            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
             if (!is_null($credential)) {
                 $paymentMethod = $request->payments;
                 $betPayToken = session('betpay_client_access_token');
