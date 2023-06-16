@@ -1767,6 +1767,8 @@ class BetPayController extends Controller
             'currency' => 'required',
             'payments' => 'required'
         ]);
+        $rules = $this->getRulesClientAccountData($request->payments);
+        $this->validate($request, $rules);
 
         try {
             $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
@@ -1869,7 +1871,7 @@ class BetPayController extends Controller
     }
 
     /**
-     * Get Client Account Dara
+     * Get Client Account Data
      * @param int $paymentMethod PaymentMethods
      * @param Request $request
      *
@@ -1893,6 +1895,32 @@ class BetPayController extends Controller
             return [];
         };
         return $clientAccountDataFunction($request);
+    }
+
+    /**
+     * Get Rules Client Account Data
+     * @param int $paymentMethod PaymentMethods
+     *
+     * @return array
+     */
+    private function getRulesClientAccountData($paymentMethod)
+    {
+
+        $rulesClientAccountDataFunctions = [
+            PaymentMethods::$binance => function () {
+                return [
+                    $rules['cryptocurrency'] = 'required',
+                    $rules['email'] = 'required',
+                    $rules['phone'] = 'required',
+                    $rules['pay_id'] = 'required',
+                    $rules['binance_id'] = 'required'
+                ];
+            },
+        ];
+        $rulesClientAccountDataFunctions = $rulesClientAccountDataFunctions[$paymentMethod] ?? function () {
+            return [];
+        };
+        return $rulesClientAccountDataFunctions();
     }
 
     /**
