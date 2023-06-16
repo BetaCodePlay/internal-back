@@ -12,6 +12,7 @@ use Dotworkers\Security\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UsersRepo
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @package App\Users\Repositories
  * @author  Eborio Linarez
+ * @author  Jhonattan Bullones
  */
 class UsersRepo
 {
@@ -132,6 +134,23 @@ class UsersRepo
 
         }
         return $arrayIds;
+    }
+
+     /**
+     * Delete exclude provider user
+     *
+     * @param int $provider Provider ID
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function changePassword($user_id, $password, $action) {
+        return \DB::table('users')
+            ->where('id', $user_id)
+            ->update([
+                'password' => Hash::make($password),
+                'action' => $action
+            ]);
     }
 
     /**

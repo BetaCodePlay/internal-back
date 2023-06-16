@@ -495,5 +495,23 @@ iframe {
   }
 }
 
+.btn-color-gradient {
+    color: black;
+    background: -webkit-linear-gradient(left, #EAFF6A , #b721ff);
+    border: 0px;
+}
+
+.bg-darkgray{
+    background: #27282D;
+    color: white;
+}
+.btn-color-white {
+    color: white;
+}
+.info-change-password{
+    color: lightgrey;
+    font-size: 13px;
+}
+
 
 
