@@ -1916,10 +1916,9 @@ class BetPayController extends Controller
                 ];
             },
         ];
-        $rulesClientAccountDataFunctions = $rulesClientAccountDataFunctions[$paymentMethod] ?? function () {
+        $rulesClientAccountDataFunctions = $this->validate($request, $rulesClientAccountDataFunctions[$paymentMethod]) ?? function () {
             return [];
         };
-        $this->validate($request, $rules);
         return $rulesClientAccountDataFunctions();
     }
 
