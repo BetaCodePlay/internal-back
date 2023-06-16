@@ -1767,7 +1767,15 @@ class BetPayController extends Controller
             'currency' => 'required',
             'payments' => 'required',
         ]);
-        $this->getRulesClientAccountData($request->payments, $request);
+        //$this->getRulesClientAccountData($request->payments, $request);
+        switch ($request->payments) {
+            case 43:
+            {
+                $rules['email'] = 'required';
+                break;
+            }
+        }
+        $this->validate($request, $rules);
     
         try {
             $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
