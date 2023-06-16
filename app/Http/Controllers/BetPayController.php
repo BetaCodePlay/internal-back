@@ -1765,7 +1765,8 @@ class BetPayController extends Controller
     {
         $this->validate($request, [
             'currency' => 'required',
-            'payments' => 'required'
+            'payments' => 'required',
+            'cryptocurrency' => 'required',
         ]);
         $rules = $this->getRulesClientAccountData($request->payments);
         $this->validate($request, $rules);
