@@ -1768,7 +1768,6 @@ class BetPayController extends Controller
             'payments' => 'required',
         ]);
         $rules = $this->getRulesClientAccountData($request->payments);
-        \Log::debug($request->all());
         $this->validate($request, $rules);
     
         try {
@@ -1835,7 +1834,8 @@ class BetPayController extends Controller
                         'status' => true,
                         'transactionType' => $transactionType
                     ];
-                    $urlAccounts = "{$this->betPayURL}/clients/accounts/store";
+                    \Log::debug([$clientAccountData]);
+                    $urlAccounts = "{$this->betPayURL}/clients/accounts/store-client-accounts-payment-methods";
                     $curlAccounts = Curl::to($urlAccounts)
                         ->withData($accountsData)
                         ->withHeader('Accept: application/json')
