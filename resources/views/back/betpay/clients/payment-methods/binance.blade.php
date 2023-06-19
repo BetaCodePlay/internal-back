@@ -10,7 +10,7 @@
     <div class="col-md-4 d-none binance">
         <div class="form-group">
             <label for="email">{{ _i('Email') }}</label>
-                <input type="email" name="email" id="email" class="form-control" autocomplete="off">
+                <input type="email" name="email" class="form-control" autocomplete="off">
         </div>
     </div>
     <div class="col-md-4 d-none binance">
