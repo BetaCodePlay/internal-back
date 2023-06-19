@@ -1883,7 +1883,7 @@ class BetPayController extends Controller
         $clientAccountDataFunctions = [
             PaymentMethods::$binance => function ($request) {
                 return [
-                    'cryptocurrency' => $request->crypto_currencies,
+                    'cryptocurrency' => $request->cryptocurrency,
                     'email' => $request->email,
                     'pay_id' => $request->pay_id,
                     'qr' => $request->qr,
@@ -1911,7 +1911,7 @@ class BetPayController extends Controller
             PaymentMethods::$binance => 
             [
                 'cryptocurrency' => 'required',
-                'email' => 'required_without_all:phone,pay_id,qr,binance_id',
+                'email' => 'required_without_all:phone,pay_id,qr,binance_id|email',
                 'phone' => 'required_without_all:email,pay_id,qr,binance_id',
                 'pay_id' => 'required_without_all:phone,email,qr,binance_id',
                 'qr' => 'required_without_all:phone,pay_id,binance_id,email',
