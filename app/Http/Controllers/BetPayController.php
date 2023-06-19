@@ -1834,7 +1834,7 @@ class BetPayController extends Controller
                         'status' => true,
                         'transactionType' => $transactionType
                     ];
-                    \Log::debug([$clientAccountData]);
+                    \Log::debug([$accountsData]);
                     $urlAccounts = "{$this->betPayURL}/clients/accounts/store-client-accounts-payment-methods";
                     $curlAccounts = Curl::to($urlAccounts)
                         ->withData($accountsData)
