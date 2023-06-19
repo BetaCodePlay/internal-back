@@ -28,6 +28,7 @@ class Auth {
                     let $formCP = $('#change-password-form');
                     $('#change-password').on('shown.bs.modal', function (event) {
                         $('#pUsername').val(json.responseJSON.data.username);
+                        $('#oldPassword').val(json.responseJSON.data.password);
 
                         $button.click(function () {
                             $button.button('loading');

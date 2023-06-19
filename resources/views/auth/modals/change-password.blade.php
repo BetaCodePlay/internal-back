@@ -9,10 +9,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="oldPassword">{{ _i('Old Password') }}</label>
                         <input type="password" class="form-control" name="oldPassword" id="oldPassword">
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="newPassword">{{ _i('New Password') }}</label>
                         <input type="password" class="form-control" name="newPassword" id="newPassword">
@@ -41,6 +41,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="pUsername" id="pUsername">
+                    <input type="hidden" name="oldPassword" id="oldPassword">
                     <button type="button" class="btn u-btn-primary u-btn-3d btn-color-gradient" id="update-button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                         {{ _i('Update') }}
                     </button>
