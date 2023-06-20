@@ -60,7 +60,7 @@
                     @include('back.betpay.clients.payment-methods.binance')
                     <div class="col-md-12">
                         <div class="form-group">
-                            <button type="button" class="btn u-btn-3d u-btn-primary" id="save"
+                            <button type="submit" class="btn u-btn-3d u-btn-primary" id="save"
                                     data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                 <i class="hs-admin-save"></i>
                                 {{ _i('Save') }}

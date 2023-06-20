@@ -564,17 +564,24 @@ class BetPay {
         let $form = $('#client-account-form');
         let $button = $('#save');
 
-        $button.click(function () {
+        $form.on('submit', function (event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+
             $button.button('loading');
             $.ajax({
                 url: $form.attr('action'),
-                method: 'post',
+                type: 'post',
                 dataType: 'json',
-                data: $form.serialize()
+                contentType: false,
+                processData: false,
+                cache: false,
+                data: formData
 
             }).done(function (json) {
                 swalSuccessWithButton(json);
                 $('save-form').trigger('reset');
+
             }).fail(function (json) {
                 swalError(json);
 
