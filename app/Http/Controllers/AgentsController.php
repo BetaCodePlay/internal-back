@@ -2319,7 +2319,7 @@ class AgentsController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
-            $agentBlocked = $this->agentsRepo->getUserBlocked($agent);
+            $agentBlocked = $this->agentsRepo->getUserBlocked($agent->user_id);
             if(!is_null($agentBlocked)){
                 $this->agentsRepo->blockUsers($userAgent);
             }
