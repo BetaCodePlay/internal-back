@@ -17,7 +17,7 @@
             </div>
         </header>
         <div class="card-block g-pa-15">
-            <form id="client-account-form" method="post" action="{{ route('betpay.clients.accounts.store') }}">
+            <form id="client-account-form" method="post" action="{{ route('betpay.clients.accounts.store') }}" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
