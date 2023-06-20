@@ -1921,7 +1921,7 @@ class BetPayController extends Controller
             PaymentMethods::$binance => 
             [
                 'cryptocurrency' => 'required',
-                'email' => 'required_without_all:phone,pay_id,image,binance_id|email',
+                'email' => 'required_without_all:phone,pay_id,image,binance_id',
                 'phone' => 'required_without_all:email,pay_id,image,binance_id',
                 'pay_id' => 'required_without_all:phone,email,image,binance_id',
                 'image' => 'required_without_all:phone,pay_id,binance_id,email',
