@@ -3127,7 +3127,9 @@ class AgentsCollection
     public function formatAgent($user)
     {
         //TODO New route block agent and user, field action and status
-        if((int)$user->action === 1 || (int)$user->action === 0){
+        if((int)$user->action === 7){
+            $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
+        }else{
 
             $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;
             $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : _i('Blocked');
@@ -3138,8 +3140,6 @@ class AgentsCollection
                 $statusClassTmp,
                 $statusTextTmp
             );
-        }else{
-            $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
         }
 
 //        //TODO New route block agent and user, field action and status
