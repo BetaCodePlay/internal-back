@@ -55,7 +55,8 @@ class ActionUser
             }
             case self::$changed_password:
             {
-                return _i('Password change process');
+                return _i('Proceso de cambio de contraseña');
+                //return _i('Password change process');
                 //return _i('Changed password');
                 break;
             }
