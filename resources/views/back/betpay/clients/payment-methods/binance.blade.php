@@ -15,8 +15,8 @@
     </div>
     <div class="col-md-4 d-none binance">
         <div class="form-group">
-            <label for="qr">{{ _i('QR') }}</label>
-                <input type="file" name="qr" id="qr" class="form-control" autocomplete="off">
+            <label for="phone">{{ _i('Phone') }}</label>
+                <input type="number" name="phone" id="phone" class="form-control" autocomplete="off">
         </div>
     </div>
     <div class="col-md-4 d-none binance">
@@ -33,7 +33,8 @@
     </div>
     <div class="col-md-4 d-none binance">
         <div class="form-group">
-            <label for="phone">{{ _i('Phone') }}</label>
-                <input type="number" name="phone" id="phone" class="form-control" autocomplete="off">
+            <label for="qr">{{ _i('QR') }}</label>
+                <input type="file" name="qr" id="qr" class="form-control" autocomplete="off">
         </div>
     </div>
+   
