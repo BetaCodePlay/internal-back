@@ -2277,10 +2277,8 @@ class AgentsController extends Controller
                 'owner_id' => $agentId,
                 'user_id' => $userAgent,
             ];
-            $agentStatus = $this->agentsRepo->getStatusUser($agentId);
-            if($agentStatus->status){
-                $this->agentsRepo->unBlockUsers($userAgent);
-            }else{
+            $agentStatus = $this->agentsRepo->getUserBlocked($agentId);
+            if(!is_null($agentStatus)){
                 $this->agentsRepo->blockUsers($userAgent);
             }
             $this->agentsRepo->update($agent->id, $agentData);
@@ -2321,10 +2319,8 @@ class AgentsController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
-            $agentStatus = $this->agentsRepo->getStatusUser($agent->user_id);
-            if($agentStatus->status){
-                $this->agentsRepo->unBlockUsers($userAgent);
-            }else{
+            $agentStatus = $this->agentsRepo->getUserBlocked($agent->user_id);
+            if(!is_null($agentStatus)){
                 $this->agentsRepo->blockUsers($userAgent);
             }
             $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
