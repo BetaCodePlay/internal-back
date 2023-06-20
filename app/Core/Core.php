@@ -17,6 +17,7 @@ use Dotworkers\Configurations\Enums\TemplateElementTypes;
 use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ixudra\Curl\Facades\Curl;
@@ -439,13 +440,11 @@ class Core
         $providersIds = array_map(function ($val) {
             return $val->id;
         }, json_decode($providersRepo->getByWhitelabelAndTypesIds($providerTypes)));
-
-        //$paymentMethods = !is_null(session('payment_methods')) && count(session('payment_methods'))>0?json_decode(session('payment_methods')):[];
-        $paymentMethods = [];
+        Log::notice('test menu',[session('payment_methods')]);
         $paymentMethodsIds = array_map(function ($val) {
             return $val->payment_method_id;
-        }, $paymentMethods);
-
+        }, session('payment_methods'));
+        Log::notice('test menu',[$paymentMethodsIds]);
         $uniquePaymentMethods = collect($paymentMethodsIds)->unique()->values()->all();
 
         $store = Configurations::getStore();
