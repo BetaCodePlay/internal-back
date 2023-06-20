@@ -99,7 +99,8 @@ class AuthController extends Controller
                         'message' => _i('Please Change Password...'),
                         'close' => _i('Close'),
                         'changePassword' => true,
-                        'username' => auth()->user()->username
+                        'username' => auth()->user()->username,
+                        'password' => $credentials['password']
                     ];
                     session()->flush();
                     auth()->logout();
