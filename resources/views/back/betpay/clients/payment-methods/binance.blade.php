@@ -33,8 +33,8 @@
     </div>
     <div class="col-md-4 d-none binance">
         <div class="form-group">
-            <label for="qr">{{ _i('QR') }}</label>
-                <input type="file" name="qr" id="qr" class="form-control" autocomplete="off">
+            <label for="image">{{ _i('QR') }}</label>
+                <input type="file" name="image" id="image" class="form-control" autocomplete="off">
         </div>
     </div>
    
