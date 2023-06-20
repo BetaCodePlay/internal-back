@@ -2710,7 +2710,8 @@ class AgentsController extends Controller
             $email = "$username@$domain";
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserProvider($owner);
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+            $userBlocked = $this->agentsRepo->getUserBlocked($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -2741,13 +2742,14 @@ class AgentsController extends Controller
 
             $whitelabel = Configurations::getWhitelabel();
             $store = Configurations::getStore()->active;
+            $status = is_null($userBlocked) ? true : false;
             $userData = [
                 'username' => $username,
                 'email' => $email,
                 'password' => $password,
                 'uuid' => $uuid,
                 'ip' => $ip,
-                'status' => true,
+                'status' => $status,
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
                 'register_currency' => $currency,
@@ -3160,6 +3162,7 @@ class AgentsController extends Controller
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+            $userBlocked = $this->agentsRepo->getUserBlocked($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -3207,13 +3210,14 @@ class AgentsController extends Controller
             }
 
             $whitelabel = Configurations::getWhitelabel();
+            $status = is_null($userBlocked) ? true : false;
             $userData = [
                 'username' => $username,
                 'email' => $email,
                 'password' => $password,
                 'uuid' => $uuid,
                 'ip' => $ip,
-                'status' => true,
+                'status' => $status,
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
                 'register_currency' => $currency,
