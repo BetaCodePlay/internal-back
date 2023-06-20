@@ -406,9 +406,9 @@ class AgentsRepo
      * @param int $user User ID
      * @return mixed
      */
-    public function getUserBlocked($user)
+    public function getStatusUser($user)
     {
-        $data = User::where('id', $user)->where('status', false)->get();
+        $data = User::select('status')->where('id', $user)->get();
         return $data;
     }
 

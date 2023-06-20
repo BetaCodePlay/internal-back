@@ -2277,8 +2277,10 @@ class AgentsController extends Controller
                 'owner_id' => $agentId,
                 'user_id' => $userAgent,
             ];
-            $agentBlocked = $this->agentsRepo->getUserBlocked($agentId);
-            if(!is_null($agentBlocked)){
+            $agentStatus = $this->agentsRepo->getStatusUser($agentId);
+            if($agentStatus->status){
+                $this->agentsRepo->unBlockUsers($userAgent);
+            }else{
                 $this->agentsRepo->blockUsers($userAgent);
             }
             $this->agentsRepo->update($agent->id, $agentData);
@@ -2319,8 +2321,10 @@ class AgentsController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
-            $agentBlocked = $this->agentsRepo->getUserBlocked($agent->user_id);
-            if(!is_null($agentBlocked)){
+            $agentStatus = $this->agentsRepo->getStatusUser($agent->user_id);
+            if($agentStatus->status){
+                $this->agentsRepo->unBlockUsers($userAgent);
+            }else{
                 $this->agentsRepo->blockUsers($userAgent);
             }
             $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
@@ -2717,7 +2721,6 @@ class AgentsController extends Controller
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
-            $userBlocked = $this->agentsRepo->getUserBlocked($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -2748,14 +2751,13 @@ class AgentsController extends Controller
 
             $whitelabel = Configurations::getWhitelabel();
             $store = Configurations::getStore()->active;
-            $status = is_null($userBlocked) ? true : false;
             $userData = [
                 'username' => $username,
                 'email' => $email,
                 'password' => $password,
                 'uuid' => $uuid,
                 'ip' => $ip,
-                'status' => $status,
+                'status' => true,
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
                 'register_currency' => $currency,
@@ -3168,7 +3170,6 @@ class AgentsController extends Controller
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
-            $userBlocked = $this->agentsRepo->getUserBlocked($owner);
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -3216,14 +3217,13 @@ class AgentsController extends Controller
             }
 
             $whitelabel = Configurations::getWhitelabel();
-            $status = is_null($userBlocked) ? true : false;
             $userData = [
                 'username' => $username,
                 'email' => $email,
                 'password' => $password,
                 'uuid' => $uuid,
                 'ip' => $ip,
-                'status' => $status,
+                'status' => true,
                 'whitelabel_id' => $whitelabel,
                 'web_register' => false,
                 'register_currency' => $currency,
