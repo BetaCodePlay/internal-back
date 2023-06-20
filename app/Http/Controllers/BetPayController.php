@@ -1883,8 +1883,8 @@ class BetPayController extends Controller
         $clientAccountDataFunctions = [
             PaymentMethods::$binance => function ($request) {
                 $name = null;
-                if(!is_null($request->file('qr'))){
-                    $image = $request->file('qr');
+                if(!is_null($request->file('image'))){
+                    $image = $request->file('image');
                     $extension = $image->getClientOriginalExtension();
                     $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
                     $name = Str::slug($originalName) . time() . '.' . $extension;
