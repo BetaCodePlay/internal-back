@@ -2277,6 +2277,10 @@ class AgentsController extends Controller
                 'owner_id' => $agentId,
                 'user_id' => $userAgent,
             ];
+            $agentBlocked = $this->agentsRepo->getUserBlocked($agentId);
+            if(!is_null($agentBlocked)){
+                $this->agentsRepo->blockUsers($userAgent);
+            }
             $this->agentsRepo->update($agent->id, $agentData);
             $data = [
                 'title' => _i('Agent moved'),
@@ -2314,9 +2318,11 @@ class AgentsController extends Controller
                     'close' => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
-
             }
-
+            $agentBlocked = $this->agentsRepo->getUserBlocked($agent);
+            if(!is_null($agentBlocked)){
+                $this->agentsRepo->blockUsers($userAgent);
+            }
             $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
             $data = [
                 'title' => _i('User moved'),
