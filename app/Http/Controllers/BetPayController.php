@@ -1881,11 +1881,22 @@ class BetPayController extends Controller
     {
         $clientAccountDataFunctions = [
             PaymentMethods::$binance => function ($request) {
+                $name = null;
+                if(!is_null($request->file('qr'))){
+                    $image = $request->file('qr');
+                    $extension = $image->getClientOriginalExtension();
+                    $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                    $name = Str::slug($originalName) . time() . '.' . $extension;
+                    $s3Directory = Configurations::getS3Directory();
+                    $filePath = "$s3Directory/payment/";
+                    $path = "{$filePath}{$name}";
+                    Storage::put($path, file_get_contents($image->getRealPath()), 'public');
+                }
                 return [
                     'cryptocurrency' => $request->cryptocurrency,
                     'email' => $request->email,
                     'pay_id' => $request->pay_id,
-                    'qr' => $request->qr,
+                    'qr' => $name,
                     'binance_id' => $request->binance_id,
                     'phone' => $request->phone,
                 ];
