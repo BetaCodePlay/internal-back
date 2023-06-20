@@ -401,6 +401,18 @@ class AgentsRepo
     }
 
     /**
+     * Get user blocked status
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getUserBlocked($user)
+    {
+        $data = User::where('id', $user)->where('status', false)->get();
+        return $data;
+    }
+
+    /**
      * Get exclude user maker
      *
      * @param int $user User ID
