@@ -440,7 +440,8 @@ class Core
             return $val->id;
         }, json_decode($providersRepo->getByWhitelabelAndTypesIds($providerTypes)));
 
-        $paymentMethods = !is_null(session('payment_methods')) && count(session('payment_methods'))>0?json_decode(session('payment_methods')):[];
+        //$paymentMethods = !is_null(session('payment_methods')) && count(session('payment_methods'))>0?json_decode(session('payment_methods')):[];
+        $paymentMethods = [];
         $paymentMethodsIds = array_map(function ($val) {
             return $val->payment_method_id;
         }, $paymentMethods);
