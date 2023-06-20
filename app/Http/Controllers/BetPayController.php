@@ -1767,7 +1767,7 @@ class BetPayController extends Controller
             'currency' => 'required',
             'payments' => 'required',
         ]);
-        \Log::debug([$request->all]);
+        \Log::debug([$request->all()]);
         $rules = $this->getRulesClientAccountData($request->payments);
         $this->validate($request, $rules);
     
