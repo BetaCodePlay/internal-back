@@ -36,6 +36,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
@@ -1902,6 +1903,25 @@ class BetPayController extends Controller
                     'phone' => $request->phone,
                 ];
             },
+            PaymentMethods::$cryptocurrency => function ($request) {
+                $name = null;
+                if(!is_null($request->file('image'))){
+                    $image = $request->file('image');
+                    $extension = $image->getClientOriginalExtension();
+                    $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                    $name = Str::slug($originalName) . time() . '.' . $extension;
+                    $s3Directory = Configurations::getS3Directory();
+                    $filePath = "$s3Directory/payment/";
+                    $path = "{$filePath}{$name}";
+                    Storage::put($path, file_get_contents($image->getRealPath()), 'public');
+                }
+                return [
+                    'cryptocurrency' => $request->cryptocurrency,
+                    'wallet' => $request->wallet,
+                    'red' => $request->red,
+                    'qr' => $name,
+                ];
+            },
         ];
         $clientAccountDataFunction = $clientAccountDataFunctions[$paymentMethod] ?? function () {
             return [];
@@ -1927,6 +1947,13 @@ class BetPayController extends Controller
                 'pay_id' => 'required_without_all:phone,email,image,binance_id',
                 'image' => 'required_without_all:phone,pay_id,binance_id,email',
                 'binance_id' => 'required_without_all:phone,pay_id,image,email',
+            ],
+            PaymentMethods::$cryptocurrency => 
+            [
+                'cryptocurrency' => 'required',
+                'wallet' => 'required_without_all:red,image',
+                'red' => 'required_without_all:wallet,image',
+                'image' => 'required_without_all:wallet,red',
             ]
         ];
 
