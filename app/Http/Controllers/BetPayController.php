@@ -1884,8 +1884,8 @@ class BetPayController extends Controller
         $clientAccountDataFunctions = [
             PaymentMethods::$binance => function ($request) {
                 $name = null;
-                if(!is_null($request->file('image'))){
-                    $image = $request->file('image');
+                if(!is_null($request->file('qr_binance'))){
+                    $image = $request->file('qr_binance');
                     $extension = $image->getClientOriginalExtension();
                     $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
                     $name = Str::slug($originalName) . time() . '.' . $extension;
@@ -1895,18 +1895,18 @@ class BetPayController extends Controller
                     Storage::put($path, file_get_contents($image->getRealPath()), 'public');
                 }
                 return [
-                    'cryptocurrency' => $request->cryptocurrency,
-                    'email' => $request->email,
-                    'pay_id' => $request->pay_id,
+                    'cryptocurrency' => $request->cryptocurrency_binance,
+                    'email' => $request->email_binance,
+                    'pay_id' => $request->pay_id_binance,
                     'qr' => $name,
                     'binance_id' => $request->binance_id,
-                    'phone' => $request->phone,
+                    'phone' => $request->phone_binance,
                 ];
             },
             PaymentMethods::$cryptocurrencies => function ($request) {
                 $name = null;
-                if(!is_null($request->file('image'))){
-                    $image = $request->file('image');
+                if(!is_null($request->file('qr_cripto'))){
+                    $image = $request->file('qr_cripto');
                     $extension = $image->getClientOriginalExtension();
                     $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
                     $name = Str::slug($originalName) . time() . '.' . $extension;
@@ -1916,9 +1916,9 @@ class BetPayController extends Controller
                     Storage::put($path, file_get_contents($image->getRealPath()), 'public');
                 }
                 return [
-                    'cryptocurrency' => $request->cryptocurrency,
-                    'wallet' => $request->wallet,
-                    'network' => $request->network,
+                    'cryptocurrency' => $request->cryptocurrency_cripto,
+                    'wallet' => $request->wallet_cripto,
+                    'network' => $request->network_cripto,
                     'qr' => $name,
                 ];
             },
@@ -1937,23 +1937,22 @@ class BetPayController extends Controller
      */
     private function getRulesClientAccountData($paymentMethod)
     {
-
         $rulesClientAccountDataFunctions = [
             PaymentMethods::$binance => 
             [
-                'cryptocurrency' => 'required',
-                'email' => 'required_without_all:phone,pay_id,image,binance_id',
-                'phone' => 'required_without_all:email,pay_id,image,binance_id',
-                'pay_id' => 'required_without_all:phone,email,image,binance_id',
-                'image' => 'required_without_all:phone,pay_id,binance_id,email',
-                'binance_id' => 'required_without_all:phone,pay_id,image,email',
+                'cryptocurrency_binance' => 'required',
+                'email_binance' => 'required_without_all:pay_id_binance,binance_id,qr_binance,phone_binance',
+                'pay_id_binance' => 'required_without_all:email_binance,binance_id,qr_binance,phone_binance',
+                'binance_id' => 'required_without_all:email_binance,pay_id_binance,qr_binance,phone_binance',
+                'qr_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,phone_binance',
+                'phone_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,qr_binance',
             ],
             PaymentMethods::$cryptocurrencies => 
             [
-                'cryptocurrency' => 'required',
-                'wallet' => 'required_without_all:network,image',
-                'network' => 'required_without_all:wallet,image',
-                'image' => 'required_without_all:wallet,network',
+                'cryptocurrency_cripto' => 'required',
+                'wallet_cripto' => 'required_without_all:network_cripto,qr_cripto',
+                'network_cripto' => 'required_without_all:wallet_cripto,qr_cripto',
+                'qr_cripto' => 'required_without_all:wallet_cripto,network_cripto',
             ]
         ];
 
