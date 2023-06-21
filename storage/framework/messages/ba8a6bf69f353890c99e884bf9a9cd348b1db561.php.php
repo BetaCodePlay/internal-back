@@ -64,6 +64,95 @@ class AgentsCollection
     }
 
     /**
+     *  Tree format for users (Children Tree)
+     * @param object $agent User data
+     * @param int $user User data
+     */
+    public function childrenTree($agent, $user)
+    {
+        $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $agentsRepo = new AgentsRepo();
+        $tree = [
+            'id' => $agent->id,
+            'text' => $agent->username,
+            'status' => $agent->status,
+            'icon' => 'fa fa-diamond',
+            'type' => 'agent',
+            'state' => [
+                'opened' => true,
+                'selected' => true,
+            ],
+            'li_attr' => [
+                'data_type' => 'agent',
+                'class' => 'init_tree'
+            ],
+            'children' => $agentsRepo->getChildrenByOwner($user, $currency, $whitelabel)
+        ];
+
+        return json_encode($tree);
+    }
+
+    /**
+     * Json Format
+     * @param $tableDb
+     * @param $percentage
+     * @return string
+     */
+    public function closuresByUsername($closures, $total, $percentage, $request)
+    {
+        $timezone = session('timezone');
+        $data = array();
+
+        $i = 1;
+        $total_played = 0;
+        $total_won = 0;
+        $total_bet = 0;
+        $total_profit = 0;
+        $rtp = 0;
+        foreach ($closures as $value) {
+
+            $total_played = $total_played + $value->total_played;
+            $total_won = $total_won + $value->total_won;
+            $total_bet = $total_bet + $value->total_bet;
+            $total_profit = $total_profit + $value->total_profit;
+            //$rtp = $rtp +$value->rtp;
+
+            $data[] = [
+                'id' => $i++,
+                'username' => $value->user_name,
+                'total_played' => $value->total_played,
+                'total_won' => $value->total_won,
+                'total_bet' => $value->total_bet,
+                'total_profit' => $value->total_profit,
+                'rtp' => $value->rtp . '%'
+            ];
+
+        }
+
+        $total_rtp = ($total_won / $total_played) * 100;
+        $data[] = [
+            'id' => 999999999,
+            'username' => _i('Totals'),
+            'total_played' => number_format($total_played, 2, '.', '.'),
+            'total_won' => number_format($total_won, 2, '.', '.'),
+            'total_bet' => number_format($total_bet, 2, '.', '.'),
+            'total_profit' => number_format($total_profit, 2, '.', '.'),
+            'rtp' => number_format($total_rtp, 2, '.') . '%'
+        ];
+
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($total),
+            "recordsFiltered" => intval($total),
+            "data" => $data
+        );
+
+        return $json_data;
+
+    }
+
+    /**
      * @param $tableDb
      * @param $percentage
      * @return string
@@ -3038,28 +3127,34 @@ class AgentsCollection
     public function formatAgent($user)
     {
         //TODO New route block agent and user, field action and status
-        $actionTmp = (int)$user->action === 1 || (int)$user->action === 0 ? ActionUser::$active : ActionUser::$locked_higher;
-        $statusTextTmp = (int)$user->action === 1 ? _i('Active') : _i('Blocked');
-        $statusClassTmp = $actionTmp === 1 || (int)$user->action === 0 ? 'teal' : 'lightred';
-        $user->status = sprintf(
-            '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
-            route('users.block.status', [$user->id, ((int)$user->action === 1 ? ActionUser::$locked_higher : ActionUser::$active), 0]),
-            $statusClassTmp,
-            $statusTextTmp
-        );
+        if((int)$user->action === ActionUser::$changed_password || (int)$user->action === ActionUser::$blocked_branch){
+            $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
+        }else{
 
-        $statusClass = $user->status ? 'teal' : 'lightred';
-        $statusText = $user->status ? _i('Active') : _i('Blocked');
-        $words = ['dotpanel.', 'admin.', 'latsoft.'];
+            $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;
+            $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : ActionUser::getName($user->action);//_i('Blocked');
+            $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
+            $user->status = sprintf(
+                '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
+                route('users.block.status', [$user->id, ((int)$user->action === 1 && (boolean)$user->status ? ActionUser::$locked_higher : ActionUser::$active), 0]),
+                $statusClassTmp,
+                $statusTextTmp
+            );
+        }
+
+//        //TODO New route block agent and user, field action and status
+//        $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;
+//        $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : _i('Blocked');
+//        $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
+//        $user->status = sprintf(
+//            '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
+//            route('users.block.status', [$user->id, ((int)$user->action === 1 && (boolean)$user->status ? ActionUser::$locked_higher : ActionUser::$active), 0]),
+//            $statusClassTmp,
+//            $statusTextTmp
+//        );
+
         $domain = Configurations::getDomain();
         $user->url = "https://$domain/register?r=$user->referral_code";
-        //TODO Btn change status
-//        $user->status_old = sprintf(
-//            '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
-//            route('users.change-status', [$user->id, (int)$user->status, 0]),
-//            $statusClass,
-//            $statusText
-//        );
 
         if (isset($user->master)) {
             $typeClass = $user->master ? 'blue' : 'bluegray';
@@ -3092,6 +3187,44 @@ class AgentsCollection
                 $typeText
             );
         }
+
+    }
+
+    /**
+     * formatAgentDataMakersTotals
+     * @param $totals
+     * @return string
+     */
+    public function formatAgentDataMakersTotals($totals)
+    {
+        $htmlTotals = sprintf(
+            '<table  class="table table-bordered w-100">
+                    <thead>
+                        <tr>
+                            <th class="w-th-20">%s</th>
+                            <th class="w-th-17-5">' . _i('Total Payed') . '</th>
+                            <th class="w-th-20">' . _i('Total Won') . '</th>
+                            <th class="w-th-23">' . _i('Total Bets') . '</th>
+                            <th>' . _i('Total Profit') . '</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                            <td><strong>%s</strong></td>
+                        </tr>
+                    </tbody>',
+            _i('Totals'),
+            $totals[0]->total_played,
+            number_format($totals[0]->total_won, 2),
+            number_format($totals[0]->total_bet, 2),
+            number_format($totals[0]->total_profit, 2),
+        );
+
+        return $htmlTotals;
 
     }
 
@@ -3180,19 +3313,21 @@ class AgentsCollection
             $amountTmp = $transaction->amount;
             $transaction->debit = 0;
             $transaction->credit = 0;
-            $transaction->balance = 0;
-
+            $transaction->balance = number_format(0, 2, '.', '.');
+            $transaction->new_amount = 0;
 
             $from = $transaction->data->from;
             $to = $transaction->data->to;
             if ($transaction->transaction_type_id == TransactionTypes::$debit) {
                 $transaction->debit = $amountTmp;
+                $transaction->new_amount = '<span class="badge badge-pill badge-danger">-' . number_format($amountTmp, 2, '.', '.') . '</span>';
             }
             if ($transaction->transaction_type_id == TransactionTypes::$credit) {
                 $transaction->credit = $amountTmp;
+                $transaction->new_amount = '<span class="badge badge-pill badge-info">+' . number_format($amountTmp, 2, '.', '.') . '</span>';
             }
             if (isset($transaction->data->balance)) {
-                $transaction->balance = number_format($transaction->data->balance, 2);
+                $transaction->balance = number_format($transaction->data->balance, 2, '.', '.');
             }
 
             $credit = $transaction->credit;
@@ -3207,15 +3342,23 @@ class AgentsCollection
 //                $debit = $transaction->debit;
 //            }
 
+            $debitt = $debit > 0 ? '-' . number_format($debit, 2, ".", ".") : '0,00';
+            $creditt = $credit > 0 ? '+' . number_format($credit, 2, ".", ".") : '0,00';
+            $nameAffect = $transaction->data->from === $transaction->username ? $transaction->data->from : $transaction->data->to;
+//            if($from != $nameAffect){
+//
+//            }
             $data[] = [
                 'id' => null,
                 'date' => $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s'),
                 'data' => [
                     'from' => $from,
-                    'to' => $to,
+                    'to' => $nameAffect,
+                    //'to' => $to,
                 ],
-                'debit' => number_format($debit, 2, ",", "."),
-                'credit' => number_format($credit, 2, ",", "."),
+                'debit' => $debitt,
+                'credit' => $creditt,
+                'new_amount' => $transaction->new_amount,
                 'balance' => $transaction->balance,
             ];
 
@@ -3253,43 +3396,6 @@ class AgentsCollection
         }
     }
 
-    /**
-     * formatAgentDataMakersTotals
-     * @param $totals
-     * @return string
-     */
-    public function formatAgentDataMakersTotals($totals)
-    {
-        $htmlTotals = sprintf(
-            '<table  class="table table-bordered w-100">
-                    <thead>
-                        <tr>
-                            <th class="w-th-20">%s</th>
-                            <th class="w-th-17-5">' . _i('Total Payed') . '</th>
-                            <th class="w-th-20">' . _i('Total Won') . '</th>
-                            <th class="w-th-23">' . _i('Total Bets') . '</th>
-                            <th>' . _i('Total Profit') . '</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td><strong>%s</strong></td>
-                            <td><strong>%s</strong></td>
-                            <td><strong>%s</strong></td>
-                            <td><strong>%s</strong></td>
-                        </tr>
-                    </tbody>',
-            _i('Totals'),
-            $totals[0]->total_played,
-            number_format($totals[0]->total_won, 2),
-            number_format($totals[0]->total_bet, 2),
-            number_format($totals[0]->total_profit, 2),
-        );
-
-        return $htmlTotals;
-
-    }
     /**
      * Format Total Credit And Debit
      * @param $credit
@@ -3372,6 +3478,37 @@ class AgentsCollection
             if (!is_null($dataChildren)) {
                 $dataAgents = array_merge($dataAgents, $dataChildren);
             }
+        }
+
+        return $dataAgents;
+    }
+
+
+    /**
+     *  Format sub-agents and agents
+     *
+     * @param object $agentsRepo Repository Agents
+     * @param string $currency Currency iso
+     * @param array $agents Agents data
+     *
+     */
+    public function formatAgentandSubAgentsNew($agentsRepo, $currency, $agents)
+    {
+        $dataAgents = [];
+        foreach ($agents as $agent) {
+            $agentsChildren = [];
+            $subAgents = $agentsRepo->getAgentsChildrenByOwner($agent->user_id, $currency);
+            if (count($subAgents) > 0) {
+                $agentsChildren = $this->formatAgentandSubAgentsNew($agentsRepo,$currency,$subAgents);
+            }
+
+            $dataAgents[] = [
+                'username' => $agent->username,
+                'user_id' => $agent->user_id,
+            ];
+
+            $dataAgents = array_merge($dataAgents, $agentsChildren);
+
         }
 
         return $dataAgents;
@@ -3526,6 +3663,60 @@ class AgentsCollection
     }
 
     /**
+     * Format agents transactions Paginate
+     *
+     * @param array $transactions Transactions data
+     */
+    public function formatClosuresTotalsProviderPaginate($transactions, $total, $percentage, $request)
+    {
+        $timezone = session('timezone');
+        $data = array();
+        $total_played = 0;
+        $total_won = 0;
+        $total_bet = 0;
+        $total_profit = 0;
+        $rtp = 0;
+        $i = 1;
+        foreach ($transactions as $transaction) {
+            $total_played = $total_played + $transaction->total_played;
+            $total_won = $total_won + $transaction->total_won;
+            $total_bet = $total_bet + $transaction->total_bet;
+            $total_profit = $total_profit + $transaction->total_profit;
+            $rtp = $rtp + $transaction->rtp;
+
+            $data[] = [
+                'id' => $i++,
+                'name' => $transaction->provider_name,
+                'played' => number_format($transaction->total_played, 2, '.', '.'),
+                'won' => number_format($transaction->total_won, 2, '.', '.'),
+                'bet' => number_format($transaction->total_bet, 0, '.', '.'),
+                'profit' => number_format($transaction->total_profit, 2, '.', '.'),
+                'rpt' => number_format($transaction->rtp, 2, '.', '.'),
+            ];
+        }
+
+        $data[] = [
+            'id' => 999999999,
+            'name' => '<strong>' . _i('Totals') . '</strong>',
+            'played' => '<strong>' . number_format($total_played, 2, '.', '.') . '</strong>',
+            'won' => '<strong>' . number_format($total_won, 2, '.', '.') . '</strong>',
+            'bet' => '<strong>' . number_format($total_bet, 0, '.', '.') . '</strong>',
+            'profit' => '<strong>' . number_format($total_profit, 2, '.', '.') . '</strong>',
+            'rpt' => '<strong>' . number_format($rtp, 2, '.', '.') . '</strong>',
+        ];
+
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($total),
+            "recordsFiltered" => intval($total),
+            "data" => $data
+        );
+
+        return $json_data;
+
+    }
+
+    /**
      * format datas lock
      *
      * @param array $agents Agents data
@@ -3549,14 +3740,14 @@ class AgentsCollection
             $dataMakers[] = $maker;
             if ($lockUsers == 'true') {
                 $blockUsers[] = [
-                'currency_iso' => $currency,
-                'makers' => null,
-                'user_id' => $agent->id,
-                'category' => null,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                    'currency_iso' => $currency,
+                    'makers' => null,
+                    'user_id' => $agent->id,
+                    'category' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                 ];
-            }else{
+            } else {
                 if (is_null($category)) {
                     $categories = $gamesRepo->getCategoriesByMaker($maker);
                     $categories = array_column($categories->toArray(), 'category');
@@ -3632,7 +3823,7 @@ class AgentsCollection
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
-            }else{
+            } else {
                 if (is_null($category)) {
                     $categories = $gamesRepo->getCategoriesByMaker($maker);
                     $categories = array_column($categories->toArray(), 'category');
@@ -3686,14 +3877,14 @@ class AgentsCollection
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
-            }else{
+            } else {
                 if (is_null($category)) {
                     $categories = $gamesRepo->getCategoriesByMaker($maker);
                     $categories = array_column($categories->toArray(), 'category');
                 } else {
                     $categories[] = $category;
                 }
-                foreach ($categories as $category){
+                foreach ($categories as $category) {
                     $excludedUsers = $usersRepo->getUserLockByUserAndCategory($user['id'], $currency, $category, $whitelabel);
                     $makersExclude = isset($excludedUsers->makers) ? json_decode($excludedUsers->makers) : [];
                     $dataMakers = array_merge($dataMakers, $makersExclude);
@@ -3710,6 +3901,47 @@ class AgentsCollection
             }
         }
         return $dataUsers;
+    }
+
+    /**
+     * Get Exclude Agent
+     */
+    private function getExcludedAgent($agentsRepo, $userId, $currency, $category, $whitelabel)
+    {
+        return $agentsRepo->getAgentLockByUserAndCategory($userId, $currency, $category, $whitelabel);
+    }
+
+    /**
+     * Format search
+     *
+     * @param array $users Users data
+     */
+    public function formatExcludeMakersUser($users)
+    {
+        $timezone = session('timezone');
+        foreach ($users as $user) {
+            $makers = json_decode($user->makers);
+            $user->user = sprintf(
+                '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
+                route('users.details', [$user->user_id]),
+                $user->user_id
+            );
+            $user->makers = '';
+            foreach ($makers as $maker) {
+                if (!is_null($maker)) {
+                    $user->makers .= sprintf(
+                        '<li>%s</li>',
+                        $maker
+                    );
+                }
+            }
+            $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $user->actions = sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('agents.reports.exclude-providers-agents.delete', [$user->user_id, $user->category, $user->currency_iso]),
+                _i('Delete')
+            );
+        }
     }
 
     /**
@@ -3732,39 +3964,6 @@ class AgentsCollection
             ];
         }
         return $dataUsers;
-    }
-
-    /**
-     * Format search
-     *
-     * @param array $users Users data
-     */
-    public function formatExcludeMakersUser($users)
-    {
-        $timezone = session('timezone');
-        foreach ($users as $user) {
-            $makers = json_decode($user->makers);
-            $user->user = sprintf(
-                '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
-                route('users.details', [$user->user_id]),
-                $user->user_id
-            );
-            $user->makers = '';
-            foreach ($makers as $maker) {
-                if(!is_null($maker)){
-                    $user->makers .= sprintf(
-                        '<li>%s</li>',
-                        $maker
-                    );
-                }
-            }
-            $user->date = $user->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
-            $user->actions = sprintf(
-                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" id="delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
-                route('agents.reports.exclude-providers-agents.delete', [$user->user_id, $user->category, $user->currency_iso]),
-                _i('Delete')
-            );
-        }
     }
 
     /**
@@ -3854,13 +4053,6 @@ class AgentsCollection
                 $user->username = $user->username;
             }
         }
-    }
-
-    /**
-     * Get Exclude Agent
-     */
-    private function getExcludedAgent($agentsRepo, $userId, $currency, $category, $whitelabel) {
-        return $agentsRepo->getAgentLockByUserAndCategory($userId, $currency, $category, $whitelabel);
     }
 
     /**

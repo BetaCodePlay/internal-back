@@ -20,6 +20,10 @@ class ActionUser
 
     public static $changed_password = 7;
 
+    public static $blocked_branch = 8;
+
+    public static $direct_lock = 9;
+
     public static function getName($action)
     {
         switch ($action) {
@@ -53,9 +57,20 @@ class ActionUser
                 return _i('Blocked by a superior');
                 break;
             }
+            case self::$blocked_branch:
+            {
+                return _i('Blocked by branch');
+                break;
+            }
+            case self::$direct_lock:
+            {
+                return _i('Direct lock');
+                break;
+            }
             case self::$changed_password:
             {
-                return _i('Changed password');
+                return _i('Password change process');
+                //return _i('Changed password');
                 break;
             }
             default:
