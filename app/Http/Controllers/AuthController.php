@@ -45,13 +45,14 @@ class AuthController extends Controller
      * @param ProfilesRepo $profilesRepo
      * @param UserCurrenciesRepo $userCurrenciesRepo
      * @param AgentsRepo $agentsRepo
+     * @param string $token User activation token
      * @param Agent $agent
      * @return Response
      * @throws ValidationException
      */
-    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo): Response
+    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo, string $token): Response
     {
-
+        Log::info(__METHOD__, ['token' => $token]);
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
