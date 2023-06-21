@@ -1450,15 +1450,14 @@ class TransactionsCollection
                     $name = '<strong>'._i('from').' '.$dataTmp->from .' </strong>'._i('to').' '.$dataTmp->to;
                 }
 
-
                 $newData['id'] = $transaction->id;
                 $newData['names'] =  $name;
                 $newData['from'] = $dataTmp->from;
                 $newData['to'] = $dataTmp->to;
                 $newData['data'] = $dataTmp;
                 $newData['amount'] = $transaction->amount;
-                $newData['debit'] = $transaction->transaction_type_id == TransactionTypes::$debit ? number_format($transaction->amount, 2) : '-';
-                $newData['credit'] = $transaction->transaction_type_id == TransactionTypes::$credit ? number_format($transaction->amount, 2) : '-';
+                $newData['debit'] = $transaction->transaction_type_id == TransactionTypes::$debit ? number_format($transaction->amount, 2,'.','.') : '-';
+                $newData['credit'] = $transaction->transaction_type_id == TransactionTypes::$credit ? number_format($transaction->amount, 2,'.','.') : '-';
                 $newData['debit_'] = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : 0;
                 $newData['credit_'] = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : 0;
                 $newData['transaction_type_id'] = $transaction->transaction_type_id;
@@ -1467,19 +1466,19 @@ class TransactionsCollection
 
                 if($transaction->transaction_type_id == TransactionTypes::$debit) {
                     if (isset($dataTmp->second_balance)) {
-                        $newData['balanceFrom'] = number_format($dataTmp->second_balance, 2);
+                        $newData['balanceFrom'] = number_format($dataTmp->second_balance, 2,'.','.');
                     }
                     if(isset($dataTmp->balance)) {
-                        $newData['balance'] = number_format((float) $dataTmp->balance, 2);
+                        $newData['balance'] = number_format((float) $dataTmp->balance, 2,'.','.');
                     }
                 }
 
                 if($transaction->transaction_type_id == TransactionTypes::$credit) {
                     if (isset($dataTmp->balance)) {
-                        $newData['balance'] =  number_format((float) $dataTmp->balance, 2);
+                        $newData['balance'] =  number_format((float) $dataTmp->balance, 2,'.','.');
                     }
                     if(isset($dataTmp->second_balance)) {
-                        $newData['balanceFrom'] =  number_format((float) $dataTmp->second_balance, 2);
+                        $newData['balanceFrom'] =  number_format((float) $dataTmp->second_balance, 2,'.','.');
                     }
                 }
 
@@ -1507,7 +1506,7 @@ class TransactionsCollection
             $data[] = [
                 'id'=>'',
                 'date'=>'',
-                'names'=>'',
+                'names'=>'<strong>'._i('Totals').' </strong>',
                 'from'=>'',
                 'to'=>'',
                 'data'=>'',

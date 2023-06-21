@@ -33,9 +33,11 @@
             color: white !important;
             background-color: #38a7ef !important;
         }
+
         .flex-items {
             display: flex;
         }
+
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -57,6 +59,7 @@
             color: white !important;
             background-color: darkorange !important
         }
+
         .select2-container {
             width: 100% !important;
             text-align: left !important;
@@ -423,7 +426,8 @@
                                         </div>
                                     </div>
                                     <div class="row g-mb-15">
-                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div
+                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong> <?php echo e(_i('Type')); ?></strong>
                                             </label>
@@ -503,10 +507,11 @@
                                     <div class="row g-mb-15" id="details-user">
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
-                                                <a href="#details-user-modal" id="details-user"
+                                                <a href="#details-user-modal" id="details-user-get"
+                                                   data-route="<?php echo e(route('agents.get.father.cant')); ?>"
                                                    class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
-                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i> <strong> <?php echo e(_i('More information')); ?></strong>
-
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white"
+                                                       style="font-weight: 700!important;"></i><strong> <?php echo e(_i('More information')); ?></strong>
                                                 </a>
                                             </div>
                                         </div>
@@ -603,9 +608,10 @@
                                     <div class="form-group">
                                         <label for="date_range"><?php echo e(_i('Date range')); ?></label>
                                         <div class="flex-items">
-                                            <input type="text" id="date_range_new" class="form-control" autocomplete="off"
-                                               placeholder="<?php echo e(_i('Date range')); ?>">
-                                               <button class="btn g-bg-primary" type="button" id="updateNew"
+                                            <input type="text" id="date_range_new" class="form-control"
+                                                   autocomplete="off"
+                                                   placeholder="<?php echo e(_i('Date range')); ?>">
+                                            <button class="btn g-bg-primary" type="button" id="updateNew"
                                                     data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
                                                     data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>"
                                                     data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
@@ -618,12 +624,12 @@
 
 
                             <div class="media">
-                                <div class="media-body d-flex justify-content-end g-mb-10"
-                                     id="table-buttons-agents-transactions">
+                                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
+
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered display nowrap" style="width:100%"
+                                <table class="table table-bordered table-hover dt-responsive"
                                        id="agents-transactions-table"
                                        data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
                                        data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>">
@@ -634,42 +640,47 @@
 
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-
-                                            Cuenta origen
-
+                                            
+                                            Agente
+                                            
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-
+                                            
                                             Cuenta destino
                                         </th>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            
+                                            <?php echo e(_i('Amount')); ?>
 
-                                            Descarga
                                         </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-
-                                            Carga
-                                        </th>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             <?php echo e(_i('Balance')); ?>
 
@@ -930,7 +941,8 @@
                                                             <div class="form-group">
                                                                 <label for="maker"><?php echo e(_i('Maker')); ?></label>
                                                                 <select name="maker" id="maker"
-                                                                        class="form-control" data-route="<?php echo e(route('core.categories-by-maker')); ?>">
+                                                                        class="form-control"
+                                                                        data-route="<?php echo e(route('core.categories-by-maker')); ?>">
                                                                     <option value=""><?php echo e(_i('Select...')); ?></option>
                                                                     <?php $__currentLoopData = $makers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $maker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                         <option value="<?php echo e($maker->maker); ?>">
@@ -1156,14 +1168,16 @@
         </div>
     </div>
     <?php if($agent->master): ?>
-        <?php echo $__env->make('back.agents.modals.add-agents', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        
+        
         <?php echo $__env->make('back.agents.modals.update-percentage', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php endif; ?>
     <?php echo $__env->make('back.agents.modals.manual-transaction', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.move-agents', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.move-agents-users', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.details-user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <?php echo $__env->make('back.agents.modals.add-users', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    
+    
     <?php echo $__env->make('back.users.modals.reset-password', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
@@ -1173,17 +1187,21 @@
             let agents = new Agents();
             let users = new Users();
             users.usersIps();
+            //TODO TABLA PARA IPS EN EL MODAL
+            // users.userIpsDetails();
+
             agents.dashboard();
             agents.searchAgentDashboard();
             agents.performTransactions();
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
-            agents.usersTransactions();
+            agents.agentsTransactionsPaginate([50, 100, 500, 1000, 2000]);
+            agents.usersTransactions([50, 100, 500, 1000, 2000]);
             agents.users();
             agents.agents();
-            agents.storeAgents();
-            agents.storeUsers();
+            //TODO THE OPTION TO CREATE IS DISABLED WITHIN THE DASHBOARD
+            // agents.storeAgents();
+            // agents.storeUsers();
             agents.changeUserStatus();
             users.resetPassword();
             agents.financialState();
@@ -1198,9 +1216,10 @@
             agents.selectCategoryMaker();
             agents.statusFilter();
             <?php if($agent->master): ?>
-            agents.changeAgentType();
+                agents.changeAgentType();
             <?php endif; ?>
             agents.relocationAgents();
+            //agents.detailsUserModal();
         });
     </script>
 <?php $__env->stopSection(); ?>

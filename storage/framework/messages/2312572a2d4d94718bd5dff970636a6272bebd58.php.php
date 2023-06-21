@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\Provider;
 use App\Core\Enums\Status;
+use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Illuminate\Support\Facades\DB;
 
@@ -181,6 +182,22 @@ class ProvidersRepo
             ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
             ->where('client_id', $whitelabel)
             ->where('currency_iso', $currency)
+            ->get();
+    }
+
+    /**
+     * Get by whitelabel and types (Ids)
+     *
+     * @param array $providerTypes Provider types
+     * @return mixed
+     */
+    public function getByWhitelabelAndTypesIds($providerTypes)
+    {
+        return Provider::select('providers.id')
+            ->whereIn(DB::raw('provider_type_id::integer'), $providerTypes)
+            ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
+            ->where('client_id', Configurations::getWhitelabel())
+            ->where('currency_iso', session('currency'))
             ->get();
     }
 
