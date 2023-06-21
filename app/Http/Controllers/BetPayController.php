@@ -1863,7 +1863,7 @@ class BetPayController extends Controller
                         'payment_method' => $paymentMethod,
                         'currency' => $request->currency,
                         'data' => $clientAccountData,
-                        'status' => false,
+                        'status' => true,
                         'transactionType' => $transactionType
                     ];
                     $urlAccounts = "{$this->betPayURL}/clients/accounts/store-client-accounts-payment-methods";
