@@ -461,6 +461,7 @@ class AgentsCollection
         if (!empty($tableDb)) {
 
             //TODO STATUS OF PROVIDERS IN PROD
+            // disabled status true
             $arrayProviderTmp = array_map(function ($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));

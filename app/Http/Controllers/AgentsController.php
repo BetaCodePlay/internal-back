@@ -1317,14 +1317,15 @@ class AgentsController extends Controller
             }
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
-            $data = [
-                //ADD startOfDayUtc to Date
-                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
-                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
-            ];
+            $data = [];
+//            $data = [
+//                //ADD startOfDayUtc to Date
+//                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
+//                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
+//            ];
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
-            if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
+            //if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
 //                Log::debug('financialStateData:field _hour',[
 //                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
 //                ]);
@@ -1332,7 +1333,7 @@ class AgentsController extends Controller
                 $data = [
                     'table' => $this->agentsCollection->closuresTotalsByAgentGroupProviderHour($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
                 ];
-            }
+            //}
 
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
@@ -1847,16 +1848,16 @@ class AgentsController extends Controller
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
             $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
 
-            $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
+            //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
-            if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
+           // if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
 //                Log::debug('financialStateSummaryDataNew:field _hour',[
 //                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
 //                ]);
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSonHour(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 
-            }
+          //  }
 
 //            }
             //TODO AGENT
@@ -3224,7 +3225,7 @@ class AgentsController extends Controller
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user' => TypeUser::$player,
-                'action' => ActionUser::$changed_password,
+                'action' => ActionUser::$active,
             ];
             $profileData = [
                 'country_iso' => $country,
