@@ -236,6 +236,11 @@ class BetPay {
             switch (payment) {
                 case '43':
                     $('.binance').removeClass('d-none');
+                    $('.cryptocurrency').addClass('d-none');
+                break;
+                case '3':
+                    $('.cryptocurrency').removeClass('d-none');
+                    $('.binance').addClass('d-none');
                 break;
             }
         });
