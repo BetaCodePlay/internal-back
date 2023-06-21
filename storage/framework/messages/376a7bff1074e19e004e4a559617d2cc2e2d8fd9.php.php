@@ -10,6 +10,7 @@
             <form action="<?php echo e(route('agents.move-agent')); ?>" id="move-agent-form" method="post">
                 <div class="modal-body">
                     <div class="row row-div">
+
                         <div class="col-sm-6">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
@@ -35,7 +36,7 @@
                                     <span class="typeSet"></span>
                                 </div>
                             </div>
-                            <div class="row mb-1">
+                            <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> <?php echo e(_i('agents')); ?>: </strong>
                                 </div>
@@ -43,7 +44,7 @@
                                     <span class="agentsSet"></span>
                                 </div>
                             </div>
-                            <div class="row mb-1">
+                            <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> <?php echo e(_i('players')); ?>: </strong>
                                 </div>
@@ -67,9 +68,30 @@
                                 </div>
                             </div>
                             <div class="col-8 appendTreeFather">
+                                <h5 style="text-align: center;"><strong> <?php echo e(_i('Loading')); ?>...</strong></h5>
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">

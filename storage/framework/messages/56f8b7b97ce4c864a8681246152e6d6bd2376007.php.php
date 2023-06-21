@@ -1475,7 +1475,7 @@ class UsersController extends Controller
                         'updated_at' => $date
                     ];
                     $this->usersRepo->updateExcludeMakersUser($currency, $userToUpdate['category'], $userData->id, $data);
-                }   
+                }
                 $auditData = [
                     'ip' => Utils::userIp($request),
                     'user_id' => auth()->user()->id,
@@ -2042,8 +2042,10 @@ class UsersController extends Controller
 
             $password = $request->password;
             $userData = [
-                'password' => $password
+                'password' => $password,
+                'action' => ActionUser::$changed_password,
             ];
+
             $this->usersRepo->update($user, $userData);
 
             $auditData = [
@@ -2132,6 +2134,7 @@ class UsersController extends Controller
                         'whitelabel_id' => $whitelabel,
                         'web_register' => false,
                         'main' => true,
+                        'action'=>ActionUser::$active
                     ];
                     $profileData = [
                         'country_iso' => $request->country,

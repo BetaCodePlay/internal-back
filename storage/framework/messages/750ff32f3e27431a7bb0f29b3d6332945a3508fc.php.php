@@ -160,7 +160,11 @@ class LobbyGamesController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $games = $this->lobbyGamesRepo->searchGamesByWhitelabel($whitelabel);
+            $products = $this->gamesRepo->getProducts();
+            $makers = $this->gamesRepo->getMakers();
             $data['image'] = $image;
+            $data['makers'] = $makers;
+            $data['products'] = $products;
             $data['providers'] = $provider;
             $data['games'] = $games;
             $data['title'] = _i('Create lobby');
@@ -251,6 +255,36 @@ class LobbyGamesController extends Controller
         }
     }
 
+    /**
+     * Game by category
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function gameByCategoryAndMaker(Request $request)
+    {
+        try {
+            $provider = $request->provider;
+            $category = $request->category;
+            $maker = $request->maker;
+            $product = $request->product;
+            $games = [];
+            if (!is_null($category)) {
+                $currency = session('currency');
+                $whitelabel = Configurations::getWhitelabel();
+                $games = $this->gamesRepo->getGamesByCategoryAndMaker($whitelabel, $currency, $provider, $category, $maker, $product);
+                $this->lobbyGamesCollection->formatDotsuiteGames($games);
+            }
+            $data = [
+                'games' => $games
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
 
     /**
      * Store Lobby Games
@@ -264,11 +298,11 @@ class LobbyGamesController extends Controller
         $personalize = !is_null($request->personalize) ? $request->personalize : null;
         $route = !is_null($request->route) ? $request->route : null;
         $this->validate($request, [
-            'change_provider' => 'required'
+            'maker' => 'required',
         ]);
         if($personalize) {
             $this->validate($request, [
-                'games' => 'required|array|min:1'
+                'games' => 'required|array|min:1',
             ]);
         }
         try {
@@ -332,8 +366,11 @@ class LobbyGamesController extends Controller
                     $this->lobbyGamesRepo->store($whitelabelGameData);
                 }
             }else{
-                $provider = (string) $request->change_provider;
-                $games = $this->gamesRepo->getDotSuiteGamesByProvider($provider);
+                $provider = $request->provider;
+                $maker = $request->maker;
+                $category = $request->category;
+                $product = $request->product_id;
+                $games = $this->gamesRepo->getDotSuiteGamesByProviderAndMakerAndCategoryAndProduct($provider, $category, $maker, $product);
                 foreach ($games as $game) {
                     $whitelabelGame = $this->lobbyGamesRepo->searchByDotsuiteGames($game->id, $whitelabel);
                     if (!is_null($whitelabelGame)) {
