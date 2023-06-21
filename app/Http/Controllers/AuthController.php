@@ -50,9 +50,9 @@ class AuthController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo, string $token): Response
+    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
-        Log::info(__METHOD__, ['token' => $token]);
+    
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
