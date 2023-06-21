@@ -4,6 +4,7 @@ namespace App\Agents\Repositories;
 
 use App\Agents\Entities\Agent;
 use App\Users\Entities\User;
+use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -110,6 +111,7 @@ class AgentsRepo
     {
         $user = User::find($userId);
         $user->status = false;
+        $user->action = ActionUser::$blocked_branch;
         $user->save();
     }
 
@@ -600,6 +602,7 @@ class AgentsRepo
     {
         $user = User::find($userId);
         $user->status = true;
+        $user->action = ActionUser::$active;
         $user->save();
     }
 }

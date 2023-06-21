@@ -727,7 +727,7 @@ class AgentsController extends Controller
                             'new_status' => $newStatus,
                             'description' => $request->description
                         ];
-                        //Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
+                        Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
                     }
                     $data = [
                         'title' => _i('Locked users'),
@@ -735,7 +735,6 @@ class AgentsController extends Controller
                         'close' => _i('Close')
                     ];
                 }
-
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $user = $userToUpdate['user_id'];
@@ -749,7 +748,7 @@ class AgentsController extends Controller
                             'new_status' => $newStatus,
                             'description' => $request->description
                         ];
-                        //Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
+                        Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
                     }
                     $data = [
                         'title' => _i('Unlocked users'),
@@ -1973,7 +1972,6 @@ class AgentsController extends Controller
         }
     }
 
-
     /**
      * Find tree agents father
      *
@@ -2247,24 +2245,24 @@ class AgentsController extends Controller
             $agentId = $request->agent;
             $agent = $this->agentsRepo->existAgent($userAgent);
             $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
-            if ($userData->action == ActionUser::$locked_higher) {
-                $data = [
-                    'title' => _i('Blocked by a superior!'),
-                    'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$not_found, $data);
-
-            }
-            if ($userData->status == false) {
-                $data = [
-                    'title' => _i('Deactivated user'),
-                    'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$not_found, $data);
-
-            }
+//            if ($userData->action != ActionUser::$active) {
+//                $data = [
+//                    'title' => ActionUser::getName($userData->action),
+//                    'message' => _i('Contact your superior...'),
+//                    'close' => _i('Close')
+//                ];
+//                return Utils::errorResponse(Codes::$not_found, $data);
+//
+//            }
+//            if ($userData->status == false) {
+//                $data = [
+//                    'title' => _i('Deactivated user'),
+//                    'message' => _i('Contact your superior...'),
+//                    'close' => _i('Close')
+//                ];
+//                return Utils::errorResponse(Codes::$not_found, $data);
+//
+//            }
             if (is_null($agent)) {
                 $data = [
                     'title' => _i('Agent moved'),
@@ -2277,6 +2275,7 @@ class AgentsController extends Controller
                 'owner_id' => $agentId,
                 'user_id' => $userAgent,
             ];
+
             $agentStatus = $this->agentsRepo->getUserBlocked($agentId);
             if(!is_null($agentStatus)){
                 $this->agentsRepo->blockUsers($userAgent);
@@ -2319,6 +2318,7 @@ class AgentsController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
+            //TODO
             $agentStatus = $this->agentsRepo->getUserBlocked($agent->user_id);
             if(!is_null($agentStatus)){
                 $this->agentsRepo->blockUsers($userAgent);
@@ -2758,7 +2758,7 @@ class AgentsController extends Controller
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user' => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action' => ActionUser::$active,
+                'action' => ActionUser::$changed_password,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
@@ -3224,7 +3224,7 @@ class AgentsController extends Controller
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user' => TypeUser::$player,
-                'action' => ActionUser::$active,
+                'action' => ActionUser::$changed_password,
             ];
             $profileData = [
                 'country_iso' => $country,

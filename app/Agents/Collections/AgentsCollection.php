@@ -3127,12 +3127,12 @@ class AgentsCollection
     public function formatAgent($user)
     {
         //TODO New route block agent and user, field action and status
-        if((int)$user->action === 7){
+        if((int)$user->action === ActionUser::$changed_password || (int)$user->action === ActionUser::$blocked_branch){
             $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
         }else{
 
             $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;
-            $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : _i('Blocked');
+            $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : ActionUser::getName($user->action);//_i('Blocked');
             $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
             $user->status = sprintf(
                 '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
