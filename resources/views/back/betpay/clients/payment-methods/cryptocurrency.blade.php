@@ -15,8 +15,8 @@
     </div>
     <div class="col-md-4 d-none cryptocurrency">
         <div class="form-group">
-            <label for="red">{{ _i('Red') }}</label>
-                <input type="text" name="red" id="red" class="form-control" autocomplete="off">
+            <label for="network">{{ _i('Network') }}</label>
+                <input type="text" name="network" id="network" class="form-control" autocomplete="off">
         </div>
     </div>
     <div class="col-md-4 d-none cryptocurrency">

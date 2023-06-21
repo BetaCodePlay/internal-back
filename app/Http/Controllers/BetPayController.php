@@ -1918,7 +1918,7 @@ class BetPayController extends Controller
                 return [
                     'cryptocurrency' => $request->cryptocurrency,
                     'wallet' => $request->wallet,
-                    'red' => $request->red,
+                    'network' => $request->network,
                     'qr' => $name,
                 ];
             },
@@ -1951,9 +1951,9 @@ class BetPayController extends Controller
             PaymentMethods::$cryptocurrencies => 
             [
                 'cryptocurrency' => 'required',
-                'wallet' => 'required_without_all:red,image',
-                'red' => 'required_without_all:wallet,image',
-                'image' => 'required_without_all:wallet,red',
+                'wallet' => 'required_without_all:network,image',
+                'network' => 'required_without_all:wallet,image',
+                'image' => 'required_without_all:wallet,network',
             ]
         ];
 
