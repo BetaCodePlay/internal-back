@@ -1903,7 +1903,7 @@ class BetPayController extends Controller
                     'phone' => $request->phone,
                 ];
             },
-            PaymentMethods::$cryptocurrency => function ($request) {
+            PaymentMethods::$cryptocurrencies => function ($request) {
                 $name = null;
                 if(!is_null($request->file('image'))){
                     $image = $request->file('image');
@@ -1948,7 +1948,7 @@ class BetPayController extends Controller
                 'image' => 'required_without_all:phone,pay_id,binance_id,email',
                 'binance_id' => 'required_without_all:phone,pay_id,image,email',
             ],
-            PaymentMethods::$cryptocurrency => 
+            PaymentMethods::$cryptocurrencies => 
             [
                 'cryptocurrency' => 'required',
                 'wallet' => 'required_without_all:red,image',
