@@ -587,42 +587,32 @@ class Core
                 if ($key == 'Agents' && !Configurations::getAgents()->active) {
                     continue;
                 }
-
-                if (($key == 'BetPay' && !Configurations::getPayments()) ||
-                    ($key == 'BetPay' && is_null(session('betpay_client_id')))) {
+                if (($key == 'BetPay' && !Configurations::getPayments()) || ($key == 'BetPay' && is_null(session('betpay_client_id')))) {
                     continue;
                 }
-
                 if (($key == 'Referrals') || ($key == 'ManualTransactionsAgents') || ($key == 'ManualAdjustments') && $whitelabel == 68) {
                     continue;
                 }
-
                 if ($key == 'CasinoSliders' && !$casinoConfiguration->data->slider->active || $key == 'VirtualSliders' && !$virtualConfiguration->data->slider->active) {
                     continue;
                 }
-
                 if (($key == 'Store') || ($key == 'StoreSliders')  && !$store->active) {
                     continue;
                 }
-
                 if ($key == 'StoreSliders' && $store->active) {
                     if (!$storeConfiguration->data->slider->active) {
                         continue;
                     }
                 }
-
                 if ($key == 'RegisterImages' && $registerConfiguration->data->section_images->quantity == 0) {
                     continue;
                 }
-
                 if ($key == 'LoginImages' && $loginConfiguration->data->section_images->quantity == 0) {
                     continue;
                 }
-
                 if ($key == 'IQSoft' && !in_array(Providers::$iq_soft, $providersIds)) {
                     continue;
                 }
-
                 if ((isset($item->provider) && !in_array($item->provider, $providersIds)) || (isset($item->payment_method) && !in_array($item->payment_method, $uniquePaymentMethods))) {
                         continue;
                 }
@@ -642,7 +632,6 @@ class Core
                         }
                         $route = is_null($route) ? 'javascript:void(0)' : $route;
                         $target = '_self';
-
                     }
 
                     $htmlTmp = '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--'.$item->level_class.'-level-menu-item" data-toggle="collapse" data-target="#'.$key . $item->level_class.'"><a class="'.$anchorFlex.' media u-side-nav--'.$item->level_class.'-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="'.$route.'" target="'.$target.'">';
@@ -667,12 +656,10 @@ class Core
                         $html .= self::menuItemsNew($sliderSections,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
                             $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
                     }
-
                     if ($key == 'Images') {
                         $html .= self::menuItemsNew($imageSections,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
                             $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
                     }
-
                     if ($key == 'LobbySections') {
                         $html .= self::menuItemsNew($lobby,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
                             $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
