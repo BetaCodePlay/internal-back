@@ -68,8 +68,7 @@
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
         "torann/geoip": "^3.0",
-        "yajra/laravel-datatables-oracle": "~9.0",
-        "itsgoingd/clockwork": "^5.1"
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^1.0",
