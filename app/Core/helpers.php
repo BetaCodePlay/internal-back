@@ -800,6 +800,37 @@ if (!function_exists('menu')) {
                             // ],
                         ]
                     ],
+                    'Cryptocurrencies' => [
+                        'text' => _i('Cryptocurrencies'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-control-shuffle',
+                        'permission' => Permissions::$cryptocurrencies_menu,
+                        'payment_method' => PaymentMethods::$cryptocurrencies,
+                        'submenu' => [
+
+                            'Credit' => [
+                                'text' => _i('Credit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.cryptocurrencies.credit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-left',
+                                'permission' => Permissions::$credit_cryptocurrencies_menu,
+                                'submenu' => []
+                            ],
+
+                            'Debit' => [
+                                'text' => _i('Debit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.cryptocurrencies.debit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-right',
+                                'permission' => Permissions::$debit_cryptocurrencies_menu,
+                                'submenu' => []
+                            ],
+                        ]
+                    ],
                     'BetPayReports' => [
                         'text' => _i('Reports'),
                         'level_class' => 'second',
@@ -808,6 +839,37 @@ if (!function_exists('menu')) {
                         'icon' => 'hs-admin-bar-chart',
                         'permission' => Permissions::$betpay_reports_menu,
                         'submenu' => [
+                            'ReportCryptocurrencies' => [
+                                'text' => _i('Cryptocurrencies'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$betpay_reports_menu,
+                                'payment_method' => PaymentMethods::$cryptocurrencies,
+                                'submenu' => [
+
+                                    'Credit' => [
+                                        'text' => _i('Credit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.credit',
+                                        'params' => [PaymentMethods::$cryptocurrencies],
+                                        'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+
+                                    'Debit' => [
+                                        'text' => _i('Debit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.debit',
+                                        'params' => [PaymentMethods::$cryptocurrencies],
+                                        'icon' => 'hs-admin-shift-right',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
                             'ReportBinance' => [
                                 'text' => _i('Binance'),
                                 'level_class' => 'third',

@@ -600,6 +600,20 @@ class BetPayController extends Controller
     }
 
     /**
+     * Show pending credit cryptocurrencies
+     *
+     * @return Application|Factory|View
+     */
+    public function creditCryptocurrencies()
+    {
+        $data['transaction_type'] = TransactionTypes::$credit;
+        $data['payment_method'] = PaymentMethods::$cryptocurrencies;
+        $data['provider'] = Providers::$cryptocurrencies;
+        $data['title'] = _i('Pending Cryptocurrencies credit transactions');
+        return view('back.betpay.cryptocurrencies.credit', $data);
+    }
+
+    /**
      * Show pending credit binance
      *
      * @return Application|Factory|View
@@ -722,6 +736,22 @@ class BetPayController extends Controller
         }
         $data['payment_methods'] = $paymentMethods;
         return view('back.betpay.clients.payment-limits.create', $data);
+    }
+
+    /**
+     * Show pending debit cryptocurrency
+     *
+     * @return Application|Factory|View
+     */
+    public function debitCryptocurrencies()
+    {
+        $paymentMethod = PaymentMethods::$cryptocurrencies;
+        $data['transaction_type'] = TransactionTypes::$debit;
+        $data['payment_method'] = $paymentMethod;
+        $data['provider'] = Providers::$cryptocurrencies;
+        $data['accounts'] = $this->clientAccounts($paymentMethod);
+        $data['title'] = _i('Pending Cryptocurrencies debit transactions');
+        return view('back.betpay.cryptocurrencies.debit', $data);
     }
 
     /**

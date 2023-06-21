@@ -687,6 +687,44 @@ class BetPay {
         })
     }
 
+    // Credit cryptocurrencies
+    creditCryptocurrencies() {
+        let $table = $('#cryptocurrencies-table');
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.transactions"
+            },
+            "order": [],
+            "columns": [
+                {"data": "user"},
+                {"data": "username"},
+                {"data": "level"},
+                {"data": "amount", "className": "text-right", "type": "num-fmt"},
+                {"data": "currency_iso"},
+                {"data": "data.cryptocurrency_amount", "className": "text-right", "type": "num-fmt"},
+                {"data": "data.cryptocurrency"},
+                {"data": "reference"},
+                {"data": "data.date", "className": "text-right"},
+                {"data": "created", "className": "text-right"},
+                {"data": "status", "className": "text-right"},
+                {"data": "actions", "className": "text-right"}
+            ],
+            "initComplete": function () {
+                let api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+                BetPay.processCreditTransactions(api, $table.data('route'));
+            }
+        });
+
+        $table.on('xhr.dt', function (event, settings, json, xhr) {
+            if (xhr.status === 500) {
+                swalError(xhr);
+            }
+        });
+    }
+
     // Credit binance
     creditBinance() {
         let $table = $('#binance-table');
@@ -729,6 +767,42 @@ class BetPay {
         $modal.on('hidden.bs.modal', function () {
             $modal.find('#qr').html('');
         })
+
+        $table.on('xhr.dt', function (event, settings, json, xhr) {
+            if (xhr.status === 500) {
+                swalError(xhr);
+            }
+        });
+    }
+
+    // Debit Crytocurrencies
+    debitCryptocurrencies() {
+        let $table = $('#cryptocurrencies-table');
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.transactions"
+            },
+            "order": [],
+            "columns": [
+                {"data": "user"},
+                {"data": "username"},
+                {"data": "level"},
+                {"data": "amount", "className": "text-right", "type": "num-fmt"},
+                {"data": "currency_iso"},
+                {"data": "withdrawal_data"},
+                {"data": "created", "className": "text-right"},
+                {"data": "status", "className": "text-right"},
+                {"data": "actions", "className": "text-right"}
+            ],
+            "initComplete": function () {
+                let api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+                BetPay.lockBalance();
+                BetPay.processDebitBitcoin(api, $table.data('route'));
+            }
+        });
 
         $table.on('xhr.dt', function (event, settings, json, xhr) {
             if (xhr.status === 500) {
