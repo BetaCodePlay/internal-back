@@ -52,7 +52,7 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
-    
+        Log::info(__METHOD__, ['request' => $request]);
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
