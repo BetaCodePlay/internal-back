@@ -2245,15 +2245,15 @@ class AgentsController extends Controller
             $agentId = $request->agent;
             $agent = $this->agentsRepo->existAgent($userAgent);
             $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
-//            if ($userData->action != ActionUser::$active) {
-//                $data = [
-//                    'title' => ActionUser::getName($userData->action),
-//                    'message' => _i('Contact your superior...'),
-//                    'close' => _i('Close')
-//                ];
-//                return Utils::errorResponse(Codes::$not_found, $data);
-//
-//            }
+            if ($userData->action == ActionUser::$locked_higher) {
+                $data = [
+                    'title' => ActionUser::getName($userData->action),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
 //            if ($userData->status == false) {
 //                $data = [
 //                    'title' => _i('Deactivated user'),
@@ -2387,15 +2387,15 @@ class AgentsController extends Controller
                         return Utils::errorResponse(Codes::$not_found, $data);
 
                     }
-                    if ($userData->status == false) {
-                        $data = [
-                            'title' => _i('Deactivated user'),
-                            'message' => _i('Contact your superior...'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$not_found, $data);
-
-                    }
+//                    if ($userData->status == false) {
+//                        $data = [
+//                            'title' => _i('Deactivated user'),
+//                            'message' => _i('Contact your superior...'),
+//                            'close' => _i('Close')
+//                        ];
+//                        return Utils::errorResponse(Codes::$not_found, $data);
+//
+//                    }
 
                     $walletData = Wallet::getByClient($userData->id, $currency);
                     if ($transactionType == TransactionTypes::$credit) {
@@ -2493,15 +2493,15 @@ class AgentsController extends Controller
                         return Utils::errorResponse(Codes::$not_found, $data);
 
                     }
-                    if ($agent->status == false) {
-                        $data = [
-                            'title' => _i('Deactivated user'),
-                            'message' => _i('Contact your superior...'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$not_found, $data);
-
-                    }
+//                    if ($agent->status == false) {
+//                        $data = [
+//                            'title' => _i('Deactivated user'),
+//                            'message' => _i('Contact your superior...'),
+//                            'close' => _i('Close')
+//                        ];
+//                        return Utils::errorResponse(Codes::$not_found, $data);
+//
+//                    }
 
                     /* Agent Balance */
                     $agentBalance = round($agent->balance, 2);
