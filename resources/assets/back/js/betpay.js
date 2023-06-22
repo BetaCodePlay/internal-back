@@ -1,5 +1,5 @@
-import {swalConfirm, swalError, swalSuccessWithButton, clearForm} from "../../commons/js/core";
-import {initSelect2, initLitepickerEndToday, initFileInput} from "./commons";
+import {swalConfirm, swalError, swalSuccessWithButton} from "../../commons/js/core";
+import {initSelect2, initLitepickerEndToday, initFileInput, clearForm} from "./commons";
 import moment from 'moment';
 
 class BetPay {
