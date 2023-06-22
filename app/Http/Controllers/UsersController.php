@@ -2030,6 +2030,8 @@ class UsersController extends Controller
         try {
             $user = $request->user;
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            $roles = Security::getUserRoles($user);
+            // dd($roles);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
                     'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
@@ -2041,10 +2043,17 @@ class UsersController extends Controller
             }
 
             $password = $request->password;
-            $userData = [
-                'password' => $password,
-                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
-            ];
+            if(in_array(Roles::$players, $roles)) {
+                $userData = [
+                    'password' => $password,
+                    'action' =>  ActionUser::$active
+                ];
+            } else {
+                $userData = [
+                    'password' => $password,
+                    'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
+                ];
+            }
 
             $this->usersRepo->update($user, $userData);
 
