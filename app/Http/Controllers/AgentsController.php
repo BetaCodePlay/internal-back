@@ -1317,7 +1317,6 @@ class AgentsController extends Controller
             }
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
-Log::debug('financialStateData',[$sons,$user , $startDate, $endDate]);
             $data = [
                 'table' => $this->agentsCollection->closuresTotalsByAgentGroupProviderHour($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
             ];
