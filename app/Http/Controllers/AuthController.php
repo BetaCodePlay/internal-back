@@ -71,7 +71,9 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-                Log::info(__METHOD__, ['ip' => $ip, 'user' => $user]);
+                $prefix = $request->route()->getPrefix();
+                $api = $prefix == 'api/users';
+                Log::info(__METHOD__, ['prefix' => $prefix, 'api' => $api]);
                 if(auth()->user()->action == ActionUser::$locked_higher){
                     session()->flush();
                     auth()->logout();
