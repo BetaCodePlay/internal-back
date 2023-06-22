@@ -2746,7 +2746,7 @@ Log::debug('financialStateData',[$sons,$user , $startDate, $endDate]);
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user' => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action' => ActionUser::$changed_password,
+                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,

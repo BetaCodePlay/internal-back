@@ -2043,7 +2043,7 @@ class UsersController extends Controller
             $password = $request->password;
             $userData = [
                 'password' => $password,
-                'action' => ActionUser::$changed_password,
+                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
             ];
 
             $this->usersRepo->update($user, $userData);
