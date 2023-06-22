@@ -1,4 +1,4 @@
-import {swalConfirm, swalError, swalSuccessWithButton} from "../../commons/js/core";
+import {swalConfirm, swalError, swalSuccessWithButton, clearForm} from "../../commons/js/core";
 import {initSelect2, initLitepickerEndToday, initFileInput} from "./commons";
 import moment from 'moment';
 
@@ -585,7 +585,9 @@ class BetPay {
 
             }).done(function (json) {
                 swalSuccessWithButton(json);
-                $('client-account-form').trigger('reset');
+                $form.trigger('reset');
+                clearForm($form);
+                $('form select').val("").trigger('change');
 
             }).fail(function (json) {
                 swalError(json);
