@@ -97,7 +97,6 @@ class DotpanelServiceProvider extends ServiceProvider
                     if(($browser== "Safari") && ($agent->isMobile() || $agent->isPhone() || $agent->isTablet())){
                         $iphone = 1;
                     }
-
                     $languagesData = $coreCollection->formatLanguages($languages);
                     $selectedLanguage = $coreCollection->formatSelectedLanguage($language);
                     $timezones = $coreCollection->formatTimezones();
@@ -120,6 +119,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['free_currency'] = Configurations::getFreeCurrency();
                     $data['logo'] = Configurations::getLogo($mobile = true);
                     $data['iphone'] = $iphone;
+                    $data['reset_main_password'] = Configurations::getResetMainPassword();
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
