@@ -66,13 +66,12 @@ class AuthController extends Controller
                 'whitelabel_id' => $whitelabel,
                 //'status' => true
             ];
-            $userData = $usersRepo->find($request->username);
+
             $ip = Utils::userIp($request);
-            Log::info(__METHOD__, ['ip' => $ip, 'user' => $userData]);
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-
+                Log::info(__METHOD__, ['ip' => $ip, 'user' => $user]);
                 if(auth()->user()->action == ActionUser::$locked_higher){
                     session()->flush();
                     auth()->logout();
