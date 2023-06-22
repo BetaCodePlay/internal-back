@@ -210,10 +210,9 @@ class BetPay {
 
                 $button.click(function () {
                     $button.button('loading');
-                    let client = $('#client').val();
                     let currency = $('#currency').val();
                     let payments = $('#payments').val();
-                    let route = `${$table.data('route')}?client=${client}&payment_method=${payments}&currency=${currency}`;
+                    let route = `${$table.data('route')}?payment_method=${payments}&currency=${currency}`;
                     api.ajax.url(route).load();
                     $table.on('draw.dt', function () {
                         $button.button('reset');

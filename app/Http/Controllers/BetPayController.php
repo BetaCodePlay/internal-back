@@ -438,10 +438,10 @@ class BetPayController extends Controller
     public function clientAccountListData(Request $request)
     {
         try {
-            $client = Configurations::getWhitelabel();
             $currency = $request->currency;
             $paymentMethod = $request->payment_method;
-
+            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $currency);
+            $client = $credential->data->client_credentials_grant_id;
             $betPayToken = session('betpay_client_access_token');
             $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
             if (!is_null($betPayToken)) {

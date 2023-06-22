@@ -21,7 +21,7 @@
                 </header>
                 <div class="card-block g-pa-15">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="currency">{{ _i('Currency') }}</label>
                                 <select name="currency" id="currency" class="form-control">
@@ -34,7 +34,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="payments">{{ _i('Payment methods') }}</label>
                                 <select name="payments" id="payments" class="form-control">
