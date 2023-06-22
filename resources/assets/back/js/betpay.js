@@ -572,7 +572,7 @@ class BetPay {
         $form.on('submit', function (event) {
             event.preventDefault();
             let formData = new FormData(this);
-
+            console.log(formData);
             $button.button('loading');
             $.ajax({
                 url: $form.attr('action'),
