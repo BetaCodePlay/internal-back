@@ -51,15 +51,13 @@ class AuthController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo, $user): Response
+    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
         ]);
-        $userData = $usersRepo->find($user);
-        $ip = Utils::userIp($request);
-        Log::info(__METHOD__, ['ip' => $ip, 'user' => $userData]);
+
         try {
             $whitelabel = Configurations::getWhitelabel();
             $credentials = [
@@ -68,6 +66,9 @@ class AuthController extends Controller
                 'whitelabel_id' => $whitelabel,
                 //'status' => true
             ];
+            $userData = $usersRepo->find($request->username);
+            $ip = Utils::userIp($request);
+            Log::info(__METHOD__, ['ip' => $ip, 'user' => $userData]);
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
