@@ -98,7 +98,6 @@ class DotpanelServiceProvider extends ServiceProvider
                         $iphone = 1;
                     }
                     $resetMainPassword = Configurations::getResetMainPassword();
-                    Log::notice(__METHOD__, ['$resetMainPassword' => $resetMainPassword]);
                     $languagesData = $coreCollection->formatLanguages($languages);
                     $selectedLanguage = $coreCollection->formatSelectedLanguage($language);
                     $timezones = $coreCollection->formatTimezones();
@@ -122,6 +121,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['logo'] = Configurations::getLogo($mobile = true);
                     $data['iphone'] = $iphone;
                     $data['reset_main_password'] = $resetMainPassword;
+                    Log::notice(__METHOD__, ['$resetMainPassword' => $resetMainPassword]);
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
