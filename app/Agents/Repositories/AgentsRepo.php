@@ -410,7 +410,7 @@ class AgentsRepo
      */
     public function getUserBlocked($user)
     {
-        $data = User::where('id', $user)->where('status', false)->get();
+        $data = User::find($user);//where('id', $user)->where('status', false)->get();
         return $data;
     }
 

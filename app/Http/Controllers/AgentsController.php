@@ -2265,7 +2265,7 @@ Log::debug('financialStateData',[$sons,$user , $startDate, $endDate]);
             ];
 
             $agentStatus = $this->agentsRepo->getUserBlocked($agentId);
-            if(!is_null($agentStatus)){
+            if(isset($agentStatus->id) && $agentStatus->status  == false){
                 $this->agentsRepo->blockUsers($userAgent);
             }
             $this->agentsRepo->update($agent->id, $agentData);
@@ -2308,7 +2308,7 @@ Log::debug('financialStateData',[$sons,$user , $startDate, $endDate]);
             }
             //TODO
             $agentStatus = $this->agentsRepo->getUserBlocked($agent->user_id);
-            if(!is_null($agentStatus)){
+            if(isset($agentStatus->id) && $agentStatus->status == false){
                 $this->agentsRepo->blockUsers($userAgent);
             }
             $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
