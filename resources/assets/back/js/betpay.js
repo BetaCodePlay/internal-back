@@ -585,7 +585,7 @@ class BetPay {
 
             }).done(function (json) {
                 swalSuccessWithButton(json);
-                $('save-form').trigger('reset');
+                $('client-account-form').trigger('reset');
 
             }).fail(function (json) {
                 swalError(json);
