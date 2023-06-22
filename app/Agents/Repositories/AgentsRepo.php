@@ -208,7 +208,7 @@ class AgentsRepo
 
     public function statusActionByUser_tmp(int $user)
     {
-        return User::select('status','action')
+        return User::select('status','action','type_user')
             ->where('id', $user)
             ->first();
     }

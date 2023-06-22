@@ -2241,15 +2241,6 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$not_found, $data);
 
             }
-//            if ($userData->status == false) {
-//                $data = [
-//                    'title' => _i('Deactivated user'),
-//                    'message' => _i('Contact your superior...'),
-//                    'close' => _i('Close')
-//                ];
-//                return Utils::errorResponse(Codes::$not_found, $data);
-//
-//            }
             if (is_null($agent)) {
                 $data = [
                     'title' => _i('Agent moved'),
@@ -2263,10 +2254,13 @@ class AgentsController extends Controller
                 'user_id' => $userAgent,
             ];
 
+            //TODO CONSULTAR USUARIO PADRE
             $agentStatus = $this->agentsRepo->getUserBlocked($agentId);
-            if(isset($agentStatus->id) && $agentStatus->status  == false){
+            if(isset($agentStatus->id) && $agentStatus->status == false){
+                //TODO BLOQUEAR SI EL PADRE ESTA BLOQUEADO
                 $this->agentsRepo->blockUsers($userAgent);
             }
+
             $this->agentsRepo->update($agent->id, $agentData);
             $data = [
                 'title' => _i('Agent moved'),
@@ -2293,23 +2287,25 @@ class AgentsController extends Controller
         ]);
         try {
             $userAgent = $request->user;
-            $agent = $request->agent;
+            $agentId = $request->agent;
 
-            $agent = $this->agentsRepo->existAgent($agent);
+            $agent = $this->agentsRepo->existAgent($agentId);
             $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!') : _i('Deactivated user'),
+                    'title' => ActionUser::getName($userData->action),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
-            //TODO
-            $agentStatus = $this->agentsRepo->getUserBlocked($agent->user_id);
+            //TODO CONSULTAR USUARIO PADRE
+            $agentStatus = $this->agentsRepo->getUserBlocked($agentId);
             if(isset($agentStatus->id) && $agentStatus->status == false){
+                //TODO BLOQUEAR SI EL PADRE ESTA BLOQUEADO
                 $this->agentsRepo->blockUsers($userAgent);
             }
+
             $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
             $data = [
                 'title' => _i('User moved'),
@@ -3226,7 +3222,8 @@ class AgentsController extends Controller
                 'player_data' => $userData,
                 'profile_data' => $profileData
             ];
-            //Audits::store($user, AuditTypes::$player_creation, Configurations::getWhitelabel(), $auditData);
+            Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
+
             $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $currency);
             $this->agentsRepo->blockAgentsMakers($excludedUser);
             $wallet = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'));

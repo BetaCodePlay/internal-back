@@ -2034,7 +2034,7 @@ class UsersController extends Controller
             // dd($roles);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'title' => ActionUser::getName($userData->action),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2043,7 +2043,7 @@ class UsersController extends Controller
             }
 
             $password = $request->password;
-            if(in_array(Roles::$players, $roles)) {
+            if($userData->type_user == TypeUser::$player ) {
                 $userData = [
                     'password' => $password,
                     'action' =>  ActionUser::$active
