@@ -711,6 +711,14 @@ if (!function_exists('menu')) {
                         'icon' => 'hs-admin-user',
                         'submenu' => []
                     ],
+                    'ListAccounts' => [
+                        'text' => _i('List Accounts'),
+                        'level_class' => 'third',
+                        'route' => 'betpay.clients.accounts',
+                        'params' => [],
+                        'icon' => 'hs-admin-list',
+                        'submenu' => []
+                    ],
                     'AccountsSearch' => [
                         'text' => _i('Accounts search'),
                         'level_class' => 'second',
@@ -776,16 +784,6 @@ if (!function_exists('menu')) {
                             //     'params' => [],
                             //     'payment_method' => PaymentMethods::$binance,
                             //     'icon' => 'hs-admin-user',
-                            //     'submenu' => []
-                            // ],
-
-                            // 'ListAccounts' => [
-                            //     'text' => _i('List Accounts'),
-                            //     'level_class' => 'third',
-                            //     'route' => 'betpay.clients.accounts',
-                            //     'params' => [],
-                            //     'payment_method' => PaymentMethods::$binance,
-                            //     'icon' => 'hs-admin-list',
                             //     'submenu' => []
                             // ],
 

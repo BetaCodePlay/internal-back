@@ -25,30 +25,12 @@ class AccountsCollection
     {
         foreach ($accounts as $account) {
             $details = json_decode(json_encode($account->data));
+            $account->details = "";
             switch ($account->payment_method_id) {
-                case PaymentMethods::$airtm:
-                case PaymentMethods::$neteller:
-                case PaymentMethods::$paypal:
-                case PaymentMethods::$skrill:
-                case PaymentMethods::$uphold:
-                case PaymentMethods::$reserve:
-                {
-                    if(!is_null($details->email)){
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
-                            _i('Email'),
-                            ': ',
-                            $details->email,
-                        );
-                    }else{
-                        $account->details ="";
-                    }
-                    break;
-                }
                 case PaymentMethods::$cryptocurrencies:
                 {
                     if(!is_null($details->wallet)){
-                        $account->details = sprintf(
+                        $account->details .= sprintf(
                             '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li></ul>',
                             _i('Wallet'),
                             ': ',
@@ -57,62 +39,45 @@ class AccountsCollection
                             ': ',
                             $details->cryptocurrency,
                         );
-                    }else{
-                        $account->details ="";
                     }
                     break;
                 }
-                case PaymentMethods::$wire_transfers:
-                case PaymentMethods::$ves_to_usd:
-                {
-                    if(!is_null($details->bank_name)){
-                        $accountType = $details->account_type == 'C' ? _i('Checking') : _i('Saving');;
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><strong>%s</strong>%s%s</li</ul>',
-                            _i('Bank'),
-                            ': ',
-                            $details->bank_name,
-                            _i('Account number'),
-                            ': ',
-                            $details->account_number,
-                            _i('Type'),
-                            ': ',
-                            $accountType,
-                            _i('DNI'),
-                            ': ',
-                            $details->dni,
-                            _i('Social reason'),
-                            ': ',
-                            $details->social_reason,
-                            _i('Title'),
-                            ': ',
-                            $details->title,
-                        );
-                    }else{
-                        $account->details ="";
-                    }
-                    break;
-                }
-                case PaymentMethods::$zelle:
+                case PaymentMethods::$binance:
                 {
                     if(!is_null($details->email)){
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li></ul>',
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
                             _i('Email'),
                             ': ',
-                            $details->email,
-                            _i('Full name'),
-                            ': ',
-                            $details->full_name,
+                            $details->email
                         );
-                    }else{
-                        $account->details ="";
+                    }
+                    if(!is_null($details->phone)){
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Phone'),
+                            ': ',
+                            $details->phone
+                        );
+                    }
+                    if(!is_null($details->binance_id)){
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Binance ID'),
+                            ': ',
+                            $details->binance_id
+                        );
+                    }
+                    if(!is_null($details->pay_id)){
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Pay ID'),
+                            ': ',
+                            $details->pay_id
+                        );
                     }
                     break;
                 }
-                default:
-                    $account->details ="";
-                break;
             }
             $account->status = sprintf(
                 '<div class="checkbox checkbox-primary">

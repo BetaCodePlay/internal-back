@@ -407,40 +407,22 @@ class BetPayController extends Controller
     {
         try{
             $data['title'] = _i('Client account list');
-            $data['whitelabels'] = $this->whitelabelsRepo->all();
-            $data['currency_client'] = $this->currenciesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
-            $urlClientsAll = "{$this->betPayURL}/clients/all";
+            $paymentMethods = [];
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
                     ->get();
-
-                $curlClientsAll = Curl::to($urlClientsAll)
-                    ->withHeader('Accept: application/json')
-                    ->withHeader("Authorization: Bearer $betPayToken")
-                    ->get();
-
                 $responsePaymentMethodsAll = json_decode($curlPaymentMethodsAll);
-                $responseClientsAll = json_decode($curlClientsAll);
-
-                if ($responsePaymentMethodsAll->status == Status::$ok) {
+                if (($responsePaymentMethodsAll->status == Status::$ok)) {
                     $paymentMethods = $responsePaymentMethodsAll->data->payment_methods;
                 } else {
                     $paymentMethods = [];
                 }
-
-                if ($responseClientsAll->status == Status::$ok) {
-                    $clients = $responseClientsAll->data->client;
-                    $allClients =  $this->clientsCollection->formatClientsAll($clients);
-                } else {
-                    $allClients = [];
-                }
             }
             $data['payment_methods'] = $paymentMethods;
-            $data['clients'] = $allClients;
             return view('back.betpay.clients.accounts.index', $data);
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
@@ -456,7 +438,7 @@ class BetPayController extends Controller
     public function clientAccountListData(Request $request)
     {
         try {
-            $client = $request->client;
+            $client = Configurations::getWhitelabel();
             $currency = $request->currency;
             $paymentMethod = $request->payment_method;
 
@@ -1798,7 +1780,6 @@ class BetPayController extends Controller
             'currency' => 'required',
             'payments' => 'required',
         ]);
-        \Log::debug([$request->all()]);
         $rules = $this->getRulesClientAccountData($request->payments);
         $this->validate($request, $rules);
     

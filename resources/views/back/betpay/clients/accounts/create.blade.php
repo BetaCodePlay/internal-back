@@ -9,7 +9,7 @@
                     {{ $title }}
                 </h3>
                 <div class="media-body d-flex justify-content-end">
-                    <a href="{{ route('betpay.clients.accounts.create') }}" class="btn u-btn-3d u-btn-primary float-right">
+                    <a href="{{ route('betpay.clients.accounts') }}" class="btn u-btn-3d u-btn-primary float-right">
                         <i class="hs-admin-layout-list-thumb"></i>
                         {{ _i('Go to list') }}
                     </a>
