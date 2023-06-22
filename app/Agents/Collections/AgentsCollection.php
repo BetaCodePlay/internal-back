@@ -477,7 +477,6 @@ class AgentsCollection
 
             $arrayTmp = [];
             $arrayTmpClosures = [];
-            //$transactions = 0;
             foreach ($tableDb as $item => $value) {
 
                 $arrayTmp[$value->user_id] = [
@@ -494,6 +493,7 @@ class AgentsCollection
                 } else {
                     $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUserHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 }
+                Log::debug('closures',$closures);
                 $arrayTmpClosures[$value->user_id] = $closures;
 
                 if (count($closures) > 0) {

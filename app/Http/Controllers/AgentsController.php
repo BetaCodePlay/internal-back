@@ -1317,23 +1317,10 @@ class AgentsController extends Controller
             }
 
             $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon(Configurations::getWhitelabel(), session('currency'), $user);
-            $data = [];
-//            $data = [
-//                //ADD startOfDayUtc to Date
-//                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
-//                //'table' => $this->agentsCollection->closuresTotalsByAgentGroupProvider($sons, Configurations::getWhitelabel(), session('currency'), $startDate, $endDate, $percentage)
-//            ];
-
-            //TODO ENVIAR CAMPO _hour para consultar la otra tabla
-            //if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
-//                Log::debug('financialStateData:field _hour',[
-//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
-//                ]);
-
-                $data = [
-                    'table' => $this->agentsCollection->closuresTotalsByAgentGroupProviderHour($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
-                ];
-            //}
+Log::debug('financialStateData',[$sons,$user , $startDate, $endDate]);
+            $data = [
+                'table' => $this->agentsCollection->closuresTotalsByAgentGroupProviderHour($sons, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $percentage)
+            ];
 
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
