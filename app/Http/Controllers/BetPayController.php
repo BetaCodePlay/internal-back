@@ -1980,9 +1980,7 @@ class BetPayController extends Controller
             PaymentMethods::$cryptocurrencies => 
             [
                 'cryptocurrency_cripto' => 'required',
-                'wallet_cripto' => 'required_without_all:network_cripto,qr_cripto',
-                'network_cripto' => 'required_without_all:wallet_cripto,qr_cripto',
-                'qr_cripto' => 'required_without_all:wallet_cripto,network_cripto',
+                'wallet_cripto' => 'required'
             ]
         ];
 
