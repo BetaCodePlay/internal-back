@@ -8,6 +8,7 @@ use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
+use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
@@ -45,19 +46,20 @@ class AuthController extends Controller
      * @param ProfilesRepo $profilesRepo
      * @param UserCurrenciesRepo $userCurrenciesRepo
      * @param AgentsRepo $agentsRepo
-     * @param string $token User activation token
+     * @param UsersRepo $usersRepo
      * @param Agent $agent
      * @return Response
      * @throws ValidationException
      */
-    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo): Response
+    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo, $user): Response
     {
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
         ]);
+        $userData = $usersRepo->find($user);
         $ip = Utils::userIp($request);
-        Log::info(__METHOD__, ['ip' => $ip]);
+        Log::info(__METHOD__, ['ip' => $ip, 'user' => $userData]);
         try {
             $whitelabel = Configurations::getWhitelabel();
             $credentials = [
