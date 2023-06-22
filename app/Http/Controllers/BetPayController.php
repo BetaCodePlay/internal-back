@@ -441,29 +441,29 @@ class BetPayController extends Controller
             $currency = $request->currency;
             $paymentMethod = $request->payment_method;
             $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $currency);
-            $client = $credential->data->client_credentials_grant_id;
-            $betPayToken = session('betpay_client_access_token');
-            $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
-            if (!is_null($betPayToken)) {
-                $requestData = [
-                    'client' => $client,
-                    'currency' => $currency,
-                    'payment_method' => $paymentMethod,
-                ];
-                $curlClientAccount = Curl::to( $urlClientAccount )
-                    ->withData($requestData)
-                    ->withHeader('Accept: application/json')
-                    ->withHeader("Authorization: Bearer $betPayToken")
-                    ->get();
-                $responseClientAccount = json_decode($curlClientAccount);
-                if ($responseClientAccount->status == Status::$ok) {
-                    $accounts = $responseClientAccount->data->accounts;
-                    $this->accountsCollection->formatClientAccount($accounts);
-                } else {
-                    $accounts = [];
-                }
+            $accounts = [];
+            if(!is_null($credential)){
+                $client = $credential->data->client_credentials_grant_id;
+                $betPayToken = session('betpay_client_access_token');
+                $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
+                if (!is_null($betPayToken)) {
+                    $requestData = [
+                        'client' => $client,
+                        'currency' => $currency,
+                        'payment_method' => $paymentMethod,
+                    ];
+                    $curlClientAccount = Curl::to( $urlClientAccount )
+                        ->withData($requestData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->get();
+                    $responseClientAccount = json_decode($curlClientAccount);
+                    if ($responseClientAccount->status == Status::$ok) {
+                        $accounts = $responseClientAccount->data->accounts;
+                        $this->accountsCollection->formatClientAccount($accounts);
+                    }
+                }    
             }
-
             $data = [
                 'accounts' => $accounts
             ];
