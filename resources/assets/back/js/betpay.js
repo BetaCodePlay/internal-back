@@ -196,7 +196,6 @@ class BetPay {
             },
             "order": [],
             "columns": [
-                {"data": "client_name"},
                 {"data": "currency_iso"},
                 {"data": "name"},
                 {"data": "status", "className": "text-right"},
