@@ -1413,7 +1413,6 @@ class BetPayController extends Controller
      */
     public function statusClientAccount(Request $request)
     {
-        \Log::debug([$request->all()]);
         try {
             $status = ($request->get('value') === 'true' ? true : false);
             $id = $request->get('client_id');
@@ -1421,7 +1420,6 @@ class BetPayController extends Controller
                 'status' => $status,
                 'clientAccount_id' => $id
             ];
-            \Log::debug([$dataCredentials]);
             $betPayToken = session('betpay_client_access_token');
             $url = "{$this->betPayURL}/clients/accounts/status-accounts";
             $curl = Curl::to($url)

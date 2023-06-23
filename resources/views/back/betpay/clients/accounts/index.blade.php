@@ -122,7 +122,6 @@
             betpay.binanceQrModal();
             betpay.cryptoQrModal();
             $(document).on('click', '.status_checkbox', function () {
-                console.log('hola');
                 if (!$(this).hasClass('active')) {
                     $.post('{{route('betpay.clients.accounts.status')}}', {
                         client_id: $(this).data('id'),
