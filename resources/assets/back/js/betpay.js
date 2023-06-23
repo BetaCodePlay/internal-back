@@ -626,17 +626,14 @@ class BetPay {
         initSelect2();
         let $form = $('#client-account-form');
         let $button = $('#update');
-        let $bank = $('.bank');
-        let $bank_name;
 
         $button.click(function () {
             $button.button('loading');
-            $bank_name = $bank.find(':selected').data('name');
             $.ajax({
                 url: $form.attr('action'),
                 method: 'post',
                 dataType: 'json',
-                data: $form.serialize() + '&bank_name=' + $bank_name
+                data: $form.serialize()
             }).done(function (json) {
                 $('save-form').trigger('reset');
                 swalSuccessWithButton(json);
