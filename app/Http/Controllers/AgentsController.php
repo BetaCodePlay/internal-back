@@ -712,51 +712,102 @@ class AgentsController extends Controller
                     ];
                 }
             }
-
             if ($lockUsers == 'true') {
-                if ($type == 'true') {
-                    foreach ($usersToUpdate as $userToUpdate) {
-                        $user = $userToUpdate['user_id'];
+                foreach ($usersToUpdate as $userToUpdate) {
+                    $user = $userToUpdate['user_id'];
+                    $userData = $this->agentsRepo->findUser($user);
+                    if ($userData->action == ActionUser::$locked_higher) {
+                        $data = [
+                            'title' => ActionUser::getName($userData->action),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+                    }
+                    if($type == 'true'){
                         $this->agentsRepo->blockUsers($user);
                         Sessions::deleteByUser($user);
-                        $auditData = [
-                            'ip' => Utils::userIp(),
-                            'user_id' => auth()->user()->id,
-                            'username' => auth()->user()->username,
-                            'old_status' => $oldStatus,
-                            'new_status' => $newStatus,
-                            'description' => $request->description
-                        ];
-                        Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
-                    }
-                    $data = [
-                        'title' => _i('Locked users'),
-                        'message' => _i('The agent and his entire tree was locked'),
-                        'close' => _i('Close')
-                    ];
-                }
-                if ($type == 'false') {
-                    foreach ($usersToUpdate as $userToUpdate) {
-                        $user = $userToUpdate['user_id'];
+                    }elseif($type == 'false'){
                         $this->agentsRepo->unBlockUsers($user);
-
-                        $auditData = [
-                            'ip' => Utils::userIp(),
-                            'user_id' => auth()->user()->id,
-                            'username' => auth()->user()->username,
-                            'old_status' => $oldStatus,
-                            'new_status' => $newStatus,
-                            'description' => $request->description
-                        ];
-                        Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
-                    }
-                    $data = [
-                        'title' => _i('Unlocked users'),
-                        'message' => _i('The agent and his entire tree was unlocked'),
-                        'close' => _i('Close')
+                    } 
+                    $auditData = [
+                        'ip' => Utils::userIp(),
+                        'user_id' => auth()->user()->id,
+                        'username' => auth()->user()->username,
+                        'old_status' => $oldStatus,
+                        'new_status' => $newStatus,
+                        'description' => $request->description
                     ];
+                    Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
                 }
+                $data = [
+                    'title' => ($type == 'true') ? _i('Locked users') : _i('Unlocked users'),
+                    'message' => ($type == 'true') ? _i('The agent and his entire tree was locked') : _i('The agent and his entire tree was unlocked'),
+                    'close' => _i('Close')
+                ];
             }
+            // if ($lockUsers == 'true') {
+            //     if ($type == 'true') {
+            //         foreach ($usersToUpdate as $userToUpdate) {
+            //             $user = $userToUpdate['user_id'];
+            //             $userData = $this->agentsRepo->findUser($user);
+            //             if ($userData->action == ActionUser::$locked_higher) {
+            //                 $data = [
+            //                     'title' => ActionUser::getName($userData->action),
+            //                     'message' => _i('Contact your superior...'),
+            //                     'close' => _i('Close')
+            //                 ];
+            //                 return Utils::errorResponse(Codes::$not_found, $data);
+            //             }
+            //             $this->agentsRepo->blockUsers($user);
+            //             Sessions::deleteByUser($user);
+            //             $auditData = [
+            //                 'ip' => Utils::userIp(),
+            //                 'user_id' => auth()->user()->id,
+            //                 'username' => auth()->user()->username,
+            //                 'old_status' => $oldStatus,
+            //                 'new_status' => $newStatus,
+            //                 'description' => $request->description
+            //             ];
+            //             Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
+            //         }
+            //         $data = [
+            //             'title' => _i('Locked users'),
+            //             'message' => _i('The agent and his entire tree was locked'),
+            //             'close' => _i('Close')
+            //         ];
+            //     }
+            //     if ($type == 'false') {
+            //         foreach ($usersToUpdate as $userToUpdate) {
+            //             $user = $userToUpdate['user_id'];
+            //             $userData = $this->agentsRepo->findUser($user);
+            //             if ($userData->action == ActionUser::$locked_higher) {
+            //                 $data = [
+            //                     'title' => ActionUser::getName($userData->action),
+            //                     'message' => _i('Contact your superior...'),
+            //                     'close' => _i('Close')
+            //                 ];
+            //                 return Utils::errorResponse(Codes::$not_found, $data);
+            //             }
+            //             $this->agentsRepo->unBlockUsers($user);
+
+            //             $auditData = [
+            //                 'ip' => Utils::userIp(),
+            //                 'user_id' => auth()->user()->id,
+            //                 'username' => auth()->user()->username,
+            //                 'old_status' => $oldStatus,
+            //                 'new_status' => $newStatus,
+            //                 'description' => $request->description
+            //             ];
+            //             Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
+            //         }
+            //         $data = [
+            //             'title' => _i('Unlocked users'),
+            //             'message' => _i('The agent and his entire tree was unlocked'),
+            //             'close' => _i('Close')
+            //         ];
+            //     }
+            // }
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
