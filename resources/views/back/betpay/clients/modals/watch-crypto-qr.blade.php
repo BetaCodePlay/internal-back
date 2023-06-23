@@ -9,13 +9,6 @@
             </div>
             <div class="modal-body">
                 <div class="text-center" id="qr-cryptocurrency"></div>
-                <br>
-                <div class="row">
-                    <div class="col-md-12 text-center" id="payment">
-                        <label><strong>{{ _i('Wallet') }}</strong></label> <div id="data-wallet"></div> <br>
-                        <label><strong>{{ _i('Cryptocurrency') }}</strong></label><div id="data-cryptocurrency"></div>   
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">
