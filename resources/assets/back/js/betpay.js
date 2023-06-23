@@ -622,22 +622,30 @@ class BetPay {
     }
 
     // Update client account
-    updateClientAccount() {
+    updateClientAccount(preview, field) {
         initSelect2();
-        initFileInput();
+        initFileInput(preview, field);
         let $form = $('#client-account-form');
         let $button = $('#update');
+        
+        $form.on('submit', function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
 
-        $button.click(function () {
             $button.button('loading');
             $.ajax({
                 url: $form.attr('action'),
-                method: 'post',
+                type: 'post',
                 dataType: 'json',
-                data: $form.serialize()
+                contentType: false,
+                processData: false,
+                cache: false,
+                data: formData
+
             }).done(function (json) {
-                $('save-form').trigger('reset');
+                $('#file').val(json.data.file);
                 swalSuccessWithButton(json);
+
             }).fail(function (json) {
                 swalError(json);
 

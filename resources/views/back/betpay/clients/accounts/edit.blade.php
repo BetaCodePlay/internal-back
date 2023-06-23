@@ -17,7 +17,7 @@
             </div>
         </header>
         <div class="card-block g-pa-15">
-            <form id="client-account-form" method="post" action="{{route('betpay.clients.accounts.update-client-account')}}">
+            <form id="client-account-form" method="post" action="{{route('betpay.clients.accounts.update-client-account')}}" enctype="multipart/form-data">>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -86,8 +86,7 @@
                                     <input type="file" name="qr_cripto" id="qr_cripto" class="form-control" autocomplete="off">
                             </div>
                         </div>
-                        <input type="hidden" name="file" value="{{ $client->data->qr }}">
-                        <input type="hidden" name="qr_cripto" value="{{ $client->data->qr }}">
+                        <input type="hidden" name="file" value="{{ $client->file }}">
                     @endif
                     @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$binance)
                     <div class="col-md-4 ">
@@ -129,15 +128,14 @@
                                 <input type="file" name="qr_binance" id="qr_binance" class="form-control" autocomplete="off">
                         </div>
                     </div>
-                    <input type="hidden" name="qr_binance" value="{{ $client->data->qr }}">
-                    <input type="hidden" name="file" value="{{ $client->data->qr }}">
+                    <input type="hidden" name="file" value="{{ $client->file }}">
                     @endif
                     
                     <div class="col-md-12">
                         <input type="hidden" name="client_account" id="client_account" value="{{$client->id}}">
                         <input type="hidden" name="payments" id="payments" value="{{$client->payment_method_id}}">
                         <div class="form-group">
-                            <button type="button" class="btn u-btn-3d u-btn-primary" id="update"
+                            <button type="submit" class="btn u-btn-3d u-btn-primary" id="update"
                                     data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Updating...') }}">
                                 <i class="hs-admin-reload"></i>
                                 {{ _i('Update') }}
@@ -154,7 +152,7 @@
     <script>
         $(function () {
             let betpay = new BetPay();
-            betpay.updateClientAccount();
+            betpay.updateClientAccount("{!! $client->data->qr !!}");
         });
     </script>
 @endsection
