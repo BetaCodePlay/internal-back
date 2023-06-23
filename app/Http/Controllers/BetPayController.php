@@ -1428,7 +1428,7 @@ class BetPayController extends Controller
                 ->withData($dataCredentials)
                 ->withHeader('Accept: application/json')
                 ->withHeader("Authorization: Bearer $betPayToken")
-                ->get();
+                ->post();
 
             $data = [
                 'title' => _i('Client updated'),
