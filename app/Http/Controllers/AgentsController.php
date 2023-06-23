@@ -716,6 +716,7 @@ class AgentsController extends Controller
                 foreach ($usersToUpdate as $userToUpdate) {
                     $user = $userToUpdate['user_id'];
                     $userData = $this->agentsRepo->findUser($user);
+                    \Log::debug([$user, $userData]);
                     if ($userData->action == ActionUser::$locked_higher) {
                         $data = [
                             'title' => ActionUser::getName($userData->action),
