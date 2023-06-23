@@ -152,7 +152,7 @@
     <script>
         $(function () {
             let betpay = new BetPay();
-            betpay.updateClientAccount("{!! $client->data->qr !!}", "show-image");
+            betpay.updateClientAccount("{!! $client->data->qr !!}");
         });
     </script>
 @endsection
