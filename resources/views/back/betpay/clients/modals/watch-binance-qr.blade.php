@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="text-center" id="qr"></div>
+                <div class="text-center" id="qr-binance"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">
