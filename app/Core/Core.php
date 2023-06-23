@@ -49,14 +49,12 @@ class Core
         $providersIds = array_map(function ($val) {
             return $val->id;
         }, json_decode($providersRepo->getByWhitelabelAndTypesIds($providerTypes)));
-        if(isset(session('payment_methods'))){
-            $uniquePaymentMethods = null;
-        } else {
-            $paymentMethodsIds = array_map(function ($val) {
+
+          /*  $paymentMethodsIds = array_map(function ($val) {
                 return $val->payment_method_id;
-            }, session('payment_methods'));
-            $uniquePaymentMethods = collect($paymentMethodsIds)->unique()->values()->all();
-        }
+            }, session('payment_methods'));*/
+           // $uniquePaymentMethods = collect($paymentMethodsIds)->unique()->values()->all();
+        $uniquePaymentMethods =[];
         $sections = Configurations::getHome();
         $store = Configurations::getStore();
         $registerConfiguration = Configurations::getTemplateElement(Configurations::getRegisterView());
