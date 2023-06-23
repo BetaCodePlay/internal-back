@@ -29,16 +29,16 @@
                             {{ _i('Level') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Currency') }}
-                        </th>
-                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('Amount') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Cryptocurrency') }}
+                            {{ _i('Currency') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Amount in Cryptocurrency') }}
+                            {{ _i('Amount cryptocurrency') }}
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            {{ _i('Cryptocurrency') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('Origin Account') }}
