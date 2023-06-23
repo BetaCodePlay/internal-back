@@ -1413,6 +1413,7 @@ class BetPayController extends Controller
      */
     public function statusClientAccount(Request $request)
     {
+        \Log::debug([$request->all()]);
         try {
             $status = ($request->get('value') === 'true' ? true : false);
             $id = $request->get('id');
