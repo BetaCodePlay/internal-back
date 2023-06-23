@@ -17,7 +17,7 @@
             </div>
         </header>
         <div class="card-block g-pa-15">
-            <form id="client-account-form" method="post" action="{{route('betpay.clients.accounts.update-client-account')}}" enctype="multipart/form-data">>
+            <form id="client-account-form" method="post" action="{{route('betpay.clients.accounts.update-client-account')}}" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -86,7 +86,7 @@
                                     <input type="file" name="qr_cripto" id="qr_cripto" class="form-control" autocomplete="off">
                             </div>
                         </div>
-                        <input type="hidden" name="file" value="{{$client->data->qr}}">>
+                        <input type="hidden" name="file" value="{{$client->data->qr}}">
                     @endif
                     @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$binance)
                     <div class="col-md-4 ">
@@ -128,7 +128,7 @@
                                 <input type="file" name="qr_binance" id="qr_binance" class="form-control" autocomplete="off">
                         </div>
                     </div>
-                    <input type="hidden" name="file" value="{{$client->data->qr}}">>
+                    <input type="hidden" name="file" value="{{$client->data->qr}}">
                     @endif
                     
                     <div class="col-md-12">
