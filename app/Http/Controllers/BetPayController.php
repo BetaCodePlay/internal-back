@@ -1055,11 +1055,10 @@ class BetPayController extends Controller
     public function editClientAccount($id)
     {
         $data['title'] = _i('Edit client account');
-        $data['currency_client'] = $this->currenciesRepo->all();
-        $data['countries'] = $this->countriesRepo->all();
         $betPayToken = session('betpay_client_access_token');
+        $paymentMethods = [];
+        $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
         $url = "{$this->betPayURL}/clients/accounts/find";
-        $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
         if (!is_null($betPayToken)) {
             $requestData = [
                 'client' => $id,
@@ -1896,13 +1895,18 @@ class BetPayController extends Controller
                 $name = null;
                 if(!is_null($request->file('qr_binance'))){
                     $image = $request->file('qr_binance');
+                    $file = $request->file;
                     $extension = $image->getClientOriginalExtension();
                     $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
                     $name = Str::slug($originalName) . time() . '.' . $extension;
                     $s3Directory = Configurations::getS3Directory();
                     $filePath = "$s3Directory/payment/";
-                    $path = "{$filePath}{$name}";
-                    Storage::put($path, file_get_contents($image->getRealPath()), 'public');
+                    $newFilePath = "{$filePath}{$name}";
+                    Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                    if(isset($file)){
+                        $oldFilePath = "{$filePath}{$file}";
+                        Storage::delete($oldFilePath);
+                    }
                 }
                 return [
                     'cryptocurrency' => $request->cryptocurrency_binance,
@@ -1917,13 +1921,18 @@ class BetPayController extends Controller
                 $name = null;
                 if(!is_null($request->file('qr_cripto'))){
                     $image = $request->file('qr_cripto');
+                    $file = $request->file;
                     $extension = $image->getClientOriginalExtension();
                     $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
                     $name = Str::slug($originalName) . time() . '.' . $extension;
                     $s3Directory = Configurations::getS3Directory();
                     $filePath = "$s3Directory/payment/";
-                    $path = "{$filePath}{$name}";
-                    Storage::put($path, file_get_contents($image->getRealPath()), 'public');
+                    $newFilePath = "{$filePath}{$name}";
+                    Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                    if(isset($file)){
+                        $oldFilePath = "{$filePath}{$file}";
+                        Storage::delete($oldFilePath);
+                    }
                 }
                 return [
                     'cryptocurrency' => $request->cryptocurrency_cripto,
@@ -2126,82 +2135,7 @@ class BetPayController extends Controller
         try {
 
             $paymentMethod = $request->payments;
-            switch ($paymentMethod) {
-                case PaymentMethods::$cryptocurrencies:
-                {
-                    $dataAccount = [
-                        'cryptocurrency' => $request->crypto_currencies,
-                        'wallet' => $request->crypto_wallet,
-                    ];
-                    break;
-                }
-                case PaymentMethods::$zelle:
-                {
-                    $dataAccount = [
-                        'email' => $request->account_email,
-                        'first_name' => $request->first_name,
-                        'last_name' => $request->last_name,
-                    ];
-                    break;
-                }
-                case PaymentMethods::$wire_transfers:
-                case PaymentMethods::$ves_to_usd:
-                {
-                    if (is_null($request->bank) && isset($request->bank_name)) {
-                        $bank_id = $request->old_bank_id;
-                        $bank_name = $request->old_bank_name;
-                    } elseif($request->bank == $request->old_bank_id  && $request->bank_name == $request->old_bank_name){
-                        $bank_id = $request->old_bank_id;
-                        $bank_name = $request->old_bank_name;
-                    } else {
-                        $bank_id = $request->bank_id;
-                        $bank_name = $request->bank_name;
-                    }
-                    $dataAccount = [
-                        'bank_id' => $bank_id,
-                        'bank_name' => $bank_name,
-                        'account_number' => $request->account_number,
-                        'account_type' => $request->account_type,
-                        'social_reason' => $request->social_reason,
-                        'dni' => $request->account_dni,
-                        'title' => $request->title
-                    ];
-                    break;
-                }
-                case PaymentMethods::$vcreditos_api:
-                {
-                    $dataAccount = [
-                        'vcreditos_user' => $request->vcreditos_user,
-                        'vcreditos_secure_id' => $request->vcreditos_secure_id
-                    ];
-                    break;
-                }
-                case PaymentMethods::$paypal:
-                case PaymentMethods::$skrill:
-                case PaymentMethods::$neteller:
-                case PaymentMethods::$airtm:
-                case PaymentMethods::$uphold:
-                case PaymentMethods::$reserve:
-                {
-                    $dataAccount = [
-                        'email' => $request->account_email
-                    ];
-                    break;
-                }
-                case PaymentMethods::$just_pay:
-                {
-                    $dataAccount = [
-                        'public_key' => $request->public_key,
-                        'secret_key' => $request->secret_key,
-                        'username' => $request->username,
-                        'password' => $request->password,
-                    ];
-                    break;
-                }
-                default:
-                    $dataAccount = [];
-                    break;
-            }
+            $dataAccount = $this->getClientAccountData($paymentMethod, $request);
 
             $dataRequest = [
                 'id' => $request->client_account,

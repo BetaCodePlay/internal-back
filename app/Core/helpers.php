@@ -767,16 +767,6 @@ if (!function_exists('menu')) {
                             //     'submenu' => []
                             // ],
 
-                            // 'EditAccounts' => [
-                            //     'text' => _i('Edit Accounts'),
-                            //     'level_class' => 'third',
-                            //     'route' => 'betpay.clients.accounts.edit',
-                            //     'params' => [],
-                            //     'payment_method' => PaymentMethods::$binance,
-                            //     'icon' => 'hs-admin-user',
-                            //     'submenu' => []
-                            // ],
-
                             // 'EditPaymentLimits' => [
                             //     'text' => _i('Edit Payment Limits'),
                             //     'level_class' => 'third',
