@@ -715,7 +715,7 @@ class AgentsController extends Controller
             if ($lockUsers == 'true') {
                 foreach ($usersToUpdate as $userToUpdate) {
                     $user = $userToUpdate['user_id'];
-                    $userData = $this->agentsRepo->findUser($user);
+                    $userData = $this->agentsRepo->findByUserIdAndCurrency($user, session('currency'));
                     \Log::debug([$user, $userData]);
                     if ($userData->action == ActionUser::$locked_higher) {
                         $data = [
