@@ -624,6 +624,7 @@ class BetPay {
     // Update client account
     updateClientAccount() {
         initSelect2();
+        initFileInput();
         let $form = $('#client-account-form');
         let $button = $('#update');
 
