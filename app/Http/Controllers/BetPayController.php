@@ -1416,7 +1416,7 @@ class BetPayController extends Controller
         \Log::debug([$request->all()]);
         try {
             $status = ($request->get('value') === 'true' ? true : false);
-            $id = $request->get('id');
+            $id = $request->get('client_id');
             $dataCredentials = [
                 'status' => $status,
                 'clientAccount_id' => $id
