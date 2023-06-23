@@ -68,8 +68,6 @@
                                     <option value="">{{ _i('Select...') }}</option>
                                     <option value="BTC" {{ 'BTC' == $client->data->cryptocurrency ? 'selected' : '' }}>{{ _i('BTC') }}</option>
                                     <option value="USDT" {{ 'USDT' == $client->data->cryptocurrency ? 'selected' : '' }}>{{ _i('USDT') }}</option>
-                                    <option value="ETH" {{ 'ETH' == $client->data->cryptocurrency ? 'selected' : '' }}>{{ _i('ETH') }}</option>
-                                    <option value="LTC" {{ 'LTC' == $client->data->cryptocurrency ? 'selected' : '' }}>{{ _i('LTC') }}</option>
                                     <option value="USDC" {{ 'USDC' == $client->data->cryptocurrency ? 'selected' : '' }}>{{ _i('USDC') }}</option>
                                 </select>
                             </div>

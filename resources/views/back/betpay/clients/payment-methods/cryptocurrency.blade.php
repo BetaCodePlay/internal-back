@@ -4,9 +4,7 @@
             <select name="cryptocurrency_cripto" class="form-control cryptocurrency_cripto">
                 <option value="">{{ _i('Select...') }}</option>
                 <option value="USDT">{{ _i('USDT') }}</option>
-                <option value="ETH">{{ _i('ETH') }}</option>
                 <option value="BTC">{{ _i('BTC') }}</option>
-                <option value="LTC">{{ _i('LTC') }}</option>
                 <option value="USDC">{{ _i('USDC') }}</option>
             </select>
         </div>
