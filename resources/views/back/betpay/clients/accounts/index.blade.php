@@ -110,6 +110,8 @@
             </div>
         </div>
     </div>
+    @include('back.betpay.clients.modals.watch-binance-qr')
+    @include('back.betpay.clients.modals.watch-crypto-qr')
 @endsection
 
 @section('scripts')
@@ -117,6 +119,8 @@
         $(function () {
             let betpay = new BetPay();
             betpay.clientAccount();
+            betpay.binanceQrModal();
+            betpay.cryptoQrModal();
             $(document).on('click', '.status_checkbox', function () {
                 if (!$(this).hasClass('active')) {
                     $.post('{{route('betpay.clients.accounts.status')}}', {

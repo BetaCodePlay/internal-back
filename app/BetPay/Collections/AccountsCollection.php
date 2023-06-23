@@ -40,6 +40,15 @@ class AccountsCollection
                             $details->cryptocurrency,
                         );
                     }
+                    if(!is_null($details->qr)){
+                        $url = s3_asset("payment/{$details->qr}");
+                        $image = "<img src='$url' class='img-responsive' width='30%'>";
+                        $account->details .= sprintf(
+                            '<button class="btn u-btn-3d btn-sm u-btn-bluegray mr-2" data-toggle="modal" data-target="#watch-crypto-qr-modal" data-qr="%s" ><i class="hs-admin-eye"></i> %s</button><br>',
+                            $image,
+                            _i('View')
+                        );
+                    }
                     break;
                 }
                 case PaymentMethods::$binance:
@@ -74,6 +83,15 @@ class AccountsCollection
                             _i('Pay ID'),
                             ': ',
                             $details->pay_id
+                        );
+                    }
+                    if(!is_null($details->qr)){
+                        $url = s3_asset("payment/{$details->qr}");
+                        $image = "<img src='$url' class='img-responsive' width='30%'>";
+                        $account->details .= sprintf(
+                            '<button class="btn u-btn-3d btn-sm u-btn-bluegray mr-2" data-toggle="modal" data-target="#watch-binance-qr-modal" data-qr="%s" ><i class="hs-admin-eye"></i> %s</button><br>',
+                            $image,
+                            _i('View')
                         );
                     }
                     break;

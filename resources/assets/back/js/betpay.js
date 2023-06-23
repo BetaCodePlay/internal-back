@@ -896,6 +896,42 @@ class BetPay {
             $('#user').val($target.data('user'));
         })
     }
+
+    // BinanceQrModal
+    binanceQrModal(){
+        $(document).on('click', '.modal-qr-binance', function (e) {
+            e.preventDefault();
+        })
+        let $modal = $('#watch-binance-qr-modal');
+        $modal.on('show.bs.modal', function (event) {
+            let $target = $(event.relatedTarget);
+            $('#qr').append($target.data('qr'));
+        })
+        $modal.on('hidden.bs.modal', function () {
+            $modal.find('#qr').html('');
+        })
+
+    }
+
+    // CryptoQrModal
+    cryptoQrModal(){
+        $(document).on('click', '.modal-qr-cryto', function (e) {
+            e.preventDefault();
+        })
+        let $modal = $('#watch-crypto-qr-modal');
+        $modal.on('show.bs.modal', function (event) {
+            let $target = $(event.relatedTarget);
+            $('#qr').append($target.data('qr'));
+            $('#data-wallet').append($target.data('wallet'));
+            $('#data-cryptocurrency').append($target.data('cryptocurrency'));
+        })
+        $modal.on('hidden.bs.modal', function () {
+            $modal.find('#qr').html('');
+            $modal.find('#data-wallet').html('');
+            $modal.find('#data-cryptocurrency').html('');
+        })
+
+    }
 }
 
 window.BetPay = BetPay;
