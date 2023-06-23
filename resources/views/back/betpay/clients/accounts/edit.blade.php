@@ -87,6 +87,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="file" value="{{ $client->data->qr }}">
+                        <input type="hidden" name="qr_cripto" value="{{ $client->data->qr }}">
                     @endif
                     @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$binance)
                     <div class="col-md-4 ">
@@ -128,6 +129,7 @@
                                 <input type="file" name="qr_binance" id="qr_binance" class="form-control" autocomplete="off">
                         </div>
                     </div>
+                    <input type="hidden" name="qr_binance" value="{{ $client->data->qr }}">
                     <input type="hidden" name="file" value="{{ $client->data->qr }}">
                     @endif
                     
