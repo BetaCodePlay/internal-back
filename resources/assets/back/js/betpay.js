@@ -909,10 +909,10 @@ class BetPay {
         let $modal = $('#watch-binance-qr-modal');
         $modal.on('show.bs.modal', function (event) {
             let $target = $(event.relatedTarget);
-            $('#qr').append($target.data('qr'));
+            $('#qr-binance').append($target.data('qr'));
         })
         $modal.on('hidden.bs.modal', function () {
-            $modal.find('#qr').html('');
+            $modal.find('#qr-binance').html('');
         })
 
     }
@@ -925,12 +925,12 @@ class BetPay {
         let $modal = $('#watch-crypto-qr-modal');
         $modal.on('show.bs.modal', function (event) {
             let $target = $(event.relatedTarget);
-            $('#qr').append($target.data('qr'));
+            $('#qr-cryptocurrency').append($target.data('qr'));
             $('#data-wallet').append($target.data('wallet'));
             $('#data-cryptocurrency').append($target.data('cryptocurrency'));
         })
         $modal.on('hidden.bs.modal', function () {
-            $modal.find('#qr').html('');
+            $modal.find('#qr-cryptocurrency').html('');
             $modal.find('#data-wallet').html('');
             $modal.find('#data-cryptocurrency').html('');
         })
