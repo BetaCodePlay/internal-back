@@ -716,6 +716,15 @@ class AgentsController extends Controller
                 if ($type == 'true') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $user = $userToUpdate['user_id'];
+                        $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+                        if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
+                            $data = [
+                                'title' => ActionUser::getName($userData->action),
+                                'message' => _i('Contact your superior...'),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$not_found, $data);
+                        }
                         $this->agentsRepo->blockUsers($user);
                         Sessions::deleteByUser($user);
                         $auditData = [
@@ -737,8 +746,17 @@ class AgentsController extends Controller
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $user = $userToUpdate['user_id'];
+                        $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+                        if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
+                            $data = [
+                                'title' => ActionUser::getName($userData->action),
+                                'message' => _i('Contact your superior...'),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$not_found, $data);
+                        }
                         $this->agentsRepo->unBlockUsers($user);
-
+                        
                         $auditData = [
                             'ip' => Utils::userIp(),
                             'user_id' => auth()->user()->id,
