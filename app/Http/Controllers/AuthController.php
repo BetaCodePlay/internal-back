@@ -21,11 +21,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Dotworkers\Audits\Audits;
 use App\Audits\Enums\AuditTypes;
+use App\Users\Mailers\Users;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -71,9 +73,10 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-                $prefix = $request->route()->getPrefix();
-                $api = $prefix == 'api/users';
-                Log::info(__METHOD__, ['prefix' => $prefix, 'api' => $api]);
+                $url="";
+                $whitelabelId = Configurations::getWhitelabel();
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                Mail::to($user)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification));
                 if(auth()->user()->action == ActionUser::$locked_higher){
                     session()->flush();
                     auth()->logout();
