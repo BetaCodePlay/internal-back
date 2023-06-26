@@ -709,6 +709,7 @@ if (!function_exists('menu')) {
                         'route' => 'betpay.clients.accounts.create',
                         'params' => [],
                         'icon' => 'hs-admin-user',
+                        'permission' => Permissions::$activate_payments_methods,
                         'submenu' => []
                     ],
                     'ListAccounts' => [
@@ -717,6 +718,7 @@ if (!function_exists('menu')) {
                         'route' => 'betpay.clients.accounts',
                         'params' => [],
                         'icon' => 'hs-admin-list',
+                        'permission' => Permissions::$list_payments_methods,
                         'submenu' => []
                     ],
                     'AccountsSearch' => [
