@@ -251,6 +251,16 @@ class TransactionsCollection
                         _i('Date'),
                         Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                     );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency'),
+                        $transaction->data->cryptocurrency
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency amount'),
+                        $transaction->data->cryptocurrency_amount
+                    );
                     break;
                 }
             }
@@ -500,7 +510,7 @@ class TransactionsCollection
 
             $transaction->details = '<ul>';
             switch ($paymentMethod) {
-                case PaymentMethods::$cryptocurrencies:
+               case PaymentMethods::$cryptocurrencies:
                 {
                     $transaction->withdrawal_data .= sprintf(
                         '<strong>%s:</strong> %s<br>',
@@ -566,30 +576,12 @@ class TransactionsCollection
                 _i('Betpay ID'),
                 $transaction->id
             );
-            $transaction->details .= sprintf(
-                '<li><strong>%s</strong>: %s</li>',
-                _i('Cryptocurrency'),
-                $transaction->data->cryptocurrency
-            );
-            $transaction->details .= sprintf(
-                '<li><strong>%s</strong>: %s</li>',
-                _i('Amount in Cryptocurrency'),
-                number_format($transaction->data->crypto_amount, 2)
-            );
             if ($status == TransactionStatus::$approved || $status == TransactionStatus::$processing) {
-                if ($paymentMethod == PaymentMethods::$charging_point)   {
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Code'),
-                        $transaction->data->code
-                    );
-                } else {
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Reference'),
-                        $transaction->reference
-                    );
-                }
+                $transaction->details .= sprintf(
+                    '<li><strong>%s</strong>: %s</li>',
+                    _i('Reference'),
+                    $transaction->reference
+                );
             }
             if (!is_null($transaction->details_data)) {
                 if(isset($transaction->details_data->operator)){
