@@ -51,13 +51,13 @@ class Users extends Mailable
                 $this->button = _i('Notify');
                 $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
 
-                if (!is_null($emailConfiguration)) {
+                /*if (!is_null($emailConfiguration)) {
                     $this->title = !is_null($emailConfiguration->title) ? $emailConfiguration->title : $this->title;
                     $this->subtitle = !is_null($emailConfiguration->subtitle) ? $emailConfiguration->subtitle : $this->subtitle;
                     $this->content = !is_null($emailConfiguration->content) ? $emailConfiguration->content : $this->content;
                     $this->button = !is_null($emailConfiguration->button) ? $emailConfiguration->button : $this->button;
                     $this->footer = !is_null($emailConfiguration->footer) ? $emailConfiguration->footer : $this->footer;
-                }
+                }*/
                 break;
             }
             case EmailTypes::$activate_account:
