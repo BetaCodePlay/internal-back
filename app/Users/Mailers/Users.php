@@ -36,8 +36,10 @@ class Users extends Mailable
      *
      * @return void
      */
-    public function __construct($url, $username, $emailConfiguration, $emailType)
+    public function __construct($whitelabel, $url, $username, $emailConfiguration, $emailType)
     {
+        Log::debug(__METHOD__, ['whitelabel' => $whitelabel, 'url' => $url, 'email' => $emailConfiguration, 'emailType' => $emailType]);
+        $this->whitelabel = $whitelabel;
         $this->url = $url;
         $this->username = $username;
         $this->emailConfiguration = $emailConfiguration;
