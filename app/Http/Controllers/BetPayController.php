@@ -445,7 +445,6 @@ class BetPayController extends Controller
                 $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
                 if (!is_null($betPayToken)) {
                     $requestData = [
-                        'client' => $credential,
                         'currency' => $request->currency,
                         'payment_method' => $paymentMethod,
                     ];
