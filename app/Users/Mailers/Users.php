@@ -18,6 +18,8 @@ class Users extends Mailable
 
     public $emailConfiguration;
 
+    public $emailType;
+
     public $title;
 
     public $subtitle;
@@ -27,8 +29,6 @@ class Users extends Mailable
     public $button;
 
     public $footer;
-
-    public $emailType;
 
 
     /**
@@ -40,6 +40,7 @@ class Users extends Mailable
     {
         $this->url = $url;
         $this->username = $username;
+        $this->emailConfiguration = $emailConfiguration;
         $this->emailType = $emailType;
         switch ($emailType) {
             case EmailTypes::$login_notification:
