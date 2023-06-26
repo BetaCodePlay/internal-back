@@ -176,7 +176,7 @@ class AuthController extends Controller
                     ];
                     Audits::store($user, AuditTypes::$dotpanel_login, $whitelabel, $auditData);
                     $userTemp = $usersRepo->getUsers($user);
-                    $url = "";
+                    $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
                     $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                     Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification));
