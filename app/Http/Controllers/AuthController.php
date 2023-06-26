@@ -80,7 +80,7 @@ class AuthController extends Controller
                 $url="";
                 $whitelabelId = Configurations::getWhitelabel();
                 $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $userTemp->username, $emailConfiguration, EmailTypes::$login_notification));
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification));
                 if(auth()->user()->action == ActionUser::$locked_higher){
                     session()->flush();
                     auth()->logout();
