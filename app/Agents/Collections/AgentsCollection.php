@@ -465,7 +465,9 @@ class AgentsCollection
             $arrayProviderTmp = array_map(function ($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));
-
+//            $arrayProviderTmp[]=171;
+//            $arrayProviderTmp[]=166;
+//            $arrayProviderTmp[]=5;
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider) {
                 $providerNull[$provider] = [
@@ -483,42 +485,46 @@ class AgentsCollection
                     'id' => $value->user_id,
                     'type' => $value->type_user == 5 ? 'init_user' : 'init_agent',
                     'username' => $value->username,
-                    'providers' => []
+                    'providers' => $providerNull
                 ];
 
                 $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
 
                 if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSonHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSonHourSql($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 } else {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUserHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUserHourSql($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+
                 }
+
                 $arrayTmpClosures[$value->user_id] = $closures;
 
                 if (count($closures) > 0) {
                     $providerDB = [];
                     foreach ($closures as $index => $closure) {
                         $providerDB[$closure->id_provider] = [
-                            'total_played' => $closure->total_played,
-                            'total_won' => $closure->total_won,
-                            'total_profit' => $closure->total_profit,
+                            'total_played' => is_null($closure->total_played)?0:$closure->total_played,
+                            'total_won' => is_null($closure->total_won)?0:$closure->total_won,
+                            'total_profit' => is_null($closure->total_profit)?0:$closure->total_profit,
                         ];
                     }
                     foreach ($arrayProviderTmp as $index => $provider) {
                         if (!isset($providerDB[$provider])) {
                             $providerDB[$provider] = [
-                                'total_played' => 0,
-                                'total_won' => 0,
-                                'total_profit' => 0,
+                                'total_played' => '0',
+                                'total_won' => '0',
+                                'total_profit' => '0',
                             ];
                         }
                     }
+
                     $arrayTmp[$value->user_id]['providers'] = $providerDB;
                 } else {
                     $arrayTmp[$value->user_id]['providers'] = $providerNull;
                 }
-            }
 
+            }
+            sort($arrayProviderTmp);
             $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
             foreach ($arrayProviderTmp as $item => $value) {
                 $name = $closureRepo->nameProvider($value);
@@ -533,22 +539,33 @@ class AgentsCollection
                 $htmlProvider .= "<th  class=''>" . _i('Total Profit') . "</th>";
             }
             $htmlProvider .= "</tr>";
-
+            //return [$arrayTmp,$arrayProviderTmp];
             foreach ($arrayTmp as $item => $value) {
                 $htmlProvider .= "<tr>";
                 $htmlProvider .= "<td class='" . $value['type'] . "'>" . $value['username'] . "</td>";
-                foreach ($value['providers'] as $i => $provider) {
-                    $totalProfit += $provider['total_profit'];
-                    $totalDebit += $provider['total_played'];
-                    $totalCredit += $provider['total_won'];
-                    $htmlProvider .= "<td>" . number_format($provider['total_played'], 2) . "</td>";
-                    $htmlProvider .= "<td>" . number_format($provider['total_won'], 2) . "</td>";
-                    $htmlProvider .= "<td>" . number_format($provider['total_profit'], 2) . "</td>";
+
+//                sort($value['providers']);
+//                foreach ($value['providers'] as $i => $provider) {
+//                    $totalProfit += $provider['total_profit'];
+//                    $totalDebit += $provider['total_played'];
+//                    $totalCredit += $provider['total_won'];
+//                    $htmlProvider .= "<td>" . number_format($provider['total_played'], 2) . "</td>";
+//                    $htmlProvider .= "<td>" . number_format($provider['total_won'], 2) . "</td>";
+//                    $htmlProvider .= "<td>" . number_format($provider['total_profit'], 2) . "</td>";
+//                }
+
+                foreach ($arrayProviderTmp as $i => $provider) {
+                    $totalProfit += $value['providers'][$provider]['total_profit'];
+                    $totalDebit += $value['providers'][$provider]['total_played'];
+                    $totalCredit += $value['providers'][$provider]['total_won'];
+                    $htmlProvider .= "<td>" . number_format($value['providers'][$provider]['total_played'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($value['providers'][$provider]['total_won'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($value['providers'][$provider]['total_profit'], 2) . "</td>";
                 }
                 $htmlProvider .= "</tr>";
 
             }
-
+            //return [$arrayTmp,$arrayProviderTmp,$htmlProvider];
             //TODO TOTALES
             if (!is_null($percentage)) {
                 $totalComission = $totalProfit * ($percentage / 100);

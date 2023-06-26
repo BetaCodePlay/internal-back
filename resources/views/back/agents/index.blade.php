@@ -1193,7 +1193,7 @@
             let users = new Users();
             users.usersIps();
             //TODO TABLA PARA IPS EN EL MODAL
-            // users.userIpsDetails();
+            //users.userIpsDetails();
 
             agents.dashboard();
             agents.searchAgentDashboard();

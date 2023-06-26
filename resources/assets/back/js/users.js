@@ -1229,14 +1229,14 @@ class Users {
 
     //TODO lista de ip para el detalle de usuario
     userIpsDetails() {
-        let $table = $('#ipTableIps');
-        let $button = $('#update-ip');
-        let user = $('#user_id').val();
-        let api;
 
+        let $table = $('#ipTableIps');
+        let api;
+        let user = $('#user_id').val();
+        let route = `${$table.data('route')}/${user}`;
         $table.DataTable({
             "ajax": {
-                "url": $table.data('route'),
+                "url": route,
                 "dataSrc": "data.ips"
             },
             "order": [
@@ -1248,20 +1248,18 @@ class Users {
             ],
             "initComplete": function () {
                 api = this.api();
-                api.buttons().container()
-                    .appendTo($('#ip-table-buttons'));
+                // api.buttons().container()
+                //     .appendTo($('#ip-table-buttons'));
             }
         });
 
-        // $button.click(function () {
-        //     $button.button('loading');
-        //     user = $('#user_id').val();
-        //     let route = `${$table.data('route')}/${user}`;
-        //     api.ajax.url(route).load();
-        //     $table.on('draw.dt', function () {
-        //         $button.button('reset');
-        //     });
-        // });
+        $('#details-user-modal').on('show.bs.modal', function (event) {
+
+            user = $('#user_id').val();
+            let route = `${$table.data('route')}/${user}`;
+            console.log(event,route,user)
+            api.ajax.url(route).load();
+        })
     }
 
     // Users temp

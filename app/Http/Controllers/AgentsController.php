@@ -1299,7 +1299,7 @@ class AgentsController extends Controller
     public function financialStateData(Request $request, ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
 
-        try {
+        //try {
             if (is_null($user)) {
                 $user = Auth::id();
             }
@@ -1322,10 +1322,10 @@ class AgentsController extends Controller
             ];
 
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
+//        } catch (\Exception $ex) {
+//            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+//            return Utils::failedResponse();
+//        }
 
     }
 
