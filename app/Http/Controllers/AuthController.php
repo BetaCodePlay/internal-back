@@ -76,7 +76,7 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-                $userTemp = $usersTempRepo->getUsers($request->username);
+                $userTemp = $usersTempRepo->getUsers($user);
                 Log::info(__METHOD__, ['userTemp' => $userTemp, 'user' => $user]);
                 $url="";
                 $whitelabelId = Configurations::getWhitelabel();
