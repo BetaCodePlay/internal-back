@@ -1948,36 +1948,36 @@ if (!function_exists('menu')) {
                 'submenu' => []
             ],*/
 
-            'JustPay' => [
-                'text' => _i('ALPS'),
-                'level_class' => 'top',
-                'route' => null,
-                'params' => [],
-                'icon' => 'hs-admin-credit-card',
-                'permission' => Permissions::$just_pay_admin_menu,
-                'submenu' => [
+            // 'JustPay' => [
+            //     'text' => _i('ALPS'),
+            //     'level_class' => 'top',
+            //     'route' => null,
+            //     'params' => [],
+            //     'icon' => 'hs-admin-credit-card',
+            //     'permission' => Permissions::$just_pay_admin_menu,
+            //     'submenu' => [
 
-                    'Credit' => [
-                        'text' => _i('Credit'),
-                        'level_class' => 'second',
-                        'route' => 'reports.just-pay.credit',
-                        'params' => [],
-                        'icon' => 'hs-admin-shift-left',
-                        'permission' => Permissions::$just_pay_admin_menu,
-                        'submenu' => []
-                    ],
+            //         'Credit' => [
+            //             'text' => _i('Credit'),
+            //             'level_class' => 'second',
+            //             'route' => 'reports.just-pay.credit',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-shift-left',
+            //             'permission' => Permissions::$just_pay_admin_menu,
+            //             'submenu' => []
+            //         ],
 
-                    'Debit' => [
-                        'text' => _i('Debit'),
-                        'level_class' => 'second',
-                        'route' => 'reports.just-pay.debit',
-                        'params' => [],
-                        'icon' => 'hs-admin-shift-right',
-                        'permission' => Permissions::$just_pay_admin_menu,
-                        'submenu' => []
-                    ],
-                ]
-            ],
+            //         'Debit' => [
+            //             'text' => _i('Debit'),
+            //             'level_class' => 'second',
+            //             'route' => 'reports.just-pay.debit',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-shift-right',
+            //             'permission' => Permissions::$just_pay_admin_menu,
+            //             'submenu' => []
+            //         ],
+            //     ]
+            // ],
 
             /*'Zippy' => [
                 'text' => _i('Zippy'),
