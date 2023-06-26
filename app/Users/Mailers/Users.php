@@ -110,6 +110,7 @@ class Users extends Mailable
      */
     public function build()
     {
+        $subject = _i('Notifications');
         return $this->subject($this->subject)
         ->view('back.users.emails.activate');
     }
