@@ -813,6 +813,44 @@ class BetPay {
         });
     }
 
+    // Process debit bitcoin
+    static processDebitBitcoin(api, route) {
+        initSelect2();
+        let $button = $('#process-debit');
+        let $form = $('#process-debit-form');
+        let $modal = $('#process-debit-modal');
+
+        $button.click(function () {
+            $button.button('loading');
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                dataType: 'json',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $form.trigger('reset');
+                $('#action').val(null).trigger('change');
+                $modal.modal('hide');
+                swalSuccessWithButton(json);
+                api.ajax.url(route).load();
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+
+        $modal.on('show.bs.modal', function (event) {
+            let $target = $(event.relatedTarget);
+            $('#transaction').val($target.data('transaction'));
+            $('#wallet').val($target.data('wallet'));
+            $('#user').val($target.data('user'));
+        })
+    }
+
     // Debit Binance
     debitBinance() {
         let $table = $('#binance-table');
