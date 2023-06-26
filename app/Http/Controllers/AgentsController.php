@@ -756,7 +756,7 @@ class AgentsController extends Controller
                             return Utils::errorResponse(Codes::$not_found, $data);
                         }
                         $this->agentsRepo->unBlockUsers($user);
-                        
+
                         $auditData = [
                             'ip' => Utils::userIp(),
                             'user_id' => auth()->user()->id,
@@ -2387,17 +2387,20 @@ class AgentsController extends Controller
                         return Utils::errorResponse(Codes::$not_found, $data);
 
                     }
-//                    if ($userData->status == false) {
-//                        $data = [
-//                            'title' => _i('Deactivated user'),
-//                            'message' => _i('Contact your superior...'),
-//                            'close' => _i('Close')
-//                        ];
-//                        return Utils::errorResponse(Codes::$not_found, $data);
-//
-//                    }
 
                     $walletData = Wallet::getByClient($userData->id, $currency);
+                    if (empty($walletData)) {
+                        Log::error('error data, wallet getByClient', [
+                            'userData'=>$userData,'currency'=>$currency, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+
+                    }
                     if ($transactionType == TransactionTypes::$credit) {
                         $uuid = Str::uuid()->toString();
                         $additionalData = [
@@ -2474,6 +2477,18 @@ class AgentsController extends Controller
                         'whitelabel_id' => Configurations::getWhitelabel()
                     ];
                     $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                    if (empty($ticket)) {
+                        Log::error('error data, TransactionsRepo Store ', [
+                            '$transactionData'=>$transactionData,'approved'=>TransactionStatus::$approved, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+
+                    }
                     $transactionIdCreated = $ticket->id;
                     $button = sprintf(
                         '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
@@ -2493,15 +2508,6 @@ class AgentsController extends Controller
                         return Utils::errorResponse(Codes::$not_found, $data);
 
                     }
-//                    if ($agent->status == false) {
-//                        $data = [
-//                            'title' => _i('Deactivated user'),
-//                            'message' => _i('Contact your superior...'),
-//                            'close' => _i('Close')
-//                        ];
-//                        return Utils::errorResponse(Codes::$not_found, $data);
-//
-//                    }
 
                     /* Agent Balance */
                     $agentBalance = round($agent->balance, 2);
@@ -2591,7 +2597,18 @@ class AgentsController extends Controller
                         ];
                         /* $ticket: here the first transaction in the table is generated.*/
                         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                        if (empty($ticket)) {
+                            Log::error('error data, TransactionsRepo Store', [
+                                'transactionData'=>$transactionData,'approved'=>TransactionStatus::$approved, $request->all(), Auth::user()->id
+                            ]);
+                            $data = [
+                                'title' => _i('An error occurred'),
+                                'message' => _i("please contact support"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
 
+                        }
                         $transactionIdCreated = $ticket->id;
 
                         //  new TransactionNotAllowed($amount, $agent->id, Providers::$agents, $transactionType);
@@ -2648,9 +2665,32 @@ class AgentsController extends Controller
                     ];
 
                     $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-                    //new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
-                    $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
+                    if (empty($transactionFinal)) {
+                        Log::error('error data, TransactionsRepo Store', [
+                            'transactionData'=>$transactionData,'approved'=>TransactionStatus::$approved, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
 
+                    }
+                    //new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
+                    $transactionUpdate = $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
+                    if (empty($transactionUpdate)) {
+                        Log::error('error data, TransactionsRepo Store', [
+                            'transactionIdCreated'=>$transactionIdCreated,'transactionFinal'=>$transactionFinal,'approved'=>TransactionStatus::$approved,'transactionType'=>$transactionType, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+
+                    }
                     $data = [
                         'title' => _i('Transaction performed'),
                         'message' => _i('The transaction was successfully made to the user'),
