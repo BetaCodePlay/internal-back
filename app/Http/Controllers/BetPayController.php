@@ -487,7 +487,7 @@ class BetPayController extends Controller
             $data['whitelabels'] = $this->whitelabelsRepo->all();
             $data['currency_client'] = $this->currenciesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
 
             if (!is_null($betPayToken)) {
@@ -527,7 +527,7 @@ class BetPayController extends Controller
             $data['currency_client'] = $this->currenciesRepo->all();
             $data['countries'] = $this->countriesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
