@@ -175,11 +175,11 @@ class AuthController extends Controller
                         'mobile' => $mobile
                     ];
                     Audits::store($user, AuditTypes::$dotpanel_login, $whitelabel, $auditData);
-                    /*$userTemp = $usersRepo->getUsers($user);
+                    $userTemp = $usersRepo->getUsers($user);
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
                     $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $userTemp->username, $emailConfiguration, EmailTypes::$login_notification));*/
+                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $userTemp->username, $emailConfiguration, EmailTypes::$login_notification));
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
