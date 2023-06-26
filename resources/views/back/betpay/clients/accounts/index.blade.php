@@ -25,6 +25,7 @@
                             <div class="form-group">
                                 <label for="currency">{{ _i('Currency') }}</label>
                                 <select name="currency" id="currency" class="form-control">
+                                    <option value="">{{ _i('All currencies') }}</option>
                                     @foreach ($whitelabel_currencies as $currency)
                                     <option value="{{ $currency->iso }}">
                                         {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
