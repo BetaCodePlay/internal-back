@@ -77,6 +77,24 @@ Route::group(['prefix' => 'betpay', 'middleware' => ['auth']], function () {
     });
 
     /**
+     *  Cryptocurrencies routes
+     */
+    Route::group(['prefix' => 'cryptocurrencies', 'middleware' => ['auth']], function () {
+
+        // Credit Cryptocurrencies
+        Route::get('credit', [
+            'as' => 'betpay.cryptocurrencies.credit',
+            'uses' => 'BetPayController@creditCryptocurrencies'
+        ]);
+
+        // Debit Cryptocurrencies
+        Route::get('debit', [
+            'as' => 'betpay.cryptocurrencies.debit',
+            'uses' => 'BetPayController@debitCryptocurrencies'
+        ]);
+    });
+
+    /**
      *  Binance routes
      */
     Route::group(['prefix' => 'binance', 'middleware' => ['auth']], function () {

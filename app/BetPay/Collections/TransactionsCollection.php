@@ -157,11 +157,9 @@ class TransactionsCollection
                 $transaction->external_user
             );
 
-            $transaction->cryptocurrency = $transaction->data->cryptocurrency;
             $transaction->created = Carbon::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->data->date = Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y');
             $transaction->amount = number_format($transaction->amount, 2);
-            $transaction->crypto_amount = number_format($transaction->data->crypto_amount, 2);
         }
     }
 
@@ -180,22 +178,11 @@ class TransactionsCollection
             $timezone = session('timezone');
             $operator = null;
             $description = null;
-
-            if (Configurations::getWhitelabel() == 68) {
-                $transaction->user = sprintf(
-                    '<a href="%s" class="btn u-btn-3d btn-sm u-btn-primary mr-2" target="_blank">%s</a>',
-                    route('users.details', [$transaction->user_id]),
-                    $transaction->user_id
-                );
-                $transaction->reference = $transaction->data->reference;
-            }  else {
-                $transaction->user = sprintf(
+            $transaction->user = sprintf(
                     '<a href="%s" class="btn u-btn-3d btn-sm u-btn-primary mr-2" target="_blank">%s</a>',
                     route('users.details', [$transaction->external_user]),
                     $transaction->external_user
-                );
-            }
-
+            );
             switch ($status) {
                 case TransactionStatus::$pending:
                 {
@@ -236,51 +223,61 @@ class TransactionsCollection
             }
 
             $transaction->details = '<ul>';
-            if (Configurations::getWhitelabel() == 68) {
-                $transaction->details .= sprintf(
-                    '<li><strong>%s</strong>: %s</li>',
-                    _i('Betpay ID'),
-                    $transaction->data->betpay_transaction
-                );
+
+            switch ($paymentMethod) {
+                case PaymentMethods::$cryptocurrencies:
+                {
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Date'),
+                        Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency'),
+                        $transaction->data->cryptocurrency
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency amount'),
+                        $transaction->data->cryptocurrency_amount
+                    );
+                    break;
+                }
+                case PaymentMethods::$binance:
+                {
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Date'),
+                        Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency'),
+                        $transaction->data->cryptocurrency
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency amount'),
+                        $transaction->data->cryptocurrency_amount
+                    );
+                    break;
+                }
             }
 
-            if (Configurations::getWhitelabel() != 68) {
-                switch ($paymentMethod) {
-                    case PaymentMethods::$binance:
-                    {
-                        $transaction->details .= sprintf(
-                            '<li><strong>%s</strong>: %s</li>',
-                            _i('Date'),
-                            Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
-                        );
-                        $transaction->details .= sprintf(
-                            '<li><strong>%s</strong>: %s</li>',
-                            _i('Cryptocurrency'),
-                            $transaction->data->cryptocurrency
-                        );
-                        $transaction->details .= sprintf(
-                            '<li><strong>%s</strong>: %s</li>',
-                            _i('Amount in Cryptocurrency'),
-                            number_format($transaction->data->crypto_amount, 2)
-                        );
-                        break;
-                    }
-                }
-
-                if (!is_null($operator)) {
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Operator'),
-                        $operator
-                    );
-                }
-                if (!is_null($description)) {
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Description'),
-                        $description
-                    );
-                }
+            if (!is_null($operator)) {
+                $transaction->details .= sprintf(
+                    '<li><strong>%s</strong>: %s</li>',
+                    _i('Operator'),
+                    $operator
+                );
+            }
+            if (!is_null($description)) {
+                $transaction->details .= sprintf(
+                    '<li><strong>%s</strong>: %s</li>',
+                    _i('Description'),
+                    $description
+                );
             }
 
             $transaction->details .= '</ul>';
@@ -350,6 +347,27 @@ class TransactionsCollection
             }
 
             switch ($paymentMethod) {
+                case PaymentMethods::$cryptocurrencies:
+                {
+                    $transaction->withdrawal_data = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Wallet'),
+                        $transaction->user_account->wallet
+                    );
+                    $transaction->withdrawal_data .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Cryptocurrency'),
+                        $transaction->user_account->cryptocurrency
+                    );
+                    if(isset($transaction->user_account->network)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Network'),
+                            $transaction->user_account->network
+                        );
+                    }
+                    break;
+                }
                 case PaymentMethods::$binance:
                 {
                     $transaction->payment_method = '';
@@ -430,8 +448,6 @@ class TransactionsCollection
                 $transaction->external_user
             );
 
-            $transaction->cryptocurrency = $transaction->data->cryptocurrency;
-            $transaction->crypto_amount = number_format($transaction->data->crypto_amount, 2);
             $transaction->created = Carbon::createFromFormat('Y-m-d H:i:s', $transaction->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->amount = number_format($transaction->amount, 2);
         }
@@ -493,13 +509,26 @@ class TransactionsCollection
             $transaction->status = $statusText;
 
             $transaction->details = '<ul>';
-            $transaction->details .= sprintf(
-                '<li><strong>%s</strong>: %s</li>',
-                _i('Betpay ID'),
-                $transaction->id
-            );
-
             switch ($paymentMethod) {
+               case PaymentMethods::$cryptocurrencies:
+                {
+                    $transaction->withdrawal_data .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Wallet'),
+                        $transaction->user_account->wallet
+                    );
+                    $transaction->withdrawal_data .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Cryptocurrency'),
+                        $transaction->user_account->cryptocurrency
+                    );
+                    $transaction->withdrawal_data .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Cryptocurrency amount'),
+                        $transaction->data->cryptocurrency_amount
+                    );
+                    break;
+                }
                 case PaymentMethods::$binance:
                 {
                     if(isset($transaction->user_account->email)){
@@ -537,34 +566,22 @@ class TransactionsCollection
                             $transaction->user_account->qr
                         );
                     }
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Cryptocurrency'),
-                        $transaction->data->cryptocurrency
-                    );
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Amount in Cryptocurrency'),
-                        number_format($transaction->data->crypto_amount, 2)
-                    );
                     break;
                 }
             }
 
+            $transaction->details = '<ul>';
+            $transaction->details .= sprintf(
+                '<li><strong>%s</strong>: %s</li>',
+                _i('Betpay ID'),
+                $transaction->id
+            );
             if ($status == TransactionStatus::$approved || $status == TransactionStatus::$processing) {
-                if ($paymentMethod == PaymentMethods::$charging_point)   {
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Code'),
-                        $transaction->data->code
-                    );
-                } else {
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Reference'),
-                        $transaction->reference
-                    );
-                }
+                $transaction->details .= sprintf(
+                    '<li><strong>%s</strong>: %s</li>',
+                    _i('Reference'),
+                    $transaction->reference
+                );
             }
             if (!is_null($transaction->details_data)) {
                 if(isset($transaction->details_data->operator)){

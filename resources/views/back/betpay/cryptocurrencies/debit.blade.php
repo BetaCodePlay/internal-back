@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered w-100" id="binance-table" data-route="{{ route('betpay.transactions.data', [$payment_method, $provider, $transaction_type]) }}">
+                <table class="table table-bordered w-100" id="cryptocurrencies-table" data-route="{{ route('betpay.transactions.data', [$payment_method, $provider, $transaction_type]) }}">
                     <thead>
                     <tr>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -35,19 +35,10 @@
                             {{ _i('Currency') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Amount cryptocurrency') }}
+                            {{ _i('Data for withdrawal') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Cryptocurrency') }}
-                        </th>
-                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Origin Account') }}
-                        </th>
-                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Date') }}
-                        </th>
-                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Notified') }}
+                            {{ _i('Requested') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('Status') }}
@@ -64,15 +55,14 @@
             </div>
         </div>
     </div>
-    @include('back.betpay.binance.modals.process-credit')
-    @include('back.betpay.binance.modals.watch-binance-qr')
+    @include('back.betpay.cryptocurrencies.modals.process-debit')
 @endsection
 
 @section('scripts')
     <script>
         $(function () {
             let betPay = new BetPay();
-            betPay.creditBinance();
+            betPay.debitCryptocurrencies();
         });
     </script>
 @endsection
