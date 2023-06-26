@@ -74,13 +74,7 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-                $userTemp = $usersRepo->getUsers($user);
-                Log::info(__METHOD__, ['userTemp' => $userTemp, 'user' => $user]);
-                $url="";
-                $whitelabelId = Configurations::getWhitelabel();
-                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification));
-                if(auth()->user()->action == ActionUser::$locked_higher){
+                if (auth()->user()->action == ActionUser::$locked_higher) {
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -91,7 +85,7 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
-                if(auth()->user()->action == ActionUser::$locked_login_attempts || auth()->user()->action == ActionUser::$changed_password){
+                if (auth()->user()->action == ActionUser::$locked_login_attempts || auth()->user()->action == ActionUser::$changed_password) {
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -103,7 +97,7 @@ class AuthController extends Controller
 
                 }
 
-                if(auth()->user()->status == false){
+                if (auth()->user()->status == false) {
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -129,8 +123,8 @@ class AuthController extends Controller
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
                     $permissionsMerge = $permissions;
                     //TODO IF AGENT ADD NEW PERMISSIONS
-                    if(Auth::user()->type_user == 1){
-                        $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
+                    if (Auth::user()->type_user == 1) {
+                        $permissionsMerge = array_merge($permissions, [Permissions::$create_user_agent]);
                     }
 
                     session()->put('currency', $defaultCurrency->currency_iso);
@@ -150,11 +144,11 @@ class AuthController extends Controller
                         $language = Configurations::getDefaultLanguage();
                     }
 
-                    if(in_array(Roles::$admin_agents, $roles)){
-                       $adminAgent = $agentsRepo->findAdminAgent($whitelabel, $defaultCurrency->currency_iso);
-                       session()->put('admin_id', $adminAgent->id);
-                       session()->put('admin_agent_username', $adminAgent->username);
-                       $route = route('agents.index');
+                    if (in_array(Roles::$admin_agents, $roles)) {
+                        $adminAgent = $agentsRepo->findAdminAgent($whitelabel, $defaultCurrency->currency_iso);
+                        session()->put('admin_id', $adminAgent->id);
+                        session()->put('admin_agent_username', $adminAgent->username);
+                        $route = route('agents.index');
                     }
 
                     //TODO ROL 19 Nuevo rol
@@ -181,6 +175,11 @@ class AuthController extends Controller
                         'mobile' => $mobile
                     ];
                     Audits::store($user, AuditTypes::$dotpanel_login, $whitelabel, $auditData);
+                    $userTemp = $usersRepo->getUsers($user);
+                    $url = "";
+                    $whitelabelId = Configurations::getWhitelabel();
+                    $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification));
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
