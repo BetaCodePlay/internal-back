@@ -721,15 +721,15 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$list_payments_methods,
                         'submenu' => []
                     ],
-                    'AccountsSearch' => [
-                        'text' => _i('Accounts search'),
-                        'level_class' => 'second',
-                        'route' => 'betpay.accounts.search',
-                        'params' => [],
-                        'icon' => 'hs-admin-search',
-                        'permission' => Permissions::$check_user_accounts,
-                        'submenu' => []
-                    ],
+                    // 'AccountsSearch' => [
+                    //     'text' => _i('Accounts search'),
+                    //     'level_class' => 'second',
+                    //     'route' => 'betpay.accounts.search',
+                    //     'params' => [],
+                    //     'icon' => 'hs-admin-search',
+                    //     'permission' => Permissions::$check_user_accounts,
+                    //     'submenu' => []
+                    // ],
                     'Binance' => [
                         'text' => _i('Binance'),
                         'level_class' => 'second',
