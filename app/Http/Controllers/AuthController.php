@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Dotworkers\Audits\Audits;
 use App\Audits\Enums\AuditTypes;
 use App\Users\Mailers\Users;
+use Dotworkers\Configurations\Enums\EmailTypes;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
