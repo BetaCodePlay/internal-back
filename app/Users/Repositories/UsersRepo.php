@@ -260,6 +260,20 @@ class UsersRepo
     }
 
     /**
+     * Get users
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getUsers($id)
+    {
+        $users = User::select('users.*')
+            ->where('id', $id)
+            ->get();
+        return $users;
+    }
+
+    /**
      * Get parents from child by Id
      *
      * @param int $son User Id Son

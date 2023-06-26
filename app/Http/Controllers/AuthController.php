@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Repositories\AgentsRepo;
-use App\Users\Repositories\UsersTempRepo;
 use App\BetPay\BetPay;
 use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\ActionUser;
@@ -51,12 +50,11 @@ class AuthController extends Controller
      * @param UserCurrenciesRepo $userCurrenciesRepo
      * @param AgentsRepo $agentsRepo
      * @param UsersRepo $usersRepo
-     * @param UsersTempRepo $usersTempRepo
      * @param Agent $agent
      * @return Response
      * @throws ValidationException
      */
-    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersTempRepo $usersTempRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo): Response
+    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
         $this->validate($request, [
             'username' => 'required',
@@ -76,7 +74,7 @@ class AuthController extends Controller
 
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-                $userTemp = $usersTempRepo->getUsers($user);
+                $userTemp = $usersRepo->getUsers($user);
                 Log::info(__METHOD__, ['userTemp' => $userTemp, 'user' => $user]);
                 $url="";
                 $whitelabelId = Configurations::getWhitelabel();
