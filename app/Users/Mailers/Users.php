@@ -54,7 +54,7 @@ class Users extends Mailable
                 $this->subject = _i('Login Notification');
                 $this->title = _i('Welcome %s', $username);
                 $this->subtitle = _i('Your login was successful');
-                $this->content = _i('We inform you that you are logging from this IP address,', [$this->ip]);
+                $this->content = _i('We inform you that you are logging from this IP address, %s', [$this->ip]);
                 $this->footer = _i("If you have no idea about this activity please contact support or your top agent");
 
                 if (!is_null($emailConfiguration)) {
