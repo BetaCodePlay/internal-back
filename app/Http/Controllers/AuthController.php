@@ -180,7 +180,6 @@ class AuthController extends Controller
                     $whitelabelId = Configurations::getWhitelabel();
                     $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                     Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification));
-                    Log::debug(__METHOD__, ['userTemp' => $userTemp, 'whitelabel' => $whitelabelId, 'email' => $emailConfiguration]);
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),

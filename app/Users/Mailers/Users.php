@@ -48,29 +48,29 @@ class Users extends Mailable
         switch ($emailType) {
             case EmailTypes::$login_notification:
             {
+                $this->subject = _i('Login Notification');
                 $this->title = _i('Welcome %s', $username);
-                $this->subject = _i('Welcome %s', $username);
                 $this->subtitle = _i('Your login was successful');
                 $this->content = _i('We notify you that your login was successful. If you are unaware of this activity please let us know');
                 $this->button = _i('Notify');
                 $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
 
-                /*if (!is_null($emailConfiguration)) {
+                if (!is_null($emailConfiguration)) {
                     $this->title = !is_null($emailConfiguration->title) ? $emailConfiguration->title : $this->title;
                     $this->subtitle = !is_null($emailConfiguration->subtitle) ? $emailConfiguration->subtitle : $this->subtitle;
                     $this->content = !is_null($emailConfiguration->content) ? $emailConfiguration->content : $this->content;
                     $this->button = !is_null($emailConfiguration->button) ? $emailConfiguration->button : $this->button;
                     $this->footer = !is_null($emailConfiguration->footer) ? $emailConfiguration->footer : $this->footer;
-                }*/
+                }
                 break;
             }
-            case EmailTypes::$activate_account:
+            case EmailTypes::$password_change_notification:
             {
-                $this->subject = _i('Activate your account');
-                $this->title = _i('Activate your account');
-                $this->subtitle = _i("¡Hello %s, you are one step away from activating your account!", [$this->username]);
-                $this->content = _i('Thank you for registering on our website. You must complete the activation process in order to enjoy our services. To proceed to activate the account, click on the following button. You have a period of 24 hours to activate your account after having registered otherwise you must perform the process again');
-                $this->button = _i('Activate account');
+                $this->subject = _i('Password change notification');
+                $this->title = _i('Welcome %s', $username);
+                $this->subtitle = _i("¡Hello %s, you are informed that your password has been changed", [$this->username]);
+                $this->content = _i('This message is to notify you that your password has been changed.');
+                $this->button = _i('Notify');
                 $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
 
                 if (!is_null($emailConfiguration)) {
@@ -113,7 +113,6 @@ class Users extends Mailable
      */
     public function build()
     {
-        $subject = _i('Notifications');
         return $this->subject($this->subject)
         ->view('back.users.emails.activate');
     }

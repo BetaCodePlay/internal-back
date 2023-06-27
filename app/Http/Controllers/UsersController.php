@@ -6,6 +6,7 @@ use App\Agents\Repositories\AgentsRepo;
 use App\BetPay\Collections\AccountsCollection;
 use App\BonusSystem\Repositories\CampaignsRepo;
 use App\Core\Core;
+use App\Users\Mailers\Users;
 use App\Core\Notifications\TransactionNotAllowed;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
@@ -2039,7 +2040,11 @@ class UsersController extends Controller
                 return Utils::errorResponse(Codes::$not_found, $data);
 
             }
-
+            $userTemp = $this->usersRepo->getUsers($user);
+            $url = route('core.dashboard');
+            $whitelabelId = Configurations::getWhitelabel();
+            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
+            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->user, $emailConfiguration, EmailTypes::$password_change_notification));
             $password = $request->password;
             $userData = [
                 'password' => $password
