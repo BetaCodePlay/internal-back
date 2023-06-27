@@ -234,25 +234,24 @@ class UsersController extends Controller
      * @param AutoLockUsersRepo $autoLockUsersRepo
      */
     public function __construct(
-        UsersRepo               $usersRepo,
-        UsersCollection         $usersCollection,
-        ProfilesRepo            $profilesRepo,
-        CountriesRepo           $countriesRepo,
-        GamesRepo               $gamesRepo,
-        UsersTempRepo           $usersTempRepo,
+        UsersRepo $usersRepo,
+        UsersCollection $usersCollection,
+        ProfilesRepo $profilesRepo,
+        CountriesRepo $countriesRepo,
+        GamesRepo $gamesRepo,
+        UsersTempRepo $usersTempRepo,
         ClosuresUsersTotalsRepo $closuresUsersTotalsRepo,
-        AgentsRepo              $agentsRepo,
-        AuditsRepo              $auditsRepo,
-        WhitelabelsRepo         $whitelabelsRepo,
-        CurrenciesRepo          $currenciesRepo,
-        ProvidersRepo           $providersRepo,
-        ReportsCollection       $reportsCollection,
-        UserDocumentsRepo       $userDocumentsRepo,
-        SegmentsRepo            $segmentsRepo,
-        SegmentsCollection      $segmentsCollection,
-        AutoLockUsersRepo       $autoLockUsersRepo
-    )
-    {
+        AgentsRepo $agentsRepo,
+        AuditsRepo $auditsRepo,
+        WhitelabelsRepo $whitelabelsRepo,
+        CurrenciesRepo $currenciesRepo,
+        ProvidersRepo $providersRepo,
+        ReportsCollection $reportsCollection,
+        UserDocumentsRepo $userDocumentsRepo,
+        SegmentsRepo $segmentsRepo,
+        SegmentsCollection $segmentsCollection,
+        AutoLockUsersRepo $autoLockUsersRepo
+    ) {
         $this->usersRepo = $usersRepo;
         $this->usersCollection = $usersCollection;
         $this->reportsCollection = $reportsCollection;
@@ -592,21 +591,21 @@ class UsersController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function blockAgent($user,$lock_type,$fake,$description = null)
+    public function blockAgent($user, $lock_type, $fake, $description = null)
     {
 
         try {
 
-          $rules = [
+            $rules = [
                 'user_id' => ['required', 'exists:users,id'],
                 'lock_type' => ['required', 'integer'],
                 'description' => ['required'],
             ];
 
             $validator = Validator::make([
-                'user_id'=>$user,
-                'lock_type'=>$lock_type,
-                'description'=>$description
+                'user_id' => $user,
+                'lock_type' => $lock_type,
+                'description' => $description
             ], $rules, $this->custom_message());
 
             if ($validator->fails()) {
@@ -616,7 +615,7 @@ class UsersController extends Controller
                     'message' => __('You need to fill in all the required fields'),
                     'data' => $validator->errors()->getMessages(),
                     'close' => _i('Close'),
-                    'type'=>'info'
+                    'type' => 'info'
                 ];
 
                 return Utils::errorResponse(Codes::$forbidden, $response);
@@ -635,24 +634,24 @@ class UsersController extends Controller
 
                 $typeAudit = $this->auditsRepo->lastByType($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel());
                 $father = false;
-                if(!is_null($typeAudit) && isset($typeAudit->data->user_id)){
-                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id,Auth::id());
-                    if($typeAudit->data->user_id == Auth::id()){
+                if (!is_null($typeAudit) && isset($typeAudit->data->user_id)) {
+                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id, Auth::id());
+                    if ($typeAudit->data->user_id == Auth::id()) {
                         $father = true;
                     }
                 }
 
-                if ($type == ActionUser::$active &&  $father) {
+                if ($type == ActionUser::$active && $father) {
                     $data = [
                         'action' => ActionUser::$active,
                         'status' => true,
                     ];
-                    $statusUpdate =  true;
+                    $statusUpdate = true;
                 }
 
             }
 
-            if($statusUpdate){
+            if ($statusUpdate) {
                 $this->usersRepo->update($user, $data);
 
                 $auditData = [
@@ -679,7 +678,7 @@ class UsersController extends Controller
                 'title' => ActionUser::getName(ActionUser::$locked_higher),
                 'message' => __('This process requires superior access'),
                 'close' => _i('Close'),
-                'type'=>'info'
+                'type' => 'info'
             ];
 
             return Utils::errorResponse(Codes::$forbidden, $response);
@@ -830,7 +829,7 @@ class UsersController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             } else {
-                $newStatus = (bool)!$status;
+                $newStatus = (bool) !$status;
                 $userData = [
                     'status' => $newStatus
                 ];
@@ -1013,13 +1012,12 @@ class UsersController extends Controller
      */
     public function details(
         WalletsCollection $walletsCollection,
-        TransactionsRepo  $transactionsRepo,
+        TransactionsRepo $transactionsRepo,
         ReportsCollection $reportsCollection,
-        CampaignsRepo     $campaignsRepo,
-                          $id,
-                          $currency = null
-    )
-    {
+        CampaignsRepo $campaignsRepo,
+        $id,
+        $currency = null
+    ) {
         $user = $this->usersRepo->find($id);
         $userCurrencies = $this->usersRepo->getCurrencyUser($id);
         $currencies = [];
@@ -1058,7 +1056,7 @@ class UsersController extends Controller
                     $userAccounts = $this->userAccounts($user->id);
                     $countries = $this->countriesRepo->all();
                     $wallets = Wallet::getByUserAndCurrencies($id, $currencies);
-//                    $agent = $this->agentsRepo->existsUser($user->id);
+                    //                    $agent = $this->agentsRepo->existsUser($user->id);
 //                    $this->usersCollection->formatAgent($agent);
 
                     //$treeFather = $this->usersCollection->treeFatherValidate($user->id, Auth::user()->id);
@@ -1090,10 +1088,10 @@ class UsersController extends Controller
                         $data['points'] = number_format($pointsWallet->balance, 2);
                     }
 
-//                    if (!is_null($agent)) {
+                    //                    if (!is_null($agent)) {
 //                        $data['agent'] = $agent->username;
                     $data['agent'] = '<ol reversed>' . $treeFather . '<ol/>';
-//                    }
+                    //                    }
 
                     $data['login_user'] = $loginURL;
                     $data['user_accounts'] = $userAccounts;
@@ -1350,7 +1348,7 @@ class UsersController extends Controller
     public function excludeProviderUserDelete($user, $category, $currency)
     {
         try {
-            $user = (int)$user;
+            $user = (int) $user;
             $this->usersRepo->deleteExcludeMakersUser($category, $user, $currency);
             $data = [
                 'title' => _i('User activated'),
@@ -1391,7 +1389,7 @@ class UsersController extends Controller
                         'users' => []
                     ];
                 }
-            }else{
+            } else {
                 $data = [
                     'users' => []
                 ];
@@ -1476,7 +1474,7 @@ class UsersController extends Controller
                         'updated_at' => $date
                     ];
                     $this->usersRepo->updateExcludeMakersUser($currency, $userToUpdate['category'], $userData->id, $data);
-                }   
+                }
                 $auditData = [
                     'ip' => Utils::userIp($request),
                     'user_id' => auth()->user()->id,
@@ -2033,14 +2031,14 @@ class UsersController extends Controller
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!') : _i('Deactivated user'),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
 
             }
-            
+
             $password = $request->password;
             $userData = [
                 'password' => $password
@@ -2054,11 +2052,14 @@ class UsersController extends Controller
                 'password' => $password
             ];
             Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
-            \Log::info(__METHOD__, ['user' => $user, 'request' => $request->all()]);
+            $userTemp = $this->usersRepo->getUsers($user);
+            foreach ($userTemp as $users) {
+                $name = $users->username;
+            }
             $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
-            Mail::to($auditData)->send(new Users($whitelabelId, $url, $user, $emailConfiguration, EmailTypes::$password_change_notification));
+            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification));
             $data = [
                 'title' => _i('Password reset'),
                 'message' => _i('Password was successfully reset'),
@@ -2108,21 +2109,18 @@ class UsersController extends Controller
                         $email = "{$user}@betsweet.com";
 
                         switch ($user) {
-                            case 'wolf':
-                            {
-                                $password = env('MAIN_SUPPORT_PASSWORD');
-                                break;
-                            }
-                            case 'panther':
-                            {
-                                $password = env('DEVELOP_PASSWORD');
-                                break;
-                            }
-                            default:
-                            {
-                                $password = env('SUPPORT_PASSWORD');
-                                break;
-                            }
+                            case 'wolf': {
+                                    $password = env('MAIN_SUPPORT_PASSWORD');
+                                    break;
+                                }
+                            case 'panther': {
+                                    $password = env('DEVELOP_PASSWORD');
+                                    break;
+                                }
+                            default: {
+                                    $password = env('SUPPORT_PASSWORD');
+                                    break;
+                                }
                         }
                     }
 
@@ -2320,7 +2318,7 @@ class UsersController extends Controller
             $gender = $request->gender;
             $level = $request->level;
             $timezone = $request->timezone;
-            $phone = (int)$request->phone;
+            $phone = (int) $request->phone;
             $birthDate = is_null($request->birth_date) ? null : Carbon::createFromFormat('d-m-Y', $request->birth_date);
             $uniqueEmail = $this->usersRepo->uniqueEmailByID($id, $email);
             $state = $request->state;
