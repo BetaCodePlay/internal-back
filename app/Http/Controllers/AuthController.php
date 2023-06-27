@@ -199,10 +199,11 @@ class AuthController extends Controller
 
             } else {
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
+                Log::info(__METHOD__, ['userTemp' => $userTemp]);
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
-                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
