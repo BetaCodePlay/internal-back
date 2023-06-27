@@ -2057,7 +2057,7 @@ class UsersController extends Controller
             $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
-            Mail::to($auditData)->send(new Users($whitelabelId, $url, $auditData->username, $emailConfiguration, EmailTypes::$password_change_notification));
+            Mail::to($auditData)->send(new Users($whitelabelId, $url, $user, $emailConfiguration, EmailTypes::$password_change_notification));
             $data = [
                 'title' => _i('Password reset'),
                 'message' => _i('Password was successfully reset'),
