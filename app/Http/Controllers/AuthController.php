@@ -200,7 +200,7 @@ class AuthController extends Controller
                 }
 
             } else {
-                $user = auth()->user()->id;
+                $user = $request->username;
                 $userTemp = $usersRepo->getUsers($user);
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
