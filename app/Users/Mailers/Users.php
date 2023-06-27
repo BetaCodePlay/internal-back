@@ -21,6 +21,8 @@ class Users extends Mailable
 
     public $emailType;
 
+    public $ip;
+
     public $title;
 
     public $subtitle;
@@ -37,14 +39,15 @@ class Users extends Mailable
      *
      * @return void
      */
-    public function __construct($whitelabel, $url, $username, $emailConfiguration, $emailType)
+    public function __construct($whitelabel, $url, $username, $emailConfiguration, $emailType, $ip)
     {
-        Log::debug(__METHOD__, ['whitelabel' => $whitelabel, 'url' => $url, 'email' => $emailConfiguration, 'emailType' => $emailType]);
+        Log::debug(__METHOD__, ['whitelabel' => $whitelabel, 'url' => $url, 'email' => $emailConfiguration, 'emailType' => $emailType, 'ip' => $ip]);
         $this->whitelabel = $whitelabel;
         $this->url = $url;
         $this->username = $username;
         $this->emailConfiguration = $emailConfiguration;
         $this->emailType = $emailType;
+        $this->ip = $ip;
         switch ($emailType) {
             case EmailTypes::$login_notification:
             {

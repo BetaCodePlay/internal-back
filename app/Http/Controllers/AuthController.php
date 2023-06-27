@@ -179,7 +179,7 @@ class AuthController extends Controller
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
                     $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification));
+                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
