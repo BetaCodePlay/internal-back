@@ -73,6 +73,7 @@ class AuthController extends Controller
             $user = auth()->user()->id;
 
             if (auth()->attempt($credentials)) {
+                $user = auth()->user()->id;
                 if (auth()->user()->action == ActionUser::$locked_higher) {
                     session()->flush();
                     auth()->logout();
