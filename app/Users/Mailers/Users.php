@@ -71,7 +71,7 @@ class Users extends Mailable
                 $this->title = _i('Welcome %s', $username);
                 $this->subtitle = _i("¡Hello %s, you are informed that your password has been changed", [$this->username]);
                 $this->content = _i('This message is to notify you that your password has been changed.');
-                $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
+                $this->footer = _i("If you have no idea about this activity please contact support or your top agent");
 
                 if (!is_null($emailConfiguration)) {
                     $this->subject = !is_null($emailConfiguration->subject) ? $emailConfiguration->subject : $this->subject;
@@ -89,7 +89,7 @@ class Users extends Mailable
                 $this->title = _i('Invalid password');
                 $this->subtitle = _i("¡Hello  %s, you have entered an invalid password!", [$this->username]);
                 $this->content = _i('This message is to notify that the password entered is incorrect');
-                $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
+                $this->footer = _i("If you have no idea about this activity please contact support or your top agent");
 
                 if (!is_null($emailConfiguration)) {
                     $this->subject = !is_null($emailConfiguration->subject) ? $emailConfiguration->subject : $this->subject;

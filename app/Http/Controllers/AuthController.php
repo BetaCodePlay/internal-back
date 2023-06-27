@@ -69,11 +69,10 @@ class AuthController extends Controller
                 'whitelabel_id' => $whitelabel,
                 //'status' => true
             ];
-
             $ip = Utils::userIp($request);
+            $user = auth()->user()->id;
 
             if (auth()->attempt($credentials)) {
-                $user = auth()->user()->id;
                 if (auth()->user()->action == ActionUser::$locked_higher) {
                     session()->flush();
                     auth()->logout();
@@ -200,6 +199,11 @@ class AuthController extends Controller
                 }
 
             } else {
+                $userTemp = $usersRepo->getUsers($user);
+                $url = route('core.dashboard');
+                $whitelabelId = Configurations::getWhitelabel();
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
