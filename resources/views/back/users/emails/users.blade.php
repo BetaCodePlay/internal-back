@@ -1,4 +1,4 @@
-@extends('back.email')
+@extends('back.users')
 
 @section('title')
     {{ $title }}
