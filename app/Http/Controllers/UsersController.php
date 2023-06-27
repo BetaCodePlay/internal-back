@@ -2054,11 +2054,13 @@ class UsersController extends Controller
                 'password' => $password
             ];
             Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
-            \Log::notice(__METHOD__, ['data' => $auditData]);
-            /*$url = route('core.dashboard');
+            foreach($auditData as $data){
+                $userName = $data->username;
+            }
+            $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
-            Mail::to($auditData)->send(new Users($whitelabelId, $url, $request->user, $emailConfiguration, EmailTypes::$password_change_notification));*/
+            Mail::to($auditData)->send(new Users($whitelabelId, $url, $userName, $emailConfiguration, EmailTypes::$password_change_notification));
             $data = [
                 'title' => _i('Password reset'),
                 'message' => _i('Password was successfully reset'),
