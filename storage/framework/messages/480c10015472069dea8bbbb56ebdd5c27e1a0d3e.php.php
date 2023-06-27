@@ -34,10 +34,49 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="image"><?php echo e(_i('Image')); ?></label>
-                            <input type="file" name="image" id="image" class="opacity-0">
-                        </div>
+                        <?php if(!is_null($image->front)): ?>
+                            <div class="form-group">
+                                <label for="image"><?php echo e(_i('Image')); ?></label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                            <div class="form-group">
+                                <label for="front"><?php echo e(_i('Image')); ?></label>
+                                <input type="file" name="front" id="show-front" class="opacity-0">
+                            </div>
+                        <?php else: ?>
+                            <div class="form-group">
+                                <label for="image"><?php echo e(_i('Image')); ?></label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="">
+                                    <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
+                                    <span
+                                        class="glyphicon glyphicon-ok"><?php echo e(_i('Enable only for moving images: ')); ?></span>
+                                </label>
+                                <div class="div_a_show">
+                                    <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
+                                        <div class="noty_body">
+                                            <div class="g-mr-20">
+                                                <div class="noty_body__icon">
+                                                    <i class="hs-admin-info"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p>
+                                                    <?php echo e(_i('This image is only if you want to activate images with movement.The maximum file size is 5mb and the maximum width is 3440px')); ?>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="front"><?php echo e(_i('Image')); ?></label>
+                                        <input type="file" name="front" id="show-front" class="opacity-0">
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -98,6 +137,22 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
+                            <?php if($section == 'section-7'): ?>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="category"><?php echo e(_i('Category')); ?></label>
+                                        <select name="category" id="category" class="form-control">
+                                            <option value=""><?php echo e(_i('Select...')); ?></option>
+                                            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($category); ?>">
+                                                    <?php echo e($category); ?>
+
+                                                </option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="start_date"><?php echo e(_i('Start date')); ?></label>
@@ -126,21 +181,6 @@
                                     <?php endif; ?>
                                 </div>
                             </div>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="status"><?php echo e(_i('Status')); ?></label>
@@ -172,6 +212,7 @@
                                     <input type="hidden" name="id" value="<?php echo e(isset($image->id) ? $image->id : null); ?>">
                                     <input type="hidden" name="file" value="<?php echo e($image->file); ?>">
                                     <input type="hidden" name="image" value="<?php echo e($image->file); ?>">
+                                    <input type="hidden" name="front" value="<?php echo e($image->file); ?>">
                                     <input type="hidden" name="template_element_type"
                                            value="<?php echo e($template_element_type); ?>">
                                     <input type="hidden" name="section" value="<?php echo e($section); ?>">
@@ -196,7 +237,30 @@
     <script>
         $(function () {
             let sectionImages = new SectionImages();
-            sectionImages.update("<?php echo $image->image; ?>");
+            sectionImages.update("<?php echo $image->image; ?>", "show-image");
+            sectionImages.update("<?php echo $image->front; ?>", "show-front");
+        });
+    </script>
+    <script>
+        $(function () {
+
+            // obtener campos ocultar div
+            var checkbox = $(".checkshow");
+            var hidden = $(".div_a_show");
+            //
+
+            hidden.hide();
+            checkbox.change(function () {
+                if (checkbox.is(':checked')) {
+                    //hidden.show();
+                    $(".div_a_show").fadeIn("200")
+                } else {
+                    //hidden.hide();
+                    $(".div_a_show").fadeOut("200")
+                    $('input[type=checkbox]').prop('checked', false);// limpia los valores de checkbox al ser ocultado
+
+                }
+            });
         });
     </script>
 <?php $__env->stopSection(); ?>

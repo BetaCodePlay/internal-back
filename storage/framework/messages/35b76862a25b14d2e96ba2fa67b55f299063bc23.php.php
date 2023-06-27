@@ -5,6 +5,6 @@
     </ul>
 
     <div class="col-social-navigation">
-        <a class="color-telegram" href="https://t.me/graficascasino" target="_blank"><i class="fa fa-telegram"></i> <span class="social-name">Canal Publicitario</span></a>
+        <a class="color-telegram" href="<?php echo e(\Dotworkers\Configurations\Configurations::getWhitelabel() == 20 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 11 ? 'https://t.me/+uc7jrJU0DfY0NTcx' : 'https://t.me/graficascasino'); ?>" target="_blank"><i class="fa fa-telegram"></i> <span class="social-name">Canal Publicitario</span></a>
     </div>
 </div>

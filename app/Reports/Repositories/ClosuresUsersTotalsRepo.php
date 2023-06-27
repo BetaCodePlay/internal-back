@@ -549,33 +549,79 @@ class ClosuresUsersTotalsRepo
      */
     public function whitelabelsTotals($startDate, $endDate, $currency, $provider, $whitelabel)
     {
-        DB::statement('SET search_path TO public');
-        $totals = ClosureUserTotal2023Hour::select('site.whitelabels.description AS whitelabel', 'closures_users_totals_2023_hour.provider_id', \DB::raw('sum(closures_users_totals_2023_hour.played) AS played'), \DB::raw('sum(closures_users_totals_2023_hour.won) AS won'),
-            \DB::raw('sum(closures_users_totals_2023_hour.profit) AS profit'), 'closures_users_totals_2023_hour.currency_iso', 'provider_type_id')
-            ->from('public.closures_users_totals_2023_hour')
-            ->join('site.whitelabels', 'closures_users_totals_2023_hour.whitelabel_id', '=', 'whitelabels.id')
-            ->join('site.providers', 'closures_users_totals_2023_hour.provider_id', '=', 'providers.id')
-            ->where('closures_users_totals_2023_hour.start_date', '>=', $startDate)
-            ->where('closures_users_totals_2023_hour.end_date', '<=', $endDate);
+        // DB::statement('SET search_path TO public');
+        // $totals = ClosureUserTotal2023Hour::select('site.whitelabels.description AS whitelabel', 'closures_users_totals_2023_hour.provider_id', \DB::raw('sum(closures_users_totals_2023_hour.played) AS played'), \DB::raw('sum(closures_users_totals_2023_hour.won) AS won'),
+        //     \DB::raw('sum(closures_users_totals_2023_hour.profit) AS profit'), 'closures_users_totals_2023_hour.currency_iso', 'provider_type_id')
+        //     ->from('public.closures_users_totals_2023_hour')
+        //     ->join('site.whitelabels', 'closures_users_totals_2023_hour.whitelabel_id', '=', 'whitelabels.id')
+        //     ->join('site.providers', 'closures_users_totals_2023_hour.provider_id', '=', 'providers.id')
+        //     ->where('closures_users_totals_2023_hour.start_date', '>=', $startDate)
+        //     ->where('closures_users_totals_2023_hour.end_date', '<=', $endDate);
 
-        if (!empty($whitelabel)) {
-            $totals->where('closures_users_totals_2023_hour.whitelabel_id', $whitelabel);
-        }
+        // if (!empty($whitelabel)) {
+        //     $totals->where('closures_users_totals_2023_hour.whitelabel_id', $whitelabel);
+        // }
 
-        if (!empty($currency)) {
-            $totals->where('closures_users_totals_2023_hour.currency_iso', $currency);
-        }
+        // if (!empty($currency)) {
+        //     $totals->where('closures_users_totals_2023_hour.currency_iso', $currency);
+        // }
 
-        if (!empty($provider)) {
-            $totals->where('closures_users_totals_2023_hour.provider_id', $provider);
-        }
+        // if (!empty($provider)) {
+        //     $totals->where('closures_users_totals_2023_hour.provider_id', $provider);
+        // }
 
-        $data = $totals->orderBy('whitelabels.description', 'ASC')
-            ->orderBy('closures_users_totals_2023_hour.provider_id', 'ASC')
-            ->orderBy('closures_users_totals_2023_hour.currency_iso', 'ASC')
-            ->groupBy('whitelabels.description', 'closures_users_totals_2023_hour.provider_id', 'closures_users_totals_2023_hour.currency_iso', 'providers.provider_type_id', 'closures_users_totals_2023_hour.whitelabel_id')
-            ->get();
-        return $data;
+        // $data = $totals->orderBy('whitelabels.description', 'ASC')
+        //     ->orderBy('closures_users_totals_2023_hour.provider_id', 'ASC')
+        //     ->orderBy('closures_users_totals_2023_hour.currency_iso', 'ASC')
+        //     ->groupBy('whitelabels.description', 'closures_users_totals_2023_hour.provider_id', 'closures_users_totals_2023_hour.currency_iso', 'providers.provider_type_id', 'closures_users_totals_2023_hour.whitelabel_id')
+        //     ->get();
+                // dd([
+                //     $startDate,
+                //     $endDate,
+                //     $whitelabel,
+                //     $whitelabel ? $whitelabel : 'NULL',
+                //     (string) $currency,
+                //     (string) $currency ? $currency : 'NULL',
+                //     $provider ? $provider : 'NULL',
+                //     $provider ? $provider : 'NULL',
+                // ]);
+                $data = DB::select("
+                    SELECT
+                    site.whitelabels.description AS whitelabel,
+                    closures_users_totals_2023_hour.provider_id,
+                    SUM(closures_users_totals_2023_hour.played) AS played,
+                    SUM(closures_users_totals_2023_hour.won) AS won,
+                    SUM(closures_users_totals_2023_hour.profit) AS profit,
+                    closures_users_totals_2023_hour.currency_iso,
+                    providers.provider_type_id
+                    FROM public.closures_users_totals_2023_hour
+                    JOIN site.whitelabels ON closures_users_totals_2023_hour.whitelabel_id = whitelabels.id
+                    JOIN site.providers ON closures_users_totals_2023_hour.provider_id = providers.id
+                    WHERE closures_users_totals_2023_hour.start_date >= ?
+                        AND closures_users_totals_2023_hour.end_date <= ?
+                        AND closures_users_totals_2023_hour.whitelabel_id = COALESCE(?, closures_users_totals_2023_hour.whitelabel_id)
+                        AND closures_users_totals_2023_hour.currency_iso = COALESCE(?, closures_users_totals_2023_hour.currency_iso)
+                        AND closures_users_totals_2023_hour.provider_id = COALESCE(?, closures_users_totals_2023_hour.provider_id)
+                    GROUP BY
+                    site.whitelabels.description,
+                    closures_users_totals_2023_hour.provider_id,
+                    closures_users_totals_2023_hour.currency_iso,
+                    providers.provider_type_id,
+                    closures_users_totals_2023_hour.whitelabel_id
+                    ORDER BY
+                    site.whitelabels.description ASC,
+                    closures_users_totals_2023_hour.provider_id ASC,
+                    closures_users_totals_2023_hour.currency_iso ASC;
+                ", [
+                    $startDate,
+                    $endDate,
+                    $whitelabel,
+                    $currency,
+                    $provider
+                ]);
+
+                return $data;
+
     }
 
     /**

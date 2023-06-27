@@ -1,11 +1,7 @@
 
-<?php $__env->startSection('styles'); ?>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">
 
-
-<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-
+    <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
         <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
             <div class="media">
@@ -17,30 +13,25 @@
         </header>
         <div class="card-block g-pa-15">
             <div class="media">
-                <div class="media-body d-flex justify-content-end g-mb-10" id="table-buttons">
+                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
 
                 </div>
             </div>
-            <div class="table-reponsive">
-
-            <table id="exampleTable" class="table table-bordered display nowrap"  style="width:100%">
-                <?php echo $__env->make('back.layout.litepicker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                <thead>
-                <tr>
-                    <th> <?php echo e(_i('Date')); ?></th>
-                    <th> <?php echo e(_i('Description')); ?></th>
-                    <th> <?php echo e(_i('Debit')); ?></th>
-                    <th> <?php echo e(_i('Credit')); ?></th>
-                    <th> <?php echo e(_i('Balance')); ?> <strong><?php echo e('('._i('from').')'); ?></strong></th>
-                    <th> <?php echo e(_i('Balance')); ?></th>
-
-                </tr>
-                </thead>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover dt-responsive" id="tableTimeline" data-route="<?php echo e(route('reports.data.transaction.timeline')); ?>" width="100%">
+                    <thead>
+                        <tr>
+                            <th> <?php echo e(_i('Date')); ?></th>
+                            <th> <?php echo e(_i('Description')); ?></th>
+                            <th> <?php echo e(_i('Debit')); ?></th>
+                            <th> <?php echo e(_i('Credit')); ?></th>
+                            <th> <?php echo e(_i('Balance')); ?> <strong><?php echo e('('._i('from').')'); ?></strong></th>
+                            <th> <?php echo e(_i('Balance')); ?></th>
+            
+                        </tr>
+                    </thead>
+                </table>
         </div>
-
-
-
         </div>
     </div>
 <?php $__env->stopSection(); ?>
@@ -49,7 +40,7 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.transactionTimeline('<?php echo e(route('reports.data.transaction.timeline')); ?>','#exampleTable',[10,20,50,100]);
+            agents.transactionTimeline([50,100,500,1000,2000]);
         });
 
     </script>

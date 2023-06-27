@@ -4,6 +4,8 @@ namespace App\Agents\Repositories;
 
 use App\Agents\Entities\Agent;
 use App\Users\Entities\User;
+use App\Users\Enums\ActionUser;
+use App\Users\Enums\TypeUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -99,7 +101,6 @@ class AgentsRepo
         return $agents;
     }
 
-
     /**
      * Block users
      *
@@ -110,6 +111,7 @@ class AgentsRepo
     {
         $user = User::find($userId);
         $user->status = false;
+        $user->action = ActionUser::$blocked_branch;
         $user->save();
     }
 
@@ -298,6 +300,62 @@ class AgentsRepo
     }
 
     /**
+     * Get agents children by owner
+     *
+     * @param int $owner Owner ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function getAgentsChildrenByOwner($owner, $currency)
+    {
+        return Agent::select('agents.user_id', 'users.username')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.owner_id', $owner)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->whitelabel()
+            ->orderBy('users.username', 'ASC')
+            ->get();
+    }
+
+    /**
+     * Format Json Tree V1.0
+     * Get user and agents son (first generation)
+     * @param int $owner Owner ID
+     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel ID
+     * @return mixed
+     */
+    public function getChildrenByOwner(int $owner,string $currency,int $whitelabel)
+    {
+        $response = DB::select('SELECT * FROM site.get_users_agents_son(?,?,?)', [$owner, $currency,$whitelabel]);
+        $treeItem =[];
+        foreach ($response as $item => $value){
+
+            $icon = $value->type_user == 1 ? 'star' : ($value->type_user == 2 ? 'users' : 'user');
+            $type = $value->type_user == 5 ? 'user':'agent';
+            $datTmp = [
+                'id' => $value->user_id,
+                'text' => $value->username,
+                'status' => $value->status,
+                'icon' => "fa fa-{$icon}",
+                'li_attr' => [
+                    'data_type' => $type,
+                    'class' => 'init_'.$type
+                ],
+                //'children'=>[]
+            ];
+            if(in_array($value->type_user,[TypeUser::$agentMater,TypeUser::$agentCajero])){
+                $datTmp['children']=$this->getChildrenByOwner($value->user_id, $currency,$whitelabel);
+            }
+            $treeItem[] = $datTmp;
+        }
+
+        return $treeItem;
+
+    }
+
+    /**
      * Get agents dependency
      *
      * @param int $user Agent user ID
@@ -341,6 +399,18 @@ class AgentsRepo
             ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
             ->where('exclude_providers_users.user_id', $user)
             ->get();
+        return $data;
+    }
+
+    /**
+     * Get user blocked status
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getUserBlocked($user)
+    {
+        $data = User::where('id', $user)->where('status', false)->get();
         return $data;
     }
 
@@ -532,6 +602,7 @@ class AgentsRepo
     {
         $user = User::find($userId);
         $user->status = true;
+        $user->action = ActionUser::$active;
         $user->save();
     }
 }

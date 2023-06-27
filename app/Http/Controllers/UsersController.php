@@ -1478,7 +1478,7 @@ class UsersController extends Controller
                         'updated_at' => $date
                     ];
                     $this->usersRepo->updateExcludeMakersUser($currency, $userToUpdate['category'], $userData->id, $data);
-                }   
+                }
                 $auditData = [
                     'ip' => Utils::userIp($request),
                     'user_id' => auth()->user()->id,
@@ -2033,9 +2033,11 @@ class UsersController extends Controller
         try {
             $user = $request->user;
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            $roles = Security::getUserRoles($user);
+            // dd($roles);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'title' => ActionUser::getName($userData->action),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2044,9 +2046,18 @@ class UsersController extends Controller
             }
 
             $password = $request->password;
-            $userData = [
-                'password' => $password
-            ];
+            if($userData->type_user == TypeUser::$player ) {
+                $userData = [
+                    'password' => $password,
+                    'action' =>  ActionUser::$active
+                ];
+            } else {
+                $userData = [
+                    'password' => $password,
+                    'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
+                ];
+            }
+
             $this->usersRepo->update($user, $userData);
 
             $auditData = [
@@ -2135,6 +2146,7 @@ class UsersController extends Controller
                         'whitelabel_id' => $whitelabel,
                         'web_register' => false,
                         'main' => true,
+                        'action'=>ActionUser::$active
                     ];
                     $profileData = [
                         'country_iso' => $request->country,

@@ -13,12 +13,23 @@
         </header>
         <div class="card-block g-pa-15">
             <div class="media">
-                <div class="media-body d-flex justify-content-end g-mb-10" id="table-buttons">
+                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
 
                 </div>
             </div>
-            <div class="table-responsive" id="financial-state-table" data-route="<?php echo e(route('agents.reports.financial-state-data.provider')); ?>">
-
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover dt-responsive" id="financial-statetable" data-route="<?php echo e(route('agents.reports.financial-state-data.provider')); ?>" width="100%">
+                    <thead>
+                        <tr>
+                            <th> <?php echo e(_i('Providers')); ?></th>
+                            <th> <?php echo e(_i('Played')); ?></th>
+                            <th> <?php echo e(_i('Win')); ?></th>
+                            <th> <?php echo e(_i('Bets')); ?></th>
+                            <th> <?php echo e(_i('Profit')); ?></th>
+                            <th> <?php echo e(_i('Rtp')); ?></th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -28,8 +39,8 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.financialState(<?php echo e($user); ?>);
-            $('#update').trigger('click')
+            agents.financialStateNew(<?php echo e($user); ?>,[50,100,500,1000,2000]);
+            // $('#update').trigger('click')
         });
     </script>
 <?php $__env->stopSection(); ?>

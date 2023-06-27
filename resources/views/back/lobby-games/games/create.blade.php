@@ -16,19 +16,50 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="change_provider">{{ _i('Provider') }}</label>
-                                    <select name="change_provider" id="change_provider" data-route="{{ route('games.game') }}" class="form-control">
+                                    <label for="maker">{{ _i('Maker') }}</label>
+                                    <select name="maker" id="maker" class="form-control" data-route="{{ route('core.providers-by-maker') }}"
+                                    data-categories="{{ route('core.categories-by-maker') }}">
                                         <option value="">{{ _i('Select...') }}</option>
-                                        @foreach ($providers as $provider)
-                                            <option value="{{ $provider->provider_id }}">
-                                                {{ $provider->name }}
+                                        @foreach ($makers as $maker)
+                                        <option value="{{ $maker->maker }}">
+                                            {{ $maker->maker }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="provider">{{ _i('Provider') }}</label>
+                                    <select name="provider" id="provider" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category">{{ _i('Category') }}</label>
+                                    <select name="category" id="category" class="form-control"
+                                    data-route="{{ route('games.game-by-categories') }}">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 div_a_product_id">
+                                <div class="form-group">
+                                    <label for="product_id">{{ _i('Product ID') }}</label>
+                                    <select name="product_id" id="product_id" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($products as $product)
+                                            <option value="{{ $product->product_id }}">
+                                                {{ $product->product_id }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="">
+                                <label>
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span class="glyphicon glyphicon-ok">{{ _i('Games Personalize: ') }}</span>
                                 </label>
@@ -42,27 +73,27 @@
                                     </div>
                                 </div>
                             </div>
-                            @isset($route)
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="route">{{ _i('Menu where it will be shown') }}</label>
-                                        <select select name="route" id="route" class="form-control">
-                                            <option value="">{{ _i('Select...') }}</option>
-                                            @foreach ($route as $item)
-                                                <option value="{{ $item->route }}">
-                                                    {{ $item->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            @endisset
                             <div class="div_a_show col-md-6">
                                 <div class="form-group">
                                     <label for="order">{{ _i('Order (optional)') }}</label>
                                     <input type="number" name="order" id="order" value="0" class="form-control" min="0">
                                 </div>
                             </div>
+                            @isset($route)
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="route">{{ _i('Menu where it will be shown') }}</label>
+                                    <select select name="route" id="route" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($route as $item)
+                                            <option value="{{ $item->route }}">
+                                                {{ $item->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                           @endisset
                             <div class="div_a_show card-block g-pa-15">
                                 <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
                                     <div class="noty_body">
@@ -198,6 +229,12 @@
                                 {{ _i('Game') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Maker') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Category') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Menu') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -221,8 +258,12 @@
         $(function () {
             let lobbyGames = new LobbyGames()
             lobbyGames.all();
-            lobbyGames.game();
             lobbyGames.store();
+            lobbyGames.providersByMaker();
+            lobbyGames.categoryByMaker();
+            lobbyGames.gamesByCategory();
+            lobbyGames.gamesByProducts();
+            lobbyGames.products();
         });
     </script>
     <script>
@@ -231,6 +272,8 @@
             // obtener campos ocultar div
             var checkbox = $(".checkshow");
             var hidden = $(".div_a_show");
+            var products = $(".div_a_product_id");
+            products.hide();
             //
 
             hidden.hide();
