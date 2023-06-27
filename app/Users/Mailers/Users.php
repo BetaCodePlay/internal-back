@@ -54,14 +54,13 @@ class Users extends Mailable
                 $this->subject = _i('Login Notification');
                 $this->title = _i('Welcome %s', $username);
                 $this->subtitle = _i('Your login was successful');
-                $this->content = _i('We inform you that you are logging from this IP address,', $ip , '.If you are unaware of this activity please let us know');
-                $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
+                $this->content = _i('We inform you that you are logging from this IP address,', $ip);
+                $this->footer = _i("If you have no idea about this activity please contact support or your top agent");
 
                 if (!is_null($emailConfiguration)) {
                     $this->title = !is_null($emailConfiguration->title) ? $emailConfiguration->title : $this->title;
                     $this->subtitle = !is_null($emailConfiguration->subtitle) ? $emailConfiguration->subtitle : $this->subtitle;
                     $this->content = !is_null($emailConfiguration->content) ? $emailConfiguration->content : $this->content;
-                    $this->button = !is_null($emailConfiguration->button) ? $emailConfiguration->button : $this->button;
                     $this->footer = !is_null($emailConfiguration->footer) ? $emailConfiguration->footer : $this->footer;
                 }
                 break;
@@ -72,7 +71,6 @@ class Users extends Mailable
                 $this->title = _i('Welcome %s', $username);
                 $this->subtitle = _i("¡Hello %s, you are informed that your password has been changed", [$this->username]);
                 $this->content = _i('This message is to notify you that your password has been changed.');
-                $this->button = _i('Notify');
                 $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
 
                 if (!is_null($emailConfiguration)) {
@@ -80,7 +78,6 @@ class Users extends Mailable
                     $this->title = !is_null($emailConfiguration->title) ? $emailConfiguration->title : $this->title;
                     $this->subtitle = !is_null($emailConfiguration->subtitle) ? $emailConfiguration->subtitle : $this->subtitle;
                     $this->content = !is_null($emailConfiguration->content) ? $emailConfiguration->content : $this->content;
-                    $this->button = !is_null($emailConfiguration->button) ? $emailConfiguration->button : $this->button;
                     $this->footer = !is_null($emailConfiguration->footer) ? $emailConfiguration->footer : $this->footer;
                 }
 
@@ -92,7 +89,6 @@ class Users extends Mailable
                 $this->title = _i('Invalid password');
                 $this->subtitle = _i("¡Hello  %s, you have entered an invalid password!", [$this->username]);
                 $this->content = _i('This message is to notify that the password entered is incorrect');
-                $this->button = _i('Notify');
                 $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
 
                 if (!is_null($emailConfiguration)) {
@@ -100,7 +96,6 @@ class Users extends Mailable
                     $this->title = !is_null($emailConfiguration->title) ? $emailConfiguration->title : $this->title;
                     $this->subtitle = !is_null($emailConfiguration->subtitle) ? $emailConfiguration->subtitle : $this->subtitle;
                     $this->content = !is_null($emailConfiguration->content) ? $emailConfiguration->content : $this->content;
-                    $this->button = !is_null($emailConfiguration->button) ? $emailConfiguration->button : $this->button;
                     $this->footer = !is_null($emailConfiguration->footer) ? $emailConfiguration->footer : $this->footer;
                 }
                 break;
@@ -116,6 +111,6 @@ class Users extends Mailable
     public function build()
     {
         return $this->subject($this->subject)
-        ->view('back.users.emails.activate');
+        ->view('back.users.emails.users');
     }
 }
