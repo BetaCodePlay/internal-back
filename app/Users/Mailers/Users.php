@@ -84,13 +84,13 @@ class Users extends Mailable
 
                 break;
             }
-            case EmailTypes::$password_reset:
+            case EmailTypes::$invalid_password_notification:
             {
-                $this->subject = _i('Reset your password');
-                $this->title = _i('Reset your password');
-                $this->subtitle = _i("¡Hello  %s, you have requested the reset of your password!", [$this->username]);
-                $this->content = _i('To configure a new password please click on the following button. You have a period of 24 hours to activate your account after having registered otherwise you must perform the process again');
-                $this->button = _i('Reset password');
+                $this->subject = _i('Invalid password notification');
+                $this->title = _i('Invalid password');
+                $this->subtitle = _i("¡Hello  %s, you have entered an invalid password!", [$this->username]);
+                $this->content = _i('This message is to notify that the password entered is incorrect');
+                $this->button = _i('Notify');
                 $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
 
                 if (!is_null($emailConfiguration)) {
