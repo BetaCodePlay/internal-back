@@ -54,8 +54,7 @@ class Users extends Mailable
                 $this->subject = _i('Login Notification');
                 $this->title = _i('Welcome %s', $username);
                 $this->subtitle = _i('Your login was successful');
-                $this->content = _i('We notify you that your login was successful. If you are unaware of this activity please let us know');
-                $this->button = _i('Notify');
+                $this->content = _i('We inform you that you are logging from this IP address,', $ip , '.If you are unaware of this activity please let us know');
                 $this->footer = _i("If the button doesn't show correctly or doesn't work, copy and paste the following link into your browser:");
 
                 if (!is_null($emailConfiguration)) {
