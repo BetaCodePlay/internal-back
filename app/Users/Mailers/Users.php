@@ -41,7 +41,6 @@ class Users extends Mailable
      */
     public function __construct($whitelabel, $url, $username, $emailConfiguration, $emailType, $ip)
     {
-        Log::debug(__METHOD__, ['whitelabel' => $whitelabel, 'url' => $url, 'email' => $emailConfiguration, 'emailType' => $emailType, 'ip' => $ip]);
         $this->whitelabel = $whitelabel;
         $this->url = $url;
         $this->username = $username;
@@ -70,7 +69,7 @@ class Users extends Mailable
                 $this->subject = _i('Password change notification');
                 $this->title = _i('Welcome %s', $username);
                 $this->subtitle = _i("¡Hello %s, you are informed that your password has been changed", [$this->username]);
-                $this->content = _i('This message is to notify you that your password has been changed.');
+                $this->content = _i('This message is to notify you that your password has been changed from this IP address %s', [$this->ip]);
                 $this->footer = _i("If you have no idea about this activity please contact support or your top agent");
 
                 if (!is_null($emailConfiguration)) {
@@ -88,7 +87,7 @@ class Users extends Mailable
                 $this->subject = _i('Invalid password notification');
                 $this->title = _i('Invalid password');
                 $this->subtitle = _i("¡Hello  %s, you have entered an invalid password!", [$this->username]);
-                $this->content = _i('This message is to notify that the password entered is incorrect');
+                $this->content = _i('This message is to notify that the password entered is incorrect from this IPaddress %s', [$this->ip]);
                 $this->footer = _i("If you have no idea about this activity please contact support or your top agent");
 
                 if (!is_null($emailConfiguration)) {

@@ -198,8 +198,8 @@ class AuthController extends Controller
                 }
 
             } else {
+                //Estos datos se anexan para el envio de email
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
-                Log::info(__METHOD__, ['userTemp' => $userTemp]);
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
                 $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
