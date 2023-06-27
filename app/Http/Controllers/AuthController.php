@@ -70,8 +70,6 @@ class AuthController extends Controller
                 //'status' => true
             ];
             $ip = Utils::userIp($request);
-            $user = auth()->user()->id;
-
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
                 if (auth()->user()->action == ActionUser::$locked_higher) {
@@ -200,7 +198,7 @@ class AuthController extends Controller
                 }
 
             } else {
-                $userTemp = $usersRepo->getUsers($user);
+                $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
                 $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
