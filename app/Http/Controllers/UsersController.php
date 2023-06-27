@@ -2054,6 +2054,7 @@ class UsersController extends Controller
                 'password' => $password
             ];
             Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
+            \Log::info(__METHOD__, ['user' => $user, 'request' => $request->all()]);
             $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
