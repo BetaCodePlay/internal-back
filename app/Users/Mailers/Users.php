@@ -87,7 +87,7 @@ class Users extends Mailable
                 $this->subject = _i('Invalid password notification');
                 $this->title = _i('Invalid password');
                 $this->subtitle = _i("¡Hello  %s, you have entered an invalid password!", [$this->username]);
-                $this->content = _i('This message is to notify that the password entered is incorrect from this IPaddress %s', [$this->ip]);
+                $this->content = _i('This message is to notify that the password entered is incorrect from this IP address %s', [$this->ip]);
                 $this->footer = _i("If you have no idea about this activity please contact support or your top agent");
 
                 if (!is_null($emailConfiguration)) {
