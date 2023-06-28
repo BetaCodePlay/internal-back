@@ -120,6 +120,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['free_currency'] = Configurations::getFreeCurrency();
                     $data['logo'] = Configurations::getLogo($mobile = true);
                     $data['iphone'] = $iphone;
+                    $data['theme'] = Configurations::getTheme();
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {

@@ -1,4 +1,4 @@
-@extends('back.users')
+@extends('back.users-notifications')
 
 @section('title')
     {{ $title }}
