@@ -3,7 +3,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title')</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
       @import "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap";
@@ -234,7 +233,7 @@
         </div>
 
         <div class="information">
-            <div class="welcome">Welcome, Clandor.</div>
+            <div class="welcome">@yield('title')</div>
             <p>@yield('content')</p>
 
             <p>@yield('footer')</p>
