@@ -17,6 +17,7 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -92,6 +93,66 @@ class AgentsCollection
 
         return json_encode($tree);
     }
+
+    /**
+     *  Tree format for users (Children Tree Sql)
+     * @param int $user User Id
+     */
+    public function childrenTreeSql($user)
+    {
+        $agentsRepo = new AgentsRepo();
+        $tree = collect($agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()));
+        return $this->childrenTreeDraw($tree,0);
+
+    }
+
+    /**
+     *  Tree format (Children Tree Draw)
+     * @param array $tree Users
+     */
+    public function childrenTreeDraw($tree,$level,$idOwner=null)
+    {
+        $arrayTree=[];
+        $treeEdit = $tree;
+        $treeAll = $tree->where('level',$level)->all();
+        if(!is_null($idOwner)){
+            $treeAll = $tree->where('level',$level)->where('owner_id',$idOwner)->all();
+        }
+       foreach ($treeAll as $value){
+
+           if($value->level == $level){
+               $icon = $level === 0 ? 'diamond' : ($value->type_user == 1 ? 'star' : ($value->type_user == 2 ? 'users' : 'user'));
+               $type = $value->type_user == 5 ? 'user':'agent';
+
+               $arrayTreeTmp=[
+                   'id' => $value->id,
+                   'text' => $value->username,
+                   'status' => $value->status,
+                   'icon' => "fa fa-{$icon}",
+                   'li_attr' => [
+                       'data_type' => $type,
+                       'class' => 'init_'.$type
+                   ]
+               ];
+                if($level == 0){
+                    $arrayTreeTmp['state']=[
+                        'opened' => true,
+                        'selected' => true,
+                    ];
+                }
+               if(in_array($value->type_user,[TypeUser::$agentMater,TypeUser::$agentCajero])){
+                   $arrayTreeTmp['children']=$this->childrenTreeDraw($tree,$level+1,$value->id);
+               }
+               $arrayTree[]=$arrayTreeTmp;
+           }
+
+
+       }
+
+        return $arrayTree;
+    }
+
+
 
     /**
      * Json Format

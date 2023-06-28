@@ -2077,7 +2077,7 @@ class AgentsController extends Controller
      */
     public function index(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
-        //try {
+        try {
             if (session('admin_id')) {
                 $user = session('admin_id');
             } else {
@@ -2107,14 +2107,77 @@ class AgentsController extends Controller
             $data['makers'] = $this->gamesRepo->getMakers();
             $data['agents'] = $agentAndSubAgents;
             $data['tree'] = $this->agentsCollection->childrenTree($agent,$user);
+            //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
             $data['title'] = _i('Agents module');
-
             return view('back.agents.index', $data);
 
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            abort(500);
-//        }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Get Tree Users
+     *
+     */
+    public function getTreeUsers()
+    {
+        try {
+            return Utils::successResponse(['tree'=>$this->agentsCollection->childrenTreeSql(Auth::id())]);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Show dashboard Temp
+     *
+     * @param CountriesRepo $countriesRepo
+     * @param ProvidersRepo $providersRepo
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|View
+     */
+    public function index_Temp(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    {
+        try {
+            if (session('admin_id')) {
+                $user = session('admin_id');
+            } else {
+                $user = auth()->user()->id ? Auth::id() : null;
+                if (is_null(Auth::user()->username) == 'romeo') {
+                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+                }
+
+            }
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = session('currency');
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            //TODO MOSTRAR EL AGENTE LOGUEADO
+            $agent->user_id = $agent->id;
+
+            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgentsNew($this->agentsRepo,$currency,[$agent]);
+
+            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $data['currencies'] = Configurations::getCurrencies();
+            $data['countries'] = [];//$countriesRepo->all();
+            $data['timezones'] = [];//\DateTimeZone::listIdentifiers();
+            $data['providers'] = $providers;
+            $data['agent'] = $agent;
+            $data['makers'] = $this->gamesRepo->getMakers();
+            $data['agents'] = $agentAndSubAgents;
+            $data['tree'] = json_encode([]);
+            $data['title'] = _i('Agents module Temp');
+            return view('back.agents.index_temp', $data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
     }
 
     /**

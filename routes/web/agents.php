@@ -33,6 +33,17 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'as' => 'agents.index',
         'uses' => 'AgentsController@index'
     ]);
+    // Get Tree Josn
+    Route::get('get/tree/users', [
+        'as' => 'agents.get.tree.users',
+        'uses' => 'AgentsController@getTreeUsers'
+    ]);
+
+    // Show dashboard Temp
+    Route::get('temp', [
+        'as' => 'agents.index.temp',
+        'uses' => 'AgentsController@index_temp'
+    ]);
 
     Route::get('create-user', [
         'as' => 'agents.create.user',

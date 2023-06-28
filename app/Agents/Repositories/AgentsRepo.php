@@ -356,6 +356,37 @@ class AgentsRepo
     }
 
     /**
+     * Get Tree Sql Levels
+     * @param int $user User Id
+     * @return array
+     */
+    public function getTreeSqlLevels(int $user,string $currency,int $whitelabel)
+    {
+        return DB::select('WITH RECURSIVE all_agents AS (
+                  SELECT agents.id, agents.user_id, agents.owner_id,0 AS level
+                  FROM site.agents AS agents
+                  JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                  WHERE agents.user_id = ?
+                  AND currency_iso = ?
+                  UNION
+                  SELECT agents.id, agents.user_id, agents.owner_id,level+1 AS level
+                  FROM site.agents AS agents
+                  JOIN all_agents ON agents.owner_id = all_agents.user_id
+                  )
+
+                SELECT u.id, u.username, a.owner_id, u.type_user, u.status, level
+                    FROM site.users u
+                    INNER join  all_agents a on u.id=a.user_id
+                    WHERE u.whitelabel_id = ?
+                UNION
+                    SELECT u.id,u.username, a.user_id, u.type_user,u.status, level+1 as level FROM site.agent_user AS au
+                    INNER JOIN site.users AS u ON u.id = au.user_id
+                    INNER join  all_agents  a on au.agent_id=a.id
+                    WHERE u.whitelabel_id = ?
+                    ORDER BY type_user,username',[$user,$currency,$whitelabel,$whitelabel]);
+    }
+
+    /**
      * Get agents dependency
      *
      * @param int $user Agent user ID
