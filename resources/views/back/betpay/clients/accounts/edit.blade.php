@@ -54,6 +54,31 @@
                             </select>
                         </div>
                     </div>
+                    @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$zelle || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$paypal
+                        || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$skrill || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$neteller
+                        || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$airtm
+                        || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$uphold)
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="email">{{ _i('Email') }}</label>
+                            <input type="email" name="account_email" id="account_email" class="form-control" autocomplete="off" value="{{$client->data->email}}">
+                        </div>
+                    </div>
+                        @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$zelle)
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="first_name">{{ _i('First name') }}</label>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" autocomplete="off" value="{{$client->data->first_name}}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="last_name">{{ _i('Last name') }}</label>
+                                    <input type="text" name="last_name" id="last_name" class="form-control" autocomplete="off" value="{{$client->data->last_name}}">
+                                </div>
+                            </div>
+                        @endif
+                    @endif
                     @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$cryptocurrencies)
                         <div class="col-md-4">
                             <div class="form-group">
@@ -128,7 +153,32 @@
                     </div>
                     <input type="hidden" name="file" value="{{$client->data->qr}}">
                     @endif
-                    
+                    @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$mercado_pago)
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="email_mercado_pago">{{ _i('Email') }}</label>
+                                <input type="email" name="email_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->email}}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="cbu_mercado_pago">{{ _i('CBU') }}</label>
+                                <input type="number" name="cbu_mercado_pago" id="cbu_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->cbu}}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="cvu_mercado_pago">{{ _i('CVU') }}</label>
+                                <input type="number" name="cvu_mercado_pago" id="cvu_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->cvu}}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="alias_mercado_pago">{{ _i('Alias') }}</label>
+                                <input type="text" name="alias_mercado_pago" id="alias_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->alias}}">
+                        </div>
+                    </div>
+                    @endif
                     <div class="col-md-12">
                         <input type="hidden" name="client_account" id="client_account" value="{{$client->id}}">
                         <input type="hidden" name="payments" id="payments" value="{{$client->payment_method_id}}">

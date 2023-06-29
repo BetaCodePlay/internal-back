@@ -138,7 +138,37 @@ class TransactionsCollection
                     );
                 }
             }
-
+            if($paymentMethod == PaymentMethods::$mercado_pago) {
+                $transaction->origin_account = '';
+                if(isset($transaction->user_account->email)){
+                    $transaction->origin_account .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $transaction->user_account->email
+                    );
+                }
+                if(isset($transaction->user_account->cbu)){
+                    $transaction->origin_account .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('CBU'),
+                        $transaction->user_account->cbu
+                    );
+                }
+                if(isset($transaction->user_account->cvu)){
+                    $transaction->origin_account .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('CVU'),
+                        $transaction->user_account->cvu
+                    );
+                }
+                if(isset($transaction->user_account->alias)){
+                    $transaction->origin_account .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Alias'),
+                        $transaction->user_account->alias
+                    );
+                }
+            }
             $transaction->actions = '';
             if (Gate::allows('access', Permissions::$process_credit)) {
                 $transaction->actions .= sprintf(
@@ -241,6 +271,8 @@ class TransactionsCollection
                     break;
                 }
                 case PaymentMethods::$binance:
+                case PaymentMethods::$paypal:
+                case PaymentMethods::$mercado_pago:
                 {
                     $transaction->details .= sprintf(
                         '<li><strong>%s</strong>: %s</li>',
@@ -396,6 +428,44 @@ class TransactionsCollection
                         );
                     }
                 }
+                case PaymentMethods::$mercado_pago:
+                {
+                    $transaction->payment_method = '';
+                    if(isset($transaction->user_account->email)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Email'),
+                            $transaction->user_account->email
+                        );
+                    }
+                    if(isset($transaction->user_account->cbu)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CBU'),
+                            $transaction->user_account->cbu
+                        );
+                    }
+                    if(isset($transaction->user_account->cvu)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CVU'),
+                            $transaction->user_account->cvu
+                        );
+                    }
+                    if(isset($transaction->user_account->alias)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Alias'),
+                            $transaction->user_account->alias
+                        );
+                    }
+                }
+                case PaymentMethods::$paypal:
+                {
+                   if (isset($transaction->user_account->email)) {
+                       $transaction->user_account->email = !is_null($transaction->user_account->email) ? $transaction->user_account->email : "N/A";
+                   }
+                }
             }
 
             $userData = $usersRepo->find($transaction->external_user);
@@ -549,6 +619,47 @@ class TransactionsCollection
                             '<strong>%s:</strong> %s<br>',
                             _i('Qr'),
                             $transaction->user_account->qr
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$paypal:
+                {
+                    $transaction->withdrawal_data .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $transaction->user_account->email
+                    );
+                    break;
+                }
+                case PaymentMethods::$mercado_pago:
+                {
+                    if(isset($transaction->user_account->email)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Email'),
+                            $transaction->user_account->email
+                        );
+                    }
+                    if(isset($transaction->user_account->cbu)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CBU'),
+                            $transaction->user_account->cbu
+                        );
+                    }
+                    if(isset($transaction->user_account->cvu)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CVU'),
+                            $transaction->user_account->cvu
+                        );
+                    }
+                    if(isset($transaction->user_account->alias)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Alias'),
+                            $transaction->user_account->alias
                         );
                     }
                     break;

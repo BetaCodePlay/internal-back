@@ -96,6 +96,52 @@ class AccountsCollection
                     }
                     break;
                 }
+                case PaymentMethods::$paypal:
+                {
+                    if(!is_null($details->email)){
+                        $account->details = sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Email'),
+                            ': ',
+                            $details->email,
+                        );
+                    }else{
+                        $account->details ="";
+                    }
+                    break;
+                }
+                case PaymentMethods::$mercado_pago:
+                {
+                    if(!is_null($details->email)){
+                        $account->details = sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Email'),
+                            ': ',
+                            $details->email,
+                        );
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('CBU'),
+                            ': ',
+                            $details->cbu
+                        );
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('CVU'),
+                            ': ',
+                            $details->cvu
+                        );
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Alias'),
+                            ': ',
+                            $details->alias
+                        );
+                    }else{
+                        $account->details ="";
+                    }
+                    break;
+                }
             }
             $account->status = sprintf(
                 '<div class="checkbox checkbox-primary">
@@ -196,6 +242,71 @@ class AccountsCollection
                         $account->data->phone,
                         $account->data->pay_id,
                         $account->data->binance_id,
+                        $account->id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$paypal:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $account->data->email
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="electronic-wallets" data-email="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->email,
+                        $account->id,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$mercado_pago:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $account->data->email
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('CBU'),
+                        $account->data->cbu
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('CVU'),
+                        $account->data->cvu
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Alias'),
+                        $account->data->alias
+                    );
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="mercado-pago" data-mercado-pago-email="%s" data-mercado-pago-cbu="%s" data-mercado-pago-cvu="%s" data-mercado-pago-alias="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->email,
+                        $account->data->cbu,
+                        $account->data->cvu,
+                        $account->data->alias,
                         $account->id,
                         _i('Edit')
                     );

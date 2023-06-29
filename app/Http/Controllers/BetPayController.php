@@ -609,6 +609,34 @@ class BetPayController extends Controller
     }
 
     /**
+     * Show pending credit paypal
+     *
+     * @return Application|Factory|View
+     */
+    public function creditPayPal()
+    {
+        $data['transaction_type'] = TransactionTypes::$credit;
+        $data['payment_method'] = PaymentMethods::$paypal;
+        $data['provider'] = Providers::$paypal;
+        $data['title'] = _i('Pending PayPal credit transactions');
+        return view('back.betpay.paypal.credit', $data);
+    }
+
+    /**
+     * Show pending credit MercadoPago
+     *
+     * @return Application|Factory|View
+     */
+    public function creditMercadoPago()
+    {
+        $data['transaction_type'] = TransactionTypes::$credit;
+        $data['payment_method'] = PaymentMethods::$mercado_pago;
+        $data['provider'] = Providers::$mercado_pago;
+        $data['title'] = _i('Pending MercadoPago credit transactions');
+        return view('back.betpay.mercado-pago.credit', $data);
+    }
+
+    /**
      * Show credit report
      *
      * @param int $paymentMethod Payment method ID
@@ -749,6 +777,38 @@ class BetPayController extends Controller
         $data['accounts'] = $this->clientAccounts($paymentMethod);
         $data['title'] = _i('Pending Binance debit transactions');
         return view('back.betpay.binance.debit', $data);
+    }
+
+    /**
+     * Show pending debit paypal
+     *
+     * @return Application|Factory|View
+     */
+    public function debitPayPal()
+    {
+        $paymentMethod = PaymentMethods::$paypal;
+        $data['transaction_type'] = TransactionTypes::$debit;
+        $data['payment_method'] = $paymentMethod;
+        $data['provider'] = Providers::$paypal;
+        $data['accounts'] = $this->clientAccounts($paymentMethod);
+        $data['title'] = _i('Pending PayPal debit transactions');
+        return view('back.betpay.paypal.debit', $data);
+    }
+
+    /**
+     * Show pending debit MercadoPago
+     *
+     * @return Application|Factory|View
+     */
+    public function debitMercadoPago()
+    {
+        $paymentMethod = PaymentMethods::$mercado_pago;
+        $data['transaction_type'] = TransactionTypes::$debit;
+        $data['payment_method'] = $paymentMethod;
+        $data['provider'] = Providers::$mercado_pago;
+        $data['accounts'] = $this->clientAccounts($paymentMethod);
+        $data['title'] = _i('Pending MercadoPago debit transactions');
+        return view('back.betpay.mercado-pago.debit', $data);
     }
 
     /**
@@ -1941,6 +2001,19 @@ class BetPayController extends Controller
                     'qr' => $name,
                 ];
             },
+            PaymentMethods::$paypal => function ($request) {
+                return [
+                    'email' => $request->email_paypal
+                ];
+            },
+            PaymentMethods::$mercado_pago => function ($request) {
+                return [
+                    'email' => $request->email_mercado_pago,
+                    'alias' => $request->alias_mercado_pago,
+                    'cbu' => $request->cbu_mercado_pago,
+                    'cvu' => $request->cvu_mercado_pago
+                ];
+            },
         ];
         $clientAccountDataFunction = $clientAccountDataFunctions[$paymentMethod] ?? function () {
             return [];
@@ -1970,7 +2043,18 @@ class BetPayController extends Controller
             [
                 'cryptocurrency_cripto' => 'required',
                 'wallet_cripto' => 'required'
-            ]
+            ],
+            PaymentMethods::$paypal => 
+            [
+                'email_paypal' => 'required'
+            ],
+            PaymentMethods::$mercado_pago => 
+            [
+                'email_mercado_pago' => 'required_without_all:alias_mercado_pago,cbu_mercado_pago,cvu_mercado_pago',
+                'alias_mercado_pago' => 'required_without_all:email_mercado_pago,cbu_mercado_pago,cvu_mercado_pago',
+                'cbu_mercado_pago' => 'required_without_all:alias_mercado_pago,email_mercado_pago,cvu_mercado_pago',
+                'cvu_mercado_pago' => 'required_without_all:alias_mercado_pago,cbu_mercado_pago,email_mercado_pago'
+            ],
         ];
 
         return $rulesClientAccountDataFunctions[$paymentMethod];
@@ -2304,6 +2388,16 @@ class BetPayController extends Controller
                         'pay_id' => $request->binance_pay_id,
                         'binance_id' => $request->binance_id
                     ];
+                }
+                case PaymentMethods::$mercado_pago:
+                {
+                    $requestData = [
+                        'email' => $request->mercado_pago_email,
+                        'cbu' => $request->mercado_pago_cbu,
+                        'cvu' => $request->mercado_pago_cvu,
+                        'alias' => $request->mercado_pago_alias
+                    ];
+                    break;
                 }
             }
 

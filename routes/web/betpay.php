@@ -112,6 +112,42 @@ Route::group(['prefix' => 'betpay', 'middleware' => ['auth']], function () {
         ]);
     });
 
+     /**
+     *  PayPal routes
+     */
+    Route::group(['prefix' => 'paypal', 'middleware' => ['auth']], function () {
+
+        // Credit paypal
+        Route::get('credit', [
+            'as' => 'betpay.paypal.credit',
+            'uses' => 'BetPayController@creditPayPal'
+        ]);
+
+        // Debit paypal
+        Route::get('debit', [
+            'as' => 'betpay.paypal.debit',
+            'uses' => 'BetPayController@debitPayPal'
+        ]);
+    });
+
+    /**
+     *  MercadoPago routes
+     */
+    Route::group(['prefix' => 'mercado-pago', 'middleware' => ['auth']], function () {
+
+        // Credit MercadoPago
+        Route::get('credit', [
+            'as' => 'betpay.mercado-pago.credit',
+            'uses' => 'BetPayController@creditMercadoPago'
+        ]);
+
+        // Debit MercadoPago
+        Route::get('debit', [
+            'as' => 'betpay.mercado-pago.debit',
+            'uses' => 'BetPayController@debitMercadoPago'
+        ]);
+    });
+
     /**
      * Clients routes
      */

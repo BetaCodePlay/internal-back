@@ -721,15 +721,15 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$list_payments_methods,
                         'submenu' => []
                     ],
-                    'AccountsSearch' => [
-                        'text' => _i('Accounts search'),
-                        'level_class' => 'second',
-                        'route' => 'betpay.accounts.search',
-                        'params' => [],
-                        'icon' => 'hs-admin-search',
-                        'permission' => Permissions::$check_user_accounts,
-                        'submenu' => []
-                    ],
+                    // 'AccountsSearch' => [
+                    //     'text' => _i('Accounts search'),
+                    //     'level_class' => 'second',
+                    //     'route' => 'betpay.accounts.search',
+                    //     'params' => [],
+                    //     'icon' => 'hs-admin-search',
+                    //     'permission' => Permissions::$check_user_accounts,
+                    //     'submenu' => []
+                    // ],
                     'Binance' => [
                         'text' => _i('Binance'),
                         'level_class' => 'second',
@@ -821,6 +821,68 @@ if (!function_exists('menu')) {
                             ],
                         ]
                     ],
+                    'Paypal' => [
+                        'text' => _i('PayPal'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-control-shuffle',
+                        'permission' => Permissions::$paypal_menu,
+                        'payment_method' => PaymentMethods::$paypal,
+                        'submenu' => [
+
+                            'Credit' => [
+                                'text' => _i('Credit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.paypal.credit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-left',
+                                'permission' => Permissions::$credit_paypal_menu,
+                                'submenu' => []
+                            ],
+
+                            'Debit' => [
+                                'text' => _i('Debit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.paypal.debit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-right',
+                                'permission' => Permissions::$debit_paypal_menu,
+                                'submenu' => []
+                            ],
+                        ]
+                    ],
+                    'MercadoPago' => [
+                        'text' => _i('MercadoPago'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-control-shuffle',
+                        'permission' => Permissions::$mercado_pago_menu,
+                        'payment_method' => PaymentMethods::$mercado_pago,
+                        'submenu' => [
+
+                            'Credit' => [
+                                'text' => _i('Credit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.mercado-pago.credit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-left',
+                                'permission' => Permissions::$credit_mercado_pago_menu,
+                                'submenu' => []
+                            ],
+
+                            'Debit' => [
+                                'text' => _i('Debit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.mercado-pago.debit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-right',
+                                'permission' => Permissions::$debit_mercado_pago_menu,
+                                'submenu' => []
+                            ],
+                        ]
+                    ],
                     'BetPayReports' => [
                         'text' => _i('Reports'),
                         'level_class' => 'second',
@@ -886,6 +948,66 @@ if (!function_exists('menu')) {
                                         'route' => 'betpay.reports.debit',
                                         'params' => [PaymentMethods::$binance],
                                         'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+                            'ReportPayPal' => [
+                                'text' => _i('PayPal'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$paypal_menu,
+                                'payment_method' => PaymentMethods::$paypal,
+                                'submenu' => [
+
+                                    'Credit' => [
+                                        'text' => _i('Credit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.credit',
+                                        'params' => [PaymentMethods::$paypal],
+                                        'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+
+                                    'Debit' => [
+                                        'text' => _i('Debit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.debit',
+                                        'params' => [PaymentMethods::$paypal],
+                                        'icon' => 'hs-admin-shift-right',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+                            'ReportMercadoPago' => [
+                                'text' => _i('MercadoPago'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$betpay_reports_menu,
+                                'payment_method' => PaymentMethods::$mercado_pago,
+                                'submenu' => [
+                                    'ReportCredit' => [
+                                        'text' => _i('Credit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.credit',
+                                        'params' => [PaymentMethods::$mercado_pago],
+                                        'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                    'ReportDebit' => [
+                                        'text' => _i('Debit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.debit',
+                                        'params' => [PaymentMethods::$mercado_pago],
+                                        'icon' => 'hs-admin-shift-right',
                                         'permission' => Permissions::$betpay_reports_menu,
                                         'submenu' => []
                                     ],
@@ -4840,15 +4962,15 @@ if (!function_exists('menu')) {
                 ]
             ],
 
-            'IQSoftTotals' => [
-                'text' => _i('IQ Soft Totals'),
-                'level_class' => 'top',
-                'route' => 'iq-soft.totals',
-                'params' => [],
-                'icon' => 'hs-admin-briefcase',
-                'permission' => Permissions::$iq_soft_totals,
-                'submenu' => []
-            ],
+            // 'IQSoftTotals' => [
+            //     'text' => _i('IQ Soft Totals'),
+            //     'level_class' => 'top',
+            //     'route' => 'iq-soft.totals',
+            //     'params' => [],
+            //     'icon' => 'hs-admin-briefcase',
+            //     'permission' => Permissions::$iq_soft_totals,
+            //     'submenu' => []
+            // ],
 
             'ManageWhitelabels' => [
                 'text' => _i('Manage whitelabels'),
