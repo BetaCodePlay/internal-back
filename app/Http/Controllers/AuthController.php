@@ -8,6 +8,7 @@ use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
+use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
