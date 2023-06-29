@@ -264,7 +264,7 @@
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_report])
         @include('back.reports.products.layout.products')
     @endcan
-
+    @include('back.users.modals.reset-email')
 @endsection
 
 @section('scripts')

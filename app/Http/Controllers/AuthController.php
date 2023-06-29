@@ -159,7 +159,6 @@ class AuthController extends Controller
                     }
 
                     if (in_array(Roles::$admin, $roles) || in_array(Roles::$super_admin, $roles)) {
-                        Log::info(__METHOD__, ['roles' => $roles]);
                         $route = route('core.dashboard');
                     }
                     session()->put('dashboard_route', $route);
