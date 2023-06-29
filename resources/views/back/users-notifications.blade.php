@@ -111,8 +111,9 @@
       }
 
       .body .header {
-          background: #1e7e9b;
+          background: linear-gradient(0,transparent 20%, #1e7e9b 20%);
           text-align: center;
+          padding-top: 40px;
       }
 
       .body .header .symbol {
@@ -121,8 +122,6 @@
           border: 8px solid #1e7e9b;
           background: #fff;
           display: inline-block;
-          margin-bottom: -30px;
-          margin-top: 40px;
       }
 
       .body .header .symbol img {
@@ -204,9 +203,8 @@
       }
 
       @media screen and (max-width: 767px) {
-          .body .header .symbol {
-              margin-bottom: -30px;
-              margin-top: 20px;
+          .body .header {
+              padding-top: 20px;
           }
 
           .body .header .symbol img {
