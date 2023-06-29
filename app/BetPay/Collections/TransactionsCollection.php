@@ -208,7 +208,11 @@ class TransactionsCollection
             $timezone = session('timezone');
             $operator = null;
             $description = null;
-
+            $transaction->user = sprintf(
+                    '<a href="%s" class="btn u-btn-3d btn-sm u-btn-primary mr-2" target="_blank">%s</a>',
+                    route('users.details', [$transaction->external_user]),
+                    $transaction->external_user
+            );
             switch ($status) {
                 case TransactionStatus::$pending:
                 {
