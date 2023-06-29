@@ -1232,7 +1232,7 @@ class Users {
 
         let $table = $('#ipTableIps');
         let api;
-        let user = $('#user_id').val();
+        let user = $('.user').val();
         let route = `${$table.data('route')}/${user}`;
         $table.DataTable({
             "ajax": {
@@ -1255,7 +1255,7 @@ class Users {
 
         $('#details-user-modal').on('show.bs.modal', function (event) {
 
-            user = $('#user_id').val();
+            user = $('.user').val();
             let route = `${$table.data('route')}/${user}`;
             console.log(event,route,user)
             api.ajax.url(route).load();

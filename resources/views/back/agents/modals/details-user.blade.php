@@ -72,26 +72,26 @@
                             </div>
                         </div>
                     </div>
-{{--                    <div class="row">--}}
-{{--                        <div class="col-md-12">--}}
-{{--                            <br>--}}
-{{--                            <br>--}}
-{{--                            <div class="table-responsive">--}}
-{{--                                <table class="table table-bordered w-100" id="ipTableIps" data-route="{{ route('users.users-ips-data') }}">--}}
-{{--                                    <thead>--}}
-{{--                                        <tr>--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                {{ _i('IP') }}--}}
-{{--                                            </th>--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                {{ _i('Quantity') }}--}}
-{{--                                            </th>--}}
-{{--                                        </tr>--}}
-{{--                                    </thead>--}}
-{{--                                </table>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <br>
+                            <div class="table-responsive">
+                                <table class="table table-bordered w-100" id="ipTableIps" data-route="{{ route('users.users-ips-data') }}">
+                                    <thead>
+                                        <tr>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                {{ _i('IP') }}
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                {{ _i('Quantity') }}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">
