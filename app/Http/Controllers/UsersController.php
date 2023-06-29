@@ -2013,6 +2013,42 @@ class UsersController extends Controller
     }
 
     /**
+     * Reset email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function resetEmail(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['required', new Email()]
+        ]);
+
+        try {
+          
+           
+            $email = $request->email;
+            $userData = [
+                'email' => $email
+            ];
+            $this->usersRepo->update($email, $userData);
+
+            
+            $data = [
+                'title' => _i('Email reset'),
+                'message' => _i('Email was successfully reset'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Reset password
      *
      * @param Request $request

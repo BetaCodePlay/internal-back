@@ -180,6 +180,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@pointsTransactions'
     ]);
 
+    // Reset user email
+    Route::post('reset-email', [
+        'as' => 'users.reset-email',
+        'uses' => 'UsersController@resetEmail'
+    ]);
+
     // Reset user password
     Route::post('reset-password', [
         'as' => 'users.reset-password',

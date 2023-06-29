@@ -1174,6 +1174,7 @@
     @include('back.agents.modals.details-user')
     @include('back.agents.modals.add-users')
     @include('back.users.modals.reset-password')
+    @include('back.users.modals.reset-email')
 @endsection
 
 @section('scripts')
