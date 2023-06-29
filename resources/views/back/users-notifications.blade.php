@@ -110,24 +110,18 @@
       }
 
       .body .header {
-          height: 150px;
           background: #1e7e9b;
-          position: relative;
-          box-shadow: 0 1px 3px #333;
+          text-align: center;
       }
 
       .body .header .symbol {
           padding: 10px 20px;
           border-radius: 100px;
           border: 8px solid #1e7e9b;
-          position: absolute;
-          bottom: -50px;
           background: #fff;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          display: inline-block;
+          margin-bottom: -30px;
+          margin-top: 40px;
       }
 
       .body .header .symbol img {
@@ -209,8 +203,9 @@
       }
 
       @media screen and (max-width: 767px) {
-          .body .header {
-              height: 80px;
+          .body .header .symbol {
+              margin-bottom: -30px;
+              margin-top: 20px;
           }
 
           .body .header .symbol img {
