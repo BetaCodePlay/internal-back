@@ -2132,6 +2132,20 @@ class AgentsController extends Controller
     }
 
     /**
+     * Get Tree Users
+     *
+     */
+    public function getTreeUsers_format()
+    {
+        try {
+            return Utils::successResponse(['tree'=>$this->agentsCollection->childrenTreeSql_format(Auth::id())]);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
      * Show dashboard Temp
      *
      * @param CountriesRepo $countriesRepo

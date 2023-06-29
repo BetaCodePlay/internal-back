@@ -108,6 +108,19 @@ class AgentsCollection
     }
 
     /**
+     *  Tree format for users (Children Tree Sql) Format
+     * @param int $user User Id
+     */
+    public function childrenTreeSql_format($user)
+    {
+        $agentsRepo = new AgentsRepo();
+        $tree = collect($agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()));
+
+        return $this->childrenTreeDraw($tree,0);
+
+    }
+
+    /**
      *  Tree format (Children Tree Draw)
      * @param array $tree Users
      */
