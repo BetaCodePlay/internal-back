@@ -213,6 +213,7 @@ class TransactionsCollection
                     route('users.details', [$transaction->external_user]),
                     $transaction->external_user
             );
+            
             switch ($status) {
                 case TransactionStatus::$pending:
                 {
