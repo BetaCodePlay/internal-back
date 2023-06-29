@@ -8,7 +8,6 @@ use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
-use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
@@ -21,11 +20,14 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Dotworkers\Audits\Audits;
 use App\Audits\Enums\AuditTypes;
+use App\Users\Mailers\Users;
+use Dotworkers\Configurations\Enums\EmailTypes;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
 use App\Users\Rules\Password;
@@ -47,17 +49,19 @@ class AuthController extends Controller
      * @param ProfilesRepo $profilesRepo
      * @param UserCurrenciesRepo $userCurrenciesRepo
      * @param AgentsRepo $agentsRepo
+     * @param UsersRepo $usersRepo
      * @param Agent $agent
      * @return Response
      * @throws ValidationException
      */
-    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, Agent $agent, AgentsRepo $agentsRepo): Response
+    public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
 
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
         ]);
+
         try {
             $whitelabel = Configurations::getWhitelabel();
             $credentials = [
@@ -66,11 +70,10 @@ class AuthController extends Controller
                 'whitelabel_id' => $whitelabel,
                 //'status' => true
             ];
-
+            $ip = Utils::userIp($request);
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
-                // dd(auth()->user());
-                if(auth()->user()->action == ActionUser::$locked_higher){
+                if (auth()->user()->action == ActionUser::$locked_higher) {
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -81,7 +84,7 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
-                if(auth()->user()->action == ActionUser::$locked_login_attempts) {
+                if (auth()->user()->action == ActionUser::$locked_login_attempts) {
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -185,6 +188,11 @@ class AuthController extends Controller
                         'mobile' => $mobile
                     ];
                     Audits::store($user, AuditTypes::$dotpanel_login, $whitelabel, $auditData);
+                    $userTemp = $usersRepo->getUsers($user);
+                    $url = route('core.dashboard');
+                    $whitelabelId = Configurations::getWhitelabel();
+                    $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
@@ -205,6 +213,12 @@ class AuthController extends Controller
                 }
 
             } else {
+                //Estos datos se anexan para el envio de email
+                $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
+                $url = route('core.dashboard');
+                $whitelabelId = Configurations::getWhitelabel();
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
