@@ -224,7 +224,7 @@
 <div class="body">
     <div class="header">
         <div class="symbol">
-            <img src="{{ \Dotworkers\Configurations\Configurations::getLogo()->img_light }}" alt="">
+            <img src="{{ \Dotworkers\Configurations\Configurations::getLogo()->img_light }}" alt="{{ $whitelabel_description }}">
         </div>
     </div>
     <div class="content">
