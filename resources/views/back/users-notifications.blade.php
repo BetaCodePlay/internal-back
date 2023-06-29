@@ -230,19 +230,15 @@
             <p>@yield('content')</p>
 
             <p>@yield('footer')</p>
-            <p>
-                <button class="btn success">Yes it was me</button>
-                <button class="btn cancel">was not me</button>
-            </p>
         </div>
 
         <div class="footer">
-            <div class="text">Síguenos</div>
+        {{--<div class="text">Síguenos</div>
             <div class="social">
                 <a href="#" target="_blank"><i class="fa fa-telegram" aria-hidden="true"></i></a>
                 <a href="#" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
                 <a href="#" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-            </div>
+            </div>--}}
         </div>
     </div>
 </div>
