@@ -2800,16 +2800,18 @@ class AgentsController extends Controller
      */
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
-
+        $whitelabel = Configurations::getWhitelabel();
         $this->validate($request, [
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
+            'email' => ['required|email|unique:users,email,'.Rule::unique('users')->where('whitel',$whitelabel)],
             'balance' => 'required',
             'percentage' => 'required|numeric|between:1,99',
             'timezone' => 'required'
         ]);
 
         //try {
+
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
             $currency = session('currency');
@@ -2820,8 +2822,10 @@ class AgentsController extends Controller
             $master = $request->master;
             $percentage = $request->percentage;
             $currencies = !empty($request->currencies) ? $request->currencies : [$currency];
-            $domain = Configurations::getDomain();
-            $email = "$username@$domain";
+            //TODO NEW WAY TO SAVE EMAIL
+//            $domain = Configurations::getDomain();
+//            $email = "$username@$domain";
+            $email = $request->get('eamil');
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
@@ -2853,7 +2857,6 @@ class AgentsController extends Controller
                 $ip = $request->getClientIp();
             }
 
-            $whitelabel = Configurations::getWhitelabel();
             $store = Configurations::getStore()->active;
             $userData = [
                 'username' => $username,

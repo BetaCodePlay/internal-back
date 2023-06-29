@@ -57,7 +57,6 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
-
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -96,7 +95,6 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
-
                 if(auth()->user()->action == ActionUser::$changed_password) {
                     $data = [
                         'title' => _i('Access denied'),
@@ -110,7 +108,21 @@ class AuthController extends Controller
                     auth()->logout();
                     return Utils::errorResponse(Codes::$not_found, $data);
                 }
-
+                //TODO MODIFICAR EMAIL AGENT
+                //AQUI VALIDAR POR ROL
+                if(in_array(auth()->user()->type_user,[1,2]) && auth()->user()->action == ActionUser::$update_email) {
+                    $data = [
+                        'title' => _i('title'),
+                        'message' => _i('mensaje...'),
+                        'close' => _i('Close'),
+                        'changePassword' => true,
+                        'username' => auth()->user()->username,
+                        'password' => $credentials['password']
+                    ];
+                    session()->flush();
+                    auth()->logout();
+                    return Utils::errorResponse(Codes::$not_found, $data);
+                }
                 if(auth()->user()->status == false){
                     session()->flush();
                     auth()->logout();
@@ -122,8 +134,8 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
+
                 //TODO VALIDAR LAS OTRAS ACCIONES
-                //
                 $profile = $profilesRepo->find($user);
                 $defaultCurrency = $userCurrenciesRepo->findDefault($user);
 
