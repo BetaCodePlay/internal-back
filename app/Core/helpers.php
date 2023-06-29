@@ -858,7 +858,7 @@ if (!function_exists('menu')) {
                         'route' => null,
                         'params' => [],
                         'icon' => 'hs-admin-control-shuffle',
-                        'permission' => Permissions::$mercado_pago_menu,
+                        //'permission' => Permissions::$mercado_pago_menu,
                         'payment_method' => PaymentMethods::$mercado_pago,
                         'submenu' => [
 
@@ -868,7 +868,7 @@ if (!function_exists('menu')) {
                                 'route' => 'betpay.mercado-pago.credit',
                                 'params' => [],
                                 'icon' => 'hs-admin-shift-left',
-                                'permission' => Permissions::$credit_mercado_pago_menu,
+                                //'permission' => Permissions::$credit_mercado_pago_menu,
                                 'submenu' => []
                             ],
 
@@ -878,7 +878,7 @@ if (!function_exists('menu')) {
                                 'route' => 'betpay.mercado-pago.debit',
                                 'params' => [],
                                 'icon' => 'hs-admin-shift-right',
-                                'permission' => Permissions::$debit_mercado_pago_menu,
+                                //'permission' => Permissions::$debit_mercado_pago_menu,
                                 'submenu' => []
                             ],
                         ]
