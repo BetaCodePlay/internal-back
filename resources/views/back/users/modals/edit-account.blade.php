@@ -108,15 +108,15 @@
                         </div>
                         <div class="form-group">
                             <label for="mercado_pago_cbu">{{ _i('MercadoPago CBU') }}</label>
-                            <input type="email" name="mercado_pago_cbu" id="mercado_pago_cbu" class="form-control">
+                            <input type="number" name="mercado_pago_cbu" id="mercado_pago_cbu" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="mercado_pago_cvu">{{ _i('MercadoPago CVU') }}</label>
-                            <input type="email" name="mercado_pago_cvu" id="mercado_pago_cvu" class="form-control">
+                            <input type="number" name="mercado_pago_cvu" id="mercado_pago_cvu" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="mercado_pago_alias">{{ _i('MercadoPago Alias') }}</label>
-                            <input type="email" name="mercado_pago_alias" id="mercado_pago_alias" class="form-control">
+                            <input type="text" name="mercado_pago_alias" id="mercado_pago_alias" class="form-control">
                         </div>
                     </div>
                 </div>
