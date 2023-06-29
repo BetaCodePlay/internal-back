@@ -1229,7 +1229,6 @@ class Users {
 
     //TODO lista de ip para el detalle de usuario
     userIpsDetails() {
-
         let $table = $('#ipTableIps');
         let api;
         let user = $('.user').val();
@@ -1248,16 +1247,12 @@ class Users {
             ],
             "initComplete": function () {
                 api = this.api();
-                // api.buttons().container()
-                //     .appendTo($('#ip-table-buttons'));
             }
         });
 
         $('#details-user-modal').on('show.bs.modal', function (event) {
-
             user = $('.user').val();
             let route = `${$table.data('route')}/${user}`;
-            console.log(event,route,user)
             api.ajax.url(route).load();
         })
     }

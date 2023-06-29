@@ -192,8 +192,12 @@ class AuthController extends Controller
                     $userTemp = $usersRepo->getUsers($user);
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
-                    $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+
+                    if(ENV('APP_ENV') == 'production'){
+                        $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                        Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                    }
+
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
@@ -218,8 +222,11 @@ class AuthController extends Controller
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
-                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
-                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                if(ENV('APP_ENV') == 'production'){
+                    $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                }
+
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
