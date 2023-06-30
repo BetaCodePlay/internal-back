@@ -285,8 +285,9 @@
         </script>
         <script>
             $(function () {
-                let users = new Users();
-                users.resetEmail();
+                $(document).ready(function() {
+            $('#reset-email-modal').modal('show');
+               });
             });
         </script>
     @endcan
