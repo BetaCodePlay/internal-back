@@ -2031,6 +2031,25 @@ class UsersController extends Controller
             $userData = [
                 'email' => $email
             ];
+            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+            if (!is_null($uniqueEmail)) {
+                $data = [
+                    'title' => _i('Email in use'),
+                    'message' => _i('The indicated email is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+
+            } else {
+                    if (!$this->validateEmail($email)) {
+                        $data = [
+                            'title' => _i('Invalid email'),
+                            'message' => _i('The email entered is invalid or does not exist'),
+                            'close' => _i('Close'),
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+                    }
+                }
             $this->usersRepo->update($user, $userData);
 
             $data = [
