@@ -2027,9 +2027,12 @@ class UsersController extends Controller
 
         try {
             $user = auth()->user()->id;
+            $action = $this->usersRepo->getActionByUser($user);
             $email = $request->email;
+            if(!is_null($email)) {
             $userData = [
-                'email' => $email
+                'email' => $email,
+                'action' => 1
             ];
             $uniqueEmail = $this->usersRepo->uniqueEmail($email);
             if (!is_null($uniqueEmail)) {
@@ -2040,7 +2043,7 @@ class UsersController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
 
-            } else {
+            } /*else {
                     if (!$this->validateEmail($email)) {
                         $data = [
                             'title' => _i('Invalid email'),
@@ -2049,7 +2052,7 @@ class UsersController extends Controller
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
-                }
+                }*/
             $this->usersRepo->update($user, $userData);
 
             $data = [
@@ -2058,7 +2061,7 @@ class UsersController extends Controller
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
-
+            }
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();

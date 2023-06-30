@@ -396,6 +396,14 @@ class UsersRepo
         ];
     }
 
+    public function getActionByUser($user)
+    {
+        $user = User::select('users.action')
+            ->where('id', $user)
+            ->first();
+        return $user;
+    }
+
     /**
      * Get users by IDs
      *
@@ -1426,7 +1434,6 @@ class UsersRepo
         $user = User::where('username', $username)
             ->whitelabel()
             ->first();
-
         return $user;
     }
 
