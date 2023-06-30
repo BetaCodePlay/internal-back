@@ -283,10 +283,10 @@
                 
             });
         </script>
-        <script> 
-            $(document).ready(function() {
-               $('#reset-email-modal').modal('show');
-            });
-        </script>
     @endcan
+    <script> 
+        $(document).ready(function() {
+            $('#reset-email-modal').modal('show');
+        });
+    </script>
 @endsection
