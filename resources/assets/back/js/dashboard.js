@@ -53,10 +53,9 @@ class Dashboard {
 
     // Get reset email
     resetEmail() {
-        /*$(document).ready(function () {
+        $(document).ready(function () {
             $('#reset-email-modal').modal('show');
-        });*/
-
+        });
         let $button = $('#reset-email');
         let $form = $('#reset-email-form');
 
@@ -69,7 +68,7 @@ class Dashboard {
                 data: $form.serialize()
 
             }).done(function (json) {
-                $('#reset-email-modal').modal('show');
+                $('#reset-email-modal').modal('hide');
                 swalSuccessWithButton(json);
                 $form.trigger('reset');
 
