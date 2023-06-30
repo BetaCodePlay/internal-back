@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ _i('Reset email') }}</h5>
+                <h5 class="modal-title">{{ _i('Update email') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -20,13 +20,12 @@
                                     </button>
                                 </div>
                             </div>
-                            <small class="form-text text-muted">{{ _i('Minimum 8 characters, 1 letter and 1 number') }}</small>
                         </div>
                     </div>
                 <div class="modal-footer">
                     <input type="hidden" name="user" class="user" value="{{ isset($user) ? $user->id : '' }}">
                     <button type="button" class="btn u-btn-primary u-btn-3d" id="reset-email" data-loading-text="{{ _i('Please wait...') }}">
-                        {{ _i('Reset') }}
+                        {{ _i('Update') }}
                     </button>
                     <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">
                         {{ _i('Close') }}
