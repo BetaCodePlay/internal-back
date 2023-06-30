@@ -260,6 +260,7 @@
                 </div>
             </div>
         </div>
+        @include('back.users.modals.reset-email')
     @endcan
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_report])
         @include('back.reports.products.layout.products')
@@ -281,12 +282,6 @@
                 new Dashboard();
             });
         </script>
-        <script>
-            $(function () {
-                $(document).ready(function() {
-            $('#reset-email-modal').modal('show');
-          });
-            });
-        </script>
+        
     @endcan
 @endsection
