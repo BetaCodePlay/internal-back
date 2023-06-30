@@ -34,6 +34,25 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@index'
     ]);
 
+    // Get Tree Josn
+    Route::get('get/tree/users', [
+        'as' => 'agents.get.tree.users',
+        'uses' => 'AgentsController@getTreeUsers'
+    ]);
+
+
+    // Get Tree Json format
+    Route::get('get/tree/users/format', [
+        'as' => 'agents.get.tree.users.format',
+        'uses' => 'AgentsController@getTreeUsers_format'
+    ]);
+
+    // Show dashboard Temp
+    Route::get('temp', [
+        'as' => 'agents.index.temp',
+        'uses' => 'AgentsController@index_temp'
+    ]);
+
     Route::get('create-user', [
         'as' => 'agents.create.user',
         'uses' => 'AgentsController@viewCreateUser'
@@ -177,10 +196,22 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updatePercentage'
     ]);
 
+    // Update Action Temp
+    Route::get('update/agent/field/action/10', [
+        'as' => 'agent.field.action',
+        'uses' => 'AgentsController@changeActionByAgent'
+    ]);
+
     // Change Type user in users where type_user in null
     Route::get('change/type/user/in_null/temp', [
         'as' => 'agents.change.type.user.in_null.temp',
         'uses' => 'AgentsController@changeTypeUser'
+    ]);
+
+    // update Owner User
+    Route::get('update/owner/user/temp', [
+        'as' => 'agents.update.owner.user.temp',
+        'uses' => 'AgentsController@updateOwnerUser'
     ]);
 
     // Reports routes

@@ -393,7 +393,13 @@ class SectionImagesCollection
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark) {
                 $image->file = $image->image;
                 $image->image = "<img src='$image->image' class='img-responsive' width='$width'>";
-                $image->front = null;
+                if (!is_null($image->front)) {
+                    $urlFront = s3_asset("section-images/{$image->front}");
+                    $image->file = $image->front;
+                    $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
+                } else {
+                    $image->front = null;
+                }
             } else {
                 $url = s3_asset("section-images/{$image->image}");
                 $image->file = $image->image;

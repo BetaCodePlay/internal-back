@@ -33,9 +33,11 @@
             color: white !important;
             background-color: #38a7ef !important;
         }
+
         .flex-items {
             display: flex;
         }
+
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -57,6 +59,7 @@
             color: white !important;
             background-color: darkorange !important
         }
+
         .select2-container {
             width: 100% !important;
             text-align: left !important;
@@ -459,7 +462,8 @@
                                         </div>
                                     </div>
                                     <div class="row g-mb-15">
-                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div
+                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong> {{ _i('Type') }}</strong>
                                             </label>
@@ -536,9 +540,11 @@
                                     <div class="row g-mb-15" id="details-user">
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
-                                                <a href="#details-user-modal" id="details-user-get" data-route="{{route('agents.get.father.cant')}}"
+                                                <a href="#details-user-modal" id="details-user-get"
+                                                   data-route="{{route('agents.get.father.cant')}}"
                                                    class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
-                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i><strong> {{ _i('More information') }}</strong>
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white"
+                                                       style="font-weight: 700!important;"></i><strong> {{ _i('More information') }}</strong>
                                                 </a>
                                             </div>
                                         </div>
@@ -637,9 +643,10 @@
                                     <div class="form-group">
                                         <label for="date_range">{{ _i('Date range') }}</label>
                                         <div class="flex-items">
-                                            <input type="text" id="date_range_new" class="form-control" autocomplete="off"
-                                               placeholder="{{ _i('Date range') }}">
-                                               <button class="btn g-bg-primary" type="button" id="updateNew"
+                                            <input type="text" id="date_range_new" class="form-control"
+                                                   autocomplete="off"
+                                                   placeholder="{{ _i('Date range') }}">
+                                            <button class="btn g-bg-primary" type="button" id="updateNew"
                                                     data-route="{{ route('agents.transactions.paginate') }}"
                                                     data-routetotals="{{ route('agents.transactions.totals') }}"
                                                     data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
@@ -652,12 +659,12 @@
 
 
                             <div class="media">
-                                <div class="media-body d-flex justify-content-end g-mb-10"
-                                     id="table-buttons-agents-transactions">
+                                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
+
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered display nowrap" style="width:100%"
+                                <table class="table table-bordered table-hover dt-responsive"
                                        id="agents-transactions-table"
                                        data-route="{{ route('agents.transactions.paginate') }}"
                                        data-routetotals="{{ route('agents.transactions.totals') }}">
@@ -667,46 +674,46 @@
                                             {{ _i('Date') }}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('From') }}--}}
+                                            {{--                                            {{ _i('From') }}--}}
                                             Agente
-{{--                                            {{ _i('User') }}--}}
+                                            {{--                                            {{ _i('User') }}--}}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('Toward') }}--}}
+                                            {{--                                            {{ _i('Toward') }}--}}
                                             Cuenta destino
                                         </th>
-{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                            {{ _i('Debit') }}--}}
-{{--                                            Descarga--}}
-{{--                                        </th>--}}
-{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                            {{ _i('Credit') }}--}}
-{{--                                            Carga--}}
-{{--                                        </th>--}}
+                                        {{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                            {{ _i('Debit') }}--}}
+                                        {{--                                            Descarga--}}
+                                        {{--                                        </th>--}}
+                                        {{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                            {{ _i('Credit') }}--}}
+                                        {{--                                            Carga--}}
+                                        {{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('Credit') }}--}}
+                                            {{--                                            {{ _i('Credit') }}--}}
                                             {{_i('Amount')}}
                                         </th>
-{{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
-{{--                                                {{ _i('Charged him') }}--}}
-{{--                                                Carga--}}
-{{--                                            </th>--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">--}}
-{{--                                                {{ _i('Withdrew') }}--}}
-{{--                                                Retiro--}}
-{{--                                            </th>--}}
-{{--                                        @else--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                {{ _i('Debit') }}--}}
-{{--                                            </th>--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                {{ _i('Credit') }}--}}
-{{--                                            </th>--}}
-{{--                                        @endif--}}
-{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                            {{ _i('Toward') }}--}}{{--...--}}
-{{--                                        </th>--}}
+                                        {{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
+                                        {{--                                                {{ _i('Charged him') }}--}}
+                                        {{--                                                Carga--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">--}}
+                                        {{--                                                {{ _i('Withdrew') }}--}}
+                                        {{--                                                Retiro--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                        @else--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                                {{ _i('Debit') }}--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                                {{ _i('Credit') }}--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                        @endif--}}
+                                        {{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                            {{ _i('Toward') }}--}}{{--...--}}
+                                        {{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             {{ _i('Balance') }}
                                         </th>
@@ -895,7 +902,7 @@
                             {{--                                </div>--}}
                             {{--                            </div>--}}
                             @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                                <div class="table-responsive" id="financial-state-table"
+                                <div class="table-responsive if-admin" id="financial-state-table"
                                      data-route="{{ route('agents.reports.financial-state-data') }}"></div>
                             @else
                                 <div class="table-responsive" id="financial-state-table"
@@ -949,7 +956,8 @@
                                                             <div class="form-group">
                                                                 <label for="maker">{{ _i('Maker') }}</label>
                                                                 <select name="maker" id="maker"
-                                                                        class="form-control" data-route="{{ route('core.categories-by-maker') }}">
+                                                                        class="form-control"
+                                                                        data-route="{{ route('core.categories-by-maker') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                     @foreach ($makers as $maker)
                                                                         <option value="{{ $maker->maker }}">
@@ -1165,14 +1173,16 @@
         </div>
     </div>
     @if ($agent->master)
-        @include('back.agents.modals.add-agents')
+        {{--        TODO THE OPTION TO CREATE AGENT IS DISABLED WITHIN THE DASHBOARD--}}
+        {{--        @include('back.agents.modals.add-agents')--}}
         @include('back.agents.modals.update-percentage')
     @endif
     @include('back.agents.modals.manual-transaction')
     @include('back.agents.modals.move-agents')
     @include('back.agents.modals.move-agents-users')
     @include('back.agents.modals.details-user')
-    @include('back.agents.modals.add-users')
+    {{--        TODO THE OPTION TO CREATE USER IS DISABLED WITHIN THE DASHBOARD--}}
+    {{--    @include('back.agents.modals.add-users')--}}
     @include('back.users.modals.reset-password')
 @endsection
 
@@ -1182,17 +1192,21 @@
             let agents = new Agents();
             let users = new Users();
             users.usersIps();
+            //TODO TABLA PARA IPS EN EL MODAL
+            users.userIpsDetails();
+
             agents.dashboard();
             agents.searchAgentDashboard();
             agents.performTransactions();
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
-            agents.usersTransactions([10, 20, 50, 100, 500, 1000, 2000]);
+            agents.agentsTransactionsPaginate([50, 100, 500, 1000, 2000]);
+            agents.usersTransactions([50, 100, 500, 1000, 2000]);
             agents.users();
             agents.agents();
-            agents.storeAgents();
-            agents.storeUsers();
+            //TODO THE OPTION TO CREATE IS DISABLED WITHIN THE DASHBOARD
+            // agents.storeAgents();
+            // agents.storeUsers();
             agents.changeUserStatus();
             users.resetPassword();
             agents.financialState();
@@ -1207,7 +1221,7 @@
             agents.selectCategoryMaker();
             agents.statusFilter();
             @if($agent->master)
-            agents.changeAgentType();
+                agents.changeAgentType();
             @endif
             agents.relocationAgents();
             //agents.detailsUserModal();

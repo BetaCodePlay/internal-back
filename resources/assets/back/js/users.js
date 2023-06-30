@@ -1227,6 +1227,36 @@ class Users {
         });
     }
 
+    //TODO lista de ip para el detalle de usuario
+    userIpsDetails() {
+        let $table = $('#ipTableIps');
+        let api;
+        let user = $('.user').val();
+        let route = `${$table.data('route')}/${user}`;
+        $table.DataTable({
+            "ajax": {
+                "url": route,
+                "dataSrc": "data.ips"
+            },
+            "order": [
+                [1, "desc"]
+            ],
+            "columns": [
+                {"data": "ip"},
+                {"data": "quantity", "className": "text-right"},
+            ],
+            "initComplete": function () {
+                api = this.api();
+            }
+        });
+
+        $('#details-user-modal').on('show.bs.modal', function (event) {
+            user = $('.user').val();
+            let route = `${$table.data('route')}/${user}`;
+            api.ajax.url(route).load();
+        })
+    }
+
     // Users temp
     usersTemp() {
         let $table = $('#users-temp-table');

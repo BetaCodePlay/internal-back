@@ -16,7 +16,7 @@
                     <form action="{{ route('agents.store') }}" method="post" id="create-agents-form">
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-4">
                                     <div class="form-group">
                                         <label for="username">{{ _i('Username') }}</label>
                                         <input type="text" name="username" class="form-control" autocomplete="off">
@@ -26,7 +26,14 @@
                                             class="form-text text-muted">{{ _i('The username cannot be changed later') }}</small>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-4">
+                                    <div class="form-group">
+                                        <label for="username">{{ _i('Email') }}</label>
+                                        <input type="email" name="email" class="form-control" autocomplete="off" required>
+                                        <small class="form-text text-muted">{{ _i('Email can be changed later') }}</small>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-4">
                                     <label for="password">{{ _i('Password') }}</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="password">
@@ -41,7 +48,7 @@
                                     <small
                                         class="form-text text-muted">{{ _i('Minimum 8 characters, 1 letter and 1 number') }}</small>
                                 </div>
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-4">
                                     <div class="form-group">
                                         <label
                                             for="balance">{{ _i('Operational balance (It will be credited in %s)', [session('currency')]) }}</label>
@@ -51,14 +58,14 @@
                                         </small>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 option_data_agent">
+                                <div class="col-12 col-sm-4 option_data_agent">
                                     <div class="form-group">
                                         <label for="percentage">{{ _i('Percentage') }}</label>
                                         <input type="number" name="percentage" class="form-control"
                                                placeholder="{{ _i('Rango disponible de 1 - 99') }}" autocomplete="off">
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6">
+                                <div class="col-12 col-sm-4">
                                     <div class="form-group">
                                         <label for="master">{{ _i('Agent type') }}</label><br>
                                         <select name="master" id="master" class="form-control agent_type"
@@ -78,7 +85,7 @@
                                         </small>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 option_data_agent">
+                                <div class="col-12 col-sm-4 option_data_agent">
                                     <div class="form-group">
                                         <label for="timezone">{{ _i('Timezone') }}</label>
                                         <select name="timezone" class="form-control" style="width: 100%">
@@ -94,7 +101,7 @@
                                 </div>
                                 {{-- //TODO CAMBIOS SOLO PRA EL ROL: Admin beet sweet--}}
                                 @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                                    <div class="col-12 col-sm-6 option_data_agent">
+                                    <div class="col-12 col-sm-4 option_data_agent">
                                         <div class="form-group">
                                             <label for="currencies">{{ _i('Currencies') }}</label>
                                             <select name="currencies[]" class="form-control" multiple

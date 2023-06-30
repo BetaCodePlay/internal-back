@@ -31,6 +31,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
+use App\Users\Rules\Password;
 
 /**
  * Class AuthController
@@ -83,7 +84,7 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
-                if (auth()->user()->action == ActionUser::$locked_login_attempts || auth()->user()->action == ActionUser::$changed_password) {
+                if (auth()->user()->action == ActionUser::$locked_login_attempts) {
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -94,8 +95,35 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
-
-                if (auth()->user()->status == false) {
+                if(auth()->user()->action == ActionUser::$changed_password) {
+                    $data = [
+                        'title' => _i('Access denied'),
+                        'message' => _i('Please Change Password...'),
+                        'close' => _i('Close'),
+                        'changePassword' => true,
+                        'username' => auth()->user()->username,
+                        'password' => $credentials['password']
+                    ];
+                    session()->flush();
+                    auth()->logout();
+                    return Utils::errorResponse(Codes::$not_found, $data);
+                }
+                //TODO MODIFICAR EMAIL AGENT
+                //AQUI VALIDAR POR ROL
+                if(in_array(auth()->user()->type_user,[1,2]) && auth()->user()->action == ActionUser::$update_email) {
+                    $data = [
+                        'title' => _i('title'),
+                        'message' => _i('mensaje...'),
+                        'close' => _i('Close'),
+                        'changePassword' => true,
+                        'username' => auth()->user()->username,
+                        'password' => $credentials['password']
+                    ];
+                    session()->flush();
+                    auth()->logout();
+                    return Utils::errorResponse(Codes::$not_found, $data);
+                }
+                if(auth()->user()->status == false){
                     session()->flush();
                     auth()->logout();
                     $data = [
@@ -106,8 +134,8 @@ class AuthController extends Controller
                     return Utils::errorResponse(Codes::$not_found, $data);
 
                 }
+
                 //TODO VALIDAR LAS OTRAS ACCIONES
-                //
                 $profile = $profilesRepo->find($user);
                 $defaultCurrency = $userCurrenciesRepo->findDefault($user);
 
@@ -121,8 +149,8 @@ class AuthController extends Controller
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
                     $permissionsMerge = $permissions;
                     //TODO IF AGENT ADD NEW PERMISSIONS
-                    if (Auth::user()->type_user == 1) {
-                        $permissionsMerge = array_merge($permissions, [Permissions::$create_user_agent]);
+                    if(Auth::user()->type_user == 1){
+                        $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
                     }
 
                     session()->put('currency', $defaultCurrency->currency_iso);
@@ -142,11 +170,11 @@ class AuthController extends Controller
                         $language = Configurations::getDefaultLanguage();
                     }
 
-                    if (in_array(Roles::$admin_agents, $roles)) {
-                        $adminAgent = $agentsRepo->findAdminAgent($whitelabel, $defaultCurrency->currency_iso);
-                        session()->put('admin_id', $adminAgent->id);
-                        session()->put('admin_agent_username', $adminAgent->username);
-                        $route = route('agents.index');
+                    if(in_array(Roles::$admin_agents, $roles)){
+                       $adminAgent = $agentsRepo->findAdminAgent($whitelabel, $defaultCurrency->currency_iso);
+                       session()->put('admin_id', $adminAgent->id);
+                       session()->put('admin_agent_username', $adminAgent->username);
+                       $route = route('agents.index');
                     }
 
                     //TODO ROL 19 Nuevo rol
@@ -176,8 +204,12 @@ class AuthController extends Controller
                     $userTemp = $usersRepo->getUsers($user);
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
-                    $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+
+                    if(ENV('APP_ENV') == 'production'){
+                        $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                        Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                    }
+
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
@@ -202,8 +234,11 @@ class AuthController extends Controller
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
-                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
-                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                if(ENV('APP_ENV') == 'production'){
+                    $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                }
+
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
@@ -217,6 +252,60 @@ class AuthController extends Controller
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->except(['password'])]);
             session()->flush();
             auth()->logout();
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Change Password User
+     */
+    public function changePassword(Request $request, UsersRepo $usersRepo) {
+        $this->validate($request, [
+            'newPassword' => ['required', new Password()],
+        ]);
+        try {
+
+            $whitelabel = Configurations::getWhitelabel();
+            $credentials = [
+                'username' => strtolower($request->pUsername),
+                'password' => $request->oldPassword,
+                'whitelabel_id' => $whitelabel,
+                //'status' => true
+            ];
+            if (auth()->attempt($credentials)) {
+                if($request->newPassword != $request->repeatNewPassword) {
+                    $data = [
+                        'title' => _i('Invalid Passwords!'),
+                        'message' => _i('Passwords do not match'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$not_found, $data);
+                }
+                $user = auth()->user();
+
+                $usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$active);
+                // dd($usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$active));
+                $data = [
+                    'title' => _i('Password changed'),
+                    'message' => _i('Your password has been changed successfully'),
+                    'close' => _i('Close')
+                ];
+                //Cerramos la sesión del usuario para que ingrese con el nuevo password
+                session()->flush();
+                auth()->logout();
+                return Utils::successResponse($data);
+
+            } else {
+                $data = [
+                    'title' => _i('Invalid credentials!'),
+                    'message' => _i('The old password are incorrect'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+            }
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }

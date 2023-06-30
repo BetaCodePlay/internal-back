@@ -33,11 +33,19 @@
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            <?php echo e(_i('Currency')); ?>
+
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             <?php echo e(_i('Amount')); ?>
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            <?php echo e(_i('Currency')); ?>
+                            <?php echo e(_i('Cryptocurrency')); ?>
+
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            <?php echo e(_i('Amount in Cryptocurrency')); ?>
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

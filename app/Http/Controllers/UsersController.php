@@ -7,13 +7,13 @@ use App\BetPay\Collections\AccountsCollection;
 use App\BonusSystem\Repositories\CampaignsRepo;
 use App\Core\Core;
 use App\Users\Mailers\Users;
-use App\Users\Rules\Email;
 use App\Core\Notifications\TransactionNotAllowed;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
 use App\Core\Repositories\GamesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
+use App\Users\Rules\Email;
 use App\Users\Rules\Password;
 use App\Whitelabels\Repositories\OperationalBalancesRepo;
 use App\Whitelabels\Repositories\OperationalBalancesTransactionsRepo;
@@ -1056,7 +1056,7 @@ class UsersController extends Controller
                     $userAccounts = $this->userAccounts($user->id);
                     $countries = $this->countriesRepo->all();
                     $wallets = Wallet::getByUserAndCurrencies($id, $currencies);
-                    //                    $agent = $this->agentsRepo->existsUser($user->id);
+//                    $agent = $this->agentsRepo->existsUser($user->id);
 //                    $this->usersCollection->formatAgent($agent);
 
                     //$treeFather = $this->usersCollection->treeFatherValidate($user->id, Auth::user()->id);
@@ -1088,10 +1088,10 @@ class UsersController extends Controller
                         $data['points'] = number_format($pointsWallet->balance, 2);
                     }
 
-                    //                    if (!is_null($agent)) {
+//                    if (!is_null($agent)) {
 //                        $data['agent'] = $agent->username;
                     $data['agent'] = '<ol reversed>' . $treeFather . '<ol/>';
-                    //                    }
+//                    }
 
                     $data['login_user'] = $loginURL;
                     $data['user_accounts'] = $userAccounts;
@@ -2082,9 +2082,10 @@ class UsersController extends Controller
         try {
             $user = $request->user;
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            $roles = Security::getUserRoles($user);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!') : _i('Deactivated user'),
+                    'title' => ActionUser::getName($userData->action),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2093,9 +2094,18 @@ class UsersController extends Controller
             }
 
             $password = $request->password;
-            $userData = [
-                'password' => $password
-            ];
+            if($userData->type_user == TypeUser::$player ) {
+                $userData = [
+                    'password' => $password,
+                    'action' =>  ActionUser::$active
+                ];
+            } else {
+                $userData = [
+                    'password' => $password,
+                    'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
+                ];
+            }
+
             $this->usersRepo->update($user, $userData);
 
             $auditData = [
@@ -2189,6 +2199,7 @@ class UsersController extends Controller
                         'whitelabel_id' => $whitelabel,
                         'web_register' => false,
                         'main' => true,
+                        'action'=>ActionUser::$active
                     ];
                     $profileData = [
                         'country_iso' => $request->country,

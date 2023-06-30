@@ -18,7 +18,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="device"><?php echo e(_i('Devices')); ?></label>
-                                <select name="device[]"  id="device" class="form-control" multiple>
+                                <select name="device[]" id="device" class="form-control" multiple>
                                     <option value=""><?php echo e(_i('All')); ?></option>
                                     <option value="*"><?php echo e(_i('All devices')); ?></option>
                                     <option value="false"><?php echo e(_i('Desktop')); ?></option>
@@ -29,7 +29,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="language"><?php echo e(_i('Language')); ?></label>
-                                <select name="language[]"  id="language" class="form-control" multiple>
+                                <select name="language[]" id="language" class="form-control" multiple>
                                     <option value=""><?php echo e(_i('All')); ?></option>
                                     <option value="*"><?php echo e(_i('All languages')); ?></option>
                                     <?php $__currentLoopData = $languages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -48,7 +48,8 @@
                                     <option value=""><?php echo e(_i('All')); ?></option>
                                     <option value="*"><?php echo e(_i('All currencies')); ?></option>
                                     <?php $__currentLoopData = $whitelabel_currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($currency->iso); ?>" <?php echo e($currency->iso == session('currency') ? 'selected' : ''); ?>>
+                                        <option
+                                            value="<?php echo e($currency->iso); ?>" <?php echo e($currency->iso == session('currency') ? 'selected' : ''); ?>>
                                             <?php echo e($currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})"); ?>
 
                                         </option>
@@ -63,7 +64,8 @@
                                     <option value="true"><?php echo e(_i('Published')); ?></option>
                                     <option value="false"><?php echo e(_i('Unpublished')); ?></option>
                                 </select>
-                                <input type="hidden" id="template_element_type" name="template_element_type" value="<?php echo e($template_element_type); ?>">
+                                <input type="hidden" id="template_element_type" name="template_element_type"
+                                       value="<?php echo e($template_element_type); ?>">
                                 <input type="hidden" id="section" name="section" value="<?php echo e($section); ?>">
                             </div>
                         </div>
@@ -71,12 +73,12 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="route"><?php echo e(_i('Menu where it will be shown')); ?></label>
-                                    <select name="routes[]"  id="routes" class="form-control" multiple>
+                                    <select name="routes[]" id="routes" class="form-control" multiple>
                                         <option value=""><?php echo e(_i('All')); ?></option>
-                                            <option value="core.index">
-                                                <?php echo e(_i('Home')); ?>
+                                        <option value="core.index">
+                                            <?php echo e(_i('Home')); ?>
 
-                                            </option>
+                                        </option>
 
                                         <?php $__currentLoopData = $menu; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($item->route); ?>">
@@ -84,72 +86,6 @@
 
                                             </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if( \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 124 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 44): ?>
-                                            <option value="core.index">
-                                                <?php echo e(_i('Home')); ?>
-
-                                            </option>
-                                        <?php endif; ?>
-                                        <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 2 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 6 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 7 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 8 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 9 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 20 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 27 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 42 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 47 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 50 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 68 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 73 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 74 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 75 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 79 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 81 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 130 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 129 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 130): ?>
-                                            <option value="pragmatic-play.live">
-                                                <?php echo e(_i('Pragmatic Live Casino')); ?>
-
-                                            </option>
-                                        <?php endif; ?>
-                                        <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 147 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 149 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144): ?>
-                                            <option value="store.index">
-                                                <?php echo e(_i('Store')); ?>
-
-                                            </option>
-                                        <?php endif; ?>
-                                        <?php if( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114): ?>
-                                            <option value="vivo-gaming-dotsuite.lobby">
-                                                <?php echo e(_i('Vivo Gaming Dotsuite')); ?>
-
-                                            </option>
-                                        <?php endif; ?>
-                                        <?php if( \Dotworkers\Configurations\Configurations::getWhitelabel() == 114 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 125 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 153): ?>
-                                            <option value="bet-soft.vg.lobby">
-                                                <?php echo e(_i('Bet Soft')); ?>
-
-                                            </option>
-                                            <option value="tom-horn.vg.lobby">
-                                                <?php echo e(_i('Tom Horn')); ?>
-
-                                            </option>
-                                            <option value="platipus.vg.lobby">
-                                                <?php echo e(_i('Platipus')); ?>
-
-                                            </option>
-                                            <option value="booongo.vg.lobby">
-                                                <?php echo e(_i('Booongo')); ?>
-
-                                            </option>
-                                            <option value="leap.vg.lobby">
-                                                <?php echo e(_i('Leap')); ?>
-
-                                            </option>
-                                            <option value="arrows-edge.vg.lobby">
-                                                <?php echo e(_i('Arrows Edge')); ?>
-
-                                            </option>
-                                            <option value="red-rake.vg.lobby">
-                                                <?php echo e(_i('Red Rake')); ?>
-
-                                            </option>
-                                            <option value="playson.vg.lobby">
-                                                <?php echo e(_i('Playson')); ?>
-
-                                            </option>
-                                            <option value="5men.vg.lobby">
-                                                <?php echo e(_i('5 Men')); ?>
-
-                                            </option>
-                                            <option value="spinomenal.vg.lobby">
-                                                <?php echo e(_i('Spinomenal')); ?>
-
-                                            </option>
-                                        <?php endif; ?>
                                     </select>
                                 </div>
                             </div>
@@ -180,7 +116,8 @@
 
                         </h3>
                         <div class="media-body d-flex justify-content-end">
-                            <a href="<?php echo e(route('sliders.create', [$template_element_type, $section])); ?>" class="btn u-btn-3d u-btn-primary float-right">
+                            <a href="<?php echo e(route('sliders.create', [$template_element_type, $section])); ?>"
+                               class="btn u-btn-3d u-btn-primary float-right">
                                 <i class="hs-admin-upload"></i>
                                 <?php echo e(_i('Upload')); ?>
 
@@ -195,11 +132,16 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered w-100" id="sliders-table" data-route="<?php echo e(route('sliders.all', [$template_element_type, $section])); ?>">
+                        <table class="table table-bordered w-100" id="sliders-table"
+                               data-route="<?php echo e(route('sliders.all', [$template_element_type, $section])); ?>">
                             <thead>
                             <tr>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                     <?php echo e(_i('Image')); ?>
+
+                                </th>
+                                <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                    <?php echo e(_i('Front')); ?>
 
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
