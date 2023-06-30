@@ -69,7 +69,7 @@ class Dashboard {
                 data: $form.serialize()
 
             }).done(function (json) {
-                $('#reset-email-modal').modal('hide');
+                $('#reset-email-modal').modal('show');
                 swalSuccessWithButton(json);
                 $form.trigger('reset');
 
