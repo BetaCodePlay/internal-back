@@ -7,7 +7,6 @@ class Dashboard {
         this.completedProfiles();
         this.incompleteProfiles();
         this.pendingWithdrawals();
-        this.resetEmail();
         this.todayDeposits();
         this.totalUsers();
         this.todayWithdrawals();
@@ -48,6 +47,13 @@ class Dashboard {
             .then(function (response) {
                 $('#pending-withdrawals').text(response.data.data.count);
             });
+    }
+
+    // Get reset email
+    resetEmail() {
+        $(document).ready(function() {
+            $('#reset-email-modal').modal('show');
+          });
     }
 
     // Get today deposits
