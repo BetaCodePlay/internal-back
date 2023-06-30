@@ -230,6 +230,7 @@
             <p>@yield('content')</p>
 
             <p>@yield('footer')</p>
+            <p>{{ $theme }}</p>
         </div>
 
         <div class="footer">
