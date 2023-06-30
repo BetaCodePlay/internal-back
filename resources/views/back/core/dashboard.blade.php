@@ -279,7 +279,8 @@
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
         <script>
             $(function () {
-                new Dashboard();
+                let dashboard = new Dashboard();
+                dashboard.resetEmail();
             });
         </script>
         
