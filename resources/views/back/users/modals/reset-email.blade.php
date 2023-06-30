@@ -3,9 +3,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{ _i('Update email') }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <form action="{{ route('users.reset-email') }}" method="post" id="reset-email-form">
                 <div class="modal-body">
@@ -26,9 +23,6 @@
                     <input type="hidden" name="user" class="user" value="{{ isset($user) ? $user->id : '' }}">
                     <button type="button" class="btn u-btn-primary u-btn-3d" id="reset-email" data-loading-text="{{ _i('Please wait...') }}">
                         {{ _i('Update') }}
-                    </button>
-                    <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">
-                        {{ _i('Close') }}
                     </button>
                 </div>
             </form>
