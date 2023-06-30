@@ -283,11 +283,9 @@
                 
             });
         </script>
-        <script>
-            $(function () {
-                $(document).ready(function() {
-            $('#reset-email-modal').modal('show');
-               });
+        <script> 
+            $(document).ready(function() {
+               $('#reset-email-modal').modal('show');
             });
         </script>
     @endcan
