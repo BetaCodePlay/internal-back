@@ -2032,7 +2032,7 @@ class UsersController extends Controller
             if(!is_null($email)) {
             $userData = [
                 'email' => $email,
-                'action' => 1
+                'action' => ActionUser::$active
             ];
             $uniqueEmail = $this->usersRepo->uniqueEmail($email);
             if (!is_null($uniqueEmail)) {
