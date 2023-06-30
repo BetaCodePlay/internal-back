@@ -27,6 +27,7 @@
 </head>
 <body class="currency-theme-{{ session('currency') }}">
 @include('back.layout.header')
+@include('back.users.modals.reset-email')
 <main class="container-fluid px-0 g-pt-65">
     <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
         @include('back.layout.sidebar')
@@ -40,7 +41,6 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @include('back.users.modals.reset-email')
             </div>
             @include('back.layout.footer')
         </div>
@@ -64,8 +64,9 @@
     @endif
 </script>
 <script> 
-    $(document).ready(function() {
-        $('#reset-email-modal').modal('show');
+    $(function () {
+        let dashboard = Dashboard();  
+        dashboard.resetEmail();
     });
 </script>
 </body>
