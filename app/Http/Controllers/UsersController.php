@@ -2021,17 +2021,17 @@ class UsersController extends Controller
      */
     public function resetEmail(Request $request)
     {
-        \Log::info(__METHOD__, ['request' => $request->all()]);
         $this->validate($request, [
             'email' => ['required', new Email()]
         ]);
 
         try {
+            $user = auth()->user()->id;
             $email = $request->email;
             $userData = [
                 'email' => $email
             ];
-            $this->usersRepo->update($email, $userData);
+            $this->usersRepo->update($user, $userData);
 
             $data = [
                 'title' => _i('Email reset'),
