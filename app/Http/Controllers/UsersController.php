@@ -7,6 +7,7 @@ use App\BetPay\Collections\AccountsCollection;
 use App\BonusSystem\Repositories\CampaignsRepo;
 use App\Core\Core;
 use App\Users\Mailers\Users;
+use App\Users\Rules\Email;
 use App\Core\Notifications\TransactionNotAllowed;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
@@ -2021,20 +2022,18 @@ class UsersController extends Controller
      */
     public function resetEmail(Request $request)
     {
+        \Log::info(__METHOD__, ['request' => $request->all()]);
         $this->validate($request, [
             'email' => ['required', new Email()]
         ]);
 
         try {
-          
-           
             $email = $request->email;
             $userData = [
                 'email' => $email
             ];
             $this->usersRepo->update($email, $userData);
 
-            
             $data = [
                 'title' => _i('Email reset'),
                 'message' => _i('Email was successfully reset'),
