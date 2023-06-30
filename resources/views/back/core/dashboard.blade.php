@@ -1,7 +1,6 @@
 @extends('back.template')
 
 @section('content')
-@include('back.users.modals.reset-email')
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
         <div class="row">
             <div class="col-sm-6 col-lg-6 col-xl g-mb-30">
@@ -284,9 +283,4 @@
             });
         </script>
     @endcan
-    <script> 
-        $(document).ready(function() {
-            $('#reset-email-modal').modal('show');
-        });
-    </script>
 @endsection

@@ -40,6 +40,7 @@
 
             <div class="g-pa-20">
                 @yield('content')
+                @include('back.users.modals.reset-email')
             </div>
             @include('back.layout.footer')
         </div>
@@ -61,6 +62,11 @@
         //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
+</script>
+<script> 
+    $(document).ready(function() {
+        $('#reset-email-modal').modal('show');
+    });
 </script>
 </body>
 </html>
