@@ -2808,8 +2808,12 @@ class AgentsController extends Controller
             ->withData($data)
             ->post();
         $response = json_decode($curl);
-        Log::debug('validateEmail',[$response]);
-        return $response->result == 'deliverable';
+        $result = true;
+        if(!isset($response->result) || $response->result != 'deliverable'){
+            Log::debug('validateEmail',[$response]);
+            $result = false;
+        }
+        return $result;
     }
 
     /**
