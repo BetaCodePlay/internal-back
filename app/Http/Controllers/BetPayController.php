@@ -1345,7 +1345,7 @@ class BetPayController extends Controller
                         'reference' => $request->reference,
                         'action' => $action,
                         'client_account' => $request->client_account,
-                        'payment_method' => intval($request->payment_method),
+                        'payment_method' => $request->payment_method,
                         'operator' => $operator,
                     ];
 
