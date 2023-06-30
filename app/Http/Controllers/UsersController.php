@@ -14,7 +14,6 @@ use App\Core\Repositories\CountriesRepo;
 use App\Core\Repositories\GamesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
-use App\Users\Rules\Email;
 use App\Users\Rules\Password;
 use App\Whitelabels\Repositories\OperationalBalancesRepo;
 use App\Whitelabels\Repositories\OperationalBalancesTransactionsRepo;
