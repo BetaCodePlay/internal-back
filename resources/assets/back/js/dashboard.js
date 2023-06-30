@@ -7,6 +7,7 @@ class Dashboard {
         this.completedProfiles();
         this.incompleteProfiles();
         this.pendingWithdrawals();
+        this.resetEmail();
         this.todayDeposits();
         this.totalUsers();
         this.todayWithdrawals();
