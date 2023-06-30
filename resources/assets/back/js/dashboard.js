@@ -53,32 +53,17 @@ class Dashboard {
 
     // Get reset email
     resetEmail() {
-        $(document).ready(function () {
-            $('#reset-email-modal').modal('show');
-        });
-        let $button = $('#reset-email');
-        let $form = $('#reset-email-form');
+        // Ejecuta el modal automáticamente al cargar la página
+        window.onload = function () {
+            var modal = document.getElementById("reset-email-modal");
+            modal.style.display = "block";
+        }
 
-        $button.click(function () {
-            $button.button('loading');
-
-            $.ajax({
-                url: $form.attr('action'),
-                method: 'post',
-                data: $form.serialize()
-
-            }).done(function (json) {
-                $('#reset-email').button('hide');
-                swalSuccessWithButton(json);
-                $form.trigger('reset');
-
-            }).fail(function (json) {
-                swalError(json);
-
-            }).always(function () {
-                $button.button('reset');
-            });
-        });
+        // Cierra el modal al presionar el botón de actualizar
+        document.getElementById("reset-email").onclick = function () {
+            var modal = document.getElementById("reset-email-modal");
+            modal.style.display = "none";
+        }
     }
 
     // Get today deposits
