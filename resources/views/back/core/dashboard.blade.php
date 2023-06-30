@@ -280,11 +280,6 @@
         <script>
             $(function () {
                 new Dashboard();
-            });
-        </script>
-        <script>
-            $(function () {
-                let dashboard = new Dashboard()
                 dashboard.resetEmail();
             });
         </script>
