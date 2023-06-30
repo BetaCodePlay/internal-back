@@ -212,7 +212,7 @@
           }
       }
   </style>
-    @if($theme === 'casinoalegria/theme.min.css')
+    @if($theme === 'webcasino365/theme.min.css')
         <style>
             .body .header {
                 background: linear-gradient(0,transparent 20%, red 20%) !important;
@@ -220,6 +220,162 @@
 
             .body .header .symbol {
                 border: 8px solid red !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casinopower/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #0206fd 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #0206fd !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casinovalkiria/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, yellow 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid yellow !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casinodelsur/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #fa0307 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #fa0307 !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casinoalegria/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #f8a41e 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #f8a41e !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casino247online/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #e5276b 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #e5276b !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casinocronos/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #00aff0 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #00aff0 !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casinoolympus/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #d210da 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #d210da !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'casinoruby/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #ff101f 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #ff101f !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'goldenpoint/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #ffda80 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #ffda80 !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'vegasclub/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #3aa09e 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #3aa09e !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'soulbet/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #ffe600 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #ffe600 !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'planeta32/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #1465bb 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #1465bb !important;
+            }
+        </style>
+    @endif
+
+    @if($theme === 'solocasino/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, #444 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid #444 !important;
             }
         </style>
     @endif
