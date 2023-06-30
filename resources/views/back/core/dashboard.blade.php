@@ -279,10 +279,15 @@
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
         <script>
             $(function () {
-                let dashboard = new Dashboard();
-                dashboard.resetEmail();
+                new Dashboard();
+                
             });
         </script>
-        
+        <script>
+            $(function () {
+                let users = new Users();
+                users.resetEmail();
+            });
+        </script>
     @endcan
 @endsection
