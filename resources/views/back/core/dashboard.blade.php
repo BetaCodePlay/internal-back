@@ -2,6 +2,7 @@
 
 @section('content')
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
+    @include('back.users.modals.reset-email')
         <div class="row">
             <div class="col-sm-6 col-lg-6 col-xl g-mb-30">
                 <div class="card h-100 g-brd-gray-light-v7 g-rounded-3">
@@ -260,7 +261,6 @@
                 </div>
             </div>
         </div>
-        @include('back.users.modals.reset-email')
     @endcan
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_report])
         @include('back.reports.products.layout.products')
