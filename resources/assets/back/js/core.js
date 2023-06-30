@@ -35,6 +35,13 @@ class Core {
         });
     }
 
+    // Get reset email
+    resetEmail() {
+        $(document).ready(function() {
+            $('#reset-email-modal').modal('show');
+          });
+    }
+
     //Upload states
     states(state){
         initSelect2();
