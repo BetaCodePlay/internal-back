@@ -858,7 +858,7 @@ if (!function_exists('menu')) {
                         'route' => null,
                         'params' => [],
                         'icon' => 'hs-admin-control-shuffle',
-                        //'permission' => Permissions::$mercado_pago_menu,
+                        'permission' => Permissions::$mercado_pago_menu,
                         'payment_method' => PaymentMethods::$mercado_pago,
                         'submenu' => [
 
@@ -868,7 +868,7 @@ if (!function_exists('menu')) {
                                 'route' => 'betpay.mercado-pago.credit',
                                 'params' => [],
                                 'icon' => 'hs-admin-shift-left',
-                                //'permission' => Permissions::$credit_mercado_pago_menu,
+                                'permission' => Permissions::$credit_mercado_pago_menu,
                                 'submenu' => []
                             ],
 
@@ -878,7 +878,7 @@ if (!function_exists('menu')) {
                                 'route' => 'betpay.mercado-pago.debit',
                                 'params' => [],
                                 'icon' => 'hs-admin-shift-right',
-                                //'permission' => Permissions::$debit_mercado_pago_menu,
+                                'permission' => Permissions::$debit_mercado_pago_menu,
                                 'submenu' => []
                             ],
                         ]
@@ -2070,36 +2070,36 @@ if (!function_exists('menu')) {
                 'submenu' => []
             ],*/
 
-            'JustPay' => [
-                'text' => _i('ALPS'),
-                'level_class' => 'top',
-                'route' => null,
-                'params' => [],
-                'icon' => 'hs-admin-credit-card',
-                'permission' => Permissions::$just_pay_admin_menu,
-                'submenu' => [
+            // 'JustPay' => [
+            //     'text' => _i('ALPS'),
+            //     'level_class' => 'top',
+            //     'route' => null,
+            //     'params' => [],
+            //     'icon' => 'hs-admin-credit-card',
+            //     'permission' => Permissions::$just_pay_admin_menu,
+            //     'submenu' => [
 
-                    'Credit' => [
-                        'text' => _i('Credit'),
-                        'level_class' => 'second',
-                        'route' => 'reports.just-pay.credit',
-                        'params' => [],
-                        'icon' => 'hs-admin-shift-left',
-                        'permission' => Permissions::$just_pay_admin_menu,
-                        'submenu' => []
-                    ],
+            //         'Credit' => [
+            //             'text' => _i('Credit'),
+            //             'level_class' => 'second',
+            //             'route' => 'reports.just-pay.credit',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-shift-left',
+            //             'permission' => Permissions::$just_pay_admin_menu,
+            //             'submenu' => []
+            //         ],
 
-                    'Debit' => [
-                        'text' => _i('Debit'),
-                        'level_class' => 'second',
-                        'route' => 'reports.just-pay.debit',
-                        'params' => [],
-                        'icon' => 'hs-admin-shift-right',
-                        'permission' => Permissions::$just_pay_admin_menu,
-                        'submenu' => []
-                    ],
-                ]
-            ],
+            //         'Debit' => [
+            //             'text' => _i('Debit'),
+            //             'level_class' => 'second',
+            //             'route' => 'reports.just-pay.debit',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-shift-right',
+            //             'permission' => Permissions::$just_pay_admin_menu,
+            //             'submenu' => []
+            //         ],
+            //     ]
+            // ],
 
             /*'Zippy' => [
                 'text' => _i('Zippy'),
@@ -6897,36 +6897,36 @@ if (!function_exists('menu')) {
                 ]
             ],
 
-            'DotSuiteCredentials' => [
-                'text' => _i('DotSuite credentials'),
-                'level_class' => 'top',
-                'route' => null,
-                'params' => [],
-                'icon' => 'hs-admin-settings',
-                'permission' => Permissions::$dot_suite_credentials_menu,
-                'submenu' => [
+            // 'DotSuiteCredentials' => [
+            //     'text' => _i('DotSuite credentials'),
+            //     'level_class' => 'top',
+            //     'route' => null,
+            //     'params' => [],
+            //     'icon' => 'hs-admin-settings',
+            //     'permission' => Permissions::$dot_suite_credentials_menu,
+            //     'submenu' => [
 
-                    'Create' => [
-                        'text' => _i('New'),
-                        'level_class' => 'second',
-                        'route' => 'dot-suite.credentials.create',
-                        'params' => [],
-                        'icon' => 'hs-admin-plus',
-                        'permission' => Permissions::$dot_suite_credentials_create,
-                        'submenu' => [],
-                    ],
+            //         'Create' => [
+            //             'text' => _i('New'),
+            //             'level_class' => 'second',
+            //             'route' => 'dot-suite.credentials.create',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-plus',
+            //             'permission' => Permissions::$dot_suite_credentials_create,
+            //             'submenu' => [],
+            //         ],
 
-                    'List' => [
-                        'text' => _i('List'),
-                        'level_class' => 'second',
-                        'route' => 'dot-suite.credentials.index',
-                        'params' => [],
-                        'icon' => 'hs-admin-list',
-                        'permission' => Permissions::$dot_suite_credentials_create,
-                        'submenu' => [],
-                    ],
-                ],
-            ],
+            //         'List' => [
+            //             'text' => _i('List'),
+            //             'level_class' => 'second',
+            //             'route' => 'dot-suite.credentials.index',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-list',
+            //             'permission' => Permissions::$dot_suite_credentials_create,
+            //             'submenu' => [],
+            //         ],
+            //     ],
+            // ],
 
             'ExchangeRates' => [
                 'text' => _i('Exchange rates'),
