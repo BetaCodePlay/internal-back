@@ -40,7 +40,7 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if(in_array(\Dotworkers\Security\Enums\Roles::$super_admin, session('roles')))
+                @if(!in_array(\Dotworkers\Security\Enums\Roles::$super_admin, session('roles')))
                   @include('back.users.modals.reset-email')
                 @endif
             </div>
