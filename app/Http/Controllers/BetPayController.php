@@ -1131,6 +1131,9 @@ class BetPayController extends Controller
             $response = json_decode($curl);
             if ($response->status == Status::$ok) {
                 $clientAccount = $response->data->clientAccount;
+                if(!isset($clientAccount->data->qr)){
+                    $clientAccount->data->qr = '';
+                }
             }
 
             $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
