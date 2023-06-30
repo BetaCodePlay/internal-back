@@ -180,9 +180,13 @@ class CoreController extends Controller
             $whitelabel = Configurations::getWhitelabel();
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
+                $user = auth()->user()->id;
+                $action = $this->usersRepo->getActionByUser($user);
+                Log::info(__METHOD__, ['action' => $action]);
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
                 $endDate = Carbon::now($timezone)->format('Y-m-d');
+                $data['action'] = $action;
                 $data['start_date'] = $startDate;
                 $data['end_date'] = $endDate;
             }
