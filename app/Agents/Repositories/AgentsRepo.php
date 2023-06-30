@@ -6,6 +6,7 @@ use App\Agents\Entities\Agent;
 use App\Users\Entities\User;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
+use Dotworkers\Security\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -352,6 +353,23 @@ class AgentsRepo
         }
 
         return $treeItem;
+
+    }
+
+    /**
+     * Find Agent (not admin)
+
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel ID
+     * @return mixed
+     */
+    public function findAgent(int $user,int $whitelabel)
+    {
+       $response = DB::select('select u.id as id_agent
+                    from site.users u inner join site.role_user rl on u.id = rl.user_id where rl.role_id = ? and u.username != ? and u.whitelabel_id = ? and u.id = ?;', [Roles::$admin_Beet_sweet,'admin', $whitelabel,$user]);
+
+        return (int)isset($response[0]->id_agent);
 
     }
 
