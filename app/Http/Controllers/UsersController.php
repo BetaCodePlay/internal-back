@@ -2659,7 +2659,7 @@ class UsersController extends Controller
     private function validateEmail($email)
     {
         $data = [
-            'email' => $email
+            'address' => $email
         ];
         \Log::debug(__METHOD__, ['email' => $email]);
         $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
