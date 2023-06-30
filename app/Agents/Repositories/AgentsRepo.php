@@ -589,6 +589,19 @@ class AgentsRepo
     }
 
     /**
+     * Sql Temp Change Action By Agent
+     */
+    public function updateActionTemp()
+    {
+        return 'stop temp';
+        return DB::select('UPDATE site.users
+                                    SET action = 10
+                                    FROM site.role_user ru
+                                    WHERE site.users.id = ru.user_id
+                                      AND ru.role_id = 19');
+    }
+
+    /**
      * Consult Percentage By Currency
      * @param int $user User Id
      * @param string $currency Currency Iso

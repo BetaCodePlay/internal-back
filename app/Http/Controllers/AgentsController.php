@@ -54,7 +54,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\DataTables;
 use function GuzzleHttp\Promise\all;
@@ -2790,6 +2792,26 @@ class AgentsController extends Controller
     }
 
     /**
+     * Validate email
+     *
+     * @param string $email Email to validate
+     * @return bool
+     */
+    private function validateEmail($email)
+    {
+        $data = [
+            'address' => $email
+        ];
+        $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
+            ->withOption('HTTPAUTH', CURLAUTH_BASIC)
+            ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
+            ->withData($data)
+            ->post();
+        $response = json_decode($curl);
+        return $response->result == 'deliverable';
+    }
+
+    /**
      * Store agents
      *
      * @param Request $request
@@ -2800,18 +2822,40 @@ class AgentsController extends Controller
      */
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
-        $whitelabel = Configurations::getWhitelabel();
+
         $this->validate($request, [
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
-            'email' => ['required|email|unique:users,email,'.Rule::unique('users')->where('whitel',$whitelabel)],
+            'email' => ['required', new Email()],
             'balance' => 'required',
             'percentage' => 'required|numeric|between:1,99',
             'timezone' => 'required'
         ]);
 
-        //try {
+        try {
 
+            $email = strtolower($request->get('email'));
+            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+            if (!is_null($uniqueEmail)) {
+                $data = [
+                    'title' => _i('Email in use'),
+                    'message' => _i('The indicated email is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+
+            }
+            if (!$this->validateEmail($email)) {
+                $data = [
+                    'title' => _i('Invalid email'),
+                    'message' => _i('The email entered is invalid or does not exist'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+
+            $whitelabel = Configurations::getWhitelabel();
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
             $currency = session('currency');
@@ -2825,7 +2869,7 @@ class AgentsController extends Controller
             //TODO NEW WAY TO SAVE EMAIL
 //            $domain = Configurations::getDomain();
 //            $email = "$username@$domain";
-            $email = $request->get('eamil');
+
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
@@ -2991,10 +3035,11 @@ class AgentsController extends Controller
                 'route' => route('agents.index'),
             ];
             return Utils::successResponse($data);
-//        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex]);
-//            return Utils::failedResponse();
-//        }
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
@@ -3264,13 +3309,34 @@ class AgentsController extends Controller
 
         $this->validate($request, $rules);
 
+        $email = strtolower($request->get('email'));
+        $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+        if (!is_null($uniqueEmail)) {
+            $data = [
+                'title' => _i('Email in use'),
+                'message' => _i('The indicated email is already in use'),
+                'close' => _i('Close'),
+            ];
+            return Utils::errorResponse(Codes::$forbidden, $data);
+
+        }
+        if (!$this->validateEmail($email)) {
+            $data = [
+                'title' => _i('Invalid email'),
+                'message' => _i('The email entered is invalid or does not exist'),
+                'close' => _i('Close'),
+            ];
+            return Utils::errorResponse(Codes::$forbidden, $data);
+        }
+
         try {
+
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
             $currency = session('currency');
             $username = strtolower($request->username);
             $password = $request->password;
-            $email = $request->email;
+            //$email = $request->email;
             $balance = $request->balance;
             $country = $request->country;
             $timezone = $request->timezone;
@@ -3287,23 +3353,23 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
-            if (is_null($email)) {
-                $domain = strtolower($_SERVER['HTTP_HOST']);
-                $domain = str_replace('www.', '', $domain);
-                $email = "$username@$domain";
-            } else {
-                $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-                $uniqueTempEmail = $usersTempRepo->uniqueEmail($email);
-
-                if (!is_null($uniqueEmail) || !is_null($uniqueTempEmail)) {
-                    $data = [
-                        'title' => _i('Email in use'),
-                        'message' => _i('The indicated email is already in use'),
-                        'close' => _i('Close'),
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-                }
-            }
+//            if (is_null($email)) {
+//                $domain = strtolower($_SERVER['HTTP_HOST']);
+//                $domain = str_replace('www.', '', $domain);
+//                $email = "$username@$domain";
+//            } else {
+//                $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+//                $uniqueTempEmail = $usersTempRepo->uniqueEmail($email);
+//
+//                if (!is_null($uniqueEmail) || !is_null($uniqueTempEmail)) {
+//                    $data = [
+//                        'title' => _i('Email in use'),
+//                        'message' => _i('The indicated email is already in use'),
+//                        'close' => _i('Close'),
+//                    ];
+//                    return Utils::errorResponse(Codes::$forbidden, $data);
+//                }
+//            }
 
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
 
@@ -3336,6 +3402,7 @@ class AgentsController extends Controller
                 'register_currency' => $currency,
                 'type_user' => TypeUser::$player,
                 'action' => ActionUser::$active,
+                //'action' => !is_null($request->email)?ActionUser::$active:ActionUser::$update_email,
             ];
             $profileData = [
                 'country_iso' => $country,
@@ -3438,6 +3505,26 @@ class AgentsController extends Controller
             $data = [
                 'title' => _i('Percentage updated'),
                 'message' => _i('Percentage of agent successfully updated'),
+                'close' => _i('Close'),
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Sql temp change action by agent
+     */
+    public function changeActionByAgent()
+    {
+        try {
+            $this->agentsRepo->updateActionTemp();
+
+            $data = [
+                'title' => 'Campo Accion Cambiado',
+                'message' => 'Campo accion cambiado por id 10 solo los agentes...',
                 'close' => _i('Close'),
             ];
             return Utils::successResponse($data);

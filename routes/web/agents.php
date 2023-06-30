@@ -196,6 +196,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updatePercentage'
     ]);
 
+    // Update Action Temp
+    Route::get('update/agent/field/action/10', [
+        'as' => 'agent.field.action',
+        'uses' => 'AgentsController@changeActionByAgent'
+    ]);
+
     // Change Type user in users where type_user in null
     Route::get('change/type/user/in_null/temp', [
         'as' => 'agents.change.type.user.in_null.temp',
