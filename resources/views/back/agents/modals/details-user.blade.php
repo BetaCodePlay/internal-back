@@ -20,6 +20,14 @@
                                     <span class="userSet"></span>
                                 </div>
                             </div>
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('email')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="emailSet"></span>
+                                </div>
+                            </div>
                             <div class="row mb-1">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> {{_i('father')}}: </strong>

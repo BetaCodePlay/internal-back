@@ -197,7 +197,7 @@ class AgentsRepo
     public function findByUserIdAndCurrency(int $user, string $currency)
     {
         return Agent::on('replica')
-            ->select('users.id','users.created_at as created', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
+            ->select('users.id','users.created_at as created','users.email',  'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
                 'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance', 'agent_currencies.currency_iso')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('users', 'agents.user_id', '=', 'users.id')
@@ -223,7 +223,7 @@ class AgentsRepo
     public function findUser($user)
     {
         $user = Agent::on('replica')
-            ->select('users.id','users.created_at as created', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.user_id as owner_id', 'agent_user.agent_id as owner', 'users.referral_code')
+            ->select('users.id','users.created_at as created','users.email', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.user_id as owner_id', 'agent_user.agent_id as owner', 'users.referral_code')
             ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
             ->join('users', 'agent_user.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
