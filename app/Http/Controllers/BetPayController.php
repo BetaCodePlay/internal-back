@@ -1356,7 +1356,7 @@ class BetPayController extends Controller
                         ->withHeader("Authorization: Bearer $betPayToken")
                         ->post();
                     $response = json_decode($curl);
-
+                    \Log::debug("response MERCADOPAGO",[$curl]);
                     if ($response->status == Status::$ok) {
                         $betPayTransaction = $response->data->transaction;
                         $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
