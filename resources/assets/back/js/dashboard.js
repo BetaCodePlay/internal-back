@@ -49,13 +49,6 @@ class Dashboard {
             });
     }
 
-    // Get reset email
-    resetEmail() {
-        $(document).ready(function() {
-            $('#reset-email-modal').modal('show');
-          });
-    }
-
     // Get today deposits
     todayDeposits() {
         let route = $('#today-deposits').data('route');

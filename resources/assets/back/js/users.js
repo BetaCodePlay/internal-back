@@ -462,13 +462,6 @@ class Users {
         });
     };
 
-    // Get reset email
-    resetEmail() {
-        $(document).ready(function() {
-            $('#reset-email-modal').modal('show');
-          });
-    }
-
     //Select maker
     selectCategoryMaker(){
         initSelect2();
