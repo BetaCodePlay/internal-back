@@ -212,6 +212,17 @@
           }
       }
   </style>
+    @if($theme === 'casinoalegria/theme.min.css')
+        <style>
+            .body .header {
+                background: linear-gradient(0,transparent 20%, red 20%) !important;
+            }
+
+            .body .header .symbol {
+                border: 8px solid red !important;
+            }
+        </style>
+    @endif
 </head>
 <body>
 <div class="body">
@@ -230,7 +241,6 @@
             <p>@yield('content')</p>
 
             <p>@yield('footer')</p>
-            <p>{{ $theme }}</p>
         </div>
 
         <div class="footer">
