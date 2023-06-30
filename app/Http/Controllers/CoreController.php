@@ -183,11 +183,10 @@ class CoreController extends Controller
                 $user = auth()->user()->id;
                 $action = $this->usersRepo->getActionByUser($user);
                 $actionUser = $action->action;
-                Log::info(__METHOD__, ['action' => $actionUser]);
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
                 $endDate = Carbon::now($timezone)->format('Y-m-d');
-                $data['action'] = $action;
+                $data['action'] = $actionUser;
                 $data['start_date'] = $startDate;
                 $data['end_date'] = $endDate;
             }
