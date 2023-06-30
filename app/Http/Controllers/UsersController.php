@@ -2665,8 +2665,7 @@ class UsersController extends Controller
         $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
             ->withOption('HTTPAUTH', CURLAUTH_BASIC)
             ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
-            ->withData($data)
-            ->post();
+            ->get();
         $response = json_decode($curl);
         \Log::debug(__METHOD__, ['response' => $response, 'curl' => $curl]);
         return $response->result == 'deliverable';
