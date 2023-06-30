@@ -40,9 +40,8 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if(in_array(\Dotworkers\Security\Enums\Roles::$super_admin, session('roles')))
+                @if(\App\Users\Enums\ActionUser::$update_email)
                   @include('back.users.modals.reset-email')
-                @else
                 @endif
             </div>
             @include('back.layout.footer')
@@ -71,9 +70,9 @@
     });
     @endif
 </script>
-<script> 
+<script>
     $(function () {
-        let dashboard = Dashboard();  
+        let dashboard = Dashboard();
         dashboard.resetEmail();
     });
 </script>
