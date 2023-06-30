@@ -283,8 +283,9 @@
         </script>
         <script>
             $(function () {
-                let core = new Core();
-                core.resetEmail();
+                $(document).ready(function() {
+            $('#reset-email-modal').modal('show');
+          });
             });
         </script>
     @endcan
