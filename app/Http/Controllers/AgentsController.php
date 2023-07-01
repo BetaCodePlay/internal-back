@@ -3618,12 +3618,14 @@ class AgentsController extends Controller
      * Validate email
      *
      * @param Request $request
+     * @param string $token User activation token
+     * @param string $email User activation email
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function validateEmailByAgent(Request $request)
+    public function validateEmailByAgent($token, $email)
     {
-        \Log::info(__METHOD__, ['request' => $request->all()]);
+        \Log::info(__METHOD__, ['token' => $token, 'email' => $email]);
         /*try {
             $user = auth()->user()->id;
             $tokenUser = $this->usersRepo->getUsers($user);
