@@ -205,14 +205,12 @@ class UsersRepo
      * Find Type User
      *
      * @param string $token User uuid
-     * @param string $email User email
      * @return mixed
      */
-    public function findByTokenAndEmail($token, $email)
+    public function findByTokenAndEmail($token)
     {
         return User::select('users.*')
             ->where('users.uuid', $token)
-            ->where('users.email', $email)
             ->first();
     }
 

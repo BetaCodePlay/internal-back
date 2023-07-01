@@ -3635,7 +3635,7 @@ class AgentsController extends Controller
     public function validateEmailByAgent($token, $email)
     {
         try {
-            $user = $this->usersRepo->findByTokenAndEmail($token, $email);
+            $user = $this->usersRepo->findByToken($token);
             \Log::info(__METHOD__, ['user1' => $user]);
             if (!is_null($user)) {
                 $userData = [
