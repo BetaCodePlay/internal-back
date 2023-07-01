@@ -862,6 +862,20 @@ class UsersRepo
     }
 
     /**
+     * get token by user
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getTokenByUser($user)
+    {
+        $users = User::select('uuid')
+            ->where('id', $user)
+            ->first();
+        return $users;
+    }
+
+    /**
      * get total desktop or mobile login
      *
      * @param int $whitelabel Whitelabel ID

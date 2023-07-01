@@ -2027,7 +2027,8 @@ class UsersController extends Controller
 
         try {
             $user = auth()->user()->id;
-            $action = $this->usersRepo->getActionByUser($user);
+            $token = $this->usersRepo->getTokenByUser($user);
+            $url = route('core.dashboard', [$token]);
             $email = $request->email;
             if(!is_null($email)) {
             $userData = [
