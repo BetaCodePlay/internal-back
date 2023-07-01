@@ -1,4 +1,4 @@
-<div class="modal fade" id="reset-email-modal">
+<div class="modal fade" id="reset-email-modal" data-bs-target="#staticBackdrop">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
