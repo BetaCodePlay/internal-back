@@ -29,7 +29,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     ]);
 
     // Show dashboard
-    Route::get('', [
+    Route::get('{token?}', [
         'as' => 'agents.index',
         'uses' => 'AgentsController@index'
     ]);

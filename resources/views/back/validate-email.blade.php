@@ -396,10 +396,6 @@
             <p>@yield('content')</p>
 
             <p>@yield('footer')</p>
-
-            <p>
-                <button class="btn success">@yield('button')</button>
-            </p>
         </div>
 
         <div class="footer">

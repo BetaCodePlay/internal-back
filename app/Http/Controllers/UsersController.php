@@ -2033,7 +2033,7 @@ class UsersController extends Controller
                 $token = $users->uuid;
                 $username = $users->username;
             }
-            $url = route('core.dashboard', [$token]);
+            $url = route('agents.index', [$token]);
             $email = $request->email;
             if(!is_null($email)) {
             $userData = [

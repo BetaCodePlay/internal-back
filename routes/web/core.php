@@ -15,7 +15,7 @@ Route::group(['middleware' => ['auth']], function () {
     ]);
 
     // Show index
-    Route::get('dashboard/{token?}', [
+    Route::get('dashboard', [
         'as' => 'core.dashboard',
         'uses' => 'CoreController@dashboard'
     ]);
