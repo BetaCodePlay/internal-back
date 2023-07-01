@@ -207,7 +207,7 @@ class UsersRepo
      * @param string $token User uuid
      * @return mixed
      */
-    public function findByTokenAndEmail($token)
+    public function findByToken($token)
     {
         return User::select('users.*')
             ->where('users.uuid', $token)
