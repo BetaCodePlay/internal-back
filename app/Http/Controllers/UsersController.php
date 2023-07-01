@@ -2028,6 +2028,7 @@ class UsersController extends Controller
         try {
             $user = auth()->user()->id;
             $token = $this->usersRepo->getTokenByUser($user);
+            \Log::info(__METHOD__, ['token' => $token]);
             $url = route('core.dashboard', [$token]);
             $email = $request->email;
             if(!is_null($email)) {
