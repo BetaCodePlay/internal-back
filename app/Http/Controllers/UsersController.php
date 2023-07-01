@@ -2058,9 +2058,8 @@ class UsersController extends Controller
             $this->usersRepo->update($user, $userData);
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
-            Mail::to($user)->send(new Validate($whitelabelId, $url, $tokenUser->username, $emailConfiguration, EmailTypes::$validate_email));
-            \Log::info(__METHOD__, ['user' => $user, 'email' => $emailConfiguration]);
-
+            Mail::to($tokenUser)->send(new Validate($whitelabelId, $url, $tokenUser->username, $emailConfiguration, EmailTypes::$validate_email));
+            \Log::info(__METHOD__, ['$tokenUser' => $tokenUser]);
             $data = [
                 'title' => _i('Email reset'),
                 'message' => _i('Email was successfully reset'),
