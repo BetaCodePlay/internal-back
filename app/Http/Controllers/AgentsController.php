@@ -3636,6 +3636,7 @@ class AgentsController extends Controller
     {
         try {
             $user = $this->usersRepo->findByTokenAndEmail($token, $email);
+            \Log::info(__METHOD__, ['user1' => $user]);
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
