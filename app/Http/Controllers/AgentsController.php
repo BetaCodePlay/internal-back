@@ -3615,6 +3615,51 @@ class AgentsController extends Controller
     }
 
     /**
+     * Validate email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function validateEmailByAgent(Request $request)
+    {
+        \Log::info(__METHOD__, ['request' => $request->all()]);
+        /*try {
+            $user = auth()->user()->id;
+            $tokenUser = $this->usersRepo->getUsers($user);
+            foreach($tokenUser as $users){
+                $token = $users->uuid;
+                $username = $users->username;
+            }
+            $email = $request->email;
+            $url = route('agents.index', [$token, $email]);
+            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+            if (!is_null($uniqueEmail)) {
+                $data = [
+                    'title' => _i('Email in use'),
+                    'message' => _i('The indicated email is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+
+            }
+            $whitelabelId = Configurations::getWhitelabel();
+            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
+            Mail::to($email)->send(new Validate($whitelabelId, $url, $username, $emailConfiguration, EmailTypes::$validate_email));
+
+            $data = [
+                'title' => _i('Email validation'),
+                'message' => _i('Email was successfully validate'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }*/
+    }
+
+    /**
      * View Create Agent
      * @param CountriesRepo $countriesRepo
      * @param ProvidersRepo $providersRepo

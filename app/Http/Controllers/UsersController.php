@@ -2014,7 +2014,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Reset email
+     * Validate email
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -2033,13 +2033,8 @@ class UsersController extends Controller
                 $token = $users->uuid;
                 $username = $users->username;
             }
-            $url = route('agents.index', [$token]);
             $email = $request->email;
-            if(!is_null($email)) {
-            $userData = [
-                'email' => $email,
-                'action' => ActionUser::$active
-            ];
+            $url = route('agents.validate', [$token, $email]);
             $uniqueEmail = $this->usersRepo->uniqueEmail($email);
             if (!is_null($uniqueEmail)) {
                 $data = [
@@ -2049,28 +2044,17 @@ class UsersController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
 
-            } /*else {
-                    if (!$this->validateEmail($email)) {
-                        $data = [
-                            'title' => _i('Invalid email'),
-                            'message' => _i('The email entered is invalid or does not exist'),
-                            'close' => _i('Close'),
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }*/
-            $this->usersRepo->update($user, $userData);
+            }
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
-            Mail::to($request->email)->send(new Validate($whitelabelId, $url, $username, $emailConfiguration, EmailTypes::$validate_email));
+            Mail::to($email)->send(new Validate($whitelabelId, $url, $username, $emailConfiguration, EmailTypes::$validate_email));
 
             $data = [
-                'title' => _i('Email reset'),
-                'message' => _i('Email was successfully reset'),
+                'title' => _i('Email validation'),
+                'message' => _i('Email was successfully validate'),
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
-            }
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
