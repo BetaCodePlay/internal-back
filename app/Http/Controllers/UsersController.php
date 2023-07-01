@@ -23,6 +23,7 @@ use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\DocumentStatus;
 use App\Users\Mailers\Activate;
+use App\Users\Mailers\Validate;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UserDocumentsRepo;
