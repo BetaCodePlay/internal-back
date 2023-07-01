@@ -869,7 +869,7 @@ class UsersRepo
      */
     public function getTokenByUser($user)
     {
-        $users = User::select('uuid')
+        $users = User::select('id', 'uuid', 'username')
             ->where('id', $user)
             ->first();
         return $users;

@@ -2027,8 +2027,8 @@ class UsersController extends Controller
 
         try {
             $user = auth()->user()->id;
-            $token = $this->usersRepo->getTokenByUser($user);
-            \Log::info(__METHOD__, ['token' => $token]);
+            $tokenUser = $this->usersRepo->getTokenByUser($user);
+            $token = $tokenUser->uuid;
             $url = route('core.dashboard', [$token]);
             $email = $request->email;
             if(!is_null($email)) {
@@ -2056,6 +2056,10 @@ class UsersController extends Controller
                     }
                 }*/
             $this->usersRepo->update($user, $userData);
+            $whitelabelId = Configurations::getWhitelabel();
+            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
+            Mail::to($user)->send(new Validate($whitelabelId, $url, $tokenUser->username, $emailConfiguration, EmailTypes::$validate_email));
+            \Log::info(__METHOD__, ['user' => $user, 'email' => $emailConfiguration]);
 
             $data = [
                 'title' => _i('Email reset'),
