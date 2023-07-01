@@ -4,12 +4,10 @@ namespace App\Users\Mailers;
 
 use Dotworkers\Configurations\Enums\EmailTypes;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class Users extends Mailable
+class Validate extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -39,14 +37,13 @@ class Users extends Mailable
      *
      * @return void
      */
-    public function __construct($whitelabel, $url, $username, $emailConfiguration, $emailType, $ip)
+    public function __construct($whitelabel, $url, $username, $emailConfiguration, $emailType)
     {
         $this->whitelabel = $whitelabel;
         $this->url = $url;
         $this->username = $username;
         $this->emailConfiguration = $emailConfiguration;
         $this->emailType = $emailType;
-        $this->ip = $ip;
         switch ($emailType) {
             case EmailTypes::$validate_email:
             {
