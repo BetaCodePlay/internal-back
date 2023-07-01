@@ -110,19 +110,6 @@ class AuthController extends Controller
                 }
                 //TODO MODIFICAR EMAIL AGENT
                 //AQUI VALIDAR POR ROL
-                if(in_array(auth()->user()->type_user,[1,2]) && auth()->user()->action == ActionUser::$update_email) {
-                    $data = [
-                        'title' => _i('title'),
-                        'message' => _i('mensaje...'),
-                        'close' => _i('Close'),
-                        'changePassword' => true,
-                        'username' => auth()->user()->username,
-                        'password' => $credentials['password']
-                    ];
-                    session()->flush();
-                    auth()->logout();
-                    return Utils::errorResponse(Codes::$not_found, $data);
-                }
                 if(auth()->user()->status == false){
                     session()->flush();
                     auth()->logout();
@@ -283,7 +270,7 @@ class AuthController extends Controller
                 }
                 $user = auth()->user();
 
-                $usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$active);
+                $usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$update_email);
                 // dd($usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$active));
                 $data = [
                     'title' => _i('Password changed'),

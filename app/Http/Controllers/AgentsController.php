@@ -2831,7 +2831,7 @@ class AgentsController extends Controller
         $this->validate($request, [
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
-            'email' => ['required', new Email()],
+            //'email' => ['required', new Email()],
             'balance' => 'required',
             'percentage' => 'required|numeric|between:1,99',
             'timezone' => 'required'
@@ -2839,25 +2839,25 @@ class AgentsController extends Controller
 
         try {
 
-            $email = strtolower($request->get('email'));
-            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-            if (!is_null($uniqueEmail)) {
-                $data = [
-                    'title' => _i('Email in use'),
-                    'message' => _i('The indicated email is already in use'),
-                    'close' => _i('Close'),
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-
-            }
-            if (!$this->validateEmail($email)) {
-                $data = [
-                    'title' => _i('Invalid email'),
-                    'message' => _i('The email entered is invalid or does not exist'),
-                    'close' => _i('Close'),
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
+//            $email = strtolower($request->get('email'));
+//            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+//            if (!is_null($uniqueEmail)) {
+//                $data = [
+//                    'title' => _i('Email in use'),
+//                    'message' => _i('The indicated email is already in use'),
+//                    'close' => _i('Close'),
+//                ];
+//                return Utils::errorResponse(Codes::$forbidden, $data);
+//
+//            }
+//            if (!$this->validateEmail($email)) {
+//                $data = [
+//                    'title' => _i('Invalid email'),
+//                    'message' => _i('The email entered is invalid or does not exist'),
+//                    'close' => _i('Close'),
+//                ];
+//                return Utils::errorResponse(Codes::$forbidden, $data);
+//            }
 
 
             $whitelabel = Configurations::getWhitelabel();
@@ -2872,8 +2872,8 @@ class AgentsController extends Controller
             $percentage = $request->percentage;
             $currencies = !empty($request->currencies) ? $request->currencies : [$currency];
             //TODO NEW WAY TO SAVE EMAIL
-//            $domain = Configurations::getDomain();
-//            $email = "$username@$domain";
+            $domain = Configurations::getDomain();
+            $email = "$username@$domain";
 
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);

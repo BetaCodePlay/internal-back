@@ -6,6 +6,7 @@ use App\Agents\Entities\Agent;
 use App\Users\Entities\User;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
+use Dotworkers\Security\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -196,7 +197,7 @@ class AgentsRepo
     public function findByUserIdAndCurrency(int $user, string $currency)
     {
         return Agent::on('replica')
-            ->select('users.id','users.created_at as created', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
+            ->select('users.id','users.created_at as created','users.email',  'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
                 'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance', 'agent_currencies.currency_iso')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('users', 'agents.user_id', '=', 'users.id')
@@ -222,7 +223,7 @@ class AgentsRepo
     public function findUser($user)
     {
         $user = Agent::on('replica')
-            ->select('users.id','users.created_at as created', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.user_id as owner_id', 'agent_user.agent_id as owner', 'users.referral_code')
+            ->select('users.id','users.created_at as created','users.email', 'users.username', 'users.status', 'users.action', 'profiles.timezone', 'agents.user_id as owner_id', 'agent_user.agent_id as owner', 'users.referral_code')
             ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
             ->join('users', 'agent_user.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
@@ -352,6 +353,23 @@ class AgentsRepo
         }
 
         return $treeItem;
+
+    }
+
+    /**
+     * Find Agent (not admin)
+
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel ID
+     * @return mixed
+     */
+    public function findAgent(int $user,int $whitelabel)
+    {
+       $response = DB::select('select u.id as id_agent
+                    from site.users u inner join site.role_user rl on u.id = rl.user_id where rl.role_id = ? and u.username != ? and u.whitelabel_id = ? and u.id = ?;', [Roles::$admin_Beet_sweet,'admin', $whitelabel,$user]);
+
+        return (int)isset($response[0]->id_agent);
 
     }
 
