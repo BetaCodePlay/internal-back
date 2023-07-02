@@ -1,9 +1,9 @@
 @extends('back.template')
 
 @section('content')
-@if($action === '10')
+@php($action = '10')
     @yield('back.users.modals.reset-email')
-@endif
+@endphp
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
         <div class="row">
             <div class="col-sm-6 col-lg-6 col-xl g-mb-30">
