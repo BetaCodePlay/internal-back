@@ -28,6 +28,8 @@ use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UserDocumentsRepo;
 use App\Users\Repositories\UsersRepo;
+use App\Core\Repositories\ProvidersRepo;
+use App\Core\Repositories\ProvidersTypesRepo;
 use App\Users\Repositories\UsersTempRepo;
 use App\Users\Rules\Age;
 use App\Users\Rules\DNI;
@@ -65,7 +67,6 @@ use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use App\Whitelabels\Repositories\WhitelabelsRepo;
 use App\Core\Repositories\CurrenciesRepo;
-use App\Core\Repositories\ProvidersRepo;
 use App\Audits\Enums\AuditTypes;
 use App\Users\Import\TransactionsByLotImport;
 use App\CRM\Repositories\SegmentsRepo;
@@ -171,6 +172,13 @@ class UsersController extends Controller
      */
     private $providersRepo;
 
+     /**
+     * ProvidersTypesRepo
+     *
+     * @var ProvidersTypesRepo
+     */
+    private $providersTypesRepo;
+
     /**
      * ReportsCollection
      *
@@ -230,6 +238,7 @@ class UsersController extends Controller
      * @param WhitelabelsRepo $whitelabelsRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param ProvidersRepo $providersRepo
+     * @param ProvidersTypesRepo $providersTypesRepo
      * @param UserDocumentsRepo $userDocumentsRepo
      * @param SegmentsRepo $segmentsRepo
      * @param SegmentsCollection $segmentsCollection
@@ -248,6 +257,7 @@ class UsersController extends Controller
         WhitelabelsRepo $whitelabelsRepo,
         CurrenciesRepo $currenciesRepo,
         ProvidersRepo $providersRepo,
+        ProvidersTypesRepo $providersTypesRepo,
         ReportsCollection $reportsCollection,
         UserDocumentsRepo $userDocumentsRepo,
         SegmentsRepo $segmentsRepo,
@@ -269,6 +279,7 @@ class UsersController extends Controller
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->providersRepo = $providersRepo;
+        $this->providersTypesRepo = $providersTypesRepo;
         $this->userDocumentsRepo = $userDocumentsRepo;
         $this->segmentsRepo = $segmentsRepo;
         $this->segmentsCollection = $segmentsCollection;
@@ -2668,10 +2679,15 @@ class UsersController extends Controller
      */
     public function validateEmailByAgent(Request $request, $token, $email)
     {
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
             $user = $this->usersRepo->findByToken($token);
             $timezone = session('timezone');
             $startDate = Carbon::now($timezone)->format('Y-m-d');
             $endDate = Carbon::now($timezone)->format('Y-m-d');
+            $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
+            $types = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $providersTypes = $this->providersTypesRepo->getByIds($types);
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
@@ -2682,7 +2698,9 @@ class UsersController extends Controller
                     'title' => _i('Email verified'),
                     'message' => _i('The email has been successfully verified'),
                     'start_date' => $startDate,
-                    'end_date' => $endDate
+                    'end_date' => $endDate,
+                    'providers' => $providers,
+                    'providers_types' => $providersTypes
                 ];
             }
             return view('back.core.dashboard', $data);
