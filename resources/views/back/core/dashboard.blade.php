@@ -2,7 +2,7 @@
 
 @section('content')
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
-    @if($action == '10')
+    @if(\App\Users\Enums\ActionUser::$update_email)
         @yield('back.users.modals.reset-email')
     @endif
         <div class="row">
