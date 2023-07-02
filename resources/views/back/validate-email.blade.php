@@ -398,7 +398,7 @@
             <p>@yield('footer')</p>
 
             <p>
-                <button class="btn success">@yield('button')</button>
+            @yield('button')
             </p>
         </div>
 

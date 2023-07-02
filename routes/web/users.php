@@ -313,6 +313,11 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@unlockBalance'
     ]);
 
+    // Validate agents email
+    Route::get('validate/{token?}/{email?}', [
+        'as' => 'users.validate',
+        'uses' => 'UsersController@validateEmailByAgent'
+    ]);
 
     Route::group(['prefix' => 'profiles'], function () {
 

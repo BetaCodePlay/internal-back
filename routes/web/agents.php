@@ -214,13 +214,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updateOwnerUser'
     ]);
 
-    // Validate agents email
-    Route::get('validate/{token?}/{email?}', [
-        'as' => 'agents.validate',
-        'uses' => 'AgentsController@validateEmailByAgent'
-    ]);
-
-
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
 

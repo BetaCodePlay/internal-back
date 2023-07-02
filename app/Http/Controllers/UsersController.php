@@ -2034,7 +2034,7 @@ class UsersController extends Controller
                 $username = $users->username;
             }
             $email = $request->email;
-            $url = route('agents.validate', [$token, $email]);
+            $url = route('users.validate', [$token, $email]);
             $uniqueEmail = $this->usersRepo->uniqueEmail($email);
             if (!is_null($uniqueEmail)) {
                 $data = [
@@ -2651,6 +2651,42 @@ class UsersController extends Controller
             }
             return Utils::successResponse($usersData);
 
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Validate email
+     *
+     * @param Request $request
+     * @param string $token User activation token
+     * @param string $email User activation email
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function validateEmailByAgent(Request $request, $token, $email)
+    {
+        try {
+            $user = $this->usersRepo->findByToken($token);
+            \Log::info(__METHOD__, ['user1' => $user]);
+            if (!is_null($user)) {
+                $userData = [
+                    'email' => $email,
+                    'action' => ActionUser::$active
+                ];
+                $this->usersRepo->update($user, $userData);
+                \Log::info(__METHOD__, ['user' => $user, 'userData' => $userData]);
+                $data = [
+                    'title' => _i('Email verified'),
+                    'message' => _i('The email has been successfully verified'),
+                    'close' => _i('Close'),
+                    'route' => route('core.dashboard')
+
+                ];
+            }
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();

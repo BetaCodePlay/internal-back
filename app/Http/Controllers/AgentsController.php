@@ -3624,34 +3624,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * Validate email
-     *
-     * @param Request $request
-     * @param string $token User activation token
-     * @param string $email User activation email
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function validateEmailByAgent($token, $email)
-    {
-        try {
-            $user = $this->usersRepo->findByToken($token);
-            \Log::info(__METHOD__, ['user1' => $user]);
-            if (!is_null($user)) {
-                $userData = [
-                    'email' => $email,
-                    'action' => ActionUser::$active
-                ];
-                $this->usersRepo->update($user, $userData);
-                \Log::info(__METHOD__, ['user' => $user, 'userData' => $userData]);
-            }
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      * View Create Agent
      * @param CountriesRepo $countriesRepo
      * @param ProvidersRepo $providersRepo
