@@ -2670,7 +2670,7 @@ class UsersController extends Controller
     {
         try {
             $user = $this->usersRepo->findByToken($token);
-            \Log::info(__METHOD__, ['user1' => $user]);
+            \Log::info(__METHOD__, ['user1' => $user->id]);
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
