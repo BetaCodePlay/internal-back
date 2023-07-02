@@ -73,6 +73,7 @@ use App\CRM\Collections\SegmentsCollection;
 use App\Users\Repositories\AutoLockUsersRepo;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class UsersController
@@ -2663,33 +2664,23 @@ class UsersController extends Controller
      * @param Request $request
      * @param string $token User activation token
      * @param string $email User activation email
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @return Application|Factory|View
      */
     public function validateEmailByAgent(Request $request, $token, $email)
     {
-        try {
             $user = $this->usersRepo->findByToken($token);
-            \Log::info(__METHOD__, ['user1' => $user->id]);
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
                     'action' => ActionUser::$active
                 ];
                 $this->usersRepo->update($user->id, $userData);
-                \Log::info(__METHOD__, ['user' => $user, 'userData' => $userData]);
                 $data = [
                     'title' => _i('Email verified'),
-                    'message' => _i('The email has been successfully verified'),
-                    'close' => _i('Close')
-
+                    'message' => _i('The email has been successfully verified')
                 ];
             }
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
+            return view('core.dashboard', $data);
     }
 
     /**
