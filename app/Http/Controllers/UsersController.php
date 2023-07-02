@@ -2669,6 +2669,9 @@ class UsersController extends Controller
     public function validateEmailByAgent(Request $request, $token, $email)
     {
             $user = $this->usersRepo->findByToken($token);
+            $timezone = session('timezone');
+            $startDate = Carbon::now($timezone)->format('Y-m-d');
+            $endDate = Carbon::now($timezone)->format('Y-m-d');
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
@@ -2677,7 +2680,9 @@ class UsersController extends Controller
                 $this->usersRepo->update($user->id, $userData);
                 $data = [
                     'title' => _i('Email verified'),
-                    'message' => _i('The email has been successfully verified')
+                    'message' => _i('The email has been successfully verified'),
+                    'start_date' => $startDate,
+                    'end_date' => $endDate
                 ];
             }
             return view('back.core.dashboard', $data);
