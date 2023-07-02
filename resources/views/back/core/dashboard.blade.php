@@ -1,7 +1,7 @@
 @extends('back.template')
 
 @section('content')
-@if($action == 10)
+@if($action === 10)
     @yield('back.users.modals.reset-email')
 @endif
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
