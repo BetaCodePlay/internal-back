@@ -2681,8 +2681,7 @@ class UsersController extends Controller
                 $data = [
                     'title' => _i('Email verified'),
                     'message' => _i('The email has been successfully verified'),
-                    'close' => _i('Close'),
-                    'route' => route('core.dashboard')
+                    'close' => _i('Close')
 
                 ];
             }
