@@ -2676,7 +2676,7 @@ class UsersController extends Controller
                     'email' => $email,
                     'action' => ActionUser::$active
                 ];
-                $this->usersRepo->update($user, $userData);
+                $this->usersRepo->update($user->id, $userData);
                 \Log::info(__METHOD__, ['user' => $user, 'userData' => $userData]);
                 $data = [
                     'title' => _i('Email verified'),
