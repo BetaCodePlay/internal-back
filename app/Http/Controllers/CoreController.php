@@ -184,9 +184,7 @@ class CoreController extends Controller
                 $user = auth()->user()->id;
                 $action = $this->usersRepo->getActionByUser($user);
                 $actionUser = $action->action;
-                if($actionUser == ActionUser::$update_email){
-                   $data['action'] = $actionUser;
-                }
+                $data['action'] = $actionUser;
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
                 $endDate = Carbon::now($timezone)->format('Y-m-d');
