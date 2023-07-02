@@ -187,12 +187,14 @@ class CoreController extends Controller
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
                 $endDate = Carbon::now($timezone)->format('Y-m-d');
-                $data['action'] = $actionUser;
                 $data['start_date'] = $startDate;
                 $data['end_date'] = $endDate;
             }
 
             if (Gate::allows('access', Permissions::$dashboard_report)) {
+                $user = auth()->user()->id;
+                $action = $this->usersRepo->getActionByUser($user);
+                $actionUser = $action->action;
                 $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
                 $types = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$live_games, ProviderTypes::$poker];
                 $providersTypes = $providersTypesRepo->getByIds($types);
@@ -202,6 +204,7 @@ class CoreController extends Controller
             }
 
             $description = Configurations::getWhitelabelDescription();
+            $data['action'] = $actionUser;
             $data['title'] = _i('Dashboard') . ' ' . $description;
             return view('back.core.dashboard', $data);
 
