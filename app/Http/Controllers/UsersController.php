@@ -2694,6 +2694,9 @@ class UsersController extends Controller
                     'action' => ActionUser::$active
                 ];
                 $this->usersRepo->update($user->id, $userData);
+                foreach($userData as $users){
+                    $action = $users->action;
+                }
                 $data = [
                     'title' => _i('Email verified'),
                     'message' => _i('The email has been successfully verified'),
@@ -2701,7 +2704,7 @@ class UsersController extends Controller
                     'end_date' => $endDate,
                     'providers' => $providers,
                     'providers_types' => $providersTypes,
-                    'action' => $userData->action
+                    'action' => $action
                 ];
             }
             return view('back.core.dashboard', $data);
