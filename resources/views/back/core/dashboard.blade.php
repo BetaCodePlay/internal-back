@@ -2,7 +2,9 @@
 
 @section('content')
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
-    @yield('back.users.modals.reset-email')
+    @if($action == '10')
+        @yield('back.users.modals.reset-email')
+    @endif
         <div class="row">
             <div class="col-sm-6 col-lg-6 col-xl g-mb-30">
                 <div class="card h-100 g-brd-gray-light-v7 g-rounded-3">
