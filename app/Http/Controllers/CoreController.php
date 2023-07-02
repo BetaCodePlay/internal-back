@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Collections\CoreCollection;
 use App\Core\Core;
 use App\Core\Repositories\ManualExchangesRepo;
+use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
@@ -183,10 +184,12 @@ class CoreController extends Controller
                 $user = auth()->user()->id;
                 $action = $this->usersRepo->getActionByUser($user);
                 $actionUser = $action->action;
+                if($actionUser == ActionUser::$update_email){
+                   $data['action'] = $actionUser;
+                }
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
                 $endDate = Carbon::now($timezone)->format('Y-m-d');
-                $data['action'] = $actionUser;
                 $data['start_date'] = $startDate;
                 $data['end_date'] = $endDate;
             }
