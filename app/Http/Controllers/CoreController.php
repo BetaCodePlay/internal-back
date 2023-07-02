@@ -187,6 +187,7 @@ class CoreController extends Controller
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
                 $endDate = Carbon::now($timezone)->format('Y-m-d');
+                $data['action'] = $actionUser;
                 $data['start_date'] = $startDate;
                 $data['end_date'] = $endDate;
             }
@@ -201,7 +202,6 @@ class CoreController extends Controller
             }
 
             $description = Configurations::getWhitelabelDescription();
-            $data['action'] = $actionUser;
             $data['title'] = _i('Dashboard') . ' ' . $description;
             return view('back.core.dashboard', $data);
 
