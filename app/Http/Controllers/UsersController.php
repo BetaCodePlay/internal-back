@@ -2700,7 +2700,8 @@ class UsersController extends Controller
                     'start_date' => $startDate,
                     'end_date' => $endDate,
                     'providers' => $providers,
-                    'providers_types' => $providersTypes
+                    'providers_types' => $providersTypes,
+                    'action' => $userData->action
                 ];
             }
             return view('back.core.dashboard', $data);
