@@ -121,6 +121,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['iphone'] = $iphone;
                     $data['theme'] = Configurations::getTheme();
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
+                    $data['action'] = App\Users\Enums\ActionUser::$update_email;
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
