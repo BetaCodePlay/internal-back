@@ -42,6 +42,7 @@
                 @yield('content')
                 @if($action == '10')
                     @include('back.users.modals.reset-email')
+                @else
                 @endif
             </div>
             @include('back.layout.footer')
