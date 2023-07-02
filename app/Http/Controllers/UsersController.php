@@ -2680,7 +2680,7 @@ class UsersController extends Controller
                     'message' => _i('The email has been successfully verified')
                 ];
             }
-            return view('back.template', $data);
+            return view('back.core.dashboard', $data);
     }
 
     /**
