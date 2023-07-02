@@ -67,12 +67,6 @@
     });
     @endif
 </script>
-<script>
-    $(function () {
-        let dashboard = Dashboard();
-        dashboard.resetEmail();
-    });
-</script>
 </body>
 </html>
 

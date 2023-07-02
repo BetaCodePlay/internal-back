@@ -286,4 +286,10 @@
             });
         </script>
     @endcan
+    <script>
+            $(function () {
+                let core = Core();
+                core.resetEmail();
+            });
+        </script>
 @endsection
