@@ -2696,8 +2696,9 @@ class UsersController extends Controller
                 ];
                 $this->usersRepo->update($user->id, $userData);
             }
-            $route = route('auth.login') . '?action=logout';
-        return redirect()->to($route);
+            $route = route('auth.logout');
+
+            return redirect()->to($route);
     }
 
     /**
