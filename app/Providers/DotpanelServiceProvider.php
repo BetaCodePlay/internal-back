@@ -126,7 +126,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
 
                     $data['action_example'] = isset(auth()->user()->action) ? auth()->user()->action : ActionUser::$active;
-                    Log::notice(__METHOD__, [auth()->user(),'request' => $request->all(), 'domain' => $domain]);
+                    Log::notice(__METHOD__, [auth()->id(),'request' => $request->all(), 'domain' => $domain]);
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
