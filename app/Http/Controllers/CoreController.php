@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Collections\CoreCollection;
 use App\Core\Core;
+use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\ManualExchangesRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
@@ -40,6 +41,13 @@ use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 class CoreController extends Controller
 {
     /**
+     * AgentsRepo
+     *
+     * @var AgentsRepo
+     */
+    private $agentsRepo;
+
+    /**
      * UsersRepo
      *
      * @var UsersRepo
@@ -70,12 +78,14 @@ class CoreController extends Controller
     /**
      * CoreController constructor
      *
+     * @param AgentsRepo $agentsRepo
      * @param UsersRepo $usersRepo
      * @param ManualExchangesRepo $manualExchangesRepo
      * @param CoreCollection $coreCollection
      */
-    public function __construct(UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection, GamesRepo $gamesRepo)
+    public function __construct(AgentsRepo $agentsRepo, UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection, GamesRepo $gamesRepo)
     {
+        $this->agentsRepo = $agentsRepo;
         $this->usersRepo = $usersRepo;
         $this->manualExchangesRepo = $manualExchangesRepo;
         $this->coreCollection = $coreCollection;
@@ -177,8 +187,11 @@ class CoreController extends Controller
     public function dashboard(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, ProviderTypesCollection $providerTypesCollection)
     {
         try {
+            $user = auth()->user()->id;
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
+            $agent = $this->agentsRepo->findAgent($user,$whitelabel);
+            Log::debug(__METHOD__, ['agent' => $agent]);
 
             view()->share(['action'=>auth()->user()->action]);
 
