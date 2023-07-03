@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Agents\Repositories\AgentsRepo;
 use App\BetPay\BetPay;
-use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\ActionUser;
+use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UsersRepo;
@@ -191,7 +191,10 @@ class AuthController extends Controller
                     $userTemp = $usersRepo->getUsers($user);
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
-                    if($userTemp->action == 10){
+                    foreach($userTemp as $users){
+                        $action = $users->action;
+                    }  
+                    if($action === ActionUser::$update_email){
                         $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                         Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                     }
