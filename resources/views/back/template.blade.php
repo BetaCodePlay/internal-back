@@ -40,7 +40,7 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if($action == '10')
+                @if(!empty($action) && $action == '10')
                    @include('back.users.modals.reset-email')
                 @endif
                 @if($action_example == \App\Users\Enums\ActionUser::$update_email)
