@@ -191,9 +191,9 @@ class CoreController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $agent = $this->agentsRepo->findAgent($user,$whitelabel);
-            Log::debug(__METHOD__, ['agent' => $agent]);
 
             view()->share(['action'=>auth()->user()->action]);
+            view()->share(['agent'=>auth()->user()->agent]);
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
