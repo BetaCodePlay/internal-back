@@ -2705,7 +2705,7 @@ class UsersController extends Controller
                     'title' => _i('Account created'),
                 ];
             }
-            return view('auth.login');
+            return view('auth.login', $data);
     }
 
     /**
