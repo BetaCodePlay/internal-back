@@ -2689,16 +2689,22 @@ class UsersController extends Controller
     public function validateEmailByAgent(Request $request, $token, $email)
     {
             $user = $this->usersRepo->findByToken($token);
+            $url = route('users.validate', [$token, $email]);
+            $prefix = $request->route()->getPrefix();
+            $api = $prefix == 'api/users';
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
                     'action' => ActionUser::$active
                 ];
                 $this->usersRepo->update($user->id, $userData);
-                $data = [
-                    'title' => _i('Email verified'),
-                    'message' => _i('The email has been successfully verified')
-                ];
+                if ($api) {
+                    Curl::to($url)->get();
+                    $data = [
+                        'title' => _i('Account created'),
+                    ];
+
+                }
             }
             return view('auth.login', $data);
     }
