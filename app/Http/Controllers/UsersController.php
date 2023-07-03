@@ -2701,11 +2701,8 @@ class UsersController extends Controller
             }
             if ($api) {
                 Curl::to($url)->get();
-                $data = [
-                    'title' => _i('Account created'),
-                ];
             }
-            return view('auth.login', $data);
+            return view('auth.login');
     }
 
     /**
