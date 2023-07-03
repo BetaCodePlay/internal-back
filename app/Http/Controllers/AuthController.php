@@ -191,7 +191,7 @@ class AuthController extends Controller
                     $userTemp = $usersRepo->getUsers($user);
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
-                    if(ENV('APP_ENV') == 'production'){
+                    if($userTemp->action == 10){
                         $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                         Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                     }
