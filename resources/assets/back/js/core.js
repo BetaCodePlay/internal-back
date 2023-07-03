@@ -34,37 +34,7 @@ class Core {
             });
         });
     }
-
-    // Get reset email
-    resetEmail() {
-        $(document).ready(function () {
-            $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
-        });
-        let $button = $('#reset-email');
-        let $form = $('#reset-email-form');
-
-        $button.click(function () {
-            $button.button('loading');
-
-            $.ajax({
-                url: $form.attr('action'),
-                method: 'post',
-                data: $form.serialize()
-
-            }).done(function (json) {
-                $('#reset-email-modal').modal('hide');
-                swalSuccessWithButton(json);
-                $form.trigger('reset');
-
-            }).fail(function (json) {
-                swalError(json);
-
-            }).always(function () {
-                $button.button('reset');
-            });
-        });
-    }
-
+    
     //Upload states
     states(state){
         initSelect2();

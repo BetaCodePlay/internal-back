@@ -72,8 +72,8 @@
 </script>
 <script>
     $(function () {
-        let core = Core();
-        core.resetEmail();
+        let dashboard = Dashboard();
+        dashboard.resetEmail();
     });
 </script>
 </body>
