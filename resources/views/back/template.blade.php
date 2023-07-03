@@ -25,7 +25,6 @@
         }
     </style>
 </head>
-@dd($agent)
 <body class="currency-theme-{{ session('currency') }}">
 @include('back.layout.header')
 <main class="container-fluid px-0 g-pt-65">
@@ -42,6 +41,7 @@
             <div class="g-pa-20">
                 @yield('content')
                 @if(!empty($action) && $action == '10')
+                @dd($agent)
                    @if(!empty($agent) && $agent == false)
                        @include('back.users.modals.reset-email')
                    @endif   
