@@ -2686,12 +2686,12 @@ class UsersController extends Controller
      * @param string $email User activation email
      * @return Application|Factory|View
      */
-    public function validateEmailByAgent(Request $request, $token, $email)
+    public function validateEmailByAgent(Agent $agent, Request $request, $token, $email)
     {
             $user = $this->usersRepo->findByToken($token);
             $url = route('users.validate', [$token, $email]);
             $prefix = $request->route()->getPrefix();
-            $api = $prefix == 'api/login';
+            $api = $prefix == 'api/users';
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
@@ -2699,9 +2699,9 @@ class UsersController extends Controller
                 ];
                 $this->usersRepo->update($user->id, $userData);
             }
-            if ($api) {
-                Curl::to($url)->get();
-            }
+            if (!$api) {
+                auth()->login($user);
+            } 
             return view('auth.login');
     }
 
