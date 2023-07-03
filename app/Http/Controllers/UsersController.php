@@ -2056,7 +2056,7 @@ class UsersController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
 
-            }/*else {
+            }else {
                 if (!$this->validateEmail($email)) {
                     $data = [
                         'title' => _i('Invalid email'),
@@ -2065,7 +2065,7 @@ class UsersController extends Controller
                     ];
                     return Utils::errorResponse(Codes::$forbidden, $data);
                 }
-            }*/
+            }
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
             Mail::to($email)->send(new Validate($whitelabelId, $url, $username, $emailConfiguration, EmailTypes::$validate_email));
