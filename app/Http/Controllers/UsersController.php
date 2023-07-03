@@ -2069,12 +2069,21 @@ class UsersController extends Controller
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
             Mail::to($email)->send(new Validate($whitelabelId, $url, $username, $emailConfiguration, EmailTypes::$validate_email));
+            $prefix = $request->route()->getPrefix();
+            $api = $prefix == 'api/users';
+            if ($api) {
+                    Curl::to($url)->get();
+                    $data = [
+                        'title' => _i('Email reset'),
+                    ];
 
-            $data = [
-                'title' => _i('Email validation'),
-                'message' => _i('Email was successfully validate'),
-                'close' => _i('Close')
-            ];
+                } else {
+                    $data = [
+                        'title' => _i('Email reset'),
+                        'message' => _i('Your email was successfully reset. Wait while we send you to the login so that you can enter with your username and password'),
+                        'route' => $url,
+                    ];
+                }
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
@@ -2698,10 +2707,11 @@ class UsersController extends Controller
                     'action' => ActionUser::$active
                 ];
                 $this->usersRepo->update($user->id, $userData);
+
+                if ($api) {
+                    auth()->login($user);
+                }
             }
-            if (!$api) {
-                auth()->login($user);
-            } 
             return view('auth.login');
     }
 
