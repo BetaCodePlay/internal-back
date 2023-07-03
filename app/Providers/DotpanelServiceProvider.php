@@ -7,6 +7,7 @@ use App\Core\Collections\CurrenciesCollection;
 use App\Core\Collections\PushNotificationsCollection;
 use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\PushNotificationsRepo;
+use App\Users\Enums\ActionUser;
 use Dotworkers\Configurations\Configurations;
 use App\Users\Repositories\UsersRepo;
 use Illuminate\Http\Request;
@@ -123,6 +124,8 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['iphone'] = $iphone;
                     $data['theme'] = Configurations::getTheme();
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
+
+                    $data['action_example'] = isset(auth()->user()->action) ? auth()->user()->action : ActionUser::$active;
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
