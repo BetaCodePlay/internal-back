@@ -133,11 +133,12 @@
                                 <td width="20%">
                                     <div class="form-check">
                                         <label class="u-check g-pl-25">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$registration }}" id="registration">
+                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ 'false' }}" id="registration">
                                             <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
                                                 <i class="fa" data-check-icon="&#xf00c"></i>
                                             </div>
                                             {{ _i('Registration') }}
+                                            {{ $allocation_criteria['registration'] == false ? 'false': 'true'}}
                                         </label>
                                     </div>
                                 </td>

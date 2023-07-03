@@ -434,6 +434,7 @@ class BonusSystemController extends Controller
     public function all()
     {
         try {
+
             $campaigns = $this->campaignsRepo->allByVersion();
             $this->campaignsCollection->formatAll($campaigns);
             $data = [
@@ -638,6 +639,8 @@ class BonusSystemController extends Controller
             $segments = $this->segmentsRepo->all();
             $data['segments'] = $segments;
             $data['title'] = _i('New campaign');
+            $data['allocation_criteria'] = ['registration' => AllocationCriteria::$registration];
+            // dd($data['allocation_criteria_type_bonus']['registration']);
             return view('back.bonus-system.campaigns.create', $data);
 
         } catch (\Exception $ex) {
@@ -1271,7 +1274,7 @@ class BonusSystemController extends Controller
                             }
                         }
                     }
-                    $promoCode['promo_code'] = $code;
+                    $prcomoCode['promo_code'] = $code;
                     $promoCodesData[] = $promoCode;
                 }
             }
