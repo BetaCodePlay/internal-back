@@ -25,6 +25,7 @@
         }
     </style>
 </head>
+@dd($agent)
 <body class="currency-theme-{{ session('currency') }}">
 @include('back.layout.header')
 <main class="container-fluid px-0 g-pt-65">
