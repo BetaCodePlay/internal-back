@@ -2056,6 +2056,15 @@ class UsersController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
 
+            }else {
+                if (!$this->validateEmail($email)) {
+                    $data = [
+                        'title' => _i('Invalid email'),
+                        'message' => _i('The email entered is invalid or does not exist'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
             }
             $whitelabelId = Configurations::getWhitelabel();
             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
@@ -2679,15 +2688,7 @@ class UsersController extends Controller
      */
     public function validateEmailByAgent(Request $request, $token, $email)
     {
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
             $user = $this->usersRepo->findByToken($token);
-            $timezone = session('timezone');
-            $startDate = Carbon::now($timezone)->format('Y-m-d');
-            $endDate = Carbon::now($timezone)->format('Y-m-d');
-            $providers = $this->providersRepo->getByWhitelabel($whitelabel, $currency);
-            $types = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providersTypes = $this->providersTypesRepo->getByIds($types);
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
@@ -2696,12 +2697,7 @@ class UsersController extends Controller
                 $this->usersRepo->update($user->id, $userData);
                 $data = [
                     'title' => _i('Email verified'),
-                    'message' => _i('The email has been successfully verified'),
-                    'start_date' => $startDate,
-                    'end_date' => $endDate,
-                    'providers' => $providers,
-                    'providers_types' => $providersTypes,
-                    'action' => $userData
+                    'message' => _i('The email has been successfully verified')
                 ];
             }
             return view('back.core.dashboard', $data);

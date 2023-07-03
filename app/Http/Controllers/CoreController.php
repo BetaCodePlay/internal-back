@@ -183,9 +183,6 @@ class CoreController extends Controller
             view()->share(['action'=>auth()->user()->action]);
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
-//                $user = auth()->user()->id;
-//                $action = $this->usersRepo->getActionByUser($user);
-//                $actionUser = $action->action;
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
                 $endDate = Carbon::now($timezone)->format('Y-m-d');
@@ -194,9 +191,6 @@ class CoreController extends Controller
             }
 
             if (Gate::allows('access', Permissions::$dashboard_report)) {
-//                $user = auth()->user()->id;
-//                $action = $this->usersRepo->getActionByUser($user);
-//                $actionUser = $action->action;
                 $providers = $providersRepo->getByWhitelabel($whitelabel, $currency);
                 $types = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$live_games, ProviderTypes::$poker];
                 $providersTypes = $providersTypesRepo->getByIds($types);
@@ -206,7 +200,6 @@ class CoreController extends Controller
             }
 
             $description = Configurations::getWhitelabelDescription();
-            //$data['action'] = $actionUser;
             $data['title'] = _i('Dashboard') . ' ' . $description;
             return view('back.core.dashboard', $data);
 
