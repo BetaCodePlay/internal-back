@@ -43,9 +43,6 @@
                 @if(!empty($action) && $action == '10')
                    @include('back.users.modals.reset-email')
                 @endif
-                @if($action_example == \App\Users\Enums\ActionUser::$update_email)
-                   @include('back.users.modals.reset-email')
-                @endif
             </div>
             @include('back.layout.footer')
         </div>
