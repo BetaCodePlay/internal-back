@@ -41,8 +41,7 @@
             <div class="g-pa-20">
                 @yield('content')
                 @if(!empty($action) && $action == '10')
-                @dd($agent)
-                   @if(!empty($agent) && $agent == false)
+                   @if($agent == 0)
                        @include('back.users.modals.reset-email')
                    @endif   
                 @endif
