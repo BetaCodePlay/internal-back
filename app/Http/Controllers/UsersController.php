@@ -2700,13 +2700,9 @@ class UsersController extends Controller
                 $this->usersRepo->update($user->id, $userData);
                 if ($api) {
                     Curl::to($url)->get();
-                    $data = [
-                        'title' => _i('Account created'),
-                    ];
-
                 }
             }
-            return view('auth.login', $data);
+            return view('auth.login');
     }
 
     /**
