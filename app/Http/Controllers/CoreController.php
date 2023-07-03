@@ -190,11 +190,11 @@ class CoreController extends Controller
             $user = auth()->user()->id;
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $agent = $this->agentsRepo->findAgent($user,$whitelabel);
+            $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
 
             view()->share(['action'=>auth()->user()->action]);
-            $agent1 = view()->share(['agent'=> $agent]);
-            Log::debug(__METHOD__, ['agent1' => $agent1]);
+            $agent = view()->share(['agent'=> $agentUser]);
+            Log::debug(__METHOD__, ['agent1' => $agent]);
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
