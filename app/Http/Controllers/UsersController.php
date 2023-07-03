@@ -2698,13 +2698,14 @@ class UsersController extends Controller
                     'action' => ActionUser::$active
                 ];
                 $this->usersRepo->update($user->id, $userData);
+            }
+            if ($api) {
+                Curl::to($url)->get();
                 $data = [
                     'title' => _i('Account created'),
-                    'message' => _i('Your account was successfully created. Wait while we send you to the login so that you can enter with your username and password'),
-                    'route' => $url,
                 ];
             }
-            return view('auth.login', $data);
+            return view('auth.login');
     }
 
     /**
