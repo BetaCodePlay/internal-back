@@ -2072,7 +2072,7 @@ class UsersController extends Controller
 
             $data = [
                 'title' => _i('Email validation'),
-                'message' => _i('Email was successfully validate'),
+                'message' => _i('A message has been sent to activate your mail reset'),
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
@@ -2686,7 +2686,7 @@ class UsersController extends Controller
      * @param string $email User activation email
      * @return Application|Factory|View
      */
-    public function validateEmailByAgent(Agent $agent, Request $request, $token, $email)
+    public function validateEmailByAgent(Request $request, $token, $email)
     {
             $user = $this->usersRepo->findByToken($token);
             if (!is_null($user)) {
