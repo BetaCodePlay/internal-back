@@ -2704,7 +2704,7 @@ class UsersController extends Controller
                     'route' => $url,
                 ];
             }
-            return view('auth.login');
+            return view('auth.login', $data);
     }
 
     /**
