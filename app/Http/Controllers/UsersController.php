@@ -2691,7 +2691,7 @@ class UsersController extends Controller
             $user = $this->usersRepo->findByToken($token);
             $url = route('users.validate', [$token, $email]);
             $prefix = $request->route()->getPrefix();
-            $api = $prefix == 'api/users';
+            $api = $prefix == 'api/login';
             if (!is_null($user)) {
                 $userData = [
                     'email' => $email,
