@@ -1250,13 +1250,9 @@ class Users {
             }
         });
 
-        $('#details-user-modal').on('show.bs.modal', function (event) {
-
-            user = $('.user').val();
+        $('#details-user-modal').on('show.bs.modal', function () {
+            let user = $('.user').val();
             let route = `${$table.data('route')}/${user}`;
-            console.log($table.data('route'))
-            console.log(user)
-            console.log(route)
             api.ajax.url(route).load();
         })
     }
