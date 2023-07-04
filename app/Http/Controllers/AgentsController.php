@@ -2114,6 +2114,8 @@ class AgentsController extends Controller
             $data['agents'] = $agentAndSubAgents;
             $data['tree'] = $this->agentsCollection->childrenTree($agent, $user);
             //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
+            $data['action'] = Auth::user()->action;
+            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);;
             $data['title'] = _i('Agents module');
             return view('back.agents.index', $data);
 
