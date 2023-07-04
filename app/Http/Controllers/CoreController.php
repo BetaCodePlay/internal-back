@@ -194,7 +194,7 @@ class CoreController extends Controller
 
             view()->share([
                 'action'=>auth()->user()->action,
-                'agent'=> $agentUser
+                'iagent'=> $agentUser
             ]);
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
