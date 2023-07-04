@@ -40,6 +40,11 @@
 
             <div class="g-pa-20">
                 <?php echo $__env->yieldContent('content'); ?>
+                <?php if(!empty($action) && $action == '10'): ?>
+                   <?php if($agent == 1): ?>
+                       <?php echo $__env->make('back.users.modals.reset-email', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                   <?php endif; ?>   
+                <?php endif; ?>
             </div>
             <?php echo $__env->make('back.layout.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
@@ -66,6 +71,12 @@
         //socket.initChannel('<?php echo e(session()->get('betpay_client_id')); ?>', '<?php echo e($favicon); ?>', '<?php echo e(route('push-notifications.store')); ?>');
     });
     <?php endif; ?>
+</script>
+<script>
+    $(function () {
+        let dashboard = Dashboard();
+        dashboard.resetEmail();
+    });
 </script>
 </body>
 </html>

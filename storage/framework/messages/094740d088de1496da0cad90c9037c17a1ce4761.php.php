@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered w-100" id="binance-table" data-route="<?php echo e(route('betpay.transactions.data', [$payment_method, $provider, $transaction_type])); ?>">
+                <table class="table table-bordered w-100" id="cryptocurrencies-table" data-route="<?php echo e(route('betpay.transactions.data', [$payment_method, $provider, $transaction_type])); ?>">
                     <thead>
                     <tr>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -49,7 +49,7 @@
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            <?php echo e(_i('Origin Account')); ?>
+                            <?php echo e(_i('Reference')); ?>
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -77,15 +77,14 @@
             </div>
         </div>
     </div>
-    <?php echo $__env->make('back.betpay.binance.modals.process-credit', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <?php echo $__env->make('back.betpay.binance.modals.watch-binance-qr', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('back.betpay.cryptocurrencies.modals.process-credit', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
     <script>
         $(function () {
             let betPay = new BetPay();
-            betPay.creditBinance();
+            betPay.creditCryptocurrencies();
         });
     </script>
 <?php $__env->stopSection(); ?>

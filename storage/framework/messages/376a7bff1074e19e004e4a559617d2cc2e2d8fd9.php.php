@@ -20,6 +20,14 @@
                                     <span class="userSet"></span>
                                 </div>
                             </div>
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> <?php echo e(_i('email')); ?>: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="emailSet"></span>
+                                </div>
+                            </div>
                             <div class="row mb-1">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> <?php echo e(_i('father')); ?>: </strong>
@@ -72,26 +80,28 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <br>
+                            <div class="table-responsive">
+                                <table class="table table-bordered w-100" id="ipTableIps" data-route="<?php echo e(route('users.users-ips-data')); ?>">
+                                    <thead>
+                                        <tr>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('IP')); ?>
 
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Quantity')); ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">

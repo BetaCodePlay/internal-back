@@ -92,7 +92,7 @@
 
 
 </footer>
-<?php echo $__env->make('auth.modals.change-password', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php echo $__env->make('auth.modals.change-password', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>;
 
 <script src="<?php echo e(mix('js/manifest.js', 'auth')); ?>"></script>
 <script src="<?php echo e(mix('js/vendor.js', 'auth')); ?>"></script>

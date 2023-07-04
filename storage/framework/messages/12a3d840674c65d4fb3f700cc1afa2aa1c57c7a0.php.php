@@ -24,6 +24,8 @@ class ActionUser
 
     public static $direct_lock = 9;
 
+    public static $update_email = 10;
+
     public static function getName($action)
     {
         switch ($action) {
@@ -70,6 +72,12 @@ class ActionUser
             case self::$changed_password:
             {
                 return _i('Password change process');
+                //return _i('Changed password');
+                break;
+            }
+            case self::$update_email:
+            {
+                return _i('Update email');
                 //return _i('Changed password');
                 break;
             }
