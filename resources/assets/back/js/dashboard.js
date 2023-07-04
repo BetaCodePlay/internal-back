@@ -56,14 +56,14 @@ class Dashboard {
 
         console.log('resetEmail')
         $(document).ready(function () {
-            if (document.getElementById("reset-email-modal") !== null) {
-                console.log('resetEmail->reset-email-modal')
+            // if (document.getElementById("reset-email-modal") !== null) {
+            //     console.log('resetEmail->reset-email-modal')
                 $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
-            }
+            //}
 
         });
-        if (document.getElementById("reset-email") !== null) {
-            console.log('resetEmail->reset-email')
+        // if (document.getElementById("reset-email") !== null) {
+        //     console.log('resetEmail->reset-email')
 
             let $button = $('#reset-email');
             let $form = $('#reset-email-form');
@@ -88,7 +88,7 @@ class Dashboard {
                     $button.button('reset');
                 });
             });
-        }
+        //}
 
     }
 
