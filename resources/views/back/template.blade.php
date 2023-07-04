@@ -40,7 +40,7 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if(!empty($action) && $action == '10')
+                @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
                    @if($agent == 1)
                        @include('back.users.modals.reset-email')
                    @endif
@@ -71,11 +71,10 @@
         //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
-</script>
-<script>
+
     $(function () {
-        // let dashboard = Dashboard();
-        // dashboard.resetEmail();
+        let dashboard = Dashboard();
+        dashboard.resetEmail();
     });
 </script>
 </body>
