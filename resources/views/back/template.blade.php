@@ -53,7 +53,7 @@
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
-<script src="{{ asset('back/js/scripts.min.js') }}?v=21"></script>
+<script src="{{ asset('back/js/scripts.min.js') }}?v=22"></script>
 
 {{--TODO AGREGAR CDN PARA EXPORTAR PDF--}}
 {{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}
@@ -74,8 +74,8 @@
 </script>
 <script>
     $(function () {
-        let dashboard = Dashboard();
-        dashboard.resetEmail();
+        // let dashboard = Dashboard();
+        // dashboard.resetEmail();
     });
 </script>
 </body>
