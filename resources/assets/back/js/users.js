@@ -1260,12 +1260,10 @@ class Users {
         });
 
         $('#details-user-modal').on('show.bs.modal', function () {
-            // let user = $('.user').val();
-            // let route = `${$table.data('route')}/${user}`;
-            let route = $table.data('route')+'/'+$('.user').val();
-            console.log(route, 'route ips')
-            $table.DataTable().ajax.url($table.data('route')).load();
-            //api.ajax.url(route).load();
+            let user = $('.user').val();
+            let route = `${$table.data('route')}/${user}`;
+            //let route = $table.data('route')+'/'+$('.user').val();
+            $table.DataTable().ajax.url(route).load();
 
         })
     }
