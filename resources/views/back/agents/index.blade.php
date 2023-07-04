@@ -1191,11 +1191,11 @@
         $(function () {
             let agents = new Agents();
             let users = new Users();
+            agents.dashboard();
             users.usersIps();
             //TODO TABLA PARA IPS EN EL MODAL
             users.userIpsDetails();
 
-            agents.dashboard();
             agents.searchAgentDashboard();
             agents.performTransactions();
             agents.manualTransactionsModal();

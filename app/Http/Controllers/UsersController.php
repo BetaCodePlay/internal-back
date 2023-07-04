@@ -2712,14 +2712,19 @@ class UsersController extends Controller
         $data = [
             'address' => $email
         ];
-        \Log::debug(__METHOD__, ['email' => $email]);
         $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
             ->withOption('HTTPAUTH', CURLAUTH_BASIC)
             ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
             ->withData($data)
             ->post();
         $response = json_decode($curl);
-        \Log::debug(__METHOD__, ['response' => $response, 'curl' => $curl]);
-        return $response->result == 'deliverable';
+        $result = true;
+        if (!isset($response->result) || $response->result != 'deliverable') {
+            Log::debug('validateEmail', [$response]);
+            $result = false;
+        }
+        return $result;
+
+
     }
 }

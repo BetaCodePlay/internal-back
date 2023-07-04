@@ -28,12 +28,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@blockAgentsData'
     ]);
 
-    // Show dashboard
-    Route::get('{token?}', [
-        'as' => 'agents.index',
-        'uses' => 'AgentsController@index'
-    ]);
-
     // Get Tree Josn
     Route::get('get/tree/users', [
         'as' => 'agents.get.tree.users',
@@ -212,6 +206,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     Route::get('update/owner/user/temp', [
         'as' => 'agents.update.owner.user.temp',
         'uses' => 'AgentsController@updateOwnerUser'
+    ]);
+
+    // Show dashboard
+    Route::get('{token?}', [
+        'as' => 'agents.index',
+        'uses' => 'AgentsController@index'
     ]);
 
     // Reports routes

@@ -6,6 +6,7 @@ use App\Agents\Repositories\AgentsRepo;
 use App\BetPay\BetPay;
 use App\Users\Enums\ActionUser;
 use App\Core\Repositories\SectionImagesRepo;
+use App\Users\Enums\TypeUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UsersRepo;
@@ -136,7 +137,7 @@ class AuthController extends Controller
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
                     $permissionsMerge = $permissions;
                     //TODO IF AGENT ADD NEW PERMISSIONS
-                    if(Auth::user()->type_user == 1){
+                    if(Auth::user()->type_user == TypeUser::$agentMater){
                         $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
                     }
 
@@ -188,13 +189,14 @@ class AuthController extends Controller
                         'mobile' => $mobile
                     ];
                     Audits::store($user, AuditTypes::$dotpanel_login, $whitelabel, $auditData);
+                    //TODO SE PUEDE MEJORAR
                     $userTemp = $usersRepo->getUsers($user);
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
                     foreach($userTemp as $users){
                         $action = $users->action;
-                    }  
-                    if(ENV('APP_ENV') == 'production'){
+                    }
+                    if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
                         if($action === ActionUser::$active){
                             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                             Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
@@ -222,12 +224,13 @@ class AuthController extends Controller
             } else {
                 //Estos datos se anexan para el envio de email cuando esté invalido
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
-                foreach($userTemp as $users){
-                    $action = $users->action;
-                }  
+                $action = $userTemp->action;
+//                foreach($userTemp as $users){
+//                    $action = $users->action;
+//                }
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
-                if(ENV('APP_ENV') == 'production'){
+                if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
                     if($action === ActionUser::$active){
                     $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
                     Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));

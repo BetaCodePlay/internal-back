@@ -192,9 +192,11 @@ class CoreController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
 
-            view()->share(['action'=>auth()->user()->action]);
-            view()->share('agent', $agentUser);
-            
+            view()->share([
+                'action'=>auth()->user()->action,
+                'agent'=> $agentUser
+            ]);
+
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
