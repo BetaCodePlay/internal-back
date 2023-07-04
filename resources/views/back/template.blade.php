@@ -43,7 +43,7 @@
                 @if(!empty($action) && $action == '10')
                    @if($agent == 1)
                        @include('back.users.modals.reset-email')
-                   @endif   
+                   @endif
                 @endif
             </div>
             @include('back.layout.footer')
@@ -74,8 +74,8 @@
 </script>
 <script>
     $(function () {
-        let dashboard = Dashboard();
-        dashboard.resetEmail();
+        //let dashboard = Dashboard();
+        //dashboard.resetEmail();
     });
 </script>
 </body>

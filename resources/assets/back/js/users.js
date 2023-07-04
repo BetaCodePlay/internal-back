@@ -1253,6 +1253,7 @@ class Users {
         $('#details-user-modal').on('show.bs.modal', function () {
             let user = $('.user').val();
             let route = `${$table.data('route')}/${user}`;
+            console.log(route,'route ips')
             api.ajax.url(route).load();
         })
     }
