@@ -74,8 +74,8 @@
 </script>
 <script>
     $(function () {
-        //let dashboard = Dashboard();
-        //dashboard.resetEmail();
+        let dashboard = Dashboard();
+        dashboard.resetEmail();
     });
 </script>
 </body>

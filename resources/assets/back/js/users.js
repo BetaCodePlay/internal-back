@@ -1254,7 +1254,8 @@ class Users {
             let user = $('.user').val();
             let route = `${$table.data('route')}/${user}`;
             console.log(route,'route ips')
-            api.ajax.url(route).load();
+            //api.ajax.url(route).load();
+            $table.ajax.reload();
         })
     }
 
