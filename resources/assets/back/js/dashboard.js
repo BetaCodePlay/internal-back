@@ -57,8 +57,9 @@ class Dashboard {
         console.log('resetEmail')
         $(document).ready(function () {
             // if (document.getElementById("reset-email-modal") !== null) {
-            //     console.log('resetEmail->reset-email-modal')
-                $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
+                 console.log('resetEmail->reset-email-modal')
+                $('#reset-email-modal').modal('show');
+                $('#reset-email-modal').modal({backdrop: 'show', keyboard: false});
             //}
 
         });
