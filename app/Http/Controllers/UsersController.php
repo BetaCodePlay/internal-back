@@ -2691,7 +2691,7 @@ class UsersController extends Controller
             $user = $this->usersRepo->findByToken($token);
             if (!is_null($user)) {
                 $userData = [
-                    'email' => $email,
+                    'email' => strtolower($email),
                     'action' => ActionUser::$active
                 ];
                 $this->usersRepo->update($user->id, $userData);

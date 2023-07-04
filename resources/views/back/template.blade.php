@@ -41,7 +41,7 @@
             <div class="g-pa-20">
                 @yield('content')
                 @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-                   @if($agent == 0)
+                   @if($agent == 1)
                        @include('back.users.modals.reset-email')
                    @endif
                 @endif
