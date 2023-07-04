@@ -73,7 +73,7 @@
     @endif
 
     $(function () {
-        let dashboard = new Dashboard();
+        let dashboard = Dashboard();
         dashboard.resetEmail();
     });
 </script>
