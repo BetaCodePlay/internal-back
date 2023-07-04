@@ -2811,7 +2811,7 @@ class AgentsController extends Controller
     private function validateEmail($email)
     {
         $data = [
-            'address' => $email
+            'address' => strtolower($email)
         ];
         $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
             ->withOption('HTTPAUTH', CURLAUTH_BASIC)
