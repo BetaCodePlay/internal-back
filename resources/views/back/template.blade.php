@@ -40,6 +40,7 @@
 
             <div class="g-pa-20">
                 @yield('content')
+                {{dd($action,$action == \App\Users\Enums\ActionUser::$update_email,$agent,$agent == 1)}}
                 @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
                    @if($agent == 1)
                        @include('back.users.modals.reset-email')
