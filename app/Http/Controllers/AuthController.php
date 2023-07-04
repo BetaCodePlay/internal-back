@@ -232,8 +232,8 @@ class AuthController extends Controller
                 $whitelabelId = Configurations::getWhitelabel();
                 if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
                     if($action === ActionUser::$active){
-                    $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
-                    Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                        $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                        Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
                     }
                 }
 
