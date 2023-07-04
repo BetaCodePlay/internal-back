@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Agents\Repositories\AgentsRepo;
 use App\BetPay\BetPay;
-use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\ActionUser;
+use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UsersRepo;
@@ -191,11 +191,15 @@ class AuthController extends Controller
                     $userTemp = $usersRepo->getUsers($user);
                     $url = route('core.dashboard');
                     $whitelabelId = Configurations::getWhitelabel();
+                    foreach($userTemp as $users){
+                        $action = $users->action;
+                    }  
                     if(ENV('APP_ENV') == 'production'){
-                        $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                        Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                        if($action === ActionUser::$active){
+                            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                        }
                     }
-
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
@@ -216,14 +220,18 @@ class AuthController extends Controller
                 }
 
             } else {
-                //Estos datos se anexan para el envio de email
+                //Estos datos se anexan para el envio de email cuando esté invalido
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
-                Log::debug(__METHOD__, ['userTemp2' => $userTemp]);
+                foreach($userTemp as $users){
+                    $action = $users->action;
+                }  
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
                 if(ENV('APP_ENV') == 'production'){
+                    if($action === ActionUser::$active){
                     $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
                     Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                    }
                 }
 
                 $data = [
