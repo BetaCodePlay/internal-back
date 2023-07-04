@@ -54,9 +54,8 @@ class Dashboard {
     // Get reset email
     resetEmail() {
 
-        console.log('resetEmail')
         $(document).ready(function () {
-                $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
+            $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
         });
 
         let $button = $('#reset-email');
