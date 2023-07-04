@@ -56,40 +56,32 @@ class Dashboard {
 
         console.log('resetEmail')
         $(document).ready(function () {
-            // if (document.getElementById("reset-email-modal") !== null) {
-                 console.log('resetEmail->reset-email-modal')
-                $('#reset-email-modal').modal('show');
-                $('#reset-email-modal').modal({backdrop: 'show', keyboard: false});
-            //}
-
+                $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
         });
-        // if (document.getElementById("reset-email") !== null) {
-        //     console.log('resetEmail->reset-email')
 
-            let $button = $('#reset-email');
-            let $form = $('#reset-email-form');
+        let $button = $('#reset-email');
+        let $form = $('#reset-email-form');
 
-            $button.click(function () {
-                $button.button('loading');
+        $button.click(function () {
+            $button.button('loading');
 
-                $.ajax({
-                    url: $form.attr('action'),
-                    method: 'post',
-                    data: $form.serialize()
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                data: $form.serialize()
 
-                }).done(function (json) {
-                    $('#reset-email-modal').modal('hide');
-                    swalSuccessWithButton(json);
-                    $form.trigger('reset');
+            }).done(function (json) {
+                $('#reset-email-modal').modal('hide');
+                swalSuccessWithButton(json);
+                $form.trigger('reset');
 
-                }).fail(function (json) {
-                    swalError(json);
+            }).fail(function (json) {
+                swalError(json);
 
-                }).always(function () {
-                    $button.button('reset');
-                });
+            }).always(function () {
+                $button.button('reset');
             });
-        //}
+        });
 
     }
 
