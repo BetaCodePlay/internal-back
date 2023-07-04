@@ -264,7 +264,6 @@
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_report])
         @include('back.reports.products.layout.products')
     @endcan
-
 @endsection
 
 @section('scripts')
@@ -280,6 +279,7 @@
         <script>
             $(function () {
                 new Dashboard();
+                
             });
         </script>
     @endcan

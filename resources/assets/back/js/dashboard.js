@@ -1,4 +1,5 @@
 const axios = require('axios');
+const {swalSuccessWithButton, swalError} = require("../../commons/js/core");
 
 class Dashboard {
     // Constructor
@@ -7,6 +8,7 @@ class Dashboard {
         this.completedProfiles();
         this.incompleteProfiles();
         this.pendingWithdrawals();
+        this.resetEmail();
         this.todayDeposits();
         this.totalUsers();
         this.todayWithdrawals();
@@ -47,6 +49,36 @@ class Dashboard {
             .then(function (response) {
                 $('#pending-withdrawals').text(response.data.data.count);
             });
+    }
+
+    // Get reset email
+    resetEmail() {
+        $(document).ready(function () {
+            $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
+        });
+        let $button = $('#reset-email');
+        let $form = $('#reset-email-form');
+
+        $button.click(function () {
+            $button.button('loading');
+
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $('#reset-email-modal').modal('hide');
+                swalSuccessWithButton(json);
+                $form.trigger('reset');
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
     }
 
     // Get today deposits

@@ -23,10 +23,13 @@ use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\DocumentStatus;
 use App\Users\Mailers\Activate;
+use App\Users\Mailers\Validate;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UserDocumentsRepo;
 use App\Users\Repositories\UsersRepo;
+use App\Core\Repositories\ProvidersRepo;
+use App\Core\Repositories\ProvidersTypesRepo;
 use App\Users\Repositories\UsersTempRepo;
 use App\Users\Rules\Age;
 use App\Users\Rules\DNI;
@@ -64,7 +67,6 @@ use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use App\Whitelabels\Repositories\WhitelabelsRepo;
 use App\Core\Repositories\CurrenciesRepo;
-use App\Core\Repositories\ProvidersRepo;
 use App\Audits\Enums\AuditTypes;
 use App\Users\Import\TransactionsByLotImport;
 use App\CRM\Repositories\SegmentsRepo;
@@ -72,6 +74,7 @@ use App\CRM\Collections\SegmentsCollection;
 use App\Users\Repositories\AutoLockUsersRepo;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class UsersController
@@ -169,6 +172,13 @@ class UsersController extends Controller
      */
     private $providersRepo;
 
+     /**
+     * ProvidersTypesRepo
+     *
+     * @var ProvidersTypesRepo
+     */
+    private $providersTypesRepo;
+
     /**
      * ReportsCollection
      *
@@ -228,6 +238,7 @@ class UsersController extends Controller
      * @param WhitelabelsRepo $whitelabelsRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param ProvidersRepo $providersRepo
+     * @param ProvidersTypesRepo $providersTypesRepo
      * @param UserDocumentsRepo $userDocumentsRepo
      * @param SegmentsRepo $segmentsRepo
      * @param SegmentsCollection $segmentsCollection
@@ -246,6 +257,7 @@ class UsersController extends Controller
         WhitelabelsRepo $whitelabelsRepo,
         CurrenciesRepo $currenciesRepo,
         ProvidersRepo $providersRepo,
+        ProvidersTypesRepo $providersTypesRepo,
         ReportsCollection $reportsCollection,
         UserDocumentsRepo $userDocumentsRepo,
         SegmentsRepo $segmentsRepo,
@@ -267,6 +279,7 @@ class UsersController extends Controller
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->providersRepo = $providersRepo;
+        $this->providersTypesRepo = $providersTypesRepo;
         $this->userDocumentsRepo = $userDocumentsRepo;
         $this->segmentsRepo = $segmentsRepo;
         $this->segmentsCollection = $segmentsCollection;
@@ -2013,6 +2026,63 @@ class UsersController extends Controller
     }
 
     /**
+     * Validate email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function resetEmail(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['required', new Email()]
+        ]);
+
+        try {
+            $user = auth()->user()->id;
+            $tokenUser = $this->usersRepo->getUsers($user);
+            foreach($tokenUser as $users){
+                $token = $users->uuid;
+                $username = $users->username;
+            }
+            $email = $request->email;
+            $url = route('users.validate', [$token, $email]);
+            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+            if (!is_null($uniqueEmail)) {
+                $data = [
+                    'title' => _i('Email in use'),
+                    'message' => _i('The indicated email is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+
+            }/*else {
+                if (!$this->validateEmail($email)) {
+                    $data = [
+                        'title' => _i('Invalid email'),
+                        'message' => _i('The email entered is invalid or does not exist'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+            }*/
+            $whitelabelId = Configurations::getWhitelabel();
+            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
+            Mail::to($email)->send(new Validate($whitelabelId, $url, $username, $emailConfiguration, EmailTypes::$validate_email));
+
+            $data = [
+                'title' => _i('Email validation'),
+                'message' => _i('A message has been sent to activate your mail reset'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Reset password
      *
      * @param Request $request
@@ -2606,5 +2676,50 @@ class UsersController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Validate email
+     *
+     * @param Request $request
+     * @param string $token User activation token
+     * @param string $email User activation email
+     * @return Application|Factory|View
+     */
+    public function validateEmailByAgent(Request $request, $token, $email)
+    {
+            $user = $this->usersRepo->findByToken($token);
+            if (!is_null($user)) {
+                $userData = [
+                    'email' => $email,
+                    'action' => ActionUser::$active
+                ];
+                $this->usersRepo->update($user->id, $userData);
+            }
+            $route = route('auth.logout');
+
+            return redirect()->to($route);
+    }
+
+    /**
+     * Validate email
+     *
+     * @param string $email Email to validate
+     * @return bool
+     */
+    private function validateEmail($email)
+    {
+        $data = [
+            'address' => $email
+        ];
+        \Log::debug(__METHOD__, ['email' => $email]);
+        $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
+            ->withOption('HTTPAUTH', CURLAUTH_BASIC)
+            ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
+            ->withData($data)
+            ->post();
+        $response = json_decode($curl);
+        \Log::debug(__METHOD__, ['response' => $response, 'curl' => $curl]);
+        return $response->result == 'deliverable';
     }
 }

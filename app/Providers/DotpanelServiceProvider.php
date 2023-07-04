@@ -7,7 +7,9 @@ use App\Core\Collections\CurrenciesCollection;
 use App\Core\Collections\PushNotificationsCollection;
 use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\PushNotificationsRepo;
+use App\Users\Enums\ActionUser;
 use Dotworkers\Configurations\Configurations;
+use App\Users\Repositories\UsersRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -27,10 +29,11 @@ class DotpanelServiceProvider extends ServiceProvider
      * @param CoreCollection $coreCollection
      * @param PushNotificationsRepo $pushNotificationsRepo
      * @param PushNotificationsCollection $pushNotificationsCollection
+     * @param UsersRepo $usersRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param Agent $agent
      */
-    public function boot(Request $request, CoreCollection $coreCollection, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
+    public function boot(Request $request, CoreCollection $coreCollection, UsersRepo $usersRepo, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
     {
 
         if (isset($_SERVER['HTTP_HOST'])) {

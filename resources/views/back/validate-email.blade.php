@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -397,6 +396,10 @@
             <p>@yield('content')</p>
 
             <p>@yield('footer')</p>
+
+            <p>
+            @yield('button')
+            </p>
         </div>
 
         <div class="footer">

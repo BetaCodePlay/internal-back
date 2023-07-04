@@ -40,6 +40,11 @@
 
             <div class="g-pa-20">
                 @yield('content')
+                @if(!empty($action) && $action == '10')
+                   @if($agent == 1)
+                       @include('back.users.modals.reset-email')
+                   @endif   
+                @endif
             </div>
             @include('back.layout.footer')
         </div>
@@ -66,6 +71,12 @@
         //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
+</script>
+<script>
+    $(function () {
+        let dashboard = Dashboard();
+        dashboard.resetEmail();
+    });
 </script>
 </body>
 </html>

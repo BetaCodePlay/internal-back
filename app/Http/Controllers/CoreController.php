@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Core\Collections\CoreCollection;
 use App\Core\Core;
+use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\ManualExchangesRepo;
+use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
@@ -39,6 +41,13 @@ use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 class CoreController extends Controller
 {
     /**
+     * AgentsRepo
+     *
+     * @var AgentsRepo
+     */
+    private $agentsRepo;
+
+    /**
      * UsersRepo
      *
      * @var UsersRepo
@@ -69,12 +78,14 @@ class CoreController extends Controller
     /**
      * CoreController constructor
      *
+     * @param AgentsRepo $agentsRepo
      * @param UsersRepo $usersRepo
      * @param ManualExchangesRepo $manualExchangesRepo
      * @param CoreCollection $coreCollection
      */
-    public function __construct(UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection, GamesRepo $gamesRepo)
+    public function __construct(AgentsRepo $agentsRepo, UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection, GamesRepo $gamesRepo)
     {
+        $this->agentsRepo = $agentsRepo;
         $this->usersRepo = $usersRepo;
         $this->manualExchangesRepo = $manualExchangesRepo;
         $this->coreCollection = $coreCollection;
@@ -176,9 +187,13 @@ class CoreController extends Controller
     public function dashboard(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, ProviderTypesCollection $providerTypesCollection)
     {
         try {
+            $user = auth()->user()->id;
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
+            $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
 
+            view()->share(['action'=>auth()->user()->action]);
+            view()->share(['agent'=>auth()->user()->$agentUser]);
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
