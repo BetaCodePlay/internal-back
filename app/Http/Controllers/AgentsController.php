@@ -2929,7 +2929,7 @@ class AgentsController extends Controller
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user' => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$active,
+                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,

@@ -223,11 +223,9 @@ class AuthController extends Controller
 
             } else {
                 //Estos datos se anexan para el envio de email cuando esté invalido
-                $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
-                $action = $userTemp->action;
-//                foreach($userTemp as $users){
-//                    $action = $users->action;
-//                }
+                $userTemp = $usersRepo->getByUsername(strtolower($request->username), $whitelabel);
+                $action = isset($userTemp->action)?$userTemp->action:ActionUser::$inactive;
+
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
                 if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
