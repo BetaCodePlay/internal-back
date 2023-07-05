@@ -3336,14 +3336,6 @@ class AgentsController extends Controller
             return Utils::errorResponse(Codes::$forbidden, $data);
 
         }
-        if (!$this->validateEmail($email)) {
-            $data = [
-                'title' => _i('Invalid email'),
-                'message' => _i('The email entered is invalid or does not exist'),
-                'close' => _i('Close'),
-            ];
-            return Utils::errorResponse(Codes::$forbidden, $data);
-        }
 
         try {
 
@@ -3369,23 +3361,11 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
-            //            if (is_null($email)) {
-//                $domain = strtolower($_SERVER['HTTP_HOST']);
-//                $domain = str_replace('www.', '', $domain);
-//                $email = "$username@$domain";
-//            } else {
-//                $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-//                $uniqueTempEmail = $usersTempRepo->uniqueEmail($email);
-//
-//                if (!is_null($uniqueEmail) || !is_null($uniqueTempEmail)) {
-//                    $data = [
-//                        'title' => _i('Email in use'),
-//                        'message' => _i('The indicated email is already in use'),
-//                        'close' => _i('Close'),
-//                    ];
-//                    return Utils::errorResponse(Codes::$forbidden, $data);
-//                }
-//            }
+            if(is_null($request->email)){
+                $domain = strtolower($_SERVER['HTTP_HOST']);
+                $domain = str_replace('www.', '', $domain);
+                $email = "$username@$domain";
+            }
 
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
 
