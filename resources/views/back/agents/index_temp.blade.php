@@ -83,16 +83,6 @@
                         </div>
                         <div class="d-none d-sm-none d-md-block">
                             <div class="justify-content-end g-ml-10" style="padding-left: 10px">
-                                {{--<button type="button" data-route="{{ route('agents.tree-filter', [1]) }}" data-status="1"--}}
-                                {{--       class="btn u-btn-3d u-btn-teal g-mr-5 status_filter g-rounded-50"--}}
-                                {{--       data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Updating') }}" id="active-status">--}}
-                                {{--   <i class="hs-admin-check"></i>--}}
-                                {{--</button>--}}
-                                {{--<button type="button" data-route="{{ route('agents.tree-filter', [0]) }}" data-status="0"--}}
-                                {{--        class="btn u-btn-3d u-btn-primary g-mr-5 status_filter g-rounded-50"--}}
-                                {{--       data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Updating') }}" id="inactive-status">--}}
-                                {{--   <i class="hs-admin-close"></i>--}}
-                                {{--</button>--}}
                             </div>
                         </div>
                     </div>
@@ -111,38 +101,6 @@
                                 @endif
 
                             </div>
-                            {{--                            <div class="col-6 g-py-5">--}}
-                            {{--                                <a href="#add-users-modal" data-toggle="modal"--}}
-                            {{--                                   class="btn u-btn-3d u-btn-primary btn-block" id="new-user">--}}
-                            {{--                                    <i class="hs-admin-plus"></i>--}}
-                            {{--                                    {{ _i(' Player') }}--}}
-                            {{--                                </a>--}}
-                            {{--                            </div>--}}
-                            {{--                            @if ($agent->master)--}}
-                            {{--                                <div class="col-6 g-py-5">--}}
-                            {{--                                    <a href="#add-agents-modal" data-toggle="modal"--}}
-                            {{--                                       class="btn u-btn-3d u-btn-blue btn-block" id="new-agent">--}}
-                            {{--                                        <i class="hs-admin-plus"></i>--}}
-                            {{--                                        {{ _i(' Agent') }}--}}
-                            {{--                                    </a>--}}
-                            {{--                                </div>--}}
-                            {{--                            @endif--}}
-                            {{--<div class="col-6 g-py-5">--}}
-                            {{--   <button type="button" data-route="{{ route('agents.tree-filter', [1]) }}" data-status="1"--}}
-                            {{--           class="btn u-btn-3d u-btn-teal g-mr-10 btn-block status_filter"--}}
-                            {{--           data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Updating') }}" id="active-status">--}}
-                            {{--        <i class="hs-admin-check"></i>--}}
-                            {{--       {{ _i('Active') }}--}}
-                            {{--    </button>--}}
-                            {{--</div>--}}
-                            {{--<div class="col-6 g-py-5">--}}
-                            {{--    <button type="button" data-route="{{ route('agents.tree-filter', [0]) }}" data-status="0"--}}
-                            {{--            class="btn u-btn-3d u-btn-primary g-mr-10 btn-block status_filter"--}}
-                            {{--            data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Updating') }}" id="inactive-status">--}}
-                            {{--       <i class="hs-admin-close"></i>--}}
-                            {{--       {{ _i('Inactive') }}--}}
-                            {{--    </button>--}}
-                            {{--</div>--}}
                         </div>
                     </div>
                     <div class="">
@@ -228,7 +186,7 @@
                                             <i class="hs-admin-user"></i>
                                             {{ _i('Players') }}
                                         </a>
-                                        @if ($agent->master)
+                                        @if (!empty($agent) && $agent->master)
                                             <a class="dropdown-item" data-target="#agents" href="#agents"
                                                id="agents-mobile" aria-controls="agents" aria-selected="false">
                                                 <i class="hs-admin-briefcase"></i>
@@ -240,7 +198,7 @@
                                             <i class="hs-admin-pie-chart"></i>
                                             {{ _i('Financial state') }}
                                         </a>
-                                        @if ($agent->master)
+                                        @if (!empty($agent) && $agent->master)
                                             <a class="dropdown-item d-none" data-target="#locks" href="#locks"
                                                id="locks-mobile" aria-controls="agents" aria-selected="false">
                                                 <i class="hs-admin-lock"></i>
@@ -249,60 +207,6 @@
                                         @endif
                                     </div>
                                 </div>
-                                {{--<a id="agents-menu-invoker" class="d-block g-text-underline--none--hover text-dark" href="#!" aria-controls="agents-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#agents-menu" data-dropdown-type="css-animation"
-                                   data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                                <span class="g-pos-rel g-left-70">
-                                    <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i> {{ _i('Options') }}
-                                </span>
-                                </a>
-                                <ul id="agents-menu" class="languages-menu-pro g-z-index-9999 g-pos-abs g-left-0 g-nowrap g-font-size-14 g-py-20 g-mt-10 rounded" aria-labelledby="agents-menu-invoker">
-                                    <li class="mb-0">
-                                        <a href="#dashboard" id="dashboard-mobile" data-target="#dashboard" aria-controls="dashboard" aria-selected="true">
-                                            <i class="hs-admin-dashboard"></i>
-                                            {{ _i('Dashboard') }}
-                                        </a>
-                                    </li>
-                                    <li class="mb-0">
-                                        <a href="#agents-transactions" id="agents-transactions-mobile" data-target="#agents-transactions" aria-controls="agents-transactions" aria-selected="false">
-                                            <i class="hs-admin-layout-list-thumb"></i>
-                                            {{ _i('Transactions') }}
-                                        </a>
-                                    </li>
-                                    <li class="mb-0">
-                                        <a class="d-none" data-target="#users-transactions" href="#users-transactions" id="users-transactions-mobile" aria-controls="users-transactions" aria-selected="false">
-                                            <i class="hs-admin-layout-list-thumb"></i>
-                                            {{ _i('Transactions') }}
-                                        </a>
-                                    </li>
-                                    <li class="mb-0">
-                                        <a data-target="#users" href="#users" id="users-mobile" aria-controls="users" aria-selected="false">
-                                            <i class="hs-admin-user"></i>
-                                            {{ _i('Players') }}
-                                        </a>
-                                    </li>
-                                    @if ($agent->master)
-                                        <li class="mb-0">
-                                            <a data-target="#agents" href="#agents" id="agents-mobile" aria-controls="agents" aria-selected="false">
-                                                <i class="hs-admin-briefcase"></i>
-                                                {{ _i('Agents') }}
-                                            </a>
-                                        </li>
-                                    @endif
-                                    <li class="mb-0">
-                                        <a data-target="#financial-state" href="#financial-state" id="financial-state-mobile" aria-controls="agents" aria-selected="false">
-                                            <i class="hs-admin-pie-chart"></i>
-                                            {{ _i('Financial state') }}
-                                        </a>
-                                    </li>
-                                    @if ($agent->master)
-                                        <li class="mb-0">
-                                            <a class="d-none" data-target="#locks" href="#locks" id="locks-mobile" aria-controls="agents" aria-selected="false">
-                                                <i class="hs-admin-lock"></i>
-                                                {{ _i('Locks') }}
-                                            </a>
-                                        </li>
-                                    @endif
-                                </ul>--}}
                             </div>
                         </div>
                     </div>
@@ -338,7 +242,7 @@
                                     {{ _i('Players') }}
                                 </a>
                             </li>
-                            @if ($agent->master)
+                            @if (!empty($agent) && $agent->master)
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link nav_link_red" id="agents-tab" data-toggle="tab" href="#agents"
                                        role="tab" aria-controls="agents" aria-selected="false">
@@ -354,7 +258,7 @@
                                     {{ _i('Financial state') }}
                                 </a>
                             </li>
-                            @if ($agent->master)
+                            @if (!empty($agent) && $agent->master)
                                 <li class="nav-item" role="presentation">
                                     <a class="nav-link d-none nav_link_orange" id="locks-tab" data-toggle="tab"
                                        href="#locks" role="tab" aria-controls="agents" aria-selected="false">
@@ -503,7 +407,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($agent->master)
+                                    @if (!empty($agent) && $agent->master)
                                         <div class="row g-mb-15 d-none" id="move-agents-user">
                                             <div
                                                 class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
@@ -801,7 +705,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($agent->master)
+                        @if (!empty($agent) && $agent->master)
                             <div class="tab-pane fade mobile g-py-20 g-px-5" id="agents" role="tabpanel"
                                  aria-labelledby="agents-tab">
                                 <div class="media">
@@ -918,7 +822,7 @@
                             {{--                            @endif--}}
 
                         </div>
-                        @if ($agent->master)
+                        @if (!empty($agent) && $agent->master)
                             <div class="tab-pane fade mobile g-py-20 g-px-5" id="locks" role="tabpanel"
                                  aria-labelledby="locks-tab">
                                 <div class="row">
@@ -1172,7 +1076,7 @@
             </div>
         </div>
     </div>
-    @if ($agent->master)
+    @if (!empty($agent) && $agent->master)
         {{--        TODO THE OPTION TO CREATE AGENT IS DISABLED WITHIN THE DASHBOARD--}}
         {{--        @include('back.agents.modals.add-agents')--}}
         @include('back.agents.modals.update-percentage')
@@ -1220,7 +1124,7 @@
             agents.selectUsernameSearch('{{ _i('Agents search...') }}');
             agents.selectCategoryMaker();
             agents.statusFilter();
-            @if($agent->master)
+            @if(!empty($agent) && $agent->master)
                 agents.changeAgentType();
             @endif
             agents.relocationAgents();

@@ -47,6 +47,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@index_temp'
     ]);
 
+    // Show dashboard Temp 2
+    Route::get('temp2', [
+        'as' => 'agents.index.temp2',
+        'uses' => 'AgentsController@index_temp2'
+    ]);
+
     Route::get('create-user', [
         'as' => 'agents.create.user',
         'uses' => 'AgentsController@viewCreateUser'
