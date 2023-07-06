@@ -219,6 +219,7 @@ class SectionImagesController extends Controller
                     {
                         $imageData = Configurations::getLogo($mobile = false);
                         $image->image = $imageData->img_dark;
+                        $image->front = null;
                         break;
                     }
                     case ImagesPositions::$mobile_light:
