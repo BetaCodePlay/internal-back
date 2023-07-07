@@ -1581,6 +1581,7 @@ class Agents {
                 }
 
             }).done(function (json) {
+                console.log('buscar usuario:searchAgentDashboard',json,$(this).val(),id)
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);
@@ -1588,7 +1589,7 @@ class Agents {
                 $('#status').html(json.data.user.status);
                 $('#wallet').val(json.data.wallet);
                 $('.wallet').val(json.data.wallet);
-                $('.user').val(id);
+                $('.user').val(json.data.user.id);
                 $('#name').val(json.data.user.username);
                 $('#type').val(json.data.type);
                 $('.type').val(json.data.type);

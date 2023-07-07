@@ -101,14 +101,14 @@
                     <div class="d-block d-sm-block d-md-none g-pa-10">
                         <div class="row">
                             <div class="col-12">
-                                @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
+{{--                                @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
                                     <select name="agent_id_search" id="username_search"
                                             class="form-control select2 username_search agent_id_search"
                                             data-route="{{ route('agents.search-username')}}"
                                             data-select="{{ route('agents.find-user') }}">
                                         <option></option>
                                     </select>
-                                @endif
+{{--                                @endif--}}
 
                             </div>
                             {{--                            <div class="col-6 g-py-5">--}}
