@@ -1137,6 +1137,7 @@
             type: 'get',
             dataType: 'html',
         }).done(function (data) {
+            console.log(data)
             if (data.status === 'OK') {
                 console.log(data.tree)
             } else {
