@@ -110,8 +110,7 @@
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
                                 <li class="jstree-node init_tree jstree-last jstree-open">
-                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a href="javascript:void(0)" class="jstree-anchor jstree-clicked"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
-                                                                                                                                                                   role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}</a>
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a href="javascript:void(0)" id="tree-pro-master" class="jstree-anchor jstree-clicked" data-id="{{ auth()->user()->id }}"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom" role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -1142,24 +1141,36 @@
         });
     </script>
     <script>
-        $.ajax({
-            url: '{{ route('agents.get.tree.users') }}',
-            type: 'get',
-            dataType: 'json',
-        }).done(function (data) {
-            if (data.status === 'OK') {
-                console.log(data.data.tree)
-            } else {
-                alert('Error al consultar usuarios')
-            }
-        }).fail(function () {
-            Swal.fire(
-                'Ha ocurrido un error inesperado',
-                'Recarga o intenta de nuevo mas tarde.',
-                'error'
-            )
-        }).always(function () {
+        function treePro() {
+            let listUsers;
+            let idCurrentUser = $('#tree-pro-master').data('id');
 
-        });
+            $.ajax({
+                url: '{{ route('agents.get.tree.users') }}',
+                type: 'get',
+                dataType: 'json',
+            }).done(function (data) {
+                if (data.status === 'OK') {
+                    listUsers = data.data.tree;
+                    scanSearch(idCurrentUser)
+                } else {
+                    alert('Error al consultar usuarios')
+                }
+            }).fail(function () {
+                Swal.fire(
+                    'Ha ocurrido un error inesperado',
+                    'Recarga o intenta de nuevo mas tarde.',
+                    'error'
+                )
+            }).always(function () {
+
+            });
+
+            function scanSearch(id) {
+                console.log(listUsers.find( user => user.owner_id === id ));
+            }
+        }
+
+        treePro();
     </script>
 @endsection
