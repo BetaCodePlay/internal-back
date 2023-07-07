@@ -1136,8 +1136,12 @@
             url: '{{ route('agents.get.tree.users') }}',
             type: 'get',
             dataType: 'html',
-        }).done(function (element) {
-            console.log(element)
+        }).done(function (data) {
+            if (data.status === 'OK') {
+                console.log(data.tree)
+            } else {
+                alert('Error al consultar usuarios')
+            }
         }).fail(function () {
             Swal.fire(
                 'Ha ocurrido un error inesperado',
