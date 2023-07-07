@@ -1137,9 +1137,8 @@
             type: 'get',
             dataType: 'json',
         }).done(function (data) {
-            console.log(data)
             if (data.status === 'OK') {
-
+                console.log(data.data.tree)
             } else {
                 alert('Error al consultar usuarios')
             }
