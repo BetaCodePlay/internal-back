@@ -1198,7 +1198,7 @@
                 let $this = $(this);
                 let $obj = $this.parent();
 
-                if($obj.hasClass('.jstree-open')) {
+                if($obj.hasClass('jstree-open')) {
                     $obj.removeClass('jstree-open');
                     $obj.addClass('jstree-closed');
                 } else {
