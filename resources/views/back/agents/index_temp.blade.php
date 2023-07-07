@@ -1194,7 +1194,18 @@
 
             }
 
+            $(document).on('click', '.jstree-icon.jstree-ocl', function () {
+                let $this = $(this);
+                let $obj = $this.parent();
 
+                if($obj.hasClass('.jstree-open')) {
+                    $obj.removeClass('jstree-open');
+                    $obj.addClass('jstree-closed');
+                } else {
+                    $obj.removeClass('jstree-closed');
+                    $obj.addClass('jstree-open');
+                }
+            })
         }
 
         treePro();
