@@ -110,8 +110,8 @@
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
                                 <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
-                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a href="javascript:void(0)" id="tree-pro-master" class="jstree-anchor jstree-clicked" data-id="{{ auth()->user()->id }}"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
-                                                                                                                                                                                                                           role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
+                                    <i class="jstree-icon jstree-ocl" data-idtreepro="{{ auth()->user()->id }}"></i><a href="javascript:void(0)" id="tree-pro-master" class="jstree-anchor jstree-clicked"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                                                                                                                                                                                              role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
                                     </a>
                                 </li>
                             </ul>
@@ -1173,32 +1173,28 @@
                 let userHtmlTempMini = '';
                 let usersHtmlTemp;
 
-                if (id === idCurrentUser) {
-                    $.each(users, function (index, value) {
-                        if(index + 1 === users.length) {
-                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed jstree-last"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
-                        } else {
-                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
-                        }
+
+                $.each(users, function (index, value) {
+                    if (index + 1 === users.length) {
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed jstree-last"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                    } else {
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                    }
+                })
+
+                usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';
 
 
-
-                    })
-
-                    usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';
-                    $('#tree-pro-init').append(usersHtmlTemp);
-
-
-                }
-
-
+                $('[data-idtreepro="' + id + '"]').parent().append(usersHtmlTemp);
             }
 
             $(document).on('click', '.jstree-icon.jstree-ocl', function () {
                 let $this = $(this);
                 let $obj = $this.parent();
 
-                if($obj.hasClass('jstree-open')) {
+                scanSearch($this.data('idtreepro'));
+
+                if ($obj.hasClass('jstree-open')) {
                     $obj.removeClass('jstree-open');
                     $obj.addClass('jstree-closed');
                 } else {
