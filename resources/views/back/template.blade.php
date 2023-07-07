@@ -42,7 +42,7 @@
                 @yield('content')
                 @if($mailgun_notifications == true)
                     @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-                        @if($iagent == 0)
+                        @if($iagent == 1)
                             @include('back.users.modals.reset-email')
                         @endif
                     @endif

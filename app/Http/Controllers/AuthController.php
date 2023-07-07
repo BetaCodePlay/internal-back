@@ -72,6 +72,7 @@ class AuthController extends Controller
                 //'status' => true
             ];
             $ip = Utils::userIp($request);
+            $mailgun_notifications = Configurations::getMailgunNotifications();
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
                 if (auth()->user()->action == ActionUser::$locked_higher) {
@@ -196,11 +197,13 @@ class AuthController extends Controller
                     foreach($userTemp as $users){
                         $action = $users->action;
                     }
-                    if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
+                    if($mailgun_notifications == true){
+                    /*if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){*/
                         if($action === ActionUser::$active){
                             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                             Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                         }
+                    /*}*/
                     }
                     $data = [
                         'title' => _i('Welcome!'),
