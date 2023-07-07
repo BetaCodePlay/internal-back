@@ -2132,7 +2132,7 @@ class AgentsController extends Controller
     public function getTreeUsers()
     {
         try {
-            return Utils::successResponse(['tree' => $this->agentsCollection->childrenTreeSql(Auth::id())]);
+            return json_encode(Utils::successResponse(['tree' => $this->agentsCollection->childrenTreeSql(Auth::id())]));
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
