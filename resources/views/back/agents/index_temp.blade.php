@@ -1167,7 +1167,7 @@
             });
 
             function scanSearch(id) {
-                console.log(listUsers.find( user => user.owner_id === id ));
+                console.log(listUsers.filter( user => user.owner_id === id ));
             }
         }
 
