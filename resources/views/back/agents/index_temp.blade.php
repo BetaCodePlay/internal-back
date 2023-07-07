@@ -1131,4 +1131,21 @@
             //agents.detailsUserModal();
         });
     </script>
+    <script>
+        $.ajax({
+            url: '{{ route('agents.get.tree.users') }}',
+            type: 'get',
+            dataType: 'html',
+        }).done(function (element) {
+            console.log(element)
+        }).fail(function () {
+            Swal.fire(
+                'Ha ocurrido un error inesperado',
+                'Recarga o intenta de nuevo mas tarde.',
+                'error'
+            )
+        }).always(function () {
+
+        });
+    </script>
 @endsection
