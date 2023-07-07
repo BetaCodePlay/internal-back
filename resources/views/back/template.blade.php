@@ -40,7 +40,7 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if($mailgun_notifications = true)
+                @if($mailgun_notifications == true)
                     @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
                         @if($iagent == 0)
                             @include('back.users.modals.reset-email')
