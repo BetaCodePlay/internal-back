@@ -1135,9 +1135,10 @@
         $.ajax({
             url: '{{ route('agents.get.tree.users') }}',
             type: 'get',
-            dataType: 'html',
-        }).done(function (dataJson) {
-            let data = JSON.parse(dataJson)
+            dataType: 'json',
+        }).done(function (data) {
+            console.log(JSON.parse(data))
+            console.log(data)
             if (data.status === 'OK') {
 
             } else {
