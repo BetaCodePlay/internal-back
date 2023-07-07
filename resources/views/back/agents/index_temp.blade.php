@@ -1175,11 +1175,20 @@
 
                 if (id === idCurrentUser) {
                     $.each(users, function (index, value) {
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>'
+                        if(index + 1 === users.length) {
+                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed jstree-last"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        } else {
+                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        }
+
+
+
                     })
 
                     usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';
                     $('#tree-pro-init').append(usersHtmlTemp);
+
+
                 }
 
 
