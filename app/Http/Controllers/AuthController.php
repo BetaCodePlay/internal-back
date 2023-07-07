@@ -198,12 +198,12 @@ class AuthController extends Controller
                         $action = $users->action;
                     }
                     if($mailgun_notifications == true){
-                    /*if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){*/
-                        if($action === ActionUser::$active){
-                            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                        if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
+                            if($action === ActionUser::$active){
+                                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                            }
                         }
-                    /*}*/
                     }
                     $data = [
                         'title' => _i('Welcome!'),
@@ -228,18 +228,16 @@ class AuthController extends Controller
                 //Estos datos se anexan para el envio de email cuando esté invalido
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
                 $action = $userTemp->action;
-//                foreach($userTemp as $users){
-//                    $action = $users->action;
-//                }
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
-                if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
-                    if($action === ActionUser::$active){
-                        $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
-                        Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                if($mailgun_notifications == true){
+                    if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
+                        if($action === ActionUser::$active){
+                            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                        }
                     }
                 }
-
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
