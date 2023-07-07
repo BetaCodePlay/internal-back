@@ -109,8 +109,10 @@
                     <div id="tree-pro">
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
-                                <li class="jstree-node init_tree jstree-last jstree-open">
-                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a href="javascript:void(0)" id="tree-pro-master" class="jstree-anchor jstree-clicked" data-id="{{ auth()->user()->id }}"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom" role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}</a>
+                                <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a href="javascript:void(0)" id="tree-pro-master" class="jstree-anchor jstree-clicked" data-id="{{ auth()->user()->id }}"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                                                                                                                                                                                                           role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -1167,8 +1169,23 @@
             });
 
             function scanSearch(id) {
-                console.log(listUsers.filter( user => user.owner_id === id ));
+                let users = listUsers.filter(user => user.owner_id === id);
+                let userHtmlTempMini = '';
+                let usersHtmlTemp;
+
+                if (id === idCurrentUser) {
+                    $.each(users, function (index, value) {
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed"><i class="jstree-icon jstree-ocl" role="presentation"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>'
+                    })
+
+                    usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';
+                    $('#tree-pro-init').append(usersHtmlTemp);
+                }
+
+
             }
+
+
         }
 
         treePro();
