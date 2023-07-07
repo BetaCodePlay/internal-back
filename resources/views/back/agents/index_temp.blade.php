@@ -1136,9 +1136,8 @@
             url: '{{ route('agents.get.tree.users') }}',
             type: 'get',
             dataType: 'html',
-        }).done(function (data) {
-            console.log(JSON.parse(data))
-            console.log(data)
+        }).done(function (dataJson) {
+            let data = JSON.parse(dataJson)
             if (data.status === 'OK') {
 
             } else {
