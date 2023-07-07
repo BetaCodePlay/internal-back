@@ -110,8 +110,8 @@
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
                                 <li class="jstree-node init_tree jstree-last jstree-open">
-                                    <i class="jstree-icon jstree-ocl" role="presentation"></i>
-                                    <a href="javascript:void(0)" class="jstree-anchor jstree-clicked"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom" role="presentation"></i> {{ isset(auth()->user()->username) ? auth()->user()->username : '' }}</a>
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i><a href="javascript:void(0)" class="jstree-anchor jstree-clicked"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                                                                                                                                                   role="presentation"></i> {{ isset(auth()->user()->username) ? auth()->user()->username : '' }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -1135,7 +1135,7 @@
             agents.selectCategoryMaker();
             agents.statusFilter();
             @if(!empty($agent) && $agent->master)
-                agents.changeAgentType();
+            agents.changeAgentType();
             @endif
             agents.relocationAgents();
             //agents.detailsUserModal();
