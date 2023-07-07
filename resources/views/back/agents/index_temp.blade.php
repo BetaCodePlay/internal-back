@@ -1137,7 +1137,6 @@
             type: 'get',
             dataType: 'json',
         }).done(function (data) {
-            console.log(JSON.parse(data))
             console.log(data)
             if (data.status === 'OK') {
 
