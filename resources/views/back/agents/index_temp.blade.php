@@ -106,6 +106,15 @@
                     <div class="">
                         <div id="tree" data-route="{{ route('agents.find') }}" data-json="{{ $tree }}"></div>
                     </div>
+                    <div id="tree-pro">
+                        <div class="jstree-default">
+                            <ul class="jstree-container-ul jstree-children">
+                                <li class="jstree-node init_tree jstree-last jstree-open"></li>
+                            </ul>
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                            <a href="javascript:void(0)" class="jstree-anchor jstree-clicked"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom" role="presentation"></i> {{ isset(auth()->user()->username) ? auth()->user()->username : '' }}</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
