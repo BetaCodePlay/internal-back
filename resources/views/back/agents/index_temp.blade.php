@@ -1180,6 +1180,7 @@
                 let usersHtmlTemp;
                 let last = '';
                 let atm = false;
+                let type_user;
                 let atmIcon;
 
 
@@ -1204,12 +1205,15 @@
                         userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     } else {
                         if(atm) {
-                            atmIcon = 'fa-users'
+                            atmIcon = 'fa-users';
+                            type_user = 'agent';
+
                         } else {
-                            atmIcon = 'fa-user'
+                            atmIcon = 'fa-user';
+                            type_user = 'user';
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_user jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ type_user +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     }
                 })
 
