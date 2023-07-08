@@ -1201,7 +1201,7 @@
                             atmIcon = 'fa-star'
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     } else {
                         if(atm) {
                             atmIcon = 'fa-users'
@@ -1219,7 +1219,7 @@
                 $('[data-idtreepro="' + id + '"]').parent().append(usersHtmlTemp);
             }
 
-            $(document).on('click', '.jstree-icon.jstree-ocl', function () {
+            $(document).on('click', '.jstree-more', function () {
                 let $this = $(this);
                 let $obj = $this.parent();
 
@@ -1239,7 +1239,7 @@
                 $(this).addClass('jstree-clicked');
             });
 
-            $(document).on('click', '', function (){
+            $(document).on('click', '.sdfgdsf', function (){
                 $.ajax({
                     url: $tree.data('route'),
                     type: 'get',
