@@ -1181,8 +1181,6 @@
 
                     if (index + 1 === users.length) {
                         last = 'jstree-last';
-                    } else {
-                        last = '';
                     }
 
                     if (usersTemp.length > 0) {
