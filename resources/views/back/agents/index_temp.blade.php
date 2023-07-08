@@ -1239,11 +1239,17 @@
             });
 
             $(document).on('click', 'a.jstree-anchor', function () {
-                $('a.jstree-anchor').removeClass('jstree-clicked');
-                $(this).addClass('jstree-clicked');
+
             });
 
-            $(document).on('click', '.sdfgdsf', function (){
+            $(document).on('click', 'a.jstree-anchor', function (){
+                let $this = $(this);
+                let type = 'agent';
+                let id = $this.parent().find('.jstree-icon.jstree-ocl').data('idtreepro');
+
+                $('a.jstree-anchor').removeClass('jstree-clicked');
+                $this.addClass('jstree-clicked');
+
                 $.ajax({
                     url: $tree.data('route'),
                     type: 'get',
