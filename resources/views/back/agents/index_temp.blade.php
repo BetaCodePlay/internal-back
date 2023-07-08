@@ -1216,6 +1216,10 @@
                 }
             });
 
+            $(document).on('click', 'a.jstree-anchor', function () {
+                $('a.jstree-anchor').removeClass('jstree-clicked');
+                $(this).addClass('jstree-clicked');
+            });
 
             $(document).on('click', '', function (){
                 $.ajax({
