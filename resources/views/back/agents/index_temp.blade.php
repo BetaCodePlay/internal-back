@@ -1246,7 +1246,7 @@
                 let $this = $(this);
                 let $type = 'agent';
                 let $id = $this.parent().find('.jstree-icon.jstree-ocl').data('idtreepro');
-                let $container = $('#tree-pro').data('route');
+                let $container = $('#tree-pro');
 
                 $('a.jstree-anchor').removeClass('jstree-clicked');
                 $this.addClass('jstree-clicked');
