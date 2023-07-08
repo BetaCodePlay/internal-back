@@ -1170,15 +1170,26 @@
 
             function scanSearch(id) {
                 let users = listUsers.filter(user => user.owner_id === id);
+                let usersTemp;
                 let userHtmlTempMini = '';
                 let usersHtmlTemp;
 
 
                 $.each(users, function (index, value) {
+                    usersTemp = listUsers.filter(user => user.owner_id === value.id);
+
                     if (index + 1 === users.length) {
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed jstree-last"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="'+ value.owner_id +'"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        if (usersTemp.length > 0) {
+                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed jstree-last"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="'+ value.owner_id +'"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        } else {
+                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_user jstree-leaf jstree-last"><i class="jstree-icon jstree-themeicon fa fa-user jstree-themeicon-custom" data-idtreepro="' + value.id + '" role="'+ value.owner_id +'"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        }
                     } else {
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="'+ value.owner_id +'"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        if (usersTemp.length > 0) {
+                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="'+ value.owner_id +'"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        } else {
+                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_user jstree-leaf"><i class="jstree-icon jstree-themeicon fa fa-user jstree-themeicon-custom" data-idtreepro="' + value.id + '" role="'+ value.owner_id +'"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa fa-star jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        }
                     }
                 })
 
