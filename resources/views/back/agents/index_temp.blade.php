@@ -111,7 +111,7 @@
                     <div class="">
                         <div id="tree" data-route="{{ route('agents.find') }}" data-json="{{ $tree }}"></div>
                     </div>
-                    <div id="tree-pro" class="jstree">
+                    <div id="tree-pro" class="jstree" data-route="{{ route('agents.find') }}">
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
                                 <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
@@ -1244,18 +1244,19 @@
 
             $(document).on('click', 'a.jstree-anchor', function (){
                 let $this = $(this);
-                let type = 'agent';
-                let id = $this.parent().find('.jstree-icon.jstree-ocl').data('idtreepro');
+                let $type = 'agent';
+                let $id = $this.parent().find('.jstree-icon.jstree-ocl').data('idtreepro');
+                let $container = $('#tree-pro').data('route');
 
                 $('a.jstree-anchor').removeClass('jstree-clicked');
                 $this.addClass('jstree-clicked');
 
                 $.ajax({
-                    url: $tree.data('route'),
+                    url: $container.data('route'),
                     type: 'get',
                     dataType: 'json',
                     data: {
-                        id, type
+                        $id, $type
                     }
 
                 }).done(function (json) {
@@ -1282,7 +1283,7 @@
                     // $('.appendTreeFather').append(initUl+finishUl);
 
                     setTimeout(function () {
-                        Agents.getFatherRecursive($('#details-user-get').data('route'), id, type);
+                        Agents.getFatherRecursive($('#details-user-get').data('route'), $id, $type);
                     }, 500)
                     //TODO Finish Set Modal
 
