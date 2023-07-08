@@ -1209,7 +1209,7 @@
                             atmIcon = 'fa-user'
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_user jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_user jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     }
                 })
 
