@@ -65,6 +65,11 @@
             text-align: left !important;
         }
 
+        .jstree-default .jstree-anchor:hover, .jstree-default .jstree-anchor:focus {
+            background: #e7f4f9;
+            border-radius: 2px;
+            box-shadow: inset 0 0 1px #ccc;
+        }
     </style>
 @endsection
 
