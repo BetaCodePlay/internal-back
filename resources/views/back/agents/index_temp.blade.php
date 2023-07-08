@@ -1192,14 +1192,14 @@
                 let $this = $(this);
                 let $obj = $this.parent();
 
-                scanSearch($this.data('idtreepro'));
-
                 if ($obj.hasClass('jstree-open')) {
                     $obj.removeClass('jstree-open');
                     $obj.addClass('jstree-closed');
+                    $obj.find('.jstree-children').remove();
                 } else {
                     $obj.removeClass('jstree-closed');
                     $obj.addClass('jstree-open');
+                    scanSearch($this.data('idtreepro'));
                 }
             })
         }
