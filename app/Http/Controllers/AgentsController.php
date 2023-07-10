@@ -2180,6 +2180,7 @@ class AgentsController extends Controller
             abort(500);
         }
     }
+
     /**
      * Show dashboard Temp 2
      *

@@ -530,7 +530,7 @@ class Agents {
                     type = 'agent';
                 }
                 if (id !== undefined) {
-
+                    console.log(data,'arbol')
                     $.ajax({
                         url: $tree.data('route'),
                         type: 'get',
