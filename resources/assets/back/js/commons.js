@@ -272,6 +272,7 @@ let initLitepickerEndToday = () => {
 
     return new Litepicker({
         element: document.getElementById('date_range'),
+        autoRefresh:true,
         format: 'DD/MM/YYYY',
         singleMode: false,
         startDate: moment(),
@@ -291,6 +292,7 @@ let initLitepickerEndTodayNew = () => {
 
     return new Litepicker({
         element: document.getElementById('date_range_new'),
+        autoRefresh:true,
         format: 'DD/MM/YYYY',
         singleMode: false,
         startDate: moment(),
