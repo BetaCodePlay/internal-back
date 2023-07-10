@@ -1183,6 +1183,7 @@
                 let atm = false;
                 let type_user;
                 let atmIcon;
+                let atmType;
 
 
                 $.each(users, function (index, value) {
@@ -1207,16 +1208,18 @@
 
                         userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     } else {
+                        type_user = 'user';
+
                         if(atm) {
                             atmIcon = 'fa-users';
-                            type_user = 'user';
+                            atmType = 'agent';
 
                         } else {
                             atmIcon = 'fa-user';
-                            type_user = 'user';
+                            atmType = 'user';
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ type_user +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     }
                 })
 
