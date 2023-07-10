@@ -34,7 +34,7 @@ class Core {
             });
         });
     }
-
+    
     //Upload states
     states(state){
         initSelect2();

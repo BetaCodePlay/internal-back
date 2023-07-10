@@ -25,30 +25,12 @@ class AccountsCollection
     {
         foreach ($accounts as $account) {
             $details = json_decode(json_encode($account->data));
+            $account->details = "";
             switch ($account->payment_method_id) {
-                case PaymentMethods::$airtm:
-                case PaymentMethods::$neteller:
-                case PaymentMethods::$paypal:
-                case PaymentMethods::$skrill:
-                case PaymentMethods::$uphold:
-                case PaymentMethods::$reserve:
-                {
-                    if(!is_null($details->email)){
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
-                            _i('Email'),
-                            ': ',
-                            $details->email,
-                        );
-                    }else{
-                        $account->details ="";
-                    }
-                    break;
-                }
                 case PaymentMethods::$cryptocurrencies:
                 {
                     if(!is_null($details->wallet)){
-                        $account->details = sprintf(
+                        $account->details .= sprintf(
                             '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li></ul>',
                             _i('Wallet'),
                             ': ',
@@ -57,62 +39,63 @@ class AccountsCollection
                             ': ',
                             $details->cryptocurrency,
                         );
-                    }else{
-                        $account->details ="";
                     }
-                    break;
-                }
-                case PaymentMethods::$wire_transfers:
-                case PaymentMethods::$ves_to_usd:
-                {
-                    if(!is_null($details->bank_name)){
-                        $accountType = $details->account_type == 'C' ? _i('Checking') : _i('Saving');;
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li><strong>%s</strong>%s%s</li</ul>',
-                            _i('Bank'),
-                            ': ',
-                            $details->bank_name,
-                            _i('Account number'),
-                            ': ',
-                            $details->account_number,
-                            _i('Type'),
-                            ': ',
-                            $accountType,
-                            _i('DNI'),
-                            ': ',
-                            $details->dni,
-                            _i('Social reason'),
-                            ': ',
-                            $details->social_reason,
-                            _i('Title'),
-                            ': ',
-                            $details->title,
+                    if(!is_null($details->qr)){
+                        $url = s3_asset("payment/{$details->qr}");
+                        $image = "<img src='$url' class='img-responsive' width='30%'>";
+                        $account->details .= sprintf(
+                            '<ul><li><button class="btn u-btn-3d btn-sm u-btn-bluegray mr-2" data-toggle="modal" data-target="#watch-crypto-qr-modal" data-qr="%s" ><i class="hs-admin-eye"></i> %s</button></li></ul><br>',
+                            $image,
+                            _i('Qr')
                         );
-                    }else{
-                        $account->details ="";
                     }
                     break;
                 }
-                case PaymentMethods::$zelle:
+                case PaymentMethods::$binance:
                 {
                     if(!is_null($details->email)){
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li><li><strong>%s</strong>%s%s</li></ul>',
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
                             _i('Email'),
                             ': ',
-                            $details->email,
-                            _i('Full name'),
-                            ': ',
-                            $details->full_name,
+                            $details->email
                         );
-                    }else{
-                        $account->details ="";
+                    }
+                    if(!is_null($details->phone)){
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Phone'),
+                            ': ',
+                            $details->phone
+                        );
+                    }
+                    if(!is_null($details->binance_id)){
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Binance ID'),
+                            ': ',
+                            $details->binance_id
+                        );
+                    }
+                    if(!is_null($details->pay_id)){
+                        $account->details .= sprintf(
+                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                            _i('Pay ID'),
+                            ': ',
+                            $details->pay_id
+                        );
+                    }
+                    if(!is_null($details->qr)){
+                        $url = s3_asset("payment/{$details->qr}");
+                        $image = "<img src='$url' class='img-responsive' width='30%'>";
+                        $account->details .= sprintf(
+                            '<ul><li><button class="btn u-btn-3d btn-sm u-btn-bluegray mr-2" data-toggle="modal" data-target="#watch-binance-qr-modal" data-qr="%s" ><i class="hs-admin-eye"></i> %s</button></li></ul><br>',
+                            $image,
+                            _i('Qr')
+                        );
                     }
                     break;
                 }
-                default:
-                    $account->details ="";
-                break;
             }
             $account->status = sprintf(
                 '<div class="checkbox checkbox-primary">
@@ -143,6 +126,47 @@ class AccountsCollection
             );
 
             switch ($account->payment_method_id) {
+                case PaymentMethods::$cryptocurrencies:
+                {
+                    $account->info = sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Wallet'),
+                        $account->data->wallet
+                    );
+                    $account->info .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Currency'),
+                        $account->data->cryptocurrency
+                    );
+                    if(isset($account->data->network)){
+                        $account->info .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Network'),
+                            $account->data->network
+                        );
+                        $network = $account->data->network;
+                    } else {
+                       $network = '';
+                    }
+                    $account->info .= sprintf(
+                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="cryptocurrencies" data-wallet="%s" data-crypto-currency="%s" data-user-account-id="%s" data-network="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
+                        $account->payment_method_id,
+                        $account->data->wallet,
+                        $account->data->cryptocurrency,
+                        $account->id,
+                        $network,
+                        _i('Edit')
+                    );
+                    if (Gate::allows('access', Permissions::$disable_user_account)) {
+                        $account->info .= sprintf(
+                            '<button type="button" id="disable-account" data-route="%s" data-payment-method-account="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
+                            route('betpay.accounts.user.disable', [$account->id]),
+                            $account->payment_method_id,
+                            _i('Delete')
+                        );
+                    }
+                    break;
+                }
                 case PaymentMethods::$binance:
                 {
                     $account->info = sprintf(

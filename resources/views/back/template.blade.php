@@ -40,6 +40,11 @@
 
             <div class="g-pa-20">
                 @yield('content')
+                @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
+                   @if($agent == 1)
+                       @include('back.users.modals.reset-email')
+                   @endif
+                @endif
             </div>
             @include('back.layout.footer')
         </div>
@@ -48,7 +53,7 @@
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
-<script src="{{ asset('back/js/scripts.min.js') }}?v=21"></script>
+<script src="{{ asset('back/js/scripts.min.js') }}?v=22"></script>
 
 {{--TODO AGREGAR CDN PARA EXPORTAR PDF--}}
 {{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}
@@ -66,6 +71,11 @@
         //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
+
+    $(function () {
+        let dashboard = Dashboard();
+        dashboard.resetEmail();
+    });
 </script>
 </body>
 </html>

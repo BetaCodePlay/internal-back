@@ -542,6 +542,7 @@ class Agents {
                     }).done(function (json) {
                         //TODO Init Set Modal
                         $('.userSet').text(json.data.user.username);
+                        $('.emailSet').text(json.data.user.email);
                         $('.fatherSet').text(json.data.father);
                         $('.typeSet').text(json.data.user.typeSet);
                         $('.createdSet').text(json.data.user.created);

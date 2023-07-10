@@ -21,34 +21,19 @@
                 </header>
                 <div class="card-block g-pa-15">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="client">{{ _i('Whitelabel') }}</label>
-                                <select name="client" id="client" class="form-control">
-                                    <option value="">{{ _i('All Whitelabel') }}</option>
-                                    @foreach ($clients as $client)
-                                        <option value="{{ $client->id }}">
-                                            {{ $client->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="currency">{{ _i('Currency') }}</label>
                                 <select name="currency" id="currency" class="form-control">
-                                    <option value="">{{ _i('All currencies') }}</option>
-                                    @foreach ($currency_client as $currency)
-                                        <option
-                                            value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
-                                            {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
-                                        </option>
+                                    @foreach ($whitelabel_currencies as $currency)
+                                    <option value="{{ $currency->iso }}">
+                                        {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="payments">{{ _i('Payment methods') }}</label>
                                 <select name="payments" id="payments" class="form-control">
@@ -98,9 +83,6 @@
                             <thead>
                             <tr>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    {{ _i('Name') }}
-                                </th>
-                                <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                     {{ _i('Currency') }}
                                 </th>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -124,6 +106,8 @@
             </div>
         </div>
     </div>
+    @include('back.betpay.clients.modals.watch-binance-qr')
+    @include('back.betpay.clients.modals.watch-crypto-qr')
 @endsection
 
 @section('scripts')
@@ -131,6 +115,8 @@
         $(function () {
             let betpay = new BetPay();
             betpay.clientAccount();
+            betpay.binanceQrModal();
+            betpay.cryptoQrModal();
             $(document).on('click', '.status_checkbox', function () {
                 if (!$(this).hasClass('active')) {
                     $.post('{{route('betpay.clients.accounts.status')}}', {
