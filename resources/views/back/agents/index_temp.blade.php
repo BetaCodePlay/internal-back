@@ -1197,13 +1197,15 @@
                     }
 
                     if (usersTemp.length > 0) {
+                        type_user = 'agent';
+
                         if(atm) {
                             atmIcon = 'fa-users'
                         } else {
                             atmIcon = 'fa-star'
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     } else {
                         if(atm) {
                             atmIcon = 'fa-users';
@@ -1214,7 +1216,7 @@
                             type_user = 'user';
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ type_user +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ type_user +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     }
                 })
 
@@ -1241,7 +1243,7 @@
 
             $(document).on('click', 'a.jstree-anchor', function (){
                 let $this = $(this);
-                let type = 'agent';
+                let type = $this.parent().find('.jstree-icon.jstree-ocl').data('typetreepro');
                 let id = $this.parent().find('.jstree-icon.jstree-ocl').data('idtreepro');
                 let $container = $('#tree-pro');
 
