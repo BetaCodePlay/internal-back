@@ -183,6 +183,10 @@ class BonusSystem {
         });
     }
 
+    actualizarValor(checkbox) {
+        checkbox.setAttribute('value', checkbox.checked ? 'true' : 'false');
+    }
+
     // Campaigns
     campaigns() {
         initSelect2();

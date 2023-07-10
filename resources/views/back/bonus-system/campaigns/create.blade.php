@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="internal_name">{{ _i('Internal name (not displayed to user)') }}</label>
+                                    <label for="internal_name">{{ _i('Internal name') }}</label>
                                     <input type="text" name="internal_name" id="internal_name" class="form-control">
                                 </div>
                             </div>
@@ -133,12 +133,12 @@
                                 <td width="20%">
                                     <div class="form-check">
                                         <label class="u-check g-pl-25">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ 'false' }}" id="registration">
+                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ 'false' }}" id="registration" onchange="actualizarValor(this)">
                                             <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
                                                 <i class="fa" data-check-icon="&#xf00c"></i>
                                             </div>
                                             {{ _i('Registration') }}
-                                            {{ $allocation_criteria['registration'] == false ? 'false': 'true'}}
+                                            {{-- {{ $allocation_criteria['registration'] == false ? 'false': 'true'}} --}}
                                         </label>
                                     </div>
                                 </td>
@@ -148,7 +148,7 @@
                                 <td>
                                     <div class="form-check">
                                         <label class="u-check g-pl-25">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$complete_profile }}">
+                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$complete_profile }}" onchange="actualizarValor(this)">
                                             <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
                                                 <i class="fa" data-check-icon="&#xf00c"></i>
                                             </div>
@@ -156,13 +156,13 @@
                                         </label>
                                     </div>
                                 </td>
-                                <td></td>
+                                <td><input type="hidden" name="allocation_criteria[]" value="" id="allocation-criteria-input"></td>
                             </tr>
                             <tr>
                                 <td>
                                     <div class="form-check">
                                         <label class="u-check g-pl-25 disabled">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" id="deposits" disabled value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$deposit }}">
+                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" id="deposits" disabled value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$deposit }}" onchange="actualizarValor(this)">
                                             <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
                                                 <i class="fa" data-check-icon="&#xf00c"></i>
                                             </div>
@@ -571,10 +571,36 @@
 
 @section('scripts')
     <script>
+
+        var allocation_criteria = [];
+
+        function actualizarValor(checkbox) {
+            console.log(checkbox);
+        if (checkbox.checked) {
+            allocation_criteria.push(checkbox.value);
+            checkbox.setAttribute('value', 'true');
+            console.log('Paso cuando ');
+        } else {
+
+
+            var index = allocation_criteria.indexOf(checkbox.value);
+            if (index > -1) {
+            allocation_criteria.splice(index, 1);
+            checkbox.setAttribute('value', 'false');
+            }
+        }
+
+        // Asigna el valor del array allocation_criteria al campo de formulario oculto
+        document.getElementById("allocation-criteria-input").value = allocation_criteria.join(",");
+        console.log(document.getElementById("allocation-criteria-input").value);
+        }
+
         $(function () {
             let bonusSystem = new BonusSystem();
             bonusSystem.store(@json($languages));
             bonusSystem.addTranslations(@json($languages));
+
         });
+
     </script>
 @endsection

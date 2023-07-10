@@ -436,6 +436,7 @@ class BonusSystemController extends Controller
         try {
 
             $campaigns = $this->campaignsRepo->allByVersion();
+            // dd($campaigns);
             $this->campaignsCollection->formatAll($campaigns);
             $data = [
                 'campaigns' => $campaigns
@@ -1235,6 +1236,7 @@ class BonusSystemController extends Controller
             $bonusType = $request->bonus_type;
             $promoCodes = $request->promo_codes;
             $allocationCriteria = $request->allocation_criteria;
+            // dd($allocationCriteria);
             $depositTypes = $request->deposit_types;
             $minDeposits = $request->min_deposits;
             $includePaymentMethods = $request->include_payment_methods;
