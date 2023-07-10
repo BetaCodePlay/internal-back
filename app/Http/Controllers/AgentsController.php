@@ -306,8 +306,9 @@ class AgentsController extends Controller
             $walletId = null;
             $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $user = $this->agentsRepo->findUser($id);
+
             if (!is_null($userAgent)) {
-                $father = $this->usersRepo->findUsername($user->owner);
+                $father = $this->usersRepo->findUsername($userAgent->owner);
                 $user = $userAgent;
                 $balance = $userAgent->balance;
                 $master = $userAgent->master;
