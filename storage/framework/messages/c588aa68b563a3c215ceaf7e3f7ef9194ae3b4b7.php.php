@@ -202,6 +202,20 @@ class UsersRepo
     }
 
     /**
+     * Find Type User
+     *
+     * @param string $token User uuid
+     * @return mixed
+     */
+    public function findByToken($token)
+    {
+        return User::select('users.*')
+            ->where('users.uuid', $token)
+            ->first();
+    }
+
+
+    /**
      * Find exclude provider user
      *
      * @param int $provider Provider ID
@@ -276,6 +290,20 @@ class UsersRepo
     {
         return User::where('id', $user)->first(['username']);
 
+    }
+
+    /**
+     * Get users
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getUsers($id)
+    {
+        $users = User::select('users.*')
+            ->where('id', $id)
+            ->get();
+        return $users;
     }
 
     /**
@@ -380,6 +408,14 @@ class UsersRepo
             'agents'=>$agents,
             'players'=>$players,
         ];
+    }
+
+    public function getActionByUser($user)
+    {
+        $user = User::select('users.action')
+            ->where('id', $user)
+            ->first();
+        return $user;
     }
 
     /**
@@ -837,6 +873,20 @@ class UsersRepo
             $users->whereIn('profiles.language', $language);
         }
         return $users->get();
+    }
+
+    /**
+     * get token by user
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getTokenByUser($user)
+    {
+        $users = User::select('id', 'uuid', 'username')
+            ->where('id', $user)
+            ->first();
+        return $users;
     }
 
     /**
@@ -1412,7 +1462,6 @@ class UsersRepo
         $user = User::where('username', $username)
             ->whitelabel()
             ->first();
-
         return $user;
     }
 

@@ -306,7 +306,9 @@ class AgentsController extends Controller
             $walletId = null;
             $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $user = $this->agentsRepo->findUser($id);
+
             if (!is_null($userAgent)) {
+                $father = $this->usersRepo->findUsername($userAgent->owner);
                 $user = $userAgent;
                 $balance = $userAgent->balance;
                 $master = $userAgent->master;
@@ -314,6 +316,7 @@ class AgentsController extends Controller
                 $myself = $userId == $userAgent->id;
                 $type = 'agent';
             } else {
+                $father = $this->usersRepo->findUsername($user->owner_id);
                 $user = $this->agentsRepo->findUser($id);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
@@ -328,6 +331,8 @@ class AgentsController extends Controller
                 'user' => $user,
                 'balance' => number_format($balance, 2),
                 'master' => $master,
+                'father' => $father->username ?? '---',
+                'fathers' => [],
                 'agent' => $agent,
                 'wallet' => $walletId,
                 'type' => $type,
@@ -2114,6 +2119,8 @@ class AgentsController extends Controller
             $data['agents'] = $agentAndSubAgents;
             $data['tree'] = $this->agentsCollection->childrenTree($agent, $user);
             //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
+            $data['action'] = Auth::user()->action;
+            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);;
             $data['title'] = _i('Agents module');
             return view('back.agents.index', $data);
 
@@ -2160,42 +2167,45 @@ class AgentsController extends Controller
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|View
      */
-    public function index_Temp(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    public function index_Temp()
     {
+        //CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection
         try {
-            if (session('admin_id')) {
-                $user = session('admin_id');
-            } else {
-                $user = auth()->user()->id ? Auth::id() : null;
-                if (is_null(Auth::user()->username) == 'romeo') {
-                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
-                }
 
-            }
-            $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            //TODO MOSTRAR EL AGENTE LOGUEADO
-            $agent->user_id = $agent->id;
-
-            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgentsNew($this->agentsRepo, $currency, [$agent]);
-
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            $data['currencies'] = Configurations::getCurrencies();
-            $data['countries'] = []; //$countriesRepo->all();
-            $data['timezones'] = []; //\DateTimeZone::listIdentifiers();
-            $data['providers'] = $providers;
-            $data['agent'] = $agent;
-            $data['makers'] = $this->gamesRepo->getMakers();
-            $data['agents'] = $agentAndSubAgents;
+            $data['agent'] = [];//$this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
+            $data['makers'] = [];//$this->gamesRepo->getMakers();
+            $data['agents'] = [];//$this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel());
             $data['tree'] = json_encode([]);
             $data['title'] = _i('Agents module Temp');
+
             return view('back.agents.index_temp', $data);
 
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Show dashboard Temp 2
+     *
+     * @return Application|Factory|View
+     */
+    public function index_Temp2()
+    {
+        try {
+
+            $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
+            $data['makers'] = $this->gamesRepo->getMakers();
+            Log::debug('index_Temp2',[session('currency'),Configurations::getWhitelabel()]);
+            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
+            $data['tree'] = json_encode($this->agentsCollection->childrenTreeSql_format(Auth::id()));
+            $data['title'] = _i('Agents module Temp');
+
+            return view('back.agents.index_temp', $data);
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
     }
@@ -2809,7 +2819,7 @@ class AgentsController extends Controller
     private function validateEmail($email)
     {
         $data = [
-            'address' => $email
+            'address' => strtolower($email)
         ];
         $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
             ->withOption('HTTPAUTH', CURLAUTH_BASIC)
@@ -2927,7 +2937,7 @@ class AgentsController extends Controller
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user' => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$active,
+                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
@@ -3334,14 +3344,6 @@ class AgentsController extends Controller
             return Utils::errorResponse(Codes::$forbidden, $data);
 
         }
-        if (!$this->validateEmail($email)) {
-            $data = [
-                'title' => _i('Invalid email'),
-                'message' => _i('The email entered is invalid or does not exist'),
-                'close' => _i('Close'),
-            ];
-            return Utils::errorResponse(Codes::$forbidden, $data);
-        }
 
         try {
 
@@ -3367,23 +3369,11 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
-            //            if (is_null($email)) {
-//                $domain = strtolower($_SERVER['HTTP_HOST']);
-//                $domain = str_replace('www.', '', $domain);
-//                $email = "$username@$domain";
-//            } else {
-//                $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-//                $uniqueTempEmail = $usersTempRepo->uniqueEmail($email);
-//
-//                if (!is_null($uniqueEmail) || !is_null($uniqueTempEmail)) {
-//                    $data = [
-//                        'title' => _i('Email in use'),
-//                        'message' => _i('The indicated email is already in use'),
-//                        'close' => _i('Close'),
-//                    ];
-//                    return Utils::errorResponse(Codes::$forbidden, $data);
-//                }
-//            }
+            if(is_null($request->email)){
+                $domain = strtolower($_SERVER['HTTP_HOST']);
+                $domain = str_replace('www.', '', $domain);
+                $email = "$username@$domain";
+            }
 
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
 

@@ -274,7 +274,6 @@
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_report])): ?>
         <?php echo $__env->make('back.reports.products.layout.products', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php endif; ?>
-
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -290,6 +289,7 @@
         <script>
             $(function () {
                 new Dashboard();
+                
             });
         </script>
     <?php endif; ?>

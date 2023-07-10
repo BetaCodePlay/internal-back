@@ -214,6 +214,27 @@ class AgentsRepo
             ->first();
     }
 
+
+    /**
+     * Fin user profile
+     * @param int $user User Id
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function findUserProfile(int $user,string $currency)
+    {
+        $sql = DB::select('SELECT u.id,u.id AS user_id,u.created_at AS created,u.email,u.username,u.status,u.action,p.timezone,a.id AS agent,u.referral_code,a.master,a.owner_id AS owner,
+                                   p.country_iso,ac.balance,ac.currency_iso
+                            FROM site.agents a
+                              INNER JOIN site.agent_currencies ac ON a.id = ac.agent_id
+                              INNER JOIN site.users u ON a.user_id = u.id
+                              INNER JOIN site.profiles p ON u.id = p.user_id
+                            WHERE ac.currency_iso = ?
+                              and u.id = ? LIMIT 1',[$currency,$user]);
+
+        return isset($sql[0]->id)?$sql[0]:null;
+    }
+
     /**
      * Find user
      *
@@ -298,6 +319,32 @@ class AgentsRepo
             ->whitelabel()
             ->orderBy('users.username', 'ASC')
             ->get();
+    }
+    /**
+     * Get agents all by owner
+     *
+     * @param int $owner Owner ID
+     * @param string $currency Currency ISO
+     * @param int $whitelabel Whitelabel ID
+     * @return mixed
+     */
+    public function getAgentsAllByOwner(int $owner,string $currency,int $whitelabel)
+    {
+        return DB::select('SELECT u.id,u.id AS user_id,u.username FROM site.users AS u
+                   WHERE u.whitelabel_id= ? AND
+                    u.id IN (WITH RECURSIVE all_agents AS (
+                        SELECT agents.user_id
+                        FROM site.agents AS agents
+                        JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                        WHERE agents.user_id = ?
+                        AND currency_iso = ?
+                        UNION ALL
+                        SELECT agents.user_id
+                        FROM site.agents AS agents
+                        JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                        JOIN all_agents ON agents.owner_id = all_agents.user_id
+                        WHERE agent_currencies.currency_iso  = ?
+                    ) SELECT user_id FROM all_agents) ORDER BY username ASC',[$whitelabel,$owner,$currency,$currency]);
     }
 
     /**

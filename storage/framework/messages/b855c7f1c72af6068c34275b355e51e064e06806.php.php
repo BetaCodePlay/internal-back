@@ -885,7 +885,7 @@
                             
                             
                             <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
-                                <div class="table-responsive" id="financial-state-table"
+                                <div class="table-responsive if-admin" id="financial-state-table"
                                      data-route="<?php echo e(route('agents.reports.financial-state-data')); ?>"></div>
                             <?php else: ?>
                                 <div class="table-responsive" id="financial-state-table"
@@ -1188,7 +1188,7 @@
             let users = new Users();
             users.usersIps();
             //TODO TABLA PARA IPS EN EL MODAL
-            // users.userIpsDetails();
+            users.userIpsDetails();
 
             agents.dashboard();
             agents.searchAgentDashboard();

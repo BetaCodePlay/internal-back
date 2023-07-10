@@ -165,81 +165,93 @@ class SectionImagesCollection
         $imagesData = [];
         foreach ($positions as $key => $size) {
             switch ($key) {
-                case ImagesPositions::$logo_light: {
-                        $image = Configurations::getLogo($mobile = false);
-                        break;
-                    }
-                case ImagesPositions::$logo_dark: {
-                        $image = Configurations::getLogo($mobile = false);
-                        break;
-                    }
-                case ImagesPositions::$mobile_light: {
-                        $image = Configurations::getLogo($mobile = true);
-                        break;
-                    }
-                case ImagesPositions::$mobile_dark: {
-                        $image = Configurations::getLogo($mobile = true);
-                        break;
-                    }
-                case ImagesPositions::$favicon: {
-                        $image = Configurations::getFavicon();
-                        break;
-                    }
-                default: {
-                        $image = $sectionImagesRepo->findByPositionAndSection($key, $templateElementType, $section);
-                    }
+                case ImagesPositions::$logo_light:
+                {
+                    $image = Configurations::getLogo($mobile = false);
+                    break;
+                }
+                case ImagesPositions::$logo_dark:
+                {
+                    $image = Configurations::getLogo($mobile = false);
+                    break;
+                }
+                case ImagesPositions::$mobile_light:
+                {
+                    $image = Configurations::getLogo($mobile = true);
+                    break;
+                }
+                case ImagesPositions::$mobile_dark:
+                {
+                    $image = Configurations::getLogo($mobile = true);
+                    break;
+                }
+                case ImagesPositions::$favicon:
+                {
+                    $image = Configurations::getFavicon();
+                    break;
+                }
+                default:
+                {
+                    $image = $sectionImagesRepo->findByPositionAndSection($key, $templateElementType, $section);
+                }
             }
 
             $sizes = explode('x', $size);
             $width = $sizes[0] < '250' ? $sizes[0] : '250';
             if (!is_null($image)) {
                 switch ($key) {
-                    case ImagesPositions::$logo_light: {
-                            $url = $image->img_light;
-                            $urlFront = null;
-                            $image->category = _i('Without category');
-                            $image->status = true;
-                            $image->url = _i('Does not apply to this image');
-                            break;
-                        }
-                    case ImagesPositions::$logo_dark: {
-                            $url = $image->img_dark;
-                            $urlFront = null;
-                            $image->category = _i('Without category');
-                            $image->status = true;
-                            $image->url = _i('Does not apply to this image');
-                            break;
-                        }
-                    case ImagesPositions::$mobile_light: {
-                            $url = $image->img_light;
-                            $urlFront = null;
-                            $image->category = _i('Without category');
-                            $image->status = true;
-                            $image->url = _i('Does not apply to this image');
-                            break;
-                        }
-                    case ImagesPositions::$mobile_dark: {
-                            $url = $image->img_dark;
-                            $urlFront = null;
-                            $image->category = _i('Without category');
-                            $image->status = true;
-                            $image->url = _i('Does not apply to this image');
-                            break;
-                        }
-                    case ImagesPositions::$favicon: {
-                            $favicon = $image;
-                            $url = $favicon;
-                            $urlFront = null;
-                            $image = new \stdClass();
-                            $image->category = _i('Without category');
-                            $image->status = true;
-                            $image->url = _i('Does not apply to this image');
-                            break;
-                        }
-                    default: {
-                            $url = s3_asset("section-images/{$image->image}");
-                            $urlFront = s3_asset("section-images/{$image->front}");
-                        }
+                    case ImagesPositions::$logo_light:
+                    {
+                        $url = $image->img_light;
+                        $urlFront = null;
+                        $image->category = _i('Without category');
+                        $image->status = true;
+                        $image->url = _i('Does not apply to this image');
+                        break;
+                    }
+                    case ImagesPositions::$logo_dark:
+                    {
+                        $url = $image->img_dark;
+                        $urlFront = null;
+                        $image->category = _i('Without category');
+                        $image->status = true;
+                        $image->url = _i('Does not apply to this image');
+                        break;
+                    }
+                    case ImagesPositions::$mobile_light:
+                    {
+                        $url = $image->img_light;
+                        $urlFront = null;
+                        $image->category = _i('Without category');
+                        $image->status = true;
+                        $image->url = _i('Does not apply to this image');
+                        break;
+                    }
+                    case ImagesPositions::$mobile_dark:
+                    {
+                        $url = $image->img_dark;
+                        $urlFront = null;
+                        $image->category = _i('Without category');
+                        $image->status = true;
+                        $image->url = _i('Does not apply to this image');
+                        break;
+                    }
+                    case ImagesPositions::$favicon:
+                    {
+                        $favicon = $image;
+                        $url = $favicon;
+                        $urlFront = null;
+                        $image = new \stdClass();
+                        $image->category = _i('Without category');
+                        $image->status = true;
+                        $image->url = _i('Does not apply to this image');
+                        break;
+                    }
+                    default:
+                    {
+                        $url = s3_asset("section-images/{$image->image}");
+                        $urlFront = s3_asset("section-images/{$image->front}");
+                    }
                 }
 
                 $image->url = !is_null($image->url) ? $image->url : _i('Without URL');
@@ -381,7 +393,13 @@ class SectionImagesCollection
             if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark) {
                 $image->file = $image->image;
                 $image->image = "<img src='$image->image' class='img-responsive' width='$width'>";
-                $image->front = null;
+                if (!is_null($image->front)) {
+                    $urlFront = s3_asset("section-images/{$image->front}");
+                    $image->file = $image->front;
+                    $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
+                } else {
+                    $image->front = null;
+                }
             } else {
                 $url = s3_asset("section-images/{$image->image}");
                 $image->file = $image->image;

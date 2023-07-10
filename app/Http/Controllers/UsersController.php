@@ -2100,6 +2100,7 @@ class UsersController extends Controller
         ]);
 
         try {
+            $mailgun_notifications = Configurations::getMailgunNotifications();
             $user = $request->user;
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
             $roles = Security::getUserRoles($user);
@@ -2142,8 +2143,10 @@ class UsersController extends Controller
             }
             $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
-            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
-            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
+            if($mailgun_notifications == true){
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
+            }
             $data = [
                 'title' => _i('Password reset'),
                 'message' => _i('Password was successfully reset'),
@@ -2694,7 +2697,7 @@ class UsersController extends Controller
             $user = $this->usersRepo->findByToken($token);
             if (!is_null($user)) {
                 $userData = [
-                    'email' => $email,
+                    'email' => strtolower($email),
                     'action' => ActionUser::$active
                 ];
                 $this->usersRepo->update($user->id, $userData);
@@ -2713,16 +2716,21 @@ class UsersController extends Controller
     private function validateEmail($email)
     {
         $data = [
-            'address' => $email
+            'address' => strtolower($email)
         ];
-        \Log::debug(__METHOD__, ['email' => $email]);
         $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
             ->withOption('HTTPAUTH', CURLAUTH_BASIC)
             ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
             ->withData($data)
             ->post();
         $response = json_decode($curl);
-        \Log::debug(__METHOD__, ['response' => $response, 'curl' => $curl]);
-        return $response->result == 'deliverable';
+        $result = true;
+        if (!isset($response->result) || $response->result != 'deliverable') {
+            Log::debug('validateEmail', [$response]);
+            $result = false;
+        }
+        return $result;
+
+
     }
 }

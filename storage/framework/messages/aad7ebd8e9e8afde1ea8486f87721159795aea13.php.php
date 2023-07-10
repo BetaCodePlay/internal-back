@@ -36,6 +36,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
@@ -406,40 +407,22 @@ class BetPayController extends Controller
     {
         try{
             $data['title'] = _i('Client account list');
-            $data['whitelabels'] = $this->whitelabelsRepo->all();
-            $data['currency_client'] = $this->currenciesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
-            $urlClientsAll = "{$this->betPayURL}/clients/all";
+            $paymentMethods = [];
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
                     ->get();
-
-                $curlClientsAll = Curl::to($urlClientsAll)
-                    ->withHeader('Accept: application/json')
-                    ->withHeader("Authorization: Bearer $betPayToken")
-                    ->get();
-
                 $responsePaymentMethodsAll = json_decode($curlPaymentMethodsAll);
-                $responseClientsAll = json_decode($curlClientsAll);
-
-                if ($responsePaymentMethodsAll->status == Status::$ok) {
+                if (($responsePaymentMethodsAll->status == Status::$ok)) {
                     $paymentMethods = $responsePaymentMethodsAll->data->payment_methods;
                 } else {
                     $paymentMethods = [];
                 }
-
-                if ($responseClientsAll->status == Status::$ok) {
-                    $clients = $responseClientsAll->data->client;
-                    $allClients =  $this->clientsCollection->formatClientsAll($clients);
-                } else {
-                    $allClients = [];
-                }
             }
             $data['payment_methods'] = $paymentMethods;
-            $data['clients'] = $allClients;
             return view('back.betpay.clients.accounts.index', $data);
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
@@ -455,32 +438,32 @@ class BetPayController extends Controller
     public function clientAccountListData(Request $request)
     {
         try {
-            $client = $request->client;
-            $currency = $request->currency;
             $paymentMethod = $request->payment_method;
-
-            $betPayToken = session('betpay_client_access_token');
-            $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
-            if (!is_null($betPayToken)) {
-                $requestData = [
-                    'client' => $client,
-                    'currency' => $currency,
-                    'payment_method' => $paymentMethod,
-                ];
-                $curlClientAccount = Curl::to( $urlClientAccount )
-                    ->withData($requestData)
-                    ->withHeader('Accept: application/json')
-                    ->withHeader("Authorization: Bearer $betPayToken")
-                    ->get();
-                $responseClientAccount = json_decode($curlClientAccount);
-                if ($responseClientAccount->status == Status::$ok) {
-                    $accounts = $responseClientAccount->data->accounts;
-                    $this->accountsCollection->formatClientAccount($accounts);
-                } else {
-                    $accounts = [];
-                }
-            }
-
+            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
+            if (!is_null($credential)) {
+                $betPayToken = session('betpay_client_access_token');
+                $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
+                if (!is_null($betPayToken)) {
+                    $requestData = [
+                        'currency' => $request->currency,
+                        'payment_method' => $paymentMethod,
+                    ];
+                    $curlClientAccount = Curl::to( $urlClientAccount )
+                        ->withData($requestData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->get();
+                    $responseClientAccount = json_decode($curlClientAccount);
+                    if ($responseClientAccount->status == Status::$ok) {
+                        $accounts = $responseClientAccount->data->accounts;
+                        $this->accountsCollection->formatClientAccount($accounts);
+                    }else{
+                        $accounts = [];
+                    }  
+                } 
+            }else{
+                $accounts = [];
+            }    
             $data = [
                 'accounts' => $accounts
             ];
@@ -504,7 +487,7 @@ class BetPayController extends Controller
             $data['whitelabels'] = $this->whitelabelsRepo->all();
             $data['currency_client'] = $this->currenciesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
 
             if (!is_null($betPayToken)) {
@@ -544,7 +527,7 @@ class BetPayController extends Controller
             $data['currency_client'] = $this->currenciesRepo->all();
             $data['countries'] = $this->countriesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
@@ -574,13 +557,10 @@ class BetPayController extends Controller
     public function createClientAccount()
     {
         try {
-            $data['title'] = _i('Create Client Account');
-            $data['currency_client'] = $this->currenciesRepo->all();
-            $data['countries'] = $this->countriesRepo->all();
-            $data['whitelabels'] = $this->whitelabelsRepo->all();
+            $data['title'] = _i('Active Payment Methods');
             $paymentMethods = [];
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
@@ -599,6 +579,20 @@ class BetPayController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
+    }
+
+    /**
+     * Show pending credit cryptocurrencies
+     *
+     * @return Application|Factory|View
+     */
+    public function creditCryptocurrencies()
+    {
+        $data['transaction_type'] = TransactionTypes::$credit;
+        $data['payment_method'] = PaymentMethods::$cryptocurrencies;
+        $data['provider'] = Providers::$cryptocurrencies;
+        $data['title'] = _i('Pending Cryptocurrencies credit transactions');
+        return view('back.betpay.cryptocurrencies.credit', $data);
     }
 
     /**
@@ -724,6 +718,22 @@ class BetPayController extends Controller
         }
         $data['payment_methods'] = $paymentMethods;
         return view('back.betpay.clients.payment-limits.create', $data);
+    }
+
+    /**
+     * Show pending debit cryptocurrency
+     *
+     * @return Application|Factory|View
+     */
+    public function debitCryptocurrencies()
+    {
+        $paymentMethod = PaymentMethods::$cryptocurrencies;
+        $data['transaction_type'] = TransactionTypes::$debit;
+        $data['payment_method'] = $paymentMethod;
+        $data['provider'] = Providers::$cryptocurrencies;
+        $data['accounts'] = $this->clientAccounts($paymentMethod);
+        $data['title'] = _i('Pending Cryptocurrencies debit transactions');
+        return view('back.betpay.cryptocurrencies.debit', $data);
     }
 
     /**
@@ -1046,11 +1056,10 @@ class BetPayController extends Controller
     public function editClientAccount($id)
     {
         $data['title'] = _i('Edit client account');
-        $data['currency_client'] = $this->currenciesRepo->all();
-        $data['countries'] = $this->countriesRepo->all();
         $betPayToken = session('betpay_client_access_token');
+        $paymentMethods = [];
+        $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
         $url = "{$this->betPayURL}/clients/accounts/find";
-        $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
         if (!is_null($betPayToken)) {
             $requestData = [
                 'client' => $id,
@@ -1406,7 +1415,7 @@ class BetPayController extends Controller
     {
         try {
             $status = ($request->get('value') === 'true' ? true : false);
-            $id = $request->get('id');
+            $id = $request->get('client_id');
             $dataCredentials = [
                 'status' => $status,
                 'clientAccount_id' => $id
@@ -1417,7 +1426,7 @@ class BetPayController extends Controller
                 ->withData($dataCredentials)
                 ->withHeader('Accept: application/json')
                 ->withHeader("Authorization: Bearer $betPayToken")
-                ->get();
+                ->post();
 
             $data = [
                 'title' => _i('Client updated'),
@@ -1767,95 +1776,98 @@ class BetPayController extends Controller
     public function storeClientAccount(Request $request)
     {
         $this->validate($request, [
-            'client' => 'required',
             'currency' => 'required',
-            'payments' => 'required'
+            'payments' => 'required',
         ]);
-
+        $rules = $this->getRulesClientAccountData($request->payments);
+        $this->validate($request, $rules);
+    
         try {
-            $credential = $this->credentialsRepo->searchByCredential($request->client, Providers::$betpay, $request->currency);
+            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
             if (!is_null($credential)) {
+                $payment = [];
                 $paymentMethod = $request->payments;
-                switch ($paymentMethod) {
-                    case PaymentMethods::$cryptocurrencies:
-                    {
-                        $clientAccountData = [
-                            'cryptocurrency' => $request->crypto_currencies,
-                            'wallet' => $request->crypto_wallet,
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$zelle:
-                    {
-                        $clientAccountData = [
-                            'email' => $request->account_email,
-                            'first_name' => $request->first_name,
-                            'last_name' => $request->last_name,
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$wire_transfers:
-                    case PaymentMethods::$ves_to_usd:
-                    {
-                        $clientAccountData = [
-                            'bank_id' => $request->bank,
-                            'bank_name' => $request->bank_name,
-                            'account_number' => $request->account_number,
-                            'account_type' => $request->account_type,
-                            'social_reason' => $request->social_reason,
-                            'dni' => $request->account_dni,
-                            'title' => $request->title
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$vcreditos_api:
-                    {
-                        $clientAccountData = [
-                            'vcreditos_user' => $request->vcreditos_user,
-                            'vcreditos_secure_id' => $request->vcreditos_secure_id
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$paypal:
-                    case PaymentMethods::$skrill:
-                    case PaymentMethods::$neteller:
-                    case PaymentMethods::$airtm:
-                    case PaymentMethods::$uphold:
-                    case PaymentMethods::$reserve:
-
-                    {
-                        $clientAccountData = [
-                            'email' => $request->account_email
-                        ];
-                        break;
-                    }
-                    default:
-                        $clientAccountData = [];
-                        break;
-                }
-
                 $betPayToken = session('betpay_client_access_token');
-                $accountsData = [
-                    'client' => $credential->data->client_credentials_grant_id,
+                $dataPayment = [
                     'payment_method' => $paymentMethod,
-                    'currency' => $request->currency,
-                    'data' => $clientAccountData,
-                    'status' => false,
-                    'transactionType' => $request->transaction_type
+                    'currency_iso' => $request->currency
                 ];
-                $urlAccounts = "{$this->betPayURL}/clients/accounts/store";
-                $curlAccounts = Curl::to($urlAccounts)
-                    ->withData($accountsData)
+                $urlPayment = "{$this->betPayURL}/payment-methods/payment-and-currency";
+                $curlPayment = Curl::to($urlPayment)
+                    ->withData($dataPayment)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
-                    ->post();
+                    ->get();
+                $responsePayment = json_decode($curlPayment);
+                if ($responsePayment->status == Status::$ok) {
+                    $payment = (array) $responsePayment->data->payment_methods;
+                }
+                if (!empty($payment)) {
+                    $transactionType = $request->transaction_type;
+                    foreach($payment as $paymentStatus){
+                        $paymentStatusCredit = $paymentStatus->credit;
+                        $paymentStatusDebit = $paymentStatus->debit;
+                    }
+                    if ($transactionType == TransactionTypes::$credit) {
+                        if (!$paymentStatusCredit) {
+                            $data = [
+                                'title' => _i('Payment method not available'),
+                                'message' => _i('The payment method is not available for credit'),
+                                'close' => _i('Close'),
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+                        }
+                    } elseif ($transactionType == TransactionTypes::$debit) {
+                        if (!$paymentStatusDebit) {
+                            $data = [
+                                'title' => _i('Payment method not available'),
+                                'message' => _i('The payment method is not available for this debit'),
+                                'close' => _i('Close'),
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+                        }
+                    } else {
+                        if (!$paymentStatusCredit || !$paymentStatusDebit) {
+                            $data = [
+                                'title' => _i('Payment method not available'),
+                                'message' => _i('The payment method is not available for credit or debit'),
+                                'close' => _i('Close'),
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+                        }
+                    } 
 
-                $data = [
-                    'title' => _i('Saved credential'),
-                    'message' => _i('Credential data was saved correctly'),
-                    'close' => _i('Close')
-                ];
-                return Utils::successResponse($data);
+                    $clientAccountData = $this->getClientAccountData($paymentMethod, $request);
+                    $accountsData = [
+                        'client' => $credential->data->client_credentials_grant_id,
+                        'payment_method' => $paymentMethod,
+                        'currency' => $request->currency,
+                        'data' => $clientAccountData,
+                        'status' => true,
+                        'transactionType' => $transactionType
+                    ];
+                    $urlAccounts = "{$this->betPayURL}/clients/accounts/store-client-accounts-payment-methods";
+                    $curlAccounts = Curl::to($urlAccounts)
+                        ->withData($accountsData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->post();
+
+                    $data = [
+                        'title' => _i('Saved credential'),
+                        'message' => _i('Credential data was saved correctly'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::successResponse($data);
+
+                }else{
+                    $data = [
+                        'title' => _i('Payment method not available'),
+                        'message' => _i('The payment method is not available for this currency'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
             } else {
                 $data = [
                     'title' => _i('Credentials error'),
@@ -1868,6 +1880,101 @@ class BetPayController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Get Client Account Data
+     * @param int $paymentMethod PaymentMethods
+     * @param Request $request
+     *
+     * @return array
+     */
+    private function getClientAccountData($paymentMethod, $request)
+    {
+        $clientAccountDataFunctions = [
+            PaymentMethods::$binance => function ($request) {
+                $name = null;
+                if(!is_null($request->file('qr_binance'))){
+                    $image = $request->file('qr_binance');
+                    $file = $request->file;
+                    $extension = $image->getClientOriginalExtension();
+                    $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                    $name = Str::slug($originalName) . time() . '.' . $extension;
+                    $s3Directory = Configurations::getS3Directory();
+                    $filePath = "$s3Directory/payment/";
+                    $newFilePath = "{$filePath}{$name}";
+                    Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                    if(isset($file)){
+                        $oldFilePath = "{$filePath}{$file}";
+                        Storage::delete($oldFilePath);
+                    }
+                }
+                return [
+                    'cryptocurrency' => $request->cryptocurrency_binance,
+                    'email' => $request->email_binance,
+                    'pay_id' => $request->pay_id_binance,
+                    'qr' => $name,
+                    'binance_id' => $request->binance_id,
+                    'phone' => $request->phone_binance,
+                ];
+            },
+            PaymentMethods::$cryptocurrencies => function ($request) {
+                $name = null;
+                if(!is_null($request->file('qr_cripto'))){
+                    $image = $request->file('qr_cripto');
+                    $file = $request->file;
+                    $extension = $image->getClientOriginalExtension();
+                    $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                    $name = Str::slug($originalName) . time() . '.' . $extension;
+                    $s3Directory = Configurations::getS3Directory();
+                    $filePath = "$s3Directory/payment/";
+                    $newFilePath = "{$filePath}{$name}";
+                    Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                    if(isset($file)){
+                        $oldFilePath = "{$filePath}{$file}";
+                        Storage::delete($oldFilePath);
+                    }
+                }
+                return [
+                    'cryptocurrency' => $request->cryptocurrency_cripto,
+                    'wallet' => $request->wallet_cripto,
+                    'network' => $request->network_cripto,
+                    'qr' => $name,
+                ];
+            },
+        ];
+        $clientAccountDataFunction = $clientAccountDataFunctions[$paymentMethod] ?? function () {
+            return [];
+        };
+        return $clientAccountDataFunction($request);
+    }
+
+    /**
+     * Get Rules Client Account Data
+     * @param int $paymentMethod PaymentMethods
+     *
+     * @return array
+     */
+    private function getRulesClientAccountData($paymentMethod)
+    {
+        $rulesClientAccountDataFunctions = [
+            PaymentMethods::$binance => 
+            [
+                'cryptocurrency_binance' => 'required',
+                'email_binance' => 'required_without_all:pay_id_binance,binance_id,qr_binance,phone_binance',
+                'pay_id_binance' => 'required_without_all:email_binance,binance_id,qr_binance,phone_binance',
+                'binance_id' => 'required_without_all:email_binance,pay_id_binance,qr_binance,phone_binance',
+                'qr_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,phone_binance',
+                'phone_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,qr_binance',
+            ],
+            PaymentMethods::$cryptocurrencies => 
+            [
+                'cryptocurrency_cripto' => 'required',
+                'wallet_cripto' => 'required'
+            ]
+        ];
+
+        return $rulesClientAccountDataFunctions[$paymentMethod];
     }
 
     /**
@@ -2029,82 +2136,7 @@ class BetPayController extends Controller
         try {
 
             $paymentMethod = $request->payments;
-            switch ($paymentMethod) {
-                case PaymentMethods::$cryptocurrencies:
-                {
-                    $dataAccount = [
-                        'cryptocurrency' => $request->crypto_currencies,
-                        'wallet' => $request->crypto_wallet,
-                    ];
-                    break;
-                }
-                case PaymentMethods::$zelle:
-                {
-                    $dataAccount = [
-                        'email' => $request->account_email,
-                        'first_name' => $request->first_name,
-                        'last_name' => $request->last_name,
-                    ];
-                    break;
-                }
-                case PaymentMethods::$wire_transfers:
-                case PaymentMethods::$ves_to_usd:
-                {
-                    if (is_null($request->bank) && isset($request->bank_name)) {
-                        $bank_id = $request->old_bank_id;
-                        $bank_name = $request->old_bank_name;
-                    } elseif($request->bank == $request->old_bank_id  && $request->bank_name == $request->old_bank_name){
-                        $bank_id = $request->old_bank_id;
-                        $bank_name = $request->old_bank_name;
-                    } else {
-                        $bank_id = $request->bank_id;
-                        $bank_name = $request->bank_name;
-                    }
-                    $dataAccount = [
-                        'bank_id' => $bank_id,
-                        'bank_name' => $bank_name,
-                        'account_number' => $request->account_number,
-                        'account_type' => $request->account_type,
-                        'social_reason' => $request->social_reason,
-                        'dni' => $request->account_dni,
-                        'title' => $request->title
-                    ];
-                    break;
-                }
-                case PaymentMethods::$vcreditos_api:
-                {
-                    $dataAccount = [
-                        'vcreditos_user' => $request->vcreditos_user,
-                        'vcreditos_secure_id' => $request->vcreditos_secure_id
-                    ];
-                    break;
-                }
-                case PaymentMethods::$paypal:
-                case PaymentMethods::$skrill:
-                case PaymentMethods::$neteller:
-                case PaymentMethods::$airtm:
-                case PaymentMethods::$uphold:
-                case PaymentMethods::$reserve:
-                {
-                    $dataAccount = [
-                        'email' => $request->account_email
-                    ];
-                    break;
-                }
-                case PaymentMethods::$just_pay:
-                {
-                    $dataAccount = [
-                        'public_key' => $request->public_key,
-                        'secret_key' => $request->secret_key,
-                        'username' => $request->username,
-                        'password' => $request->password,
-                    ];
-                    break;
-                }
-                default:
-                    $dataAccount = [];
-                    break;
-            }
+            $dataAccount = $this->getClientAccountData($paymentMethod, $request);
 
             $dataRequest = [
                 'id' => $request->client_account,

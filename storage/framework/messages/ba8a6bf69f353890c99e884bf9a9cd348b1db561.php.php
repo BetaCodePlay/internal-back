@@ -17,6 +17,7 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -92,6 +93,80 @@ class AgentsCollection
 
         return json_encode($tree);
     }
+
+    /**
+     *  Tree format for users (Children Tree Sql)
+     * @param int $user User Id
+     */
+    public function childrenTreeSql($user)
+    {
+        $agentsRepo = new AgentsRepo();
+        return  $tree = collect($agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()));
+        //Todo armar json tree
+        return $this->childrenTreeDraw($tree,0);
+
+    }
+
+    /**
+     *  Tree format for users (Children Tree Sql) Format
+     * @param int $user User Id
+     */
+    public function childrenTreeSql_format($user)
+    {
+        $agentsRepo = new AgentsRepo();
+        $tree = collect($agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()));
+
+        return $this->childrenTreeDraw($tree,0);
+
+    }
+
+    /**
+     *  Tree format (Children Tree Draw)
+     * @param array $tree Users
+     */
+    public function childrenTreeDraw($tree,$level,$idOwner=null)
+    {
+        $arrayTree=[];
+        $treeEdit = $tree;
+        $treeAll = $tree->where('level',$level)->all();
+        if(!is_null($idOwner)){
+            $treeAll = $tree->where('level',$level)->where('owner_id',$idOwner)->all();
+        }
+       foreach ($treeAll as $value){
+
+           if($value->level == $level){
+               $icon = $level === 0 ? 'diamond' : ($value->type_user == 1 ? 'star' : ($value->type_user == 2 ? 'users' : 'user'));
+               $type = $value->type_user == 5 ? 'user':'agent';
+
+               $arrayTreeTmp=[
+                   'id' => $value->id,
+                   'text' => $value->username,
+                   'status' => $value->status,
+                   'icon' => "fa fa-{$icon}",
+                   'li_attr' => [
+                       'data_type' => $type,
+                       'class' => 'init_'.$type
+                   ]
+               ];
+                if($level == 0){
+                    $arrayTreeTmp['state']=[
+                        'opened' => true,
+                        'selected' => true,
+                    ];
+                }
+               if(in_array($value->type_user,[TypeUser::$agentMater,TypeUser::$agentCajero])){
+                   $arrayTreeTmp['children']=$this->childrenTreeDraw($tree,$level+1,$value->id);
+               }
+               $arrayTree[]=$arrayTreeTmp;
+           }
+
+
+       }
+
+        return $arrayTree;
+    }
+
+
 
     /**
      * Json Format
@@ -461,10 +536,13 @@ class AgentsCollection
         if (!empty($tableDb)) {
 
             //TODO STATUS OF PROVIDERS IN PROD
+            // disabled status true
             $arrayProviderTmp = array_map(function ($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));
-
+//            $arrayProviderTmp[]=171;
+//            $arrayProviderTmp[]=166;
+//            $arrayProviderTmp[]=5;
             $providerNull = [];
             foreach ($arrayProviderTmp as $index => $provider) {
                 $providerNull[$provider] = [
@@ -476,49 +554,52 @@ class AgentsCollection
 
             $arrayTmp = [];
             $arrayTmpClosures = [];
-            //$transactions = 0;
             foreach ($tableDb as $item => $value) {
 
                 $arrayTmp[$value->user_id] = [
                     'id' => $value->user_id,
                     'type' => $value->type_user == 5 ? 'init_user' : 'init_agent',
                     'username' => $value->username,
-                    'providers' => []
+                    'providers' => $providerNull
                 ];
 
                 $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
 
                 if (in_array($value->type_user, [TypeUser::$agentMater, TypeUser::$agentCajero])) {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSonHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersWithSonHourSql($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
                 } else {
-                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUserHour($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+                    $closures = $closureRepo->getClosureTotalsByWhitelabelAndProvidersAndUserHourSql($whitelabel, $currency, $startDate, $endDate, $value->user_id, $providersString);
+
                 }
+
                 $arrayTmpClosures[$value->user_id] = $closures;
 
                 if (count($closures) > 0) {
                     $providerDB = [];
                     foreach ($closures as $index => $closure) {
                         $providerDB[$closure->id_provider] = [
-                            'total_played' => $closure->total_played,
-                            'total_won' => $closure->total_won,
-                            'total_profit' => $closure->total_profit,
+                            'total_played' => is_null($closure->total_played)?0:$closure->total_played,
+                            'total_won' => is_null($closure->total_won)?0:$closure->total_won,
+                            'total_profit' => is_null($closure->total_profit)?0:$closure->total_profit,
                         ];
                     }
                     foreach ($arrayProviderTmp as $index => $provider) {
                         if (!isset($providerDB[$provider])) {
                             $providerDB[$provider] = [
-                                'total_played' => 0,
-                                'total_won' => 0,
-                                'total_profit' => 0,
+                                'total_played' => '0',
+                                'total_won' => '0',
+                                'total_profit' => '0',
                             ];
                         }
                     }
+
                     $arrayTmp[$value->user_id]['providers'] = $providerDB;
                 } else {
                     $arrayTmp[$value->user_id]['providers'] = $providerNull;
                 }
-            }
 
+            }
+            sort($arrayProviderTmp);
             $htmlProvider .= "<table class='table table-bordered table-sm table-striped table-hover'><thead><tr><th>" . _i('Users') . "</th>";
             foreach ($arrayProviderTmp as $item => $value) {
                 $name = $closureRepo->nameProvider($value);
@@ -533,22 +614,33 @@ class AgentsCollection
                 $htmlProvider .= "<th  class=''>" . _i('Total Profit') . "</th>";
             }
             $htmlProvider .= "</tr>";
-
+            //return [$arrayTmp,$arrayProviderTmp];
             foreach ($arrayTmp as $item => $value) {
                 $htmlProvider .= "<tr>";
                 $htmlProvider .= "<td class='" . $value['type'] . "'>" . $value['username'] . "</td>";
-                foreach ($value['providers'] as $i => $provider) {
-                    $totalProfit += $provider['total_profit'];
-                    $totalDebit += $provider['total_played'];
-                    $totalCredit += $provider['total_won'];
-                    $htmlProvider .= "<td>" . number_format($provider['total_played'], 2) . "</td>";
-                    $htmlProvider .= "<td>" . number_format($provider['total_won'], 2) . "</td>";
-                    $htmlProvider .= "<td>" . number_format($provider['total_profit'], 2) . "</td>";
+
+//                sort($value['providers']);
+//                foreach ($value['providers'] as $i => $provider) {
+//                    $totalProfit += $provider['total_profit'];
+//                    $totalDebit += $provider['total_played'];
+//                    $totalCredit += $provider['total_won'];
+//                    $htmlProvider .= "<td>" . number_format($provider['total_played'], 2) . "</td>";
+//                    $htmlProvider .= "<td>" . number_format($provider['total_won'], 2) . "</td>";
+//                    $htmlProvider .= "<td>" . number_format($provider['total_profit'], 2) . "</td>";
+//                }
+
+                foreach ($arrayProviderTmp as $i => $provider) {
+                    $totalProfit += $value['providers'][$provider]['total_profit'];
+                    $totalDebit += $value['providers'][$provider]['total_played'];
+                    $totalCredit += $value['providers'][$provider]['total_won'];
+                    $htmlProvider .= "<td>" . number_format($value['providers'][$provider]['total_played'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($value['providers'][$provider]['total_won'], 2) . "</td>";
+                    $htmlProvider .= "<td>" . number_format($value['providers'][$provider]['total_profit'], 2) . "</td>";
                 }
                 $htmlProvider .= "</tr>";
 
             }
-
+            //return [$arrayTmp,$arrayProviderTmp,$htmlProvider];
             //TODO TOTALES
             if (!is_null($percentage)) {
                 $totalComission = $totalProfit * ($percentage / 100);
