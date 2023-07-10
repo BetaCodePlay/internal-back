@@ -307,6 +307,7 @@ class AgentsController extends Controller
             $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $user = $this->agentsRepo->findUser($id);
             if (!is_null($userAgent)) {
+                $father = $this->usersRepo->findUsername($user->owner);
                 $user = $userAgent;
                 $balance = $userAgent->balance;
                 $master = $userAgent->master;
@@ -314,6 +315,7 @@ class AgentsController extends Controller
                 $myself = $userId == $userAgent->id;
                 $type = 'agent';
             } else {
+                $father = $this->usersRepo->findUsername($user->owner_id);
                 $user = $this->agentsRepo->findUser($id);
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency);
@@ -328,6 +330,8 @@ class AgentsController extends Controller
                 'user' => $user,
                 'balance' => number_format($balance, 2),
                 'master' => $master,
+                'father' => $father->username ?? '---',
+                'fathers' => [],
                 'agent' => $agent,
                 'wallet' => $walletId,
                 'type' => $type,
