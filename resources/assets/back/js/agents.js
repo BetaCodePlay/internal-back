@@ -1581,7 +1581,7 @@ class Agents {
                 }
 
             }).done(function (json) {
-                console.log('buscar usuario:searchAgentDashboard',json,$(this).val(),id)
+
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);
