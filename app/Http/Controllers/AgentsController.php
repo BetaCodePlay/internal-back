@@ -293,6 +293,10 @@ class AgentsController extends Controller
      */
     public function findUser(Request $request)
     {
+        $this->validate($request, [
+            'id' => 'required|exists:users,id',
+        ]);
+
         try {
             if (session('admin_id')) {
                 $userId = session('admin_id');
@@ -341,7 +345,7 @@ class AgentsController extends Controller
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
+            \Log::error(__METHOD__, ['exception' => $ex,'Request'=>$request->all()]);
             return Utils::failedResponse();
         }
     }
@@ -1925,6 +1929,11 @@ class AgentsController extends Controller
      */
     public function find(Request $request)
     {
+        $this->validate($request, [
+            'id' => 'required|exists:users,id',
+            'type' => 'required',
+        ]);
+
         try {
             if (session('admin_id')) {
                 $userId = session('admin_id');
@@ -2427,21 +2436,23 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions(Request $request, TransactionsRepo $transactionsRepo)
+    public function performTransactions(Request $request)
     {
         $this->validate($request, [
-            'amount' => 'required|numeric|gt:0'
+            'amount' => 'required|numeric|gt:0',
+            'user' => 'required|exists:users,id',
+            'type' => 'required',
+            'transaction_type' => 'required',
         ]);
         try {
             $id = auth()->user()->id;
             $currency = session('currency');
-            $type = $request->type;
-            $user = $request->user;
-            $amount = $request->amount;
-            $transactionType = $request->transaction_type;
+            $type = $request->get('type');
+            $user = $request->get('user');
+            $amount = $request->get('amount');
+            $transactionType = $request->get('transaction_type');
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $ownerBalanceFinal = $ownerAgent->balance;
-            //$transactionID = $transactionsRepo->getNextValue();
             $transactionIdCreated = null;
 
             /* If the logged in user is different from the user that the balance is added to*/
@@ -2495,9 +2506,9 @@ class AgentsController extends Controller
                         ];
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
-                            //                            Log::debug('error data, wallet credit', [
-//                                $transaction, $request->all(), Auth::user()->id
-//                            ]);
+                            Log::debug('error data, wallet credit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
 
                             $data = [
                                 'title' => _i('An error occurred'),
@@ -2530,9 +2541,9 @@ class AgentsController extends Controller
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
-                            //                            Log::debug('error data, wallet debit', [
-//                                $transaction, $request->all(), Auth::user()->id
-//                            ]);
+                            Log::debug('error data, wallet debit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
 
                             $data = [
                                 'title' => _i('An error occurred'),
