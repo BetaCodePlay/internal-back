@@ -345,7 +345,7 @@ class Agents {
                 id = data.selected[0];
                 type = 'agent';
             }
-            console.log('agents', id, type);
+
             if (id !== undefined) {
 
                 // $.ajax({
@@ -530,7 +530,6 @@ class Agents {
                     type = 'agent';
                 }
                 if (id !== undefined) {
-                    console.log(data,'arbol')
                     $.ajax({
                         url: $tree.data('route'),
                         type: 'get',
@@ -1581,10 +1580,23 @@ class Agents {
                 }
 
             }).done(function (json) {
-                $('.user').val('');
-                console.log(json.data.user)
-                $('.user').val(json.data.user.id);
-                console.log($('.user').val(),'user .user')
+                setTimeout(function () {
+                    Agents.getFatherRecursive($('#details-user-get').data('route'), json.data.user.id, json.data.type);
+                }, 500)
+                //TODO MODAL
+                $('.userSet').text(json.data.user.username);
+                $('.emailSet').text(json.data.user.email);
+                $('.fatherSet').text(json.data.father);
+                $('.typeSet').text(json.data.user.typeSet);
+                $('.createdSet').text(json.data.user.created);
+                $('.cantA_P').show();
+                $('.cantA_P').show();
+                if (json.data.type != "agent") {
+                    $('.cantA_P').hide();
+                    $('.cantA_P').hide();
+                }
+
+
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);
@@ -2233,7 +2245,7 @@ class Agents {
 
     detailsUserModal() {
         $('#details-user-modal').on('show.bs.modal', function (e) {
-            console.log('mostrar')
+            //console.log('mostrar')
         })
         // $('#details-user-modal').on('hidden.bs.modal', function (e) {
         //     console.log('cerrar')
