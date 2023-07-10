@@ -1581,7 +1581,10 @@ class Agents {
                 }
 
             }).done(function (json) {
-                console.log(json)
+                $('.user').val('');
+                console.log(json.data.user)
+                $('.user').val(json.data.user.id);
+                console.log($('.user').val(),'user .user')
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);

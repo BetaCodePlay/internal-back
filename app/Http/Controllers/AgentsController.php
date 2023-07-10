@@ -2191,6 +2191,7 @@ class AgentsController extends Controller
 
             $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
             $data['makers'] = $this->gamesRepo->getMakers();
+            Log::debug('index_Temp2',[session('currency'),Configurations::getWhitelabel()]);
             $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
             $data['tree'] = json_encode($this->agentsCollection->childrenTreeSql_format(Auth::id()));
             $data['title'] = _i('Agents module Temp');
