@@ -72,6 +72,7 @@ class AuthController extends Controller
                 //'status' => true
             ];
             $ip = Utils::userIp($request);
+            $mailgun_notifications = Configurations::getMailgunNotifications();
             if (auth()->attempt($credentials)) {
                 $user = auth()->user()->id;
                 if (auth()->user()->action == ActionUser::$locked_higher) {
@@ -196,10 +197,12 @@ class AuthController extends Controller
                     foreach($userTemp as $users){
                         $action = $users->action;
                     }
-                    if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
-                        if($action === ActionUser::$active){
-                            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                    if($mailgun_notifications == true){
+                        if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
+                            if($action === ActionUser::$active){
+                                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
+                            }
                         }
                     }
                     $data = [
@@ -223,18 +226,18 @@ class AuthController extends Controller
 
             } else {
                 //Estos datos se anexan para el envio de email cuando esté invalido
-                $userTemp = $usersRepo->getByUsername(strtolower($request->username), $whitelabel);
-                $action = isset($userTemp->action)?$userTemp->action:ActionUser::$inactive;
-
+                $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
+                $action = $userTemp->action;
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
-                if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
-                    if($action === ActionUser::$active){
-                        $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
-                        Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                if($mailgun_notifications == true){
+                    if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
+                        if($action === ActionUser::$active){
+                            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
+                        }
                     }
                 }
-
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
