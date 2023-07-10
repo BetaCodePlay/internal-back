@@ -1207,7 +1207,7 @@
                     } else {
                         if(atm) {
                             atmIcon = 'fa-users';
-                            type_user = 'agent';
+                            type_user = 'user';
 
                         } else {
                             atmIcon = 'fa-user';
