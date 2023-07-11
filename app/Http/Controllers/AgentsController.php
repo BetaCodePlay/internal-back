@@ -2095,7 +2095,7 @@ class AgentsController extends Controller
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|View
      */
-    public function index(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
+    public function index(ProvidersRepo $providersRepo)
     {
         try {
             if (session('admin_id')) {
