@@ -286,7 +286,7 @@ let initLitepickerEndToday = () => {
 };
 
 // Init lite picker end today with class
-let initLitepickerEndTodayNew = () => {
+let initLitepickerEndTodayNew = (start = moment(),end=moment()) => {
     let locale = getCookie('language-js');
     locale = locale.replace('_', '-');
 
@@ -295,8 +295,8 @@ let initLitepickerEndTodayNew = () => {
         autoRefresh:true,
         format: 'DD/MM/YYYY',
         singleMode: false,
-        startDate: moment(),
-        endDate: moment(),
+        startDate: start,
+        endDate: end,
         maxDate: moment(),
         numberOfMonths: 2,
         numberOfColumns: 2,

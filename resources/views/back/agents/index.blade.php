@@ -641,7 +641,7 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 col-sm-12">
                                     <div class="form-group">
-                                        <label for="date_range">{{ _i('Date range') }}</label>
+                                        <label for="date_range_new">{{ _i('Date range') }}</label>
                                         <div class="flex-items">
                                             <input type="text" id="date_range_new" class="form-control"
                                                    autocomplete="off"

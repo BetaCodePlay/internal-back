@@ -239,6 +239,10 @@ class Agents {
 
             $button.click(function () {
                 $button.button('loading');
+                let getStart = picker.getStartDate();
+                let getEnd = picker.getEndDate();
+                picker.destroy()
+                picker = initLitepickerEndTodayNew(moment(getStart),moment(getEnd));
                 let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                 let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
                 let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ? 'all' : $('#type_select').val();
