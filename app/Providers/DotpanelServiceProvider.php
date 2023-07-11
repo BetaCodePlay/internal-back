@@ -123,6 +123,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['logo'] = Configurations::getLogo($mobile = true);
                     $data['iphone'] = $iphone;
                     $data['theme'] = Configurations::getTheme();
+                    $data['mailgun_notifications'] = Configurations::getMailgunNotifications();
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
                     //dd($data);
                     view()->share($data);

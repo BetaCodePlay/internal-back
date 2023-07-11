@@ -272,6 +272,7 @@ let initLitepickerEndToday = () => {
 
     return new Litepicker({
         element: document.getElementById('date_range'),
+        autoRefresh:true,
         format: 'DD/MM/YYYY',
         singleMode: false,
         startDate: moment(),
@@ -285,16 +286,17 @@ let initLitepickerEndToday = () => {
 };
 
 // Init lite picker end today with class
-let initLitepickerEndTodayNew = () => {
+let initLitepickerEndTodayNew = (start = moment(),end=moment()) => {
     let locale = getCookie('language-js');
     locale = locale.replace('_', '-');
 
     return new Litepicker({
         element: document.getElementById('date_range_new'),
+        autoRefresh:true,
         format: 'DD/MM/YYYY',
         singleMode: false,
-        startDate: moment(),
-        endDate: moment(),
+        startDate: start,
+        endDate: end,
         maxDate: moment(),
         numberOfMonths: 2,
         numberOfColumns: 2,

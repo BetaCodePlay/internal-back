@@ -101,6 +101,7 @@ class AgentsCollection
     public function childrenTreeSql($user)
     {
         $agentsRepo = new AgentsRepo();
+        Log::debug('childrenTreeSql',[$user,session('currency'),Configurations::getWhitelabel()]);
         return  $tree = collect($agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()));
         //Todo armar json tree
         return $this->childrenTreeDraw($tree,0);
