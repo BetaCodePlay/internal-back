@@ -3223,7 +3223,7 @@ class AgentsCollection
         if((int)$user->action === ActionUser::$changed_password || (int)$user->action === ActionUser::$blocked_branch){
             $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
         }elseif((int)$user->action === ActionUser::$update_email){
-            $actionTmp = $user->action;
+            $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;;
             $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : ActionUser::getName($user->action);//_i('Blocked');
             $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
             $user->status = sprintf(
