@@ -606,7 +606,6 @@ class UsersController extends Controller
      */
     public function blockAgent($user, $lock_type, $fake, $description = null)
     {
-        \Log::notice(__METHOD__, ['$user' => $user, '$lock_type' => $lock_type, '$fake' => $fake, '$description' => $description]);
         try {
 
             $rules = [
@@ -661,7 +660,6 @@ class UsersController extends Controller
                     ];
                     $statusUpdate = true;
                 }
-                \Log::notice(__METHOD__, ['$father' => $father, '$typeAudit' => $typeAudit, '$statusUpdate' => $statusUpdate]);
             }
 
             if ($statusUpdate) {
@@ -823,6 +821,17 @@ class UsersController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
+    }
+
+    /***
+     * Change Email Agent
+     *
+     * @return Factory|View
+     */
+    public function changeEmailAgent()
+    {
+        $data['title'] = _i('Change action agent');
+        return view('back.users.modals.change-email.agent', $data);
     }
 
     /**
