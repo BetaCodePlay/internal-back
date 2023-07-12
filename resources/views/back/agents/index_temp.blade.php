@@ -1363,6 +1363,8 @@
                     swalError(json);
                 });
             })
+
+            $('#tree-pro-master').click();
         }
 
         treePro();

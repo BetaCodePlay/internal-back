@@ -11,7 +11,7 @@
                 <div class="modal-body">
                     <div class="row row-div">
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-overauto">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> {{_i('user')}}: </strong>
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-overauto">
                             <div class="row mb-1">
                                 <div class="offset-md-1 col-md-3">
                                    <h5><strong> {{_i('Estructura')}}</strong></h5>
