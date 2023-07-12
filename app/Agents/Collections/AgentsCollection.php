@@ -3228,7 +3228,7 @@ class AgentsCollection
             $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
             $user->status = sprintf(
                 '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
-                route('users.block.status', [$user->id, ((int)$user->action === 1 && (boolean)$user->status ? : ActionUser::$active)], 0),
+                route('users.block.status', [$user->id, ((int)$user->action === 1 && (boolean)$user->status ? : ActionUser::$active), 0]),
                 $statusClassTmp,
                 $statusTextTmp
             );
