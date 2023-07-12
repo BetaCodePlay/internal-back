@@ -115,7 +115,7 @@
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
                                 <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
-                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master" data-idtreepro="{{ auth()->user()->id }}"></i><a href="javascript:void(0)" class="jstree-anchor"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master" data-idtreepro="{{ auth()->user()->id }}" data-typetreepro="agent"></i><a href="javascript:void(0)" class="jstree-anchor"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
                                                                                                                                                                                                               role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
                                     </a>
                                 </li>
