@@ -841,16 +841,16 @@ class UsersController extends Controller
             ];
             return Utils::errorResponse(Codes::$forbidden, $data);
         } else {
-            $newStatus = (bool) !$status;
+            $newStatus = $status;
                 $userData = [
-                    'status' => $newStatus
+                    'action' => $newStatus
                 ];
                 $this->usersRepo->update($user, $userData);
                 $data = [
                     'title' => _i('Status changed'),
                     'message' => _i('User status was changed successfully'),
                     'close' => _i('Close'),
-                    'status' => $newStatus,
+                    'action' => $newStatus,
                     'type' => $type
                 ];
                 return Utils::successResponse($data);
