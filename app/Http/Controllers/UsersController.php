@@ -661,7 +661,7 @@ class UsersController extends Controller
                     ];
                     $statusUpdate = true;
                 }
-
+                \Log::notice(__METHOD__, ['$father' => $father, '$typeAudit' => $typeAudit, '$statusUpdate' => $statusUpdate]);
             }
 
             if ($statusUpdate) {
