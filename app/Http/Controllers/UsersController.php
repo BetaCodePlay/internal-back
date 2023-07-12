@@ -833,7 +833,26 @@ class UsersController extends Controller
     public function changeEmailAgent(Request $request, $user, $status, $type, $description)
     {
         \Log::info(__METHOD__, ['user' => $user, 'status' => $status, 'description' => $description ,'type' => $type]);
-        
+        if (is_null($description)) {
+            $data = [
+                'title' => _i('The given data was invalid'),
+                'message' => _i('The description field is required.'),
+                'close' => _i('Close')
+            ];
+            return Utils::errorResponse(Codes::$forbidden, $data);
+        } else {
+            $newStatus = (bool) !$status;
+                $userData = [
+                    'action' => $newStatus
+                ];
+                $this->usersRepo->update($user, $userData);
+                $data = [
+                    'title' => _i('Status changed'),
+                    'message' => _i('User status was changed successfully'),
+                    'close' => _i('Close')
+                ];
+                return Utils::successResponse($data);
+        }  
     }
 
     /**
