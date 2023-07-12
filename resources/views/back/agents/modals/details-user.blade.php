@@ -71,11 +71,11 @@
                         </div>
                         <div class="col-lg-6 col-overauto">
                             <div class="row mb-1">
-                                <div class="offset-md-1 col-md-3">
+                                <div class="col-md-12">
                                    <h5><strong> {{_i('Estructura')}}</strong></h5>
                                 </div>
                             </div>
-                            <div class="col-8 appendTreeFather">
+                            <div class="col-12 appendTreeFather">
                                 <h5 style="text-align: center;"><strong> {{_i('Loading')}}...</strong></h5>
                             </div>
                         </div>
