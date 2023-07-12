@@ -2097,6 +2097,7 @@ class UsersController extends Controller
         ]);
 
         try {
+            $mailgun_notifications = Configurations::getMailgunNotifications();
             $user = $request->user;
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
             $roles = Security::getUserRoles($user);
@@ -2139,8 +2140,10 @@ class UsersController extends Controller
             }
             $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
-            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
-            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
+            if($mailgun_notifications == true){
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
+            }
             $data = [
                 'title' => _i('Password reset'),
                 'message' => _i('Password was successfully reset'),

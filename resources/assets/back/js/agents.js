@@ -239,6 +239,10 @@ class Agents {
 
             $button.click(function () {
                 $button.button('loading');
+                let getStart = picker.getStartDate();
+                let getEnd = picker.getEndDate();
+                picker.destroy()
+                picker = initLitepickerEndTodayNew(moment(getStart),moment(getEnd));
                 let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                 let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
                 let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ? 'all' : $('#type_select').val();
@@ -345,7 +349,7 @@ class Agents {
                 id = data.selected[0];
                 type = 'agent';
             }
-            console.log('agents', id, type);
+
             if (id !== undefined) {
 
                 // $.ajax({
@@ -530,7 +534,6 @@ class Agents {
                     type = 'agent';
                 }
                 if (id !== undefined) {
-
                     $.ajax({
                         url: $tree.data('route'),
                         type: 'get',
@@ -1581,6 +1584,23 @@ class Agents {
                 }
 
             }).done(function (json) {
+                setTimeout(function () {
+                    Agents.getFatherRecursive($('#details-user-get').data('route'), json.data.user.id, json.data.type);
+                }, 500)
+                //TODO MODAL
+                $('.userSet').text(json.data.user.username);
+                $('.emailSet').text(json.data.user.email);
+                $('.fatherSet').text(json.data.father);
+                $('.typeSet').text(json.data.user.typeSet);
+                $('.createdSet').text(json.data.user.created);
+                $('.cantA_P').show();
+                $('.cantA_P').show();
+                if (json.data.type != "agent") {
+                    $('.cantA_P').hide();
+                    $('.cantA_P').hide();
+                }
+
+
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);
@@ -1588,7 +1608,7 @@ class Agents {
                 $('#status').html(json.data.user.status);
                 $('#wallet').val(json.data.wallet);
                 $('.wallet').val(json.data.wallet);
-                $('.user').val(id);
+                $('.user').val(json.data.user.id);
                 $('#name').val(json.data.user.username);
                 $('#type').val(json.data.type);
                 $('.type').val(json.data.type);
@@ -2229,7 +2249,7 @@ class Agents {
 
     detailsUserModal() {
         $('#details-user-modal').on('show.bs.modal', function (e) {
-            console.log('mostrar')
+            //console.log('mostrar')
         })
         // $('#details-user-modal').on('hidden.bs.modal', function (e) {
         //     console.log('cerrar')
