@@ -825,13 +825,14 @@ class UsersController extends Controller
 
     /***
      * Change Email Agent
+     * 
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @return Factory|View
      */
-    public function changeEmailAgent()
+    public function changeEmailAgent(Request $request, $user, $status, $type, $description)
     {
-        $data['title'] = _i('Change action agent');
-        return view('back.users.modals.change-email.agent', $data);
+        \Log::info(__METHOD__, ['user' => $user, 'status' => $status, 'description' => $description]);
     }
 
     /**

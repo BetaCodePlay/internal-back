@@ -473,8 +473,7 @@ class Agents {
         $(document).on('click', '#change-email-agent', function () {
             let description = $('#description').val();
             let route = $(this).data('route');
-            swalInputInfo(route);
-            //swalInput(route);
+            swal(route);
         });
     }
 

@@ -49,7 +49,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Change email agent
-    Route::get('change-email-agent', [
+    Route::get('change-email-agent/{user}/{status}/{type}/{description?}', [
         'as' => 'users.change-email-agent',
         'uses' => 'UsersController@changeEmailAgent'
     ]);
