@@ -3227,7 +3227,10 @@ class AgentsCollection
             $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : ActionUser::getName($user->action);//_i('Blocked');
             $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
             $user->status = sprintf(
-                '<a href="javascript:void(0)" data-toggle="modal" data-target="#change-email-agent-modal" ><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>'
+                '<a href="javascript:void(0)" id="change-email-agent" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
+                route('users.change-email-agent', [$user->id, ((int)$user->action === 1 && (boolean)$user->status ? ActionUser::$locked_higher : ActionUser::$active), 0]),
+                $statusClassTmp,
+                $statusTextTmp
             );
         }else{
 
