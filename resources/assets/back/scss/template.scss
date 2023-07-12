@@ -67,6 +67,16 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 
     .col-overauto {
         overflow: auto;
+
+        &:first-child {
+            @media screen and (max-width: 991px) {
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+                background: rgba(0,0,0,0.075);
+                margin-top: -15px;
+                padding-top: 15px;
+            }
+        }
     }
 
     &::before {
