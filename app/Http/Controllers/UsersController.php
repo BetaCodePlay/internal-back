@@ -832,7 +832,8 @@ class UsersController extends Controller
      */
     public function changeEmailAgent(Request $request, $user, $status, $type, $description)
     {
-        \Log::info(__METHOD__, ['user' => $user, 'status' => $status, 'description' => $description]);
+        \Log::info(__METHOD__, ['user' => $user, 'status' => $status, 'description' => $description ,'type' => $type]);
+        
     }
 
     /**
