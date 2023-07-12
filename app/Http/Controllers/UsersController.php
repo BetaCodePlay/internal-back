@@ -830,9 +830,9 @@ class UsersController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      *
      */
-    public function changeEmailAgent(Request $request, $user, $status, $type, $description)
+    public function changeEmailAgent(Request $request, $user, $action, $type, $description)
     {
-        \Log::info(__METHOD__, ['user' => $user, 'status' => $status, 'description' => $description ,'type' => $type]);
+        \Log::info(__METHOD__, ['user' => $user, 'action' => $action, 'description' => $description ,'type' => $type, 'request' => $request]);
         if (is_null($description)) {
             $data = [
                 'title' => _i('The given data was invalid'),
@@ -841,16 +841,35 @@ class UsersController extends Controller
             ];
             return Utils::errorResponse(Codes::$forbidden, $data);
         } else {
-            $newStatus = $status;
+            $newAction = ActionUser::$active;
                 $userData = [
-                    'action' => $newStatus
+                    'action' => $newAction
                 ];
                 $this->usersRepo->update($user, $userData);
+                if (!$newAction) {
+                    Sessions::deleteByUser($user);
+                }
+                $autoLockUsersRepo = new AutoLockUsersRepo();
+                $unlockUser = $autoLockUsersRepo->unlockUser($user);
+                if ($newAction === ActionUser::$active && !is_null($unlockUser)) {
+                    $autoLockUsersRepo->deleteAutoLockUser($unlockUser->id);
+                }
+
+                $auditData = [
+                    'ip' => Utils::userIp($request),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'old_action' => $action,
+                    'new_action' => $newAction,
+                    'description' => $description
+                ];
+                \Log::info(__METHOD__, ['user' => $auditData]);
+                Audits::store($user, AuditTypes::$user_modification, Configurations::getWhitelabel(), $auditData);
                 $data = [
                     'title' => _i('Status changed'),
                     'message' => _i('User status was changed successfully'),
                     'close' => _i('Close'),
-                    'action' => $newStatus,
+                    'action' => $newAction,
                     'type' => $type
                 ];
                 return Utils::successResponse($data);
