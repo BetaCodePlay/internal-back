@@ -606,7 +606,7 @@ class UsersController extends Controller
      */
     public function blockAgent($user, $lock_type, $fake, $description = null)
     {
-
+        \Log::notice(__METHOD__, ['$user' => $user, '$lock_type' => $lock_type]);
         try {
 
             $rules = [
