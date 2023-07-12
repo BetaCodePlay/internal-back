@@ -3224,7 +3224,7 @@ class AgentsCollection
             $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
         }elseif((int)$user->action === ActionUser::$update_email){
             $actionTmp = $user->action;
-            $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : ActionUser::getName($user->action);//_i('Blocked');
+            $statusTextTmp =  ActionUser::getName($user->action);
             $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
             $user->status = sprintf(
                 '<a href="javascript:void(0)" id="change-user-status" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
@@ -3232,6 +3232,7 @@ class AgentsCollection
                 $statusClassTmp,
                 $statusTextTmp
             );
+            Log::info(__METHOD__, ['$user->status' => $user->status, '$actionTmp' => $actionTmp, '$statusTextTmp' => $statusTextTmp, ' $statusClassTmp' =>  $statusClassTmp]);
         }else{
 
             $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;
