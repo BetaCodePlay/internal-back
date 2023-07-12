@@ -1246,8 +1246,8 @@
 
             $(document).on('click', 'a.jstree-anchor', function (){
                 let $this = $(this);
-                let type = $this.parent().find('.jstree-icon.jstree-ocl').data('typetreepro');
-                let id = $this.parent().find('.jstree-icon.jstree-ocl').data('idtreepro');
+                let type = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('typetreepro');
+                let id = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('idtreepro');
                 let $container = $('#tree-pro');
 
                 $('a.jstree-anchor').removeClass('jstree-clicked');
@@ -1364,7 +1364,7 @@
                 });
             })
 
-            $('#tree-pro-master').find('.jstree-anchor').click();
+            $('#tree-pro-init').find('.jstree-anchor').eq(0).click();
         }
 
         treePro();
