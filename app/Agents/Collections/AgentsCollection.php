@@ -3228,7 +3228,7 @@ class AgentsCollection
             $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) ? 'teal' : 'lightred';
             $user->status = sprintf(
                 '<a href="javascript:void(0)" id="change-email-agent" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
-                route('users.change-email-agent', [$user->id, ((int)$user->action === 10 ? ActionUser::$active : ActionUser::$update_email), 0]),
+                route('users.change-email-agent', [$user->id, $user->action, 0]),
                 $statusClassTmp,
                 $statusTextTmp
             );
