@@ -843,7 +843,7 @@ class UsersController extends Controller
         } else {
             $newStatus = (bool) !$status;
                 $userData = [
-                    'action' => $newStatus
+                    'status' => $newStatus
                 ];
                 $this->usersRepo->update($user, $userData);
                 $data = [
