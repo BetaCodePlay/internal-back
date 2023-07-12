@@ -3220,9 +3220,9 @@ class AgentsCollection
     public function formatAgent($user)
     {
         //TODO New route block agent and user, field action and status
-        if((int)$user->action === ActionUser::$changed_password || (int)$user->action === ActionUser::$blocked_branch){
+        if((int)$user->action === ActionUser::$changed_password || (int)$user->action === ActionUser::$blocked_branch || (int)$user->action === ActionUser::$update_email){
             $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
-        }elseif((int)$user->action === ActionUser::$update_email){
+        }/*elseif((int)$user->action === ActionUser::$update_email){
             $actionTmp = $user->action;
             $statusTextTmp =  ActionUser::getName($user->action);
             $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) && (boolean)$user->status ? 'teal' : 'lightred';
@@ -3233,7 +3233,7 @@ class AgentsCollection
                 $statusTextTmp
             );
             Log::info(__METHOD__, ['$user->status' => $user->status, '$actionTmp' => $actionTmp, '$statusTextTmp' => $statusTextTmp, ' $statusClassTmp' =>  $statusClassTmp]);
-        }else{
+        }*/else{
 
             $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;
             $statusTextTmp = (int)$user->action === 1 && (boolean)$user->status ? _i('Active') : ActionUser::getName($user->action);//_i('Blocked');
