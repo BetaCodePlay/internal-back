@@ -1364,7 +1364,7 @@
                 });
             })
 
-            $('#tree-pro-master').click();
+            $('#tree-pro-master').find('.jstree-anchor').click();
         }
 
         treePro();
