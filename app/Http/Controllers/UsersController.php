@@ -849,7 +849,9 @@ class UsersController extends Controller
                 $data = [
                     'title' => _i('Status changed'),
                     'message' => _i('User status was changed successfully'),
-                    'close' => _i('Close')
+                    'close' => _i('Close'),
+                    'status' => $newStatus,
+                    'type' => $type
                 ];
                 return Utils::successResponse($data);
         }  
