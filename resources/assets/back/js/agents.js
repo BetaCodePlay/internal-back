@@ -489,7 +489,7 @@ class Agents {
             let initUl = '';
             let finishUl = '';
             $.each(response.data.fathers, function (index, val) {
-                initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>' + val.username + '</strong>'
+                initUl = initUl + '<ul><li><strong>' + val.username + '</strong>'
                 finishUl = finishUl + '</li></ul>'
             });
             $('.appendTreeFather').append(initUl + finishUl);
