@@ -1208,6 +1208,7 @@
             // agents.storeAgents();
             // agents.storeUsers();
             agents.changeUserStatus();
+            agents.changeEmailAgent();
             users.resetPassword();
             agents.financialState();
             agents.lockProvider();
