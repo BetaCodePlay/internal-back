@@ -115,7 +115,7 @@
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
                                 <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
-                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master" data-idtreepro="{{ auth()->user()->id }}"></i><a href="javascript:void(0)" class="jstree-anchor"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master" data-idtreepro="{{ auth()->user()->id }}" data-typetreepro="agent"></i><a href="javascript:void(0)" class="jstree-anchor"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
                                                                                                                                                                                                               role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
                                     </a>
                                 </li>
@@ -1183,6 +1183,7 @@
                 let atm = false;
                 let type_user;
                 let atmIcon;
+                let atmType;
 
 
                 $.each(users, function (index, value) {
@@ -1197,24 +1198,28 @@
                     }
 
                     if (usersTemp.length > 0) {
+                        type_user = 'agent';
+
                         if(atm) {
                             atmIcon = 'fa-users'
                         } else {
                             atmIcon = 'fa-star'
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     } else {
+                        type_user = 'user';
+
                         if(atm) {
                             atmIcon = 'fa-users';
-                            type_user = 'agent';
+                            atmType = 'agent';
 
                         } else {
                             atmIcon = 'fa-user';
-                            type_user = 'user';
+                            atmType = 'user';
                         }
 
-                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ type_user +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                        userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     }
                 })
 
@@ -1241,8 +1246,8 @@
 
             $(document).on('click', 'a.jstree-anchor', function (){
                 let $this = $(this);
-                let type = 'agent';
-                let id = $this.parent().find('.jstree-icon.jstree-ocl').data('idtreepro');
+                let type = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('typetreepro');
+                let id = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('idtreepro');
                 let $container = $('#tree-pro');
 
                 $('a.jstree-anchor').removeClass('jstree-clicked');
@@ -1358,6 +1363,8 @@
                     swalError(json);
                 });
             })
+
+            $('#tree-pro-init').find('.jstree-anchor').eq(0).click();
         }
 
         treePro();

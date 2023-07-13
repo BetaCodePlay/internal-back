@@ -65,6 +65,20 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
 .row-div {
     position: relative;
 
+    .col-overauto {
+        overflow: auto;
+
+        &:first-child {
+            @media screen and (max-width: 991px) {
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+                background: rgba(0,0,0,0.075);
+                margin-top: -15px;
+                padding-top: 15px;
+            }
+        }
+    }
+
     &::before {
         content: "";
         background: #dee2e6;
@@ -76,12 +90,11 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
         transform: translateX(-50%);
         display: none;
 
-        @media (min-width: 576px) {
+        @media (min-width: 992px) {
             display: block;
         }
     }
 }
-
 
 .u-sidebar-navigation-v1 {
     .u-side-nav--top-level-menu {

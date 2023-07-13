@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('BackOffice') }}</title>
-    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.43">
+    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.46">
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
@@ -40,10 +40,12 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-                   @if(!empty($iagent) && $iagent == 1)
-                       @include('back.users.modals.reset-email')
-                   @endif
+                @if($mailgun_notifications == true)
+                    @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
+                        @if(!empty($iagent) && $iagent == 1)
+                            @include('back.users.modals.reset-email')
+                        @endif
+                    @endif
                 @endif
             </div>
             @include('back.layout.footer')
