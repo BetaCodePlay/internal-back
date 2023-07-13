@@ -77,6 +77,10 @@ sass --style compressed resources/assets/back/scss/template.scss:public/commons/
                 padding-top: 15px;
             }
         }
+
+        ul {
+            padding-left: 15px;
+        }
     }
 
     &::before {
