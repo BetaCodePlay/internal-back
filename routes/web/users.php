@@ -48,6 +48,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@bonusTransactions'
     ]);
 
+    // Change email agent
+    Route::get('change-email-agent/{user}/{action}/{type}/{description?}', [
+        'as' => 'users.change-email-agent',
+        'uses' => 'UsersController@changeEmailAgent'
+    ]);
+
     // Change user status
     Route::get('change-status/{user}/{status}/{type}/{description?}', [
         'as' => 'users.change-status',

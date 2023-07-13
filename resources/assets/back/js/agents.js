@@ -469,12 +469,20 @@ class Agents {
         });
     }
 
+    changeEmailAgent() {
+        $(document).on('click', '#change-email-agent', function () {
+            let description = $('#description').val();
+            let route = $(this).data('route');
+            swalInput(route);
+        });
+    }
+
     // Change user status
     changeUserStatus() {
         $(document).on('click', '#change-user-status', function () {
             let description = $('#description').val();
             let route = $(this).data('route');
-            swalInputInfo(route);
+            swalInput(route);
             //swalInput(route);
         });
     }
