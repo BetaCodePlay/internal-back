@@ -224,13 +224,13 @@ class AgentsRepo
     public function findUserProfile(int $user,string $currency)
     {
         $sql = DB::select('SELECT u.id,u.id AS user_id,u.created_at AS created,u.email,u.username,u.status,u.action,p.timezone,a.id AS agent,u.referral_code,a.master,a.owner_id AS owner,
-                                   p.country_iso,ac.balance,ac.currency_iso
-                            FROM site.agents a
-                              INNER JOIN site.agent_currencies ac ON a.id = ac.agent_id
-                              INNER JOIN site.users u ON a.user_id = u.id
-                              INNER JOIN site.profiles p ON u.id = p.user_id
-                            WHERE ac.currency_iso = ?
-                              and u.id = ? LIMIT 1',[$currency,$user]);
+                           p.country_iso,ac.balance,ac.currency_iso
+                    FROM site.agents a
+                      INNER JOIN site.agent_currencies ac ON a.id = ac.agent_id
+                      INNER JOIN site.users u ON a.user_id = u.id
+                      INNER JOIN site.profiles p ON u.id = p.user_id
+                    WHERE ac.currency_iso = ?
+                      and u.id = ? LIMIT 1',[$currency,$user]);
 
         return isset($sql[0]->id)?$sql[0]:null;
     }

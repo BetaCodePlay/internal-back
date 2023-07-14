@@ -1194,32 +1194,60 @@
                         last = 'jstree-last';
                     }
 
-                    if(value.type_user === 2) {
-                        atm = true
+                    // if(value.type_user === 2) {
+                    //     atm = true
+                    // }
+                    //
+                    // if (usersTemp.length > 0) {
+                    //     type_user = 'agent';
+                    //
+                    //     if(atm) {
+                    //         atmIcon = 'fa-users'
+                    //     } else {
+                    //         atmIcon = 'fa-star'
+                    //     }
+                    //
+                    //     userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                    // } else {
+                    //     type_user = 'user';
+                    //
+                    //     if(atm) {
+                    //         atmIcon = 'fa-users';
+                    //         atmType = 'agent';
+                    //
+                    //     } else {
+                    //         atmIcon = 'fa-user';
+                    //         atmType = 'user';
+                    //     }
+                    //
+                    //     userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                    // }
+                    ////TODO test
+                    switch(value.type_user) {
+                        case 1:
+                            type_user = 'agent';
+                            atmIcon = 'fa-star';
+                            atmType = 'agent';
+                            break;
+                        case 2:
+                            type_user = 'agent';
+                            atmIcon = 'fa-users';
+                            atmType = 'agent';
+                            break;
+                        case 5:
+                            type_user = 'user';
+                            atmIcon = 'fa-user';
+                            atmType = 'user';
+                            break;
+                        default:
+                            type_user = 'user-null';
+                            atmIcon = 'icon-null';
+                            atmType = 'null'
                     }
 
                     if (usersTemp.length > 0) {
-                        type_user = 'agent';
-
-                        if(atm) {
-                            atmIcon = 'fa-users'
-                        } else {
-                            atmIcon = 'fa-star'
-                        }
-
                         userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     } else {
-                        type_user = 'user';
-
-                        if(atm) {
-                            atmIcon = 'fa-users';
-                            atmType = 'agent';
-
-                        } else {
-                            atmIcon = 'fa-user';
-                            atmType = 'user';
-                        }
-
                         userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
                     }
                 })
