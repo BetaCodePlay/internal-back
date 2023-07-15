@@ -39,6 +39,8 @@
             @endif
 
             <div class="g-pa-20">
+                @include('back.layout.email-verify')
+
                 @yield('content')
                 @if($mailgun_notifications == true)
                     @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
