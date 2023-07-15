@@ -30,6 +30,7 @@
 <main class="container-fluid px-0 g-pt-65">
     <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
         @include('back.layout.sidebar')
+
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             @include('back.layout.warning')
             @if(isset($iphone))

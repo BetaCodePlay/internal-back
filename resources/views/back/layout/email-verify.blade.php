@@ -1,9 +1,13 @@
 {{--@if($confirmation_email)--}}
-    <div class="alert alert-danger" role="alert">
-        <p>Vaya!!! Parese que tu correo aun no esta verificado, puedes realizar ahora para mayor seguridad y mejores ofertas.</p>
-        <div class="text-right">
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Importante!</h4>
+        <p>Parece que tu correo aun no esta verificado, puedes realizar ahora para mayor seguridad y mejores ofertas.</p>
+        <hr>
+        <p class="mb-0">
             <a href="#">Verificar</a>
+            |
             <a href="#">Rechazar</a>
-        </div>
+        </p>
     </div>
-{{--@endif--}}
+{{--
+@endif--}}
