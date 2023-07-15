@@ -199,7 +199,7 @@ class CoreController extends Controller
                 'iagent'=> $agentUser,
                 'confirmation_email'=> $confirmation
             ]);
-            Log::info(__METHOD__, ['confirmation' => $confirmation]);
+            
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
