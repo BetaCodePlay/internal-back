@@ -192,7 +192,7 @@ class CoreController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
             $userData = $this->agentsRepo->findUserAgent($user);
-            Log::info(__METHOD__, ['userData' => $userData]);
+            Log::info(__METHOD__, ['userData' => $userData, 'user' => $user]);
             view()->share([
                 'action'=>auth()->user()->action,
                 'iagent'=> $agentUser,

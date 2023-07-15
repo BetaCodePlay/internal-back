@@ -10,6 +10,7 @@ use Dotworkers\Security\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsRepo
@@ -223,6 +224,7 @@ class AgentsRepo
      */
     public function findUserAgent($user)
     {
+        Log::info(__METHOD__, ['repo' => $user]);
         $user = Agent::select('users.id','users.email', 'users.username', 'users.status', 'users.action', 'users.confirmation_email')
             ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
             ->join('users', 'agent_user.user_id', '=', 'users.id')
