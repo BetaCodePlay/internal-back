@@ -6,7 +6,6 @@ use App\Core\Collections\CoreCollection;
 use App\Core\Core;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\ManualExchangesRepo;
-use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
@@ -191,7 +190,7 @@ class CoreController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
-            $userData = $this->agentsRepo->findUserAgent($user);
+            $userData = $this->usersRepo->getUsers($user);
             Log::info(__METHOD__, ['userData' => $userData, 'user' => $user]);
             view()->share([
                 'action'=>auth()->user()->action,

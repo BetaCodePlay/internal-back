@@ -215,25 +215,6 @@ class AgentsRepo
             ->first();
     }
 
-
-    /**
-     * Find user
-     *
-     * @param int $user User ID
-     * @return mixed
-     */
-    public function findUserAgent($user)
-    {
-        Log::info(__METHOD__, ['repo' => $user]);
-        $user = Agent::select('users.id','users.email', 'users.username', 'users.status', 'users.action', 'users.confirmation_email')
-            ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
-            ->join('users', 'agent_user.user_id', '=', 'users.id')
-            ->where('agent_user.user_id', $user)
-            ->first();
-        return $user;
-    }
-
-
     /**
      * Find user
      *
