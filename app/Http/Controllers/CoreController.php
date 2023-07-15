@@ -191,10 +191,11 @@ class CoreController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
-
+            Log::info(__METHOD__, ['agentUser' => $agentUser]);
             view()->share([
                 'action'=>auth()->user()->action,
-                'iagent'=> $agentUser
+                'iagent'=> $agentUser,
+                'confirmation_email'=> $agentUser
             ]);
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
