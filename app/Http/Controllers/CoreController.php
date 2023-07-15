@@ -191,13 +191,15 @@ class CoreController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
             $userData = $this->usersRepo->getUsers($user);
-            
+            foreach ($userData as $users){
+                $confirmation = $users->confirmation_email;
+            }  
             view()->share([
                 'action'=>auth()->user()->action,
                 'iagent'=> $agentUser,
-                'confirmation_email'=> $userData
+                'confirmation_email'=> $confirmation
             ]);
-
+            Log::info(__METHOD__, ['confirmation' => $confirmation]);
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
