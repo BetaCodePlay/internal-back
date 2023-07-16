@@ -1,7 +1,7 @@
 <div class="modal fade" id="process-debit-modal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('betpay.process-debit') }}" method="post" id="process-debit-form">
+            <form action="{{ route('betpay.paypal.process-debit') }}" method="post" id="process-debit-form">
                 <div class="modal-header">
                     <h5 class="modal-title">{{ _i('Process debit') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -13,24 +13,9 @@
                         <label for="action">{{ _i('Action') }}</label>
                         <select name="action" id="action" class="form-control">
                             <option value="">{{ _i('Select...') }}</option>
-                            <option value="1">{{ _i('Approve') }}</option>
+                            <option value="1">{{ _i('Send to processor') }}</option>
                             <option value="0">{{ _i('Reject') }}</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="client_account">{{ _i('Account from where you made the payment') }}</label>
-                        <select name="client_account" id="client_account" class="form-control">
-                            <option value="">{{ _i('Select...') }}</option>
-                            @foreach ($accounts as $account)
-                                <option value="{{ $account->id }}">
-                                    {{ $account->data->email }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="reference">{{ _i('Reference') }}</label>
-                        <input type="text" name="reference" id="reference" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="description">{{ _i('Description') }}</label>

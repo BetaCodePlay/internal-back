@@ -54,7 +54,7 @@
                             </select>
                         </div>
                     </div>
-                    @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$zelle || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$paypal
+                    @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$zelle
                         || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$skrill || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$neteller
                         || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$airtm
                         || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$uphold)
@@ -176,6 +176,20 @@
                         <div class="form-group">
                             <label for="alias_mercado_pago">{{ _i('Alias') }}</label>
                                 <input type="text" name="alias_mercado_pago" id="alias_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->alias}}">
+                        </div>
+                    </div>
+                    @endif
+                    @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$paypal)
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="client_id_paypal">{{ _i('Client ID') }}</label>
+                                <input type="text" name="client_id_paypal" class="form-control" autocomplete="off" value="{{$client->data->client_id}}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="client_secret_paypal">{{ _i('Client ID') }}</label>
+                                <input type="text" name="client_secret_paypal" class="form-control" autocomplete="off" value="{{$client->data->client_secret}}">
                         </div>
                     </div>
                     @endif

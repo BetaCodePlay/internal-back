@@ -276,6 +276,39 @@ class TransactionsCollection
                 }
                 case PaymentMethods::$binance:
                 case PaymentMethods::$paypal:
+                {
+                    if( $status == TransactionStatus::$approved || $status == TransactionStatus::$rejected){
+                        $transaction->details .= sprintf(
+                                '<li><strong>%s</strong>: %s</li>',
+                                _i('Date'),
+                                Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                        );
+                        if (!is_null($transaction->details_data)) {
+                            $transaction->details .= sprintf(
+                                '<li><strong>%s</strong>: %s</li>',
+                                _i('Transaction ID'),
+                                $transaction->details_data->order
+                            );
+                            $transaction->details .= sprintf(
+                                '<li><strong>%s</strong>: %s</li>',
+                                _i('PayPal ID'),
+                                $transaction->details_data->id
+                            );
+                            $transaction->details .= sprintf(
+                                '<li><strong>%s</strong>: %s</li>',
+                                _i('Reference'),
+                                $transaction->details_data->reference
+                            );
+                       }
+                    }else{
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('Date'),
+                            Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                        );
+                    }
+                    break;
+                }
                 case PaymentMethods::$mercado_pago:
                 {
                     $transaction->details .= sprintf(
@@ -464,12 +497,6 @@ class TransactionsCollection
                         );
                     }
                 }
-                case PaymentMethods::$paypal:
-                {
-                   if (isset($transaction->user_account->email)) {
-                       $transaction->user_account->email = !is_null($transaction->user_account->email) ? $transaction->user_account->email : "N/A";
-                   }
-                }
             }
 
             $userData = $usersRepo->find($transaction->external_user);
@@ -633,7 +660,7 @@ class TransactionsCollection
                     $transaction->withdrawal_data .= sprintf(
                         '<strong>%s:</strong> %s<br>',
                         _i('Email'),
-                        $transaction->user_account->email
+                        $transaction->data->email
                     );
                     break;
                 }

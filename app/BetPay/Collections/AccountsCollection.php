@@ -96,20 +96,6 @@ class AccountsCollection
                     }
                     break;
                 }
-                case PaymentMethods::$paypal:
-                {
-                    if(!is_null($details->email)){
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
-                            _i('Email'),
-                            ': ',
-                            $details->email,
-                        );
-                    }else{
-                        $account->details ="";
-                    }
-                    break;
-                }
                 case PaymentMethods::$mercado_pago:
                 {
                     if(!is_null($details->email)){
@@ -255,29 +241,6 @@ class AccountsCollection
                     }
                     break;
                 }
-                case PaymentMethods::$paypal:
-                {
-                    $account->info = sprintf(
-                        '<strong>%s:</strong> %s<br>',
-                        _i('Email'),
-                        $account->data->email
-                    );
-                    $account->info .= sprintf(
-                        '<a href="#edit-accounts-modal" data-toggle="modal" data-payment-method="%s" data-payment-method-type="electronic-wallets" data-email="%s" data-user-account-id="%s" class="btn u-btn-3d u-btn-bluegray g-mt-5 mr-2 btn-sm"><i class="hs-admin-pencil"></i> %s</a>',
-                        $account->payment_method_id,
-                        $account->data->email,
-                        $account->id,
-                        _i('Edit')
-                    );
-                    if (Gate::allows('access', Permissions::$disable_user_account)) {
-                        $account->info .= sprintf(
-                            '<button type="button" id="disable-account" data-route="%s" class="btn u-btn-3d u-btn-primary g-mt-5 btn-sm"><i class="hs-admin-trash"></i> %s</button>',
-                            route('betpay.accounts.user.disable', [$account->id]),
-                            _i('Delete')
-                        );
-                    }
-                    break;
-                }
                 case PaymentMethods::$mercado_pago:
                 {
                     $account->info = sprintf(
@@ -397,7 +360,6 @@ class AccountsCollection
                     );
                     break;
                 }
-                case PaymentMethods::$paypal:
                 case PaymentMethods::$skrill:
                 case PaymentMethods::$neteller:
                 case PaymentMethods::$airtm:

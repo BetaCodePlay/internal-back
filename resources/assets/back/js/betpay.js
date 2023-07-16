@@ -793,43 +793,7 @@ class BetPay {
             }
         });
     }
-
-    // Credit PayPal
-    creditPayPal() {
-        let $table = $('#paypal-table');
-        $table.DataTable({
-            "ajax": {
-                "url": $table.data('route'),
-                "dataSrc": "data.transactions"
-            },
-            "order": [],
-            "columns": [
-                {"data": "user"},
-                {"data": "username"},
-                {"data": "level"},
-                {"data": "amount", "className": "text-right", "type": "num-fmt"},
-                {"data": "currency_iso"},
-                {"data": "reference"},
-                {"data": "data.date", "className": "text-right"},
-                {"data": "created", "className": "text-right"},
-                {"data": "status", "className": "text-right"},
-                {"data": "actions", "className": "text-right"}
-            ],
-            "initComplete": function () {
-                let api = this.api();
-                api.buttons().container()
-                    .appendTo($('#table-buttons'));
-                BetPay.processCreditTransactions(api, $table.data('route'));
-            }
-        });
-
-        $table.on('xhr.dt', function (event, settings, json, xhr) {
-            if (xhr.status === 500) {
-                swalError(xhr);
-            }
-        });
-    }
-
+    
     // Credit MercadoPago
     creditMercadoPago() {
         let $table = $('#mercado-pago-table');
@@ -967,7 +931,6 @@ class BetPay {
                 {"data": "level"},
                 {"data": "amount", "className": "text-right", "type": "num-fmt"},
                 {"data": "currency_iso"},
-                {"data": "user_account.email"},
                 {"data": "created", "className": "text-right"},
                 {"data": "status", "className": "text-right"},
                 {"data": "actions", "className": "text-right"}

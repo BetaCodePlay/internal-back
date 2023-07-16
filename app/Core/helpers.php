@@ -830,17 +830,6 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$paypal_menu,
                         'payment_method' => PaymentMethods::$paypal,
                         'submenu' => [
-
-                            'Credit' => [
-                                'text' => _i('Credit'),
-                                'level_class' => 'third',
-                                'route' => 'betpay.paypal.credit',
-                                'params' => [],
-                                'icon' => 'hs-admin-shift-left',
-                                'permission' => Permissions::$credit_paypal_menu,
-                                'submenu' => []
-                            ],
-
                             'Debit' => [
                                 'text' => _i('Debit'),
                                 'level_class' => 'third',

@@ -117,16 +117,16 @@ Route::group(['prefix' => 'betpay', 'middleware' => ['auth']], function () {
      */
     Route::group(['prefix' => 'paypal', 'middleware' => ['auth']], function () {
 
-        // Credit paypal
-        Route::get('credit', [
-            'as' => 'betpay.paypal.credit',
-            'uses' => 'BetPayController@creditPayPal'
-        ]);
-
         // Debit paypal
         Route::get('debit', [
             'as' => 'betpay.paypal.debit',
             'uses' => 'BetPayController@debitPayPal'
+        ]);
+
+        // Process debit
+        Route::post('process-debit', [
+            'as' => 'betpay.paypal.process-debit',
+            'uses' => 'BetPayController@processDebitPaypal'
         ]);
     });
 
