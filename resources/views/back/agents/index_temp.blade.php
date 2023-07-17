@@ -879,11 +879,11 @@
                                                                         class="form-control"
                                                                         data-route="{{ route('core.categories-by-maker') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
-                                                                    @foreach ($makers as $maker)
-                                                                        <option value="{{ $maker->maker }}">
-                                                                            {{ $maker->maker }}
-                                                                        </option>
-                                                                    @endforeach
+{{--                                                                    @foreach ($makers as $maker)--}}
+{{--                                                                        <option value="{{ $maker->maker }}">--}}
+{{--                                                                            {{ $maker->maker }}--}}
+{{--                                                                        </option>--}}
+{{--                                                                    @endforeach--}}
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -1151,6 +1151,7 @@
     <script>
         function treePro() {
             let listUsers;
+            let listMakers;
             let idCurrentUser = $('#tree-pro-master').data('idtreepro');
 
             $.ajax({
@@ -1160,10 +1161,12 @@
             }).done(function (data) {
                 if (data.status === 'OK') {
                     listUsers = data.data.tree;
+                    listMakers = data.data.makers;
                     scanSearch(idCurrentUser);
+                    drawMakers();
                     $('#tree-pro-master').find('a.jstree-anchor').click();
                 } else {
-                    alert('Error al consultar usuarios')
+                    console.log('Error al consultar usuarios',data)
                 }
             }).fail(function () {
                 Swal.fire(
@@ -1194,35 +1197,6 @@
                         last = 'jstree-last';
                     }
 
-                    // if(value.type_user === 2) {
-                    //     atm = true
-                    // }
-                    //
-                    // if (usersTemp.length > 0) {
-                    //     type_user = 'agent';
-                    //
-                    //     if(atm) {
-                    //         atmIcon = 'fa-users'
-                    //     } else {
-                    //         atmIcon = 'fa-star'
-                    //     }
-                    //
-                    //     userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
-                    // } else {
-                    //     type_user = 'user';
-                    //
-                    //     if(atm) {
-                    //         atmIcon = 'fa-users';
-                    //         atmType = 'agent';
-                    //
-                    //     } else {
-                    //         atmIcon = 'fa-user';
-                    //         atmType = 'user';
-                    //     }
-                    //
-                    //     userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
-                    // }
-                    ////TODO test
                     switch(value.type_user) {
                         case 1:
                             type_user = 'agent';
@@ -1256,6 +1230,18 @@
 
 
                 $('[data-idtreepro="' + id + '"]').parent().append(usersHtmlTemp);
+            }
+
+            function drawMakers() {
+                let makers = listMakers;
+
+                $('#maker option[value!=""]').remove();
+                if(makers.length > 0){
+                    $.each(makers, function (index, val) {
+                        $('#maker').append("<option value=" + val.maker + ">" + val.maker + "</option>");
+
+                    });
+                }
             }
 
             $(document).on('click', '.jstree-more', function () {

@@ -2095,41 +2095,47 @@ class AgentsController extends Controller
      * @param ReportsCollection $reportsCollection
      * @return Application|Factory|View
      */
-    public function index(ProvidersRepo $providersRepo)
+    public function index()
     {
         try {
-            if (session('admin_id')) {
-                $user = session('admin_id');
-            } else {
-                $user = auth()->user()->id ? Auth::id() : null;
-                if (is_null(Auth::user()->username) == 'romeo') {
-                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
-                }
+            //ProvidersRepo $providersRepo
+//            if (session('admin_id')) {
+//                $user = session('admin_id');
+//            } else {
+//                $user = auth()->user()->id ? Auth::id() : null;
+//                if (is_null(Auth::user()->username) == 'romeo') {
+//                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+//                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+//                }
+//
+//            }
+//            $whitelabel = Configurations::getWhitelabel();
+//            $currency = session('currency');
+//            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+//            //TODO MOSTRAR EL AGENTE LOGUEADO
+//            $agent->user_id = $agent->id;
+//
+//            //$agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
+//            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgentsNew($this->agentsRepo, $currency, [$agent]);
+//
+//            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+//            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+//            $data['currencies'] = Configurations::getCurrencies();
+//            $data['countries'] = []; //$countriesRepo->all();
+//            $data['timezones'] = []; //\DateTimeZone::listIdentifiers();
+//            $data['providers'] = $providers;
+//            $data['agent'] = $agent;
+//            $data['makers'] = $this->gamesRepo->getMakers();
+//            $data['agents'] = $agentAndSubAgents;
+//            $data['tree'] = $this->agentsCollection->childrenTree($agent, $user);
+//            //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
+//            $data['action'] = Auth::user()->action;
+//            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);
 
-            }
-            $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            //TODO MOSTRAR EL AGENTE LOGUEADO
-            $agent->user_id = $agent->id;
-
-            //$agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
-            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgentsNew($this->agentsRepo, $currency, [$agent]);
-
-            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            $data['currencies'] = Configurations::getCurrencies();
-            $data['countries'] = []; //$countriesRepo->all();
-            $data['timezones'] = []; //\DateTimeZone::listIdentifiers();
-            $data['providers'] = $providers;
-            $data['agent'] = $agent;
-            $data['makers'] = $this->gamesRepo->getMakers();
-            $data['agents'] = $agentAndSubAgents;
-            $data['tree'] = $this->agentsCollection->childrenTree($agent, $user);
-            //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
-            $data['action'] = Auth::user()->action;
-            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);;
+            $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
+            $data['makers'] = [];//$this->gamesRepo->getMakers();
+            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
+            $data['tree'] = json_encode([]);
             $data['title'] = _i('Agents module');
             return view('back.agents.index', $data);
 
@@ -2146,7 +2152,10 @@ class AgentsController extends Controller
     public function getTreeUsers()
     {
         try {
-            return Utils::successResponse(['tree' => $this->agentsCollection->childrenTreeSql(Auth::id())]);
+            return Utils::successResponse([
+                'tree' => $this->agentsCollection->childrenTreeSql(Auth::id()),
+                'makers' => $this->gamesRepo->getMakers()
+            ]);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
@@ -2181,7 +2190,7 @@ class AgentsController extends Controller
         try {
 
             $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
-            $data['makers'] = $this->gamesRepo->getMakers();
+            $data['makers'] = [];//$this->gamesRepo->getMakers();
             $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
             $data['tree'] = json_encode([]);
             $data['title'] = _i('Agents module Temp');
