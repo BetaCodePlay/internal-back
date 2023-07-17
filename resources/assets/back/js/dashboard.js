@@ -84,7 +84,7 @@ class Dashboard {
 
     }
 
-    // Get reset email
+    // Get show email
     showEmail() {
 
         $("#show").on("click",function() {
