@@ -86,8 +86,10 @@ class Dashboard {
 
     // Get show email
     showEmail() {
+        let $modal = $('#transaction-modal');
 
         $("#show").on("click",function() {
+            $modal;
           });
     }
 
