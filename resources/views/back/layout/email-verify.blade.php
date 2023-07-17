@@ -1,13 +1,13 @@
 <div class="alert alert-warning" role="alert">
     @if (isset($mailgun_notifications->$locale->title) && !is_null($mailgun_notifications->$locale->title))
-    <h4 class="alert-heading"><i class="fa fa-envelope-o" aria-hidden="true"></i> {!! $mailgun_notifications->$locale->title !!}</h4>
+    <h4 class="alert-heading"><i class="fa fa-envelope-o" aria-hidden="true"></i> {!! $mailgun_notifications->$locale->message !!}</h4>
     @endif
     @if (isset($mailgun_notifications->$locale->message) && !is_null($mailgun_notifications->$locale->message))
     <p>{!! $mailgun_notifications->$locale->message !!}</p>
     <hr style="margin: 1rem 0">
     @endif
     <p class="mb-0">
-        <a href="#reset-email-modal" data-toggle="modal" data-target="#reset-email-modal"
+        <a href="javascript:void(0)" id="show" data-toggle="modal" data-target="#reset-email-modal"
             class="text-primary">Verificar</a>
         |
         <a href="#">Rechazar</a>

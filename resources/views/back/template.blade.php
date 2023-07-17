@@ -82,6 +82,7 @@
     $(function() {
         let dashboard = new Dashboard();
         dashboard.resetEmail();
+        dashboard.showEmail();
     });
     </script>
 </body>

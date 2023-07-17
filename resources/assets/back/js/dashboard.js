@@ -84,6 +84,13 @@ class Dashboard {
 
     }
 
+    // Get reset email
+    showEmail() {
+
+        $("#show").on("click",function() {
+          });
+    }
+
     // Get today deposits
     todayDeposits() {
         let route = $('#today-deposits').data('route');
