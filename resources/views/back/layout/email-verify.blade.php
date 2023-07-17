@@ -7,7 +7,7 @@
     <hr style="margin: 1rem 0">
     @endif
     <p class="mb-0">
-        <a href="javascript:void(0)" id="show" data-toggle="modal" data-target="#reset-email-modal"
+        <a href="javascript:void(0)" data-toggle="modal" data-target="#reset-email-modal"
             class="text-primary">Verificar</a>
         |
         <a href="#">Rechazar</a>
