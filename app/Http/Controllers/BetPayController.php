@@ -1498,7 +1498,6 @@ class BetPayController extends Controller
                         ->withHeader("Authorization: Bearer $betPayToken")
                         ->post();
                     $response = json_decode($curl);
-                    \Log::debug([$requestData,$curl]);
                     if (isset($response->status) && $response->status == Status::$ok) {
                         $betPayTransaction = $response->data->transaction;
                         $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
