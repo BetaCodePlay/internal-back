@@ -88,15 +88,7 @@ class Dashboard {
     // Get show email
     showEmail() {
         $("#show").on("click",function() {
-            alert("Modal Mostrada");
           });
-          
-          $('#reset-email-modal').on('show.bs.modal', function (e) {
-            alert("Modal Mostrada con Evento de Boostrap");
-          })
-          $('#reset-email-modal').on('hidden.bs.modal', function (e) {
-            alert("Modal Cerrada");
-          })
     }
 
     // Get today deposits
