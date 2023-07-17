@@ -48,7 +48,7 @@
                     @endif
                     @yield('content')
                     {{--@if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-                        @if($iagent == 1)
+                        @if($iagent == 0)
                             @include('back.users.modals.reset-email')
                         @endif
                     @endif--}}
