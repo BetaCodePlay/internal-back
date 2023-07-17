@@ -43,7 +43,7 @@
                 @endif
 
                 <div class="g-pa-20">
-                    @if($mailgun_notifications == true)
+                    @if($mailgun_notifications->active == true)
                     @include('back.layout.email-verify')
                     @endif
                     @yield('content')
