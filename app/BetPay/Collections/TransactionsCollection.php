@@ -294,11 +294,6 @@ class TransactionsCollection
                                 _i('PayPal ID'),
                                 $transaction->details_data->id
                             );
-                            $transaction->details .= sprintf(
-                                '<li><strong>%s</strong>: %s</li>',
-                                _i('Reference'),
-                                $transaction->details_data->reference
-                            );
                        }
                     }else{
                         $transaction->details .= sprintf(
