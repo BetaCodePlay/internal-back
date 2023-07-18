@@ -1,4 +1,4 @@
-<div class="alert alert-warning" id="DivAEsconder" role="alert">
+<div class="alert alert-warning" id="hide" style="display:none" role="alert">
     @if (isset($mailgun_notifications->$locale->title) && !is_null($mailgun_notifications->$locale->title))
     <h4 class="alert-heading"><i class="fa fa-envelope-o" aria-hidden="true"></i> {!!
         $mailgun_notifications->$locale->title !!}</h4>
@@ -16,7 +16,13 @@
         @if (isset($mailgun_notifications->$locale->denied_button) &&
         !is_null($mailgun_notifications->$locale->denied_button))
         |
-        <a href="#" id="BotonParaEsconder">{!! $mailgun_notifications->$locale->denied_button !!}</a>
+        <a href="javascript:cerrar()" id="close">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>
 </div>
+<script languague="javascript">
+        function cerrar() {
+            div = document.getElementById('hide');
+            div.style.display = 'none';
+        }
+</script>
