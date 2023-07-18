@@ -314,7 +314,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Validate agents email
-    Route::get('validate/{token?}/{email?}', [
+    Route::get('validate/{token?}/{email?}/{accepted?}', [
         'as' => 'users.validate',
         'uses' => 'UsersController@validateEmailByAgent'
     ]);
