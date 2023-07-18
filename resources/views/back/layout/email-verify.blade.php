@@ -20,10 +20,3 @@
         @endif
     </p>
 </div>
-<script>
-$(function() {
-    $("#BotonParaEsconder").click(function() {
-        $("#DivAEsconder").hide();
-    });
-});
-</script>

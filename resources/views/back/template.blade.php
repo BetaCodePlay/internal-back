@@ -73,7 +73,13 @@
         //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
-
+    <script>
+$(function() {
+    $("#BotonParaEsconder").click(function() {
+        $("#DivAEsconder").hide();
+    });
+});
+</script>
     $(function() {
         let dashboard = new Dashboard();
         dashboard.resetEmail();
