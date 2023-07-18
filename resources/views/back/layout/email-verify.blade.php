@@ -20,17 +20,3 @@
         @endif
     </p>
 </div>
-<script>
-$(document).ready(function(){
-    estado=0;                          
-    $("#oculta").click(function () {
-       if(estado==0) {
-         $('#paraocultar').slideUp('fast');
-         estado=1;
-      } else {
-         $('#paraocultar').slideDown('fast');
-         estado=0;
-      }
-    });
-});
-</script>
