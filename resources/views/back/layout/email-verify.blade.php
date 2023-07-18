@@ -10,8 +10,12 @@
     <p class="mb-0">
         @if (isset($mailgun_notifications->$locale->accepted_button) &&
         !is_null($mailgun_notifications->$locale->accepted_button))
-        <a href="javascript:void(0)" data-toggle="modal" data-target="#reset-email-modal"
-            class="text-primary">{!! $mailgun_notifications->$locale->accepted_button !!}</a>
+        @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
+        @if($iagent == 0)
+        <a href="javascript:void(0)" data-toggle="modal" data-target="#reset-email-modal" class="text-primary">{!!
+            $mailgun_notifications->$locale->accepted_button !!}</a>
+        @endif
+        @endif
         @endif
         @if (isset($mailgun_notifications->$locale->denied_button) &&
         !is_null($mailgun_notifications->$locale->denied_button))
@@ -21,9 +25,9 @@
     </p>
 </div>
 <script>
-$(function(){
-        $("#BotonParaEsconder").click(function(){
-            $("#DivAEsconder").hide();
-        });
+$(function() {
+    $("#BotonParaEsconder").click(function() {
+        $("#DivAEsconder").hide();
     });
-</script> 
+});
+</script>
