@@ -1996,9 +1996,11 @@ class AgentsController extends Controller
     public function getFatherAndCant(Request $request)
     {
         try {
+
             $currency = session('currency');
             $id = $request->id;
             $type = $request->type;
+            $cant = null;
 
             if ($type == 'agent') {
                 $cant = $this->usersRepo->numberChildren($id, $currency);
@@ -2009,10 +2011,16 @@ class AgentsController extends Controller
             }
 
             $data = [
-                'cant_agents' => $cant['agents'],
-                'cant_players' => $cant['players'],
-                'fathers' => $fathers,
+                'cant_agents' => 0,
+                'cant_players' => 0,
+                'fathers' => [],
             ];
+
+            if(!is_null($cant)){
+                $data['cant_agents'] = $cant['agents'];
+                $data['cant_players'] = $cant['players'];
+                $data['fathers'] = $fathers;
+            }
 
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
@@ -2158,71 +2166,6 @@ class AgentsController extends Controller
             ]);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
-     * Get Tree Users
-     *
-     */
-    public function getTreeUsers_format()
-    {
-        try {
-            return Utils::successResponse(['tree' => $this->agentsCollection->childrenTreeSql_format(Auth::id())]);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
-     * Show dashboard Temp
-     *
-     * @param CountriesRepo $countriesRepo
-     * @param ProvidersRepo $providersRepo
-     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
-     * @param ReportsCollection $reportsCollection
-     * @return Application|Factory|View
-     */
-    public function index_Temp()
-    {
-        try {
-
-            $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
-            $data['makers'] = [];//$this->gamesRepo->getMakers();
-            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
-            $data['tree'] = json_encode([]);
-            $data['title'] = _i('Agents module Temp');
-
-            return view('back.agents.index_temp', $data);
-
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
-     * Show dashboard Temp 2
-     *
-     * @return Application|Factory|View
-     */
-    public function index_Temp2()
-    {
-        try {
-
-            $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
-            $data['makers'] = $this->gamesRepo->getMakers();
-
-            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
-            $data['tree'] = json_encode($this->agentsCollection->childrenTreeSql_format(Auth::id()));
-            $data['title'] = _i('Agents module Temp');
-
-            return view('back.agents.index_temp', $data);
-
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
     }
