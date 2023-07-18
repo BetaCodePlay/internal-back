@@ -10,7 +10,7 @@
     <p class="mb-0">
         @if (isset($mailgun_notifications->$locale->accepted_button) &&
         !is_null($mailgun_notifications->$locale->accepted_button))
-        <a href="{{ route('users.validate', ['accepted' => true]) }}" data-toggle="modal" data-target="#reset-email-modal" class="text-primary" value="true">{!!
+        <a href="{{ route('users.reset-email', ['accepted' => true]) }}" data-toggle="modal" data-target="#reset-email-modal" class="text-primary" value="true">{!!
             $mailgun_notifications->$locale->accepted_button !!}</a>
         @endif
         @if (isset($mailgun_notifications->$locale->denied_button) &&

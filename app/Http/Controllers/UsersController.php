@@ -2034,6 +2034,7 @@ class UsersController extends Controller
      */
     public function resetEmail(Request $request)
     {
+        \Log::info(__METHOD__, ['request' => $request->all()]);
         $this->validate($request, [
             'email' => ['required', new Email()]
         ]);
@@ -2687,12 +2688,10 @@ class UsersController extends Controller
      * @param Request $request
      * @param string $token User activation token
      * @param string $email User activation email
-     * @param boolean $accepted accepted email
      * @return Application|Factory|View
      */
-    public function validateEmailByAgent(Request $request, $token, $email, $accepted)
+    public function validateEmailByAgent(Request $request, $token, $email)
     {
-        \Log::info(__METHOD__, ['accepted' => $accepted, 'request' => $request]);
             $user = $this->usersRepo->findByToken($token);
             if (!is_null($user)) {
                 $userData = [

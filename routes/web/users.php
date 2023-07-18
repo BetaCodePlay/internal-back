@@ -181,7 +181,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Reset user email
-    Route::post('reset-email', [
+    Route::post('reset-email/{accepted?}', [
         'as' => 'users.reset-email',
         'uses' => 'UsersController@resetEmail'
     ]);
@@ -314,7 +314,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Validate agents email
-    Route::get('validate/{token?}/{email?}/{accepted?}', [
+    Route::get('validate/{token?}/{email?}', [
         'as' => 'users.validate',
         'uses' => 'UsersController@validateEmailByAgent'
     ]);
