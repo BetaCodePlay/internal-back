@@ -882,6 +882,20 @@ class UsersController extends Controller
     }
 
     /**
+     * Confirmed email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function confirmedEmail(Request $request)
+    {
+        \Log::info(__METHOD__, ['request' => $request->all()]);
+
+    }
+
+
+    /**
      * Get completed profiles
      *
      * @return \Symfony\Component\HttpFoundation\Response
