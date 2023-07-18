@@ -83,7 +83,8 @@
         let dashboard = new Dashboard();
         dashboard.resetEmail();
     });
-
+    
+//script para ocultar div de notificaciones
     $(document).ready(function(){
     estado=0;                          
     $("#oculta").click(function () {

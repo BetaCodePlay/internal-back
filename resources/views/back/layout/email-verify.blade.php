@@ -19,4 +19,5 @@
         <a href="#" id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>
+    <input type="hidden" name="accepted" class="user" value="true">
 </div>
