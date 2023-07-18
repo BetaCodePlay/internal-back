@@ -26,7 +26,7 @@
                     <i class="hs-admin-align-left"></i>
                 </a>
             </div>
-            <div hidden>{!! $iphone !!}</div>
+{{--            <div hidden>{!! $iphone !!}</div>--}}
             @if(isset($iphone))
                 @if(!$iphone)
                     <form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
