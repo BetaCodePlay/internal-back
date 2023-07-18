@@ -17,7 +17,7 @@
         @if (isset($mailgun_notifications->$locale->denied_button) &&
         !is_null($mailgun_notifications->$locale->denied_button))
             |
-            <a href="{{ route('users.confirmed', ['denied' => false]) }}"
+            <a href="{{ route('users.confirmed', false) }}"
                id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>
