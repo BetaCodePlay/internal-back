@@ -2048,7 +2048,6 @@ class UsersController extends Controller
      */
     public function resetEmail(Request $request)
     {
-        \Log::info(__METHOD__, ['request' => $request->all()]);
         $this->validate($request, [
             'email' => ['required', new Email()]
         ]);
