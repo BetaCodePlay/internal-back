@@ -16,13 +16,14 @@
         @if (isset($mailgun_notifications->$locale->denied_button) &&
         !is_null($mailgun_notifications->$locale->denied_button))
         |
-        <a href="javascript:cerrar()" id="close">{!! $mailgun_notifications->$locale->denied_button !!}</a>
+        <a href="#" id="close">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>
 </div>
-<script languague="javascript">
-        function cerrar() {
-            div = document.getElementById('hide');
-            div.style.display = 'none';
-        }
+<script>
+$(document).ready(function(){
+$("#close").on( "click", function() {
+$('#hide').hide(); //oculto mediante id
+});
+});
 </script>
