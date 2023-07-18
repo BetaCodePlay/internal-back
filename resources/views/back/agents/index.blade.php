@@ -1238,241 +1238,244 @@
             agents.relocationAgents();
             //agents.detailsUserModal();
 
+            agents.treePro('{{ route('agents.get.tree.users') }}');
+
             //New user tree structure
-            function treePro() {
-                let listUsers;
-                let listMakers;
-                let idCurrentUser = $('#tree-pro-master').data('idtreepro');
+            {{--function treePro() {--}}
+            {{--    let listUsers;--}}
+            {{--    let listMakers;--}}
+            {{--    let idCurrentUser = $('#tree-pro-master').data('idtreepro');--}}
 
-                $.ajax({
-                    url: '{{ route('agents.get.tree.users') }}',
-                    type: 'get',
-                    dataType: 'json',
-                }).done(function (data) {
-                    if (data.status === 'OK') {
-                        listUsers = data.data.tree;
-                        listMakers = data.data.makers;
-                        scanSearch(idCurrentUser);
-                        drawMakers();
-                        $('#tree-pro-master').find('a.jstree-anchor').click();
-                    } else {
-                        console.log('Error al consultar usuarios',data)
-                    }
-                }).fail(function () {
-                    Swal.fire(
-                        'Ha ocurrido un error inesperado',
-                        'Recarga o intenta de nuevo mas tarde.',
-                        'error'
-                    )
-                }).always(function () {
+            {{--    $.ajax({--}}
+            {{--        url: '{{ route('agents.get.tree.users') }}',--}}
+            {{--        type: 'get',--}}
+            {{--        dataType: 'json',--}}
+            {{--    }).done(function (data) {--}}
+            {{--        if (data.status === 'OK') {--}}
+            {{--            listUsers = data.data.tree;--}}
+            {{--            listMakers = data.data.makers;--}}
+            {{--            scanSearch(idCurrentUser);--}}
+            {{--            drawMakers();--}}
+            {{--            $('#tree-pro-master').find('a.jstree-anchor').click();--}}
+            {{--        } else {--}}
+            {{--            console.log('Error al consultar usuarios',data)--}}
+            {{--        }--}}
+            {{--    }).fail(function () {--}}
+            {{--        Swal.fire(--}}
+            {{--            'Ha ocurrido un error inesperado',--}}
+            {{--            'Recarga o intenta de nuevo mas tarde.',--}}
+            {{--            'error'--}}
+            {{--        )--}}
+            {{--    }).always(function () {--}}
 
-                });
+            {{--    });--}}
 
-                function scanSearch(id) {
-                    let users = listUsers.filter(user => user.owner_id === id);
-                    let usersTemp;
-                    let userHtmlTempMini = '';
-                    let usersHtmlTemp;
-                    let last = '';
-                    let atm = false;
-                    let type_user;
-                    let atmIcon;
-                    let atmType;
-
-
-                    $.each(users, function (index, value) {
-                        usersTemp = listUsers.filter(user => user.owner_id === value.id);
-
-                        if (index + 1 === users.length) {
-                            last = 'jstree-last';
-                        }
-
-                        switch(value.type_user) {
-                            case 1:
-                                type_user = 'agent';
-                                atmIcon = 'fa-star';
-                                atmType = 'agent';
-                                break;
-                            case 2:
-                                type_user = 'agent';
-                                atmIcon = 'fa-users';
-                                atmType = 'agent';
-                                break;
-                            case 5:
-                                type_user = 'user';
-                                atmIcon = 'fa-user';
-                                atmType = 'user';
-                                break;
-                            default:
-                                type_user = 'user-null';
-                                atmIcon = 'icon-null';
-                                atmType = 'null'
-                        }
-
-                        if (usersTemp.length > 0) {
-                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
-                        } else {
-                            userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
-                        }
-                    })
-
-                    usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';
+            {{--    function scanSearch(id) {--}}
+            {{--        let users = listUsers.filter(user => user.owner_id === id);--}}
+            {{--        let usersTemp;--}}
+            {{--        let userHtmlTempMini = '';--}}
+            {{--        let usersHtmlTemp;--}}
+            {{--        let last = '';--}}
+            {{--        let atm = false;--}}
+            {{--        let type_user;--}}
+            {{--        let atmIcon;--}}
+            {{--        let atmType;--}}
 
 
-                    $('[data-idtreepro="' + id + '"]').parent().append(usersHtmlTemp);
-                }
+            {{--        $.each(users, function (index, value) {--}}
+            {{--            usersTemp = listUsers.filter(user => user.owner_id === value.id);--}}
 
-                function drawMakers() {
-                    let makers = listMakers;
+            {{--            if (index + 1 === users.length) {--}}
+            {{--                last = 'jstree-last';--}}
+            {{--            }--}}
 
-                    $('#maker option[value!=""]').remove();
-                    if(makers.length > 0){
-                        $.each(makers, function (index, val) {
-                            $('#maker').append("<option value=" + val.maker + ">" + val.maker + "</option>");
+            {{--            switch(value.type_user) {--}}
+            {{--                case 1:--}}
+            {{--                    type_user = 'agent';--}}
+            {{--                    atmIcon = 'fa-star';--}}
+            {{--                    atmType = 'agent';--}}
+            {{--                    break;--}}
+            {{--                case 2:--}}
+            {{--                    type_user = 'agent';--}}
+            {{--                    atmIcon = 'fa-users';--}}
+            {{--                    atmType = 'agent';--}}
+            {{--                    break;--}}
+            {{--                case 5:--}}
+            {{--                    type_user = 'user';--}}
+            {{--                    atmIcon = 'fa-user';--}}
+            {{--                    atmType = 'user';--}}
+            {{--                    break;--}}
+            {{--                default:--}}
+            {{--                    type_user = 'user-null';--}}
+            {{--                    atmIcon = 'icon-null';--}}
+            {{--                    atmType = 'null'--}}
+            {{--            }--}}
 
-                        });
-                    }
-                }
+            {{--            if (usersTemp.length > 0) {--}}
+            {{--                userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';--}}
+            {{--            } else {--}}
+            {{--                userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';--}}
+            {{--            }--}}
+            {{--        })--}}
 
-                $(document).on('click', '.jstree-more', function () {
-                    let $this = $(this);
-                    let $obj = $this.parent();
+            {{--        usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';--}}
 
-                    if ($obj.hasClass('jstree-open')) {
-                        $obj.removeClass('jstree-open');
-                        $obj.addClass('jstree-closed');
-                        $obj.find('.jstree-children').remove();
-                    } else {
-                        $obj.removeClass('jstree-closed');
-                        $obj.addClass('jstree-open');
-                        scanSearch($this.data('idtreepro'));
-                    }
-                });
 
-                $(document).on('click', 'a.jstree-anchor', function (){
-                    let $this = $(this);
-                    let type = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('typetreepro');
-                    let id = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('idtreepro');
-                    let $container = $('#tree-pro');
+            {{--        $('[data-idtreepro="' + id + '"]').parent().append(usersHtmlTemp);--}}
+            {{--    }--}}
 
-                    $('a.jstree-anchor').removeClass('jstree-clicked');
-                    $this.addClass('jstree-clicked');
+            {{--    function drawMakers() {--}}
+            {{--        let makers = listMakers;--}}
 
-                    $.ajax({
-                        url: $container.data('route'),
-                        type: 'get',
-                        dataType: 'json',
-                        data: {
-                            id, type
-                        }
+            {{--        $('#maker option[value!=""]').remove();--}}
+            {{--        if(makers.length > 0){--}}
+            {{--            $.each(makers, function (index, val) {--}}
+            {{--                $('#maker').append("<option value=" + val.maker + ">" + val.maker + "</option>");--}}
 
-                    }).done(function (json) {
-                        //TODO Init Set Modal
-                        $('.userSet').text(json.data.user.username);
-                        $('.emailSet').text(json.data.user.email);
-                        $('.fatherSet').text(json.data.father);
-                        $('.typeSet').text(json.data.user.typeSet);
-                        $('.createdSet').text(json.data.user.created);
-                        $('.cantA_P').show();
-                        $('.cantA_P').show();
-                        if (json.data.type != "agent") {
-                            $('.cantA_P').hide();
-                            $('.cantA_P').hide();
-                        }
-                        // $('.agentsSet').text(json.data.cant_agents);
-                        // $('.playersSet').text(json.data.cant_players);
-                        // let initUl = '';
-                        // let finishUl = '';
-                        // $.each(json.data.fathers,function(index,val) {
-                        //     initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'
-                        //     finishUl = finishUl + '</li></ul>'
-                        // });
-                        // $('.appendTreeFather').append(initUl+finishUl);
+            {{--            });--}}
+            {{--        }--}}
+            {{--    }--}}
 
-                        setTimeout(function () {
-                            Agents.getFatherRecursive($('#details-user-get').data('route'), id, type);
-                        }, 500)
-                        //TODO Finish Set Modal
+            {{--    $(document).on('click', '.jstree-more', function () {--}}
+            {{--        let $this = $(this);--}}
+            {{--        let $obj = $this.parent();--}}
 
-                        $('#username').text(json.data.user.username);
-                        $('#agent_timezone').text(json.data.user.timezone);
-                        $('.balance').text(json.data.balance);
-                        $('.balanceAuth_' + json.data.user.id).text('');
-                        $('.balanceAuth_' + json.data.user.id).text(json.data.balance);
-                        $('#user_type').html(json.data.user.type);
-                        $('#status').html(json.data.user.status);
-                        $('#wallet').val(json.data.wallet);
-                        $('.wallet').val(json.data.wallet);
-                        $('.user').val(id);
-                        $('#name').val(json.data.user.username);
-                        $('#type').val(json.data.type);
-                        $('.type').val(json.data.type);
-                        $('#referral_code').text(json.data.user.referral_code);
-                        $('.clipboard').attr('data-clipboard-text', json.data.user.url);
+            {{--        if ($obj.hasClass('jstree-open')) {--}}
+            {{--            $obj.removeClass('jstree-open');--}}
+            {{--            $obj.addClass('jstree-closed');--}}
+            {{--            $obj.find('.jstree-children').remove();--}}
+            {{--        } else {--}}
+            {{--            $obj.removeClass('jstree-closed');--}}
+            {{--            $obj.addClass('jstree-open');--}}
+            {{--            scanSearch($this.data('idtreepro'));--}}
+            {{--        }--}}
+            {{--    });--}}
 
-                        if (json.data.master) {
-                            $('#agents-tab').removeClass('d-none');
-                            $('#agents-mobile').removeClass('d-none');
-                            $('#move-agents').removeClass('d-none');
-                        } else {
-                            $('#agents-tab').addClass('d-none');
-                            $('#agents-mobile').addClass('d-none');
-                            $('#move-agents').addClass('d-none');
-                        }
+            {{--    $(document).on('click', 'a.jstree-anchor', function (){--}}
+            {{--        let $this = $(this);--}}
+            {{--        let type = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('typetreepro');--}}
+            {{--        let id = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('idtreepro');--}}
+            {{--        let $container = $('#tree-pro');--}}
 
-                        if (json.data.agent) {
-                            $('#users-tab').removeClass('d-none');
-                            $('#agents-transactions-tab').removeClass('d-none');
-                            $('#financial-state-tab').removeClass('d-none');
-                            $('#users-transactions-tab').addClass('d-none');
-                            $('#users-mobile').removeClass('d-none');
-                            $('#agents-transactions-mobile').removeClass('d-none');
-                            $('#financial-state-mobile').removeClass('d-none');
-                            $('#users-transactions-mobile').addClass('d-none');
-                            $('#move-agents-user').addClass('d-none');
-                            $('#move-agents').removeClass('d-none');
-                        } else {
-                            $('#users-tab').addClass('d-none');
-                            $('#agents-transactions-tab').addClass('d-none');
-                            $('#financial-state-tab').addClass('d-none');
-                            $('#users-transactions-tab').removeClass('d-none');
-                            $('#users-mobile').addClass('d-none');
-                            $('#agents-transactions-mobile').addClass('d-none');
-                            $('#financial-state-mobile').addClass('d-none');
-                            $('#users-transactions-mobile').removeClass('d-none');
-                            $('#move-agents-user').removeClass('d-none');
-                            $('#move-agents').addClass('d-none');
-                        }
+            {{--        $('a.jstree-anchor').removeClass('jstree-clicked');--}}
+            {{--        $this.addClass('jstree-clicked');--}}
 
-                        if (json.data.myself) {
-                            if (!json.data.agent_player) {
-                                $('#new-user, #new-agent').addClass('d-none');
-                            } else {
-                                $('#new-user, #new-agent').removeClass('d-none');
-                            }
-                            $('#locks, #locks-tab').addClass('d-none');
-                            $('#locks, #locks-mobile').addClass('d-none');
-                            $('#transactions-form-container').addClass('d-none');
-                            $('#modals-transaction').addClass('d-none');
-                            $('#move-agents-user').addClass('d-none');
-                            $('#move-agents').addClass('d-none');
-                        } else {
-                            $('#new-user, #new-agent').addClass('d-none');
-                            $('#locks, #locks-tab').removeClass('d-none');
-                            $('#locks, #locks-mobile').removeClass('d-none');
-                            $('#transactions-form-container').removeClass('d-none');
-                            $('#modals-transaction').removeClass('d-none');
-                        }
+            {{--        $.ajax({--}}
+            {{--            url: $container.data('route'),--}}
+            {{--            type: 'get',--}}
+            {{--            dataType: 'json',--}}
+            {{--            data: {--}}
+            {{--                id, type--}}
+            {{--            }--}}
 
-                    }).fail(function (json) {
-                        swalError(json);
-                    });
-                })
+            {{--        }).done(function (json) {--}}
+            {{--            //TODO Init Set Modal--}}
+            {{--            $('.userSet').text(json.data.user.username);--}}
+            {{--            $('.emailSet').text(json.data.user.email);--}}
+            {{--            $('.fatherSet').text(json.data.father);--}}
+            {{--            $('.typeSet').text(json.data.user.typeSet);--}}
+            {{--            $('.createdSet').text(json.data.user.created);--}}
+            {{--            $('.cantA_P').show();--}}
+            {{--            $('.cantA_P').show();--}}
+            {{--            if (json.data.type != "agent") {--}}
+            {{--                $('.cantA_P').hide();--}}
+            {{--                $('.cantA_P').hide();--}}
+            {{--            }--}}
+            {{--            // $('.agentsSet').text(json.data.cant_agents);--}}
+            {{--            // $('.playersSet').text(json.data.cant_players);--}}
+            {{--            // let initUl = '';--}}
+            {{--            // let finishUl = '';--}}
+            {{--            // $.each(json.data.fathers,function(index,val) {--}}
+            {{--            //     initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'--}}
+            {{--            //     finishUl = finishUl + '</li></ul>'--}}
+            {{--            // });--}}
+            {{--            // $('.appendTreeFather').append(initUl+finishUl);--}}
 
-                $('#tree-pro-init').find('.jstree-anchor').eq(0).click();
-            }
+            {{--            setTimeout(function () {--}}
+            {{--                Agents.getFatherRecursive($('#details-user-get').data('route'), id, type);--}}
+            {{--            }, 500)--}}
+            {{--            //TODO Finish Set Modal--}}
 
-            treePro();
+            {{--            $('#username').text(json.data.user.username);--}}
+            {{--            $('#agent_timezone').text(json.data.user.timezone);--}}
+            {{--            $('.balance').text(json.data.balance);--}}
+            {{--            $('.balanceAuth_' + json.data.user.id).text('');--}}
+            {{--            $('.balanceAuth_' + json.data.user.id).text(json.data.balance);--}}
+            {{--            $('#user_type').html(json.data.user.type);--}}
+            {{--            $('#status').html(json.data.user.status);--}}
+            {{--            $('#wallet').val(json.data.wallet);--}}
+            {{--            $('.wallet').val(json.data.wallet);--}}
+            {{--            $('.user').val(id);--}}
+            {{--            $('#name').val(json.data.user.username);--}}
+            {{--            $('#type').val(json.data.type);--}}
+            {{--            $('.type').val(json.data.type);--}}
+            {{--            $('#referral_code').text(json.data.user.referral_code);--}}
+            {{--            $('.clipboard').attr('data-clipboard-text', json.data.user.url);--}}
+
+            {{--            if (json.data.master) {--}}
+            {{--                $('#agents-tab').removeClass('d-none');--}}
+            {{--                $('#agents-mobile').removeClass('d-none');--}}
+            {{--                $('#move-agents').removeClass('d-none');--}}
+            {{--            } else {--}}
+            {{--                $('#agents-tab').addClass('d-none');--}}
+            {{--                $('#agents-mobile').addClass('d-none');--}}
+            {{--                $('#move-agents').addClass('d-none');--}}
+            {{--            }--}}
+
+            {{--            if (json.data.agent) {--}}
+            {{--                $('#users-tab').removeClass('d-none');--}}
+            {{--                $('#agents-transactions-tab').removeClass('d-none');--}}
+            {{--                $('#financial-state-tab').removeClass('d-none');--}}
+            {{--                $('#users-transactions-tab').addClass('d-none');--}}
+            {{--                $('#users-mobile').removeClass('d-none');--}}
+            {{--                $('#agents-transactions-mobile').removeClass('d-none');--}}
+            {{--                $('#financial-state-mobile').removeClass('d-none');--}}
+            {{--                $('#users-transactions-mobile').addClass('d-none');--}}
+            {{--                $('#move-agents-user').addClass('d-none');--}}
+            {{--                $('#move-agents').removeClass('d-none');--}}
+            {{--            } else {--}}
+            {{--                $('#users-tab').addClass('d-none');--}}
+            {{--                $('#agents-transactions-tab').addClass('d-none');--}}
+            {{--                $('#financial-state-tab').addClass('d-none');--}}
+            {{--                $('#users-transactions-tab').removeClass('d-none');--}}
+            {{--                $('#users-mobile').addClass('d-none');--}}
+            {{--                $('#agents-transactions-mobile').addClass('d-none');--}}
+            {{--                $('#financial-state-mobile').addClass('d-none');--}}
+            {{--                $('#users-transactions-mobile').removeClass('d-none');--}}
+            {{--                $('#move-agents-user').removeClass('d-none');--}}
+            {{--                $('#move-agents').addClass('d-none');--}}
+            {{--            }--}}
+
+            {{--            if (json.data.myself) {--}}
+            {{--                if (!json.data.agent_player) {--}}
+            {{--                    $('#new-user, #new-agent').addClass('d-none');--}}
+            {{--                } else {--}}
+            {{--                    $('#new-user, #new-agent').removeClass('d-none');--}}
+            {{--                }--}}
+            {{--                $('#locks, #locks-tab').addClass('d-none');--}}
+            {{--                $('#locks, #locks-mobile').addClass('d-none');--}}
+            {{--                $('#transactions-form-container').addClass('d-none');--}}
+            {{--                $('#modals-transaction').addClass('d-none');--}}
+            {{--                $('#move-agents-user').addClass('d-none');--}}
+            {{--                $('#move-agents').addClass('d-none');--}}
+            {{--            } else {--}}
+            {{--                $('#new-user, #new-agent').addClass('d-none');--}}
+            {{--                $('#locks, #locks-tab').removeClass('d-none');--}}
+            {{--                $('#locks, #locks-mobile').removeClass('d-none');--}}
+            {{--                $('#transactions-form-container').removeClass('d-none');--}}
+            {{--                $('#modals-transaction').removeClass('d-none');--}}
+            {{--            }--}}
+
+            {{--        }).fail(function (json) {--}}
+            {{--            swalError(json);--}}
+            {{--        });--}}
+            {{--    })--}}
+
+            {{--    $('#tree-pro-init').find('.jstree-anchor').eq(0).click();--}}
+            {{--}--}}
+
+            {{--treePro();--}}
+
         });
     </script>
 @endsection
