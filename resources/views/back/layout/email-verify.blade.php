@@ -1,4 +1,4 @@
-<div class="alert alert-warning" id="hide" style="display:none" role="alert">
+<div class="alert alert-warning" id="hide" role="alert">
     @if (isset($mailgun_notifications->$locale->title) && !is_null($mailgun_notifications->$locale->title))
     <h4 class="alert-heading"><i class="fa fa-envelope-o" aria-hidden="true"></i> {!!
         $mailgun_notifications->$locale->title !!}</h4>
