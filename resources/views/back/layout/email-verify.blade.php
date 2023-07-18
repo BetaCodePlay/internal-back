@@ -10,7 +10,7 @@
     <p class="mb-0">
         @if (isset($mailgun_notifications->$locale->accepted_button) &&
         !is_null($mailgun_notifications->$locale->accepted_button))
-        <a href="javascript:void(0)" data-toggle="modal" data-target="#reset-email-modal" class="text-primary">{!!
+        <a href="core.dashboard" data-toggle="modal" data-target="#reset-email-modal" class="text-primary" value="true">{!!
             $mailgun_notifications->$locale->accepted_button !!}</a>
         @endif
         @if (isset($mailgun_notifications->$locale->denied_button) &&
@@ -19,5 +19,4 @@
         <a href="#" id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>
-    <input type="hidden" name="accepted" class="user" value="true">
 </div>
