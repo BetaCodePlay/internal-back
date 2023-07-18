@@ -1,4 +1,4 @@
-<div class="alert alert-warning" id="hide" role="alert">
+<div class="alert alert-warning" id="paraocultar" role="alert">
     @if (isset($mailgun_notifications->$locale->title) && !is_null($mailgun_notifications->$locale->title))
     <h4 class="alert-heading"><i class="fa fa-envelope-o" aria-hidden="true"></i> {!!
         $mailgun_notifications->$locale->title !!}</h4>
@@ -16,14 +16,21 @@
         @if (isset($mailgun_notifications->$locale->denied_button) &&
         !is_null($mailgun_notifications->$locale->denied_button))
         |
-        <a href="#" id="close">{!! $mailgun_notifications->$locale->denied_button !!}</a>
+        <a href="#" id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>
 </div>
 <script>
 $(document).ready(function(){
-$("#close").on( "click", function() {
-$('#hide').hide(); //oculto mediante id
-});
+    estado=0;                          
+    $("#oculta").click(function () {
+       if(estado==0) {
+         $('#paraocultar').slideUp('fast');
+         estado=1;
+      } else {
+         $('#paraocultar').slideDown('fast');
+         estado=0;
+      }
+    });
 });
 </script>
