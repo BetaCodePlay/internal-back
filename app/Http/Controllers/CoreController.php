@@ -181,12 +181,10 @@ class CoreController extends Controller
      * @param ProvidersRepo $providersRepo
      * @param ProvidersTypesRepo $providersTypesRepo
      * @param ProviderTypesCollection $providerTypesCollection
-     * @param Request $request
      * @return Application|Factory|View
      */
-    public function dashboard(Request $request, ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, ProviderTypesCollection $providerTypesCollection)
+    public function dashboard(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, ProviderTypesCollection $providerTypesCollection)
     {
-        Log::info(__METHOD__, ['request' => $request]);
         try {
             $user = auth()->user()->id;
             $currency = session('currency');

@@ -2687,10 +2687,12 @@ class UsersController extends Controller
      * @param Request $request
      * @param string $token User activation token
      * @param string $email User activation email
+     * @param boolean $accepted accepted email
      * @return Application|Factory|View
      */
-    public function validateEmailByAgent(Request $request, $token, $email)
+    public function validateEmailByAgent(Request $request, $token, $email, $accepted)
     {
+        \Log::info(__METHOD__, ['accepted' => $accepted, 'request' => $request]);
             $user = $this->usersRepo->findByToken($token);
             if (!is_null($user)) {
                 $userData = [
