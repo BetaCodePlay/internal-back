@@ -83,11 +83,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-// Show index
-Route::get('{confirmation_email}', [
-    'as' => 'core.confirmed',
-    'uses' => 'CoreController@confirmedEmail'
-]);
 // Change language
 Route::get('language/{locale}', [
     'as' => 'core.change-language',
