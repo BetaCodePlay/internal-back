@@ -176,6 +176,26 @@ class CoreController extends Controller
     }
 
     /**
+     * Confirmed email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function confirmedEmail(Request $request, $confirmation_email)
+    {
+        try {
+            if($confirmation_email == false){
+                \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+
+    /**
      * Show dashboard
      *
      * @param ProvidersRepo $providersRepo
@@ -193,13 +213,13 @@ class CoreController extends Controller
             $userData = $this->usersRepo->getUsers($user);
             foreach ($userData as $users){
                 $confirmation = $users->confirmation_email;
-            }  
+            }
             view()->share([
                 'action'=>auth()->user()->action,
                 'iagent'=> $agentUser,
                 'confirmation_email'=> $confirmation
             ]);
-            
+
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');

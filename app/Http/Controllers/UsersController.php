@@ -882,26 +882,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Confirmed email
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function confirmedEmail(Request $request, $confirmation_email)
-    {
-        try {
-            if($confirmation_email == false){
-                \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
-            }
-
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
-
-    /**
      * Get completed profiles
      *
      * @return \Symfony\Component\HttpFoundation\Response

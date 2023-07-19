@@ -80,6 +80,12 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.makers',
         'uses' => 'CoreController@makers'
     ]);
+    // Show index
+    Route::get('dashboard/{confirmation_email}', [
+        'as' => 'core.confirmed',
+        'uses' => 'CoreController@confirmedEmail'
+    ]);
+
 });
 
 // Change language

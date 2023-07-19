@@ -319,12 +319,6 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@validateEmailByAgent'
     ]);
 
-    // Accepted or denied email
-    Route::get('/{confirmation_email}', [
-        'as' => 'users.confirmed',
-        'uses' => 'UsersController@confirmedEmail'
-    ]);
-
     Route::group(['prefix' => 'profiles'], function () {
 
         // Show search results
