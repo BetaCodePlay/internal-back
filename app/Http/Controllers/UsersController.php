@@ -889,7 +889,7 @@ class UsersController extends Controller
     public function confirmedEmail(Request $request, $denied)
     {
         \Log::info(__METHOD__, ['request' => $request->all(), $denied]);
-
+        return view('core.dashboard');
     }
 
 
