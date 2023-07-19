@@ -19,5 +19,6 @@
             |
             <a href="{{ route('users.confirmed', ['confirmation_email' => false]) }}" id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
+            @dd($confirmation_email)
     </p>
 </div>
