@@ -885,14 +885,19 @@ class UsersController extends Controller
      * Confirmed email
      *
      * @param Request $request
-     * @return Factory|View
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirmedEmail(Request $request, $confirmation_email)
     {
+        try {
+            if($confirmation_email == false){
+                \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+            }
 
-        \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
-        $data['title'] = _i('Documents verifications');
-        return view('back.users.documents-verifications', $data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
 
