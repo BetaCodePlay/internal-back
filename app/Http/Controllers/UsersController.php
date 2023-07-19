@@ -889,13 +889,8 @@ class UsersController extends Controller
      */
     public function confirmedEmail(Request $request, $confirmation_email)
     {
-        $timezone = session('timezone');
-        $startDate = Carbon::now($timezone)->format('Y-m-d');
-        $endDate = Carbon::now($timezone)->format('Y-m-d');
-        $data['start_date'] = $startDate;
-        $data['end_date'] = $endDate;
         \Log::info(__METHOD__, ['request' => $request->all(), (boolean)$confirmation_email]);
-        return view('back.core.dashboard', $data);
+
     }
 
 
