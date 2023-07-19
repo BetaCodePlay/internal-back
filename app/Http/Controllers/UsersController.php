@@ -889,8 +889,10 @@ class UsersController extends Controller
      */
     public function confirmedEmail(Request $request, $confirmation_email)
     {
-        \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
 
+        \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+        $data['title'] = _i('Documents verifications');
+        return view('back.users.documents-verifications', $data);
     }
 
 
