@@ -81,7 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'CoreController@makers'
     ]);
     // Show index
-    Route::get('dashboard/{confirmation_email}', [
+    Route::get('dashboard/{confirmation_email?}', [
         'as' => 'core.confirmed',
         'uses' => 'CoreController@confirmedEmail'
     ]);
