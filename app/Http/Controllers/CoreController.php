@@ -175,25 +175,6 @@ class CoreController extends Controller
         }
     }
 
-    /**
-     * Confirmed email
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function confirmedEmail(Request $request, $confirmation_email)
-    {
-        try {
-            if($confirmation_email == false){
-                \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
-            }
-
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
 
     /**
      * Show dashboard
@@ -246,6 +227,26 @@ class CoreController extends Controller
             abort(500);
         }
     }
+
+    /**
+     * Confirmed email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function confirmedEmail(Request $request, $confirmation_email)
+    {  \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+        try {
+            if($confirmation_email == false){
+                \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
 
     /**
      * Show exchange rates view
