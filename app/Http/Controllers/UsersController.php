@@ -887,9 +887,9 @@ class UsersController extends Controller
      * @param Request $request
      * @return Factory|View
      */
-    public function confirmedEmail(Request $request, $confirmation_email= false)
+    public function confirmedEmail(Request $request, $confirmation_email)
     {
-        \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+        \Log::info(__METHOD__, ['request' => $request->all(), (boolean)$confirmation_email]);
         return view('core.dashboard');
     }
 
