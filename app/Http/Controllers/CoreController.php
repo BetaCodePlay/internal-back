@@ -200,7 +200,7 @@ class CoreController extends Controller
                 'iagent'=> $agentUser,
                 'confirmation_email'=> $confirmation
             ]);
-            \Log::debug(__METHOD__, ['confirmation' => $confirmation]);
+
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
@@ -235,10 +235,10 @@ class CoreController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function confirmedEmail(Request $request, $confirmation_email)
-    {  \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+    {  \Log::info(__METHOD__, ['1' => $request->all(), (boolean)$confirmation_email]);
         try {
             if($confirmation_email == false){
-                \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
+                \Log::info(__METHOD__, ['2' => $request->all(), $confirmation_email]);
             }
 
         } catch (\Exception $ex) {
