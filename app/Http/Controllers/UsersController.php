@@ -890,7 +890,7 @@ class UsersController extends Controller
     public function confirmedEmail(Request $request, $confirmation_email)
     {
         \Log::info(__METHOD__, ['request' => $request->all(), (boolean)$confirmation_email]);
-        return view('core.dashboard');
+        return view('back.core.dashboard');
     }
 
 
