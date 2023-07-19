@@ -1,4 +1,5 @@
 <div class="alert alert-warning" id="paraocultar" role="alert">
+    @dd($confirmation_email)
     @if (isset($mailgun_notifications->$locale->title) && !is_null($mailgun_notifications->$locale->title))
         <h4 class="alert-heading"><i class="fa fa-envelope-o" aria-hidden="true"></i> {!!
         $mailgun_notifications->$locale->title !!}</h4>
