@@ -320,7 +320,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Accepted or denied email
-    Route::get('/{confirmation_email?}', [
+    Route::get('/{confirmation_email}', [
         'as' => 'users.confirmed',
         'uses' => 'UsersController@confirmedEmail'
     ]);

@@ -886,9 +886,9 @@ class UsersController extends Controller
      *
      * @param Request $request
      */
-    public function confirmedEmail(Request $request, $denied)
+    public function confirmedEmail(Request $request, $confirmation_email)
     {
-        \Log::info(__METHOD__, ['request' => $request->all(), $denied]);
+        \Log::info(__METHOD__, ['request' => $request->all(), $confirmation_email]);
         return view('core.dashboard');
     }
 
