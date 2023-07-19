@@ -44,7 +44,9 @@
 
             <div class="g-pa-20">
                 @if($mailgun_notifications->active == true)
-                    @include('back.layout.email-verify')
+                    @if($confirmation_email == false)
+                        @include('back.layout.email-verify')
+                    @endif
                 @endif
                 @yield('content')
                 @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
@@ -74,8 +76,8 @@
 <script>
     @if(env('APP_ENV') == 'testing')
     $(function () {
-        //let socket = new Socket();
-        //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
+//let socket = new Socket();
+//socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
 
