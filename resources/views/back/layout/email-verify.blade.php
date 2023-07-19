@@ -10,14 +10,14 @@
     <p class="mb-0">
         @if (isset($mailgun_notifications->$locale->accepted_button) &&
         !is_null($mailgun_notifications->$locale->accepted_button))
-            <a href="{{ route('users.confirmed', ['confirmation_email' => true]) }}" data-toggle="modal"
+            <a href="{{ route('users.confirmed', [$confirmation_email]) }}" data-toggle="modal"
                data-target="#reset-email-modal" class="text-primary">{!!
             $mailgun_notifications->$locale->accepted_button !!}</a>
         @endif
         @if (isset($mailgun_notifications->$locale->denied_button) &&
         !is_null($mailgun_notifications->$locale->denied_button))
             |
-            <a href="{{ route('users.confirmed', ['confirmation_email' => false]) }}" id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
+            <a href="{{ route('users.confirmed', [$confirmation_email]) }}" id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>
 </div>
