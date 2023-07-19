@@ -885,6 +885,7 @@ class UsersController extends Controller
      * Confirmed email
      *
      * @param Request $request
+     * @return Factory|View
      */
     public function confirmedEmail(Request $request, $confirmation_email)
     {
