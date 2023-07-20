@@ -191,13 +191,18 @@ class CoreController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
-
+            $userData = $this->usersRepo->getUsers($user);
+            foreach ($userData as $users){
+                $confirmationData = $users->confirmation_email;
+            }
+            $confirmation = auth()->user()->confirmation_email;
+            Log::info(__METHOD__, ['confirmation' => $confirmation]);
             view()->share([
                 'action'=>auth()->user()->action,
-                $confirmation = 'confirmation'=> auth()->user()->confirmation_email,
+                'confirmation_email'=> auth()->user()->confirmation_email,
                 'iagent'=> $agentUser
             ]);
-            Log::info(__METHOD__, ['confirmation' => $confirmation]);
+
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
