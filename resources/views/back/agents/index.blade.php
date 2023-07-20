@@ -1216,6 +1216,7 @@
             let agents = new Agents();
             let users = new Users();
             agents.dashboard();
+            agents.resetEmail();
             users.usersIps();
             //TODO TABLA PARA IPS EN EL MODAL
             users.userIpsDetails();
@@ -1252,9 +1253,6 @@
             //agents.detailsUserModal();
 
             agents.treePro('{{ route('agents.get.tree.users') }}');
-
-            let dashboard = new Dashboard();
-            dashboard.resetEmail();
 
             //script para ocultar div de notificaciones
             $(document).ready(function () {
