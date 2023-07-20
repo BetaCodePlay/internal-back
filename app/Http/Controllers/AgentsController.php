@@ -2139,7 +2139,18 @@ class AgentsController extends Controller
 //            //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
 //            $data['action'] = Auth::user()->action;
 //            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);
-
+            $user = auth()->user()->id;
+            $whitelabel = Configurations::getWhitelabel();
+            $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
+            $userData = $this->usersRepo->getUsers($user);
+            foreach ($userData as $users){
+                $confirmation = $users->confirmation_email;
+            }
+            view()->share([
+                'action'=>auth()->user()->action,
+                'iagent'=> $agentUser,
+                'confirmation_email'=> $confirmation
+            ]);
             $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
             $data['makers'] = [];//$this->gamesRepo->getMakers();
             $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
