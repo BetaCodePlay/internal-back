@@ -41,6 +41,11 @@
 
             <div class="g-pa-20">
                 @yield('content')
+                @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
+                    @if($iagent == 1)
+                        @include('back.users.modals.reset-email')
+                    @endif
+                @endif
             </div>
             @include('back.layout.footer')
         </div>

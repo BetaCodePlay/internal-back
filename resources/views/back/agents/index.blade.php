@@ -74,11 +74,6 @@
             @include('back.layout.email-verify')
         @endif
     @endif
-    @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-        @if($iagent == 1)
-            @include('back.users.modals.reset-email')
-        @endif
-    @endif
     <div class="row">
         <div class="col-lg-3 col-xl-4">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
