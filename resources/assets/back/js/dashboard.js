@@ -3,17 +3,17 @@ const {swalSuccessWithButton, swalError} = require("../../commons/js/core");
 
 class Dashboard {
     // Constructor
-    // constructor() {
-    //     this.newUsers();
-    //     this.completedProfiles();
-    //     this.incompleteProfiles();
-    //     this.pendingWithdrawals();
-    //     this.resetEmail();
-    //     this.todayDeposits();
-    //     this.totalUsers();
-    //     this.todayWithdrawals();
-    //     this.totalUsersConnected();
-    // }
+     constructor() {
+         this.newUsers();
+         this.completedProfiles();
+         this.incompleteProfiles();
+         this.pendingWithdrawals();
+         this.resetEmail();
+         this.todayDeposits();
+         this.totalUsers();
+         this.todayWithdrawals();
+         this.totalUsersConnected();
+     }
 
     // Completed profiles
     completedProfiles() {
@@ -53,10 +53,6 @@ class Dashboard {
 
     // Get reset email
     resetEmail() {
-
-        $(document).ready(function () {
-            $('#reset-email-modal').modal({backdrop: 'static', keyboard: false});
-        });
 
         let $button = $('#reset-email');
         let $form = $('#reset-email-form');

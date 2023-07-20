@@ -125,6 +125,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['theme'] = Configurations::getTheme();
                     $data['mailgun_notifications'] = Configurations::getMailgunNotifications();
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
+                    $data['locale'] = LaravelGettext::getLocale();
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {

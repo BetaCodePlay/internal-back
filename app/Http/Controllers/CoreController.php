@@ -6,7 +6,6 @@ use App\Core\Collections\CoreCollection;
 use App\Core\Core;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\ManualExchangesRepo;
-use App\Users\Enums\ActionUser;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
@@ -176,6 +175,7 @@ class CoreController extends Controller
         }
     }
 
+
     /**
      * Show dashboard
      *
@@ -191,10 +191,14 @@ class CoreController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
-
+            $userData = $this->usersRepo->getUsers($user);
+            foreach ($userData as $users){
+                $confirmation = $users->confirmation_email;
+            }
             view()->share([
                 'action'=>auth()->user()->action,
-                'iagent'=> $agentUser
+                'iagent'=> $agentUser,
+                'confirmation_email'=> $confirmation
             ]);
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
@@ -223,6 +227,26 @@ class CoreController extends Controller
             abort(500);
         }
     }
+
+    /**
+     * Confirmed email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function confirmedEmail(Request $request, $confirmation_email)
+    {  \Log::info(__METHOD__, ['1' => $request->all(), (boolean)$confirmation_email]);
+        try {
+            if($confirmation_email == false){
+                \Log::info(__METHOD__, ['2' => $request->all(), $confirmation_email]);
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
 
     /**
      * Show exchange rates view

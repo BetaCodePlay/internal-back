@@ -2746,7 +2746,8 @@ class UsersController extends Controller
             if (!is_null($user)) {
                 $userData = [
                     'email' => strtolower($email),
-                    'action' => ActionUser::$active
+                    'action' => ActionUser::$active,
+                    'confirmation_email' => true
                 ];
                 $this->usersRepo->update($user->id, $userData);
             }

@@ -39,12 +39,15 @@
             @endif
 
             <div class="g-pa-20">
+                @if($mailgun_notifications->active == true)
+                    @if($confirmation_email == false)
+                        @include('back.layout.email-verify')
+                    @endif
+                @endif
                 @yield('content')
-                @if($mailgun_notifications == true)
-                    @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-                        @if(!empty($iagent) && $iagent == 1)
-                            @include('back.users.modals.reset-email')
-                        @endif
+                @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
+                    @if($iagent == 0)
+                        @include('back.users.modals.reset-email')
                     @endif
                 @endif
             </div>
@@ -77,6 +80,20 @@
     $(function () {
         let dashboard = new Dashboard();
         dashboard.resetEmail();
+    });
+
+    //script para ocultar div de notificaciones
+    $(document).ready(function () {
+        estado = 0;
+        $("#oculta").click(function () {
+            if (estado == 0) {
+                $('#paraocultar').slideUp('fast');
+                estado = 1;
+            } else {
+                $('#paraocultar').slideDown('fast');
+                estado = 0;
+            }
+        });
     });
 </script>
 </body>
