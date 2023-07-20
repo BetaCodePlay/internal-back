@@ -44,7 +44,7 @@
 
             <div class="g-pa-20">
                 @if($mailgun_notifications->active == true)
-                    @if(!is_null($confirmation) && $confirmation == false)
+                    @if(!empty($confirmation))
                         @include('back.layout.email-verify')
                     @endif
                 @endif
