@@ -41,8 +41,10 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if($iagent == 1)
-                    @include('back.users.modals.reset-email')
+                @if(!empty($action))
+                    @if($iagent == 1)
+                        @include('back.users.modals.reset-email')
+                    @endif
                 @endif
             </div>
             @include('back.layout.footer')
