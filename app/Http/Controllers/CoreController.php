@@ -191,13 +191,10 @@ class CoreController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
-            $userData = $this->usersRepo->getUsers($user);
-            foreach ($userData as $users){
-                $confirmation = $users->confirmation_email;
-            }
+
             view()->share([
                 'action'=>auth()->user()->action,
-                'confirmation_email'=> auth()->user()->confirmation_email,
+                'confirmation'=> auth()->user()->confirmation_email,
                 'iagent'=> $agentUser
             ]);
 
