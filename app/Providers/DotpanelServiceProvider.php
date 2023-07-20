@@ -35,6 +35,7 @@ class DotpanelServiceProvider extends ServiceProvider
      */
     public function boot(Request $request, CoreCollection $coreCollection, UsersRepo $usersRepo, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
     {
+        Log::error(__METHOD__, ['request' => $request->all()]);
 
         if (isset($_SERVER['HTTP_HOST'])) {
             $regex = '/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/';
@@ -100,11 +101,10 @@ class DotpanelServiceProvider extends ServiceProvider
                     if(($browser== "Safari") && ($agent->isMobile() || $agent->isPhone() || $agent->isTablet())){
                         $iphone = 1;
                     }
-                    $user = auth()->user()->id;
-                    $userData = $this->usersRepo->getUsers($user);
+                    /*$userData = $this->usersRepo->getUsers($user);
                     foreach ($userData as $users){
                         $confirmation = $users->confirmation_email;
-                    }
+                    }*/
                     $languagesData = $coreCollection->formatLanguages($languages);
                     $selectedLanguage = $coreCollection->formatSelectedLanguage($language);
                     $timezones = $coreCollection->formatTimezones();
@@ -131,7 +131,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['mailgun_notifications'] = Configurations::getMailgunNotifications();
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
                     $data['locale'] = LaravelGettext::getLocale();
-                    $data['confirmation_email'] = $confirmation;
+                    //$data['confirmation_email'] = $confirmation;
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
