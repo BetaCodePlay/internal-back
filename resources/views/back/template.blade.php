@@ -45,11 +45,11 @@
                     @endif
                 @endif--}}
                 @yield('content')
-                @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
+                {{--@if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
                     @if($iagent == 0)
                         @include('back.users.modals.reset-email')
                     @endif
-                @endif
+                @endif--}}
             </div>
             @include('back.layout.footer')
         </div>
