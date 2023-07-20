@@ -101,10 +101,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     if(($browser== "Safari") && ($agent->isMobile() || $agent->isPhone() || $agent->isTablet())){
                         $iphone = 1;
                     }
-                    /*$userData = $this->usersRepo->getUsers($user);
-                    foreach ($userData as $users){
-                        $confirmation = $users->confirmation_email;
-                    }*/
+
                     $languagesData = $coreCollection->formatLanguages($languages);
                     $selectedLanguage = $coreCollection->formatSelectedLanguage($language);
                     $timezones = $coreCollection->formatTimezones();
@@ -131,7 +128,6 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['mailgun_notifications'] = Configurations::getMailgunNotifications();
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
                     $data['locale'] = LaravelGettext::getLocale();
-                    //$data['confirmation_email'] = $confirmation;
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {

@@ -39,11 +39,11 @@
             @endif
 
             <div class="g-pa-20">
-                @if($mailgun_notifications->active == true)
+                {{--@if($mailgun_notifications->active == true)
                     @if($confirmation_email == false)
                         @include('back.layout.email-verify')
                     @endif
-                @endif
+                @endif--}}
                 @yield('content')
                 @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
                     @if($iagent == 0)
