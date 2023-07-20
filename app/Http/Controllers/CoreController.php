@@ -199,7 +199,7 @@ class CoreController extends Controller
             Log::info(__METHOD__, ['confirmation1' => $confirmation, 'confirmation2' => $confirmationData ]);
             view()->share([
                 'action'=>auth()->user()->action,
-                'confirmation_email'=> auth()->user()->confirmation_email,
+                'confirmation'=> auth()->user()->confirmation_email,
                 'iagent'=> $agentUser
             ]);
 
