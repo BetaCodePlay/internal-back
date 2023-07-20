@@ -197,8 +197,8 @@ class CoreController extends Controller
             }
             view()->share([
                 'action'=>auth()->user()->action,
-                'iagent'=> $agentUser,
-                'confirmation_email'=> $confirmation
+                'confirmation_email'=> auth()->user()->confirmation_email,
+                'iagent'=> $agentUser
             ]);
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
