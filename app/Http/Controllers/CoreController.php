@@ -196,7 +196,7 @@ class CoreController extends Controller
                 $confirmationData = $users->confirmation_email;
             }
             $confirmation = auth()->user()->confirmation_email;
-            Log::info(__METHOD__, ['confirmation' => $confirmation]);
+            Log::info(__METHOD__, ['confirmation1' => $confirmation, 'confirmation2' => $confirmationData ]);
             view()->share([
                 'action'=>auth()->user()->action,
                 'confirmation_email'=> auth()->user()->confirmation_email,
