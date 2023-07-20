@@ -194,10 +194,10 @@ class CoreController extends Controller
 
             view()->share([
                 'action'=>auth()->user()->action,
-                'confirmation'=> auth()->user()->confirmation_email,
+                $confirmation = 'confirmation'=> auth()->user()->confirmation_email,
                 'iagent'=> $agentUser
             ]);
-
+            Log::info(__METHOD__, ['confirmation' => $confirmation]);
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');
                 $startDate = Carbon::now($timezone)->format('Y-m-d');
