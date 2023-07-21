@@ -196,15 +196,15 @@ class AuthController extends Controller
                     $whitelabelId = Configurations::getWhitelabel();
                     foreach($userTemp as $users){
                         $action = $users->action;
+                        $confirmation = $users->confirmation_email;
                     }
-                    if($mailgun_notifications == true){
-                        if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
-                            if($action === ActionUser::$active){
-                                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
-                                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
-                            }
+                    if (ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop') {
+                        if ($action === ActionUser::$active && $confirmation == true) {
+                            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
+                            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                         }
                     }
+
                     $data = [
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
@@ -228,14 +228,13 @@ class AuthController extends Controller
                 //Estos datos se anexan para el envio de email cuando esté invalido
                 $userTemp = $usersRepo->getByUsername($request->username, $whitelabel);
                 $action = $userTemp->action;
+                $confirmation = $userTemp->confirmation_email;
                 $url = route('core.dashboard');
                 $whitelabelId = Configurations::getWhitelabel();
-                if($mailgun_notifications == true){
-                    if(ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop'){
-                        if($action === ActionUser::$active){
-                            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
-                            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
-                        }
+                if (ENV('APP_ENV') == 'production' || ENV('APP_ENV') == 'develop') {
+                    if ($action === ActionUser::$active && $confirmation == true) {
+                        $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$invalid_password_notification);
+                        Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$invalid_password_notification, $ip));
                     }
                 }
                 $data = [
