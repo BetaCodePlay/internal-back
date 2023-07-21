@@ -825,14 +825,13 @@ class UsersController extends Controller
 
     /***
      * Change Email Agent
-     * 
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
      */
     public function changeEmailAgent(Request $request, $user, $action, $type, $description)
     {
-        \Log::info(__METHOD__, ['user' => $user, 'action' => $action, 'description' => $description ,'type' => $type, 'request' => $request]);
         if (is_null($description)) {
             $data = [
                 'title' => _i('The given data was invalid'),
@@ -863,7 +862,7 @@ class UsersController extends Controller
                     'new_action' => $newAction,
                     'description' => $description
                 ];
-                \Log::info(__METHOD__, ['user' => $auditData]);
+
                 Audits::store($user, AuditTypes::$user_modification, Configurations::getWhitelabel(), $auditData);
                 $data = [
                     'title' => _i('Status changed'),
@@ -873,7 +872,7 @@ class UsersController extends Controller
                     'type' => $type
                 ];
                 return Utils::successResponse($data);
-        }  
+        }
     }
 
     /**
@@ -2148,7 +2147,6 @@ class UsersController extends Controller
         ]);
 
         try {
-            $mailgun_notifications = Configurations::getMailgunNotifications();
             $user = $request->user;
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
             $roles = Security::getUserRoles($user);
@@ -2188,10 +2186,12 @@ class UsersController extends Controller
             $ip = Utils::userIp($request);
             foreach ($userTemp as $users) {
                 $name = $users->username;
+                $action = $users->action;
+                $confirmation = $users->confirmation_email;
             }
             $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
-            if($mailgun_notifications == true){
+            if($action === ActionUser::$active && $confirmation == true){
                 $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
                 Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
             }
