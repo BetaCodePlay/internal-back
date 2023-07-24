@@ -8,7 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=13">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+    <link rel="stylesheet"
+          href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
     @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)
         <link rel="shortcut icon" href="{{ asset('commons/img/bloko-favicon.png') }}">
     @else
@@ -40,11 +41,9 @@
 
             <div class="g-pa-20">
                 @yield('content')
-                @if($mailgun_notifications == true)
-                    @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-                        @if(!empty($iagent) && $iagent == 1)
-                            @include('back.users.modals.reset-email')
-                        @endif
+                @if(!empty($action))
+                    @if($iagent == 1)
+                        @include('back.users.modals.reset-email')
                     @endif
                 @endif
             </div>
@@ -73,11 +72,6 @@
         //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
-
-    $(function () {
-        let dashboard = new Dashboard();
-        dashboard.resetEmail();
-    });
 </script>
 </body>
 </html>

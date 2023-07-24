@@ -1741,6 +1741,35 @@ class Agents {
         });
     }
 
+    // Get reset email
+    resetEmail() {
+
+        let $button = $('#reset-email');
+        let $form = $('#reset-email-form');
+
+        $button.click(function () {
+            $button.button('loading');
+
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $('#reset-email-modal').modal('hide');
+                swalSuccessWithButton(json);
+                $form.trigger('reset');
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+
+    }
+
     // Store agents
     storeAgents() {
         initSelect2();

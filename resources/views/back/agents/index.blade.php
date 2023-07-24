@@ -69,6 +69,11 @@
 @endsection
 
 @section('content')
+    @if($mailgun_notifications->active == true)
+        @if($confirmation_email == false)
+            @include('back.layout.email-verify')
+        @endif
+    @endif
     <div class="row">
         <div class="col-lg-3 col-xl-4">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -101,14 +106,14 @@
                     <div class="d-block d-sm-block d-md-none g-pa-10">
                         <div class="row">
                             <div class="col-12">
-{{--                                @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
-                                    <select name="agent_id_search" id="username_search"
-                                            class="form-control select2 username_search agent_id_search"
-                                            data-route="{{ route('agents.search-username')}}"
-                                            data-select="{{ route('agents.find-user') }}">
-                                        <option></option>
-                                    </select>
-{{--                                @endif--}}
+                                {{--                                @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+                                <select name="agent_id_search" id="username_search"
+                                        class="form-control select2 username_search agent_id_search"
+                                        data-route="{{ route('agents.search-username')}}"
+                                        data-select="{{ route('agents.find-user') }}">
+                                    <option></option>
+                                </select>
+                                {{--                                @endif--}}
 
                             </div>
                             {{--                            <div class="col-6 g-py-5">--}}
@@ -145,15 +150,18 @@
                             {{--</div>--}}
                         </div>
                     </div>
-{{--                    <div class="">--}}
-{{--                        <div id="tree" data-route="{{ route('agents.find') }}" data-json="{{ $tree }}"></div>--}}
-{{--                    </div>--}}
+                    {{--                    <div class="">--}}
+                    {{--                        <div id="tree" data-route="{{ route('agents.find') }}" data-json="{{ $tree }}"></div>--}}
+                    {{--                    </div>--}}
                     <div id="tree-pro" class="jstree" data-route="{{ route('agents.find') }}">
                         <div class="jstree-default">
                             <ul class="jstree-container-ul jstree-children">
                                 <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
-                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master" data-idtreepro="{{ auth()->user()->id }}" data-typetreepro="agent"></i><a href="javascript:void(0)" class="jstree-anchor"><i class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
-                                                                                                                                                                                                                        role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
+                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master"
+                                       data-idtreepro="{{ auth()->user()->id }}" data-typetreepro="agent"></i><a
+                                        href="javascript:void(0)" class="jstree-anchor"><i
+                                            class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                            role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
                                     </a>
                                 </li>
                             </ul>
@@ -1203,6 +1211,7 @@
             let agents = new Agents();
             let users = new Users();
             agents.dashboard();
+            agents.resetEmail();
             users.usersIps();
             //TODO TABLA PARA IPS EN EL MODAL
             users.userIpsDetails();
@@ -1233,13 +1242,26 @@
             agents.selectCategoryMaker();
             agents.statusFilter();
             @if($agent->master)
-                agents.changeAgentType();
+            agents.changeAgentType();
             @endif
             agents.relocationAgents();
             //agents.detailsUserModal();
 
             agents.treePro('{{ route('agents.get.tree.users') }}');
 
+            //script para ocultar div de notificaciones
+            $(document).ready(function () {
+                estado = 0;
+                $("#oculta").click(function () {
+                    if (estado == 0) {
+                        $('#paraocultar').slideUp('fast');
+                        estado = 1;
+                    } else {
+                        $('#paraocultar').slideDown('fast');
+                        estado = 0;
+                    }
+                });
+            });
             //New user tree structure
             {{--function treePro() {--}}
             {{--    let listUsers;--}}
