@@ -538,8 +538,8 @@ class AgentsController extends Controller
             $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
             $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
             $orderCol = [
-                'column' => 'id',
-                'order' => 'desc',
+                'column' => 'date',
+                'order' => 'asc',
             ];
             if ($request->has('order') && !empty($request->get('order'))) {
                 $orderCol = [
@@ -2387,7 +2387,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions(Request $request)
+    public function performTransactions_Original(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -2772,21 +2772,299 @@ class AgentsController extends Controller
         }
     }
 
+    /**
+     * Perform transactions
+     *
+     * @param Request $request
+     * @return Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function performTransactions(Request $request)
+    {
+        $this->validate($request, [
+            'amount' => 'required|numeric|gt:0',
+            'user' => 'required|exists:users,id',
+            'type' => 'required',
+            'transaction_type' => 'required',
+        ]);
+        try {
+            $id = auth()->user()->id;
+            $currency = session('currency');
+            $type = $request->get('type');
+            $user = $request->get('user');
+            $amount = $request->get('amount');
+            $transactionType = $request->get('transaction_type');
+            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            $ownerBalanceFinal = $ownerAgent->balance;
+            $transactionIdCreated = null;
+
+            /* If the logged in user is different from the user that the balance is added to*/
+            if ($id != $user) {
+
+                /*Insufficient balance */
+                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
+                    $data = [
+                        'title' => _i('Insufficient balance'),
+                        'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+
+                /* User Type: User */
+                if ($type == 'user') {
+                    $wallet = $request->wallet;
+
+                    $userData = $this->agentsRepo->findUser($user);
+                    if ($userData->action == ActionUser::$locked_higher) {
+                        $data = [
+                            'title' => _i('Blocked by a superior!'),
+                            'message' => _i('Contact your superior...'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$not_found, $data);
+
+                    }
+
+                    $walletData = Wallet::getByClient($userData->id, $currency);
+                    if (empty($walletData)) {
+                        Log::error('error data, wallet getByClient', [
+                            'userData' => $userData,
+                            'currency' => $currency, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+
+                    }
+                    if ($transactionType == TransactionTypes::$credit) {
+                        $uuid = Str::uuid()->toString();
+                        $additionalData = [
+                            'provider_transaction' => $uuid,
+                            'from' => $ownerAgent->username,
+                            'to' => $userData->username
+                        ];
+                        $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        if (empty($transaction) || empty($transaction->data)) {
+                            Log::debug('error data, wallet credit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
+
+                            $data = [
+                                'title' => _i('An error occurred'),
+                                'message' => _i("please contact support"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+
+                        }
+                        //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
+                        $ownerBalance = $ownerAgent->balance - $amount;
+                        $agentBalanceFinal = $walletData->data->wallet->balance;
+                    } else {
+
+                        $agentBalanceFinal = $walletData->data->wallet->balance;
+                        if ($amount > $walletData->data->wallet->balance) {
+                            $data = [
+                                'title' => _i('Insufficient balance'),
+                                'message' => _i("The user's balance is insufficient to perform the transaction"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+                        }
+
+                        $uuid = Str::uuid()->toString();
+                        $additionalData = [
+                            'provider_transaction' => $uuid,
+                            'from' => $ownerAgent->username,
+                            'to' => $userData->username
+                        ];
+                        $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        if (empty($transaction) || empty($transaction->data)) {
+                            Log::debug('error data, wallet debit', [
+                                $transaction, $request->all(), Auth::user()->id
+                            ]);
+
+                            $data = [
+                                'title' => _i('An error occurred'),
+                                'message' => _i("please contact support"),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+
+                        }
+                        //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
+                        $ownerBalance = $ownerAgent->balance + $amount;
+                    }
+                    $balance = $transaction->data->wallet->balance;
+                    $status = $transaction->status;
+                    //TODO TEST STATUS
+                    //dd($transaction);
+                    Log::info('ver status de transaction',[$transaction]);
+                    $userAdditionalData = $additionalData;
+                    $userAdditionalData['wallet_transaction'] = $transaction->data->transaction->id;
+
+                    $transactionData = [
+                        //'id' => $transactionID,
+                        'user_id' => $user,
+                        'amount' => $amount,
+                        'currency_iso' => $currency,
+                        'transaction_type_id' => $transactionType,
+                        'transaction_status_id' => TransactionStatus::$approved,
+                        'provider_id' => Providers::$agents_users,
+                        'data' => $userAdditionalData,
+                        'whitelabel_id' => Configurations::getWhitelabel()
+                    ];
+                    $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                    if (empty($ticket)) {
+                        Log::error('error data, TransactionsRepo Store ', [
+                            '$transactionData' => $transactionData,
+                            'approved' => TransactionStatus::$approved, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+
+                    }
+                    $transactionIdCreated = $ticket->id;
+                    $button = sprintf(
+                        '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
+                        route('agents.ticket', [$ticket->id]),
+                        _i('Print ticket')
+                    );
+                }else {
+                    /*TODO  User Type: Agent */
+                    return $this->performTransactionsAgent($request,$this->agentsRepo, $this->agentCurrenciesRepo, $this->transactionsRepo);
+                }
+                /*If valid status equals true*/
+                if ($status == Status::$ok) {
+                    /*$agentData: agent id and selected currency are saved */
+                    $agentData = [
+                        'agent_id' => $ownerAgent->agent,
+                        'currency_iso' => $currency
+                    ];
+                    /*$balanceData: balance is saved */
+                    $balanceData = [
+                        'balance' => $ownerBalance
+                    ];
+                    /*The balance field of that agent is added or modified in the agent_currencies table */
+                    if ($ownerAgent->username != 'wolf') {
+                        $this->agentCurrenciesRepo->store($agentData, $balanceData);
+                    }
+                    /* if $type equals user */
+                    if ($type == 'user') {
+                        /*I assign the balance */
+                        $additionalData['balance'] = $ownerBalance;
+                    }
+                    /* If the logged in user is different from wolf */
+                    if ($ownerAgent->username != 'wolf') {
+                        /*I assign the balance */
+                        $additionalData['balance'] = $ownerBalance;
+                    } else {
+                        /*I assign the balance */
+                        $additionalData['balance'] = 0;
+                    }
+                    /*it is assigned the id of the transaction created first */
+                    $additionalData['transaction_id'] = $transactionIdCreated;
+
+                    $additionalData['second_balance'] = $transactionType == TransactionTypes::$credit ? round($agentBalanceFinal, 2) : round($agentBalanceFinal, 2) - $amount;
+
+                    $transactionData = [
+                        //'id' => $transactionID,
+                        'user_id' => $id,
+                        'amount' => $amount,
+                        'currency_iso' => $currency,
+                        'transaction_type_id' => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
+                        'transaction_status_id' => TransactionStatus::$approved,
+                        'provider_id' => Providers::$agents,
+                        'data' => $additionalData,
+                        'whitelabel_id' => Configurations::getWhitelabel()
+                    ];
+
+                    $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                    if (empty($transactionFinal)) {
+                        Log::error('error data, TransactionsRepo Store', [
+                            'transactionData' => $transactionData,
+                            'approved' => TransactionStatus::$approved, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+
+                    }
+                    //new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
+                    $transactionUpdate = $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
+                    if (empty($transactionUpdate)) {
+                        Log::error('error data, TransactionsRepo Store', [
+                            'transactionIdCreated' => $transactionIdCreated,
+                            'transactionFinal' => $transactionFinal,
+                            'approved' => TransactionStatus::$approved,
+                            'transactionType' => $transactionType, $request->all(), Auth::user()->id
+                        ]);
+                        $data = [
+                            'title' => _i('An error occurred'),
+                            'message' => _i("please contact support"),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+
+                    }
+                    $data = [
+                        'title' => _i('Transaction performed'),
+                        'message' => _i('The transaction was successfully made to the user'),
+                        'close' => _i('Close'),
+                        'balance' => number_format($balance, 2),
+                        'button' => $button
+                    ];
+                    return Utils::successResponse($data);
+                }
+            } else {
+                $data = [
+                    'title' => _i('Error'),
+                    'message' => _i('You cannot make transactions to yourself'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Transfer balance between agent
+     * @param $request
+     * @param $agentsRepo
+     * @param $agentCurrenciesRepo
+     * @param $transactionsRepo
+     * @return Response
+     */
     public static function performTransactionsAgent($request, $agentsRepo, $agentCurrenciesRepo, $transactionsRepo)
     {
 
-        try {
+//        try {
             $userAuth = auth()->user();
+            $idWolf =  Auth::user()->username == 'wolf' ? Auth::user()->id : 0;
+
             $currency = session('currency');
-            $type = $request->type;
-            $userAffected = $request->get('user');
+            $userAffected = (int)$request->get('user');
             $amount = $request->amount;
             $transactionType = $request->transaction_type;
             /* verify that the user is not blocked or deactivated */
             $validateDb = $agentsRepo->statusActionByUser($userAffected);
             if (isset($validateDb->username) && $validateDb->action == ActionUser::$locked_higher || $validateDb->status == false) {
                 $data = [
-                    'title' => $validateDb->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'title' => ActionUser::getName($validateDb->action) ,
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2804,14 +3082,10 @@ class AgentsController extends Controller
             switch ($transactionType){
                 case TransactionTypes::$credit:{
                     /*consult and debit*/
-                    //TODO POR HACER
-                    // SI ES WOLF NO DEBITAR NI ACREADITAR SALDO...
-                    //$result =  $this->agentsRepo->getAndUpdateBalance('ARS',70,76,50);
-
-                    $balance = $agentsRepo->getAndUpdateBalance($currency,$userAuth->id,$userAffected,$amount);
-
+                    $balance = $agentsRepo->getAndUpdateBalance($currency,$userAuth->id,$userAffected,$amount,$idWolf);
+                    Log::notice('Balance credit',[$balance,$currency,$userAuth->id,$userAffected,$amount,$idWolf]);
                     /*error debiting*/
-                    if(isset($balance[0]->status) && !$balance[0]->status){
+                    if(isset($balance[0]->status) && !$balance[0]->status == 'false'){
                         $data = [
                             'title' => _i('Insufficient balance'),
                             'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
@@ -2830,6 +3104,9 @@ class AgentsController extends Controller
                         'balance' => $balance[0]->balance_debit,
                         'second_balance' => $balance[0]->balance_credit
                     ];
+                    $balanceReturn = $balance[0]->balance_credit;
+                    $balanceReturn2 = $balance[0]->balance_debit;
+
                     $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
 
                     /*add affected user transactions*/
@@ -2850,6 +3127,9 @@ class AgentsController extends Controller
                     $data = [
                         'title' => _i('Transaction performed'),
                         'message' => _i('The transaction was successfully made to the user'),
+                        'balance' => number_format($balanceReturn, 2),
+                        'balance_auth' => number_format($balanceReturn2, 2),
+                        'auth_balance' => Auth::user()->id,
                         'close' => _i('Close'),
                     ];
                     return Utils::successResponse($data);
@@ -2857,14 +3137,10 @@ class AgentsController extends Controller
                 }
                 case TransactionTypes::$debit:{
                     /*consult and debit*/
-                    //TODO POR HACER
-                    // SI ES WOLF NO DEBITAR NI ACREADITAR SALDO...
-                    //$result =  $this->agentsRepo->getAndUpdateBalance('ARS',70,76,50);
-
-                    $balance = $agentsRepo->getAndUpdateBalance($currency,$userAffected,$userAuth->id,$amount);
-
+                    $balance = $agentsRepo->getAndUpdateBalance($currency,$userAffected,$userAuth->id,$amount,$idWolf);
+                    Log::notice('Balance debit',[$balance,$currency,$userAffected,$userAuth->id,$amount,$idWolf]);
                     /*error debiting*/
-                    if(isset($balance[0]->status) && !$balance[0]->status){
+                    if(isset($balance[0]->status) && $balance[0]->status == 'false'){
                         $data = [
                             'title' => _i('Insufficient balance'),
                             'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
@@ -2883,6 +3159,8 @@ class AgentsController extends Controller
                         'balance' => $balance[0]->balance_debit,
                         'second_balance' => $balance[0]->balance_credit
                     ];
+                    $balanceReturn = $balance[0]->balance_debit;
+                    $balanceReturn2 = $balance[0]->balance_credit;
                     $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
 
                     /*add affected user transactions*/
@@ -2903,6 +3181,9 @@ class AgentsController extends Controller
                     $data = [
                         'title' => _i('Transaction performed'),
                         'message' => _i('The transaction was successfully made to the user'),
+                        'balance' => number_format($balanceReturn, 2),
+                        'balance_auth' => number_format($balanceReturn2, 2),
+                        'auth_balance' => Auth::user()->id,
                         'close' => _i('Close'),
                     ];
                     return Utils::successResponse($data);
@@ -2915,10 +3196,12 @@ class AgentsController extends Controller
                 'close' => _i('Close')
             ];
             return Utils::errorResponse(Codes::$forbidden, $data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
+
+//        } catch (\Exception $ex) {
+//            return [$ex,$request->all()];
+//            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+//            return Utils::failedResponse();
+//        }
     }
 
     /**

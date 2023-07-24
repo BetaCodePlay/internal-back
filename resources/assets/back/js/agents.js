@@ -1612,6 +1612,14 @@ class Agents {
 
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
+                let userInput = json.data.balance_auth;
+                let userclass = 'balanceAuth_'+json.data.auth_balance;
+                let userclass2 = '.balanceAuth_'+json.data.auth_balance;
+                document.getElementsByClassName(userclass).innerHTML = userInput;
+
+                $(userclass2).text(userInput);
+                console.log(userInput,userclass,userclass2)
+
                 //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');
                 swalSuccessWithButton(json);
@@ -1638,6 +1646,14 @@ class Agents {
 
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
+                let userInput = json.data.balance_auth;
+                let userclass = 'balanceAuth_'+json.data.auth_balance;
+                let userclass2 = '.balanceAuth_'+json.data.auth_balance;
+                document.getElementsByClassName(userclass).innerHTML = userInput;
+
+                $(userclass2).text(userInput);
+                console.log(userInput,userclass,userclass2)
+
                 //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');
                 swalSuccessWithButton(json);

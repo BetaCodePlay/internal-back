@@ -365,25 +365,21 @@ class UsersController extends Controller
                     'users' => []
                 ];
             } else {
-                if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-                    //TODO REPLICA DE TREE
-                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(), session('currency'), Configurations::getWhitelabel());
-                    $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $tree);
-                } else {
-                    $users = $this->usersRepo->advancedSearch($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode);
+                $user = Auth::user()->id;
+                if (Auth::user()->username == 'romeo') {
+                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
                 }
 
+                $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+                                
+                $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $idChildren);
                 $this->usersCollection->formatSearch($users);
 
-                if (count($users) > 0) {
-                    $data = [
-                        'users' => $users
-                    ];
-                } else {
-                    $data = [
-                        'users' => []
-                    ];
-                }
+                $data = [
+                    'users' => $users
+                ];
+
             }
             return Utils::successResponse($data);
 
@@ -825,7 +821,7 @@ class UsersController extends Controller
 
     /***
      * Change Email Agent
-     * 
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -873,7 +869,7 @@ class UsersController extends Controller
                     'type' => $type
                 ];
                 return Utils::successResponse($data);
-        }  
+        }
     }
 
     /**
@@ -1602,17 +1598,14 @@ class UsersController extends Controller
     {
         try {
             $username = strtolower($request->username);
-            if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-                $tree = $this->usersRepo->sqlTreeAllUsersSon(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
-                //TODO MIDIFICAR ARRAY IDS
-                $arrayIds = [];
-                foreach ($tree as $item => $value) {
-                    $arrayIds[] = $value->user_id;
-                }
-                $users = $this->usersRepo->searchTree($username, $arrayIds);
-            } else {
-                $users = $this->usersRepo->search($username);
+            $user = Auth::user()->id;
+            if (Auth::user()->username == 'romeo') {
+                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
             }
+            $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+
+            $users = $this->usersRepo->searchTree($username, $idChildren);
 
             $this->usersCollection->formatSearch($users);
             $data['username'] = $username;
