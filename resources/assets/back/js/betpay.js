@@ -244,6 +244,7 @@ class BetPay {
         });
     }
 
+    // Credit transactions report
     creditTransactionsReport() {
         let picker = initLitepickerEndToday();
         let $table = $('#credit-table');
