@@ -3854,6 +3854,7 @@ class AgentsCollection
 
                 foreach ($categories as $category) {
                     $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
+                    \Log::debug($excludedAgent);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     \Log::debug($agent->id);
                     \Log::debug($dataMakers);
