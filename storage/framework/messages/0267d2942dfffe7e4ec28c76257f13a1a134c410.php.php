@@ -23,36 +23,20 @@
                 </header>
                 <div class="card-block g-pa-15">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="client"><?php echo e(_i('Whitelabel')); ?></label>
-                                <select name="client" id="client" class="form-control">
-                                    <option value=""><?php echo e(_i('All Whitelabel')); ?></option>
-                                    <?php $__currentLoopData = $clients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $client): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($client->id); ?>">
-                                            <?php echo e($client->name); ?>
-
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="currency"><?php echo e(_i('Currency')); ?></label>
                                 <select name="currency" id="currency" class="form-control">
-                                    <option value=""><?php echo e(_i('All currencies')); ?></option>
-                                    <?php $__currentLoopData = $currency_client; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option
-                                            value="<?php echo e($currency->iso); ?>" <?php echo e($currency->iso == session('currency') ? 'selected' : ''); ?>>
-                                            <?php echo e($currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})"); ?>
+                                    <?php $__currentLoopData = $whitelabel_currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($currency->iso); ?>">
+                                        <?php echo e($currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})"); ?>
 
-                                        </option>
+                                    </option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="payments"><?php echo e(_i('Payment methods')); ?></label>
                                 <select name="payments" id="payments" class="form-control">
@@ -105,10 +89,6 @@
                             <thead>
                             <tr>
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                    <?php echo e(_i('Name')); ?>
-
-                                </th>
-                                <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                     <?php echo e(_i('Currency')); ?>
 
                                 </th>
@@ -137,6 +117,8 @@
             </div>
         </div>
     </div>
+    <?php echo $__env->make('back.betpay.clients.modals.watch-binance-qr', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('back.betpay.clients.modals.watch-crypto-qr', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -144,6 +126,8 @@
         $(function () {
             let betpay = new BetPay();
             betpay.clientAccount();
+            betpay.binanceQrModal();
+            betpay.cryptoQrModal();
             $(document).on('click', '.status_checkbox', function () {
                 if (!$(this).hasClass('active')) {
                     $.post('<?php echo e(route('betpay.clients.accounts.status')); ?>', {

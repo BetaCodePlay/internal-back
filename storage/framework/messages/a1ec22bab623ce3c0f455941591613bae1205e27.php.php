@@ -294,6 +294,23 @@ class ClosuresUsersTotals2023Repo
         return DB::select('SELECT * FROM site.get_closure_totals_by_username_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $username, $ownerId]);
     }
 
+
+     /**
+     * @param $whitelabel
+     * @param $currency
+     * @param $startDate
+     * @param $endDate
+     * @param $ownerId
+     * @param $username
+     * @param $limit
+     * @param $page
+     * @return array
+     */
+    public function getClosureByUsername($whitelabel, $currency, $startDate, $endDate, $ownerId, $username, $limit, $page)
+    {
+        return DB::select('SELECT * FROM site.get_closure_by_username(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$username,$limit,$page]);
+    }
+
     /**
      * Closure Totals hour by username
      * @param int $whitelabel Whitelabel Id
@@ -330,6 +347,7 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureTotalsByWhitelabelAndProviders(int $whitelabel, string $currency, string $startDate, string $endDate)
     {
+
         return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers(?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate]);
     }
 
@@ -363,6 +381,39 @@ class ClosuresUsersTotals2023Repo
     }
 
     /**
+     * Sql
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param int $userId User Id
+     * @param array $arrayProvider Array Provider Id
+     * @return array
+     */
+    public function getClosureTotalsByWhitelabelAndProvidersAndUserHourSql(int $whitelabel, string $currency, string $startDate, string $endDate, int $userId, string $arrayProvider)
+    {
+        return DB::select('
+                                SELECT
+                                    p.id as id_provider,
+                                    p.name as provider_name,
+                                    case p.id when cut.provider_id then (ROUND(SUM(played)::numeric, 2)) else 0 end total_played,
+                                    case p.id when cut.provider_id then (ROUND(SUM(won)::numeric,2)) else 0 end  total_won,
+                                    case p.id when cut.provider_id then (SUM(bets)::numeric) else 0 end  total_bet,
+                                    case p.id when cut.provider_id then (ROUND(SUM(profit)::numeric,2)) else 0 end  total_profit,
+                                    case p.id when cut.provider_id then (ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100),2)) else 0 end  rtp
+                                    FROM site.providers p
+                                    LEFT  JOIN  public.closures_users_totals_2023_hour cut ON cut.provider_id = p.id
+                                    WHERE (p.id=any(?) )
+                                    AND (cut.whitelabel_id = ? or cut.whitelabel_id is null)
+                                    AND (cut.currency_iso = ? or cut.currency_iso is null)
+                                    AND (cut.start_date BETWEEN ? AND ? or cut.start_date is null)
+                                    AND (cut.user_id =  ? or cut.user_id  is null)
+                                    GROUP BY p.id, p.name, cut.provider_id
+                                    ORDER BY p.id DESC
+                                    ', [$arrayProvider,$whitelabel, $currency, $startDate, $endDate, $userId]);
+    }
+
+    /**
      * FOR ADMIN STATE FINANCIAL
      * @param int $whitelabel Whitelabel Id
      * @param string $currency Iso Currency
@@ -374,22 +425,38 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureTotalsByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
     {
+
         return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
     }
 
     /**
-     * FOR ADMIN STATE FINANCIAL Hour
+     * STATE FINANCIAL BY PROVIDERS TOTALS
      * @param int $whitelabel Whitelabel Id
      * @param string $currency Iso Currency
      * @param string $startDate Date Start
      * @param string $endDate Date End
-     * @param int $ownerId User Id Owner
-     * @param array $arrayProvider Array Provider Id
+     * @param int $limit Cant by items
+     * @param int $page Cant by page
      * @return array
      */
-    public function getClosureTotalsHourByWhitelabelAndProvidersWithSon(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
+    public function getClosureTotalsByProviders(int $whitelabel, string $currency, string $startDate, string $endDate, $ownerId, int $limit, int $page)
     {
-        return DB::select('SELECT * FROM site.get_closure_totals_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
+        return DB::select('SELECT * FROM site.get_closure_totals_by_providers(?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $limit, $page]);
+    }
+
+    /**
+     * STATE FINANCIAL BY PROVIDERS
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param int $limit Cant by items
+     * @param int $page Cant by page
+     * @return array
+     */
+    public function getClosureByProviders(int $whitelabel, string $currency, string $startDate, string $endDate, $ownerId, int $limit, int $page)
+    {
+        return DB::select('SELECT * FROM site.get_closure_by_providers(?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $limit, $page]);
     }
 
     /**
@@ -400,7 +467,7 @@ class ClosuresUsersTotals2023Repo
      * @param string $startDate Date Start
      * @param string $endDate Date End
      * @param int $ownerId User Id Owner
-     * @param array $arrayProvider Array Provider Id
+     * @param string $arrayProvider Array Provider Id
      * @return array
      */
     public function getClosureTotalsByWhitelabelAndProvidersWithSonHour(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
@@ -408,9 +475,39 @@ class ClosuresUsersTotals2023Repo
         return DB::select('SELECT * FROM public.get_closure_totals_hour_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
     }
 
-
-
-
+    /**
+     * Sql
+     * FOR ADMIN STATE FINANCIAL FOR HOUR
+     * @param int $whitelabel Whitelabel Id
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @param int $ownerId User Id Owner
+     * @param string $arrayProvider Array Provider Id
+     * @return array
+     */
+    public function getClosureTotalsByWhitelabelAndProvidersWithSonHourSql(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
+    {
+        return DB::select('
+                                SELECT
+                                    p.id as id_provider,
+                                    p.name as provider_name,
+                                    case p.id when cut.provider_id then (ROUND(SUM(played)::numeric, 2)) else 0 end total_played,
+                                    case p.id when cut.provider_id then (ROUND(SUM(won)::numeric,2)) else 0 end  total_won,
+                                    case p.id when cut.provider_id then (SUM(bets)::numeric) else 0 end  total_bet,
+                                    case p.id when cut.provider_id then (ROUND(SUM(profit)::numeric,2)) else 0 end  total_profit,
+                                    case p.id when cut.provider_id then (ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100),2)) else 0 end  rtp
+                                    FROM site.providers p
+                                    LEFT  JOIN  public.closures_users_totals_2023_hour cut ON cut.provider_id = p.id
+                                    WHERE (p.id=any(?) )
+                                    AND (cut.whitelabel_id = ? or cut.whitelabel_id is null)
+                                    AND (cut.currency_iso = ? or cut.currency_iso is null)
+                                    AND (cut.start_date BETWEEN ? AND ? or cut.start_date is null)
+                                    AND (cut.user_id in (SELECT * FROM site.get_ids_children_from_father(?,?,?)) or cut.user_id  is null)
+                                    GROUP BY p.id, p.name, cut.provider_id
+                                    ORDER BY p.id DESC
+                                    ', [$arrayProvider,$whitelabel, $currency, $startDate, $endDate, $ownerId,$currency,$whitelabel]);
+    }
 
 
     /** FOR AGENT STATE FINANCIAL
@@ -504,9 +601,9 @@ class ClosuresUsersTotals2023Repo
         return DB::select('select p.id,p.name from site.providers p
                             inner join site.credentials c on c.provider_id = p.id
                             where c.currency_iso = ?
-                            AND c.status = ?
+                            --AND c.status = ?
                             AND c.client_id = ?
-                            order by p.id desc ', [$currency, $active, $whitelabel]);
+                            order by p.id desc ', [$currency, $whitelabel]);
     }
 
     /**

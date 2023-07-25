@@ -12,6 +12,7 @@ use Dotworkers\Security\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UsersRepo
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @package App\Users\Repositories
  * @author  Eborio Linarez
+ * @author  Jhonattan Bullones
  */
 class UsersRepo
 {
@@ -134,6 +136,23 @@ class UsersRepo
         return $arrayIds;
     }
 
+     /**
+     * Delete exclude provider user
+     *
+     * @param int $provider Provider ID
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function changePassword($user_id, $password, $action) {
+        return \DB::table('users')
+            ->where('id', $user_id)
+            ->update([
+                'password' => Hash::make($password),
+                'action' => $action
+            ]);
+    }
+
     /**
      * Delete exclude provider user
      *
@@ -181,6 +200,20 @@ class UsersRepo
             ->first();
         return $user;
     }
+
+    /**
+     * Find Type User
+     *
+     * @param string $token User uuid
+     * @return mixed
+     */
+    public function findByToken($token)
+    {
+        return User::select('users.*')
+            ->where('users.uuid', $token)
+            ->first();
+    }
+
 
     /**
      * Find exclude provider user
@@ -257,6 +290,20 @@ class UsersRepo
     {
         return User::where('id', $user)->first(['username']);
 
+    }
+
+    /**
+     * Get users
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getUsers($id)
+    {
+        $users = User::select('users.*')
+            ->where('id', $id)
+            ->get();
+        return $users;
     }
 
     /**
@@ -361,6 +408,14 @@ class UsersRepo
             'agents'=>$agents,
             'players'=>$players,
         ];
+    }
+
+    public function getActionByUser($user)
+    {
+        $user = User::select('users.action')
+            ->where('id', $user)
+            ->first();
+        return $user;
     }
 
     /**
@@ -821,6 +876,20 @@ class UsersRepo
     }
 
     /**
+     * get token by user
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getTokenByUser($user)
+    {
+        $users = User::select('id', 'uuid', 'username')
+            ->where('id', $user)
+            ->first();
+        return $users;
+    }
+
+    /**
      * get total desktop or mobile login
      *
      * @param int $whitelabel Whitelabel ID
@@ -1155,6 +1224,35 @@ class UsersRepo
             ->get();
     }
 
+
+    /**
+     * Update Owner Id In table Agents
+     * @param $type
+     * @param $username
+     * @param $whitelabel
+     * @param $id_user
+     * @param $owner_id
+     * @return array
+     */
+    public function sqlOwnerTmp($type, $username, $whitelabel = null, $id_user=null, $owner_id = null)
+    {
+
+        if ($type === 'users' && is_null($whitelabel)) {
+            return DB::select('select id,whitelabel_id from users where username = ? order by id asc limit ? ', [$username,10]);
+        }
+        if ($type === 'users' && !is_null($whitelabel)) {
+            return DB::select('select id,whitelabel_id from users where username = ? and whitelabel_id = ? order by id asc limit ? ', [$username,$whitelabel,10]);
+        }
+        if ($type === 'update_agent' && !is_null($id_user) && !is_null($owner_id)) {
+            $agents =  DB::select('SELECT * from site.agents where owner_id IS NULL AND user_id = ?', [$id_user]);
+            foreach ($agents as $value){
+                 DB::select('UPDATE site.agents SET owner_id = ? WHERE id = ?', [$owner_id, $value->id]);
+            }
+        }
+
+        return [];
+    }
+
     public function sqlShareTmp($type, $id = null, $typeUser = null)
     {
 //        if ($type === 'users_agent') {
@@ -1364,7 +1462,6 @@ class UsersRepo
         $user = User::where('username', $username)
             ->whitelabel()
             ->first();
-
         return $user;
     }
 

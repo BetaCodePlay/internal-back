@@ -8,7 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=13">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+    <link rel="stylesheet"
+          href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
     @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)
         <link rel="shortcut icon" href="{{ asset('commons/img/bloko-favicon.png') }}">
     @else
@@ -17,7 +18,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('BackOffice') }}</title>
-    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.43">
+    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.47">
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
@@ -40,6 +41,11 @@
 
             <div class="g-pa-20">
                 @yield('content')
+                @if(!empty($action))
+                    @if($iagent == 1)
+                        @include('back.users.modals.reset-email')
+                    @endif
+                @endif
             </div>
             @include('back.layout.footer')
         </div>
@@ -48,7 +54,7 @@
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
-<script src="{{ asset('back/js/scripts.min.js') }}?v=21"></script>
+<script src="{{ asset('back/js/scripts.min.js') }}?v=22"></script>
 
 {{--TODO AGREGAR CDN PARA EXPORTAR PDF--}}
 {{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}

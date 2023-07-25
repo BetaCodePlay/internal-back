@@ -10,13 +10,22 @@
             <form action="{{ route('agents.move-agent') }}" id="move-agent-form" method="post">
                 <div class="modal-body">
                     <div class="row row-div">
-                        <div class="col-sm-6">
+
+                        <div class="col-lg-6 col-overauto">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> {{_i('user')}}: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="userSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('email')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="emailSet"></span>
                                 </div>
                             </div>
                             <div class="row mb-1">
@@ -60,14 +69,34 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-lg-6 col-overauto">
                             <div class="row mb-1">
-                                <div class="offset-md-1 col-md-3">
+                                <div class="col-md-12">
                                    <h5><strong> {{_i('Estructura')}}</strong></h5>
                                 </div>
                             </div>
-                            <div class="col-8 appendTreeFather">
+                            <div class="col-12 appendTreeFather">
                                 <h5 style="text-align: center;"><strong> {{_i('Loading')}}...</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <br>
+                            <div class="table-responsive">
+                                <table class="table table-bordered w-100" id="ipTableIps" data-route="{{ route('users.users-ips-data') }}">
+                                    <thead>
+                                        <tr>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                {{ _i('IP') }}
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                {{ _i('Quantity') }}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>

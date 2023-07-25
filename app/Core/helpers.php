@@ -220,7 +220,7 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Dashboar'),
+                        'text' => _i('Dashboard'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
                         'params' => [],

@@ -10,6 +10,7 @@
             <form action="<?php echo e(route('agents.move-agent')); ?>" id="move-agent-form" method="post">
                 <div class="modal-body">
                     <div class="row row-div">
+
                         <div class="col-sm-6">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
@@ -17,6 +18,14 @@
                                 </div>
                                 <div class="col-md-8">
                                     <span class="userSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> <?php echo e(_i('email')); ?>: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="emailSet"></span>
                                 </div>
                             </div>
                             <div class="row mb-1">
@@ -35,7 +44,7 @@
                                     <span class="typeSet"></span>
                                 </div>
                             </div>
-                            <div class="row mb-1">
+                            <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> <?php echo e(_i('agents')); ?>: </strong>
                                 </div>
@@ -43,7 +52,7 @@
                                     <span class="agentsSet"></span>
                                 </div>
                             </div>
-                            <div class="row mb-1">
+                            <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> <?php echo e(_i('players')); ?>: </strong>
                                 </div>
@@ -67,6 +76,29 @@
                                 </div>
                             </div>
                             <div class="col-8 appendTreeFather">
+                                <h5 style="text-align: center;"><strong> <?php echo e(_i('Loading')); ?>...</strong></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <br>
+                            <div class="table-responsive">
+                                <table class="table table-bordered w-100" id="ipTableIps" data-route="<?php echo e(route('users.users-ips-data')); ?>">
+                                    <thead>
+                                        <tr>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('IP')); ?>
+
+                                            </th>
+                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                                <?php echo e(_i('Quantity')); ?>
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -438,30 +438,31 @@ class BetPayController extends Controller
     public function clientAccountListData(Request $request)
     {
         try {
-            $currency = $request->currency;
             $paymentMethod = $request->payment_method;
-            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $currency);
-            $client = $credential ? $credential->data->client_credentials_grant_id : null;
-            $betPayToken = session('betpay_client_access_token');
-            $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
-            if (!is_null($betPayToken)) {
-                $requestData = [
-                    'client' => $client,
-                    'currency' => $currency,
-                    'payment_method' => $paymentMethod,
-                ];
-                $curlClientAccount = Curl::to( $urlClientAccount )
-                    ->withData($requestData)
-                    ->withHeader('Accept: application/json')
-                    ->withHeader("Authorization: Bearer $betPayToken")
-                    ->get();
-                $responseClientAccount = json_decode($curlClientAccount);
-                if ($responseClientAccount->status == Status::$ok) {
-                    $accounts = $responseClientAccount->data->accounts;
-                    $this->accountsCollection->formatClientAccount($accounts);
-                }else{
-                    $accounts = [];
-                }
+            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
+            if (!is_null($credential)) {
+                $betPayToken = session('betpay_client_access_token');
+                $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
+                if (!is_null($betPayToken)) {
+                    $requestData = [
+                        'currency' => $request->currency,
+                        'payment_method' => $paymentMethod,
+                    ];
+                    $curlClientAccount = Curl::to( $urlClientAccount )
+                        ->withData($requestData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->get();
+                    $responseClientAccount = json_decode($curlClientAccount);
+                    if ($responseClientAccount->status == Status::$ok) {
+                        $accounts = $responseClientAccount->data->accounts;
+                        $this->accountsCollection->formatClientAccount($accounts);
+                    }else{
+                        $accounts = [];
+                    }  
+                } 
+            }else{
+                $accounts = [];
             }    
             $data = [
                 'accounts' => $accounts
@@ -486,7 +487,7 @@ class BetPayController extends Controller
             $data['whitelabels'] = $this->whitelabelsRepo->all();
             $data['currency_client'] = $this->currenciesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
 
             if (!is_null($betPayToken)) {
@@ -526,7 +527,7 @@ class BetPayController extends Controller
             $data['currency_client'] = $this->currenciesRepo->all();
             $data['countries'] = $this->countriesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)

@@ -253,7 +253,7 @@ class TransactionsCollection
             }
 
             $transaction->details = '<ul>';
-            
+
             switch ($paymentMethod) {
                 case PaymentMethods::$cryptocurrencies:
                 {
@@ -310,6 +310,16 @@ class TransactionsCollection
                         '<li><strong>%s</strong>: %s</li>',
                         _i('Date'),
                         Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency'),
+                        $transaction->data->cryptocurrency
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Cryptocurrency amount'),
+                        $transaction->data->cryptocurrency_amount
                     );
                     break;
                 }

@@ -41,6 +41,14 @@
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            <?php echo e(_i('Amount cryptocurrency')); ?>
+
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            <?php echo e(_i('Cryptocurrency')); ?>
+
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             <?php echo e(_i('Origin Account')); ?>
 
                         </th>

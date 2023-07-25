@@ -6,6 +6,7 @@ use App\Agents\Repositories\AgentsRepo;
 use App\BetPay\Collections\AccountsCollection;
 use App\BonusSystem\Repositories\CampaignsRepo;
 use App\Core\Core;
+use App\Users\Mailers\Users;
 use App\Core\Notifications\TransactionNotAllowed;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
@@ -22,10 +23,13 @@ use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\DocumentStatus;
 use App\Users\Mailers\Activate;
+use App\Users\Mailers\Validate;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UserDocumentsRepo;
 use App\Users\Repositories\UsersRepo;
+use App\Core\Repositories\ProvidersRepo;
+use App\Core\Repositories\ProvidersTypesRepo;
 use App\Users\Repositories\UsersTempRepo;
 use App\Users\Rules\Age;
 use App\Users\Rules\DNI;
@@ -63,7 +67,6 @@ use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use App\Whitelabels\Repositories\WhitelabelsRepo;
 use App\Core\Repositories\CurrenciesRepo;
-use App\Core\Repositories\ProvidersRepo;
 use App\Audits\Enums\AuditTypes;
 use App\Users\Import\TransactionsByLotImport;
 use App\CRM\Repositories\SegmentsRepo;
@@ -71,6 +74,7 @@ use App\CRM\Collections\SegmentsCollection;
 use App\Users\Repositories\AutoLockUsersRepo;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class UsersController
@@ -168,6 +172,13 @@ class UsersController extends Controller
      */
     private $providersRepo;
 
+     /**
+     * ProvidersTypesRepo
+     *
+     * @var ProvidersTypesRepo
+     */
+    private $providersTypesRepo;
+
     /**
      * ReportsCollection
      *
@@ -227,31 +238,32 @@ class UsersController extends Controller
      * @param WhitelabelsRepo $whitelabelsRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param ProvidersRepo $providersRepo
+     * @param ProvidersTypesRepo $providersTypesRepo
      * @param UserDocumentsRepo $userDocumentsRepo
      * @param SegmentsRepo $segmentsRepo
      * @param SegmentsCollection $segmentsCollection
      * @param AutoLockUsersRepo $autoLockUsersRepo
      */
     public function __construct(
-        UsersRepo               $usersRepo,
-        UsersCollection         $usersCollection,
-        ProfilesRepo            $profilesRepo,
-        CountriesRepo           $countriesRepo,
-        GamesRepo               $gamesRepo,
-        UsersTempRepo           $usersTempRepo,
+        UsersRepo $usersRepo,
+        UsersCollection $usersCollection,
+        ProfilesRepo $profilesRepo,
+        CountriesRepo $countriesRepo,
+        GamesRepo $gamesRepo,
+        UsersTempRepo $usersTempRepo,
         ClosuresUsersTotalsRepo $closuresUsersTotalsRepo,
-        AgentsRepo              $agentsRepo,
-        AuditsRepo              $auditsRepo,
-        WhitelabelsRepo         $whitelabelsRepo,
-        CurrenciesRepo          $currenciesRepo,
-        ProvidersRepo           $providersRepo,
-        ReportsCollection       $reportsCollection,
-        UserDocumentsRepo       $userDocumentsRepo,
-        SegmentsRepo            $segmentsRepo,
-        SegmentsCollection      $segmentsCollection,
-        AutoLockUsersRepo       $autoLockUsersRepo
-    )
-    {
+        AgentsRepo $agentsRepo,
+        AuditsRepo $auditsRepo,
+        WhitelabelsRepo $whitelabelsRepo,
+        CurrenciesRepo $currenciesRepo,
+        ProvidersRepo $providersRepo,
+        ProvidersTypesRepo $providersTypesRepo,
+        ReportsCollection $reportsCollection,
+        UserDocumentsRepo $userDocumentsRepo,
+        SegmentsRepo $segmentsRepo,
+        SegmentsCollection $segmentsCollection,
+        AutoLockUsersRepo $autoLockUsersRepo
+    ) {
         $this->usersRepo = $usersRepo;
         $this->usersCollection = $usersCollection;
         $this->reportsCollection = $reportsCollection;
@@ -267,6 +279,7 @@ class UsersController extends Controller
         $this->whitelabelsRepo = $whitelabelsRepo;
         $this->currenciesRepo = $currenciesRepo;
         $this->providersRepo = $providersRepo;
+        $this->providersTypesRepo = $providersTypesRepo;
         $this->userDocumentsRepo = $userDocumentsRepo;
         $this->segmentsRepo = $segmentsRepo;
         $this->segmentsCollection = $segmentsCollection;
@@ -591,21 +604,21 @@ class UsersController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function blockAgent($user,$lock_type,$fake,$description = null)
+    public function blockAgent($user, $lock_type, $fake, $description = null)
     {
 
         try {
 
-          $rules = [
+            $rules = [
                 'user_id' => ['required', 'exists:users,id'],
                 'lock_type' => ['required', 'integer'],
                 'description' => ['required'],
             ];
 
             $validator = Validator::make([
-                'user_id'=>$user,
-                'lock_type'=>$lock_type,
-                'description'=>$description
+                'user_id' => $user,
+                'lock_type' => $lock_type,
+                'description' => $description
             ], $rules, $this->custom_message());
 
             if ($validator->fails()) {
@@ -615,7 +628,7 @@ class UsersController extends Controller
                     'message' => __('You need to fill in all the required fields'),
                     'data' => $validator->errors()->getMessages(),
                     'close' => _i('Close'),
-                    'type'=>'info'
+                    'type' => 'info'
                 ];
 
                 return Utils::errorResponse(Codes::$forbidden, $response);
@@ -634,24 +647,24 @@ class UsersController extends Controller
 
                 $typeAudit = $this->auditsRepo->lastByType($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel());
                 $father = false;
-                if(!is_null($typeAudit) && isset($typeAudit->data->user_id)){
-                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id,Auth::id());
-                    if($typeAudit->data->user_id == Auth::id()){
+                if (!is_null($typeAudit) && isset($typeAudit->data->user_id)) {
+                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id, Auth::id());
+                    if ($typeAudit->data->user_id == Auth::id()) {
                         $father = true;
                     }
                 }
 
-                if ($type == ActionUser::$active &&  $father) {
+                if ($type == ActionUser::$active && $father) {
                     $data = [
                         'action' => ActionUser::$active,
                         'status' => true,
                     ];
-                    $statusUpdate =  true;
+                    $statusUpdate = true;
                 }
 
             }
 
-            if($statusUpdate){
+            if ($statusUpdate) {
                 $this->usersRepo->update($user, $data);
 
                 $auditData = [
@@ -678,7 +691,7 @@ class UsersController extends Controller
                 'title' => ActionUser::getName(ActionUser::$locked_higher),
                 'message' => __('This process requires superior access'),
                 'close' => _i('Close'),
-                'type'=>'info'
+                'type' => 'info'
             ];
 
             return Utils::errorResponse(Codes::$forbidden, $response);
@@ -829,7 +842,7 @@ class UsersController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             } else {
-                $newStatus = (bool)!$status;
+                $newStatus = (bool) !$status;
                 $userData = [
                     'status' => $newStatus
                 ];
@@ -1012,13 +1025,12 @@ class UsersController extends Controller
      */
     public function details(
         WalletsCollection $walletsCollection,
-        TransactionsRepo  $transactionsRepo,
+        TransactionsRepo $transactionsRepo,
         ReportsCollection $reportsCollection,
-        CampaignsRepo     $campaignsRepo,
-                          $id,
-                          $currency = null
-    )
-    {
+        CampaignsRepo $campaignsRepo,
+        $id,
+        $currency = null
+    ) {
         $user = $this->usersRepo->find($id);
         $userCurrencies = $this->usersRepo->getCurrencyUser($id);
         $currencies = [];
@@ -1349,7 +1361,7 @@ class UsersController extends Controller
     public function excludeProviderUserDelete($user, $category, $currency)
     {
         try {
-            $user = (int)$user;
+            $user = (int) $user;
             $this->usersRepo->deleteExcludeMakersUser($category, $user, $currency);
             $data = [
                 'title' => _i('User activated'),
@@ -1390,7 +1402,7 @@ class UsersController extends Controller
                         'users' => []
                     ];
                 }
-            }else{
+            } else {
                 $data = [
                     'users' => []
                 ];
@@ -1475,7 +1487,7 @@ class UsersController extends Controller
                         'updated_at' => $date
                     ];
                     $this->usersRepo->updateExcludeMakersUser($currency, $userToUpdate['category'], $userData->id, $data);
-                }   
+                }
                 $auditData = [
                     'ip' => Utils::userIp($request),
                     'user_id' => auth()->user()->id,
@@ -2014,6 +2026,63 @@ class UsersController extends Controller
     }
 
     /**
+     * Validate email
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function resetEmail(Request $request)
+    {
+        $this->validate($request, [
+            'email' => ['required', new Email()]
+        ]);
+
+        try {
+            $user = auth()->user()->id;
+            $tokenUser = $this->usersRepo->getUsers($user);
+            foreach($tokenUser as $users){
+                $token = $users->uuid;
+                $username = $users->username;
+            }
+            $email = $request->email;
+            $url = route('users.validate', [$token, $email]);
+            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+            if (!is_null($uniqueEmail)) {
+                $data = [
+                    'title' => _i('Email in use'),
+                    'message' => _i('The indicated email is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+
+            }else {
+                if (!$this->validateEmail($email)) {
+                    $data = [
+                        'title' => _i('Invalid email'),
+                        'message' => _i('The email entered is invalid or does not exist'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+            }
+            $whitelabelId = Configurations::getWhitelabel();
+            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$validate_email);
+            Mail::to($email)->send(new Validate($whitelabelId, $url, $username, $emailConfiguration, EmailTypes::$validate_email));
+
+            $data = [
+                'title' => _i('Email validation'),
+                'message' => _i('A message has been sent to activate your mail reset'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Reset password
      *
      * @param Request $request
@@ -2030,9 +2099,10 @@ class UsersController extends Controller
         try {
             $user = $request->user;
             $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            $roles = Security::getUserRoles($user);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => $userData->action == ActionUser::$locked_higher ? _i('Blocked by a superior!'):_i('Deactivated user'),
+                    'title' => ActionUser::getName($userData->action),
                     'message' => _i('Contact your superior...'),
                     'close' => _i('Close')
                 ];
@@ -2041,9 +2111,18 @@ class UsersController extends Controller
             }
 
             $password = $request->password;
-            $userData = [
-                'password' => $password
-            ];
+            if($userData->type_user == TypeUser::$player ) {
+                $userData = [
+                    'password' => $password,
+                    'action' =>  ActionUser::$active
+                ];
+            } else {
+                $userData = [
+                    'password' => $password,
+                    'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
+                ];
+            }
+
             $this->usersRepo->update($user, $userData);
 
             $auditData = [
@@ -2053,7 +2132,15 @@ class UsersController extends Controller
                 'password' => $password
             ];
             Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
-
+            $userTemp = $this->usersRepo->getUsers($user);
+            $ip = Utils::userIp($request);
+            foreach ($userTemp as $users) {
+                $name = $users->username;
+            }
+            $url = route('core.dashboard');
+            $whitelabelId = Configurations::getWhitelabel();
+            $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
+            Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
             $data = [
                 'title' => _i('Password reset'),
                 'message' => _i('Password was successfully reset'),
@@ -2103,21 +2190,18 @@ class UsersController extends Controller
                         $email = "{$user}@betsweet.com";
 
                         switch ($user) {
-                            case 'wolf':
-                            {
-                                $password = env('MAIN_SUPPORT_PASSWORD');
-                                break;
-                            }
-                            case 'panther':
-                            {
-                                $password = env('DEVELOP_PASSWORD');
-                                break;
-                            }
-                            default:
-                            {
-                                $password = env('SUPPORT_PASSWORD');
-                                break;
-                            }
+                            case 'wolf': {
+                                    $password = env('MAIN_SUPPORT_PASSWORD');
+                                    break;
+                                }
+                            case 'panther': {
+                                    $password = env('DEVELOP_PASSWORD');
+                                    break;
+                                }
+                            default: {
+                                    $password = env('SUPPORT_PASSWORD');
+                                    break;
+                                }
                         }
                     }
 
@@ -2132,6 +2216,7 @@ class UsersController extends Controller
                         'whitelabel_id' => $whitelabel,
                         'web_register' => false,
                         'main' => true,
+                        'action'=>ActionUser::$active
                     ];
                     $profileData = [
                         'country_iso' => $request->country,
@@ -2315,7 +2400,7 @@ class UsersController extends Controller
             $gender = $request->gender;
             $level = $request->level;
             $timezone = $request->timezone;
-            $phone = (int)$request->phone;
+            $phone = (int) $request->phone;
             $birthDate = is_null($request->birth_date) ? null : Carbon::createFromFormat('d-m-Y', $request->birth_date);
             $uniqueEmail = $this->usersRepo->uniqueEmailByID($id, $email);
             $state = $request->state;
@@ -2591,5 +2676,50 @@ class UsersController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Validate email
+     *
+     * @param Request $request
+     * @param string $token User activation token
+     * @param string $email User activation email
+     * @return Application|Factory|View
+     */
+    public function validateEmailByAgent(Request $request, $token, $email)
+    {
+            $user = $this->usersRepo->findByToken($token);
+            if (!is_null($user)) {
+                $userData = [
+                    'email' => $email,
+                    'action' => ActionUser::$active
+                ];
+                $this->usersRepo->update($user->id, $userData);
+            }
+            $route = route('auth.logout');
+
+            return redirect()->to($route);
+    }
+
+    /**
+     * Validate email
+     *
+     * @param string $email Email to validate
+     * @return bool
+     */
+    private function validateEmail($email)
+    {
+        $data = [
+            'address' => $email
+        ];
+        \Log::debug(__METHOD__, ['email' => $email]);
+        $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
+            ->withOption('HTTPAUTH', CURLAUTH_BASIC)
+            ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
+            ->withData($data)
+            ->post();
+        $response = json_decode($curl);
+        \Log::debug(__METHOD__, ['response' => $response, 'curl' => $curl]);
+        return $response->result == 'deliverable';
     }
 }

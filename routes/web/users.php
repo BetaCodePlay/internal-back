@@ -48,6 +48,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@bonusTransactions'
     ]);
 
+    // Change email agent
+    Route::get('change-email-agent/{user}/{action}/{type}/{description?}', [
+        'as' => 'users.change-email-agent',
+        'uses' => 'UsersController@changeEmailAgent'
+    ]);
+
     // Change user status
     Route::get('change-status/{user}/{status}/{type}/{description?}', [
         'as' => 'users.change-status',
@@ -180,6 +186,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@pointsTransactions'
     ]);
 
+    // Reset user email
+    Route::post('reset-email', [
+        'as' => 'users.reset-email',
+        'uses' => 'UsersController@resetEmail'
+    ]);
+
     // Reset user password
     Route::post('reset-password', [
         'as' => 'users.reset-password',
@@ -307,6 +319,11 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@unlockBalance'
     ]);
 
+    // Validate agents email
+    Route::get('validate/{token?}/{email?}', [
+        'as' => 'users.validate',
+        'uses' => 'UsersController@validateEmailByAgent'
+    ]);
 
     Route::group(['prefix' => 'profiles'], function () {
 

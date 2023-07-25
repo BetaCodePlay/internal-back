@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.makers',
         'uses' => 'CoreController@makers'
     ]);
+
 });
 
 // Change language

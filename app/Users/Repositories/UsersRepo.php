@@ -12,6 +12,7 @@ use Dotworkers\Security\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UsersRepo
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @package App\Users\Repositories
  * @author  Eborio Linarez
+ * @author  Jhonattan Bullones
  */
 class UsersRepo
 {
@@ -134,6 +136,23 @@ class UsersRepo
         return $arrayIds;
     }
 
+     /**
+     * Delete exclude provider user
+     *
+     * @param int $provider Provider ID
+     * @param int $user User ID
+     * @param string $currency Currency ISO
+     * @return mixed
+     */
+    public function changePassword($user_id, $password, $action) {
+        return \DB::table('users')
+            ->where('id', $user_id)
+            ->update([
+                'password' => Hash::make($password),
+                'action' => $action
+            ]);
+    }
+
     /**
      * Delete exclude provider user
      *
@@ -181,6 +200,20 @@ class UsersRepo
             ->first();
         return $user;
     }
+
+    /**
+     * Find Type User
+     *
+     * @param string $token User uuid
+     * @return mixed
+     */
+    public function findByToken($token)
+    {
+        return User::select('users.*')
+            ->where('users.uuid', $token)
+            ->first();
+    }
+
 
     /**
      * Find exclude provider user
@@ -257,6 +290,20 @@ class UsersRepo
     {
         return User::where('id', $user)->first(['username']);
 
+    }
+
+    /**
+     * Get users
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getUsers($id)
+    {
+        $users = User::select('users.*')
+            ->where('id', $id)
+            ->get();
+        return $users;
     }
 
     /**
@@ -361,6 +408,14 @@ class UsersRepo
             'agents'=>$agents,
             'players'=>$players,
         ];
+    }
+
+    public function getActionByUser($user)
+    {
+        $user = User::select('users.action')
+            ->where('id', $user)
+            ->first();
+        return $user;
     }
 
     /**
@@ -821,6 +876,20 @@ class UsersRepo
     }
 
     /**
+     * get token by user
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public function getTokenByUser($user)
+    {
+        $users = User::select('id', 'uuid', 'username')
+            ->where('id', $user)
+            ->first();
+        return $users;
+    }
+
+    /**
      * get total desktop or mobile login
      *
      * @param int $whitelabel Whitelabel ID
@@ -1140,7 +1209,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "%$username%")
+            ->where('username', 'ilike', '%'.$username.'%')
             ->orderBy('username', 'ASC')
             ->get();
     }
@@ -1149,7 +1218,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "%$username%")
+            ->where('username', 'ilike', '%'.$username.'%')
             ->orderBy('username', 'ASC')
             ->whereIn('id', $arrayUsers)
             ->get();
@@ -1393,7 +1462,6 @@ class UsersRepo
         $user = User::where('username', $username)
             ->whitelabel()
             ->first();
-
         return $user;
     }
 

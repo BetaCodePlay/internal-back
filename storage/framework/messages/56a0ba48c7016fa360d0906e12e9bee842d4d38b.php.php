@@ -27,6 +27,13 @@
                                             class="form-text text-muted"><?php echo e(_i('The username cannot be changed later')); ?></small>
                                     </div>
                                 </div>
+
+
+
+
+
+
+
                                 <div class="col-12 col-sm-6">
                                     <label for="password"><?php echo e(_i('Password')); ?></label>
                                     <div class="input-group">

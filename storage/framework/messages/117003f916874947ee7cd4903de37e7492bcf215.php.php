@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="<?php echo e($favicon); ?>">
     <link rel="apple-touch-icon" sizes="114x114" href="<?php echo e($favicon); ?>">
     <title><?php echo e($title ?? _i('BackOffice')); ?></title>
-    <link rel="stylesheet" href="<?php echo e(asset('commons/css/template.min.css')); ?>?v=0.30">
+    <link rel="stylesheet" href="<?php echo e(asset('commons/css/template.min.css')); ?>?v=0.43">
     <?php echo $__env->yieldContent('styles'); ?>
     <style>
         li.has-active .u-side-nav-opened {
@@ -38,26 +38,13 @@
                 <?php endif; ?>
             <?php endif; ?>
 
-                <div class="g-pt-20 g-pr-15 g-pl-15">
-                    <div class="row">
-                        <div class="offset-md-8 offset-lg-9 offset-xl-9 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
-                            <div class="form-group">
-                                <select name="timezone" class="form-control change-timezone" data-route="<?php echo e(route('core.change-timezone')); ?>">
-                                    <?php $__currentLoopData = $global_timezones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $global_timezone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($global_timezone['timezone']); ?>" <?php echo e($global_timezone['timezone'] == session()->get('timezone') ? 'selected' : ''); ?>>
-                                            <?php echo e($global_timezone['text']); ?>
-
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             <div class="g-pa-20">
                 <?php echo $__env->yieldContent('content'); ?>
+                <?php if(!empty($action) && $action == '10'): ?>
+                   <?php if($agent == 1): ?>
+                       <?php echo $__env->make('back.users.modals.reset-email', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                   <?php endif; ?>   
+                <?php endif; ?>
             </div>
             <?php echo $__env->make('back.layout.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
@@ -67,6 +54,11 @@
 <script src="<?php echo e(mix('js/vendor.js', 'back')); ?>"></script>
 <script src="<?php echo e(mix('js/custom.min.js', 'back')); ?>"></script>
 <script src="<?php echo e(asset('back/js/scripts.min.js')); ?>?v=21"></script>
+
+
+
+
+
 <?php echo $__env->yieldContent('scripts'); ?>
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])): ?>
     <?php echo $__env->make('back.layout.tawk', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -79,6 +71,12 @@
         //socket.initChannel('<?php echo e(session()->get('betpay_client_id')); ?>', '<?php echo e($favicon); ?>', '<?php echo e(route('push-notifications.store')); ?>');
     });
     <?php endif; ?>
+</script>
+<script>
+    $(function () {
+        let dashboard = Dashboard();
+        dashboard.resetEmail();
+    });
 </script>
 </body>
 </html>
