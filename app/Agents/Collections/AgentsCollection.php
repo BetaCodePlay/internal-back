@@ -3853,13 +3853,8 @@ class AgentsCollection
                 }
 
                 foreach ($categories as $category) {
-                    \Log::debug([$agentsRepo, $agent->user_id, $currency, $category, $whitelabel]);
-                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
-                    \Log::debug($excludedAgent);
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->id, $currency, $category, $whitelabel);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
-                    \Log::debug($agent->id);
-                    \Log::debug($dataMakers);
-                    \Log::debug($makersExclude);
                     $dataMakers = array_merge($dataMakers, $makersExclude);
                     $listMakers = array_values(array_filter(array_unique($dataMakers)));
                     $blockUsers[] = [
