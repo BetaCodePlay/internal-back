@@ -42,6 +42,7 @@ use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Security\Security;
 use Dotworkers\Sessions\Sessions;
@@ -52,6 +53,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -536,7 +538,14 @@ class AgentsController extends Controller
             $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
             $username = $request->get('search')['value'] ?? null;
             $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
-            $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+
+            $typeTransaction = 'credit';
+            if (Gate::allows('access', Permissions::$users_search)) {
+                $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+            }
+
+            //$typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+
             $orderCol = [
                 'column' => 'date',
                 'order' => 'asc',
