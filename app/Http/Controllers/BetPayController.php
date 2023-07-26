@@ -2045,7 +2045,7 @@ class BetPayController extends Controller
                         ];
                         return Utils::successResponse($data);
                     } else {
-                        return Utils::errorResponse(Codes::$forbidden, $response->data->message);
+                        return Utils::errorResponse(Codes::$forbidden, $response->data);
                     }
 
                 }else{
