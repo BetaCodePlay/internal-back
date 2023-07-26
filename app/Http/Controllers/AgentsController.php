@@ -2139,6 +2139,14 @@ class AgentsController extends Controller
 //            //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
 //            $data['action'] = Auth::user()->action;
 //            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);
+
+            //EN CASO DE ROMEO ENTRA COMO WOLF
+//            $user = auth()->user()->id ? Auth::id() : null;
+//            if (is_null(Auth::user()->username) == 'romeo') {
+//                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+//                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+//            }
+
             $user = auth()->user()->id;
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);

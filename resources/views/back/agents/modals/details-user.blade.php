@@ -14,6 +14,14 @@
                         <div class="col-lg-6 col-overauto">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('id')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="userIdSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
                                     <strong> {{_i('user')}}: </strong>
                                 </div>
                                 <div class="col-md-8">
@@ -26,6 +34,14 @@
                                 </div>
                                 <div class="col-md-8">
                                     <span class="emailSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> {{_i('agent_id')}}: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="agentIdSet"></span>
                                 </div>
                             </div>
                             <div class="row mb-1">

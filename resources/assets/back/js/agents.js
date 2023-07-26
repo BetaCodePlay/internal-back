@@ -563,6 +563,8 @@ class Agents {
 
                     }).done(function (json) {
                         //TODO Init Set Modal
+                        $('.userIdSet').text(json.data.user.id);
+                        $('.agentIdSet').text(json.data.user.agent);
                         $('.userSet').text(json.data.user.username);
                         $('.emailSet').text(json.data.user.email);
                         $('.fatherSet').text(json.data.father);
@@ -798,6 +800,8 @@ class Agents {
 
             }).done(function (json) {
                 //TODO Init Set Modal
+                $('.userIdSet').text(json.data.user.id);
+                $('.agentIdSet').text(json.data.user.agent);
                 $('.userSet').text(json.data.user.username);
                 $('.emailSet').text(json.data.user.email);
                 $('.fatherSet').text(json.data.father);
@@ -1895,6 +1899,9 @@ class Agents {
                     Agents.getFatherRecursive($('#details-user-get').data('route'), json.data.user.id, json.data.type);
                 }, 500)
                 //TODO MODAL
+
+                $('.userIdSet').text(json.data.user.id);
+                $('.agentIdSet').text(json.data.user.agent);
                 $('.userSet').text(json.data.user.username);
                 $('.emailSet').text(json.data.user.email);
                 $('.fatherSet').text(json.data.father);
