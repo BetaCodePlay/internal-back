@@ -638,18 +638,20 @@
                                     <input type="hidden" id="start_date" name="start_date">
                                     <input type="hidden" id="end_date" name="end_date">
                                 </div> --}}
-                                @can('access', [\Dotworkers\Security\Enums\Permissions::$users_search])
+
                                     <div class="col-md-3 ">
                                         <div class="form-group">
+                                            @can('access', [\Dotworkers\Security\Enums\Permissions::$users_search])
                                             <label for="transaction_select">{{ _i('Type Transaction') }}</label>
                                             <select name="transaction_select" id="transaction_select" class="form-control">
                                                 <option value="all" selected="selected" hidden>{{_i('All')}}</option>
                                                 <option value="credit">{{_i('Charge')}}</option>
                                                 <option value="debit">{{_i('Discharge')}}</option>
                                             </select>
+
+                                            @endcan
                                         </div>
                                     </div>
-                                @endcan
                                 <div class="col-md-3 ">
                                     <div class="form-group">
                                         <label for="type_select">{{ _i('Type User') }}</label>
