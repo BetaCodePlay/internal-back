@@ -6,7 +6,7 @@
     </div>
     <div class="col-md-4 d-none paypal">
         <div class="form-group">
-        <label for="client_secret_paypal">{{ _i('Client ID') }}</label>
+        <label for="client_secret_paypal">{{ _i('Secret Key') }}</label>
             <input type="text" name="client_secret_paypal" class="form-control" autocomplete="off">
         </div>
     </div>
