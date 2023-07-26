@@ -2035,8 +2035,6 @@ class BetPayController extends Controller
                         ->withHeader("Authorization: Bearer $betPayToken")
                         ->post();
                     $response = json_decode($curlAccounts);
-
-                    \Log::debug($curlAccounts);
                     if ($response->status == Status::$ok) {
                         $data = [
                             'title' => _i('Saved credential'),
