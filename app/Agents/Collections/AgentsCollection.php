@@ -3853,7 +3853,7 @@ class AgentsCollection
                 }
 
                 foreach ($categories as $category) {
-                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->id, $currency, $category, $whitelabel);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     $dataMakers = array_merge($dataMakers, $makersExclude);
                     $listMakers = array_values(array_filter(array_unique($dataMakers)));
