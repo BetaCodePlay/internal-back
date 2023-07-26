@@ -1999,7 +1999,8 @@ class BetPayController extends Controller
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
-                    } elseif ($transactionType == TransactionTypes::$debit) {
+                    } 
+                    if ($transactionType == TransactionTypes::$debit) {
                         if (!$paymentStatusDebit) {
                             $data = [
                                 'title' => _i('Payment method not available'),
@@ -2008,16 +2009,15 @@ class BetPayController extends Controller
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
-                    } else {
-                        if (!$paymentStatusCredit || !$paymentStatusDebit) {
-                            $data = [
-                                'title' => _i('Payment method not available'),
-                                'message' => _i('The payment method is not available for credit or debit'),
-                                'close' => _i('Close'),
-                            ];
-                            return Utils::errorResponse(Codes::$forbidden, $data);
-                        }
                     } 
+                    if (!$paymentStatusCredit || !$paymentStatusDebit) {
+                        $data = [
+                            'title' => _i('Payment method not available'),
+                            'message' => _i('The payment method is not available for credit or debit'),
+                            'close' => _i('Close'),
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+                    }
 
                     $clientAccountData = $this->getClientAccountData($paymentMethod, $request);
                     $accountsData = [
@@ -2034,13 +2034,18 @@ class BetPayController extends Controller
                         ->withHeader('Accept: application/json')
                         ->withHeader("Authorization: Bearer $betPayToken")
                         ->post();
+                    $response = json_decode($curlAccounts);
 
-                    $data = [
-                        'title' => _i('Saved credential'),
-                        'message' => _i('Credential data was saved correctly'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::successResponse($data);
+                    if ($response->status == Status::$ok) {
+                        $data = [
+                            'title' => _i('Saved credential'),
+                            'message' => _i('Credential data was saved correctly'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::successResponse($data);
+                    } else {
+                        return Utils::errorResponse(Codes::$forbidden, $response->message);
+                    }
 
                 }else{
                     $data = [
