@@ -372,7 +372,7 @@ class UsersController extends Controller
                 }
 
                 $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
-                                
+
                 $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $idChildren);
                 $this->usersCollection->formatSearch($users);
 
@@ -2141,7 +2141,7 @@ class UsersController extends Controller
 
         try {
             $user = $request->user;
-            $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            $userData = $this->agentsRepo->statusActionByUser($user);
             $roles = Security::getUserRoles($user);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [

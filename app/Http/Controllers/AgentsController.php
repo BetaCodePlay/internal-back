@@ -757,7 +757,7 @@ class AgentsController extends Controller
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
                         $user = $userToUpdate['user_id'];
-                        $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+                        $userData = $this->agentsRepo->statusActionByUser($user);
                         if (isset($userData->action) && $userData->action == ActionUser::$locked_higher) {
                             $data = [
                                 'title' => ActionUser::getName($userData->action),
@@ -2379,7 +2379,7 @@ class AgentsController extends Controller
             $agentId = $request->agent;
 
             $agent = $this->agentsRepo->existAgent($agentId);
-            $userData = $this->agentsRepo->statusActionByUser_tmp($userAgent);
+            $userData = $this->agentsRepo->statusActionByUser($userAgent);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
                     'title' => ActionUser::getName($userData->action),
