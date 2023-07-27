@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
-"POT-Creation-Date: 2023-07-27 10:53-0400\n"
-"PO-Revision-Date: 2023-07-27 10:57-0400\n"
+"POT-Creation-Date: 2023-07-27 11:03-0400\n"
+"PO-Revision-Date: 2023-07-27 11:18-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_ES\n"
@@ -819,6 +819,7 @@ msgstr "Cajero"
 #: ../storage/framework/messages/197b839b4313afebfab0b0f3651c5a33edc1f0f0.php.php:46
 #: ../storage/framework/messages/197b839b4313afebfab0b0f3651c5a33edc1f0f0.php.php:162
 #: ../storage/framework/messages/2529f0997f7abec9cbbe1f42c9b0c8b50281fdc5.php.php:93
+#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:25
 #: ../storage/framework/messages/562daddff2ec7587eda0561ecc0ae2f98cbb2074.php.php:20
 #: ../storage/framework/messages/5982bae60d19451d0e3fc7b8ca4405ab62701bcd.php.php:21
 #: ../storage/framework/messages/5982bae60d19451d0e3fc7b8ca4405ab62701bcd.php.php:82
@@ -1828,6 +1829,7 @@ msgstr "Qr"
 #: ../storage/framework/messages/22b3da31b097b8c51cb976f1733afbb078d4db54.php.php:248
 #: ../storage/framework/messages/22b3da31b097b8c51cb976f1733afbb078d4db54.php.php:298
 #: ../storage/framework/messages/23f1ad91109542e1a46016858e25192bb7c49bfb.php.php:105
+#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:33
 #: ../storage/framework/messages/4d112d4d6fe5786c61eb891fa71860576fbb5ad8.php.php:33
 #: ../storage/framework/messages/54ae19936be875e5ccf5ef99ef136e3aa0783449.php.php:11
 #: ../storage/framework/messages/8ba8f5874082a357b55d1ca1e319a46963bca82f.php.php:47
@@ -4381,17 +4383,13 @@ msgstr "BetPay"
 
 #: ../app/Core/helpers.php:707
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:707
-#, fuzzy
-#| msgid "Payment methods"
 msgid "Activate Payment Methods"
-msgstr "Métodos de Pago"
+msgstr "Activar métodos de pago"
 
 #: ../app/Core/helpers.php:716
 #: ../storage/framework/messages/98b2e7dc3bd4e83e105c9eb7d88a4d1b346a348b.php.php:716
-#, fuzzy
-#| msgid "Edit account"
 msgid "List Accounts"
-msgstr "Editar cuenta"
+msgstr "Lista de cuentas"
 
 #: ../app/Core/helpers.php:734 ../app/Core/helpers.php:864
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:4000
@@ -9987,6 +9985,7 @@ msgstr "Login de soporte"
 #: ../app/Users/Collections/UsersCollection.php:1008
 #: ../app/Users/Collections/UsersCollection.php:1087
 #: ../app/Users/Collections/UsersCollection.php:1181
+#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:17
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:953
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1008
 #: ../storage/framework/messages/b90ac253ad0ade96d7ca53ff5326254e7e8363b5.php.php:1087
@@ -10084,6 +10083,7 @@ msgid "Cashier Agent"
 msgstr "Agente Cajero"
 
 #: ../app/Users/Enums/TypeUser.php:29
+#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:73
 #: ../storage/framework/messages/4c864425fbc2d1c4e3559004585a3e8e0e7e0d78.php.php:29
 #: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:255
 #: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:318
@@ -11366,6 +11366,7 @@ msgid "Limits"
 msgstr "Limites"
 
 #: ../storage/framework/messages/0393f288695bbbca369491f157ed50e2d7e32e49.php.php:44
+#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:81
 msgid "Created"
 msgstr "Creado"
 
@@ -13241,50 +13242,38 @@ msgstr "Esta descripción se mostrará al usuario"
 msgid "Information of the User"
 msgstr "Información del Usuario"
 
-#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:17
-#, fuzzy
-#| msgid "user"
-msgid "user_id"
-msgstr "usuario"
-
-#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:25
-msgid "user"
-msgstr "usuario"
-
-#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:33
-msgid "email"
-msgstr "correo electrónico"
-
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:41
 #, fuzzy
-#| msgid "agents"
-msgid "agent_id"
-msgstr "agentes"
+#| msgid " Agent "
+msgid "Agent ID"
+msgstr " Agente"
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:49
-msgid "father"
+#, fuzzy
+#| msgid "father"
+msgid "Father"
 msgstr "Árbol paterno"
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:57
 #, fuzzy
-#| msgid "Url"
-msgid "rol"
-msgstr "Url"
+#| msgid "Role"
+msgid "Rol"
+msgstr "Rol"
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:65
-msgid "agents"
-msgstr "agentes"
-
-#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:73
-msgid "players"
-msgstr "jugadores"
-
-#: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:81
-msgid "created"
-msgstr "creado"
+#: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:3394
+#: ../storage/framework/messages/7fd6b4df4ab814becfb66dab86d9ca6c5ba3f8a1.php.php:34
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:262
+#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:327
+#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:33
+#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:162
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:162
+#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3394
+msgid "Agents"
+msgstr "Agentes"
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:91
-msgid "Estructura"
+msgid "Structure"
 msgstr ""
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:95
@@ -15150,17 +15139,6 @@ msgstr "ALPS"
 msgid "Play'n Go"
 msgstr "Play'n Go"
 
-#: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:3394
-#: ../storage/framework/messages/7fd6b4df4ab814becfb66dab86d9ca6c5ba3f8a1.php.php:34
-#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:262
-#: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:327
-#: ../storage/framework/messages/c52178359135e0a34e1c02edb8587113dbf47af2.php.php:33
-#: ../storage/framework/messages/e549d3ab504a3cccb96ff3ada1ef0dca07abf74b.php.php:162
-#: ../vendor/dotworkers/configurations/src/Configurations/Enums/ProviderTypes.php:162
-#: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3394
-msgid "Agents"
-msgstr "Agentes"
-
 #: ../storage/framework/messages/7bbefebe27dfdd815275df9fd47b477d39353a95.php.php:3414
 #: ../vendor/dotworkers/configurations/src/Configurations/Enums/Providers.php:3414
 msgid "XLive"
@@ -16419,7 +16397,7 @@ msgstr "Tipo del usuario"
 
 #: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:747
 msgid "Charged him"
-msgstr ""
+msgstr "lo cargó"
 
 #: ../storage/framework/messages/b855c7f1c72af6068c34275b355e51e064e06806.php.php:751
 msgid "Withdrew"
@@ -16742,22 +16720,16 @@ msgid "SSL?"
 msgstr "¿SSL?"
 
 #: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:21
-#, fuzzy
-#| msgid "Whitelabel"
 msgid "whitelabel"
-msgstr "Whitelabel"
+msgstr "whitelabel"
 
 #: ../storage/framework/messages/cac42a36d411524ec83d0acf7707df0ba7531749.php.php:24
-#, fuzzy
-#| msgid "Whitelabel"
 msgid "All whitelabels"
-msgstr "Whitelabel"
+msgstr "All whitelabels"
 
 #: ../storage/framework/messages/cb5d80750cabadc45e26973588a1de18c9377ad5.php.php:83
-#, fuzzy
-#| msgid "Exclude segments"
 msgid "Excluded agents"
-msgstr "Excluir segmentos"
+msgstr "Agentes excluidos"
 
 #: ../storage/framework/messages/ce44e08cda55af928521ff1405d06b83dadd9a14.php.php:6
 msgid "Test email"
@@ -16938,8 +16910,6 @@ msgid "Casino"
 msgstr "Casino"
 
 #: ../storage/framework/messages/e6614b1f1e806b40e2c9fc9ba6e9003beec874cc.php.php:112
-#, fuzzy
-#| msgid "Uploading..."
 msgid "Upload landing"
 msgstr "Subiendo..."
 
@@ -17154,6 +17124,36 @@ msgstr "Correo electrónico de Binance"
 #: ../storage/framework/messages/fffc89d30061398740c39f0cadc3190c2e9f0f49.php.php:92
 msgid "Binance Phone"
 msgstr "Teléfono Binance"
+
+#, fuzzy
+#~| msgid "user"
+#~ msgid "user_id"
+#~ msgstr "usuario"
+
+#~ msgid "user"
+#~ msgstr "usuario"
+
+#~ msgid "email"
+#~ msgstr "correo electrónico"
+
+#, fuzzy
+#~| msgid "agents"
+#~ msgid "agent_id"
+#~ msgstr "agentes"
+
+#, fuzzy
+#~| msgid "Url"
+#~ msgid "rol"
+#~ msgstr "Url"
+
+#~ msgid "agents"
+#~ msgstr "agentes"
+
+#~ msgid "players"
+#~ msgstr "jugadores"
+
+#~ msgid "created"
+#~ msgstr "creado"
 
 #~ msgid "Dashboar"
 #~ msgstr "Dashboard"
@@ -17529,9 +17529,6 @@ msgstr "Teléfono Binance"
 #~ msgstr " Jugador"
 
 #~ msgid " Agent"
-#~ msgstr " Agente"
-
-#~ msgid " Agent "
 #~ msgstr " Agente"
 
 #~ msgid "Id"

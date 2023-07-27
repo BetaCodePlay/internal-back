@@ -14,7 +14,7 @@
                         <div class="col-lg-6 col-overauto">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('user_id')); ?>: </strong>
+                                    <strong> <?php echo e(_i('User ID')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="userIdSet"></span>
@@ -22,7 +22,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('user')); ?>: </strong>
+                                    <strong> <?php echo e(_i('User')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="userSet"></span>
@@ -30,7 +30,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('email')); ?>: </strong>
+                                    <strong> <?php echo e(_i('Email')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="emailSet"></span>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('agent_id')); ?>: </strong>
+                                    <strong> <?php echo e(_i('Agent ID')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="agentIdSet"></span>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="row mb-1">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('father')); ?>: </strong>
+                                    <strong> <?php echo e(_i('Father')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="fatherSet"></span>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="row mb-1">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('rol')); ?>: </strong>
+                                    <strong> <?php echo e(_i('Rol')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="typeSet"></span>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('agents')); ?>: </strong>
+                                    <strong> <?php echo e(_i('Agents')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="agentsSet"></span>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="row mb-1 cantA_P">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('players')); ?>: </strong>
+                                    <strong> <?php echo e(_i('Players')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="playersSet"></span>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="row mb-1">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> <?php echo e(_i('created')); ?>: </strong>
+                                    <strong> <?php echo e(_i('Created')); ?>: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="createdSet"></span>
@@ -88,7 +88,7 @@
                         <div class="col-lg-6 col-overauto">
                             <div class="row mb-1">
                                 <div class="col-md-12">
-                                   <h5><strong> <?php echo e(_i('Estructura')); ?></strong></h5>
+                                   <h5><strong> <?php echo e(_i('Structure')); ?></strong></h5>
                                 </div>
                             </div>
                             <div class="col-12 appendTreeFather">
