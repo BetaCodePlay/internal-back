@@ -14,7 +14,7 @@
                         <div class="col-lg-6 col-overauto">
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> {{_i('user_id')}}: </strong>
+                                    <strong> {{_i('user id')}}: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="userIdSet"></span>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
-                                    <strong> {{_i('agent_id')}}: </strong>
+                                    <strong> {{_i('agent id')}}: </strong>
                                 </div>
                                 <div class="col-md-8">
                                     <span class="agentIdSet"></span>
@@ -88,7 +88,7 @@
                         <div class="col-lg-6 col-overauto">
                             <div class="row mb-1">
                                 <div class="col-md-12">
-                                   <h5><strong> {{_i('Estructura')}}</strong></h5>
+                                   <h5><strong> {{_i('Structure')}}</strong></h5>
                                 </div>
                             </div>
                             <div class="col-12 appendTreeFather">
