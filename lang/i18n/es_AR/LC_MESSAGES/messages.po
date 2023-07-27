@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
-"POT-Creation-Date: 2023-07-27 11:09-0400\n"
-"PO-Revision-Date: 2023-07-27 11:17-0400\n"
+"POT-Creation-Date: 2023-07-27 11:28-0400\n"
+"PO-Revision-Date: 2023-07-27 11:30-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_AR\n"
@@ -13329,20 +13329,14 @@ msgid "Information of the User"
 msgstr "Información del usuario"
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:41
-#, fuzzy
-#| msgid " Agent "
 msgid "Agent ID"
-msgstr " Agente "
+msgstr "ID del agente "
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:49
-#, fuzzy
-#| msgid "father"
 msgid "Father"
 msgstr "Padre"
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:57
-#, fuzzy
-#| msgid "Role"
 msgid "Rol"
 msgstr "Rol"
 
@@ -13359,8 +13353,6 @@ msgid "Agents"
 msgstr "Agentes"
 
 #: ../storage/framework/messages/376a7bff1074e19e004e4a559617d2cc2e2d8fd9.php.php:91
-#, fuzzy
-#| msgid "Estructura"
 msgid "Structure"
 msgstr "Estructura"
 
