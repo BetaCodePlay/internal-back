@@ -2930,8 +2930,6 @@ class AgentsController extends Controller
                     $balance = $transaction->data->wallet->balance;
                     $status = $transaction->status;
                     //TODO TEST STATUS
-                    //dd($transaction);
-                    Log::info('ver status de transaction',[$transaction]);
                     $userAdditionalData = $additionalData;
                     $userAdditionalData['wallet_transaction'] = $transaction->data->transaction->id;
 
@@ -3111,7 +3109,6 @@ class AgentsController extends Controller
                 case TransactionTypes::$credit:{
                     /*consult and debit*/
                     $balance = $agentsRepo->getAndUpdateBalance($currency,$userAuth->id,$userAffected,$amount,$idWolf);
-                    Log::notice('Balance credit',[$balance,$currency,$userAuth->id,$userAffected,$amount,$idWolf]);
                     /*error debiting*/
                     if(isset($balance[0]->status) && !$balance[0]->status == 'false'){
                         $data = [
@@ -3166,7 +3163,6 @@ class AgentsController extends Controller
                 case TransactionTypes::$debit:{
                     /*consult and debit*/
                     $balance = $agentsRepo->getAndUpdateBalance($currency,$userAffected,$userAuth->id,$amount,$idWolf);
-                    Log::notice('Balance debit',[$balance,$currency,$userAffected,$userAuth->id,$amount,$idWolf]);
                     /*error debiting*/
                     if(isset($balance[0]->status) && $balance[0]->status == 'false'){
                         $data = [
