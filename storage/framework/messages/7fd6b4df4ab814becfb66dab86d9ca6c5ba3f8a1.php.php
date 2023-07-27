@@ -34,9 +34,9 @@
                                 <label for="agents"><?php echo e(_i('Agents')); ?></label>
                                 <select name="agent" id="agent" class="form-control" style="width: 100%">
                                     <option value=""><?php echo e(_i('Select...')); ?></option>
-                                    <?php $__currentLoopData = $agents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $agent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($agent['user_id']); ?>">
-                                            <?php echo e($agent['username']); ?>
+                                    <?php $__currentLoopData = $agents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $val): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($val['user_id']); ?>">
+                                            <?php echo e($val['username']); ?>
 
                                         </option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -11,7 +11,15 @@
                 <div class="modal-body">
                     <div class="row row-div">
 
-                        <div class="col-sm-6">
+                        <div class="col-lg-6 col-overauto">
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> <?php echo e(_i('user_id')); ?>: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="userIdSet"></span>
+                                </div>
+                            </div>
                             <div class="row mb-2">
                                 <div class="offset-md-1 col-md-3">
                                     <strong> <?php echo e(_i('user')); ?>: </strong>
@@ -26,6 +34,14 @@
                                 </div>
                                 <div class="col-md-8">
                                     <span class="emailSet"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="offset-md-1 col-md-3">
+                                    <strong> <?php echo e(_i('agent_id')); ?>: </strong>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="agentIdSet"></span>
                                 </div>
                             </div>
                             <div class="row mb-1">
@@ -69,13 +85,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-lg-6 col-overauto">
                             <div class="row mb-1">
-                                <div class="offset-md-1 col-md-3">
+                                <div class="col-md-12">
                                    <h5><strong> <?php echo e(_i('Estructura')); ?></strong></h5>
                                 </div>
                             </div>
-                            <div class="col-8 appendTreeFather">
+                            <div class="col-12 appendTreeFather">
                                 <h5 style="text-align: center;"><strong> <?php echo e(_i('Loading')); ?>...</strong></h5>
                             </div>
                         </div>
