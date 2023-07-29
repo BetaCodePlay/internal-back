@@ -2415,7 +2415,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions(Request $request)
+    public function performTransactions_original(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -2807,7 +2807,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions_new(Request $request)
+    public function performTransactions(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -2966,7 +2966,9 @@ class AgentsController extends Controller
                     );
                 }else {
                     /*TODO  User Type: Agent */
+                    Log::debug('performTransactionsAgent',[$request->all()]);
                     return $this->performTransactionsAgent($request,$this->agentsRepo, $this->agentCurrenciesRepo, $this->transactionsRepo);
+
                 }
                 /*If valid status equals true*/
                 if ($status == Status::$ok) {
@@ -3109,6 +3111,7 @@ class AgentsController extends Controller
                 case TransactionTypes::$credit:{
                     /*consult and debit*/
                     $balance = $agentsRepo->getAndUpdateBalance($currency,$userAuth->id,$userAffected,$amount,$idWolf);
+
                     /*error debiting*/
                     if(isset($balance[0]->status) && !$balance[0]->status == 'false'){
                         $data = [
@@ -3119,6 +3122,12 @@ class AgentsController extends Controller
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
 
+                    Log::debug('getAndUpdateBalance 2',[$balance,$idWolf,$userAffected,$userAuth->id]);
+
+                    //TODO BALANCE 0 PARA WOLF
+                    $balanceCredit = $balance[0]->balance_credit;
+                    $balanceDebit = $idWolf == $userAuth->id ? 0:$balance[0]->balance_debit;
+
                     /*add authenticated user transactions*/
                     $transactionAdd = $transactionData;
                     $transactionAdd['user_id']=$userAuth->id;
@@ -3126,12 +3135,9 @@ class AgentsController extends Controller
                     $transactionAdd['data']=[
                         'from' => $userAuth->username,
                         'to' => $validateDb->username,
-                        'balance' => $balance[0]->balance_debit,
-                        'second_balance' => $balance[0]->balance_credit
+                        'balance' => $balanceDebit,
+                        'second_balance' => $balanceCredit
                     ];
-                    $balanceReturn = $balance[0]->balance_credit;
-                    $balanceReturn2 = $balance[0]->balance_debit;
-
                     $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
 
                     /*add affected user transactions*/
@@ -3141,8 +3147,8 @@ class AgentsController extends Controller
                     $transactionAdd['data']=[
                         'from' => $userAuth->username,
                         'to' => $validateDb->username,
-                        'balance' => $balance[0]->balance_credit,
-                        'second_balance' => $balance[0]->balance_debit,
+                        'balance' => $balanceCredit,
+                        'second_balance' => $balanceDebit,
                         'transaction_id'=>$transaction1->id
                     ];
                     $transaction2 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
@@ -3152,8 +3158,8 @@ class AgentsController extends Controller
                     $data = [
                         'title' => _i('Transaction performed'),
                         'message' => _i('The transaction was successfully made to the user'),
-                        'balance' => number_format($balanceReturn, 2),
-                        'balance_auth' => number_format($balanceReturn2, 2),
+                        'balance' => number_format($balanceCredit, 2),
+                        'balance_auth' => number_format($balanceDebit, 2),
                         'auth_balance' => Auth::user()->id,
                         'close' => _i('Close'),
                     ];
@@ -3163,6 +3169,7 @@ class AgentsController extends Controller
                 case TransactionTypes::$debit:{
                     /*consult and debit*/
                     $balance = $agentsRepo->getAndUpdateBalance($currency,$userAffected,$userAuth->id,$amount,$idWolf);
+
                     /*error debiting*/
                     if(isset($balance[0]->status) && $balance[0]->status == 'false'){
                         $data = [
@@ -3173,18 +3180,23 @@ class AgentsController extends Controller
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
 
+                    Log::debug('getAndUpdateBalance 2',[$balance,$idWolf,$userAffected,$userAuth->id]);
+
+                    //TODO BALANCE 0 PARA WOLF
+                    $balanceCredit = $idWolf == $userAuth->id ? 0 : $balance[0]->balance_credit;
+                    $balanceDebit = $balance[0]->balance_debit;
+
                     /*add authenticated user transactions*/
                     $transactionAdd = $transactionData;
                     $transactionAdd['user_id']=$userAuth->id;
                     $transactionAdd['transaction_type_id']=TransactionTypes::$debit;
+
                     $transactionAdd['data']=[
-                        'from' => $validateDb->username,
-                        'to' => $userAuth->username,
-                        'balance' => $balance[0]->balance_debit,
-                        'second_balance' => $balance[0]->balance_credit
+                        'from' => $userAuth->username,
+                        'to' => $validateDb->username,
+                        'balance' => $balanceDebit,
+                        'second_balance' => $balanceCredit
                     ];
-                    $balanceReturn = $balance[0]->balance_debit;
-                    $balanceReturn2 = $balance[0]->balance_credit;
                     $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
 
                     /*add affected user transactions*/
@@ -3192,10 +3204,10 @@ class AgentsController extends Controller
                     $transactionAdd['user_id']=$userAffected;
                     $transactionAdd['transaction_type_id']=TransactionTypes::$credit;
                     $transactionAdd['data']=[
-                        'from' => $validateDb->username,
-                        'to' => $userAuth->username,
-                        'balance' => $balance[0]->balance_credit,
-                        'second_balance' => $balance[0]->balance_debit,
+                        'from' => $userAuth->username,
+                        'to' => $validateDb->username,
+                        'balance' => $balanceCredit,
+                        'second_balance' => $balanceDebit,
                         'transaction_id'=>$transaction1->id
                     ];
                     $transaction2 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
@@ -3205,8 +3217,8 @@ class AgentsController extends Controller
                     $data = [
                         'title' => _i('Transaction performed'),
                         'message' => _i('The transaction was successfully made to the user'),
-                        'balance' => number_format($balanceReturn, 2),
-                        'balance_auth' => number_format($balanceReturn2, 2),
+                        'balance' => number_format($balanceDebit, 2),
+                        'balance_auth' => number_format($balanceCredit, 2),
                         'auth_balance' => Auth::user()->id,
                         'close' => _i('Close'),
                     ];
