@@ -239,6 +239,10 @@ class Agents {
 
             $button.click(function () {
                 $button.button('loading');
+                let getStart = picker.getStartDate();
+                let getEnd = picker.getEndDate();
+                picker.destroy()
+                picker = initLitepickerEndTodayNew(moment(getStart),moment(getEnd));
                 let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
                 let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
                 let type = $('#type_select').val() === '' || $('#type_select').val() === undefined ? 'all' : $('#type_select').val();
@@ -300,6 +304,12 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             let route = `${$table.data('route')}/${startDate}/${endDate}`;
@@ -318,7 +328,6 @@ class Agents {
 
     // Agents payments
     agentsPayments() {
-        console.log('agent payments.jd')
         let picker = initLitepickerEndToday();
         let $table = $('#agent-payment-transactions-table');
         let $button = $('#update');
@@ -438,6 +447,12 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             let route = `${$table.data('route')}/${startDate}/${endDate}`;
@@ -465,12 +480,20 @@ class Agents {
         });
     }
 
+    changeEmailAgent() {
+        $(document).on('click', '#change-email-agent', function () {
+            let description = $('#description').val();
+            let route = $(this).data('route');
+            swalInput(route);
+        });
+    }
+
     // Change user status
     changeUserStatus() {
         $(document).on('click', '#change-user-status', function () {
             let description = $('#description').val();
             let route = $(this).data('route');
-            swalInputInfo(route);
+            swalInput(route);
             //swalInput(route);
         });
     }
@@ -489,7 +512,7 @@ class Agents {
             let initUl = '';
             let finishUl = '';
             $.each(response.data.fathers, function (index, val) {
-                initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>' + val.username + '</strong>'
+                initUl = initUl + '<ul><li><strong>' + val.username + '</strong>'
                 finishUl = finishUl + '</li></ul>'
             });
             $('.appendTreeFather').append(initUl + finishUl);
@@ -540,6 +563,8 @@ class Agents {
 
                     }).done(function (json) {
                         //TODO Init Set Modal
+                        $('.userIdSet').text(json.data.user.id);
+                        $('.agentIdSet').text(json.data.user.agent);
                         $('.userSet').text(json.data.user.username);
                         $('.emailSet').text(json.data.user.email);
                         $('.fatherSet').text(json.data.father);
@@ -644,6 +669,232 @@ class Agents {
 
         })
 
+    }
+
+    //TODO New user tree structure PRO
+    treePro(urlTree) {
+        let listUsers;
+        let listMakers;
+        let idCurrentUser = $('#tree-pro-master').data('idtreepro');
+
+        $.ajax({
+            url: urlTree,
+            type: 'get',
+            dataType: 'json',
+        }).done(function (data) {
+            if (data.status === 'OK') {
+                listUsers = data.data.tree;
+                listMakers = data.data.makers;
+                scanSearch(idCurrentUser);
+                drawMakers();
+                $('#tree-pro-master').find('a.jstree-anchor').click();
+            } else {
+                console.log('Error al consultar usuarios',data)
+            }
+        }).fail(function () {
+            Swal.fire(
+                'Ha ocurrido un error inesperado',
+                'Recarga o intenta de nuevo mas tarde.',
+                'error'
+            )
+        }).always(function () {
+
+        });
+
+        function scanSearch(id) {
+            let users = listUsers.filter(user => user.owner_id === id);
+            let usersTemp;
+            let userHtmlTempMini = '';
+            let usersHtmlTemp;
+            let last = '';
+            let type_user;
+            let atmIcon;
+            let atmType;
+
+
+            $.each(users, function (index, value) {
+                usersTemp = listUsers.filter(user => user.owner_id === value.id);
+
+                if (index + 1 === users.length) {
+                    last = 'jstree-last';
+                }
+
+                switch(value.type_user) {
+                    case 1:
+                        type_user = 'agent';
+                        atmIcon = 'fa-star';
+                        atmType = 'agent';
+                        break;
+                    case 2:
+                        type_user = 'agent';
+                        atmIcon = 'fa-users';
+                        atmType = 'agent';
+                        break;
+                    case 5:
+                        type_user = 'user';
+                        atmIcon = 'fa-user';
+                        atmType = 'user';
+                        break;
+                    default:
+                        type_user = 'user-null';
+                        atmIcon = 'icon-null';
+                        atmType = 'null'
+                }
+
+                if (usersTemp.length > 0) {
+                    userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                } else {
+                    userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';
+                }
+            })
+
+            usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';
+
+            $('[data-idtreepro="' + id + '"]').parent().append(usersHtmlTemp);
+        }
+
+        //TODO Draw marker for blocking
+        function drawMakers() {
+            let makers = listMakers;
+
+            $('#maker option[value!=""]').remove();
+            if(makers.length > 0){
+                $.each(makers, function (index, val) {
+                    $('#maker').append("<option value=" + val.maker + ">" + val.maker + "</option>");
+
+                });
+            }
+        }
+
+        $(document).on('click', '.jstree-more', function () {
+            let $this = $(this);
+            let $obj = $this.parent();
+
+            if ($obj.hasClass('jstree-open')) {
+                $obj.removeClass('jstree-open');
+                $obj.addClass('jstree-closed');
+                $obj.find('.jstree-children').remove();
+            } else {
+                $obj.removeClass('jstree-closed');
+                $obj.addClass('jstree-open');
+                scanSearch($this.data('idtreepro'));
+            }
+        });
+
+        $(document).on('click', 'a.jstree-anchor', function (){
+            let $this = $(this);
+            let type = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('typetreepro');
+            let id = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('idtreepro');
+            let $container = $('#tree-pro');
+
+            $('a.jstree-anchor').removeClass('jstree-clicked');
+            $this.addClass('jstree-clicked');
+
+            $.ajax({
+                url: $container.data('route'),
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    id, type
+                }
+
+            }).done(function (json) {
+                //TODO Init Set Modal
+                $('.userIdSet').text(json.data.user.id);
+                $('.agentIdSet').text(json.data.user.agent);
+                $('.userSet').text(json.data.user.username);
+                $('.emailSet').text(json.data.user.email);
+                $('.fatherSet').text(json.data.father);
+                $('.typeSet').text(json.data.user.typeSet);
+                $('.createdSet').text(json.data.user.created);
+                $('.cantA_P').show();
+                $('.cantA_P').show();
+                if (json.data.type != "agent") {
+                    $('.cantA_P').hide();
+                    $('.cantA_P').hide();
+                }
+
+                setTimeout(function () {
+                    Agents.getFatherRecursive($('#details-user-get').data('route'), id, type);
+                }, 500)
+                //TODO Finish Set Modal
+
+                $('#username').text(json.data.user.username);
+                $('#agent_timezone').text(json.data.user.timezone);
+                $('.balance').text(json.data.balance);
+                $('.balanceAuth_' + json.data.user.id).text('');
+                $('.balanceAuth_' + json.data.user.id).text(json.data.balance);
+                $('#user_type').html(json.data.user.type);
+                $('#status').html(json.data.user.status);
+                $('#wallet').val(json.data.wallet);
+                $('.wallet').val(json.data.wallet);
+                $('.user').val(id);
+                $('#name').val(json.data.user.username);
+                $('#type').val(json.data.type);
+                $('.type').val(json.data.type);
+                $('#referral_code').text(json.data.user.referral_code);
+                $('.clipboard').attr('data-clipboard-text', json.data.user.url);
+
+                if (json.data.master) {
+                    $('#agents-tab').removeClass('d-none');
+                    $('#agents-mobile').removeClass('d-none');
+                    $('#move-agents').removeClass('d-none');
+                } else {
+                    $('#agents-tab').addClass('d-none');
+                    $('#agents-mobile').addClass('d-none');
+                    $('#move-agents').addClass('d-none');
+                }
+
+                if (json.data.agent) {
+                    $('#users-tab').removeClass('d-none');
+                    $('#agents-transactions-tab').removeClass('d-none');
+                    $('#financial-state-tab').removeClass('d-none');
+                    $('#users-transactions-tab').addClass('d-none');
+                    $('#users-mobile').removeClass('d-none');
+                    $('#agents-transactions-mobile').removeClass('d-none');
+                    $('#financial-state-mobile').removeClass('d-none');
+                    $('#users-transactions-mobile').addClass('d-none');
+                    $('#move-agents-user').addClass('d-none');
+                    $('#move-agents').removeClass('d-none');
+                } else {
+                    $('#users-tab').addClass('d-none');
+                    $('#agents-transactions-tab').addClass('d-none');
+                    $('#financial-state-tab').addClass('d-none');
+                    $('#users-transactions-tab').removeClass('d-none');
+                    $('#users-mobile').addClass('d-none');
+                    $('#agents-transactions-mobile').addClass('d-none');
+                    $('#financial-state-mobile').addClass('d-none');
+                    $('#users-transactions-mobile').removeClass('d-none');
+                    $('#move-agents-user').removeClass('d-none');
+                    $('#move-agents').addClass('d-none');
+                }
+
+                if (json.data.myself) {
+                    if (!json.data.agent_player) {
+                        $('#new-user, #new-agent').addClass('d-none');
+                    } else {
+                        $('#new-user, #new-agent').removeClass('d-none');
+                    }
+                    $('#locks, #locks-tab').addClass('d-none');
+                    $('#locks, #locks-mobile').addClass('d-none');
+                    $('#transactions-form-container').addClass('d-none');
+                    $('#modals-transaction').addClass('d-none');
+                    $('#move-agents-user').addClass('d-none');
+                    $('#move-agents').addClass('d-none');
+                } else {
+                    $('#new-user, #new-agent').addClass('d-none');
+                    $('#locks, #locks-tab').removeClass('d-none');
+                    $('#locks, #locks-mobile').removeClass('d-none');
+                    $('#transactions-form-container').removeClass('d-none');
+                    $('#modals-transaction').removeClass('d-none');
+                }
+
+            }).fail(function (json) {
+                swalError(json);
+            });
+        })
+
+        $('#tree-pro-init').find('.jstree-anchor').eq(0).click();
     }
 
     //Deposits withdrawals provider
@@ -824,6 +1075,13 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
+
             let username_like = $('#username_like').val() === '' ? '' : '&username_like=' + $('#username_like').val();
             let provider_id = $('#provider_id').val() === undefined || $('#provider_id').val() === '' ? '' : '&provider_id=' + $('#provider_id').val();
             let _hour = $('#_hour').val() === '' ? '' : '&_hour=' + $('#_hour').val();
@@ -902,6 +1160,12 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             let user = $('.user').val();
@@ -929,6 +1193,12 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
@@ -1346,6 +1616,14 @@ class Agents {
 
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
+                let userInput = json.data.balance_auth;
+                let userclass = 'balanceAuth_'+json.data.auth_balance;
+                let userclass2 = '.balanceAuth_'+json.data.auth_balance;
+                document.getElementsByClassName(userclass).innerHTML = userInput;
+
+                $(userclass2).text(userInput);
+                console.log(userInput,userclass,userclass2)
+
                 //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');
                 swalSuccessWithButton(json);
@@ -1372,6 +1650,14 @@ class Agents {
 
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
+                let userInput = json.data.balance_auth;
+                let userclass = 'balanceAuth_'+json.data.auth_balance;
+                let userclass2 = '.balanceAuth_'+json.data.auth_balance;
+                document.getElementsByClassName(userclass).innerHTML = userInput;
+
+                $(userclass2).text(userInput);
+                console.log(userInput,userclass,userclass2)
+
                 //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');
                 swalSuccessWithButton(json);
@@ -1457,6 +1743,35 @@ class Agents {
                 });
             });
         });
+    }
+
+    // Get reset email
+    resetEmail() {
+
+        let $button = $('#reset-email');
+        let $form = $('#reset-email-form');
+
+        $button.click(function () {
+            $button.button('loading');
+
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $('#reset-email-modal').modal('hide');
+                swalSuccessWithButton(json);
+                $form.trigger('reset');
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+
     }
 
     // Store agents
@@ -1584,6 +1899,9 @@ class Agents {
                     Agents.getFatherRecursive($('#details-user-get').data('route'), json.data.user.id, json.data.type);
                 }, 500)
                 //TODO MODAL
+
+                $('.userIdSet').text(json.data.user.id);
+                $('.agentIdSet').text(json.data.user.agent);
                 $('.userSet').text(json.data.user.username);
                 $('.emailSet').text(json.data.user.email);
                 $('.fatherSet').text(json.data.father);
@@ -1930,6 +2248,12 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             let _hour = $('#_hour').val() === '' ? '' : '?_hour=' + $('#_hour').val();
@@ -2152,6 +2476,12 @@ class Agents {
 
         $button.click(function () {
             $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             let dateFinal = '?start_date=' + startDate + '&end_date=' + endDate

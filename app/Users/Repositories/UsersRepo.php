@@ -1209,7 +1209,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "%$username%")
+            ->where('username', 'ilike', '%'.$username.'%')
             ->orderBy('username', 'ASC')
             ->get();
     }
@@ -1218,7 +1218,7 @@ class UsersRepo
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "%$username%")
+            ->where('username', 'ilike', '%'.$username.'%')
             ->orderBy('username', 'ASC')
             ->whereIn('id', $arrayUsers)
             ->get();
