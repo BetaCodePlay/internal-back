@@ -7,7 +7,9 @@ use App\Core\Collections\CurrenciesCollection;
 use App\Core\Collections\PushNotificationsCollection;
 use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\PushNotificationsRepo;
+use App\Users\Enums\ActionUser;
 use Dotworkers\Configurations\Configurations;
+use App\Users\Repositories\UsersRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -27,12 +29,12 @@ class DotpanelServiceProvider extends ServiceProvider
      * @param CoreCollection $coreCollection
      * @param PushNotificationsRepo $pushNotificationsRepo
      * @param PushNotificationsCollection $pushNotificationsCollection
+     * @param UsersRepo $usersRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param Agent $agent
      */
-    public function boot(Request $request, CoreCollection $coreCollection, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
+    public function boot(Request $request, CoreCollection $coreCollection, UsersRepo $usersRepo, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
     {
-
         if (isset($_SERVER['HTTP_HOST'])) {
             $regex = '/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/';
             $domain = strtolower($_SERVER['HTTP_HOST']);
@@ -120,6 +122,10 @@ class DotpanelServiceProvider extends ServiceProvider
                     $data['free_currency'] = Configurations::getFreeCurrency();
                     $data['logo'] = Configurations::getLogo($mobile = true);
                     $data['iphone'] = $iphone;
+                    $data['theme'] = Configurations::getTheme();
+                    $data['mailgun_notifications'] = Configurations::getMailgunNotifications();
+                    $data['reset_main_password'] = Configurations::getResetMainPassword();
+                    $data['locale'] = LaravelGettext::getLocale();
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {

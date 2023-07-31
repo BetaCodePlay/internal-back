@@ -19,14 +19,14 @@
             </div>
         </header>
         <div class="card-block g-pa-15">
-            <form id="client-account-form" method="post" action="<?php echo e(route('betpay.clients.accounts.update-client-account')); ?>">
+            <form id="client-account-form" method="post" action="<?php echo e(route('betpay.clients.accounts.update-client-account')); ?>" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="currency"><?php echo e(_i('Currency')); ?></label>
                             <select name="currency" id="currency" class="form-control">
                                 <option value=""><?php echo e(_i('Select...')); ?></option>
-                                <?php $__currentLoopData = $currency_client; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $whitelabel_currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($currency->iso); ?>" <?php echo e($currency->iso == $client->currency_iso ? 'selected' : ''); ?>>
                                         <?php echo e($currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})"); ?>
 
@@ -58,92 +58,6 @@
                             </select>
                         </div>
                     </div>
-                    <?php if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$zelle || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$paypal
-                        || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$skrill || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$neteller
-                        || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$airtm
-                        || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$uphold): ?>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="email"><?php echo e(_i('Email')); ?></label>
-                            <input type="email" name="account_email" id="account_email" class="form-control" autocomplete="off" value="<?php echo e($client->data->email); ?>">
-                        </div>
-                    </div>
-                        <?php if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$zelle): ?>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="first_name"><?php echo e(_i('First name')); ?></label>
-                                    <input type="text" name="first_name" id="first_name" class="form-control" autocomplete="off" value="<?php echo e($client->data->first_name); ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="last_name"><?php echo e(_i('Last name')); ?></label>
-                                    <input type="text" name="last_name" id="last_name" class="form-control" autocomplete="off" value="<?php echo e($client->data->last_name); ?>">
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                    <?php if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$wire_transfers || $client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$ves_to_usd): ?>
-                        <input type="hidden" name="old_bank_id" id="back" value="<?php echo e($client->data->bank_id); ?>">
-                        <input type="hidden" name="old_bank_name" value="<?php echo e($client->data->bank_name); ?>">
-                        <input type="hidden" name="payments" id="payments" value="<?php echo e($client->payment_method_id); ?>">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="country"><?php echo e(_i('Country')); ?></label>
-                                <select name="country" class="form-control country"  data-route="<?php echo e(route('betpay.banks.data')); ?>">
-                                    <option value=""><?php echo e(_i('Select...')); ?></option>
-                                    <?php $__currentLoopData = $countries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $country): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($country->iso); ?>">
-                                            <?php echo e($country->name); ?>
-
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="back"><?php echo e(_i('Bank ')); ?></label>
-                                <select name="bank" class="form-control select2 bank">
-                                    <option value=""><?php echo e(_i('Select ...')); ?></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="account_number"><?php echo e(_i('Account number')); ?></label>
-                                <input type="text" name="account_number" class="form-control" autocomplete="off" value="<?php echo e($client->data->account_number); ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="account_type"><?php echo e(_i('Account type')); ?></label>
-                                <select name="account_type" class="form-control">
-                                    <option value=""><?php echo e(_i('Select...')); ?></option>
-                                    <option value="C" <?php echo e('C' == $client->data->account_type ? 'selected' : ''); ?>><?php echo e(_i('Current')); ?></option>
-                                    <option value="S" <?php echo e('S' == $client->data->account_type ? 'selected' : ''); ?>><?php echo e(_i('Saving')); ?></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="account_type"><?php echo e(_i('Social reasons')); ?></label>
-                                <input type="text" name="social_reason" class="form-control" autocomplete="off" value="<?php echo e($client->data->social_reason); ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="dni"><?php echo e(_i('DNI')); ?></label>
-                                <input name="account_dni" class="form-control" type="text" autocomplete="off" value="<?php echo e($client->data->dni); ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="title"><?php echo e(_i('Title')); ?></label>
-                                <input type="text" name="title" class="form-control" autocomplete="off" value="<?php echo e($client->data->title); ?>">
-                            </div>
-                        </div>
-                    <?php endif; ?>
                     <?php if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$cryptocurrencies): ?>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -158,55 +72,72 @@
                                     <option value=""><?php echo e(_i('Select...')); ?></option>
                                     <option value="BTC" <?php echo e('BTC' == $client->data->cryptocurrency ? 'selected' : ''); ?>><?php echo e(_i('BTC')); ?></option>
                                     <option value="USDT" <?php echo e('USDT' == $client->data->cryptocurrency ? 'selected' : ''); ?>><?php echo e(_i('USDT')); ?></option>
+                                    <option value="USDC" <?php echo e('USDC' == $client->data->cryptocurrency ? 'selected' : ''); ?>><?php echo e(_i('USDC')); ?></option>
                                 </select>
                             </div>
                         </div>
-                    <?php endif; ?>
-                    <?php if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$just_pay): ?>
-                        <div class="col-md-4 d-none alps">
-                            <div class="form-group">
-                                <label for="public_key"><?php echo e(_i('Public key ')); ?></label>
-                                <input id="public_key" name="public_key" class="form-control" type="text" autocomplete="off" value="<?php echo e($client->data->public_key); ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-none alps">
-                            <div class="form-group">
-                                <label for="secret_key"><?php echo e(_i('Secret key')); ?></label>
-                                <input id="secret_key" name="secret_key" class="form-control" type="text" autocomplete="off" value="<?php echo e($client->data->secret_key); ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-none alps">
-                            <div class="form-group">
-                                <label for="username"><?php echo e(_i('Username')); ?></label>
-                                <input id="username" name="username" class="form-control" type="text" autocomplete="off" value="<?php echo e($client->data->username); ?>">
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-none alps">
-                            <div class="form-group">
-                                <label for="password"><?php echo e(_i('Password')); ?></label>
-                                <input id="password" name="password" class="form-control" type="password" autocomplete="off" value="<?php echo e($client->data->password); ?>">
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                    <?php if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$vcreditos_api): ?>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="vcreditos_user"><?php echo e(_i('Vcreditos user ')); ?></label>
-                                <input id="vcreditos_user" name="vcreditos_user" class="form-control" type="text" autocomplete="off">
+                                <label for="network_cripto"><?php echo e(_i('Network')); ?></label>
+                                    <input type="text" name="network_cripto" id="network_cripto" class="form-control" autocomplete="off" value="<?php echo e($client->data->network_cripto); ?>">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="vcreditos_secure_id"><?php echo e(_i('Vcreditos secure')); ?></label>
-                                <input id="vcreditos_secure_id" name="vcreditos_secure_id" class="form-control" type="text" autocomplete="off">
+                                <label for="qr_cripto"><?php echo e(_i('QR')); ?></label>
+                                    <input type="file" name="qr_cripto" id="qr_cripto" class="form-control" autocomplete="off">
                             </div>
                         </div>
+                        <input type="hidden" name="file" value="<?php echo e($client->data->qr); ?>">
                     <?php endif; ?>
+                    <?php if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$binance): ?>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label for="cryptocurrency_binance"><?php echo e(_i('Cryptocurrency')); ?></label>
+                            <select name="cryptocurrency_binance" class="form-control cryptocurrency">
+                                <option value=""><?php echo e(_i('Select...')); ?></option>
+                                <option value="USDT" <?php echo e('USDT' == $client->data->cryptocurrency ? 'selected' : ''); ?>><?php echo e(_i('USDT')); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label for="email_binance"><?php echo e(_i('Email')); ?></label>
+                                <input type="email" name="email_binance" class="form-control" autocomplete="off" value="<?php echo e($client->data->email); ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label for="phone_binance"><?php echo e(_i('Phone')); ?></label>
+                                <input type="number" name="phone_binance" id="phone_binance" class="form-control" autocomplete="off" value="<?php echo e($client->data->phone); ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label for="pay_id_binance"><?php echo e(_i('Pay Id')); ?></label>
+                                <input type="number" name="pay_id_binance" id="pay_id_binance" class="form-control" autocomplete="off" value="<?php echo e($client->data->pay_id); ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label for="binance_id"><?php echo e(_i('Binance Id')); ?></label>
+                                <input type="number" name="binance_id" id="binance_id" class="form-control" autocomplete="off" value="<?php echo e($client->data->binance_id); ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            <label for="qr_binance"><?php echo e(_i('QR')); ?></label>
+                                <input type="file" name="qr_binance" id="qr_binance" class="form-control" autocomplete="off">
+                        </div>
+                    </div>
+                    <input type="hidden" name="file" value="<?php echo e($client->data->qr); ?>">
+                    <?php endif; ?>
+                    
                     <div class="col-md-12">
                         <input type="hidden" name="client_account" id="client_account" value="<?php echo e($client->id); ?>">
                         <input type="hidden" name="payments" id="payments" value="<?php echo e($client->payment_method_id); ?>">
                         <div class="form-group">
-                            <button type="button" class="btn u-btn-3d u-btn-primary" id="update"
+                            <button type="submit" class="btn u-btn-3d u-btn-primary" id="update"
                                     data-loading-text="<i class='fa fa-spin fa-spinner'></i> <?php echo e(_i('Updating...')); ?>">
                                 <i class="hs-admin-reload"></i>
                                 <?php echo e(_i('Update')); ?>
@@ -224,8 +155,7 @@
     <script>
         $(function () {
             let betpay = new BetPay();
-            betpay.banksData();
-            betpay.updateClientAccount();
+            betpay.updateClientAccount("<?php echo $client->data->qr; ?>");
         });
     </script>
 <?php $__env->stopSection(); ?>

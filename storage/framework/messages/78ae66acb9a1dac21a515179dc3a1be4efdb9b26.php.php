@@ -30,10 +30,49 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="image"><?php echo e(_i('Image')); ?></label>
-                            <input type="file" name="image" id="image" class="opacity-0">
-                        </div>
+                        <?php if(!is_null($slider->front)): ?>
+                            <div class="form-group">
+                                <label for="image"><?php echo e(_i('Image')); ?></label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                            <div class="form-group">
+                                <label for="front"><?php echo e(_i('Image')); ?></label>
+                                <input type="file" name="front" id="show-front" class="opacity-0">
+                            </div>
+                        <?php else: ?>
+                            <div class="form-group">
+                                <label for="image"><?php echo e(_i('Image')); ?></label>
+                                <input type="file" name="image" id="show-image" class="opacity-0">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="">
+                                    <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
+                                    <span
+                                        class="glyphicon glyphicon-ok"><?php echo e(_i('Enable only for moving sliders: ')); ?></span>
+                                </label>
+                                <div class="div_a_show">
+                                    <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
+                                        <div class="noty_body">
+                                            <div class="g-mr-20">
+                                                <div class="noty_body__icon">
+                                                    <i class="hs-admin-info"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p>
+                                                    <?php echo e(_i('This image is only if you want to activate images with movement.The maximum file size is 5mb and the maximum width is 3440px')); ?>
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="front"><?php echo e(_i('Image')); ?></label>
+                                        <input type="file" name="front" id="show-front" class="opacity-0">
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -157,80 +196,11 @@
 
                                                 </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                <option
-                                                    value="core.index" <?php echo e('core.index' == $slider->route ? 'selected' : ''); ?>>
-                                                    <?php echo e(_i('Home')); ?>
+                                            <option
+                                                value="core.index" <?php echo e('core.index' == $slider->route ? 'selected' : ''); ?>>
+                                                <?php echo e(_i('Home')); ?>
 
-                                                </option>
-                                            <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 2 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 6 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 7 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 8 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 9 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 20 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 27 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 42 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 47 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 50 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 68 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 73 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 74 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 75 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 76 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 79 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 81 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 112 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 116 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 119 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 117 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 114 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 130 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 129
-                                                || \Dotworkers\Configurations\Configurations::getWhitelabel() == 137 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 145 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 140 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 119 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 126 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 134 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 117 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 104): ?>
-                                                <option
-                                                    value="pragmatic-play.live" <?php echo e('pragmatic-play.live' == $slider->route ? 'selected' : ''); ?>>
-                                                    <?php echo e(_i('Pragmatic Live Casino')); ?>
-
-                                                </option>
-                                            <?php endif; ?>
-                                            <?php if( \Dotworkers\Configurations\Configurations::getWhitelabel() == 116): ?>
-                                                <option
-                                                     value="vivo-gaming.lobby" <?php echo e('vivo-gaming.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                     <?php echo e(_i('Live Casino')); ?>
-
-                                                </option>
-                                            <?php endif; ?>
-                                            <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 147 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 149 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144): ?>
-                                                 <option value="store.index">
-                                                      <?php echo e(_i('Store')); ?>
-
-                                                 </option>
-                                            <?php endif; ?>
-                                            <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 114): ?>
-                                                 <option value="vivo-gaming-dotsuite.lobby" <?php echo e('vivo-gaming-dotsuite.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                      <?php echo e(_i('Vivo Gaming Dotsuite')); ?>
-
-                                                 </option>
-                                            <?php endif; ?>
-                                            <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 114 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 125 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 153): ?>
-                                                 <option value="bet-soft.vg.lobby" <?php echo e('bet-soft.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                      <?php echo e(_i('Bet Soft')); ?>
-
-                                                 </option>
-                                                    <option value="tom-horn.vg.lobby" <?php echo e('tom-horn.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Tom Horn')); ?>
-
-                                                    </option>
-                                                    <option value="platipus.vg.lobby" <?php echo e('platipus.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Platipus')); ?>
-
-                                                    </option>
-                                                    <option value="booongo.vg.lobby" <?php echo e('booongo.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Booongo')); ?>
-
-                                                    </option>
-                                                    <option value="leap.vg.lobby" <?php echo e('leap.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Leap')); ?>
-
-                                                    </option>
-                                                    <option value="arrows-edge.vg.lobby" <?php echo e('arrows-edge.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Arrows Edge')); ?>
-
-                                                    </option>
-                                                    <option value="red-rake.vg.lobby" <?php echo e('red-rake.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Red Rake')); ?>
-
-                                                    </option>
-                                                    <option value="playson.vg.lobby" <?php echo e('playson.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Playson')); ?>
-
-                                                    </option>
-                                                    <option value="5men.vg.lobby" <?php echo e('5men.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('5 Men')); ?>
-
-                                                    </option>
-                                                    <option value="spinomenal.vg.lobby" <?php echo e('spinomenal.vg.lobby' == $slider->route ? 'selected' : ''); ?>>
-                                                        <?php echo e(_i('Spinomenal')); ?>
-
-                                                    </option>
-                                            <?php endif; ?>
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -245,8 +215,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="hidden" name="id" value="<?php echo e($slider->id); ?>">
-                                    <input type="hidden" name="file" id="file" value="<?php echo e($slider->file); ?>" >
+                                    <input type="hidden" name="file" id="file" value="<?php echo e($slider->file); ?>">
                                     <input type="hidden" name="image" id="image" value="<?php echo e($slider->file); ?>">
+                                    <input type="hidden" name="front" id="front" value="<?php echo e($slider->file); ?>">
                                     <input type="hidden" name="template_element_type"
                                            value="<?php echo e($slider->element_type_id); ?>">
                                     <input type="hidden" name="section" value="<?php echo e($slider->section); ?>">
@@ -270,7 +241,30 @@
     <script>
         $(function () {
             let sliders = new Sliders();
-            sliders.update("<?php echo $slider->image; ?>");
+            sliders.update("<?php echo $slider->image; ?>", "show-image");
+            sliders.update("<?php echo $slider->front; ?>", "show-front");
+        });
+    </script>
+    <script>
+        $(function () {
+
+            // obtener campos ocultar div
+            var checkbox = $(".checkshow");
+            var hidden = $(".div_a_show");
+            //
+
+            hidden.hide();
+            checkbox.change(function () {
+                if (checkbox.is(':checked')) {
+                    //hidden.show();
+                    $(".div_a_show").fadeIn("200")
+                } else {
+                    //hidden.hide();
+                    $(".div_a_show").fadeOut("200")
+                    $('input[type=checkbox]').prop('checked', false);// limpia los valores de checkbox al ser ocultado
+
+                }
+            });
         });
     </script>
 <?php $__env->stopSection(); ?>

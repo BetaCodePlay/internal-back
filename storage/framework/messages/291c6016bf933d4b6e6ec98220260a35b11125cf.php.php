@@ -17,12 +17,44 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="change_provider"><?php echo e(_i('Provider')); ?></label>
-                                    <select name="change_provider" id="change_provider" data-route="<?php echo e(route('games.game')); ?>" class="form-control">
+                                    <label for="maker"><?php echo e(_i('Maker')); ?></label>
+                                    <select name="maker" id="maker" class="form-control" data-route="<?php echo e(route('core.providers-by-maker')); ?>"
+                                    data-categories="<?php echo e(route('core.categories-by-maker')); ?>">
                                         <option value=""><?php echo e(_i('Select...')); ?></option>
-                                        <?php $__currentLoopData = $providers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $provider): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($provider->provider_id); ?>">
-                                                <?php echo e($provider->name); ?>
+                                        <?php $__currentLoopData = $makers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $maker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($maker->maker); ?>">
+                                            <?php echo e($maker->maker); ?>
+
+                                        </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="provider"><?php echo e(_i('Provider')); ?></label>
+                                    <select name="provider" id="provider" class="form-control">
+                                        <option value=""><?php echo e(_i('Select...')); ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="category"><?php echo e(_i('Category')); ?></label>
+                                    <select name="category" id="category" class="form-control"
+                                    data-route="<?php echo e(route('games.game-by-categories')); ?>">
+                                        <option value=""><?php echo e(_i('Select...')); ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 div_a_product_id">
+                                <div class="form-group">
+                                    <label for="product_id"><?php echo e(_i('Product ID')); ?></label>
+                                    <select name="product_id" id="product_id" class="form-control">
+                                        <option value=""><?php echo e(_i('Select...')); ?></option>
+                                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($product->product_id); ?>">
+                                                <?php echo e($product->product_id); ?>
 
                                             </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -30,7 +62,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="">
+                                <label>
                                     <input type="checkbox" class="checkshow" name="personalize" autocomplete="off">
                                     <span class="glyphicon glyphicon-ok"><?php echo e(_i('Games Personalize: ')); ?></span>
                                 </label>
@@ -44,28 +76,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php if(isset($route)): ?>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="route"><?php echo e(_i('Menu where it will be shown')); ?></label>
-                                        <select select name="route" id="route" class="form-control">
-                                            <option value=""><?php echo e(_i('Select...')); ?></option>
-                                            <?php $__currentLoopData = $route; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($item->route); ?>">
-                                                    <?php echo e($item->name); ?>
-
-                                                </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
                             <div class="div_a_show col-md-6">
                                 <div class="form-group">
                                     <label for="order"><?php echo e(_i('Order (optional)')); ?></label>
                                     <input type="number" name="order" id="order" value="0" class="form-control" min="0">
                                 </div>
                             </div>
+                            <?php if(isset($route)): ?>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="route"><?php echo e(_i('Menu where it will be shown')); ?></label>
+                                    <select select name="route" id="route" class="form-control">
+                                        <option value=""><?php echo e(_i('Select...')); ?></option>
+                                        <?php $__currentLoopData = $route; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($item->route); ?>">
+                                                <?php echo e($item->name); ?>
+
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                            </div>
+                           <?php endif; ?>
                             <div class="div_a_show card-block g-pa-15">
                                 <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
                                     <div class="noty_body">
@@ -136,6 +168,14 @@
 
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                <?php echo e(_i('Maker')); ?>
+
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                <?php echo e(_i('Category')); ?>
+
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 <?php echo e(_i('Menu')); ?>
 
                             </th>
@@ -162,8 +202,12 @@
         $(function () {
             let lobbyGames = new LobbyGames()
             lobbyGames.all();
-            lobbyGames.game();
             lobbyGames.store();
+            lobbyGames.providersByMaker();
+            lobbyGames.categoryByMaker();
+            lobbyGames.gamesByCategory();
+            lobbyGames.gamesByProducts();
+            lobbyGames.products();
         });
     </script>
     <script>
@@ -172,6 +216,8 @@
             // obtener campos ocultar div
             var checkbox = $(".checkshow");
             var hidden = $(".div_a_show");
+            var products = $(".div_a_product_id");
+            products.hide();
             //
 
             hidden.hide();

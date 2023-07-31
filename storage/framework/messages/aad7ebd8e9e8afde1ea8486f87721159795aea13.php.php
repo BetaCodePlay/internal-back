@@ -36,6 +36,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
@@ -406,40 +407,22 @@ class BetPayController extends Controller
     {
         try{
             $data['title'] = _i('Client account list');
-            $data['whitelabels'] = $this->whitelabelsRepo->all();
-            $data['currency_client'] = $this->currenciesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
-            $urlClientsAll = "{$this->betPayURL}/clients/all";
+            $paymentMethods = [];
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
                     ->get();
-
-                $curlClientsAll = Curl::to($urlClientsAll)
-                    ->withHeader('Accept: application/json')
-                    ->withHeader("Authorization: Bearer $betPayToken")
-                    ->get();
-
                 $responsePaymentMethodsAll = json_decode($curlPaymentMethodsAll);
-                $responseClientsAll = json_decode($curlClientsAll);
-
-                if ($responsePaymentMethodsAll->status == Status::$ok) {
+                if (($responsePaymentMethodsAll->status == Status::$ok)) {
                     $paymentMethods = $responsePaymentMethodsAll->data->payment_methods;
                 } else {
                     $paymentMethods = [];
                 }
-
-                if ($responseClientsAll->status == Status::$ok) {
-                    $clients = $responseClientsAll->data->client;
-                    $allClients =  $this->clientsCollection->formatClientsAll($clients);
-                } else {
-                    $allClients = [];
-                }
             }
             $data['payment_methods'] = $paymentMethods;
-            $data['clients'] = $allClients;
             return view('back.betpay.clients.accounts.index', $data);
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
@@ -455,32 +438,32 @@ class BetPayController extends Controller
     public function clientAccountListData(Request $request)
     {
         try {
-            $client = $request->client;
-            $currency = $request->currency;
             $paymentMethod = $request->payment_method;
-
-            $betPayToken = session('betpay_client_access_token');
-            $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
-            if (!is_null($betPayToken)) {
-                $requestData = [
-                    'client' => $client,
-                    'currency' => $currency,
-                    'payment_method' => $paymentMethod,
-                ];
-                $curlClientAccount = Curl::to( $urlClientAccount )
-                    ->withData($requestData)
-                    ->withHeader('Accept: application/json')
-                    ->withHeader("Authorization: Bearer $betPayToken")
-                    ->get();
-                $responseClientAccount = json_decode($curlClientAccount);
-                if ($responseClientAccount->status == Status::$ok) {
-                    $accounts = $responseClientAccount->data->accounts;
-                    $this->accountsCollection->formatClientAccount($accounts);
-                } else {
-                    $accounts = [];
-                }
-            }
-
+            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
+            if (!is_null($credential)) {
+                $betPayToken = session('betpay_client_access_token');
+                $urlClientAccount = "{$this->betPayURL}/clients/accounts/get-by-client-payment-methods-currency";
+                if (!is_null($betPayToken)) {
+                    $requestData = [
+                        'currency' => $request->currency,
+                        'payment_method' => $paymentMethod,
+                    ];
+                    $curlClientAccount = Curl::to( $urlClientAccount )
+                        ->withData($requestData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->get();
+                    $responseClientAccount = json_decode($curlClientAccount);
+                    if ($responseClientAccount->status == Status::$ok) {
+                        $accounts = $responseClientAccount->data->accounts;
+                        $this->accountsCollection->formatClientAccount($accounts);
+                    }else{
+                        $accounts = [];
+                    }  
+                } 
+            }else{
+                $accounts = [];
+            }    
             $data = [
                 'accounts' => $accounts
             ];
@@ -504,7 +487,7 @@ class BetPayController extends Controller
             $data['whitelabels'] = $this->whitelabelsRepo->all();
             $data['currency_client'] = $this->currenciesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
 
             if (!is_null($betPayToken)) {
@@ -544,7 +527,7 @@ class BetPayController extends Controller
             $data['currency_client'] = $this->currenciesRepo->all();
             $data['countries'] = $this->countriesRepo->all();
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
@@ -574,13 +557,10 @@ class BetPayController extends Controller
     public function createClientAccount()
     {
         try {
-            $data['title'] = _i('Create Client Account');
-            $data['currency_client'] = $this->currenciesRepo->all();
-            $data['countries'] = $this->countriesRepo->all();
-            $data['whitelabels'] = $this->whitelabelsRepo->all();
+            $data['title'] = _i('Active Payment Methods');
             $paymentMethods = [];
             $betPayToken = session('betpay_client_access_token');
-            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
+            $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
@@ -602,76 +582,6 @@ class BetPayController extends Controller
     }
 
     /**
-     * Show pending credit abitab
-     *
-     * @return Application|Factory|View
-     */
-    public function creditAbitab()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$abitab;
-        $data['provider'] = Providers::$abitab;
-        $data['title'] = _i('Pending Abitab credit transactions');
-        return view('back.betpay.abitab.credit', $data);
-    }
-
-    /**
-     * Show pending credit airtm
-     *
-     * @return Application|Factory|View
-     */
-    public function creditAirtm()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$airtm;
-        $data['provider'] = Providers::$airtm;
-        $data['title'] = _i('Pending AirTM credit transactions');
-        return view('back.betpay.airtm.credit', $data);
-    }
-
-    /**
-     * Show pending credit bizum
-     *
-     * @return Application|Factory|View
-     */
-    public function creditBizum()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$bizum;
-        $data['provider'] = Providers::$bizum;
-        $data['title'] = _i('Pending Bizum credit transactions');
-        return view('back.betpay.bizum.credit', $data);
-    }
-
-    /**
-     * Show credit charging point
-     *
-     * @return Application|Factory|View
-     */
-    public function creditChargingPoint()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] =  PaymentMethods::$charging_point;
-        $data['provider'] =  Providers::$charging_point;
-        $data['title'] = _i('Process charging point credit transactions');
-        return view('back.betpay.charging-point.credit', $data);
-    }
-
-    /**
-     * Show pending credit binance
-     *
-     * @return Application|Factory|View
-     */
-    public function creditBinance()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$binance;
-        $data['provider'] = Providers::$binance;
-        $data['title'] = _i('Pending Binance credit transactions');
-        return view('back.betpay.binance.credit', $data);
-    }
-
-    /**
      * Show pending credit cryptocurrencies
      *
      * @return Application|Factory|View
@@ -686,87 +596,17 @@ class BetPayController extends Controller
     }
 
     /**
-     * Show pending credit mobile payment
+     * Show pending credit binance
      *
      * @return Application|Factory|View
      */
-    public function creditMobilePayment()
+    public function creditBinance()
     {
         $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$mobile_payment;
-        $data['provider'] = Providers::$mobile_payment;
-        $data['title'] = _i('Pending mobile payment credit transactions');
-        return view('back.betpay.mobile-payment.credit', $data);
-    }
-
-    /**
-     * Show pending credit nesteller
-     *
-     * @return Application|Factory|View
-     */
-    public function creditNeteller()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$neteller;
-        $data['provider'] = Providers::$neteller;
-        $data['title'] = _i('Pending Neteller credit transactions');
-        return view('back.betpay.neteller.credit', $data);
-    }
-
-    /**
-     * Show pending credit Nequi
-     *
-     * @return Application|Factory|View
-     */
-    public function creditNequi()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$nequi;
-        $data['provider'] = Providers::$nequi;
-        $data['title'] = _i('Pending Nequi credit transactions');
-        return view('back.betpay.nequi.credit', $data);
-    }
-
-    /**
-     * Show pending credit paypal
-     *
-     * @return Application|Factory|View
-     */
-    public function creditPayPal()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$paypal;
-        $data['provider'] = Providers::$paypal;
-        $data['title'] = _i('Pending PayPal credit transactions');
-        return view('back.betpay.paypal.credit', $data);
-    }
-
-    /**
-     * Show pending credit total
-     *
-     * @return Application|Factory|View
-     */
-    public function creditTotalPago()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$total_pago;
-        $data['provider'] = Providers::$total_pago;
-        $data['title'] = _i('Pending total pago credit transactions');
-        return view('back.betpay.total-pago.credit', $data);
-    }
-
-    /**
-     * Show pending credit red pagos
-     *
-     * @return Application|Factory|View
-     */
-    public function creditRedPagos()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$red_pagos;
-        $data['provider'] = Providers::$red_pagos;
-        $data['title'] = _i('Pending Red Pagos credit transactions');
-        return view('back.betpay.red-pagos.credit', $data);
+        $data['payment_method'] = PaymentMethods::$binance;
+        $data['provider'] = Providers::$binance;
+        $data['title'] = _i('Pending Binance credit transactions');
+        return view('back.betpay.binance.credit', $data);
     }
 
     /**
@@ -853,90 +693,6 @@ class BetPayController extends Controller
     }
 
     /**
-     * Show pending credit skrill
-     *
-     * @return Application|Factory|View
-     */
-    public function creditSkrill()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$skrill;
-        $data['provider'] = Providers::$skrill;
-        $data['title'] = _i('Pending Skrill credit transactions');
-        return view('back.betpay.skrill.credit', $data);
-    }
-
-    /**
-     * Show pending credit uphold
-     *
-     * @return Application|Factory|View
-     */
-    public function creditUphold()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$uphold;
-        $data['provider'] = Providers::$uphold;
-        $data['title'] = _i('Pending Uphold credit transactions');
-        return view('back.betpay.uphold.credit', $data);
-    }
-
-    /**
-     * Show pending credit reserve
-     *
-     * @return Application|Factory|View
-     */
-    public function creditReserve()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$reserve;
-        $data['provider'] = Providers::$reserve;
-        $data['title'] = _i('Pending Reserve credit transactions');
-        return view('back.betpay.reserve.credit', $data);
-    }
-
-    /**
-     * Show pending credit VES to USD
-     *
-     * @return Application|Factory|View
-     */
-    public function creditVesToUsd()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$ves_to_usd;
-        $data['provider'] = Providers::$ves_to_usd;
-        $data['title'] = _i('Pending VES to USD transfers');
-        return view('back.betpay.ves-to-usd.credit', $data);
-    }
-
-    /**
-     * Show pending credit wire transfers
-     *
-     * @return Application|Factory|View
-     */
-    public function creditWireTransfers()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$wire_transfers;
-        $data['provider'] = Providers::$wire_transfers;
-        $data['title'] = _i('Pending credit wire transfers');
-        return view('back.betpay.wire-transfers.credit', $data);
-    }
-
-    /**
-     * Show pending credit zelle
-     *
-     * @return Application|Factory|View
-     */
-    public function creditZelle()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$zelle;
-        $data['provider'] = Providers::$zelle;
-        $data['title'] = _i('Pending Zelle credit transactions');
-        return view('back.betpay.zelle.credit', $data);
-    }
-
-    /**
      * Show payment limits
      *
      * @return Factory|View
@@ -965,401 +721,6 @@ class BetPayController extends Controller
     }
 
     /**
-     * Show pending debit airtm
-     *
-     * @return Application|Factory|View
-     */
-    public function debitAirtm()
-    {
-        $paymentMethod = PaymentMethods::$airtm;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$airtm;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending AirTM debit transactions');
-        return view('back.betpay.airtm.debit', $data);
-    }
-
-    /**
-     * Show debit bizum
-     *
-     * @return Application|Factory|View
-     */
-    public function debitBizum()
-    {
-        $paymentMethod = PaymentMethods::$bizum;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] =  $paymentMethod;
-        $data['provider'] = Providers::$bizum;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending bizum debit transactions');
-        return view('back.betpay.bizum.debit', $data);
-    }
-
-    /**
-     * Show debit charging point
-     *
-     * @return Application|Factory|View
-     */
-    public function debitChargingPoint()
-    {
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] =  PaymentMethods::$charging_point;
-        $data['provider'] = Providers::$charging_point;
-        $data['title'] = _i('Pending charging point debit transactions');
-        return view('back.betpay.charging-point.debit', $data);
-    }
-
-    /**
-     * Show pending debit binance
-     *
-     * @return Application|Factory|View
-     */
-    public function debitBinance()
-    {
-        $paymentMethod = PaymentMethods::$binance;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$binance;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Binance debit transactions');
-        return view('back.betpay.binance.debit', $data);
-    }
-
-     /**
-     * Show pending debit pronto paga
-     *
-     * @return Application|Factory|View
-     */
-    public function debitProntoPaga()
-    {
-        $paymentMethod = PaymentMethods::$pronto_paga;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$pronto_paga;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Pronto Paga debit transactions');
-        return view('back.betpay.pronto-paga.debit', $data);
-    }
-
-    /**
-     * Show pending debit payku
-     *
-     * @return Application|Factory|View
-     */
-    public function debitPayKu()
-    {
-        $paymentMethod = PaymentMethods::$payku;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$payku;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending PayKu debit transactions');
-        return view('back.betpay.payku.debit', $data);
-    }
-
-    /**
-     * Show pending debit personal
-     *
-     * @return Application|Factory|View
-     */
-    public function debitPersonal()
-    {
-        $paymentMethod = PaymentMethods::$personal;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$personal;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Personal debit transactions');
-        return view('back.betpay.personal.debit', $data);
-    }
-
-    /**
-     * Search charging point
-     *
-     * @return Application|Factory|View
-     */
-    public function searchChargingPoint()
-    {
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] =  PaymentMethods::$charging_point;
-        $data['provider'] = Providers::$charging_point;
-        $data['title'] = _i('Pending charging point debit transactions');
-        return view('back.betpay.charging-point.search', $data);
-    }
-
-
-    /**
-     * Show search payments personal
-     *
-     * @return Application|Factory|View
-     */
-    public function searchPaymentsPersonal()
-    {
-        $data['title'] = _i('Search transactions');
-        return view('back.betpay.personal.search', $data);
-    }
-
-     /**
-     * Get payments personal
-     *
-     * @param null $startDate
-     * @param null $endDate
-     * @param null $paymentMethod Payment method ID
-     * @return Response
-     */
-    public function searchPaymentsPersonalData($reference = null)
-    {
-        try {
-            if (!is_null($reference) ){
-                    $requestData = [
-                        'reference' => $reference,
-                    ];
-                    $betPayToken = session('betpay_client_access_token');
-                    $url = "{$this->betPayURL}/personal/payments";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-                    if(!is_null($response)){
-                        $data = $response->data;
-                        $this->transactionsCollection->formatTransactionsPersonal($data);
-                        $transactions[] = $data;
-                        $data = [
-                            'transactions' => $transactions
-                        ];
-                        return Utils::successResponse($data);
-                    } else {
-                        $data = [
-                            'transactions' => [],
-                        ];
-                        return Utils::successResponse($data);
-                    }
-                } else {
-                    $data = [
-                        'transactions' => [],
-                    ];
-                    return Utils::successResponse($data);
-                }
-            } catch (\Exception $ex) {
-                \Log::error(__METHOD__, ['exception' => $ex]);
-                return Utils::failedResponse();
-            }
-    }
-
-    /**
-     * Show search payments personal
-     *
-     * @return Application|Factory|View
-     */
-    public function cancelPaymentsPersonal()
-    {
-        $data['title'] = _i('Cancel transactions');
-        $data['payment_method'] =  PaymentMethods::$personal;
-        $data['provider'] = Providers::$personal;
-        return view('back.betpay.personal.cancel', $data);
-    }
-
-
-    /**
-     * Payments personal data
-     *
-     * @param null $startDate
-     * @param null $endDate
-     * @param null $paymentMethod Payment method ID
-     * @return Response
-     */
-    public function cancelPaymentsPersonalData($reference = null)
-    {
-        try {
-            if (!is_null($reference) ){
-                    $requestData = [
-                        'reference' => $reference,
-                    ];
-                    $betPayToken = session('betpay_client_access_token');
-                    $url = "{$this->betPayURL}/personal/payments";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-                    if(!is_null($response)){
-                        if ($response->data->code == 0) {
-                            $data = $response->data;
-                            if($data->transaction->transaction_status_id == 2){
-                                $this->transactionsCollection->formatCancelTransactionsPersonal($data);
-                                $transactions[] = $data;
-                                $data = [
-                                    'transactions' => $transactions
-                                ];
-                                return Utils::successResponse($data);
-                            }else{
-                                $data = [
-                                    'transactions' => [],
-                                ];
-                                return Utils::successResponse($data);
-                            }
-
-                        }  else {
-                            $data = [
-                                'transactions' => [],
-                            ];
-                            return Utils::successResponse($data);
-                        }
-                    } else {
-                        $data = [
-                            'transactions' => [],
-                        ];
-                        return Utils::successResponse($data);
-                    }
-                } else {
-                    $data = [
-                        'transactions' => [],
-                    ];
-                    return Utils::successResponse($data);
-                }
-            } catch (\Exception $ex) {
-                \Log::error(__METHOD__, ['exception' => $ex]);
-                return Utils::failedResponse();
-            }
-    }
-
-     /**
-     * Process payments personal
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processPaymentPersonal(Request $request, TransactionsRepo $transactionsRepo , OperationalBalancesRepo $operationalBalanceRepo, OperationalBalancesTransactionsRepo $operationalBalanceTransactionsRepo): Response
-    {
-        $this->validate($request, [
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-        try {
-            $description = "Debit for canceled transaction";
-            $currency = session('currency');
-            $user = $request->user;
-            $wallet = $request->wallet;
-            $walletData = Wallet::getByClient($user, $currency);
-            $whitelabel = Configurations::getWhitelabel();
-            $operationalBalanceData = $operationalBalanceRepo->find($whitelabel, $currency);
-            $provider = $request->provider;
-            $userData = $this->usersRepo->find($user);
-            $transaction = $request->transaction;
-            $reference = $request->reference;
-            $operator = auth()->user()->username;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($transaction);
-
-            $additionalData = [
-                'provider_transaction' => Str::uuid()->toString(),
-                'description' => $description,
-                'operator' => $operator
-            ];
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$approved) {
-            $betPayToken = session('betpay_client_access_token');
-            $requestData = [
-                'reference' => $reference,
-                'description' => $request->description,
-                'operator' => $operator
-            ];
-            $url = "{$this->betPayURL}/personal/reverse-payment";
-            $curl = Curl::to($url)
-                ->withData($requestData)
-                ->withHeader('Accept: application/json')
-                ->withHeader("Authorization: Bearer $betPayToken")
-                ->post();
-            $response = json_decode($curl);
-            if ($response->status == Status::$ok) {
-                $betPayTransaction = $response->data->transaction;
-                if ($betPayTransaction->amount <= $walletData->data->wallet->balance) {
-                    $walletDebit = Wallet::debitManualTransactions($betPayTransaction->amount, $provider, $additionalData, $wallet);
-                } else {
-                    $data = [
-                        'title' => _i('Insufficient balance'),
-                        'message' => _i("The user's balance is insufficient to perform the transaction"),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-                }
-
-                if ($walletDebit->status == Status::$ok) {
-                    $transactionData = [
-                        'id' =>  $transactionsRepo->getNextValue(),
-                        'user_id' => $user,
-                        'amount' => $betPayTransaction->amount,
-                        'currency_iso' => $currency,
-                        'transaction_type_id' => TransactionTypes::$debit,
-                        'transaction_status_id' => TransactionStatus::$approved,
-                        'provider_id' => $provider,
-                        'data' => $additionalData,
-                        'whitelabel_id' => Configurations::getWhitelabel()
-                    ];
-                    $additionalData['wallet_transaction'] = $walletDebit->data->transaction->id;
-                    $detailsData = [
-                        'data' => json_encode($additionalData)
-                    ];
-                    $transactionsRepo->store($transactionData, TransactionStatus::$approved, $detailsData);
-
-                    $operationalBalanceTransaction = [
-                        'amount' => $betPayTransaction->amount,
-                        'user_id' => $user,
-                        'operator' => $operator,
-                        'provider_id' => $provider,
-                        'whitelabel_id' => $whitelabel,
-                        'currency_iso' => $currency,
-                        'transaction_type_id' => TransactionTypes::$debit
-                    ];
-                    $operationalBalanceTransactionsRepo->store($operationalBalanceTransaction);
-                    $operationalBalanceRepo->decrement($whitelabel, $currency, $betPayTransaction->amount);
-
-                    $userDates = [
-                        'last_debit' => Carbon::now(),
-                        'last_debit_amount' => $betPayTransaction->amount,
-                        'last_debit_currency' => $betPayTransaction->currency_iso
-                    ];
-                    $this->usersRepo->update($user, $userDates);
-
-                    $data = [
-                        'title' => _i('Transaction performed'),
-                        'message' => _i('The transaction was successfully made to the user'),
-                        'close' => _i('Close'),
-                        'balance' => number_format($walletDebit->data->wallet->balance, 2)
-                    ];
-                    return Utils::successResponse($data);
-
-                } else {
-                    return Utils::failedResponse();
-                }
-            } else {
-                $data = [
-                    'title' => _i('Transaction rejected'),
-                    'message' => $response->data->message,
-                    'close' => _i('Close'),
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        }else {
-            $data = [
-                'title' => _i('Deposit already processed'),
-                'message' => _i('The deposit is already processed. Please refresh the page to update the list'),
-                'close' => _i('Close')
-            ];
-            return Utils::errorResponse(Codes::$forbidden, $data);
-        }
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      * Show pending debit cryptocurrency
      *
      * @return Application|Factory|View
@@ -1376,127 +737,19 @@ class BetPayController extends Controller
     }
 
     /**
-     * Show pending debit directa24
+     * Show pending debit binance
      *
      * @return Application|Factory|View
      */
-    public function debitDirecta24()
+    public function debitBinance()
     {
-        $paymentMethod = PaymentMethods::$directa24;
+        $paymentMethod = PaymentMethods::$binance;
         $data['transaction_type'] = TransactionTypes::$debit;
         $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$directa24;
-        $data['title'] = _i('Pending Directa24 debit transactions');
-        return view('back.betpay.directa24.debit', $data);
-    }
-
-    /**
-     * Show pending debit ALPS
-     *
-     * @return Application|Factory|View
-     */
-    public function debitJustPay()
-    {
-        $paymentMethod = PaymentMethods::$just_pay;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$just_pay;
-        $data['title'] = _i('Pending ALPS debit transactions');
-        return view('back.betpay.justpay.debit', $data);
-    }
-
-    /**
-     * Show pending debit monnet
-     *
-     * @return Application|Factory|View
-     */
-    public function debitMonnet()
-    {
-        $paymentMethod = PaymentMethods::$monnet;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$monnet;
-        $data['title'] = _i('Pending Monnet debit transactions');
-        return view('back.betpay.monnet.debit', $data);
-    }
-
-    /**
-     * Show pending debit neteller
-     *
-     * @return Application|Factory|View
-     */
-    public function debitNeteller()
-    {
-        $paymentMethod = PaymentMethods::$neteller;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$neteller;
+        $data['provider'] = Providers::$binance;
         $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Neteller debit transactions');
-        return view('back.betpay.neteller.debit', $data);
-    }
-
-    /**
-     * Show pending debit paypal
-     *
-     * @return Application|Factory|View
-     */
-    public function debitPayPal()
-    {
-        $paymentMethod = PaymentMethods::$paypal;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$paypal;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending PayPal debit transactions');
-        return view('back.betpay.paypal.debit', $data);
-    }
-
-    /**
-     * Show pending debit Pay For Fun
-     *
-     * @return Factory|\Illuminate\Contracts\View\View
-     */
-    public function debitPayForFun()
-    {
-        $paymentMethod = PaymentMethods::$pay_for_fun;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$pay_for_fun;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Pay For Fun debit transactions');
-        return view('back.betpay.pay-for-fun.debit', $data);
-    }
-
-      /**
-     * Show pending debit Pay For Fun Gateway
-     *
-     * @return Factory|\Illuminate\Contracts\View\View
-     */
-    public function debitPayForFunGateway()
-    {
-        $paymentMethod = PaymentMethods::$pay_for_fun_go;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$pay_for_fun_go;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Pay For Fun Gateway debit transactions');
-        return view('back.betpay.pay-for-fun-gateway.debit', $data);
-    }
-
-    /**
-     * Show pending debit Pay retailers
-     *
-     * @return Application|Factory|View
-     */
-    public function debitPayRetailers()
-    {
-        $paymentMethod = PaymentMethods::$pay_retailers;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$pay_retailers;
-        $data['title'] = _i('Pending Pay Retailers debit transactions');
-        return view('back.betpay.pay-retailers.debit', $data);
+        $data['title'] = _i('Pending Binance debit transactions');
+        return view('back.betpay.binance.debit', $data);
     }
 
     /**
@@ -1565,150 +818,6 @@ class BetPayController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
             return Utils::failedResponse();
         }
-    }
-
-
-    /**
-     * Show pending debit Skrill
-     *
-     * @return Application|Factory|View
-     */
-    public function debitSkrill()
-    {
-        $paymentMethod = PaymentMethods::$skrill;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$skrill;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Skrill debit transactions');
-        return view('back.betpay.skrill.debit', $data);
-    }
-
-    /**
-     * Show pending debit Uphold
-     *
-     * @return Application|Factory|View
-     */
-    public function debitUphold()
-    {
-        $paymentMethod = PaymentMethods::$uphold;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$uphold;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Uphold debit transactions');
-        return view('back.betpay.uphold.debit', $data);
-    }
-
-    /**
-     * Show pending debit reserve
-     *
-     * @return Application|Factory|View
-     */
-    public function debitReserve()
-    {
-        $paymentMethod = PaymentMethods::$reserve;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$reserve;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Reserve debit transactions');
-        return view('back.betpay.reserve.debit', $data);
-    }
-
-    /**
-     * Show pending debit VCreditos
-     *
-     * @return Application|Factory|View
-     */
-    public function debitVCreditos()
-    {
-        $paymentMethod = PaymentMethods::$vcreditos;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$vcreditos;
-        $data['title'] = _i('Pending VCreditos debit transactions');
-        return view('back.betpay.vcreditos.debit', $data);
-    }
-
-    /**
-     * Show pending debit VCreditos Api
-     *
-     * @return Application|Factory|View
-     */
-    public function debitVCreditosApi()
-    {
-        $paymentMethod = PaymentMethods::$vcreditos_api;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$vcreditos_api;
-        $data['title'] = _i('Pending VCreditos Api debit transactions');
-        return view('back.betpay.vcreditos-api.debit', $data);
-    }
-
-    /**
-     * Show pending debit transactions
-     *
-     * @return Application|Factory|View
-     */
-    public function debitWireTransfers()
-    {
-        $paymentMethod = PaymentMethods::$wire_transfers;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$wire_transfers;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending debit wire transfers');
-        return view('back.betpay.wire-transfers.debit', $data);
-    }
-
-    /**
-     * Show pending debit Zampay
-     *
-     * @return Application|Factory|View
-     */
-    public function debitZampay()
-    {
-        $paymentMethod = PaymentMethods::$zampay;
-
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$zampay;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Zampay debit transactions');
-
-        return view('back.betpay.zampay.debit', $data);
-    }
-
-
-    /**
-     * Show pending debit zelle
-     *
-     * @return Application|Factory|View
-     */
-    public function debitZelle()
-    {
-        $paymentMethod = PaymentMethods::$zelle;
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = $paymentMethod;
-        $data['provider'] = Providers::$zelle;
-        $data['accounts'] = $this->clientAccounts($paymentMethod);
-        $data['title'] = _i('Pending Zelle debit transactions');
-        return view('back.betpay.zelle.debit', $data);
-    }
-
-    /**
-     * Show pending debit Zippy
-     *
-     * @return Application|Factory|View
-     */
-    public function debitZippy()
-    {
-        $data['transaction_type'] = TransactionTypes::$debit;
-        $data['payment_method'] = PaymentMethods::$zippy;
-        $data['provider'] = Providers::$zippy;
-        $data['title'] = _i('Pending debit Zippy');
-        return view('back.betpay.zippy.debit', $data);
     }
 
     /**
@@ -1947,11 +1056,10 @@ class BetPayController extends Controller
     public function editClientAccount($id)
     {
         $data['title'] = _i('Edit client account');
-        $data['currency_client'] = $this->currenciesRepo->all();
-        $data['countries'] = $this->countriesRepo->all();
         $betPayToken = session('betpay_client_access_token');
+        $paymentMethods = [];
+        $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
         $url = "{$this->betPayURL}/clients/accounts/find";
-        $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/all";
         if (!is_null($betPayToken)) {
             $requestData = [
                 'client' => $id,
@@ -2298,1763 +1406,6 @@ class BetPayController extends Controller
     }
 
     /**
-     * Process Debit Directa24
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function processDebitDirecta24(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action,
-                        'operator' => $operator
-                    ];
-
-                    $url = "{$this->betPayURL}/transactions/directa24/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$approved;
-                            $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$directa24, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                            if ($walletTransaction->status != 'OK') {
-                                $data = [
-                                    'title' => _i('Error'),
-                                    'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                    'close' => _i('Close')
-                                ];
-                                return Utils::errorResponse(Codes::$forbidden, $data);
-                            }
-                            $detailsAdditionalData = [
-                                'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                'operator' => $operator
-                            ];
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-                            $userDate = [
-                                'last_debit' => Carbon::now(),
-                                'last_debit_amount' => $betPayTransaction->amount,
-                                'last_debit_currency' => $betPayTransaction->currency_iso
-                            ];
-                            $this->usersRepo->update($user, $userDate);
-
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$directa24, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description,
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        $data = [
-                            'title' => _i('Withdrawal not processed'),
-                            'message' => $response->data->message,
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit JustPay
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitJustPay(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action,
-                        'operator' => $operator
-                    ];
-
-                    $url = "{$this->betPayURL}/transactions/justpay/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-                        $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$processing;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$just_pay, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description,
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$just_pay, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description,
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        $data = [
-                            'title' => _i('Withdrawal not processed'),
-                            'message' => $response->data->message,
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit ProntoPaga
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitProntoPaga(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action
-                    ];
-                    $url = "{$this->betPayURL}/transactions/pronto-paga/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if (isset($response->status) && $response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-                        $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$processing;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$pronto_paga, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$pronto_paga, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        $data = [
-                            'title' => _i('Withdrawal not processed'),
-                            'message' => $response->data->message,
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit PayKu
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitPayKu(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action
-                    ];
-                    $url = "{$this->betPayURL}/transactions/payku/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-                    if (isset($response->status) && $response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-                        $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => time()
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$approved;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$payku, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$payku, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        $data = [
-                            'title' => _i('Withdrawal not processed'),
-                            'message' => $response->data->message,
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process Debit Monnet
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function processDebitMonnet(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $usersRepo = new UsersRepo();
-                    $userData = $usersRepo->find($user);
-                    $date = Carbon::now()->format('Y-m-d');
-                    $fullName = "{$userData->first_name} {$userData->last_name}";
-                    $countryRepo = new CountriesRepo();
-                    $countryData = $countryRepo->find($userData->country_iso);
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action,
-                        'operator' => $operator,
-                        'user' => $user,
-                        'username' => $userData->username,
-                        'phone' => $userData->phone,
-                        'email' => $userData->email,
-                        'name' => $fullName,
-                        'date' => $date,
-                        'country' => $countryData->alfa3,
-                        'department' => $userData->city,
-                    ];
-                    $url = "{$this->betPayURL}/transactions/monnet/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$processing;
-                            $detailsAdditionalData = [
-                                'operator' => $operator
-                            ];
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$monnet, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description,
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        switch ($response->code) {
-                            case BetPayCodes::$api_message:
-                            {
-                                $betPayTransaction = $response->data->transaction;
-                                $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                                $detailsData = [];
-                                $transactionAdditionalData = [
-                                    'betpay_transaction' => $betPayTransaction->id,
-                                    'provider_transaction' => Str::uuid()->toString(),
-                                ];
-
-                                $status = TransactionStatus::$rejected;
-                                $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                                if ($wallet->data->wallet->balance_locked > 0) {
-                                    $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$monnet, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                    if ($walletTransaction->status != 'OK') {
-                                        $data = [
-                                            'title' => _i('Error'),
-                                            'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                            'close' => _i('Close')
-                                        ];
-                                        return Utils::errorResponse(Codes::$forbidden, $data);
-                                    }
-                                    $detailsAdditionalData = [
-                                        'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                        'operator' => $operator,
-                                        'reason' => $response->data->message,
-                                    ];
-                                    $detailsData = [
-                                        'data' => json_encode($detailsAdditionalData)
-                                    ];
-                                }
-                                $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                                $transactionData = [
-                                    'data' => $transactionAdditionalData
-                                ];
-                                $this->transactionsRepo->update($transaction->id, $transactionData);
-                                $data = [
-                                    'title' => _i('Transaction rejected'),
-                                    'message' => $response->data->message,
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                            default:
-                            {
-                                $data = [
-                                    'title' => _i('Failed transaction'),
-                                    'message' => _i('The transaction could not be executed. Please reload and try again'),
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                        }
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process Debit Pay For Fun
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function processDebitPayForFun(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action,
-                        'operator' => $operator
-                    ];
-
-                    $url = "{$this->betPayURL}/transactions/pay-for-fun/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$approved;
-                            $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$pay_for_fun, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                            if ($walletTransaction->status != 'OK') {
-                                $data = [
-                                    'title' => _i('Error'),
-                                    'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                    'close' => _i('Close')
-                                ];
-                                return Utils::errorResponse(Codes::$forbidden, $data);
-                            }
-                            $detailsAdditionalData = [
-                                'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                'operator' => $operator
-                            ];
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-                            $userDate = [
-                                'last_debit' => Carbon::now(),
-                                'last_debit_amount' => $betPayTransaction->amount,
-                                'last_debit_currency' => $betPayTransaction->currency_iso
-                            ];
-                            $this->usersRepo->update($user, $userDate);
-
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$pay_for_fun, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description,
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        $data = [
-                            'title' => _i('Withdrawal not processed'),
-                            'message' => $response->data->message,
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process Debit Pay For Fun Go
-     *
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function processDebitPayForFunGateway(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action,
-                        'operator' => $operator
-                    ];
-                    $url = "{$this->betPayURL}/transactions/pay-for-fun-gateway/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$processing;
-                            $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$pay_for_fun_go, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                            if ($walletTransaction->status != 'OK') {
-                                $data = [
-                                    'title' => _i('Error'),
-                                    'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                    'close' => _i('Close')
-                                ];
-                                return Utils::errorResponse(Codes::$forbidden, $data);
-                            }
-                            $detailsAdditionalData = [
-                                'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                'operator' => $operator
-                            ];
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-                            $userDate = [
-                                'last_debit' => Carbon::now(),
-                                'last_debit_amount' => $betPayTransaction->amount,
-                                'last_debit_currency' => $betPayTransaction->currency_iso
-                            ];
-                            $this->usersRepo->update($user, $userDate);
-
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$pay_for_fun_go, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description,
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        $data = [
-                            'title' => _i('Withdrawal not processed'),
-                            'message' => $response->data->message,
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit Pay Retailers
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitPayRetailers(Request $request)
-    {
-        $this->validate($request, [
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $usersRepo = new UsersRepo();
-                    $userData = $usersRepo->find($user);
-                    $requestData = [
-                        'currency' => $currency,
-                        'level' => $userData->level,
-                        'whitelabel_id' => Configurations::getWhitelabel(),
-                        'first_name' => $userData->first_name,
-                        'last_name' => $userData->last_name,
-                        'dni' => $userData->dni,
-                        'email' => $userData->email,
-                        'phone' => $userData->phone,
-                        'country' => $userData->country_iso,
-                        'bank' => $request->bank,
-                        'account_number' => $request->user_account,
-                        'account_type' => $request->type_account,
-                        'username' => $userData->username,
-                        'transaction' => $request->transaction,
-                        'action' => $action,
-                        'operator' => $operator
-                    ];
-
-                    $url = "{$this->betPayURL}/transactions/pay-retailers/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        switch ($response->code) {
-                            case BetPayCodes::$api_message:
-                            {
-                                $data = [
-                                    'title' => _i('Success transaction'),
-                                    'message' => $response->data->message,
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                            default:
-                            {
-                                $data = [
-                                    'title' => _i('Failed transaction'),
-                                    'message' => _i('The transaction could not be executed. Please reload and try again'),
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                        }
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit VCreditos
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitVCreditos(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'action' => $action,
-                        'operator' => $operator,
-                    ];
-
-                    $url = "{$this->betPayURL}/transactions/vcreditos/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$approved;
-                            $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$vcreditos, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                            if ($walletTransaction->status != 'OK') {
-                                $data = [
-                                    'title' => _i('Error'),
-                                    'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                    'close' => _i('Close')
-                                ];
-                                return Utils::errorResponse(Codes::$forbidden, $data);
-                            }
-                            $detailsAdditionalData = [
-                                'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                'operator' => $operator
-                            ];
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-                            $userDate = [
-                                'last_debit' => Carbon::now(),
-                                'last_debit_amount' => $betPayTransaction->amount,
-                                'last_debit_currency' => $betPayTransaction->currency_iso
-                            ];
-                            $this->usersRepo->update($user, $userDate);
-
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$vcreditos, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description
-                                ];
-                            } else {
-                                $detailsAdditionalData = [
-                                    'operator' => $operator,
-                                    'reason' => $request->description
-                                ];
-                            }
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        switch ($response->code) {
-                            case BetPayCodes::$used_reference:
-                            {
-                                $data = [
-                                    'title' => _i('Bank reference in use'),
-                                    'message' => _i('The bank reference entered is already registered in our system'),
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                            default:
-                            {
-                                $data = [
-                                    'title' => _i('Failed transaction'),
-                                    'message' => _i('The transaction could not be executed. Please reload and try again'),
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                        }
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit VCreditos
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitVCreditosApi(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $usersRepo = new UsersRepo();
-                    $userData = $usersRepo->find($user);
-                    $requestData = [
-                        'currency' => $currency,
-                        'username' => $userData->username,
-                        'transaction' => $request->transaction,
-                        'action' => $action,
-                        'operator' => $operator
-                    ];
-
-                    $url = "{$this->betPayURL}/transactions/vcreditos-api/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$approved;
-                            $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$vcreditos_api, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                            if ($walletTransaction->status != 'OK') {
-                                $data = [
-                                    'title' => _i('Error'),
-                                    'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                    'close' => _i('Close')
-                                ];
-                                return Utils::errorResponse(Codes::$forbidden, $data);
-                            }
-                            $detailsAdditionalData = [
-                                'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                'operator' => $operator,
-                                'vcreditos_transaction_id' => $response->data->vcreditos_transaction_id
-                            ];
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-                            $userDate = [
-                                'last_debit' => Carbon::now(),
-                                'last_debit_amount' => $betPayTransaction->amount,
-                                'last_debit_currency' => $betPayTransaction->currency_iso
-                            ];
-                            $this->usersRepo->update($user, $userDate);
-
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$vcreditos_api, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                    'operator' => $operator,
-                                    'reason' => $request->description
-                                ];
-                            } else {
-                                $detailsAdditionalData = [
-                                    'operator' => $operator,
-                                    'reason' => $request->description
-                                ];
-                            }
-                            $detailsData = [
-                                'data' => json_encode($detailsAdditionalData)
-                            ];
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        switch ($response->code) {
-                            case BetPayCodes::$api_message:
-                            {
-                                $betPayTransaction = $response->data->transaction;
-                                $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                                $detailsData = [];
-                                $transactionAdditionalData = [
-                                    'betpay_transaction' => $betPayTransaction->id,
-                                    'provider_transaction' => Str::uuid()->toString(),
-                                ];
-
-                                $status = TransactionStatus::$rejected;
-                                $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-                                if ($wallet->data->wallet->balance_locked > 0) {
-                                    $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$vcreditos_api, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-                                    if ($walletTransaction->status != 'OK') {
-                                        $data = [
-                                            'title' => _i('Error'),
-                                            'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                            'close' => _i('Close')
-                                        ];
-                                        return Utils::errorResponse(Codes::$forbidden, $data);
-                                    }
-                                    $detailsAdditionalData = [
-                                        'wallet_transaction' => $walletTransaction->data->transaction->id,
-                                        'operator' => $operator,
-                                        'reason' => $response->data->message,
-                                    ];
-                                    $detailsData = [
-                                        'data' => json_encode($detailsAdditionalData)
-                                    ];
-                                }
-                                $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                                $transactionData = [
-                                    'data' => $transactionAdditionalData
-                                ];
-                                $this->transactionsRepo->update($transaction->id, $transactionData);
-                                $data = [
-                                    'title' => _i('Failed transaction'),
-                                    'message' => $response->data->message,
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                            default:
-                            {
-                                $data = [
-                                    'title' => _i('Failed transaction'),
-                                    'message' => _i('The transaction could not be executed. Please reload and try again'),
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                        }
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit Zampay
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitZampay(Request $request): Response
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action
-                    ];
-                    $url = "{$this->betPayURL}/transactions/zampay/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if (isset($response->status) && $response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-                        $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
-
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                            'provider_transaction' => Str::uuid()->toString(),
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$processing;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, Providers::$zampay, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            if ($wallet->data->wallet->balance_locked > 0) {
-                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, Providers::$zampay, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
-
-                                if ($walletTransaction->status != 'OK') {
-                                    $data = [
-                                        'title' => _i('Error'),
-                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
-                                        'close' => _i('Close')
-                                    ];
-                                    return Utils::errorResponse(Codes::$forbidden, $data);
-                                }
-
-                                $detailsAdditionalData = [
-                                    'wallet_transaction' => $walletTransaction->data->transaction->id
-                                ];
-                                $detailsData = [
-                                    'data' => json_encode($detailsAdditionalData)
-                                ];
-                            }
-                        }
-
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-
-                        return Utils::successResponse($data);
-                    } else {
-                        $data = [
-                            'title' => _i('Withdrawal not processed'),
-                            'message' => $response->data->message,
-                            'close' => _i('Close')
-                        ];
-
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Process debit Zippy
-     *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
-     */
-    public function processDebitZippy(Request $request)
-    {
-        $this->validate($request, [
-            'description' => 'required_if:action,0',
-            'action' => 'required'
-        ]);
-        $requestData = null;
-        $curl = null;
-
-        try {
-            $user = $request->user;
-            $currency = session('currency');
-            $wallet = Wallet::getByClient($user, $currency);
-            $action = $request->action;
-            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-
-            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
-                if ($wallet->data->wallet->balance_locked == 0 && $action) {
-                    $data = [
-                        'title' => _i('Withdrawal not processed'),
-                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-
-                } else {
-                    $betPayToken = session('betpay_client_access_token');
-                    $operator = auth()->user()->username;
-                    $requestData = [
-                        'transaction' => $request->transaction,
-                        'description' => $request->description,
-                        'action' => $action,
-                        'operator' => $operator,
-                    ];
-
-                    $url = "{$this->betPayURL}/transactions/zippy/process-debit";
-                    $curl = Curl::to($url)
-                        ->withData($requestData)
-                        ->withHeader('Accept: application/json')
-                        ->withHeader("Authorization: Bearer $betPayToken")
-                        ->post();
-                    $response = json_decode($curl);
-
-                    if ($response->status == Status::$ok) {
-                        $betPayTransaction = $response->data->transaction;
-                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
-                        $detailsData = [];
-                        $transactionAdditionalData = [
-                            'betpay_transaction' => $betPayTransaction->id,
-                        ];
-
-                        if ($action) {
-                            $status = TransactionStatus::$approved;
-                            $userDate = [
-                                'last_debit' => Carbon::now(),
-                                'last_debit_amount' => $betPayTransaction->amount
-                            ];
-                            $this->usersRepo->update($user, $userDate);
-                        } else {
-                            $status = TransactionStatus::$rejected;
-                            $details = [
-                                'reason' => $request->description,
-                            ];
-                            $detailsData = [
-                                'data' => json_encode($details)
-                            ];
-                        }
-                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
-                        $transactionData = [
-                            'data' => $transactionAdditionalData
-                        ];
-                        $this->transactionsRepo->update($transaction->id, $transactionData);
-                        $data = [
-                            'title' => _i('Withdrawal processed'),
-                            'message' => _i('The withdrawal was processed correctly'),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::successResponse($data);
-
-                    } else {
-                        switch ($response->code) {
-                            case BetPayCodes::$used_reference:
-                            {
-                                $data = [
-                                    'title' => _i('Bank reference in use'),
-                                    'message' => _i('The bank reference entered is already registered in our system'),
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                            default:
-                            {
-                                $data = [
-                                    'title' => _i('Failed transaction'),
-                                    'message' => _i('The transaction could not be executed. Please reload and try again'),
-                                    'close' => _i('Close'),
-                                ];
-                                break;
-                            }
-                        }
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-                }
-            } else {
-                $data = [
-                    'title' => _i('Withdrawal already processed'),
-                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      * status Client account
      *
      * @param Request $request
@@ -4064,7 +1415,7 @@ class BetPayController extends Controller
     {
         try {
             $status = ($request->get('value') === 'true' ? true : false);
-            $id = $request->get('id');
+            $id = $request->get('client_id');
             $dataCredentials = [
                 'status' => $status,
                 'clientAccount_id' => $id
@@ -4075,7 +1426,7 @@ class BetPayController extends Controller
                 ->withData($dataCredentials)
                 ->withHeader('Accept: application/json')
                 ->withHeader("Authorization: Bearer $betPayToken")
-                ->get();
+                ->post();
 
             $data = [
                 'title' => _i('Client updated'),
@@ -4425,95 +1776,98 @@ class BetPayController extends Controller
     public function storeClientAccount(Request $request)
     {
         $this->validate($request, [
-            'client' => 'required',
             'currency' => 'required',
-            'payments' => 'required'
+            'payments' => 'required',
         ]);
-
+        $rules = $this->getRulesClientAccountData($request->payments);
+        $this->validate($request, $rules);
+    
         try {
-            $credential = $this->credentialsRepo->searchByCredential($request->client, Providers::$betpay, $request->currency);
+            $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
             if (!is_null($credential)) {
+                $payment = [];
                 $paymentMethod = $request->payments;
-                switch ($paymentMethod) {
-                    case PaymentMethods::$cryptocurrencies:
-                    {
-                        $clientAccountData = [
-                            'cryptocurrency' => $request->crypto_currencies,
-                            'wallet' => $request->crypto_wallet,
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$zelle:
-                    {
-                        $clientAccountData = [
-                            'email' => $request->account_email,
-                            'first_name' => $request->first_name,
-                            'last_name' => $request->last_name,
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$wire_transfers:
-                    case PaymentMethods::$ves_to_usd:
-                    {
-                        $clientAccountData = [
-                            'bank_id' => $request->bank,
-                            'bank_name' => $request->bank_name,
-                            'account_number' => $request->account_number,
-                            'account_type' => $request->account_type,
-                            'social_reason' => $request->social_reason,
-                            'dni' => $request->account_dni,
-                            'title' => $request->title
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$vcreditos_api:
-                    {
-                        $clientAccountData = [
-                            'vcreditos_user' => $request->vcreditos_user,
-                            'vcreditos_secure_id' => $request->vcreditos_secure_id
-                        ];
-                        break;
-                    }
-                    case PaymentMethods::$paypal:
-                    case PaymentMethods::$skrill:
-                    case PaymentMethods::$neteller:
-                    case PaymentMethods::$airtm:
-                    case PaymentMethods::$uphold:
-                    case PaymentMethods::$reserve:
-
-                    {
-                        $clientAccountData = [
-                            'email' => $request->account_email
-                        ];
-                        break;
-                    }
-                    default:
-                        $clientAccountData = [];
-                        break;
-                }
-
                 $betPayToken = session('betpay_client_access_token');
-                $accountsData = [
-                    'client' => $credential->data->client_credentials_grant_id,
+                $dataPayment = [
                     'payment_method' => $paymentMethod,
-                    'currency' => $request->currency,
-                    'data' => $clientAccountData,
-                    'status' => false,
-                    'transactionType' => $request->transaction_type
+                    'currency_iso' => $request->currency
                 ];
-                $urlAccounts = "{$this->betPayURL}/clients/accounts/store";
-                $curlAccounts = Curl::to($urlAccounts)
-                    ->withData($accountsData)
+                $urlPayment = "{$this->betPayURL}/payment-methods/payment-and-currency";
+                $curlPayment = Curl::to($urlPayment)
+                    ->withData($dataPayment)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
-                    ->post();
+                    ->get();
+                $responsePayment = json_decode($curlPayment);
+                if ($responsePayment->status == Status::$ok) {
+                    $payment = (array) $responsePayment->data->payment_methods;
+                }
+                if (!empty($payment)) {
+                    $transactionType = $request->transaction_type;
+                    foreach($payment as $paymentStatus){
+                        $paymentStatusCredit = $paymentStatus->credit;
+                        $paymentStatusDebit = $paymentStatus->debit;
+                    }
+                    if ($transactionType == TransactionTypes::$credit) {
+                        if (!$paymentStatusCredit) {
+                            $data = [
+                                'title' => _i('Payment method not available'),
+                                'message' => _i('The payment method is not available for credit'),
+                                'close' => _i('Close'),
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+                        }
+                    } elseif ($transactionType == TransactionTypes::$debit) {
+                        if (!$paymentStatusDebit) {
+                            $data = [
+                                'title' => _i('Payment method not available'),
+                                'message' => _i('The payment method is not available for this debit'),
+                                'close' => _i('Close'),
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+                        }
+                    } else {
+                        if (!$paymentStatusCredit || !$paymentStatusDebit) {
+                            $data = [
+                                'title' => _i('Payment method not available'),
+                                'message' => _i('The payment method is not available for credit or debit'),
+                                'close' => _i('Close'),
+                            ];
+                            return Utils::errorResponse(Codes::$forbidden, $data);
+                        }
+                    } 
 
-                $data = [
-                    'title' => _i('Saved credential'),
-                    'message' => _i('Credential data was saved correctly'),
-                    'close' => _i('Close')
-                ];
-                return Utils::successResponse($data);
+                    $clientAccountData = $this->getClientAccountData($paymentMethod, $request);
+                    $accountsData = [
+                        'client' => $credential->data->client_credentials_grant_id,
+                        'payment_method' => $paymentMethod,
+                        'currency' => $request->currency,
+                        'data' => $clientAccountData,
+                        'status' => true,
+                        'transactionType' => $transactionType
+                    ];
+                    $urlAccounts = "{$this->betPayURL}/clients/accounts/store-client-accounts-payment-methods";
+                    $curlAccounts = Curl::to($urlAccounts)
+                        ->withData($accountsData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->post();
+
+                    $data = [
+                        'title' => _i('Saved credential'),
+                        'message' => _i('Credential data was saved correctly'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::successResponse($data);
+
+                }else{
+                    $data = [
+                        'title' => _i('Payment method not available'),
+                        'message' => _i('The payment method is not available for this currency'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
             } else {
                 $data = [
                     'title' => _i('Credentials error'),
@@ -4526,6 +1880,101 @@ class BetPayController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Get Client Account Data
+     * @param int $paymentMethod PaymentMethods
+     * @param Request $request
+     *
+     * @return array
+     */
+    private function getClientAccountData($paymentMethod, $request)
+    {
+        $clientAccountDataFunctions = [
+            PaymentMethods::$binance => function ($request) {
+                $name = null;
+                if(!is_null($request->file('qr_binance'))){
+                    $image = $request->file('qr_binance');
+                    $file = $request->file;
+                    $extension = $image->getClientOriginalExtension();
+                    $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                    $name = Str::slug($originalName) . time() . '.' . $extension;
+                    $s3Directory = Configurations::getS3Directory();
+                    $filePath = "$s3Directory/payment/";
+                    $newFilePath = "{$filePath}{$name}";
+                    Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                    if(isset($file)){
+                        $oldFilePath = "{$filePath}{$file}";
+                        Storage::delete($oldFilePath);
+                    }
+                }
+                return [
+                    'cryptocurrency' => $request->cryptocurrency_binance,
+                    'email' => $request->email_binance,
+                    'pay_id' => $request->pay_id_binance,
+                    'qr' => $name,
+                    'binance_id' => $request->binance_id,
+                    'phone' => $request->phone_binance,
+                ];
+            },
+            PaymentMethods::$cryptocurrencies => function ($request) {
+                $name = null;
+                if(!is_null($request->file('qr_cripto'))){
+                    $image = $request->file('qr_cripto');
+                    $file = $request->file;
+                    $extension = $image->getClientOriginalExtension();
+                    $originalName = str_replace(".$extension", '', $image->getClientOriginalName());
+                    $name = Str::slug($originalName) . time() . '.' . $extension;
+                    $s3Directory = Configurations::getS3Directory();
+                    $filePath = "$s3Directory/payment/";
+                    $newFilePath = "{$filePath}{$name}";
+                    Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
+                    if(isset($file)){
+                        $oldFilePath = "{$filePath}{$file}";
+                        Storage::delete($oldFilePath);
+                    }
+                }
+                return [
+                    'cryptocurrency' => $request->cryptocurrency_cripto,
+                    'wallet' => $request->wallet_cripto,
+                    'network' => $request->network_cripto,
+                    'qr' => $name,
+                ];
+            },
+        ];
+        $clientAccountDataFunction = $clientAccountDataFunctions[$paymentMethod] ?? function () {
+            return [];
+        };
+        return $clientAccountDataFunction($request);
+    }
+
+    /**
+     * Get Rules Client Account Data
+     * @param int $paymentMethod PaymentMethods
+     *
+     * @return array
+     */
+    private function getRulesClientAccountData($paymentMethod)
+    {
+        $rulesClientAccountDataFunctions = [
+            PaymentMethods::$binance => 
+            [
+                'cryptocurrency_binance' => 'required',
+                'email_binance' => 'required_without_all:pay_id_binance,binance_id,qr_binance,phone_binance',
+                'pay_id_binance' => 'required_without_all:email_binance,binance_id,qr_binance,phone_binance',
+                'binance_id' => 'required_without_all:email_binance,pay_id_binance,qr_binance,phone_binance',
+                'qr_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,phone_binance',
+                'phone_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,qr_binance',
+            ],
+            PaymentMethods::$cryptocurrencies => 
+            [
+                'cryptocurrency_cripto' => 'required',
+                'wallet_cripto' => 'required'
+            ]
+        ];
+
+        return $rulesClientAccountDataFunctions[$paymentMethod];
     }
 
     /**
@@ -4687,82 +2136,7 @@ class BetPayController extends Controller
         try {
 
             $paymentMethod = $request->payments;
-            switch ($paymentMethod) {
-                case PaymentMethods::$cryptocurrencies:
-                {
-                    $dataAccount = [
-                        'cryptocurrency' => $request->crypto_currencies,
-                        'wallet' => $request->crypto_wallet,
-                    ];
-                    break;
-                }
-                case PaymentMethods::$zelle:
-                {
-                    $dataAccount = [
-                        'email' => $request->account_email,
-                        'first_name' => $request->first_name,
-                        'last_name' => $request->last_name,
-                    ];
-                    break;
-                }
-                case PaymentMethods::$wire_transfers:
-                case PaymentMethods::$ves_to_usd:
-                {
-                    if (is_null($request->bank) && isset($request->bank_name)) {
-                        $bank_id = $request->old_bank_id;
-                        $bank_name = $request->old_bank_name;
-                    } elseif($request->bank == $request->old_bank_id  && $request->bank_name == $request->old_bank_name){
-                        $bank_id = $request->old_bank_id;
-                        $bank_name = $request->old_bank_name;
-                    } else {
-                        $bank_id = $request->bank_id;
-                        $bank_name = $request->bank_name;
-                    }
-                    $dataAccount = [
-                        'bank_id' => $bank_id,
-                        'bank_name' => $bank_name,
-                        'account_number' => $request->account_number,
-                        'account_type' => $request->account_type,
-                        'social_reason' => $request->social_reason,
-                        'dni' => $request->account_dni,
-                        'title' => $request->title
-                    ];
-                    break;
-                }
-                case PaymentMethods::$vcreditos_api:
-                {
-                    $dataAccount = [
-                        'vcreditos_user' => $request->vcreditos_user,
-                        'vcreditos_secure_id' => $request->vcreditos_secure_id
-                    ];
-                    break;
-                }
-                case PaymentMethods::$paypal:
-                case PaymentMethods::$skrill:
-                case PaymentMethods::$neteller:
-                case PaymentMethods::$airtm:
-                case PaymentMethods::$uphold:
-                case PaymentMethods::$reserve:
-                {
-                    $dataAccount = [
-                        'email' => $request->account_email
-                    ];
-                    break;
-                }
-                case PaymentMethods::$just_pay:
-                {
-                    $dataAccount = [
-                        'public_key' => $request->public_key,
-                        'secret_key' => $request->secret_key,
-                        'username' => $request->username,
-                        'password' => $request->password,
-                    ];
-                    break;
-                }
-                default:
-                    $dataAccount = [];
-                    break;
-            }
+            $dataAccount = $this->getClientAccountData($paymentMethod, $request);
 
             $dataRequest = [
                 'id' => $request->client_account,
@@ -4980,149 +2354,6 @@ class BetPayController extends Controller
             }
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Perform manual transactions
-     *
-     * @param Request $request
-     * @param TransactionsRepo $transactionsRepo
-     * @param OperationalBalancesRepo $operationalBalanceRepo
-     * @param OperationalBalancesTransactionsRepo $operationalBalanceTransactionsRepo
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function processCreditChargingPointTransactions(Request $request, TransactionsRepo $transactionsRepo , OperationalBalancesRepo $operationalBalanceRepo, OperationalBalancesTransactionsRepo $operationalBalanceTransactionsRepo)
-    {
-        $this->validate($request, [
-            'amount' => 'required|numeric|gt:0',
-            'transaction_type' => 'required',
-            'description' => 'required'
-        ]);
-
-        try {
-            $currency = session('currency');
-            $user = $request->user;
-            $wallet = $request->wallet;
-            $amount = $request->amount;
-            $transactionType = $request->transaction_type;
-            $description = $request->description;
-            $walletData = Wallet::getByClient($user, $currency);
-            $operator = auth()->user()->username;
-            $whitelabel = Configurations::getWhitelabel();
-            $operationalBalanceData = $operationalBalanceRepo->find($whitelabel, $currency);
-            $provider = $request->provider;
-            $userData = $this->usersRepo->find($user);
-            $transactionID = $transactionsRepo->getNextValue();
-
-            $additionalData = [
-                'provider_transaction' => Str::uuid()->toString(),
-                'description' => $description,
-                'operator' => $operator
-            ];
-
-            if ($transactionType == TransactionTypes::$credit) {
-                if (!is_null($operationalBalanceData) && $amount > $operationalBalanceData->balance) {
-                    $operationalBalance = number_format($operationalBalanceData->balance, 2);
-                    //new TransactionNotAllowed($amount, $user, $provider, $transactionType);
-                    $data = [
-                        'title' => _i('Transaction not allowed'),
-                        'message' => _i('The amount is higher than the operational balance. Available: %s %s', [$currency, $operationalBalance]),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-                } else {
-                    $transaction = Wallet::creditManualTransactions($amount, $provider, $additionalData, $wallet);
-                }
-            } else {
-                if ($amount <= $walletData->data->wallet->balance) {
-                    $transaction = Wallet::debitManualTransactions($amount, $provider, $additionalData, $wallet);
-                } else {
-                    $data = [
-                        'title' => _i('Insufficient balance'),
-                        'message' => _i("The user's balance is insufficient to perform the transaction"),
-                        'close' => _i('Close')
-                    ];
-                    return Utils::errorResponse(Codes::$forbidden, $data);
-                }
-            }
-
-            if ($transaction->status == Status::$ok) {
-                $transactionData = [
-                    'id' => $transactionID,
-                    'user_id' => $user,
-                    'amount' => $amount,
-                    'currency_iso' => $currency,
-                    'transaction_type_id' => $transactionType,
-                    'transaction_status_id' => TransactionStatus::$approved,
-                    'provider_id' => $provider,
-                    'data' => $additionalData,
-                    'whitelabel_id' => Configurations::getWhitelabel()
-                ];
-                $additionalData['wallet_transaction'] = $transaction->data->transaction->id;
-                $detailsData = [
-                    'data' => json_encode($additionalData)
-                ];
-                $transactionsRepo->store($transactionData, TransactionStatus::$approved, $detailsData);
-
-                $operationalBalanceTransaction = [
-                    'amount' => $amount,
-                    'user_id' => $user,
-                    'operator' => $operator,
-                    'provider_id' => $provider,
-                    'whitelabel_id' => $whitelabel,
-                    'currency_iso' => $currency,
-                    'transaction_type_id' => $transactionType,
-                ];
-                $operationalBalanceTransactionsRepo->store($operationalBalanceTransaction);
-                $operationalBalanceRepo->decrement($whitelabel, $currency, $amount);
-                $auditData = [
-                    'ip' => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
-                    'transaction' => [
-                        'amount' => $amount,
-                        'currency' => $currency,
-                        'transaction_type_id' => $transactionType,
-                        'description' => $description
-                    ]
-                ];
-                //Audits::store($user, AuditTypes::$manual_transactions, Configurations::getWhitelabel(), $auditData);
-                if ($transactionType == TransactionTypes::$credit) {
-                    $userDates = [
-                        'last_deposit' => Carbon::now(),
-                        'last_deposit_amount' => $amount,
-                        'last_deposit_currency' => $currency
-                    ];
-                    if (is_null($userData->first_deposit)) {
-                        $userDates['first_deposit'] = Carbon::now();
-                        $userDates['first_deposit_amount'] = $amount;
-                        $userDates['first_deposit_currency'] = $currency;
-                    }
-                } else {
-                    $userDates = [
-                        'last_debit' => Carbon::now(),
-                        'last_debit_amount' => $amount,
-                        'last_debit_currency' => $currency
-                    ];
-                }
-                $this->usersRepo->update($user, $userDates);
-
-                $data = [
-                    'title' => _i('Transaction performed'),
-                    'message' => _i('The transaction was successfully made to the user'),
-                    'close' => _i('Close'),
-                    'balance' => number_format($transaction->data->wallet->balance, 2)
-                ];
-                return Utils::successResponse($data);
-
-            } else {
-                return Utils::failedResponse();
-            }
-        } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
     }

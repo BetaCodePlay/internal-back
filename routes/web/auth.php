@@ -22,6 +22,10 @@ Route::group(['prefix' => 'auth', 'middleware' => ['guest']], function () {
         'as' => 'auth.authenticate',
         'uses' => 'AuthController@authenticate'
     ]);
+    Route::post('change-password', [
+        'as' => 'auth.change-password',
+        'uses' => 'AuthController@changePassword'
+    ]);
 });
 
 /**

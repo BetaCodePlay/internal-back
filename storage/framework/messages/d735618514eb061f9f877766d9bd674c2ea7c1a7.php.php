@@ -381,7 +381,7 @@ class TransactionsRepo
         }
 
         if (!is_null($username)) {
-            $transactions = $transactions->where('username', 'like', "%$username%");
+            $transactions = $transactions->where('transactions.data->from', 'like', "%$username%")->orWhere('transactions.data->to', 'like', "%$username%");
         }
 
         if (!empty($orderCol)) {
@@ -393,14 +393,23 @@ class TransactionsRepo
                 $transactions = $transactions->orderBy('transactions.data->to', $orderCol['order']);
             }elseif ($orderCol['column'] == 'debit' || $orderCol['column'] == 'credit'){
 
-                //$transactions = $transactions->orderBy('transactions.amount', $orderCol['order']);
                 $transactions = $transactions->orderBy('transactions.transaction_type_id', $orderCol['order'])->orderBy('transactions.amount', $orderCol['order']);
 
             }elseif ($orderCol['column'] == 'balance'){
 
-                //$transactions = $transactions->orderBy('transactions.data->>balance', $orderCol['order']);
-                //$transactions = $transactions->orderByRaw('CAST(transaction.data->"$.balance") as UNSIGNED'.$orderCol['order']);
+                if($orderCol['order'] == 'asc'){
+                    $transactions = $transactions->orderByRaw("(site.transactions.data::json->>'balance')::numeric ASC");
+                }else{
+                    $transactions = $transactions->orderByRaw("(site.transactions.data::json->>'balance')::numeric DESC");
+                }
 
+            }elseif ($orderCol['column'] == 'new_amount'){
+
+                if($orderCol['order'] == 'asc'){
+                    $transactions = $transactions->orderByRaw("(site.transactions.amount)::numeric ASC");
+                }else{
+                    $transactions = $transactions->orderByRaw("(site.transactions.amount)::numeric DESC");
+                }
 
             }else{
                 $transactions = $transactions->orderBy('transactions.id', $orderCol['order']);
@@ -1288,7 +1297,6 @@ class TransactionsRepo
         $transaction->update();
         return $transaction;
     }
-
 
     /**
      * Update transactions

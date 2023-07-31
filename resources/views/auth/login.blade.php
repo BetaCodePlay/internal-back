@@ -88,6 +88,7 @@
 
 
 </footer>
+@include('auth.modals.change-password');
 
 <script src="{{ mix('js/manifest.js', 'auth') }}"></script>
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>
@@ -97,6 +98,5 @@
         Auth.login();
     });
 </script>
-
 </body>
 </html>

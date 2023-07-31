@@ -12,12 +12,23 @@
         </header>
         <div class="card-block g-pa-15">
             <div class="media">
-                <div class="media-body d-flex justify-content-end g-mb-10" id="table-buttons">
+                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
 
                 </div>
             </div>
-            <div class="table-responsive" id="financial-state-table" data-route="{{ route('agents.reports.financial-state-data.provider') }}">
-
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover dt-responsive" id="financial-statetable" data-route="{{ route('agents.reports.financial-state-data.provider') }}" width="100%">
+                    <thead>
+                        <tr>
+                            <th> {{ _i('Providers') }}</th>
+                            <th> {{ _i('Played') }}</th>
+                            <th> {{ _i('Win') }}</th>
+                            <th> {{ _i('Bets') }}</th>
+                            <th> {{ _i('Profit') }}</th>
+                            <th> {{ _i('Rtp') }}</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
@@ -27,8 +38,8 @@
     <script>
         $(function () {
             let agents = new Agents();
-            agents.financialState({{ $user }});
-            $('#update').trigger('click')
+            agents.financialStateNew({{ $user }},[50,100,500,1000,2000]);
+            // $('#update').trigger('click')
         });
     </script>
 @endsection

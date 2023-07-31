@@ -26,12 +26,13 @@
                     <i class="hs-admin-align-left"></i>
                 </a>
             </div>
-            <div hidden><?php echo $iphone; ?></div>
+
             <?php if(isset($iphone)): ?>
                 <?php if(!$iphone): ?>
                     <form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
                           aria-labelledby="searchInvoker" action="<?php echo e(route('users.search')); ?>" method="get">
                         <div class="input-group g-max-width-450">
+
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_search])): ?>
                                 <input class="form-control form-control-md g-rounded-4" type="text" name="username" placeholder="<?php echo e(_i('Search user')); ?>" value="<?php echo e(isset($username) ? $username : ''); ?>">
                                 <button type="submit"
@@ -41,10 +42,10 @@
                             <?php endif; ?>
                         </div>
                     </form>
-                    <a id="searchInvoker" class="g-hidden-sm-up text-uppercase u-header-icon-v1 g-pos-rel g-width-40 g-height-40 rounded-circle g-font-size-20" href="#!" aria-controls="header-search-form" aria-haspopup="true" aria-expanded="false" data-is-mobile-only="true" data-dropdown-event="click"
-                       data-dropdown-target="#header-search-form" data-dropdown-type="css-animation" data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                        <i class="hs-admin-search g-absolute-centered"></i>
-                    </a>
+
+
+
+
                 <?php endif; ?>
             <?php endif; ?>
             <div class="col-auto d-flex g-py-12 ml-auto">
@@ -59,72 +60,11 @@
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
-                        <?php if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1): ?>
-                            <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
-                               data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                            <span class="g-pos-rel">
-                                <span class="g-hidden-sm-down"><i class="fa fa-database"></i></span> <?php echo e(session('currency') == 'VEF' ? $free_currency->currency_name : session('currency')); ?>
+                        <span class="balanceAuth_<?php echo e(\Illuminate\Support\Facades\Auth::id()); ?>"></span> <?php echo e(session('currency') == 'VEF' ? $free_currency->currency_name : session('currency')); ?>
 
-                                <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i>
-                            </span>
-                            </a>
-                            <ul id="currency-menu" class="currency-menu-pro g-pos-abs g-left-0 g-nowrap g-font-size-14 g-py-20 g-mt-10 rounded" aria-labelledby="currency-menu-invoker">
-                                <?php $__currentLoopData = $whitelabel_currencies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $currency): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <li class="mb-0">
-                                        <a class="<?php echo e($currency->iso == session('currency') ? 'active' : ''); ?> media g-color-primary--hover g-py-5 g-px-20" href="<?php echo e(route('core.change-currency', [$currency->iso])); ?>">
-                                        <span class="media-body align-self-center">
-                                            <?php echo e($currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})"); ?>
-
-                                        </span>
-                                        </a>
-                                    </li>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </ul>
-                        <?php else: ?>
-                            <a id="currency-menu-invoker" class="d-block" href="#!" aria-controls="currency-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#currency-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
-                               data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                                <span class="g-pos-rel">
-                                    <span class="g-hidden-sm-down"><i class="fa fa-database"></i></span> <?php echo e(session('currency') == 'VEF' ? $free_currency->currency_name : session('currency')); ?>
-
-                                    <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i>
-                                </span>
-                            </a>
-                        <?php endif; ?>
-
-                        <span class="balanceAuth_<?php echo e(\Illuminate\Support\Facades\Auth::id()); ?>"></span>
                     </div>
                 </div>
             </div>
-            <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
-                    <?php if(count($languages) > 1): ?>
-                        <div class="g-pos-rel">
-                            <a id="languages-menu-invoker" class="d-block" href="#!" aria-controls="languages-menu" aria-haspopup="true" aria-expanded="false" data-dropdown-event="click" data-dropdown-target="#languages-menu" data-dropdown-type="css-animation" data-dropdown-duration="300"
-                               data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
-                            <span class="g-pos-rel">
-                                <span class="g-hidden-sm-down"  <?php echo e($selected_language['iso']); ?>><i class="fa fa-globe"></i></span>
-                                <?php echo e($selected_language['name']); ?>
-
-                                <i class="hs-admin-angle-down g-pos-rel g-top-2 g-ml-10"></i>
-                            </span>
-                            </a>
-                            <ul id="languages-menu" class="languages-menu-pro g-pos-abs g-left-0 g-nowrap g-font-size-14 g-py-20 g-mt-10 rounded" aria-labelledby="currency-menu-invoker">
-                                <?php $__currentLoopData = $languages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $language): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <li class="mb-0">
-                                        <a href="<?php echo e(route('core.change-language', [$language['iso']])); ?>" class="change-language" data-locale="<?php echo e($language['iso']); ?>">
-                                            <img class="lang-flag" src="<?php echo e($language['flag']); ?>" alt="<?php echo e($language['name']); ?>">
-                                            <?php echo e($language['name']); ?>
-
-                                        </a>
-                                    </li>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
-
-                </div>
-            </div>
-            
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">

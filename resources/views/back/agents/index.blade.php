@@ -33,9 +33,11 @@
             color: white !important;
             background-color: #38a7ef !important;
         }
+
         .flex-items {
             display: flex;
         }
+
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -57,6 +59,7 @@
             color: white !important;
             background-color: darkorange !important
         }
+
         .select2-container {
             width: 100% !important;
             text-align: left !important;
@@ -66,6 +69,11 @@
 @endsection
 
 @section('content')
+    @if($mailgun_notifications->active == true)
+        @if($confirmation_email == false)
+            @include('back.layout.email-verify')
+        @endif
+    @endif
     <div class="row">
         <div class="col-lg-3 col-xl-4">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -98,14 +106,14 @@
                     <div class="d-block d-sm-block d-md-none g-pa-10">
                         <div class="row">
                             <div class="col-12">
-                                @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                                    <select name="agent_id_search" id="username_search"
-                                            class="form-control select2 username_search agent_id_search"
-                                            data-route="{{ route('agents.search-username')}}"
-                                            data-select="{{ route('agents.find-user') }}">
-                                        <option></option>
-                                    </select>
-                                @endif
+                                {{--                                @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+                                <select name="agent_id_search" id="username_search"
+                                        class="form-control select2 username_search agent_id_search"
+                                        data-route="{{ route('agents.search-username')}}"
+                                        data-select="{{ route('agents.find-user') }}">
+                                    <option></option>
+                                </select>
+                                {{--                                @endif--}}
 
                             </div>
                             {{--                            <div class="col-6 g-py-5">--}}
@@ -142,8 +150,22 @@
                             {{--</div>--}}
                         </div>
                     </div>
-                    <div class="">
-                        <div id="tree" data-route="{{ route('agents.find') }}" data-json="{{ $tree }}"></div>
+                    {{--                    <div class="">--}}
+                    {{--                        <div id="tree" data-route="{{ route('agents.find') }}" data-json="{{ $tree }}"></div>--}}
+                    {{--                    </div>--}}
+                    <div id="tree-pro" class="jstree" data-route="{{ route('agents.find') }}">
+                        <div class="jstree-default">
+                            <ul class="jstree-container-ul jstree-children">
+                                <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
+                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master"
+                                       data-idtreepro="{{ auth()->user()->id }}" data-typetreepro="agent"></i><a
+                                        href="javascript:void(0)" class="jstree-anchor"><i
+                                            class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                            role="presentation"></i>{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -459,7 +481,8 @@
                                         </div>
                                     </div>
                                     <div class="row g-mb-15">
-                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div
+                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong> {{ _i('Type') }}</strong>
                                             </label>
@@ -536,9 +559,11 @@
                                     <div class="row g-mb-15" id="details-user">
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
-                                                <a href="#details-user-modal" id="details-user-get" data-route="{{route('agents.get.father.cant')}}"
+                                                <a href="#details-user-modal" id="details-user-get"
+                                                   data-route="{{route('agents.get.father.cant')}}"
                                                    class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
-                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i><strong> {{ _i('More information') }}</strong>
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white"
+                                                       style="font-weight: 700!important;"></i><strong> {{ _i('More information') }}</strong>
                                                 </a>
                                             </div>
                                         </div>
@@ -613,16 +638,20 @@
                                     <input type="hidden" id="start_date" name="start_date">
                                     <input type="hidden" id="end_date" name="end_date">
                                 </div> --}}
-                                <div class="col-md-3 ">
-                                    <div class="form-group">
-                                        <label for="transaction_select">{{ _i('Type Transaction') }}</label>
-                                        <select name="transaction_select" id="transaction_select" class="form-control">
-                                            <option value="all" selected="selected" hidden>{{_i('All')}}</option>
-                                            <option value="credit">{{_i('Charge')}}</option>
-                                            <option value="debit">{{_i('Discharge')}}</option>
-                                        </select>
+
+                                    <div class="col-md-3 ">
+                                        <div class="form-group">
+                                            @can('access', [\Dotworkers\Security\Enums\Permissions::$users_search])
+                                            <label for="transaction_select">{{ _i('Type Transaction') }}</label>
+                                            <select name="transaction_select" id="transaction_select" class="form-control">
+                                                <option value="all" selected="selected" hidden>{{_i('All')}}</option>
+                                                <option value="credit">{{_i('Charge')}}</option>
+                                                <option value="debit">{{_i('Discharge')}}</option>
+                                            </select>
+
+                                            @endcan
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="col-md-3 ">
                                     <div class="form-group">
                                         <label for="type_select">{{ _i('Type User') }}</label>
@@ -635,11 +664,12 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 col-sm-12">
                                     <div class="form-group">
-                                        <label for="date_range">{{ _i('Date range') }}</label>
+                                        <label for="date_range_new">{{ _i('Date range') }}</label>
                                         <div class="flex-items">
-                                            <input type="text" id="date_range_new" class="form-control" autocomplete="off"
-                                               placeholder="{{ _i('Date range') }}">
-                                               <button class="btn g-bg-primary" type="button" id="updateNew"
+                                            <input type="text" id="date_range_new" class="form-control"
+                                                   autocomplete="off"
+                                                   placeholder="{{ _i('Date range') }}">
+                                            <button class="btn g-bg-primary" type="button" id="updateNew"
                                                     data-route="{{ route('agents.transactions.paginate') }}"
                                                     data-routetotals="{{ route('agents.transactions.totals') }}"
                                                     data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
@@ -652,12 +682,12 @@
 
 
                             <div class="media">
-                                <div class="media-body d-flex justify-content-end g-mb-10"
-                                     id="table-buttons-agents-transactions">
+                                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
+
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered display nowrap" style="width:100%"
+                                <table class="table table-bordered table-hover dt-responsive"
                                        id="agents-transactions-table"
                                        data-route="{{ route('agents.transactions.paginate') }}"
                                        data-routetotals="{{ route('agents.transactions.totals') }}">
@@ -667,46 +697,46 @@
                                             {{ _i('Date') }}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('From') }}--}}
+                                            {{--                                            {{ _i('From') }}--}}
                                             Agente
-{{--                                            {{ _i('User') }}--}}
+                                            {{--                                            {{ _i('User') }}--}}
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('Toward') }}--}}
+                                            {{--                                            {{ _i('Toward') }}--}}
                                             Cuenta destino
                                         </th>
-{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                            {{ _i('Debit') }}--}}
-{{--                                            Descarga--}}
-{{--                                        </th>--}}
-{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                            {{ _i('Credit') }}--}}
-{{--                                            Carga--}}
-{{--                                        </th>--}}
+                                        {{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                            {{ _i('Debit') }}--}}
+                                        {{--                                            Descarga--}}
+                                        {{--                                        </th>--}}
+                                        {{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                            {{ _i('Credit') }}--}}
+                                        {{--                                            Carga--}}
+                                        {{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-{{--                                            {{ _i('Credit') }}--}}
+                                            {{--                                            {{ _i('Credit') }}--}}
                                             {{_i('Amount')}}
                                         </th>
-{{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
-{{--                                                {{ _i('Charged him') }}--}}
-{{--                                                Carga--}}
-{{--                                            </th>--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">--}}
-{{--                                                {{ _i('Withdrew') }}--}}
-{{--                                                Retiro--}}
-{{--                                            </th>--}}
-{{--                                        @else--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                {{ _i('Debit') }}--}}
-{{--                                            </th>--}}
-{{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                                {{ _i('Credit') }}--}}
-{{--                                            </th>--}}
-{{--                                        @endif--}}
-{{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
-{{--                                            {{ _i('Toward') }}--}}{{--...--}}
-{{--                                        </th>--}}
+                                        {{--                                        @if(in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Entrada">--}}
+                                        {{--                                                {{ _i('Charged him') }}--}}
+                                        {{--                                                Carga--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none" title="Salida">--}}
+                                        {{--                                                {{ _i('Withdrew') }}--}}
+                                        {{--                                                Retiro--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                        @else--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                                {{ _i('Debit') }}--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                                {{ _i('Credit') }}--}}
+                                        {{--                                            </th>--}}
+                                        {{--                                        @endif--}}
+                                        {{--                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">--}}
+                                        {{--                                            {{ _i('Toward') }}--}}{{--...--}}
+                                        {{--                                        </th>--}}
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             {{ _i('Balance') }}
                                         </th>
@@ -895,7 +925,7 @@
                             {{--                                </div>--}}
                             {{--                            </div>--}}
                             @if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles')))
-                                <div class="table-responsive" id="financial-state-table"
+                                <div class="table-responsive if-admin" id="financial-state-table"
                                      data-route="{{ route('agents.reports.financial-state-data') }}"></div>
                             @else
                                 <div class="table-responsive" id="financial-state-table"
@@ -949,7 +979,8 @@
                                                             <div class="form-group">
                                                                 <label for="maker">{{ _i('Maker') }}</label>
                                                                 <select name="maker" id="maker"
-                                                                        class="form-control" data-route="{{ route('core.categories-by-maker') }}">
+                                                                        class="form-control"
+                                                                        data-route="{{ route('core.categories-by-maker') }}">
                                                                     <option value="">{{ _i('Select...') }}</option>
                                                                     @foreach ($makers as $maker)
                                                                         <option value="{{ $maker->maker }}">
@@ -1165,14 +1196,16 @@
         </div>
     </div>
     @if ($agent->master)
-        @include('back.agents.modals.add-agents')
+        {{--        TODO THE OPTION TO CREATE AGENT IS DISABLED WITHIN THE DASHBOARD--}}
+        {{--        @include('back.agents.modals.add-agents')--}}
         @include('back.agents.modals.update-percentage')
     @endif
     @include('back.agents.modals.manual-transaction')
     @include('back.agents.modals.move-agents')
     @include('back.agents.modals.move-agents-users')
     @include('back.agents.modals.details-user')
-    @include('back.agents.modals.add-users')
+    {{--        TODO THE OPTION TO CREATE USER IS DISABLED WITHIN THE DASHBOARD--}}
+    {{--    @include('back.agents.modals.add-users')--}}
     @include('back.users.modals.reset-password')
 @endsection
 
@@ -1181,19 +1214,25 @@
         $(function () {
             let agents = new Agents();
             let users = new Users();
-            users.usersIps();
             agents.dashboard();
+            agents.resetEmail();
+            users.usersIps();
+            //TODO TABLA PARA IPS EN EL MODAL
+            users.userIpsDetails();
+
             agents.searchAgentDashboard();
             agents.performTransactions();
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
-            agents.usersTransactions([10, 20, 50, 100, 500, 1000, 2000]);
+            agents.agentsTransactionsPaginate([50, 100, 500, 1000, 2000]);
+            agents.usersTransactions([50, 100, 500, 1000, 2000]);
             agents.users();
             agents.agents();
-            agents.storeAgents();
-            agents.storeUsers();
+            //TODO THE OPTION TO CREATE IS DISABLED WITHIN THE DASHBOARD
+            // agents.storeAgents();
+            // agents.storeUsers();
             agents.changeUserStatus();
+            agents.changeEmailAgent();
             users.resetPassword();
             agents.financialState();
             agents.lockProvider();
@@ -1211,6 +1250,258 @@
             @endif
             agents.relocationAgents();
             //agents.detailsUserModal();
+
+            agents.treePro('{{ route('agents.get.tree.users') }}');
+
+            //script para ocultar div de notificaciones
+            $(document).ready(function () {
+                estado = 0;
+                $("#oculta").click(function () {
+                    if (estado == 0) {
+                        $('#paraocultar').slideUp('fast');
+                        estado = 1;
+                    } else {
+                        $('#paraocultar').slideDown('fast');
+                        estado = 0;
+                    }
+                });
+            });
+            //New user tree structure
+            {{--function treePro() {--}}
+            {{--    let listUsers;--}}
+            {{--    let listMakers;--}}
+            {{--    let idCurrentUser = $('#tree-pro-master').data('idtreepro');--}}
+
+            {{--    $.ajax({--}}
+            {{--        url: '{{ route('agents.get.tree.users') }}',--}}
+            {{--        type: 'get',--}}
+            {{--        dataType: 'json',--}}
+            {{--    }).done(function (data) {--}}
+            {{--        if (data.status === 'OK') {--}}
+            {{--            listUsers = data.data.tree;--}}
+            {{--            listMakers = data.data.makers;--}}
+            {{--            scanSearch(idCurrentUser);--}}
+            {{--            drawMakers();--}}
+            {{--            $('#tree-pro-master').find('a.jstree-anchor').click();--}}
+            {{--        } else {--}}
+            {{--            console.log('Error al consultar usuarios',data)--}}
+            {{--        }--}}
+            {{--    }).fail(function () {--}}
+            {{--        Swal.fire(--}}
+            {{--            'Ha ocurrido un error inesperado',--}}
+            {{--            'Recarga o intenta de nuevo mas tarde.',--}}
+            {{--            'error'--}}
+            {{--        )--}}
+            {{--    }).always(function () {--}}
+
+            {{--    });--}}
+
+            {{--    function scanSearch(id) {--}}
+            {{--        let users = listUsers.filter(user => user.owner_id === id);--}}
+            {{--        let usersTemp;--}}
+            {{--        let userHtmlTempMini = '';--}}
+            {{--        let usersHtmlTemp;--}}
+            {{--        let last = '';--}}
+            {{--        let atm = false;--}}
+            {{--        let type_user;--}}
+            {{--        let atmIcon;--}}
+            {{--        let atmType;--}}
+
+
+            {{--        $.each(users, function (index, value) {--}}
+            {{--            usersTemp = listUsers.filter(user => user.owner_id === value.id);--}}
+
+            {{--            if (index + 1 === users.length) {--}}
+            {{--                last = 'jstree-last';--}}
+            {{--            }--}}
+
+            {{--            switch(value.type_user) {--}}
+            {{--                case 1:--}}
+            {{--                    type_user = 'agent';--}}
+            {{--                    atmIcon = 'fa-star';--}}
+            {{--                    atmType = 'agent';--}}
+            {{--                    break;--}}
+            {{--                case 2:--}}
+            {{--                    type_user = 'agent';--}}
+            {{--                    atmIcon = 'fa-users';--}}
+            {{--                    atmType = 'agent';--}}
+            {{--                    break;--}}
+            {{--                case 5:--}}
+            {{--                    type_user = 'user';--}}
+            {{--                    atmIcon = 'fa-user';--}}
+            {{--                    atmType = 'user';--}}
+            {{--                    break;--}}
+            {{--                default:--}}
+            {{--                    type_user = 'user-null';--}}
+            {{--                    atmIcon = 'icon-null';--}}
+            {{--                    atmType = 'null'--}}
+            {{--            }--}}
+
+            {{--            if (usersTemp.length > 0) {--}}
+            {{--                userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_agent jstree-closed ' + last + '"><i class="jstree-icon jstree-ocl jstree-more" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';--}}
+            {{--            } else {--}}
+            {{--                userHtmlTempMini = userHtmlTempMini + '<li class="jstree-node init_'+ atmType +' jstree-leaf ' + last + '"><i class="jstree-icon jstree-ocl" data-idtreepro="' + value.id + '" data-typetreepro="' + type_user + '" role="' + value.owner_id + '"></i><a class="jstree-anchor" href="javascript:void(0)"><i class="jstree-icon jstree-themeicon fa '+ atmIcon +' jstree-themeicon-custom" role="presentation"></i>' + value.username + '</a></li>';--}}
+            {{--            }--}}
+            {{--        })--}}
+
+            {{--        usersHtmlTemp = '<ul role="group" class="jstree-children">' + userHtmlTempMini + '</ul>';--}}
+
+
+            {{--        $('[data-idtreepro="' + id + '"]').parent().append(usersHtmlTemp);--}}
+            {{--    }--}}
+
+            {{--    function drawMakers() {--}}
+            {{--        let makers = listMakers;--}}
+
+            {{--        $('#maker option[value!=""]').remove();--}}
+            {{--        if(makers.length > 0){--}}
+            {{--            $.each(makers, function (index, val) {--}}
+            {{--                $('#maker').append("<option value=" + val.maker + ">" + val.maker + "</option>");--}}
+
+            {{--            });--}}
+            {{--        }--}}
+            {{--    }--}}
+
+            {{--    $(document).on('click', '.jstree-more', function () {--}}
+            {{--        let $this = $(this);--}}
+            {{--        let $obj = $this.parent();--}}
+
+            {{--        if ($obj.hasClass('jstree-open')) {--}}
+            {{--            $obj.removeClass('jstree-open');--}}
+            {{--            $obj.addClass('jstree-closed');--}}
+            {{--            $obj.find('.jstree-children').remove();--}}
+            {{--        } else {--}}
+            {{--            $obj.removeClass('jstree-closed');--}}
+            {{--            $obj.addClass('jstree-open');--}}
+            {{--            scanSearch($this.data('idtreepro'));--}}
+            {{--        }--}}
+            {{--    });--}}
+
+            {{--    $(document).on('click', 'a.jstree-anchor', function (){--}}
+            {{--        let $this = $(this);--}}
+            {{--        let type = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('typetreepro');--}}
+            {{--        let id = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('idtreepro');--}}
+            {{--        let $container = $('#tree-pro');--}}
+
+            {{--        $('a.jstree-anchor').removeClass('jstree-clicked');--}}
+            {{--        $this.addClass('jstree-clicked');--}}
+
+            {{--        $.ajax({--}}
+            {{--            url: $container.data('route'),--}}
+            {{--            type: 'get',--}}
+            {{--            dataType: 'json',--}}
+            {{--            data: {--}}
+            {{--                id, type--}}
+            {{--            }--}}
+
+            {{--        }).done(function (json) {--}}
+            {{--            //TODO Init Set Modal--}}
+            {{--            $('.userSet').text(json.data.user.username);--}}
+            {{--            $('.emailSet').text(json.data.user.email);--}}
+            {{--            $('.fatherSet').text(json.data.father);--}}
+            {{--            $('.typeSet').text(json.data.user.typeSet);--}}
+            {{--            $('.createdSet').text(json.data.user.created);--}}
+            {{--            $('.cantA_P').show();--}}
+            {{--            $('.cantA_P').show();--}}
+            {{--            if (json.data.type != "agent") {--}}
+            {{--                $('.cantA_P').hide();--}}
+            {{--                $('.cantA_P').hide();--}}
+            {{--            }--}}
+            {{--            // $('.agentsSet').text(json.data.cant_agents);--}}
+            {{--            // $('.playersSet').text(json.data.cant_players);--}}
+            {{--            // let initUl = '';--}}
+            {{--            // let finishUl = '';--}}
+            {{--            // $.each(json.data.fathers,function(index,val) {--}}
+            {{--            //     initUl = initUl + '<ul style="margin-left: -13%!important;"><li><strong>'+val.username+'</strong>'--}}
+            {{--            //     finishUl = finishUl + '</li></ul>'--}}
+            {{--            // });--}}
+            {{--            // $('.appendTreeFather').append(initUl+finishUl);--}}
+
+            {{--            setTimeout(function () {--}}
+            {{--                Agents.getFatherRecursive($('#details-user-get').data('route'), id, type);--}}
+            {{--            }, 500)--}}
+            {{--            //TODO Finish Set Modal--}}
+
+            {{--            $('#username').text(json.data.user.username);--}}
+            {{--            $('#agent_timezone').text(json.data.user.timezone);--}}
+            {{--            $('.balance').text(json.data.balance);--}}
+            {{--            $('.balanceAuth_' + json.data.user.id).text('');--}}
+            {{--            $('.balanceAuth_' + json.data.user.id).text(json.data.balance);--}}
+            {{--            $('#user_type').html(json.data.user.type);--}}
+            {{--            $('#status').html(json.data.user.status);--}}
+            {{--            $('#wallet').val(json.data.wallet);--}}
+            {{--            $('.wallet').val(json.data.wallet);--}}
+            {{--            $('.user').val(id);--}}
+            {{--            $('#name').val(json.data.user.username);--}}
+            {{--            $('#type').val(json.data.type);--}}
+            {{--            $('.type').val(json.data.type);--}}
+            {{--            $('#referral_code').text(json.data.user.referral_code);--}}
+            {{--            $('.clipboard').attr('data-clipboard-text', json.data.user.url);--}}
+
+            {{--            if (json.data.master) {--}}
+            {{--                $('#agents-tab').removeClass('d-none');--}}
+            {{--                $('#agents-mobile').removeClass('d-none');--}}
+            {{--                $('#move-agents').removeClass('d-none');--}}
+            {{--            } else {--}}
+            {{--                $('#agents-tab').addClass('d-none');--}}
+            {{--                $('#agents-mobile').addClass('d-none');--}}
+            {{--                $('#move-agents').addClass('d-none');--}}
+            {{--            }--}}
+
+            {{--            if (json.data.agent) {--}}
+            {{--                $('#users-tab').removeClass('d-none');--}}
+            {{--                $('#agents-transactions-tab').removeClass('d-none');--}}
+            {{--                $('#financial-state-tab').removeClass('d-none');--}}
+            {{--                $('#users-transactions-tab').addClass('d-none');--}}
+            {{--                $('#users-mobile').removeClass('d-none');--}}
+            {{--                $('#agents-transactions-mobile').removeClass('d-none');--}}
+            {{--                $('#financial-state-mobile').removeClass('d-none');--}}
+            {{--                $('#users-transactions-mobile').addClass('d-none');--}}
+            {{--                $('#move-agents-user').addClass('d-none');--}}
+            {{--                $('#move-agents').removeClass('d-none');--}}
+            {{--            } else {--}}
+            {{--                $('#users-tab').addClass('d-none');--}}
+            {{--                $('#agents-transactions-tab').addClass('d-none');--}}
+            {{--                $('#financial-state-tab').addClass('d-none');--}}
+            {{--                $('#users-transactions-tab').removeClass('d-none');--}}
+            {{--                $('#users-mobile').addClass('d-none');--}}
+            {{--                $('#agents-transactions-mobile').addClass('d-none');--}}
+            {{--                $('#financial-state-mobile').addClass('d-none');--}}
+            {{--                $('#users-transactions-mobile').removeClass('d-none');--}}
+            {{--                $('#move-agents-user').removeClass('d-none');--}}
+            {{--                $('#move-agents').addClass('d-none');--}}
+            {{--            }--}}
+
+            {{--            if (json.data.myself) {--}}
+            {{--                if (!json.data.agent_player) {--}}
+            {{--                    $('#new-user, #new-agent').addClass('d-none');--}}
+            {{--                } else {--}}
+            {{--                    $('#new-user, #new-agent').removeClass('d-none');--}}
+            {{--                }--}}
+            {{--                $('#locks, #locks-tab').addClass('d-none');--}}
+            {{--                $('#locks, #locks-mobile').addClass('d-none');--}}
+            {{--                $('#transactions-form-container').addClass('d-none');--}}
+            {{--                $('#modals-transaction').addClass('d-none');--}}
+            {{--                $('#move-agents-user').addClass('d-none');--}}
+            {{--                $('#move-agents').addClass('d-none');--}}
+            {{--            } else {--}}
+            {{--                $('#new-user, #new-agent').addClass('d-none');--}}
+            {{--                $('#locks, #locks-tab').removeClass('d-none');--}}
+            {{--                $('#locks, #locks-mobile').removeClass('d-none');--}}
+            {{--                $('#transactions-form-container').removeClass('d-none');--}}
+            {{--                $('#modals-transaction').removeClass('d-none');--}}
+            {{--            }--}}
+
+            {{--        }).fail(function (json) {--}}
+            {{--            swalError(json);--}}
+            {{--        });--}}
+            {{--    })--}}
+
+            {{--    $('#tree-pro-init').find('.jstree-anchor').eq(0).click();--}}
+            {{--}--}}
+
+            {{--treePro();--}}
+
         });
     </script>
 @endsection

@@ -33,12 +33,6 @@
                                 <label for="agents"><?php echo e(_i('Agents')); ?></label>
                                 <select name="agent" id="relocation-agents" class="form-control" style="width: 100%" data-route="<?php echo e(route('agents.relocation-agents-data')); ?>">
                                     <option value=""><?php echo e(_i('Select...')); ?></option>
-                                    <?php $__currentLoopData = $agents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $agent): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($agent['user_id']); ?>">
-                                            <?php echo e($agent['username']); ?>
-
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </div>

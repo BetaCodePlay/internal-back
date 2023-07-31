@@ -11,7 +11,8 @@
                 </h3>
                 <?php if(isset($positions) && empty($positions)): ?>
                     <div class="media-body d-flex justify-content-end">
-                        <a href="<?php echo e(route('section-images.create', [$template_element_type, $section])); ?>" class="btn u-btn-3d u-btn-primary float-right">
+                        <a href="<?php echo e(route('section-images.create', [$template_element_type, $section])); ?>"
+                           class="btn u-btn-3d u-btn-primary float-right">
                             <i class="hs-admin-upload"></i>
                             <?php echo e(_i('Upload')); ?>
 
@@ -27,11 +28,16 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered w-100" id="images-table" data-route="<?php echo e(route('section-images.all', [$template_element_type, $section])); ?>">
+                <table class="table table-bordered w-100" id="images-table"
+                       data-route="<?php echo e(route('section-images.all', [$template_element_type, $section])); ?>">
                     <thead>
                     <tr>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             <?php echo e(_i('Image')); ?>
+
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            <?php echo e(_i('Front')); ?>
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -44,6 +50,10 @@
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             <?php echo e(_i('URL')); ?>
+
+                        </th>
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            <?php echo e(_i('Category')); ?>
 
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

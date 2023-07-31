@@ -19,7 +19,7 @@
                     <form action="{{ route('agents.store-user') }}" method="post" id="create-users-form">
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="username">{{ _i('Username') }}</label>
                                         <input type="text" name="username" class="form-control" autocomplete="off">
@@ -27,7 +27,14 @@
                                         <small class="form-text text-muted">{{ _i('The username cannot be changed later') }}</small>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4">
+{{--                                <div class="col-12 col-sm-4">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="username">{{ _i('Email') }}</label>--}}
+{{--                                        <input type="email" name="email" class="form-control" autocomplete="off" required>--}}
+{{--                                        <small class="form-text text-muted">{{ _i('Email can be changed later') }}</small>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+                                <div class="col-12 col-md-6">
                                     <label for="password">{{ _i('Password') }}</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="password">
@@ -39,7 +46,7 @@
                                     </div>
                                     <small class="form-text text-muted">{{ _i('Minimum 8 characters, 1 letter and 1 number') }}</small>
                                 </div>
-                                <div class="col-12 col-md-4">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="balance">{{ _i('Balance') }}</label>
                                         <input type="number" name="balance" class="form-control">

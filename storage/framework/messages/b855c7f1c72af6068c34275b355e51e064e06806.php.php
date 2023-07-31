@@ -33,9 +33,11 @@
             color: white !important;
             background-color: #38a7ef !important;
         }
+
         .flex-items {
             display: flex;
         }
+
         /*#dashboard {*/
         /*    border-color: #38a7ef;*/
         /*    border-top-style: solid;*/
@@ -57,6 +59,7 @@
             color: white !important;
             background-color: darkorange !important
         }
+
         .select2-container {
             width: 100% !important;
             text-align: left !important;
@@ -66,6 +69,11 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+    <?php if($mailgun_notifications->active == true): ?>
+        <?php if($confirmation_email == false): ?>
+            <?php echo $__env->make('back.layout.email-verify', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php endif; ?>
+    <?php endif; ?>
     <div class="row">
         <div class="col-lg-3 col-xl-4">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -99,14 +107,14 @@
                     <div class="d-block d-sm-block d-md-none g-pa-10">
                         <div class="row">
                             <div class="col-12">
-                                <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
-                                    <select name="agent_id_search" id="username_search"
-                                            class="form-control select2 username_search agent_id_search"
-                                            data-route="<?php echo e(route('agents.search-username')); ?>"
-                                            data-select="<?php echo e(route('agents.find-user')); ?>">
-                                        <option></option>
-                                    </select>
-                                <?php endif; ?>
+                                
+                                <select name="agent_id_search" id="username_search"
+                                        class="form-control select2 username_search agent_id_search"
+                                        data-route="<?php echo e(route('agents.search-username')); ?>"
+                                        data-select="<?php echo e(route('agents.find-user')); ?>">
+                                    <option></option>
+                                </select>
+                                
 
                             </div>
                             
@@ -143,8 +151,23 @@
                             
                         </div>
                     </div>
-                    <div class="">
-                        <div id="tree" data-route="<?php echo e(route('agents.find')); ?>" data-json="<?php echo e($tree); ?>"></div>
+                    
+                    
+                    
+                    <div id="tree-pro" class="jstree" data-route="<?php echo e(route('agents.find')); ?>">
+                        <div class="jstree-default">
+                            <ul class="jstree-container-ul jstree-children">
+                                <li class="jstree-node init_tree jstree-last jstree-open" id="tree-pro-init">
+                                    <i class="jstree-icon jstree-ocl" id="tree-pro-master"
+                                       data-idtreepro="<?php echo e(auth()->user()->id); ?>" data-typetreepro="agent"></i><a
+                                        href="javascript:void(0)" class="jstree-anchor"><i
+                                            class="jstree-icon jstree-themeicon fa fa-diamond jstree-themeicon-custom"
+                                            role="presentation"></i><?php echo e(isset(auth()->user()->username) ? auth()->user()->username : ''); ?>
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -423,7 +446,8 @@
                                         </div>
                                     </div>
                                     <div class="row g-mb-15">
-                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div
+                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong> <?php echo e(_i('Type')); ?></strong>
                                             </label>
@@ -503,10 +527,11 @@
                                     <div class="row g-mb-15" id="details-user">
                                         <div class="col-12 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
-                                                <a href="#details-user-modal" id="details-user"
+                                                <a href="#details-user-modal" id="details-user-get"
+                                                   data-route="<?php echo e(route('agents.get.father.cant')); ?>"
                                                    class="btn u-btn-3d u-btn-blue btn-sm" data-toggle="modal">
-                                                    <i class="hs-admin-info g-font-size-16 g-color-white" style="font-weight: 700!important;"></i> <strong> <?php echo e(_i('More information')); ?></strong>
-
+                                                    <i class="hs-admin-info g-font-size-16 g-color-white"
+                                                       style="font-weight: 700!important;"></i><strong> <?php echo e(_i('More information')); ?></strong>
                                                 </a>
                                             </div>
                                         </div>
@@ -579,16 +604,20 @@
                             <div class="row">
                                 <div class="offset-md-2"></div>
                                 
-                                <div class="col-md-3 ">
-                                    <div class="form-group">
-                                        <label for="transaction_select"><?php echo e(_i('Type Transaction')); ?></label>
-                                        <select name="transaction_select" id="transaction_select" class="form-control">
-                                            <option value="all" selected="selected" hidden><?php echo e(_i('All')); ?></option>
-                                            <option value="credit"><?php echo e(_i('Charge')); ?></option>
-                                            <option value="debit"><?php echo e(_i('Discharge')); ?></option>
-                                        </select>
+
+                                    <div class="col-md-3 ">
+                                        <div class="form-group">
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_search])): ?>
+                                            <label for="transaction_select"><?php echo e(_i('Type Transaction')); ?></label>
+                                            <select name="transaction_select" id="transaction_select" class="form-control">
+                                                <option value="all" selected="selected" hidden><?php echo e(_i('All')); ?></option>
+                                                <option value="credit"><?php echo e(_i('Charge')); ?></option>
+                                                <option value="debit"><?php echo e(_i('Discharge')); ?></option>
+                                            </select>
+
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="col-md-3 ">
                                     <div class="form-group">
                                         <label for="type_select"><?php echo e(_i('Type User')); ?></label>
@@ -601,11 +630,12 @@
                                 </div>
                                 <div class="col-md-4 col-xs-12 col-sm-12">
                                     <div class="form-group">
-                                        <label for="date_range"><?php echo e(_i('Date range')); ?></label>
+                                        <label for="date_range_new"><?php echo e(_i('Date range')); ?></label>
                                         <div class="flex-items">
-                                            <input type="text" id="date_range_new" class="form-control" autocomplete="off"
-                                               placeholder="<?php echo e(_i('Date range')); ?>">
-                                               <button class="btn g-bg-primary" type="button" id="updateNew"
+                                            <input type="text" id="date_range_new" class="form-control"
+                                                   autocomplete="off"
+                                                   placeholder="<?php echo e(_i('Date range')); ?>">
+                                            <button class="btn g-bg-primary" type="button" id="updateNew"
                                                     data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
                                                     data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>"
                                                     data-loading-text="<i class='fa fa-spin fa-refresh g-color-white'></i>">
@@ -618,12 +648,12 @@
 
 
                             <div class="media">
-                                <div class="media-body d-flex justify-content-end g-mb-10"
-                                     id="table-buttons-agents-transactions">
+                                <div class="media-body d-flex justify-content-start g-mb-10" id="table-buttons">
+
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-bordered display nowrap" style="width:100%"
+                                <table class="table table-bordered table-hover dt-responsive"
                                        id="agents-transactions-table"
                                        data-route="<?php echo e(route('agents.transactions.paginate')); ?>"
                                        data-routetotals="<?php echo e(route('agents.transactions.totals')); ?>">
@@ -634,42 +664,47 @@
 
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-
-                                            Cuenta origen
-
+                                            
+                                            Agente
+                                            
                                         </th>
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-
+                                            
                                             Cuenta destino
                                         </th>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                            
+                                            <?php echo e(_i('Amount')); ?>
 
-                                            Descarga
                                         </th>
-                                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-
-                                            Carga
-                                        </th>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
                                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                             <?php echo e(_i('Balance')); ?>
 
@@ -874,7 +909,7 @@
                             
                             
                             <?php if(!in_array(\Dotworkers\Security\Enums\Roles::$admin_Beet_sweet, session('roles'))): ?>
-                                <div class="table-responsive" id="financial-state-table"
+                                <div class="table-responsive if-admin" id="financial-state-table"
                                      data-route="<?php echo e(route('agents.reports.financial-state-data')); ?>"></div>
                             <?php else: ?>
                                 <div class="table-responsive" id="financial-state-table"
@@ -930,7 +965,8 @@
                                                             <div class="form-group">
                                                                 <label for="maker"><?php echo e(_i('Maker')); ?></label>
                                                                 <select name="maker" id="maker"
-                                                                        class="form-control" data-route="<?php echo e(route('core.categories-by-maker')); ?>">
+                                                                        class="form-control"
+                                                                        data-route="<?php echo e(route('core.categories-by-maker')); ?>">
                                                                     <option value=""><?php echo e(_i('Select...')); ?></option>
                                                                     <?php $__currentLoopData = $makers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $maker): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                                         <option value="<?php echo e($maker->maker); ?>">
@@ -1156,14 +1192,16 @@
         </div>
     </div>
     <?php if($agent->master): ?>
-        <?php echo $__env->make('back.agents.modals.add-agents', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        
+        
         <?php echo $__env->make('back.agents.modals.update-percentage', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php endif; ?>
     <?php echo $__env->make('back.agents.modals.manual-transaction', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.move-agents', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.move-agents-users', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->make('back.agents.modals.details-user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <?php echo $__env->make('back.agents.modals.add-users', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    
+    
     <?php echo $__env->make('back.users.modals.reset-password', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
 
@@ -1172,19 +1210,25 @@
         $(function () {
             let agents = new Agents();
             let users = new Users();
-            users.usersIps();
             agents.dashboard();
+            agents.resetEmail();
+            users.usersIps();
+            //TODO TABLA PARA IPS EN EL MODAL
+            users.userIpsDetails();
+
             agents.searchAgentDashboard();
             agents.performTransactions();
             agents.manualTransactionsModal();
             //agents.agentsTransactions();
-            agents.agentsTransactionsPaginate([10, 20, 50, 100, 500, 1000, 2000]);
-            agents.usersTransactions();
+            agents.agentsTransactionsPaginate([50, 100, 500, 1000, 2000]);
+            agents.usersTransactions([50, 100, 500, 1000, 2000]);
             agents.users();
             agents.agents();
-            agents.storeAgents();
-            agents.storeUsers();
+            //TODO THE OPTION TO CREATE IS DISABLED WITHIN THE DASHBOARD
+            // agents.storeAgents();
+            // agents.storeUsers();
             agents.changeUserStatus();
+            agents.changeEmailAgent();
             users.resetPassword();
             agents.financialState();
             agents.lockProvider();
@@ -1201,6 +1245,259 @@
             agents.changeAgentType();
             <?php endif; ?>
             agents.relocationAgents();
+            //agents.detailsUserModal();
+
+            agents.treePro('<?php echo e(route('agents.get.tree.users')); ?>');
+
+            //script para ocultar div de notificaciones
+            $(document).ready(function () {
+                estado = 0;
+                $("#oculta").click(function () {
+                    if (estado == 0) {
+                        $('#paraocultar').slideUp('fast');
+                        estado = 1;
+                    } else {
+                        $('#paraocultar').slideDown('fast');
+                        estado = 0;
+                    }
+                });
+            });
+            //New user tree structure
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+
+            
+            
+
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+
+            
+
+
+            
+            
+
+            
+            
+
+            
+            
+            
+            
+
+            
+            
+            
+
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
+            
+
+            
+            
+
+            
+
         });
     </script>
 <?php $__env->stopSection(); ?>

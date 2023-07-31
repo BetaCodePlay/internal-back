@@ -32,11 +32,6 @@
                                 <label for="agents">{{ _i('Agents') }}</label>
                                 <select name="agent" id="relocation-agents" class="form-control" style="width: 100%" data-route="{{ route('agents.relocation-agents-data') }}">
                                     <option value="">{{ _i('Select...') }}</option>
-                                    @foreach ($agents as $agent)
-                                        <option value="{{ $agent['user_id'] }}">
-                                            {{ $agent['username'] }}
-                                        </option>
-                                    @endforeach
                                 </select>
                             </div>
                         </div>

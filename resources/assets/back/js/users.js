@@ -1,4 +1,11 @@
-import {clearForm, initDatepickerEndToday, initDateRangePickerEndToday, initFileInput, initSelect2, refreshRandomPassword} from "./commons";
+import {
+    clearForm,
+    initDatepickerEndToday,
+    initDateRangePickerEndToday,
+    initFileInput,
+    initSelect2,
+    refreshRandomPassword
+} from "./commons";
 import {
     clipboard,
     swalError,
@@ -8,7 +15,7 @@ import {
     swalSuccessNoButton
 } from "../../commons/js/core";
 import moment from "moment";
-import { ajaxSetup } from "jquery";
+import {ajaxSetup} from "jquery";
 
 class Users {
 
@@ -53,7 +60,6 @@ class Users {
         let $table = $('#users-table');
         let $button = $('#search');
         let $form = $('#advanced-search-form');
-        clearForm($form);
 
         $table.DataTable({
             "ajax": {
@@ -91,7 +97,7 @@ class Users {
                 });
             }
         });
-
+        clearForm($form);
         $table.on('xhr.dt', function (event, settings, json, xhr) {
             if (xhr.status === 500 || xhr.status === 422) {
                 swalError(xhr);
@@ -171,7 +177,7 @@ class Users {
     }
 
     // Users temp
-   documents() {
+    documents() {
         let $table = $('#documents-table');
         let $modal = $('#watch-document-modal');
         let api;
@@ -200,22 +206,22 @@ class Users {
             }
         });
 
-       $modal.on('show.bs.modal', function (event) {
-           let $target = $(event.relatedTarget);
-           $('#document').append($target.data('document'));
-       })
+        $modal.on('show.bs.modal', function (event) {
+            let $target = $(event.relatedTarget);
+            $('#document').append($target.data('document'));
+        })
 
-       $modal.on('hidden.bs.modal', function () {
-           $modal.find('#document').html('');
-       })
+        $modal.on('hidden.bs.modal', function () {
+            $modal.find('#document').html('');
+        })
 
-       $table.on('xhr.dt', function (event, settings, json, xhr) {
-           if (xhr.status === 500 || xhr.status === 422) {
-               swalError(xhr);
-               $button.button('reset');
-           }
-       });
-   };
+        $table.on('xhr.dt', function (event, settings, json, xhr) {
+            if (xhr.status === 500 || xhr.status === 422) {
+                swalError(xhr);
+                $button.button('reset');
+            }
+        });
+    };
 
     // Document approved
     static documentsApproved(api, route) {
@@ -463,7 +469,7 @@ class Users {
     };
 
     //Select maker
-    selectCategoryMaker(){
+    selectCategoryMaker() {
         initSelect2();
         $('#category').on('change', function () {
             let category = $(this).val();
@@ -471,7 +477,7 @@ class Users {
             let route;
             if (category !== '*') {
                 route = $(this).data('route');
-            }else{
+            } else {
                 route = makers.data('route');
             }
             $.ajax({
@@ -487,7 +493,8 @@ class Users {
                     makers.append("<option value=" + element.maker + ">" + element.maker + "</option>");
                 })
                 makers.prop('disabled', false);
-            }).fail(function (json) {});
+            }).fail(function (json) {
+            });
         }).trigger('change');
     }
 
@@ -1225,6 +1232,39 @@ class Users {
                 $button.button('reset');
             });
         });
+    }
+
+    //TODO lista de ip para el detalle de usuario
+    userIpsDetails() {
+        let $table = $('#ipTableIps');
+        let api;
+
+        let route = $table.data('route')+'/'+$('.user').val();
+
+        $table.DataTable({
+            "ajax": {
+                "url": route,
+                "dataSrc": "data.ips"
+            },
+            "order": [
+                [1, "desc"]
+            ],
+            "columns": [
+                {"data": "ip"},
+                {"data": "quantity", "className": "text-right"},
+            ],
+            "initComplete": function () {
+                api = this.api();
+            }
+        });
+
+        $('#details-user-modal').on('show.bs.modal', function () {
+            let user = $('.user').val();
+            let route = `${$table.data('route')}/${user}`;
+            //let route = $table.data('route')+'/'+$('.user').val();
+            $table.DataTable().ajax.url(route).load();
+
+        })
     }
 
     // Users temp

@@ -2811,6 +2811,7 @@ class Providers
             case self::$gbs_games:
             case self::$sw3_sports:
             case self::$gamble_ca:
+            case self::$lv_sLots:
             {
                 if ($transactionType == TransactionTypes::$credit) {
                     if (isset($data->bet_type)) {
@@ -2968,7 +2969,7 @@ class Providers
                             }
                         }
                     } else {
-                        switch ($data->bet_type) {
+                        switch ($data->type) {
                             case 'default':
                             {
                                 if (isset($data->provider_transaction)) {
@@ -3283,29 +3284,6 @@ class Providers
                     }
                 }
                 break;
-            }
-            case self::$lv_sLots:
-            {
-                if (isset($data->type)) {
-                    switch ($data->type) {
-                        case 'debit':
-                        {
-                            $description = _i('Bet #%s on the game %s', [$data->provider_transaction, $data->game, $data->provider_transaction]);
-                            break;
-                        }
-                        case 'credit':
-                        {
-                            $description = _i('Bet #%s on the game %s won. Round #%s', [$data->provider_transaction, $data->game, $data->provider_transaction]);
-                            break;
-                        }
-                        case 'refund':
-                        {
-                            $description = _i('Bet #%s on the game %s refunded. Round #%s', [$data->provider_transaction, $data->game, $data->provider_transaction,]);
-                            break;
-                        }
-                    }
-                    break;
-                }
             }
             default:
             {

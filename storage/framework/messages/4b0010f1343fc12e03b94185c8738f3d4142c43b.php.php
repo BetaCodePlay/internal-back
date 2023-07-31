@@ -17,6 +17,7 @@ use Dotworkers\Configurations\Enums\TemplateElementTypes;
 use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ixudra\Curl\Facades\Curl;
@@ -41,7 +42,158 @@ class Core
     public static function buildMenu()
     {
         $menu = menu();
-        return self::menuItems($menu);
+        //return self::menuItems($menu);
+        $providersRepo = new ProvidersRepo();
+        $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+
+        $providersIds = array_map(function ($val) {
+            return $val->id;
+        }, json_decode($providersRepo->getByWhitelabelAndTypesIds($providerTypes)));
+
+        $uniquePaymentMethods =[];
+        $paymentMethodsIds = [];
+        if(!is_null(session('payment_methods'))){
+            $paymentMethodsIds = array_map(function ($val) {
+               return $val->payment_method_id;
+           }, session('payment_methods'));
+            $uniquePaymentMethods = collect($paymentMethodsIds)->unique()->values()->all();
+        }
+
+        $sections = Configurations::getHome();
+        $store = Configurations::getStore();
+        $registerConfiguration = Configurations::getTemplateElement(Configurations::getRegisterView());
+
+        $login = Configurations::getLoginView();
+        $loginConfiguration = Configurations::getTemplateElement($login);
+        $casino = str_replace('lobby', 'casino', Configurations::getCasinoLobby()->view);
+        $casinoConfiguration = Configurations::getTemplateElement($casino);
+
+        $virtual = str_replace('lobby', 'casino', Configurations::getVirtualLobby()->view);
+        $virtualConfiguration = Configurations::getTemplateElement($virtual);
+        $storeConfiguration = Configurations::getTemplateElement($element = 'store');
+        $whitelabel = Configurations::getWhitelabel();
+
+        $arrayLevelsClass=[
+            'top'=>'second',
+            'second'=>'third',
+            'third'=>'fourth',
+        ];
+        $sliderSections = [];
+        $imageSections = [];
+        $lobby = [];
+
+        if (is_object($sections)) {
+            foreach ($sections as $sectionKey => $section) {
+                if (isset($section->slider)) {
+                    //TODO Sliders
+                    $sliderSections[$sectionKey] = json_decode(json_encode([
+                        'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-list',
+                        'permission' => null,
+                        'submenu' => [
+
+                            'Upload' => [
+                                'text' => _i('Upload'),
+                                'level_class' => 'third',
+                                'route' => 'sliders.create',
+                                'params' => [TemplateElementTypes::$home, $sectionKey],
+                                'icon' => 'hs-admin-upload',
+                                'permission' => Permissions::$manage_sliders,
+                                'submenu' => []
+                            ],
+
+                            'List' => [
+                                'text' => _i('List'),
+                                'level_class' => 'third',
+                                'route' => 'sliders.index',
+                                'params' => [TemplateElementTypes::$home, $sectionKey],
+                                'icon' => 'hs-admin-list',
+                                'permission' => Permissions::$sliders_list,
+                                'submenu' => []
+                            ],
+                        ]
+                    ]));
+                }
+                if (isset($section->section_images)) {
+                    //TODO Images
+                    $imageSections[$sectionKey] = json_decode(json_encode([
+                        'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
+                        'level_class' => 'second',
+                        'route' => 'section-images.index',
+                        'params' => [TemplateElementTypes::$home, $sectionKey],
+                        'icon' => 'hs-admin-list',
+                        'permission' => Permissions::$section_images_list,
+                        'submenu' => []
+                    ]));
+
+                }
+            }
+        }
+
+        $lobbySections = isset(Configurations::getCasinoLobby()->home)?Configurations::getCasinoLobby()->home:[];
+        if (is_object($lobbySections)) {
+            foreach ($lobbySections as $sectionKey => $section) {
+                if (isset($section->section_images)) {
+                    $lobby[$sectionKey] = json_decode(json_encode([
+                        'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
+                        'level_class' => 'second',
+                        'route' => 'section-images.index',
+                        'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                        'icon' => 'hs-admin-list',
+                        'permission' => Permissions::$manage_section_images,
+                        'submenu' => [
+                        ],
+                    ]));
+                }
+                if (isset($section->slider)) {
+                    $lobby[$sectionKey] = json_decode(json_encode([
+                        'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-list',
+                        'permission' => null,
+                        'submenu' => [
+
+                            'Upload' => [
+                                'text' => _i('Upload'),
+                                'level_class' => 'third',
+                                'route' => 'sliders.create',
+                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                'icon' => 'hs-admin-upload',
+                                'permission' => Permissions::$manage_sliders,
+                                'submenu' => []
+                            ],
+
+                            'List' => [
+                                'text' => _i('List'),
+                                'level_class' => 'third',
+                                'route' => 'sliders.index',
+                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                'icon' => 'hs-admin-list',
+                                'permission' => Permissions::$sliders_list,
+                                'submenu' => []
+                            ],
+                        ]
+                    ]));
+                }
+            }
+        }
+////        Inicio de la medición del tiempo
+//        $startTime = microtime(true);
+
+        return self::menuItemsNew($menu,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
+            $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
+
+
+//        // Fin de la medición del tiempo y cálculo de la duración
+//        $endTime = microtime(true);
+//        $duration = $endTime - $startTime;
+//        dd($duration,$menu);
+
     }
 
     /**
@@ -202,7 +354,7 @@ class Core
 
 
                 $anchorFlex = ($item->level_class == 'second' || $item->level_class == 'third' || $item->level_class == 'fourth') ? 'd-flex' : '';
-                if (empty($item->submenu) && $key != 'Sliders' && $key != 'Images' && $key  != 'Games' ) {
+                if (empty($item->submenu) && $key != 'Sliders' && $key != 'Images' && $key  != 'Games' && $key != 'LobbySections') {
                     if (isset($item->route)) {
                         if (empty($item->params)) {
                             $route = route($item->route);
@@ -263,7 +415,7 @@ class Core
                     $item->text
                 );
 
-                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection') {
+                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection'|| $key == 'LobbySections') {
                     $html .= '<span class="d-flex align-self-center u-side-nav--control-icon"><i class="hs-admin-angle-right"></i></span>';
                     if ($item->level_class == 'top') {
                         $html .= '<span class="u-side-nav--has-sub-menu__indicator"></span>';
@@ -358,13 +510,26 @@ class Core
                         $html .= self::menuItems($imageSections);
                     }
 
-                    if ($key == 'GamesSection') {
-                        $gameSections = [];
+                    if ($key == 'LobbySections') {
+                        $lobbySections = Configurations::getCasinoLobby()->home;
+                        $lobby = [];
 
-                        if (is_object($sections)) {
-                            foreach ($sections as $sectionKey => $section) {
-                                if (isset($section->games)) {
-                                    $gameSections[$sectionKey] = json_decode(json_encode([
+                        if (is_object($lobbySections)) {
+                            foreach ($lobbySections as $sectionKey => $section) {
+                                if (isset($section->section_images)) {
+                                    $lobby[$sectionKey] = json_decode(json_encode([
+                                        'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
+                                        'level_class' => 'second',
+                                        'route' => 'section-images.index',
+                                        'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                        'icon' => 'hs-admin-list',
+                                        'permission' => Permissions::$manage_section_images,
+                                        'submenu' => [
+                                        ],
+                                    ]));
+                                }
+                                if (isset($section->slider)) {
+                                    $lobby[$sectionKey] = json_decode(json_encode([
                                         'text' => ucfirst(str_replace('-', ' ', $sectionKey)),
                                         'level_class' => 'second',
                                         'route' => null,
@@ -373,23 +538,23 @@ class Core
                                         'permission' => null,
                                         'submenu' => [
 
-                                            'Create' => [
-                                                'text' => _i('Create'),
+                                            'Upload' => [
+                                                'text' => _i('Upload'),
                                                 'level_class' => 'third',
-                                                'route' => 'section-games.create',
-                                                'params' => [$sectionKey],
-                                                'icon' => 'hs-admin-user',
-                                                'permission' => Permissions::$manage_section_games,
+                                                'route' => 'sliders.create',
+                                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
+                                                'icon' => 'hs-admin-upload',
+                                                'permission' => Permissions::$manage_sliders,
                                                 'submenu' => []
                                             ],
 
                                             'List' => [
                                                 'text' => _i('List'),
                                                 'level_class' => 'third',
-                                                'route' => 'section-games.index',
-                                                'params' => [$sectionKey],
+                                                'route' => 'sliders.index',
+                                                'params' => [TemplateElementTypes::$lobby_sections_mega_home, $sectionKey],
                                                 'icon' => 'hs-admin-list',
-                                                'permission' => Permissions::$manage_section_games,
+                                                'permission' => Permissions::$sliders_list,
                                                 'submenu' => []
                                             ],
                                         ]
@@ -397,7 +562,7 @@ class Core
                                 }
                             }
                         }
-                        $html .= self::menuItems($gameSections);
+                        $html .= self::menuItems($lobby);
                     }
 
                     $html .= self::menuItems($item->submenu);
@@ -405,6 +570,112 @@ class Core
                     $html .= '</ul>';
                 }
                 $html .= '</li>';
+            }
+        }
+        return $html;
+    }
+
+    /**
+     * Menu items New Update 1.0
+     *
+     * @param array|string $menu Menu items
+     * @return null|string
+     */
+    private static function menuItemsNew($menu,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
+                                               $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby)
+    {
+        $html=null;
+        foreach ($menu as $key => $item) {
+            if (!isset($item->permission) || Gate::allows('access', $item->permission)) {
+
+                if ($key == 'Agents' && !Configurations::getAgents()->active) {
+                    continue;
+                }
+                if (($key == 'BetPay' && !Configurations::getPayments()) || ($key == 'BetPay' && is_null(session('betpay_client_id')))) {
+                    continue;
+                }
+                if (($key == 'Referrals') || ($key == 'ManualTransactionsAgents') || ($key == 'ManualAdjustments') && $whitelabel == 68) {
+                    continue;
+                }
+                if ($key == 'CasinoSliders' && !$casinoConfiguration->data->slider->active || $key == 'VirtualSliders' && !$virtualConfiguration->data->slider->active) {
+                    continue;
+                }
+                if (($key == 'Store') || ($key == 'StoreSliders')  && !$store->active) {
+                    continue;
+                }
+                if ($key == 'StoreSliders' && $store->active) {
+                    if (!$storeConfiguration->data->slider->active) {
+                        continue;
+                    }
+                }
+                if ($key == 'RegisterImages' && $registerConfiguration->data->section_images->quantity == 0) {
+                    continue;
+                }
+                if ($key == 'LoginImages' && $loginConfiguration->data->section_images->quantity == 0) {
+                    continue;
+                }
+                if ($key == 'IQSoft' && !in_array(Providers::$iq_soft, $providersIds)) {
+                    continue;
+                }
+                if ((isset($item->provider) && !in_array($item->provider, $providersIds)) || (isset($item->payment_method) && !in_array($item->payment_method, $uniquePaymentMethods))) {
+                        continue;
+                }
+
+                //TODO HTML
+                $validateLevel = ($item->level_class == 'second' || $item->level_class == 'third' || $item->level_class == 'fourth');
+                $anchorFlex =  $validateLevel ? 'd-flex' : '';
+
+                $htmlTmp = '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--has-sub-menu u-side-nav--'.$item->level_class.'-level-menu-item"><a class="'.$anchorFlex.' media u-side-nav--'.$item->level_class.'-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="#" data-hssm-target="#'.$key . $item->level_class.'" data-toggle="collapse" data-target="#'.$key . $item->level_class.'">';
+                if (empty($item->submenu) && $key != 'Sliders' && $key != 'Images' && $key  != 'Games' && $key != 'LobbySections') {
+                    $route = !empty($item->url)?$item->url:'';
+                    $target = '_blank';
+                    if (isset($item->route)) {
+                        $route = empty($item->params)?route($item->route):null;
+                        if (!empty($item->params)) {
+                            $route = route($item->route, $item->params);
+                        }
+                        $route = is_null($route) ? 'javascript:void(0)' : $route;
+                        $target = '_self';
+                    }
+
+                    $htmlTmp = '<li class="u-sidebar-navigation-v1-menu-item u-side-nav--'.$item->level_class.'-level-menu-item" data-toggle="collapse" data-target="#'.$key . $item->level_class.'"><a class="'.$anchorFlex.' media u-side-nav--'.$item->level_class.'-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="'.$route.'" target="'.$target.'">';
+
+                }
+
+                $html.= $htmlTmp;
+                $spanFlex = $validateLevel ? '' : 'd-flex';
+
+                $html .= '<span class="'.$spanFlex.' align-self-center g-pos-rel g-font-size-18 g-mr-18"><i class="'.$item->icon.'"></i></span><span class="media-body align-self-center">'.$item->text.'</span>';
+
+                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection'|| $key == 'LobbySections') {
+                    $html .= '<span class="d-flex align-self-center u-side-nav--control-icon"><i class="hs-admin-angle-right"></i></span>'.($item->level_class == 'top') ? '<span class="u-side-nav--has-sub-menu__indicator"></span>' : '';
+                }
+                $html .= '</a>';
+
+                if (!empty($item->submenu) || $key == 'Sliders' || $key == 'Images' || $key == 'GamesSection') {
+                    $level = $arrayLevelsClass[$item->level_class];
+
+                    $html .= '<ul id="'.$key . $item->level_class.'" class="u-sidebar-navigation-v1-menu u-side-nav--'.$level.'-level-menu mb-0 collapse">';
+                    if ($key == 'Sliders') {
+                        $html .= self::menuItemsNew($sliderSections,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
+                            $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
+                    }
+                    if ($key == 'Images') {
+                        $html .= self::menuItemsNew($imageSections,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
+                            $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
+                    }
+                    if ($key == 'LobbySections') {
+                        $html .= self::menuItemsNew($lobby,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
+                            $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
+                    }
+
+                    $html .= self::menuItemsNew($item->submenu,$providersIds,$uniquePaymentMethods,$sections,$store,$registerConfiguration,$loginConfiguration,$casinoConfiguration,$virtualConfiguration,$storeConfiguration,
+                        $whitelabel,$arrayLevelsClass,$sliderSections,$imageSections,$lobby);
+
+                    $html .= '</ul>';
+                }
+                $html .= '</li>';
+                //TODO HTML
             }
         }
         return $html;

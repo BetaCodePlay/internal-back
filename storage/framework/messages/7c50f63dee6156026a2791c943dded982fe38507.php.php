@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\Game;
 use Dotworkers\Configurations\Enums\GamesStatus;
+use Dotworkers\Configurations\Enums\Providers;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -171,6 +172,52 @@ class GamesRepo
     }
 
     /**
+     * Get games by category and maker
+     *
+     * @param int $whitelabel Whitelabel ID
+     * @param string $currency Currency ISO
+     * @param string $category Games Category
+     * @param string $maker Games Maker
+     * @param int $product Games product_id
+     * @return mixed
+     */
+    public function getGamesByCategoryAndMaker($whitelabel, $currency, $provider, $category, $maker, $product)
+    {
+        $games = Game::select('games.id', 'games.name', 'games.slug', 'games.image', 'games.maker',
+            'games.category', 'games.provider_id')
+            ->join('providers', 'games.provider_id', '=', 'providers.id')
+            ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
+            ->where('credentials.client_id', $whitelabel)
+            ->where('credentials.currency_iso', $currency)
+            ->where('credentials.status', true)
+            ->where(function($query) use ($whitelabel) {
+                $query->where(function($query) use($whitelabel) {
+                    $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
+                        ->where('games.status', GamesStatus::$active);
+                })
+                    ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
+            });
+
+            if (!is_null($provider)) {
+                $games->where('providers.id', $provider);
+            }
+
+            if (!is_null($category)) {
+                $games->where('games.category', $category);
+            }
+
+            if (!is_null($maker)) {
+                $games->where('games.maker',  $maker);
+            }
+            
+            if (!is_null($product)) {
+                $games->where('games.product_id', $product);
+            }
+            $data = $games->get();
+        return $data;
+    }
+
+    /**
      * Get dotSuite games by provider
      *
      * @param int $provider
@@ -181,6 +228,31 @@ class GamesRepo
         $games = Game::where('provider_id', $provider)
             ->get();
         return $games;
+    }
+
+    /**
+     * Get dotSuite games by provider, maker, category and product
+     *
+     * @param int $provider
+     * @param string $category
+     * @param string $maker
+     * @param string $product
+     * @return mixed
+     */
+    public function getDotSuiteGamesByProviderAndMakerAndCategoryAndProduct($provider, $category, $maker, $product)
+    {
+        $games = Game::where('maker', $maker);
+        if(!is_null($provider)){
+            $games->where('provider_id', $provider);
+        }
+        if(!is_null($category)){
+            $games->where('category', $category);
+        }
+        if(!is_null($product)){
+            $games->where('product_id', $product);
+        }
+        $data = $games->get();
+        return $data;
     }
 
     /**
@@ -250,6 +322,38 @@ class GamesRepo
         $games = Game::select('maker')
         ->distinct()
         ->where('provider_id', $provider)
+        ->get();
+        return $games;
+    }
+
+     /**
+     * Get products
+     *
+     * @param int 
+     * @return mixed
+     */
+    public function getProducts()
+    {
+        $games = Game::select('product_id')
+        ->distinct()
+        ->where('provider_id', Providers::$bet_connections)
+        ->get();
+        return $games;
+    }
+
+     /**
+     * Get providers by maker
+     *
+     * @param int 
+     * @return mixed
+     */
+    public function getProvidersByMaker($maker)
+    {
+        $games = Game::select('providers.id', 'providers.name')
+        ->distinct()
+        ->join('providers', 'games.provider_id', '=', 'providers.id')
+        ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
+        ->where('games.maker', $maker)
         ->get();
         return $games;
     }

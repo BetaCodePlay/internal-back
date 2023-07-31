@@ -33,9 +33,9 @@
                                 <label for="agents">{{ _i('Agents') }}</label>
                                 <select name="agent" id="agent" class="form-control" style="width: 100%">
                                     <option value="">{{ _i('Select...') }}</option>
-                                    @foreach ($agents as $agent)
-                                        <option value="{{ $agent['user_id'] }}">
-                                            {{ $agent['username'] }}
+                                    @foreach ($agents as $val)
+                                        <option value="{{ $val['user_id'] }}">
+                                            {{ $val['username'] }}
                                         </option>
                                     @endforeach
                                 </select>
