@@ -51,7 +51,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "dotworkers/alerts": "1.*",
         "dotworkers/audits": "1.*",
-        "dotworkers/bonus": "4.*",
+        "dotworkers/bonus": "5.*",
         "dotworkers/configurations": "6.*",
         "dotworkers/laravel-gettext": "7.x",
         "dotworkers/notifications": "1.*",

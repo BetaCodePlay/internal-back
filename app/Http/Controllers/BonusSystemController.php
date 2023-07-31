@@ -450,6 +450,25 @@ class BonusSystemController extends Controller
     }
 
     /**
+     * Allocation criteria All
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function allocationCriteriaAll()
+    {
+        try {
+            $data = $this->allocationCriteriaRepo->all();
+
+            return Utils::successResponse($data);
+        } catch(\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+
+    }
+
+    /**
      * Type providers
      *
      * @param Request $request
@@ -638,9 +657,10 @@ class BonusSystemController extends Controller
     {
         try {
             $segments = $this->segmentsRepo->all();
+            $allocation = $this->allocationCriteriaRepo->all();
             $data['segments'] = $segments;
+            $data['criterias'] = $allocation;
             $data['title'] = _i('New campaign');
-            $data['allocation_criteria'] = ['registration' => AllocationCriteria::$registration];
             // dd($data['allocation_criteria_type_bonus']['registration']);
             return view('back.bonus-system.campaigns.create', $data);
 

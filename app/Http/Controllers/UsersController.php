@@ -1649,7 +1649,7 @@ class UsersController extends Controller
             if ($transactionType == TransactionTypes::$credit) {
                 $transaction = Wallet::creditManualTransactions($amount, Providers::$manual_adjustments, $additionalData, $wallet);
                 //new TransactionNotAllowed($amount, $user, Providers::$manual_adjustments, $transactionType);
-
+                // dd($transaction);
             } else {
                 $transaction = Wallet::debitManualTransactions($amount, Providers::$manual_adjustments, $additionalData, $wallet);
                 //new TransactionNotAllowed($amount, $user, Providers::$manual_adjustments, $transactionType);

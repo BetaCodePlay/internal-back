@@ -34,6 +34,11 @@ use App\Whitelabels\Repositories\WhitelabelsRepo;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Dotworkers\Audits\Audits;
+use Dotworkers\Bonus\Bonus;
+use Dotworkers\Bonus\Repositories\CampaignsRepo;
+use Dotworkers\Bonus\Repositories\CampaignParticipationRepo;
+use Dotworkers\Bonus\Enums\AllocationCriteria;
+use Dotworkers\Bonus\Enums\CampaignParticipationStatus;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
@@ -170,6 +175,25 @@ class AgentsController extends Controller
      */
     private $closuresUsersTotals2023Repo;
 
+    /**
+     * $CampaignsRepo
+     *
+     * @var CampaignsRepo
+     */
+    private $campaignsRepo;
+    /**
+     * $CampaignParticipationRepo
+     *
+     * @var CampaignParticipationRepo
+     */
+    private $campaignParticipationRepo;
+    /**
+     * $Bonus
+     *
+     * @var Bonus
+     */
+    private $bonus;
+
     /***
      * AgentsController constructor.
      *
@@ -188,7 +212,7 @@ class AgentsController extends Controller
      * @param UsersCollection $usersCollection
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection, GamesRepo $gamesRepo)
+    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection, GamesRepo $gamesRepo, CampaignsRepo $campaignsRepo, CampaignParticipationRepo $campaignParticipationRepo, Bonus $bonus)
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
@@ -204,6 +228,9 @@ class AgentsController extends Controller
         $this->currenciesRepo = $currenciesRepo;
         $this->usersCollection = $usersCollection;
         $this->transactionsCollection = $transactionsCollection;
+        $this->campaignsRepo = $campaignsRepo;
+        $this->campaignParticipationRepo = $campaignParticipationRepo;
+        $this->bonus = $bonus;
     }
 
     /**
@@ -3346,10 +3373,13 @@ class AgentsController extends Controller
         }
 
         try {
+            //Moneda
+            $currency = session('currency');
+            //Whitelabel id
+            $whitelabel = Configurations::getWhitelabel();
 
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
-            $currency = session('currency');
             $username = strtolower($request->username);
             $password = $request->password;
             //$email = $request->email;
@@ -3359,6 +3389,7 @@ class AgentsController extends Controller
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+
 
             if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
@@ -3393,7 +3424,7 @@ class AgentsController extends Controller
                 $ip = $request->getClientIp();
             }
 
-            $whitelabel = Configurations::getWhitelabel();
+
             $userData = [
                 'username' => $username,
                 'email' => $email,
@@ -3414,6 +3445,7 @@ class AgentsController extends Controller
                 'level' => 1
             ];
             $user = $this->usersRepo->store($userData, $profileData);
+            \Log::debug(['user' => $user]);
             $auditData = [
                 'ip' => Utils::userIp(),
                 'user_id' => auth()->user()->id,
@@ -3440,6 +3472,27 @@ class AgentsController extends Controller
             $store = Configurations::getStore()->active;
             if ($store) {
                 Store::storeWallet($user->id, $currency);
+            }
+
+            //Bonus register
+            $bonus = Configurations::getBonus();
+            if($bonus) {
+                $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
+                //Create wallet bonus
+                $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
+
+                //add Bonus
+
+                $participation = Bonus::welcomeRegister($whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
+                // $participation = $this->campaignParticipationRepo->createCampaignParticipation($user['id'], $campaigns->id, CampaignParticipationStatus::$assigned);
+
+                // foreach ($campaigns as $key => $campaign) {
+                //     \Log::debug(['$campaign' => $campaign]);
+                //     $participation = $this->campaignParticipationRepo->createOrUpdateCampaignParticipation($user['id'], $campaign->id, CampaignParticipationStatus::$assigned);
+
+                //     \Log::info(['participation' => $participation]);
+
+                // }
             }
 
             if ($balance > 0) {
