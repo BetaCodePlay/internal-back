@@ -2415,7 +2415,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions_original(Request $request)
+    public function performTransactions(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -2807,7 +2807,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions(Request $request)
+    public function performTransactions_new(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
