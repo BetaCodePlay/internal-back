@@ -138,37 +138,6 @@ class TransactionsCollection
                     );
                 }
             }
-            if($paymentMethod == PaymentMethods::$mercado_pago) {
-                $transaction->origin_account = '';
-                if(isset($transaction->user_account->email)){
-                    $transaction->origin_account .= sprintf(
-                        '<strong>%s:</strong> %s<br>',
-                        _i('Email'),
-                        $transaction->user_account->email
-                    );
-                }
-                if(isset($transaction->user_account->cbu)){
-                    $transaction->origin_account .= sprintf(
-                        '<strong>%s:</strong> %s<br>',
-                        _i('CBU'),
-                        $transaction->user_account->cbu
-                    );
-                }
-                if(isset($transaction->user_account->cvu)){
-                    $transaction->origin_account .= sprintf(
-                        '<strong>%s:</strong> %s<br>',
-                        _i('CVU'),
-                        $transaction->user_account->cvu
-                    );
-                }
-                if(isset($transaction->user_account->alias)){
-                    $transaction->origin_account .= sprintf(
-                        '<strong>%s:</strong> %s<br>',
-                        _i('Alias'),
-                        $transaction->user_account->alias
-                    );
-                }
-            }
             $transaction->actions = '';
             if (Gate::allows('access', Permissions::$process_credit)) {
                 $transaction->actions .= sprintf(
@@ -311,17 +280,13 @@ class TransactionsCollection
                         _i('Date'),
                         Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                     );
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Cryptocurrency'),
-                        $transaction->data->cryptocurrency
-                    );
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Cryptocurrency amount'),
-                        $transaction->data->cryptocurrency_amount
-                    );
-                    break;
+                    if (!is_null($transaction->details_data)) {
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('MercadoPago ID'),
+                            $transaction->details_data->id_mercado_pago
+                        );
+                    }
                 }
             }
 

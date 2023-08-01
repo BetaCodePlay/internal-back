@@ -96,36 +96,36 @@ class AccountsCollection
                     }
                     break;
                 }
+                case PaymentMethods::$paypal:
+                {
+                    $account->details = sprintf(
+                        '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                        _i('Client ID'),
+                        ': ',
+                        $details->client_id_paypal,
+                    );
+                    $account->details .= sprintf(
+                        '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                        _i('Client Secret'),
+                        ': ',
+                        $details->client_secret_paypal
+                    );
+                    break;
+                }
                 case PaymentMethods::$mercado_pago:
                 {
-                    if(!is_null($details->email)){
-                        $account->details = sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
-                            _i('Email'),
-                            ': ',
-                            $details->email,
-                        );
-                        $account->details .= sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
-                            _i('CBU'),
-                            ': ',
-                            $details->cbu
-                        );
-                        $account->details .= sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
-                            _i('CVU'),
-                            ': ',
-                            $details->cvu
-                        );
-                        $account->details .= sprintf(
-                            '<ul><li><strong>%s</strong>%s%s</li></ul>',
-                            _i('Alias'),
-                            ': ',
-                            $details->alias
-                        );
-                    }else{
-                        $account->details ="";
-                    }
+                    $account->details = sprintf(
+                        '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                        _i('Access Token'),
+                        ': ',
+                        $details->access_token,
+                    );
+                    $account->details .= sprintf(
+                        '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                        _i('Public Token'),
+                        ': ',
+                        $details->public_key
+                    );
                     break;
                 }
             }

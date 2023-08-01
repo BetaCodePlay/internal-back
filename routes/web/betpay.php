@@ -135,12 +135,6 @@ Route::group(['prefix' => 'betpay', 'middleware' => ['auth']], function () {
      */
     Route::group(['prefix' => 'mercado-pago', 'middleware' => ['auth']], function () {
 
-        // Credit MercadoPago
-        Route::get('credit', [
-            'as' => 'betpay.mercado-pago.credit',
-            'uses' => 'BetPayController@creditMercadoPago'
-        ]);
-
         // Debit MercadoPago
         Route::get('debit', [
             'as' => 'betpay.mercado-pago.debit',

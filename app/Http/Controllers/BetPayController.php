@@ -610,20 +610,6 @@ class BetPayController extends Controller
     }
 
     /**
-     * Show pending credit MercadoPago
-     *
-     * @return Application|Factory|View
-     */
-    public function creditMercadoPago()
-    {
-        $data['transaction_type'] = TransactionTypes::$credit;
-        $data['payment_method'] = PaymentMethods::$mercado_pago;
-        $data['provider'] = Providers::$mercado_pago;
-        $data['title'] = _i('Pending MercadoPago credit transactions');
-        return view('back.betpay.mercado-pago.credit', $data);
-    }
-
-    /**
      * Show credit report
      *
      * @param int $paymentMethod Payment method ID
@@ -2136,10 +2122,8 @@ class BetPayController extends Controller
             },
             PaymentMethods::$mercado_pago => function ($request) {
                 return [
-                    'email' => $request->email_mercado_pago,
-                    'alias' => $request->alias_mercado_pago,
-                    'cbu' => $request->cbu_mercado_pago,
-                    'cvu' => $request->cvu_mercado_pago
+                    'access_token' => $request->access_token_mercado_pago,
+                    'public_key' => $request->public_key_mercado_pago,
                 ];
             },
         ];
@@ -2179,10 +2163,8 @@ class BetPayController extends Controller
             ],
             PaymentMethods::$mercado_pago => 
             [
-                'email_mercado_pago' => 'required_without_all:alias_mercado_pago,cbu_mercado_pago,cvu_mercado_pago',
-                'alias_mercado_pago' => 'required_without_all:email_mercado_pago,cbu_mercado_pago,cvu_mercado_pago',
-                'cbu_mercado_pago' => 'required_without_all:alias_mercado_pago,email_mercado_pago,cvu_mercado_pago',
-                'cvu_mercado_pago' => 'required_without_all:alias_mercado_pago,cbu_mercado_pago,email_mercado_pago'
+                'access_token_mercado_pago' => 'required',
+                'public_key_mercado_pago' => 'required'
             ],
         ];
 

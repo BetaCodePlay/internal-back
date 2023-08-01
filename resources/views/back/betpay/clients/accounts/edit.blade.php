@@ -156,26 +156,14 @@
                     @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$mercado_pago)
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="email_mercado_pago">{{ _i('Email') }}</label>
-                                <input type="email" name="email_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->email}}">
+                            <label for="access_token_mercado_pago">{{ _i('Access Token') }}</label>
+                                <input type="text" name="access_token_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->access_token}}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="cbu_mercado_pago">{{ _i('CBU') }}</label>
-                                <input type="number" name="cbu_mercado_pago" id="cbu_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->cbu}}">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="cvu_mercado_pago">{{ _i('CVU') }}</label>
-                                <input type="number" name="cvu_mercado_pago" id="cvu_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->cvu}}">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="alias_mercado_pago">{{ _i('Alias') }}</label>
-                                <input type="text" name="alias_mercado_pago" id="alias_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->alias}}">
+                            <label for="public_key_mercado_pago">{{ _i('Public Key') }}</label>
+                                <input type="text" name="public_key_mercado_pago" class="form-control" autocomplete="off" value="{{$client->data->public_key}}">
                         </div>
                     </div>
                     @endif

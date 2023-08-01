@@ -794,43 +794,6 @@ class BetPay {
         });
     }
     
-    // Credit MercadoPago
-    creditMercadoPago() {
-        let $table = $('#mercado-pago-table');
-
-        $table.DataTable({
-            "ajax": {
-                "url": $table.data('route'),
-                "dataSrc": "data.transactions"
-            },
-            "order": [],
-            "columns": [
-                {"data": "user"},
-                {"data": "username"},
-                {"data": "level"},
-                {"data": "amount", "className": "text-right", "type": "num-fmt"},
-                {"data": "currency_iso"},
-                {"data": "origin_account"},
-                {"data": "data.date", "className": "text-right"},
-                {"data": "created", "className": "text-right"},
-                {"data": "status", "className": "text-right"},
-                {"data": "actions", "className": "text-right"}
-            ],
-            "initComplete": function () {
-                let api = this.api();
-                api.buttons().container()
-                    .appendTo($('#table-buttons'));
-                BetPay.lockBalance();
-                BetPay.processCreditTransactions(api, $table.data('route'));
-            }
-        });
-
-        $table.on('xhr.dt', function (event, settings, json, xhr) {
-            if (xhr.status === 500) {
-                swalError(xhr);
-            }
-        });
-    }
 
     // Debit Crytocurrencies
     debitCryptocurrencies() {
