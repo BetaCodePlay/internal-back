@@ -102,13 +102,13 @@ class AccountsCollection
                         '<ul><li><strong>%s</strong>%s%s</li></ul>',
                         _i('Client ID'),
                         ': ',
-                        $details->client_id_paypal,
+                        $details->client_id,
                     );
                     $account->details .= sprintf(
                         '<ul><li><strong>%s</strong>%s%s</li></ul>',
                         _i('Client Secret'),
                         ': ',
-                        $details->client_secret_paypal
+                        $details->client_secret
                     );
                     break;
                 }
