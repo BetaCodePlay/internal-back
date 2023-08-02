@@ -433,12 +433,16 @@ class BonusSystem {
             $('.deposits-row').addClass('d-none');
             $('.bonus-row').addClass('d-none');
             $('.bet-row').addClass('d-none');
+            $(`.deposit-row-${currencies}`).removeClass('d-none');
+            $(`.bonus-row-${currencies}`).removeClass('d-none');
+            $(`.bet-row-${currencies}`).removeClass('d-none');
 
-            for (let currency of currencies) {
-                $(`.deposit-row-${currency}`).removeClass('d-none');
-                $(`.bonus-row-${currency}`).removeClass('d-none');
-                $(`.bet-row-${currency}`).removeClass('d-none');
-            }
+            //Si es multiple currencies se agrega est for
+            // for (let currency of currencies) {
+            //     $(`.deposit-row-${currency}`).removeClass('d-none');
+            //     $(`.bonus-row-${currency}`).removeClass('d-none');
+            //     $(`.bet-row-${currency}`).removeClass('d-none');
+            // }
 
             if (currencies.length > 0) {
                 $('#deposits').removeClass('disabled').removeAttr('disabled').parent().removeClass('disabled');
@@ -578,12 +582,9 @@ class BonusSystem {
 
     // Bonus type radios
     static bonusType() {
-        console.log('Estoy pasando por el bonusType-bonus ');
         $('#fixed-bonus').change(function () {
-            console.log('Estoy pasando por el fixed-bonus');
             if (this.checked) {
-                console.log('Estoy pasando por el fixed-bonus despues del checked');
-                $('.fixed-bonus, .max-convert, .bonus-table, .bonus-row').removeClass('d-none');
+                $('.fixed-bonus, .max-convert, .bonus-table').removeClass('d-none');
                 $('.deposit-percentage').addClass('d-none');
             }
         });
@@ -592,7 +593,7 @@ class BonusSystem {
             console.log('Estoy pasando por el deposit-percentage');
             if (this.checked) {
                 console.log('Estoy pasando por el deposit-percentage despues del checked');
-                $('.deposit-percentage, .max-convert, .bonus-table, .bonus-row').removeClass('d-none');
+                $('.deposit-percentage, .max-convert, .bonus-table').removeClass('d-none');
                 $('.fixed-bonus').addClass('d-none');
             }
         });
