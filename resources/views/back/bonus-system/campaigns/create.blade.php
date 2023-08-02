@@ -144,14 +144,20 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">{{ _i('Internal name') }}</label>
-                                    <input type="text" name="internal_name" id="internal_name" class="form-control">
+                                    <label for="">{{ _i('Commission real balance(%)') }}
+                                        <i class="fa fa-info-circle" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ _i('Assign the percentage of your actual balance that you want to spend along with the bonus') }}">
+                                        </i>
+                                    </label>
+                                    <input type="text" name="commission_real" id="commission_real" onkeyup="updateCommissionBonus()" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="">{{ _i('Internal name') }}</label>
-                                    <input type="text" name="internal_name" id="internal_name" class="form-control">
+                                    <label for="">{{ _i('Commission bonus balance(%)') }}
+                                        <i class="fa fa-info-circle" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ _i('Assign the percentage of bonus balance you want to spend along with the actual balance') }}">
+                                        </i>
+                                    </label>
+                                    <input type="text" name="commission_bonus" id="commission_bonus" class="form-control" >
                                 </div>
                             </div>
                         </div>
@@ -601,8 +607,17 @@
             let bonusSystem = new BonusSystem();
             bonusSystem.store(@json($languages));
             bonusSystem.addTranslations(@json($languages));
-
+            $('[data-toggle="popover"]').popover();
         });
 
+        function updateCommissionBonus() {
+                var totalPercentage = 100;
+                var commissionReal = parseFloat($('#commission_real').val());
+                var commissionBonus = totalPercentage - commissionReal;
+
+                if (!isNaN(commissionBonus)) {
+                    $('#commission_bonus').val(commissionBonus);
+                }
+        }
     </script>
 @endsection

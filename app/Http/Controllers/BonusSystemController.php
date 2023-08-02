@@ -1030,7 +1030,7 @@ class BonusSystemController extends Controller
     public function paymentMethds(Request $request)
     {
         try {
-            $currencies = $request->currencies;
+            $currencies = [$request->currencies];
             $data = [];
             foreach ($currencies as $currency) {
                 $paymentMethods = BetPay::getClientPaymentMethods($currency);
@@ -1058,7 +1058,7 @@ class BonusSystemController extends Controller
     public function providerTypes(Request $request)
     {
         try {
-            $currencies = $request->currencies;
+            $currencies = [$request->currencies];
             $whitelabel = Configurations::getWhitelabel();
             $providersTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
             $providerTypesData = $this->providersTypesRepo->getByWhitelabelAndCurrencies($whitelabel, $currencies, $providersTypes);
@@ -1220,6 +1220,8 @@ class BonusSystemController extends Controller
             'start_date' => 'required',
             'currencies' => 'required',
             'allocation_criteria' => 'required',
+            'commission_real' => 'required',
+            'commission_bonus' => 'required',
             'complete_rollovers' => 'required',
             'include_deposit' => 'required_if:complete_rollovers,true',
             'provider_type' => 'required_if:complete_rollovers,true',
@@ -1256,6 +1258,8 @@ class BonusSystemController extends Controller
             $bonusType = $request->bonus_type;
             $promoCodes = $request->promo_codes;
             $allocationCriteria = $request->allocation_criteria;
+            $commissionReal = $request->commission_real;
+            $commissionBonus = $request->commission_bonus;
             // dd($allocationCriteria);
             $depositTypes = $request->deposit_types;
             $minDeposits = $request->min_deposits;
@@ -1399,6 +1403,8 @@ class BonusSystemController extends Controller
             }
 
             $configData['allocation_criteria'] = $allocationCriteria;
+            $configData['commission_real'] = $commissionReal;
+            $configData['commission_bonus'] = $commissionBonus;
             $configData['promo_codes'] = $promoCodesData;
             $configData['rollovers'] = $completeRollovers;
 

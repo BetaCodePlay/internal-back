@@ -578,16 +578,21 @@ class BonusSystem {
 
     // Bonus type radios
     static bonusType() {
+        console.log('Estoy pasando por el bonusType-bonus ');
         $('#fixed-bonus').change(function () {
+            console.log('Estoy pasando por el fixed-bonus');
             if (this.checked) {
-                $('.fixed-bonus, .max-convert, .bonus-table').removeClass('d-none');
+                console.log('Estoy pasando por el fixed-bonus despues del checked');
+                $('.fixed-bonus, .max-convert, .bonus-table, .bonus-row').removeClass('d-none');
                 $('.deposit-percentage').addClass('d-none');
             }
         });
 
         $('#deposit-percentage').change(function () {
+            console.log('Estoy pasando por el deposit-percentage');
             if (this.checked) {
-                $('.deposit-percentage, .max-convert, .bonus-table').removeClass('d-none');
+                console.log('Estoy pasando por el deposit-percentage despues del checked');
+                $('.deposit-percentage, .max-convert, .bonus-table, .bonus-row').removeClass('d-none');
                 $('.fixed-bonus').addClass('d-none');
             }
         });
