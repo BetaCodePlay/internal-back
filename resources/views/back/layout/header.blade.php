@@ -26,19 +26,20 @@
                     <i class="hs-admin-align-left"></i>
                 </a>
             </div>
-            <div hidden>{!! $iphone !!}</div>
+{{--            <div hidden>{!! $iphone !!}</div>--}}
             @if(isset($iphone))
                 @if(!$iphone)
                     <form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
                           aria-labelledby="searchInvoker" action="{{ route('users.search') }}" method="get">
                         <div class="input-group g-max-width-450">
-{{--                            @can('access', [\Dotworkers\Security\Enums\Permissions::$users_search])--}}
-{{--                                <input class="form-control form-control-md g-rounded-4" type="text" name="username" placeholder="{{ _i('Search user') }}" value="{{ isset($username) ? $username : '' }}">--}}
-{{--                                <button type="submit"--}}
-{{--                                        class="btn u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">--}}
-{{--                                    <i class="hs-admin-search"></i>--}}
-{{--                                </button>--}}
-{{--                            @endcan--}}
+{{--                            Permission of search advanced --}}
+                            @can('access', [\Dotworkers\Security\Enums\Permissions::$users_search])
+                                <input class="form-control form-control-md g-rounded-4" type="text" name="username" placeholder="{{ _i('Search user') }}" value="{{ isset($username) ? $username : '' }}">
+                                <button type="submit"
+                                        class="btn u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
+                                    <i class="hs-admin-search"></i>
+                                </button>
+                            @endcan
                         </div>
                     </form>
 {{--                    <a id="searchInvoker" class="g-hidden-sm-up text-uppercase u-header-icon-v1 g-pos-rel g-width-40 g-height-40 rounded-circle g-font-size-20" href="#!" aria-controls="header-search-form" aria-haspopup="true" aria-expanded="false" data-is-mobile-only="true" data-dropdown-event="click"--}}

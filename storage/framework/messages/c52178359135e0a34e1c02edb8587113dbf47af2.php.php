@@ -33,11 +33,6 @@
                                 <label for="agents"><?php echo e(_i('Agents')); ?></label>
                                 <select name="agent" id="relocation-agents" class="form-control" style="width: 100%" data-route="<?php echo e(route('agents.relocation-agents-data')); ?>">
                                     <option value=""><?php echo e(_i('Select...')); ?></option>
-
-
-
-
-
                                 </select>
                             </div>
                         </div>

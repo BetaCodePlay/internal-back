@@ -101,11 +101,7 @@ class AgentsCollection
     public function childrenTreeSql($user)
     {
         $agentsRepo = new AgentsRepo();
-        Log::debug('childrenTreeSql',[$user,session('currency'),Configurations::getWhitelabel()]);
         return  $tree = collect($agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()));
-        //Todo armar json tree
-        return $this->childrenTreeDraw($tree,0);
-
     }
 
     /**
@@ -166,8 +162,6 @@ class AgentsCollection
 
         return $arrayTree;
     }
-
-
 
     /**
      * Json Format
@@ -3222,6 +3216,16 @@ class AgentsCollection
         //TODO New route block agent and user, field action and status
         if((int)$user->action === ActionUser::$changed_password || (int)$user->action === ActionUser::$blocked_branch){
             $user->status = '<a href="javascript:void(0)"><span class="u-label g-rounded-20 g-px-15" style="background-color: grey !important;">'.ActionUser::getName($user->action).'</span></a>';
+        }elseif((int)$user->action === ActionUser::$update_email){
+            $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) ? ActionUser::$active : ActionUser::$locked_higher;;
+            $statusTextTmp = (int)$user->action === 1 ? _i('Active') : ActionUser::getName($user->action);//_i('Blocked');
+            $statusClassTmp = ($actionTmp === 1 || (int)$user->action === 0 ) ? 'teal' : 'lightred';
+            $user->status = sprintf(
+                '<a href="javascript:void(0)" id="change-email-agent" data-route="%s"><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
+                route('users.change-email-agent', [$user->id, $user->action, 0]),
+                $statusClassTmp,
+                $statusTextTmp
+            );
         }else{
 
             $actionTmp = ((int)$user->action === 1 || (int)$user->action === 0) && (boolean)$user->status ? ActionUser::$active : ActionUser::$locked_higher;
@@ -3849,7 +3853,7 @@ class AgentsCollection
                 }
 
                 foreach ($categories as $category) {
-                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->user_id, $currency, $category, $whitelabel);
+                    $excludedAgent = $this->getExcludedAgent($agentsRepo, $agent->id, $currency, $category, $whitelabel);
                     $makersExclude = isset($excludedAgent->makers) ? json_decode($excludedAgent->makers) : [];
                     $dataMakers = array_merge($dataMakers, $makersExclude);
                     $listMakers = array_values(array_filter(array_unique($dataMakers)));
