@@ -1748,7 +1748,7 @@ class Agents {
     // Get reset email
     resetEmail() {
 
-        if (document.getElementById( "reset-email" )) {
+        if (document.getElementById( "reset-email" ) && document.getElementById( "reset-email-form" )) {
 
             let $button = $('#reset-email');
             let $form = $('#reset-email-form');
@@ -1775,7 +1775,6 @@ class Agents {
             });
 
         }
-
 
     }
 
