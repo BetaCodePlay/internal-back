@@ -1748,29 +1748,34 @@ class Agents {
     // Get reset email
     resetEmail() {
 
-        let $button = $('#reset-email');
-        let $form = $('#reset-email-form');
+        if (document.getElementById( "reset-email" )) {
 
-        $button.click(function () {
-            $button.button('loading');
+            let $button = $('#reset-email');
+            let $form = $('#reset-email-form');
 
-            $.ajax({
-                url: $form.attr('action'),
-                method: 'post',
-                data: $form.serialize()
+            $button.click(function () {
+                $button.button('loading');
 
-            }).done(function (json) {
-                $('#reset-email-modal').modal('hide');
-                swalSuccessWithButton(json);
-                $form.trigger('reset');
+                $.ajax({
+                    url: $form.attr('action'),
+                    method: 'post',
+                    data: $form.serialize()
 
-            }).fail(function (json) {
-                swalError(json);
+                }).done(function (json) {
+                    $('#reset-email-modal').modal('hide');
+                    swalSuccessWithButton(json);
+                    $form.trigger('reset');
 
-            }).always(function () {
-                $button.button('reset');
+                }).fail(function (json) {
+                    swalError(json);
+
+                }).always(function () {
+                    $button.button('reset');
+                });
             });
-        });
+
+        }
+
 
     }
 
