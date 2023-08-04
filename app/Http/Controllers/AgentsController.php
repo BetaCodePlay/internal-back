@@ -3909,20 +3909,12 @@ class AgentsController extends Controller
             if($bonus) {
                 $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
                 //Create wallet bonus
+                \Log::debug($campaigns);
                 $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
 
                 //add Bonus
 
                 $participation = Bonus::welcomeRegister($whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
-                // $participation = $this->campaignParticipationRepo->createCampaignParticipation($user['id'], $campaigns->id, CampaignParticipationStatus::$assigned);
-
-                // foreach ($campaigns as $key => $campaign) {
-                //     \Log::debug(['$campaign' => $campaign]);
-                //     $participation = $this->campaignParticipationRepo->createOrUpdateCampaignParticipation($user['id'], $campaign->id, CampaignParticipationStatus::$assigned);
-
-                //     \Log::info(['participation' => $participation]);
-
-                // }
             }
 
             if ($balance > 0) {
