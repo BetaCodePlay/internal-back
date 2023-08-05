@@ -3908,13 +3908,15 @@ class AgentsController extends Controller
             $bonus = Configurations::getBonus();
             if($bonus) {
                 $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
-
+                    \Log::debug($campaigns);
                  // Comprobar si $campaigns no está vacío antes de continuar
                 if (!empty($campaigns)) {
                     //Create wallet bonus
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
 
                     //add Bonus
+                    \Log::debug($walletBonus);
+                    \Log::debug([$whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1]);
 
                     $participation = Bonus::welcomeRegister($whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
                 }
