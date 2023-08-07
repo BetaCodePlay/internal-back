@@ -2442,7 +2442,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions_original(Request $request)
+    public function performTransactions(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -2834,7 +2834,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions(Request $request)
+    public function performTransactions_new(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -3908,21 +3908,19 @@ class AgentsController extends Controller
             $bonus = Configurations::getBonus();
             if($bonus) {
                 $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
-                //Create wallet bonus
-                $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
 
-                //add Bonus
+                 // Comprobar si $campaigns no está vacío antes de continuar
+                if (!empty($campaigns)) {
+                    //Create wallet bonus
+                    \Log::debug([$user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id]);
+                    $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
 
-                $participation = Bonus::welcomeRegister($whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
-                // $participation = $this->campaignParticipationRepo->createCampaignParticipation($user['id'], $campaigns->id, CampaignParticipationStatus::$assigned);
+                    //add Bonus
+                    \Log::debug($walletBonus);
+                    \Log::debug([$whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1]);
 
-                // foreach ($campaigns as $key => $campaign) {
-                //     \Log::debug(['$campaign' => $campaign]);
-                //     $participation = $this->campaignParticipationRepo->createOrUpdateCampaignParticipation($user['id'], $campaign->id, CampaignParticipationStatus::$assigned);
-
-                //     \Log::info(['participation' => $participation]);
-
-                // }
+                    $participation = Bonus::welcomeRegister($whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
+                }
             }
 
             if ($balance > 0) {
