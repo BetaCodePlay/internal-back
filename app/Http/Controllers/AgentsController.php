@@ -3917,7 +3917,7 @@ class AgentsController extends Controller
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
 
                     //add Bonus
-                    \Log::debug($walletBonus);
+                    \Log::debug([$walletBonus]);
                     \Log::debug([$whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1]);
 
                     $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
