@@ -3906,9 +3906,10 @@ class AgentsController extends Controller
 
             //Bonus register
             $bonus = Configurations::getBonus();
+            \Log::debug(['$$bonus' => $bonus]);
             if($bonus) {
                 $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
-
+                \Log::debug(['$campaigns' => $campaigns]);
                  // Comprobar si $campaigns no está vacío antes de continuar
                 if (!empty($campaigns)) {
                     //Create wallet bonus
@@ -3917,9 +3918,9 @@ class AgentsController extends Controller
 
                     //add Bonus
                     \Log::debug($walletBonus);
-                    \Log::debug([$whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1]);
+                    \Log::debug([$whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1]);
 
-                    $participation = Bonus::welcomeRegister($whitelabel, $currency, $user['id'], $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
+                    $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1);
                 }
             }
 
