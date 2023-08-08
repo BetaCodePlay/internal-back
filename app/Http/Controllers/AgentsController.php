@@ -860,7 +860,14 @@ class AgentsController extends Controller
             $agentData = [
                 'master' => true
             ];
-            $this->agentsRepo->update($agent, $agentData);
+            $agentDb = $this->agentsRepo->update($agent, $agentData);
+            if(isset($agentDb->user_id)){
+                $userData = [
+                    'type_user' => TypeUser::$agentMater
+                ];
+                $this->usersRepo->update($agentDb->user_id, $userData);
+            }
+
             //$user = $this->agentsRepo->findAgentCashier($agent);
             //$this->agentsCollection->formatChangeAgentType($user);
             $data = [
@@ -1953,6 +1960,11 @@ class AgentsController extends Controller
             }
             $currency = session('currency');
             $id = $request->id;
+//            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
+//                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+//                $id = isset($userTmp[0]->id) ? $userTmp[0]->id : $request->get('id');
+//            }
+
             $type = $request->type;
             $walletId = null;
             if ($type == 'agent') {
@@ -2150,29 +2162,28 @@ class AgentsController extends Controller
 //            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);
 
             //EN CASO DE ROMEO ENTRA COMO WOLF
-//            $user = auth()->user()->id ? Auth::id() : null;
-//            if (is_null(Auth::user()->username) == 'romeo') {
+            $user = Auth::user()->id;
+//            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
 //                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
 //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
 //            }
 
-            $user = auth()->user()->id;
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
             $userData = $this->usersRepo->getUsers($user);
             foreach ($userData as $users){
                 $confirmation = $users->confirmation_email;
             }
-            view()->share([
-                'action'=>auth()->user()->action,
-                'iagent'=> $agentUser,
-                'confirmation_email'=> $confirmation
-            ]);
-            $data['agent'] = $this->agentsRepo->findUserProfile(Auth::id(), session('currency'));
-            $data['makers'] = [];//$this->gamesRepo->getMakers();
-            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner(Auth::id(), session('currency'),Configurations::getWhitelabel())),true);
+
+            $data['agent'] = $this->agentsRepo->findUserProfile($user, session('currency'));
+            $data['makers'] = [];
+            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner($user, session('currency'),Configurations::getWhitelabel())),true);
             $data['tree'] = json_encode([]);
+            $data['action'] = auth()->user()->action;
+            $data['iagent'] = $agentUser;
+            $data['confirmation_email'] = $confirmation;
             $data['title'] = _i('Agents module');
+
             return view('back.agents.index', $data);
 
         } catch (\Exception $ex) {
@@ -3642,10 +3653,22 @@ class AgentsController extends Controller
             $whitelabel = $request->whitelabel;
             $admin = 'admin';
             $support = 'wolf';
+            $romeo = 'romeo';
+            $romeoAgent = null;
             $supportAgent = null;
             $adminAgent = null;
+            //$romeoUser = $this->usersRepo->getByUsername($romeo, $whitelabel);
             $supportUser = $this->usersRepo->getByUsername($support, $whitelabel);
             $adminUser = $this->usersRepo->getByUsername($admin, $whitelabel);
+
+//            if (is_null($romeoUser)) {
+//                $data = [
+//                    'title' => _i('User %s does not exist', [$romeo]),
+//                    'message' => _i('The %s user has not yet been created. Please create it first', [$romeo]),
+//                    'close' => _i('Close')
+//                ];
+//                return Utils::errorResponse(Codes::$forbidden, $data);
+//            }
 
             if (is_null($supportUser)) {
                 $data = [
@@ -3665,13 +3688,23 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
+            //$romeoAgent = $this->agentsRepo->existAgent($romeoUser->id);
             $supportAgent = $this->agentsRepo->existAgent($supportUser->id);
             $adminAgent = $this->agentsRepo->existAgent($adminUser->id);
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
 
+//            if (is_null($romeoAgent)) {
+//                $romeoAgentData = [
+//                    'user_id' => $romeoUser->id,
+//                    'master' => true
+//                ];
+//                $romeoAgent = $this->agentsRepo->store($romeoAgentData);
+//            }
+
             if (is_null($supportAgent)) {
                 $supportAgentData = [
                     'user_id' => $supportUser->id,
+                    //'owner_id' => $romeoUser->id,
                     'master' => true
                 ];
                 $supportAgent = $this->agentsRepo->store($supportAgentData);
@@ -3710,6 +3743,14 @@ class AgentsController extends Controller
                 $balance = [
                     'balance' => 0
                 ];
+
+//                if (!is_null($romeoAgent)) {
+//                    $romeoAgentCurrencyData = [
+//                        'agent_id' => $romeoAgent->id,
+//                        'currency_iso' => $currency,
+//                    ];
+//                    $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, $balance);
+//                }
 
                 if (!is_null($supportAgent)) {
                     $supportAgentCurrencyData = [
@@ -3835,8 +3876,7 @@ class AgentsController extends Controller
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user' => TypeUser::$player,
-                'action' => ActionUser::$active,
-                //'action' => !is_null($request->email)?ActionUser::$active:ActionUser::$update_email,
+                'action' => ActionUser::$active
             ];
             $profileData = [
                 'country_iso' => $country,
