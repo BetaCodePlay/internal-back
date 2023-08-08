@@ -4136,7 +4136,6 @@ class AgentsController extends Controller
             $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency(auth()->user()->id, session('currency'));
             $data['countries'] = $countriesRepo->all();
             $data['timezones'] = \DateTimeZone::listIdentifiers();
-
             $data['title'] = _i('Create player');
 
             return view('back.agents.user-and-agent.create-user', $data);
