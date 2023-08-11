@@ -17,7 +17,7 @@
         @if (isset($mailgun_notifications->$locale->denied_button) &&
         !is_null($mailgun_notifications->$locale->denied_button))
             |
-            <a href="{{ route('core.dashboard')}}"
+            <a href="{{ route('agents.index')}}"
                id="oculta">{!! $mailgun_notifications->$locale->denied_button !!}</a>
         @endif
     </p>

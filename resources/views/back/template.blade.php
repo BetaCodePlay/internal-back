@@ -19,7 +19,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('BackOffice') }}</title>
-    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.43">
+    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.47">
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
@@ -27,30 +27,23 @@
         }
     </style>
 </head>
-
 <body class="currency-theme-{{ session('currency') }}">
 @include('back.layout.header')
 <main class="container-fluid px-0 g-pt-65">
     <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
         @include('back.layout.sidebar')
-
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             @include('back.layout.warning')
-            @if(isset($iphone))
-                @if($iphone)
-                    @include('back.layout.search')
-                @endif
-            @endif
+{{--            @if(isset($iphone))--}}
+{{--                @if($iphone)--}}
+{{--                    @include('back.layout.search')--}}
+{{--                @endif--}}
+{{--            @endif--}}
 
             <div class="g-pa-20">
-                @if($mailgun_notifications->active == true)
-                    @if(!empty($confirmation))
-                        @include('back.layout.email-verify')
-                    @endif
-                @endif
                 @yield('content')
-                @if(!empty($action) && $action == \App\Users\Enums\ActionUser::$update_email)
-                    @if($iagent == 0)
+                @if(!empty($action))
+                    @if($iagent == 1)
                         @include('back.users.modals.reset-email')
                     @endif
                 @endif
@@ -74,32 +67,13 @@
 @endif
 @include('back.layout.chat')
 <script>
-    @if(env('APP_ENV') == 'testing')
+    @if (env('APP_ENV') == 'testing')
     $(function () {
-//let socket = new Socket();
-//socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
+        //let socket = new Socket();
+        //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
-
-    $(function () {
-        let dashboard = new Dashboard();
-        dashboard.resetEmail();
-    });
-
-    //script para ocultar div de notificaciones
-    $(document).ready(function () {
-        estado = 0;
-        $("#oculta").click(function () {
-            if (estado == 0) {
-                $('#paraocultar').slideUp('fast');
-                estado = 1;
-            } else {
-                $('#paraocultar').slideDown('fast');
-                estado = 0;
-            }
-        });
-    });
 </script>
 </body>
-
 </html>
+

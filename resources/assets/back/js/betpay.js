@@ -232,18 +232,35 @@ class BetPay {
         $(document).on('change', '#payments',function () {
             let payment = $(this).val();
             switch (payment) {
+                case '3':
+                    $('.paypal').addClass('d-none');
+                    $('.binance').addClass('d-none');
+                    $('.cryptocurrency').removeClass('d-none');
+                    $('.mercado_pago').addClass('d-none');
+                break;
+                case '7':
+                    $('.paypal').removeClass('d-none');
+                    $('.binance').addClass('d-none');
+                    $('.cryptocurrency').addClass('d-none');
+                    $('.mercado_pago').addClass('d-none');
+                break;
                 case '43':
+                    $('.paypal').addClass('d-none');
                     $('.binance').removeClass('d-none');
                     $('.cryptocurrency').addClass('d-none');
+                    $('.mercado_pago').addClass('d-none');
                 break;
-                case '3':
-                    $('.cryptocurrency').removeClass('d-none');
+                case '55':
+                    $('.paypal').addClass('d-none');
                     $('.binance').addClass('d-none');
+                    $('.cryptocurrency').addClass('d-none');
+                    $('.mercado_pago').removeClass('d-none');
                 break;
             }
         });
     }
 
+    // Credit transactions report
     creditTransactionsReport() {
         let picker = initLitepickerEndToday();
         let $table = $('#credit-table');
@@ -776,6 +793,7 @@ class BetPay {
             }
         });
     }
+    
 
     // Debit Crytocurrencies
     debitCryptocurrencies() {
@@ -899,8 +917,154 @@ class BetPay {
         });
     }
 
+    // Debit Paypal
+    debitPaypal() {
+        let $table = $('#paypal-table');
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.transactions"
+            },
+            "order": [],
+            "columns": [
+                {"data": "user"},
+                {"data": "username"},
+                {"data": "level"},
+                {"data": "amount", "className": "text-right", "type": "num-fmt"},
+                {"data": "currency_iso"},
+                {"data": "created", "className": "text-right"},
+                {"data": "status", "className": "text-right"},
+                {"data": "actions", "className": "text-right"}
+            ],
+            "initComplete": function () {
+                let api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+                BetPay.lockBalance();
+                BetPay.processDebitPaypal(api, $table.data('route'));
+            }
+        });
+
+        $table.on('xhr.dt', function (event, settings, json, xhr) {
+            if (xhr.status === 500) {
+                swalError(xhr);
+            }
+        });
+    }
+
+    // Debit MercadoPago
+    debitMercadoPago() {
+        let $table = $('#mercado-pago-table');
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.transactions"
+            },
+            "order": [],
+            "columns": [
+                {"data": "user"},
+                {"data": "username"},
+                {"data": "level"},
+                {"data": "amount", "className": "text-right", "type": "num-fmt"},
+                {"data": "currency_iso"},
+                {"data": "payment_method"},
+                {"data": "created", "className": "text-right"},
+                {"data": "status", "className": "text-right"},
+                {"data": "actions", "className": "text-right"}
+            ],
+            "initComplete": function () {
+                let api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+                BetPay.lockBalance();
+                BetPay.processDebitMercadoPago(api, $table.data('route'));
+            }
+        });
+        $table.on('xhr.dt', function (event, settings, json, xhr) {
+            if (xhr.status === 500) {
+                swalError(xhr);
+            }
+        });
+    }
+
     // Process debit binance
     static processDebitBinance(api, route) {
+        initSelect2();
+        let $button = $('#process-debit');
+        let $form = $('#process-debit-form');
+        let $modal = $('#process-debit-modal');
+
+        $button.click(function () {
+            $button.button('loading');
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                dataType: 'json',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $form.trigger('reset');
+                $('#action').val(null).trigger('change');
+                $modal.modal('hide');
+                swalSuccessWithButton(json);
+                api.ajax.url(route).load();
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+
+        $modal.on('show.bs.modal', function (event) {
+            let $target = $(event.relatedTarget);
+            $('#transaction').val($target.data('transaction'));
+            $('#wallet').val($target.data('wallet'));
+            $('#user').val($target.data('user'));
+        })
+    }
+
+    // Process debit paypal
+    static processDebitPaypal(api, route) {
+        initSelect2();
+        let $button = $('#process-debit');
+        let $form = $('#process-debit-form');
+        let $modal = $('#process-debit-modal');
+
+        $button.click(function () {
+            $button.button('loading');
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                dataType: 'json',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $form.trigger('reset');
+                $('#action').val(null).trigger('change');
+                $modal.modal('hide');
+                swalSuccessWithButton(json);
+                api.ajax.url(route).load();
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+
+        $modal.on('show.bs.modal', function (event) {
+            let $target = $(event.relatedTarget);
+            $('#transaction').val($target.data('transaction'));
+            $('#wallet').val($target.data('wallet'));
+            $('#user').val($target.data('user'));
+        })
+    }
+
+    // Process debit MercadoPago
+    static processDebitMercadoPago(api, route) {
         initSelect2();
         let $button = $('#process-debit');
         let $form = $('#process-debit-form');

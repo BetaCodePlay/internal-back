@@ -220,7 +220,7 @@ if (!function_exists('menu')) {
                 'submenu' => [
 
                     'AgentsDashboard' => [
-                        'text' => _i('Dashboar'),
+                        'text' => _i('Dashboard'),
                         'level_class' => 'second',
                         'route' => 'agents.index',
                         'params' => [],
@@ -821,6 +821,47 @@ if (!function_exists('menu')) {
                             ],
                         ]
                     ],
+                    'Paypal' => [
+                        'text' => _i('PayPal'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-control-shuffle',
+                        'permission' => Permissions::$paypal_menu,
+                        'payment_method' => PaymentMethods::$paypal,
+                        'submenu' => [
+                            'Debit' => [
+                                'text' => _i('Debit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.paypal.debit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-right',
+                                'permission' => Permissions::$debit_paypal_menu,
+                                'submenu' => []
+                            ],
+                        ]
+                    ],
+                    'MercadoPago' => [
+                        'text' => _i('MercadoPago'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-control-shuffle',
+                        'permission' => Permissions::$mercado_pago_menu,
+                        'payment_method' => PaymentMethods::$mercado_pago,
+                        'submenu' => [
+                            
+                            'Debit' => [
+                                'text' => _i('Debit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.mercado-pago.debit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-right',
+                                'permission' => Permissions::$debit_mercado_pago_menu,
+                                'submenu' => []
+                            ],
+                        ]
+                    ],
                     'BetPayReports' => [
                         'text' => _i('Reports'),
                         'level_class' => 'second',
@@ -886,6 +927,66 @@ if (!function_exists('menu')) {
                                         'route' => 'betpay.reports.debit',
                                         'params' => [PaymentMethods::$binance],
                                         'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+                            'ReportPayPal' => [
+                                'text' => _i('PayPal'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$paypal_menu,
+                                'payment_method' => PaymentMethods::$paypal,
+                                'submenu' => [
+
+                                    'Credit' => [
+                                        'text' => _i('Credit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.credit',
+                                        'params' => [PaymentMethods::$paypal],
+                                        'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+
+                                    'Debit' => [
+                                        'text' => _i('Debit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.debit',
+                                        'params' => [PaymentMethods::$paypal],
+                                        'icon' => 'hs-admin-shift-right',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+                            'ReportMercadoPago' => [
+                                'text' => _i('MercadoPago'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$betpay_reports_menu,
+                                'payment_method' => PaymentMethods::$mercado_pago,
+                                'submenu' => [
+                                    'ReportCredit' => [
+                                        'text' => _i('Credit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.credit',
+                                        'params' => [PaymentMethods::$mercado_pago],
+                                        'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                    'ReportDebit' => [
+                                        'text' => _i('Debit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.debit',
+                                        'params' => [PaymentMethods::$mercado_pago],
+                                        'icon' => 'hs-admin-shift-right',
                                         'permission' => Permissions::$betpay_reports_menu,
                                         'submenu' => []
                                     ],
@@ -4840,15 +4941,15 @@ if (!function_exists('menu')) {
                 ]
             ],
 
-            'IQSoftTotals' => [
-                'text' => _i('IQ Soft Totals'),
-                'level_class' => 'top',
-                'route' => 'iq-soft.totals',
-                'params' => [],
-                'icon' => 'hs-admin-briefcase',
-                'permission' => Permissions::$iq_soft_totals,
-                'submenu' => []
-            ],
+            // 'IQSoftTotals' => [
+            //     'text' => _i('IQ Soft Totals'),
+            //     'level_class' => 'top',
+            //     'route' => 'iq-soft.totals',
+            //     'params' => [],
+            //     'icon' => 'hs-admin-briefcase',
+            //     'permission' => Permissions::$iq_soft_totals,
+            //     'submenu' => []
+            // ],
 
             'ManageWhitelabels' => [
                 'text' => _i('Manage whitelabels'),
@@ -6775,36 +6876,36 @@ if (!function_exists('menu')) {
                 ]
             ],
 
-            'DotSuiteCredentials' => [
-                'text' => _i('DotSuite credentials'),
-                'level_class' => 'top',
-                'route' => null,
-                'params' => [],
-                'icon' => 'hs-admin-settings',
-                'permission' => Permissions::$dot_suite_credentials_menu,
-                'submenu' => [
+            // 'DotSuiteCredentials' => [
+            //     'text' => _i('DotSuite credentials'),
+            //     'level_class' => 'top',
+            //     'route' => null,
+            //     'params' => [],
+            //     'icon' => 'hs-admin-settings',
+            //     'permission' => Permissions::$dot_suite_credentials_menu,
+            //     'submenu' => [
 
-                    'Create' => [
-                        'text' => _i('New'),
-                        'level_class' => 'second',
-                        'route' => 'dot-suite.credentials.create',
-                        'params' => [],
-                        'icon' => 'hs-admin-plus',
-                        'permission' => Permissions::$dot_suite_credentials_create,
-                        'submenu' => [],
-                    ],
+            //         'Create' => [
+            //             'text' => _i('New'),
+            //             'level_class' => 'second',
+            //             'route' => 'dot-suite.credentials.create',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-plus',
+            //             'permission' => Permissions::$dot_suite_credentials_create,
+            //             'submenu' => [],
+            //         ],
 
-                    'List' => [
-                        'text' => _i('List'),
-                        'level_class' => 'second',
-                        'route' => 'dot-suite.credentials.index',
-                        'params' => [],
-                        'icon' => 'hs-admin-list',
-                        'permission' => Permissions::$dot_suite_credentials_create,
-                        'submenu' => [],
-                    ],
-                ],
-            ],
+            //         'List' => [
+            //             'text' => _i('List'),
+            //             'level_class' => 'second',
+            //             'route' => 'dot-suite.credentials.index',
+            //             'params' => [],
+            //             'icon' => 'hs-admin-list',
+            //             'permission' => Permissions::$dot_suite_credentials_create,
+            //             'submenu' => [],
+            //         ],
+            //     ],
+            // ],
 
             'ExchangeRates' => [
                 'text' => _i('Exchange rates'),

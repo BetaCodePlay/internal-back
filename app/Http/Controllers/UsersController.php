@@ -58,6 +58,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -365,25 +366,30 @@ class UsersController extends Controller
                     'users' => []
                 ];
             } else {
-                if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-                    //TODO REPLICA DE TREE
-                    $tree = $this->usersRepo->treeSqlByUser(Auth::id(), session('currency'), Configurations::getWhitelabel());
-                    $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $tree);
-                } else {
+
+                if (Gate::allows('access', Permissions::$users_search)) {
+
                     $users = $this->usersRepo->advancedSearch($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode);
+
+                }else{
+
+                    $user = Auth::user()->id;
+                    if (Auth::user()->username == 'romeo') {
+                        $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                        $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
+                    }
+
+                    $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+
+                    $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $idChildren);
                 }
 
                 $this->usersCollection->formatSearch($users);
 
-                if (count($users) > 0) {
-                    $data = [
-                        'users' => $users
-                    ];
-                } else {
-                    $data = [
-                        'users' => []
-                    ];
-                }
+                $data = [
+                    'users' => $users
+                ];
+
             }
             return Utils::successResponse($data);
 
@@ -606,7 +612,6 @@ class UsersController extends Controller
      */
     public function blockAgent($user, $lock_type, $fake, $description = null)
     {
-
         try {
 
             $rules = [
@@ -661,7 +666,6 @@ class UsersController extends Controller
                     ];
                     $statusUpdate = true;
                 }
-
             }
 
             if ($statusUpdate) {
@@ -822,6 +826,58 @@ class UsersController extends Controller
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
+        }
+    }
+
+    /***
+     * Change Email Agent
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     */
+    public function changeEmailAgent(Request $request, $user, $action, $type, $description)
+    {
+        if (is_null($description)) {
+            $data = [
+                'title' => _i('The given data was invalid'),
+                'message' => _i('The description field is required.'),
+                'close' => _i('Close')
+            ];
+            return Utils::errorResponse(Codes::$forbidden, $data);
+        } else {
+            $newAction = ActionUser::$active;
+                $userData = [
+                    'action' => $newAction
+                ];
+                $this->usersRepo->update($user, $userData);
+                if (!$newAction) {
+                    Sessions::deleteByUser($user);
+                }
+                $autoLockUsersRepo = new AutoLockUsersRepo();
+                $unlockUser = $autoLockUsersRepo->unlockUser($user);
+                if ($newAction === ActionUser::$active && !is_null($unlockUser)) {
+                    $autoLockUsersRepo->deleteAutoLockUser($unlockUser->id);
+                }
+
+                $auditData = [
+                    'ip' => Utils::userIp($request),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'old_action' => $action,
+                    'new_action' => $newAction,
+                    'description' => $description
+                ];
+
+                Audits::store($user, AuditTypes::$user_modification, Configurations::getWhitelabel(), $auditData);
+                $data = [
+                    'title' => _i('Status changed'),
+                    'message' => _i('User status was changed successfully'),
+                    'close' => _i('Close'),
+                    'action' => $newAction,
+                    'type' => $type
+                ];
+                return Utils::successResponse($data);
         }
     }
 
@@ -1551,16 +1607,20 @@ class UsersController extends Controller
     {
         try {
             $username = strtolower($request->username);
-            if (in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-                $tree = $this->usersRepo->sqlTreeAllUsersSon(auth()->user()->id, session('currency'), Configurations::getWhitelabel());
-                //TODO MIDIFICAR ARRAY IDS
-                $arrayIds = [];
-                foreach ($tree as $item => $value) {
-                    $arrayIds[] = $value->user_id;
-                }
-                $users = $this->usersRepo->searchTree($username, $arrayIds);
-            } else {
+
+            if (Gate::allows('access', Permissions::$users_search)) {
+
                 $users = $this->usersRepo->search($username);
+            }else{
+
+                $user = Auth::user()->id;
+                if (Auth::user()->username == 'romeo') {
+                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
+                }
+                $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+
+                $users = $this->usersRepo->searchTree($username, $idChildren);
             }
 
             $this->usersCollection->formatSearch($users);
@@ -2097,9 +2157,8 @@ class UsersController extends Controller
         ]);
 
         try {
-            $mailgun_notifications = Configurations::getMailgunNotifications();
             $user = $request->user;
-            $userData = $this->agentsRepo->statusActionByUser_tmp($user);
+            $userData = $this->agentsRepo->statusActionByUser($user);
             $roles = Security::getUserRoles($user);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
@@ -2137,10 +2196,12 @@ class UsersController extends Controller
             $ip = Utils::userIp($request);
             foreach ($userTemp as $users) {
                 $name = $users->username;
+                $action = $users->action;
+                $confirmation = $users->confirmation_email;
             }
             $url = route('core.dashboard');
             $whitelabelId = Configurations::getWhitelabel();
-            if($mailgun_notifications == true){
+            if($action === ActionUser::$active && $confirmation == true){
                 $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
                 Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
             }
@@ -2219,7 +2280,8 @@ class UsersController extends Controller
                         'whitelabel_id' => $whitelabel,
                         'web_register' => false,
                         'main' => true,
-                        'action'=>ActionUser::$active
+                        'action'=>ActionUser::$active,
+                        'type_user' => TypeUser::$agentMater
                     ];
                     $profileData = [
                         'country_iso' => $request->country,

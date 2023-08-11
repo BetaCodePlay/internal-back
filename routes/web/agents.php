@@ -41,12 +41,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@getTreeUsers_format'
     ]);
 
-    // Show dashboard Temp
-    Route::get('temp', [
-        'as' => 'agents.index.temp',
-        'uses' => 'AgentsController@index_temp'
-    ]);
-
     Route::get('create-user', [
         'as' => 'agents.create.user',
         'uses' => 'AgentsController@viewCreateUser'

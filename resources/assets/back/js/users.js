@@ -60,7 +60,6 @@ class Users {
         let $table = $('#users-table');
         let $button = $('#search');
         let $form = $('#advanced-search-form');
-        clearForm($form);
 
         $table.DataTable({
             "ajax": {
@@ -98,7 +97,7 @@ class Users {
                 });
             }
         });
-
+        clearForm($form);
         $table.on('xhr.dt', function (event, settings, json, xhr) {
             if (xhr.status === 500 || xhr.status === 422) {
                 swalError(xhr);
@@ -1125,6 +1124,13 @@ class Users {
                     $('#binance_phone').val($target.data('binance-phone'));
                     $('#binance_pay_id').val($target.data('binance-pay-id'));
                     $('#binance_id').val($target.data('binance-id'));
+                    break;
+                }
+                case 'mercado-pago': {
+                    $('#mercado_pago_email').val($target.data('mercado_pago_email'));
+                    $('#mercado_pago_cbu').val($target.data('mercado_pago_cbu'));
+                    $('#mercado_pago_cvu').val($target.data('mercado_pago_cvu'));
+                    $('#mercado_pago_alias').val($target.data('mercado_pago_alias'));
                     break;
                 }
             }

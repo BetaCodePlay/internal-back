@@ -212,29 +212,34 @@ class SectionImagesController extends Controller
                     {
                         $imageData = Configurations::getLogo($mobile = false);
                         $image->image = $imageData->img_light;
+                        $image->front = null;
                         break;
                     }
                     case ImagesPositions::$logo_dark:
                     {
                         $imageData = Configurations::getLogo($mobile = false);
                         $image->image = $imageData->img_dark;
+                        $image->front = null;
                         break;
                     }
                     case ImagesPositions::$mobile_light:
                     {
                         $imageData = Configurations::getLogo($mobile = true);
                         $image->image = $imageData->img_light;
+                        $image->front = null;
                         break;
                     }
                     case ImagesPositions::$mobile_dark:
                     {
                         $imageData = Configurations::getLogo($mobile = true);
                         $image->image = $imageData->img_dark;
+                        $image->front = null;
                         break;
                     }
                     case ImagesPositions::$favicon:
                     {
                         $image->image = Configurations::getFavicon();
+                        $image->front = null;
                         break;
                     }
                 }

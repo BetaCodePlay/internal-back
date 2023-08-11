@@ -11,6 +11,7 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Security\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,8 +21,8 @@ use Illuminate\Support\Facades\Hash;
  * This class allows to interact with User entity
  *
  * @package App\Users\Repositories
- * @author  Eborio Linarez
  * @author  Jhonattan Bullones
+ * @author  Estarly Olivar
  */
 class UsersRepo
 {
@@ -56,15 +57,32 @@ class UsersRepo
      */
     public function advancedSearch($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode)
     {
-        return User::on('replica')
+        $users =  User::on('replica')
             ->select('users.id', 'profiles.gender', 'users.status', 'users.username', 'users.email', 'users.referral_code', 'profiles.last_name', 'profiles.first_name')
-            ->join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->whitelabel()
-            ->conditions($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $referralCode, $wallet)
-            ->orderBy('username', 'ASC')
-            ->get();
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')->whitelabel()->conditions($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $referralCode, $wallet);
+            if (Auth::user()->username != 'wolf') {
+                $users =  $users->where('username','!=', 'wolf');
+            }
+            $users =  $users->orderBy('username', 'ASC')->get();
+            return $users;
     }
 
+    /**
+     * Advanced users search with tree
+     *
+     * @param int $id User ID
+     * @param string $username User username
+     * @param string $dni User DNI
+     * @param string $email User email
+     * @param string $firstName User first name
+     * @param string $lastName User last name
+     * @param string $gender User gender
+     * @param int $level Level ID
+     * @param string $phone Phone ID
+     * @param int $wallet Wallet ID
+     * @param string $referralCode Referral code
+     * @return mixed
+     */
     public function advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $arrayUsers)
     {
         return User::on('replica')
@@ -73,6 +91,7 @@ class UsersRepo
             ->whereIn('users.id', $arrayUsers)
             ->whitelabel()
             ->conditions($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $referralCode, $wallet)
+            ->where('username','!=', 'wolf')
             ->orderBy('username', 'ASC')
             ->get();
     }
@@ -1207,23 +1226,32 @@ class UsersRepo
      */
     public function search(string $username)
     {
-        return User::join('profiles', 'users.id', '=', 'profiles.user_id')
+        $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "%$username%")
-            ->orderBy('username', 'ASC')
-            ->get();
+            ->where('username', 'ilike', '%'.$username.'%');
+            if (Auth::user()->username != 'wolf') {
+                $users =  $users->where('username','!=', 'wolf');
+            }
+        $users = $users->orderBy('username', 'ASC')->get();
+        return $users;
     }
 
+    /**
+     * Search users by username and tree
+     *
+     * @param string $username User username
+     * @return mixed
+     */
     public function searchTree(string $username, $arrayUsers = [])
     {
         return User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
-            ->where('username', 'ilike', "%$username%")
+            ->where('username', 'ilike', '%'.$username.'%')
+            ->where('username','!=', 'wolf')
             ->orderBy('username', 'ASC')
             ->whereIn('id', $arrayUsers)
             ->get();
     }
-
 
     /**
      * Update Owner Id In table Agents

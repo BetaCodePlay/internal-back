@@ -187,21 +187,8 @@ class CoreController extends Controller
     public function dashboard(ProvidersRepo $providersRepo, ProvidersTypesRepo $providersTypesRepo, ProviderTypesCollection $providerTypesCollection)
     {
         try {
-            $user = auth()->user()->id;
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
-            $userData = $this->usersRepo->getUsers($user);
-            foreach ($userData as $users){
-                $confirmationData = $users->confirmation_email;
-            }
-            $confirmation = auth()->user()->confirmation_email;
-            Log::info(__METHOD__, ['confirmation1' => $confirmation, 'confirmation2' => $confirmationData ]);
-            view()->share([
-                'action'=>auth()->user()->action,
-                'confirmation'=> auth()->user()->confirmation_email,
-                'iagent'=> $agentUser
-            ]);
 
             if (Gate::allows('access', Permissions::$dashboard_widgets)) {
                 $timezone = session('timezone');

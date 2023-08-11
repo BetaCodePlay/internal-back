@@ -1298,7 +1298,6 @@ class TransactionsRepo
         return $transaction;
     }
 
-
     /**
      * Update transactions
      *

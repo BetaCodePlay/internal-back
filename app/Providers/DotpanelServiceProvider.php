@@ -99,6 +99,7 @@ class DotpanelServiceProvider extends ServiceProvider
                     if(($browser== "Safari") && ($agent->isMobile() || $agent->isPhone() || $agent->isTablet())){
                         $iphone = 1;
                     }
+
                     $languagesData = $coreCollection->formatLanguages($languages);
                     $selectedLanguage = $coreCollection->formatSelectedLanguage($language);
                     $timezones = $coreCollection->formatTimezones();
