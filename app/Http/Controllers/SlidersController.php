@@ -261,6 +261,7 @@ class SlidersController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::notice(__METHOD__, ['request' => $request->all()]);
         $rules = [
             'image' => 'required',
             'device' => 'required',
@@ -403,7 +404,6 @@ class SlidersController extends Controller
             $rules['order'] = 'required|numeric|min:0|digits_between:0,10';
         }
         $this->validate($request, $rules);
-        \Log::notice(__METHOD__, ['request' => $request->all()]);
         try {
             $id = $request->id;
             $file = $request->file;
