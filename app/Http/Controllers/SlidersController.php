@@ -221,6 +221,7 @@ class SlidersController extends Controller
                 $this->slidersCollection->formatDetails($slider);
                 \Log::info(__METHOD__, ['slider' => $slider]);
                 $data['slider'] = $slider;
+                $data['image'] = $slider->image;
                 $data['order'] = $count;
                 $data['title'] = _i('Update slider');
                 return view('back.sliders.edit', $data);
