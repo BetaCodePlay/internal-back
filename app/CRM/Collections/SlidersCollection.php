@@ -99,6 +99,7 @@ class SlidersCollection
         $timezone = session('timezone');
         $url = s3_asset("sliders/static/{$slider->image}");
         $slider->image = "<img src='$url' class='img-responsive' width='600'>";
+        $slider->front = null;
         if (!is_null($slider->front)) {
             $urlFront = s3_asset("sliders/static/{$slider->front}");
             $slider->front = "<img src='$urlFront' class='img-responsive' width='600'>";
