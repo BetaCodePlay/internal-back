@@ -261,7 +261,6 @@ class SlidersController extends Controller
      */
     public function store(Request $request)
     {
-        \Log::notice(__METHOD__, ['request' => $request->all()]);
         $rules = [
             'image' => 'required',
             'device' => 'required',
