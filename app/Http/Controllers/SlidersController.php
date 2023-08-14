@@ -393,7 +393,6 @@ class SlidersController extends Controller
      */
     public function update(Request $request)
     {
-        \Log::info(__METHOD__, ['request' => $request->all()]);
         $rules = [
             'image' => 'required',
             'device' => 'required',
@@ -407,8 +406,9 @@ class SlidersController extends Controller
 
         try {
             $id = $request->id;
-            $file = $request->file;
-            $fileFront = $request->file;
+            $slider = $this->slidersRepo->find($id);
+            $file = $slider->image;
+            $fileFront = $slider->front;
             $image = $request->file('image');
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
