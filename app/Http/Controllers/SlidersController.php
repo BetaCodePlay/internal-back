@@ -406,10 +406,11 @@ class SlidersController extends Controller
 
         try {
             $id = $request->id;
-            $slider = $this->slidersRepo->find($id);
-            $file = $slider->image;
-            $fileFront = $slider->front;
+            $file = $request->file;
+            $fileFront = $request->file;
             $image = $request->file('image');
+            \Log::notice(__METHOD__, ['image' => $image]);
+            /*$slider = $this->slidersRepo->find($id);*/
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
