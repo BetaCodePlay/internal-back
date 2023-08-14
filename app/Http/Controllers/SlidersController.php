@@ -406,8 +406,8 @@ class SlidersController extends Controller
 
         try {
             $id = $request->id;
-            $fileFront = $request->file;
             $file = $request->file;
+            $fileFront = $request->file;
             $image = $request->file('image');
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
@@ -500,9 +500,7 @@ class SlidersController extends Controller
                 $oldFilePath = "{$this->filePath}{$file}";
                 \Log::info(__METHOD__, ['oldFile' => $oldFilePath]);
                 Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
-                if (!is_null($oldFilePath)){
-                    Storage::delete($oldFilePath);
-                }
+                Storage::delete($oldFilePath);
                 $sliderData['image'] = $name;
                 $file = $name;
                 $front = $request->file('front');
