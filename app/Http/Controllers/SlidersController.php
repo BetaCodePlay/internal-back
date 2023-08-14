@@ -407,11 +407,6 @@ class SlidersController extends Controller
             $id = $request->id;
             $file = $request->file;
             $fileFront = $request->file;
-            $slider = $this->slidersRepo->find($id);
-            if (is_null($file) && is_null($fileFront)){
-                $file = $slider->image;
-                $fileFront = $slider->front;
-            }
             $image = $request->file('image');
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
@@ -517,6 +512,13 @@ class SlidersController extends Controller
                     Storage::delete($oldFilePath);
                     $sliderData['front'] = $nameFront;
                 }
+            }else{
+                $slider = $this->slidersRepo->find($id);
+                $extension = $slider->image->getClientOriginalExtension();
+                $originalName = str_replace(".$extension", '', $slider->image->getClientOriginalName());
+                $name = Str::slug($originalName) . time() . mt_rand(1, 100) . '.' . $extension;
+                \Log::info(__METHOD__, ['name' => $name]);
+                $sliderData['image'] = $name;
             }
             $this->slidersRepo->update($id, $sliderData);
 
