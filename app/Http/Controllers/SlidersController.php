@@ -219,9 +219,7 @@ class SlidersController extends Controller
                 }
                 $count = count($sliders);
                 $this->slidersCollection->formatDetails($slider);
-                \Log::info(__METHOD__, ['slider' => $slider]);
                 $data['slider'] = $slider;
-                $data['image'] = $slider->image;
                 $data['order'] = $count;
                 $data['title'] = _i('Update slider');
                 return view('back.sliders.edit', $data);
@@ -501,7 +499,7 @@ class SlidersController extends Controller
                 $newFilePath = "{$this->filePath}{$name}";
                 $oldFilePath = "{$this->filePath}{$file}";
                 Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
-                Storage::delete($oldFilePath);
+                /*Storage::delete($oldFilePath);*/
                 $sliderData['image'] = $name;
                 $file = $name;
                 $front = $request->file('front');
