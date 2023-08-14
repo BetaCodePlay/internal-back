@@ -512,14 +512,8 @@ class SlidersController extends Controller
                     Storage::delete($oldFilePath);
                     $sliderData['front'] = $nameFront;
                 }
-            }else{
-                $slider = $this->slidersRepo->find($id);
-                $extension = $slider->image->getClientOriginalExtension();
-                $originalName = str_replace(".$extension", '', $slider->image->getClientOriginalName());
-                $name = Str::slug($originalName) . time() . mt_rand(1, 100) . '.' . $extension;
-                \Log::info(__METHOD__, ['name' => $name]);
-                $sliderData['image'] = $name;
             }
+            \Log::info(__METHOD__, ['slider' => $sliderData]);
             $this->slidersRepo->update($id, $sliderData);
 
             $user_id = auth()->user()->id;
