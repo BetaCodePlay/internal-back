@@ -162,6 +162,7 @@ class SectionImagesController extends Controller
      */
     public function edit(Request $request, $templateElementType)
     {
+        \Log::info(__METHOD__, ['request' => $request]);
         $id = $request->id;
         $section = $request->section;
         $position = $request->position;
