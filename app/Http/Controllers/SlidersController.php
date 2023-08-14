@@ -204,9 +204,7 @@ class SlidersController extends Controller
      */
     public function edit($id)
     {
-        \Log::info(__METHOD__, ['id' => $id]);
         $slider = $this->slidersRepo->find($id);
-        \Log::info(__METHOD__, ['slider' => $slider]);
         if (!is_null($slider)) {
             try {
 
@@ -221,6 +219,7 @@ class SlidersController extends Controller
                 }
                 $count = count($sliders);
                 $this->slidersCollection->formatDetails($slider);
+                \Log::info(__METHOD__, ['slider' => $slider]);
                 $data['slider'] = $slider;
                 $data['order'] = $count;
                 $data['title'] = _i('Update slider');
