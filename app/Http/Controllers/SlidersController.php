@@ -403,13 +403,12 @@ class SlidersController extends Controller
             $rules['order'] = 'required|numeric|min:0|digits_between:0,10';
         }
         $this->validate($request, $rules);
-
+        \Log::notice(__METHOD__, ['request' => $request->all()]);
         try {
             $id = $request->id;
             $file = $request->file;
             $fileFront = $request->file;
             $image = $request->file('image');
-            \Log::notice(__METHOD__, ['file' => $request->file]);
             /*$slider = $this->slidersRepo->find($id);*/
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
