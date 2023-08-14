@@ -69,11 +69,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <?php if($mailgun_notifications->active == true): ?>
-        <?php if($confirmation_email == false): ?>
-            <?php echo $__env->make('back.layout.email-verify', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <?php endif; ?>
-    <?php endif; ?>
+    
     <div class="row">
         <div class="col-lg-3 col-xl-4">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">

@@ -27,12 +27,10 @@
                 </a>
             </div>
 
-            <?php if(isset($iphone)): ?>
-                <?php if(!$iphone): ?>
+
                     <form id="header-search-form" class="u-header--search col-sm g-py-12 g-ml-15--sm g-ml-20--md g-mr-10--sm"
                           aria-labelledby="searchInvoker" action="<?php echo e(route('users.search')); ?>" method="get">
                         <div class="input-group g-max-width-450">
-
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_search])): ?>
                                 <input class="form-control form-control-md g-rounded-4" type="text" name="username" placeholder="<?php echo e(_i('Search user')); ?>" value="<?php echo e(isset($username) ? $username : ''); ?>">
                                 <button type="submit"
@@ -42,12 +40,14 @@
                             <?php endif; ?>
                         </div>
                     </form>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_search])): ?>
+                        <a id="searchInvoker" class="g-hidden-sm-up text-uppercase u-header-icon-v1 g-pos-rel g-width-40 g-height-40 rounded-circle g-font-size-20" href="#!" aria-controls="header-search-form" aria-haspopup="true" aria-expanded="false" data-is-mobile-only="true" data-dropdown-event="click"
+                           data-dropdown-target="#header-search-form" data-dropdown-type="css-animation" data-dropdown-duration="300" data-dropdown-animation-in="fadeIn" data-dropdown-animation-out="fadeOut">
+                            <i class="hs-admin-search g-absolute-centered"></i>
+                        </a>
+                    <?php endif; ?>
 
 
-
-
-                <?php endif; ?>
-            <?php endif; ?>
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
