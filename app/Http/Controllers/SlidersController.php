@@ -498,8 +498,11 @@ class SlidersController extends Controller
                 $name = Str::slug($originalName) . time() . mt_rand(1, 100) . '.' . $extension;
                 $newFilePath = "{$this->filePath}{$name}";
                 $oldFilePath = "{$this->filePath}{$file}";
+                \Log::info(__METHOD__, ['oldFile' => $oldFilePath]);
                 Storage::put($newFilePath, file_get_contents($image->getRealPath()), 'public');
-                /*Storage::delete($oldFilePath);*/
+                if (!is_null($oldFilePath)){
+                    Storage::delete($oldFilePath);
+                }
                 $sliderData['image'] = $name;
                 $file = $name;
                 $front = $request->file('front');
