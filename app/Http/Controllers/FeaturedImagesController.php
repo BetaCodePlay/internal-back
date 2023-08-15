@@ -53,10 +53,9 @@ class FeaturedImagesController extends Controller
      * @param int $templateElementType Template element type ID
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function all()
+    public function all($templateElementType)
     {
         try {
-            $templateElementType = '12';
             $images =  $this->sectionImagesRepo->allByElementType($templateElementType);
             $view = Configurations::getFeaturedLobby()->view;
             $configuration = Configurations::getTemplateElement($view);
