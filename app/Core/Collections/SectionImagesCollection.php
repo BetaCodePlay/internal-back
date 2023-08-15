@@ -79,45 +79,6 @@ class SectionImagesCollection
      * @param array $images Images data
      * @param object $configuration Section configuration
      */
-    public function formatAllByElementType($images, $configuration)
-    {
-        foreach ($images as $image) {
-            $size = "{$configuration->width}x{$configuration->height}";
-            $width = $configuration->width < '250' ? $configuration->width : '250';
-            $url = s3_asset("section-images/{$image->image}");
-            $image->url = !is_null($image->url) ? $image->url : _i('Without URL');
-            $statusClass = $image->status ? 'teal' : 'lightred';
-            $statusText = $image->status ? _i('Published') : _i('Unpublished');
-            $image->image = "<img src='$url' class='img-responsive' width='$width'>";
-            $image->position = _i('Does not apply to this image');
-            $image->size = $size;
-
-            $image->status = sprintf(
-                '<span class="u-label g-bg-%s g-rounded-20 g-px-15 g-mr-10 g-mb-15">%s</span>',
-                $statusClass,
-                $statusText
-            );
-
-            if (Gate::allows('access', Permissions::$manage_section_images)) {
-                $id = isset($image->id) ? $image->id : null;
-                $image->actions = sprintf(
-                    '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                    route('featured-images.edit', [$image->element_type_id]) . "?id={$id}",
-                    _i('Edit')
-                );
-            } else {
-                $image->actions = '';
-            }
-        }
-        return $images;
-    }
-
-    /**
-     * Format all By Element section images
-     *
-     * @param array $images Images data
-     * @param object $configuration Section configuration
-     */
     public function formatAllFeatured($images, $configuration)
     {
         foreach ($images as $image) {
@@ -306,36 +267,6 @@ class SectionImagesCollection
         return $imagesData;
     }
 
-    /**
-     * Format by element type
-     *
-     * @param array $image Image data
-     * @param object $configuration Section configuration
-     */
-    public function formatByElementType($image, $configuration)
-    {
-        $imageSize = null;
-        $width = $configuration->width < '250' ? $configuration->width : '250';
-        $imageSize = "{$configuration->width}x{$configuration->height}";
-        if (!is_null($image)) {
-            $url = s3_asset("section-images/{$image->image}");
-            $image->file = $image->image;
-            $image->image = "<img src='$url' class='img-responsive' width='$width'>";
-        } else {
-            $image = new \stdClass();
-            $url = "https://via.placeholder.com/$imageSize";
-            $image->image = "<img src='$url' class='img-responsive' width='$width'>";
-            $image->title = null;
-            $image->button = null;
-            $image->description = null;
-            $image->url = null;
-            $image->status = null;
-            $image->file = null;
-        }
-        $image->size = $imageSize;
-
-        return $image;
-    }
 
     /**
      * Format by featured
