@@ -35,12 +35,12 @@ class SectionImagesCollection
             $statusClass = $image->status ? 'teal' : 'lightred';
             $statusText = $image->status ? _i('Published') : _i('Unpublished');
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
+            $image->front = _i('Without front image');
             if (!is_null($image->front)) {
                 $urlFront = s3_asset("section-images/{$image->front}");
                 $image->front = "<img src='$urlFront' class='img-responsive' width='$width'>";
-            } else {
-                $image->front = _i('Without front image');
             }
+            $image->category = _i('Without category');
             if (!is_null($image->category)) {
                 if ($image->category === 'new') {
                     $image->category = _i('New');
@@ -51,8 +51,6 @@ class SectionImagesCollection
                 if ($image->category === 'featured') {
                     $image->category = _i('Featured');
                 }
-            } else {
-                $image->category = _i('Without category');
             }
             $image->position = _i('Does not apply to this image');
             $image->size = $size;
@@ -263,6 +261,7 @@ class SectionImagesCollection
                     $statusClass,
                     $statusText
                 );
+                $image->category = _i('Without category');
                 if (!is_null($image->category)) {
                     if ($image->category === 'new') {
                         $image->category = _i('New');
@@ -273,8 +272,6 @@ class SectionImagesCollection
                     if ($image->category === 'featured') {
                         $image->category = _i('Featured');
                     }
-                } else {
-                    $image->category = _i('Without category');
                 }
             } else {
                 $image = new \stdClass();

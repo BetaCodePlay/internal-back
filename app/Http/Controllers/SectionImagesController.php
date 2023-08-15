@@ -104,6 +104,13 @@ class SectionImagesController extends Controller
                     $positions = $configuration->data->section_images->positions;
                     break;
                 }
+                case TemplateElementTypes::$lobby_featured:
+                {
+                    $lobby = Configurations::getFeaturedLobby()->home;
+                    $configuration = Configurations::getTemplateElement($lobby);
+                    $positions = $configuration->data->section_images->positions;
+                    break;
+                }
             }
             if (empty($positions))  {
                 $imagesData = $this->sectionImagesRepo->getBySection($section);
