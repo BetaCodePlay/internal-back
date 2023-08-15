@@ -35,6 +35,7 @@ class SectionImagesRepo
      */
     public function allByElementType($templateElementType)
     {
+        \Log::notice(__METHOD__, ['$templateElementType' => $templateElementType]);
         return SectionImage::where('element_type_id', $templateElementType)
             ->whitelabel()
             ->get();
