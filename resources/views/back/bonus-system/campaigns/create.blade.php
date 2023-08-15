@@ -157,7 +157,8 @@
                                         <i class="fa fa-info-circle" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ _i('Assign the percentage of bonus balance you want to spend along with the actual balance') }}">
                                         </i>
                                     </label>
-                                    <input type="text" name="commission_bonus" id="commission_bonus" class="form-control" disabled>
+                                    <input type="text" name="commission_bonus_v" id="commission_bonus_v" class="form-control" disabled>
+                                    <input type="hidden" name="commission_bonus" id="commission_bonus" class="form-control" >
                                 </div>
                             </div>
                         </div>
@@ -616,6 +617,7 @@
                 var commissionBonus = totalPercentage - commissionReal;
 
                 if (!isNaN(commissionBonus)) {
+                    $('#commission_bonus_v').val(commissionBonus);
                     $('#commission_bonus').val(commissionBonus);
                 }
         }
