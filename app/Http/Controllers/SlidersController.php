@@ -407,8 +407,8 @@ class SlidersController extends Controller
             $id = $request->id;
             $file = $request->file;
             $fileFront = $request->file;
-            \Log::info(__METHOD__, ['file' => $file, 'fileFront' => $fileFront]);
             $image = $request->file('image');
+            \Log::info(__METHOD__, ['image' => $image]);
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
