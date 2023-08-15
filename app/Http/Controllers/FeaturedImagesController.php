@@ -133,7 +133,6 @@ class FeaturedImagesController extends Controller
      */
     public function index($templateElementType)
     {
-        \Log::info(__METHOD__, ['$templateElementType' => $templateElementType]);
         $data['template_element_type'] = $templateElementType;
         $data['title'] = _i('List of images');
         return view('back.featured.section-images.index', $data);
