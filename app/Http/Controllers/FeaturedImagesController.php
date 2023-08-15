@@ -56,9 +56,7 @@ class FeaturedImagesController extends Controller
     public function all($templateElementType)
     {
         try {
-            \Log::info(__METHOD__, ['$templateElementType' => $templateElementType]);
             $images =  $this->sectionImagesRepo->allByElementType($templateElementType);
-            \Log::info(__METHOD__, ['images' => $images]);
             $view = Configurations::getFeaturedLobby()->view;
             $configuration = Configurations::getTemplateElement($view);
             $positions = $configuration->data->section_images;
@@ -135,6 +133,7 @@ class FeaturedImagesController extends Controller
      */
     public function index($templateElementType)
     {
+        \Log::info(__METHOD__, ['$templateElementType' => $templateElementType]);
         $data['template_element_type'] = $templateElementType;
         $data['title'] = _i('List of images');
         return view('back.featured.section-images.index', $data);
