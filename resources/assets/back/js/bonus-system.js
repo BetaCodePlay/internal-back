@@ -697,8 +697,40 @@ class BonusSystem {
 
     // Payment methods
     static paymentMethods() {
+        // $('#currencies').on('change', function () {
+        //     let currencies = $(this).val();
+        //     let route = $(this).data('payments-route');
+
+        //     if (currencies.length > 0) {
+        //         $.ajax({
+        //             url: route,
+        //             type: 'get',
+        //             dataType: 'json',
+        //             data: {
+        //                 currencies: currencies
+        //             }
+        //         }).done(function (json) {
+        //             let paymentMethods = json.data.payment_methods;
+
+        //             for (let currency of currencies) {
+        //                 $(`#include-payment-methods-${currency} option[value!="1"], #exclude-payment-methods-${currency} option[value!="1"]`).remove();
+
+        //                 for (let paymentMethod in paymentMethods) {
+        //                     if (paymentMethod === currency) {
+        //                         for (let currencyPaymentMethod of paymentMethods[paymentMethod]) {
+        //                             let include = new Option(currencyPaymentMethod.name, currencyPaymentMethod.id, false, false);
+        //                             $(`#include-payment-methods-${currency}`).append(include).trigger('change');
+        //                             let exclude = new Option(currencyPaymentMethod.name, currencyPaymentMethod.id, false, false);
+        //                             $(`#exclude-payment-methods-${currency}`).append(exclude).trigger('change');
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         });
+        //     }
+        // });
         $('#currencies').on('change', function () {
-            let currencies = $(this).val();
+            let currencies = [$(this).val()];
             let route = $(this).data('payments-route');
 
             if (currencies.length > 0) {
@@ -727,7 +759,7 @@ class BonusSystem {
                         }
                     }
                 });
-            }
+
         });
     }
 
