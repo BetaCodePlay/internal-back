@@ -127,6 +127,8 @@ class SectionImagesCollection
             $image->url = !is_null($image->url) ? $image->url : _i('Without URL');
             $statusClass = $image->status ? 'teal' : 'lightred';
             $statusText = $image->status ? _i('Published') : _i('Unpublished');
+            $image->category = _i('Without category');
+            $image->front = _i('Without image front');
             $image->image = "<img src='$url' class='img-responsive' width='$width'>";
             $image->position = _i('Does not apply to this image');
             $image->size = $size;
