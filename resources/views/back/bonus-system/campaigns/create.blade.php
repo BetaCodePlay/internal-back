@@ -157,7 +157,7 @@
                                         <i class="fa fa-info-circle" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ _i('Assign the percentage of bonus balance you want to spend along with the actual balance') }}">
                                         </i>
                                     </label>
-                                    <input type="text" name="commission_bonus" id="commission_bonus" class="form-control" >
+                                    <input type="text" name="commission_bonus" id="commission_bonus" class="form-control" disabled>
                                 </div>
                             </div>
                         </div>
