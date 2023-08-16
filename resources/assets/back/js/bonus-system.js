@@ -429,7 +429,7 @@ class BonusSystem {
         let $button = $('#store');
 
         $('#currencies').on('change', function () {
-            let currencies = $(this).val();
+            let currencies = [$(this).val()];
             $('.deposits-row').addClass('d-none');
             $('.bonus-row').addClass('d-none');
             $('.bet-row').addClass('d-none');
