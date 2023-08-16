@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\CRM\Collections\SlidersCollection;
 use App\CRM\Repositories\SlidersRepo;
 use App\Core\Collections\CoreCollection;
-use App\Core\Core;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
@@ -15,8 +14,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Boolean;
 use App\Audits\Repositories\AuditsRepo;
-use App\Audits\Enums\AuditTypes;
-use Dotworkers\Audits\Audits;
 
 /**
  * Class SlidersController
@@ -394,7 +391,6 @@ class SlidersController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'image' => 'required',
             'device' => 'required',
             'language' => 'required',
             'currency' => 'required'
@@ -403,11 +399,10 @@ class SlidersController extends Controller
             $rules['order'] = 'required|numeric|min:0|digits_between:0,10';
         }
         $this->validate($request, $rules);
-
         try {
             $id = $request->id;
-            $fileFront = $request->file;
             $file = $request->file;
+            $fileFront = $request->file;
             $image = $request->file('image');
             $timezone = session('timezone');
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
