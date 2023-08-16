@@ -827,7 +827,7 @@ class BonusSystem {
     static providerTypes() {
         initSelect2();
         $('#currencies').on('change', function () {
-            let currencies = $(this).val();
+            let currencies = [$(this).val()];
             let route = $(this).data('route');
             let $providerTypes = $('#provider_type');
             let $providerTypesBets = $('#provider_type_bet');
