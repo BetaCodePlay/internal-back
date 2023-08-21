@@ -278,8 +278,14 @@
     @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard_widgets])
         <script>
             $(function () {
-                new Dashboard();
-                
+               let options =  new Dashboard();
+                options.todayWithdrawals();
+                options.totalUsersConnected();
+                options.newUsers();
+                options.totalUsers();
+                options.completedProfiles();
+                options.todayDeposits();
+                options.pendingWithdrawals();
             });
         </script>
     @endcan

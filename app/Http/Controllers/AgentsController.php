@@ -347,7 +347,7 @@ class AgentsController extends Controller
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex,'Request'=>$request->all()]);
+            \Log::error(__METHOD__, ['exception' => $ex, 'Request' => $request->all()]);
             return Utils::failedResponse();
         }
     }
@@ -687,7 +687,7 @@ class AgentsController extends Controller
                 ];
             }
             $usersToUpdate = $this->agentsCollection->formatDataLock($lockUsers, $subAgents, $users, $agent, $currency, $category, $maker);
-            $newStatus = (bool) $request->type;
+            $newStatus = (bool)$request->type;
             $oldStatus = !$newStatus;
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
@@ -793,6 +793,256 @@ class AgentsController extends Controller
     }
 
     /**
+     * Store agents
+     *
+     * @param Request $request
+     * @param UsersTempRepo $usersTempRepo
+     * @param UserCurrenciesRepo $userCurrenciesRepo
+     * @return Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
+    {
+
+        $this->validate($request, [
+            'username' => ['required', new Username()],
+            'password' => ['required', new Password()],
+            //'email' => ['required', new Email()],
+            'balance' => 'required',
+            'percentage' => 'required|numeric|between:1,99',
+            'timezone' => 'required'
+        ]);
+
+        try {
+
+            //            $email = strtolower($request->get('email'));
+//            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+//            if (!is_null($uniqueEmail)) {
+//                $data = [
+//                    'title' => _i('Email in use'),
+//                    'message' => _i('The indicated email is already in use'),
+//                    'close' => _i('Close'),
+//                ];
+//                return Utils::errorResponse(Codes::$forbidden, $data);
+//
+//            }
+//            if (!$this->validateEmail($email)) {
+//                $data = [
+//                    'title' => _i('Invalid email'),
+//                    'message' => _i('The email entered is invalid or does not exist'),
+//                    'close' => _i('Close'),
+//                ];
+//                return Utils::errorResponse(Codes::$forbidden, $data);
+//            }
+
+
+            $whitelabel = Configurations::getWhitelabel();
+            $uuid = Str::uuid()->toString();
+            $owner = auth()->user()->id;
+            $currency = session('currency');
+            $username = strtolower($request->username);
+            $password = $request->password;
+            $timezone = $request->timezone;
+            $balance = $request->balance;
+            $master = $request->master;
+            $percentage = $request->percentage;
+            $currencies = !empty($request->currencies) ? $request->currencies : [$currency];
+            //TODO NEW WAY TO SAVE EMAIL
+            $domain = Configurations::getDomain();
+            $email = "$username@$domain";
+
+            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+            $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+
+            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
+                $data = [
+                    'title' => _i('Username in use'),
+                    'message' => _i('The indicated username is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
+
+            if ($balance > $ownerAgent->balance) {
+                $data = [
+                    'title' => _i('Insufficient balance'),
+                    'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ipForwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                $ip = explode(',', $ipForwarded)[0];
+            } else {
+                $ip = $request->getClientIp();
+            }
+
+            $store = Configurations::getStore()->active;
+            $userData = [
+                'username' => $username,
+                'email' => $email,
+                'password' => $password,
+                'uuid' => $uuid,
+                'ip' => $ip,
+                'status' => true,
+                'whitelabel_id' => $whitelabel,
+                'web_register' => false,
+                'register_currency' => $currency,
+                'type_user' => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
+                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
+            ];
+            $profileData = [
+                'country_iso' => $ownerAgent->country_iso,
+                'timezone' => $timezone,
+                'level' => 1
+            ];
+            $user = $this->usersRepo->store($userData, $profileData);
+            $this->generateReferenceCode->generateReferenceCode($user->id);
+
+            foreach ($currencies as $key => $agentCurrency) {
+                $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $agentCurrency);
+                $this->agentsRepo->blockAgentsMakers($excludedUser);
+                $wallet = Wallet::store($user->id, $user->username, $uuid, $agentCurrency, $whitelabel, session('wallet_access_token'));
+                $userData = [
+                    'user_id' => $user->id,
+                    'currency_iso' => $agentCurrency
+                ];
+                $walletData = [
+                    'wallet_id' => $wallet->data->wallet->id,
+                    'default' => $key == 0
+                ];
+                $userCurrenciesRepo->store($userData, $walletData);
+                if ($store) {
+                    Store::storeWallet($user->id, $currency);
+                }
+            }
+
+            $agentData = [
+                'user_id' => $user->id,
+                'owner_id' => $owner,
+                'master' => $master,
+                'percentage' => $percentage,
+            ];
+            $agent = $this->agentsRepo->store($agentData);
+
+            foreach ($currencies as $key => $agentCurrency) {
+                if ($currency == $agentCurrency) {
+                    $this->createAgentBalance($agent->id, $currency, $balance);
+                } else {
+                    $this->createAgentBalance($agent->id, $agentCurrency);
+                }
+            }
+
+            if ($balance > 0 && in_array($currency, $currencies)) {
+                $ownerBalance = $ownerAgent->balance - $balance;
+                $agentData = [
+                    'agent_id' => $ownerAgent->agent,
+                    'currency_iso' => $currency
+                ];
+                $balanceData = [
+                    'balance' => $ownerBalance
+                ];
+                $this->agentCurrenciesRepo->store($agentData, $balanceData);
+
+                $additionalData = [
+                    'from' => $ownerAgent->username,
+                    'to' => $user->username,
+                    'balance' => $ownerBalance
+                ];
+                $transactionData1 = [
+                    'user_id' => $ownerAgent->id,
+                    'amount' => $balance,
+                    'currency_iso' => $currency,
+                    'transaction_type_id' => TransactionTypes::$debit,
+                    'transaction_status_id' => TransactionStatus::$approved,
+                    'provider_id' => Providers::$agents,
+                    'data' => $additionalData,
+                    'whitelabel_id' => Configurations::getWhitelabel()
+                ];
+                $transactionTmp1 = $this->transactionsRepo->store($transactionData1, TransactionStatus::$approved, []);
+
+                $additionalData['balance'] = $balance;
+                $additionalData['transaction_id'] = $transactionTmp1->id;
+                $transactionData2 = [
+                    'user_id' => $user->id,
+                    'amount' => $balance,
+                    'currency_iso' => $currency,
+                    'transaction_type_id' => TransactionTypes::$credit,
+                    'transaction_status_id' => TransactionStatus::$approved,
+                    'provider_id' => Providers::$agents,
+                    'data' => $additionalData,
+                    'whitelabel_id' => Configurations::getWhitelabel()
+                ];
+                $transactionTmp2 = $this->transactionsRepo->store($transactionData2, TransactionStatus::$approved, []);
+
+                //TODO AUDIT 2 CREDIT
+                $auditDataTransaction2 = [
+                    'ip' => Utils::userIp(),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'transaction_data' => $transactionData2
+                ];
+                Audits::store($user->id, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
+
+                //TODO UPDATE TRANSACTION 1 DATA = transaction_id
+                $transactionData1_updated = $this->transactionsRepo->updateData($transactionTmp1->id, $transactionTmp2->id);
+
+                //TODO AUDIT 1 DEBIT
+                $auditDataTransaction1 = [
+                    'ip' => Utils::userIp(),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'transaction_data' => $transactionData1_updated
+                ];
+                Audits::store($user->id, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
+
+            } else {
+                $ownerBalance = $ownerAgent->balance;
+            }
+
+            //Security::assignRole($user->id, 3); //TODO ROL AGENTS DEFAULT
+            Security::assignRole($user->id, Roles::$admin_Beet_sweet); //TODO NUEVO ROL OF AGENT
+
+            $data = [
+                'title' => _i('Agent created'),
+                'message' => _i('Agent created successfully'),
+                'close' => _i('Close'),
+                'balance' => number_format($ownerBalance, 2),
+                'route' => route('agents.index'),
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Create agent balance
+     *
+     * @param object $agent Agent data
+     * @param string $currency Currency ISO
+     * @param float $balance Agent balance
+     */
+    private function createAgentBalance($agent, $currency, $balance = 0)
+    {
+        $agentData = [
+            'agent_id' => $agent,
+            'currency_iso' => $currency,
+        ];
+        $balance = [
+            'balance' => $balance
+        ];
+        $this->agentCurrenciesRepo->store($agentData, $balance);
+    }
+
+    /**
      * Show cash flow by dates
      *
      * @return Application|Factory|View
@@ -849,6 +1099,26 @@ class AgentsController extends Controller
     }
 
     /**
+     * Sql temp change action by agent
+     */
+    public function changeActionByAgent()
+    {
+        try {
+            $this->agentsRepo->updateActionTemp();
+
+            $data = [
+                'title' => 'Campo Accion Cambiado',
+                'message' => 'Campo accion cambiado por id 10 solo los agentes...',
+                'close' => _i('Close'),
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Change agent type
      *
      * @param int $agent Agent ID
@@ -861,7 +1131,7 @@ class AgentsController extends Controller
                 'master' => true
             ];
             $agentDb = $this->agentsRepo->update($agent, $agentData);
-            if(isset($agentDb->user_id)){
+            if (isset($agentDb->user_id)) {
                 $userData = [
                     'type_user' => TypeUser::$agentMater
                 ];
@@ -921,26 +1191,6 @@ class AgentsController extends Controller
         }
 
         return $users;
-    }
-
-    /**
-     * Update Owner User
-     * @param Request $request
-     * @return array
-     */
-    public function updateOwnerUser(Request $request)
-    {
-        return 'Update Owner in Agents';
-        $users = $this->usersRepo->sqlOwnerTmp('users', 'wolf');
-        foreach ($users as $value) {
-            $romeos = $this->usersRepo->sqlOwnerTmp('users', 'romeo', $value->whitelabel_id);
-            foreach ($romeos as $romeo) {
-                $user = $this->usersRepo->sqlOwnerTmp('update_agent', null, null, $value->id, $romeo->id);
-            }
-        }
-
-        return $users;
-
     }
 
     /**
@@ -1152,7 +1402,7 @@ class AgentsController extends Controller
     public function excludeProviderAgentsDelete($user, $category, $currency)
     {
         try {
-            $user = (int) $user;
+            $user = (int)$user;
             $this->agentsRepo->unBlockAgents($currency, $category, $user);
             $data = [
                 'title' => _i('User activated'),
@@ -2009,48 +2259,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * Find tree agents father
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function getFatherAndCant(Request $request)
-    {
-        try {
-
-            $currency = session('currency');
-            $id = $request->id;
-            $type = $request->type;
-            $cant = null;
-
-            if ($type == 'agent') {
-                $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency, Auth::user()->id, $type);
-            } else {
-                $cant = $this->usersRepo->numberChildren($id, $currency);
-                $fathers = $this->usersRepo->getParentsFromChild($id, $currency, Auth::user()->id, $type);
-            }
-
-            $data = [
-                'cant_agents' => 0,
-                'cant_players' => 0,
-                'fathers' => [],
-            ];
-
-            if(!is_null($cant)){
-                $data['cant_agents'] = $cant['agents'];
-                $data['cant_players'] = $cant['players'];
-                $data['fathers'] = $fathers;
-            }
-
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      * Show agents payments transactions by dates
      *
      * @param null $startDate
@@ -2116,6 +2324,65 @@ class AgentsController extends Controller
     }
 
     /**
+     * Find tree agents father
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getFatherAndCant(Request $request)
+    {
+        try {
+
+            $currency = session('currency');
+            $id = $request->id;
+            $type = $request->type;
+            $cant = null;
+
+            if ($type == 'agent') {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency, Auth::user()->id, $type);
+            } else {
+                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $fathers = $this->usersRepo->getParentsFromChild($id, $currency, Auth::user()->id, $type);
+            }
+
+            $data = [
+                'cant_agents' => 0,
+                'cant_players' => 0,
+                'fathers' => [],
+            ];
+
+            if (!is_null($cant)) {
+                $data['cant_agents'] = $cant['agents'];
+                $data['cant_players'] = $cant['players'];
+                $data['fathers'] = $fathers;
+            }
+
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Get Tree Users
+     *
+     */
+    public function getTreeUsers()
+    {
+        try {
+            return Utils::successResponse([
+                'tree' => $this->agentsCollection->childrenTreeSql(Auth::id()),
+                'makers' => $this->gamesRepo->getMakers()
+            ]);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
      * Show dashboard
      *
      * @param CountriesRepo $countriesRepo
@@ -2169,15 +2436,15 @@ class AgentsController extends Controller
 //            }
 
             $whitelabel = Configurations::getWhitelabel();
-            $agentUser = $this->agentsRepo->findAgent($user,$whitelabel);
+            $agentUser = $this->agentsRepo->findAgent($user, $whitelabel);
             $userData = $this->usersRepo->getUsers($user);
-            foreach ($userData as $users){
+            foreach ($userData as $users) {
                 $confirmation = $users->confirmation_email;
             }
 
             $data['agent'] = $this->agentsRepo->findUserProfile($user, session('currency'));
             $data['makers'] = [];
-            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner($user, session('currency'),Configurations::getWhitelabel())),true);
+            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner($user, session('currency'), Configurations::getWhitelabel())), true);
             $data['tree'] = json_encode([]);
             $data['action'] = auth()->user()->action;
             $data['iagent'] = $agentUser;
@@ -2186,23 +2453,6 @@ class AgentsController extends Controller
 
             return view('back.agents.index', $data);
 
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
-    }
-
-    /**
-     * Get Tree Users
-     *
-     */
-    public function getTreeUsers()
-    {
-        try {
-            return Utils::successResponse([
-                'tree' => $this->agentsCollection->childrenTreeSql(Auth::id()),
-                'makers' => $this->gamesRepo->getMakers()
-            ]);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
@@ -2582,7 +2832,7 @@ class AgentsController extends Controller
                         route('agents.ticket', [$ticket->id]),
                         _i('Print ticket')
                     );
-                } /* User Type: Agent */else {
+                } /* User Type: Agent */ else {
                     /*We consulted the agent to recharge balance*/
                     $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
                     if ($agent->action == ActionUser::$locked_higher) {
@@ -2630,7 +2880,7 @@ class AgentsController extends Controller
                             'balance' => $balance
                         ];
 
-                    } /*If the transaction is debit type */else {
+                    } /*If the transaction is debit type */ else {
                         if ($amount <= $agentBalance) {
                             /*Valid status */
                             $status = Status::$ok;
@@ -2975,10 +3225,10 @@ class AgentsController extends Controller
                         route('agents.ticket', [$ticket->id]),
                         _i('Print ticket')
                     );
-                }else {
+                } else {
                     /*TODO  User Type: Agent */
-                    Log::debug('performTransactionsAgent',[$request->all()]);
-                    return $this->performTransactionsAgent($request,$this->agentsRepo, $this->agentCurrenciesRepo, $this->transactionsRepo);
+                    Log::debug('performTransactionsAgent', [$request->all()]);
+                    return $this->performTransactionsAgent($request, $this->agentsRepo, $this->agentCurrenciesRepo, $this->transactionsRepo);
 
                 }
                 /*If valid status equals true*/
@@ -3092,438 +3342,165 @@ class AgentsController extends Controller
     {
 
 //        try {
-            $userAuth = auth()->user();
-            $idWolf =  Auth::user()->username == 'wolf' ? Auth::user()->id : 0;
+        $userAuth = auth()->user();
+        $idWolf = Auth::user()->username == 'wolf' ? Auth::user()->id : 0;
 
-            $currency = session('currency');
-            $userAffected = (int)$request->get('user');
-            $amount = $request->amount;
-            $transactionType = $request->transaction_type;
-            /* verify that the user is not blocked or deactivated */
-            $validateDb = $agentsRepo->statusActionByUser($userAffected);
-            if (isset($validateDb->username) && $validateDb->action == ActionUser::$locked_higher || $validateDb->status == false) {
-                $data = [
-                    'title' => ActionUser::getName($validateDb->action) ,
-                    'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$not_found, $data);
-
-            }
-            $transactionData = [
-                'amount' => $amount,
-                'currency_iso' => $currency,
-                'transaction_status_id' => TransactionStatus::$approved,
-                'provider_id' => Providers::$agents,
-                'whitelabel_id' => Configurations::getWhitelabel()
-            ];
-
-            switch ($transactionType){
-                case TransactionTypes::$credit:{
-                    /*consult and debit*/
-                    $balance = $agentsRepo->getAndUpdateBalance($currency,$userAuth->id,$userAffected,$amount,$idWolf);
-
-                    /*error debiting*/
-                    if(isset($balance[0]->status) && !$balance[0]->status == 'false'){
-                        $data = [
-                            'title' => _i('Insufficient balance'),
-                            'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-
-                    Log::debug('getAndUpdateBalance 2',[$balance,$idWolf,$userAffected,$userAuth->id]);
-
-                    //TODO BALANCE 0 PARA WOLF
-                    $balanceCredit = $balance[0]->balance_credit;
-                    $balanceDebit = $idWolf == $userAuth->id ? 0:$balance[0]->balance_debit;
-
-                    /*add authenticated user transactions*/
-                    $transactionAdd = $transactionData;
-                    $transactionAdd['user_id']=$userAuth->id;
-                    $transactionAdd['transaction_type_id']=TransactionTypes::$debit;
-                    $transactionAdd['data']=[
-                        'from' => $userAuth->username,
-                        'to' => $validateDb->username,
-                        'balance' => $balanceDebit,
-                        'second_balance' => $balanceCredit
-                    ];
-                    $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
-
-                    /*add affected user transactions*/
-                    $transactionAdd = $transactionData;
-                    $transactionAdd['user_id']=$userAffected;
-                    $transactionAdd['transaction_type_id']=TransactionTypes::$credit;
-                    $transactionAdd['data']=[
-                        'from' => $userAuth->username,
-                        'to' => $validateDb->username,
-                        'balance' => $balanceCredit,
-                        'second_balance' => $balanceDebit,
-                        'transaction_id'=>$transaction1->id
-                    ];
-                    $transaction2 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
-
-                    /*add related transaction id*/
-                    $transactionsRepo->updateData($transaction1->id, $transaction2->id);
-                    $data = [
-                        'title' => _i('Transaction performed'),
-                        'message' => _i('The transaction was successfully made to the user'),
-                        'balance' => number_format($balanceCredit, 2),
-                        'balance_auth' => number_format($balanceDebit, 2),
-                        'auth_balance' => Auth::user()->id,
-                        'close' => _i('Close'),
-                    ];
-                    return Utils::successResponse($data);
-                    break;
-                }
-                case TransactionTypes::$debit:{
-                    /*consult and debit*/
-                    $balance = $agentsRepo->getAndUpdateBalance($currency,$userAffected,$userAuth->id,$amount,$idWolf);
-
-                    /*error debiting*/
-                    if(isset($balance[0]->status) && $balance[0]->status == 'false'){
-                        $data = [
-                            'title' => _i('Insufficient balance'),
-                            'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
-                            'close' => _i('Close')
-                        ];
-                        return Utils::errorResponse(Codes::$forbidden, $data);
-                    }
-
-                    Log::debug('getAndUpdateBalance 2',[$balance,$idWolf,$userAffected,$userAuth->id]);
-
-                    //TODO BALANCE 0 PARA WOLF
-                    $balanceCredit = $idWolf == $userAuth->id ? 0 : $balance[0]->balance_credit;
-                    $balanceDebit = $balance[0]->balance_debit;
-
-                    /*add authenticated user transactions*/
-                    $transactionAdd = $transactionData;
-                    $transactionAdd['user_id']=$userAuth->id;
-                    $transactionAdd['transaction_type_id']=TransactionTypes::$debit;
-
-                    $transactionAdd['data']=[
-                        'from' => $userAuth->username,
-                        'to' => $validateDb->username,
-                        'balance' => $balanceDebit,
-                        'second_balance' => $balanceCredit
-                    ];
-                    $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
-
-                    /*add affected user transactions*/
-                    $transactionAdd = $transactionData;
-                    $transactionAdd['user_id']=$userAffected;
-                    $transactionAdd['transaction_type_id']=TransactionTypes::$credit;
-                    $transactionAdd['data']=[
-                        'from' => $userAuth->username,
-                        'to' => $validateDb->username,
-                        'balance' => $balanceCredit,
-                        'second_balance' => $balanceDebit,
-                        'transaction_id'=>$transaction1->id
-                    ];
-                    $transaction2 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
-
-                    /*add related transaction id*/
-                    $transactionsRepo->updateData($transaction1->id, $transaction2->id);
-                    $data = [
-                        'title' => _i('Transaction performed'),
-                        'message' => _i('The transaction was successfully made to the user'),
-                        'balance' => number_format($balanceDebit, 2),
-                        'balance_auth' => number_format($balanceCredit, 2),
-                        'auth_balance' => Auth::user()->id,
-                        'close' => _i('Close'),
-                    ];
-                    return Utils::successResponse($data);
-                    break;
-                }
-            }
+        $currency = session('currency');
+        $userAffected = (int)$request->get('user');
+        $amount = $request->amount;
+        $transactionType = $request->transaction_type;
+        /* verify that the user is not blocked or deactivated */
+        $validateDb = $agentsRepo->statusActionByUser($userAffected);
+        if (isset($validateDb->username) && $validateDb->action == ActionUser::$locked_higher || $validateDb->status == false) {
             $data = [
-                'title' => _i('Error'),
-                'message' => _i('This transaction cannot be performed'),
+                'title' => ActionUser::getName($validateDb->action),
+                'message' => _i('Contact your superior...'),
                 'close' => _i('Close')
             ];
-            return Utils::errorResponse(Codes::$forbidden, $data);
+            return Utils::errorResponse(Codes::$not_found, $data);
+
+        }
+        $transactionData = [
+            'amount' => $amount,
+            'currency_iso' => $currency,
+            'transaction_status_id' => TransactionStatus::$approved,
+            'provider_id' => Providers::$agents,
+            'whitelabel_id' => Configurations::getWhitelabel()
+        ];
+
+        switch ($transactionType) {
+            case TransactionTypes::$credit:
+            {
+                /*consult and debit*/
+                $balance = $agentsRepo->getAndUpdateBalance($currency, $userAuth->id, $userAffected, $amount, $idWolf);
+
+                /*error debiting*/
+                if (isset($balance[0]->status) && !$balance[0]->status == 'false') {
+                    $data = [
+                        'title' => _i('Insufficient balance'),
+                        'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+
+                Log::debug('getAndUpdateBalance 2', [$balance, $idWolf, $userAffected, $userAuth->id]);
+
+                //TODO BALANCE 0 PARA WOLF
+                $balanceCredit = $balance[0]->balance_credit;
+                $balanceDebit = $idWolf == $userAuth->id ? 0 : $balance[0]->balance_debit;
+
+                /*add authenticated user transactions*/
+                $transactionAdd = $transactionData;
+                $transactionAdd['user_id'] = $userAuth->id;
+                $transactionAdd['transaction_type_id'] = TransactionTypes::$debit;
+                $transactionAdd['data'] = [
+                    'from' => $userAuth->username,
+                    'to' => $validateDb->username,
+                    'balance' => $balanceDebit,
+                    'second_balance' => $balanceCredit
+                ];
+                $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
+
+                /*add affected user transactions*/
+                $transactionAdd = $transactionData;
+                $transactionAdd['user_id'] = $userAffected;
+                $transactionAdd['transaction_type_id'] = TransactionTypes::$credit;
+                $transactionAdd['data'] = [
+                    'from' => $userAuth->username,
+                    'to' => $validateDb->username,
+                    'balance' => $balanceCredit,
+                    'second_balance' => $balanceDebit,
+                    'transaction_id' => $transaction1->id
+                ];
+                $transaction2 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
+
+                /*add related transaction id*/
+                $transactionsRepo->updateData($transaction1->id, $transaction2->id);
+                $data = [
+                    'title' => _i('Transaction performed'),
+                    'message' => _i('The transaction was successfully made to the user'),
+                    'balance' => number_format($balanceCredit, 2),
+                    'balance_auth' => number_format($balanceDebit, 2),
+                    'auth_balance' => Auth::user()->id,
+                    'close' => _i('Close'),
+                ];
+                return Utils::successResponse($data);
+                break;
+            }
+            case TransactionTypes::$debit:
+            {
+                /*consult and debit*/
+                $balance = $agentsRepo->getAndUpdateBalance($currency, $userAffected, $userAuth->id, $amount, $idWolf);
+
+                /*error debiting*/
+                if (isset($balance[0]->status) && $balance[0]->status == 'false') {
+                    $data = [
+                        'title' => _i('Insufficient balance'),
+                        'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+                }
+
+                Log::debug('getAndUpdateBalance 2', [$balance, $idWolf, $userAffected, $userAuth->id]);
+
+                //TODO BALANCE 0 PARA WOLF
+                $balanceCredit = $idWolf == $userAuth->id ? 0 : $balance[0]->balance_credit;
+                $balanceDebit = $balance[0]->balance_debit;
+
+                /*add authenticated user transactions*/
+                $transactionAdd = $transactionData;
+                $transactionAdd['user_id'] = $userAuth->id;
+                $transactionAdd['transaction_type_id'] = TransactionTypes::$debit;
+
+                $transactionAdd['data'] = [
+                    'from' => $userAuth->username,
+                    'to' => $validateDb->username,
+                    'balance' => $balanceDebit,
+                    'second_balance' => $balanceCredit
+                ];
+                $transaction1 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
+
+                /*add affected user transactions*/
+                $transactionAdd = $transactionData;
+                $transactionAdd['user_id'] = $userAffected;
+                $transactionAdd['transaction_type_id'] = TransactionTypes::$credit;
+                $transactionAdd['data'] = [
+                    'from' => $userAuth->username,
+                    'to' => $validateDb->username,
+                    'balance' => $balanceCredit,
+                    'second_balance' => $balanceDebit,
+                    'transaction_id' => $transaction1->id
+                ];
+                $transaction2 = $transactionsRepo->store($transactionAdd, TransactionStatus::$approved, []);
+
+                /*add related transaction id*/
+                $transactionsRepo->updateData($transaction1->id, $transaction2->id);
+                $data = [
+                    'title' => _i('Transaction performed'),
+                    'message' => _i('The transaction was successfully made to the user'),
+                    'balance' => number_format($balanceDebit, 2),
+                    'balance_auth' => number_format($balanceCredit, 2),
+                    'auth_balance' => Auth::user()->id,
+                    'close' => _i('Close'),
+                ];
+                return Utils::successResponse($data);
+                break;
+            }
+        }
+        $data = [
+            'title' => _i('Error'),
+            'message' => _i('This transaction cannot be performed'),
+            'close' => _i('Close')
+        ];
+        return Utils::errorResponse(Codes::$forbidden, $data);
 
 //        } catch (\Exception $ex) {
 //            return [$ex,$request->all()];
 //            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
 //            return Utils::failedResponse();
 //        }
-    }
-
-    /**
-     * Validate email
-     *
-     * @param string $email Email to validate
-     * @return bool
-     */
-    private function validateEmail($email)
-    {
-        $data = [
-            'address' => strtolower($email)
-        ];
-        $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
-            ->withOption('HTTPAUTH', CURLAUTH_BASIC)
-            ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
-            ->withData($data)
-            ->post();
-        $response = json_decode($curl);
-        $result = true;
-        if (!isset($response->result) || $response->result != 'deliverable') {
-            Log::debug('validateEmail', [$response]);
-            $result = false;
-        }
-        return $result;
-    }
-
-    /**
-     * Store agents
-     *
-     * @param Request $request
-     * @param UsersTempRepo $usersTempRepo
-     * @param UserCurrenciesRepo $userCurrenciesRepo
-     * @return Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
-    {
-
-        $this->validate($request, [
-            'username' => ['required', new Username()],
-            'password' => ['required', new Password()],
-            //'email' => ['required', new Email()],
-            'balance' => 'required',
-            'percentage' => 'required|numeric|between:1,99',
-            'timezone' => 'required'
-        ]);
-
-        try {
-
-            //            $email = strtolower($request->get('email'));
-//            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-//            if (!is_null($uniqueEmail)) {
-//                $data = [
-//                    'title' => _i('Email in use'),
-//                    'message' => _i('The indicated email is already in use'),
-//                    'close' => _i('Close'),
-//                ];
-//                return Utils::errorResponse(Codes::$forbidden, $data);
-//
-//            }
-//            if (!$this->validateEmail($email)) {
-//                $data = [
-//                    'title' => _i('Invalid email'),
-//                    'message' => _i('The email entered is invalid or does not exist'),
-//                    'close' => _i('Close'),
-//                ];
-//                return Utils::errorResponse(Codes::$forbidden, $data);
-//            }
-
-
-            $whitelabel = Configurations::getWhitelabel();
-            $uuid = Str::uuid()->toString();
-            $owner = auth()->user()->id;
-            $currency = session('currency');
-            $username = strtolower($request->username);
-            $password = $request->password;
-            $timezone = $request->timezone;
-            $balance = $request->balance;
-            $master = $request->master;
-            $percentage = $request->percentage;
-            $currencies = !empty($request->currencies) ? $request->currencies : [$currency];
-            //TODO NEW WAY TO SAVE EMAIL
-            $domain = Configurations::getDomain();
-            $email = "$username@$domain";
-
-            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
-            $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
-
-            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
-                $data = [
-                    'title' => _i('Username in use'),
-                    'message' => _i('The indicated username is already in use'),
-                    'close' => _i('Close'),
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-
-            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
-
-            if ($balance > $ownerAgent->balance) {
-                $data = [
-                    'title' => _i('Insufficient balance'),
-                    'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
-
-            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                $ipForwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                $ip = explode(',', $ipForwarded)[0];
-            } else {
-                $ip = $request->getClientIp();
-            }
-
-            $store = Configurations::getStore()->active;
-            $userData = [
-                'username' => $username,
-                'email' => $email,
-                'password' => $password,
-                'uuid' => $uuid,
-                'ip' => $ip,
-                'status' => true,
-                'whitelabel_id' => $whitelabel,
-                'web_register' => false,
-                'register_currency' => $currency,
-                'type_user' => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
-            ];
-            $profileData = [
-                'country_iso' => $ownerAgent->country_iso,
-                'timezone' => $timezone,
-                'level' => 1
-            ];
-            $user = $this->usersRepo->store($userData, $profileData);
-            $this->generateReferenceCode->generateReferenceCode($user->id);
-
-            foreach ($currencies as $key => $agentCurrency) {
-                $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $agentCurrency);
-                $this->agentsRepo->blockAgentsMakers($excludedUser);
-                $wallet = Wallet::store($user->id, $user->username, $uuid, $agentCurrency, $whitelabel, session('wallet_access_token'));
-                $userData = [
-                    'user_id' => $user->id,
-                    'currency_iso' => $agentCurrency
-                ];
-                $walletData = [
-                    'wallet_id' => $wallet->data->wallet->id,
-                    'default' => $key == 0
-                ];
-                $userCurrenciesRepo->store($userData, $walletData);
-                if ($store) {
-                    Store::storeWallet($user->id, $currency);
-                }
-            }
-
-            $agentData = [
-                'user_id' => $user->id,
-                'owner_id' => $owner,
-                'master' => $master,
-                'percentage' => $percentage,
-            ];
-            $agent = $this->agentsRepo->store($agentData);
-
-            foreach ($currencies as $key => $agentCurrency) {
-                if ($currency == $agentCurrency) {
-                    $this->createAgentBalance($agent->id, $currency, $balance);
-                } else {
-                    $this->createAgentBalance($agent->id, $agentCurrency);
-                }
-            }
-
-            if ($balance > 0 && in_array($currency, $currencies)) {
-                $ownerBalance = $ownerAgent->balance - $balance;
-                $agentData = [
-                    'agent_id' => $ownerAgent->agent,
-                    'currency_iso' => $currency
-                ];
-                $balanceData = [
-                    'balance' => $ownerBalance
-                ];
-                $this->agentCurrenciesRepo->store($agentData, $balanceData);
-
-                $additionalData = [
-                    'from' => $ownerAgent->username,
-                    'to' => $user->username,
-                    'balance' => $ownerBalance
-                ];
-                $transactionData1 = [
-                    'user_id' => $ownerAgent->id,
-                    'amount' => $balance,
-                    'currency_iso' => $currency,
-                    'transaction_type_id' => TransactionTypes::$debit,
-                    'transaction_status_id' => TransactionStatus::$approved,
-                    'provider_id' => Providers::$agents,
-                    'data' => $additionalData,
-                    'whitelabel_id' => Configurations::getWhitelabel()
-                ];
-                $transactionTmp1 = $this->transactionsRepo->store($transactionData1, TransactionStatus::$approved, []);
-
-                $additionalData['balance'] = $balance;
-                $additionalData['transaction_id'] = $transactionTmp1->id;
-                $transactionData2 = [
-                    'user_id' => $user->id,
-                    'amount' => $balance,
-                    'currency_iso' => $currency,
-                    'transaction_type_id' => TransactionTypes::$credit,
-                    'transaction_status_id' => TransactionStatus::$approved,
-                    'provider_id' => Providers::$agents,
-                    'data' => $additionalData,
-                    'whitelabel_id' => Configurations::getWhitelabel()
-                ];
-                $transactionTmp2 = $this->transactionsRepo->store($transactionData2, TransactionStatus::$approved, []);
-
-                //TODO AUDIT 2 CREDIT
-                $auditDataTransaction2 = [
-                    'ip' => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
-                    'transaction_data' => $transactionData2
-                ];
-                Audits::store($user->id, AuditTypes::$transaction_credit, Configurations::getWhitelabel(), $auditDataTransaction2);
-
-                //TODO UPDATE TRANSACTION 1 DATA = transaction_id
-                $transactionData1_updated = $this->transactionsRepo->updateData($transactionTmp1->id, $transactionTmp2->id);
-
-                //TODO AUDIT 1 DEBIT
-                $auditDataTransaction1 = [
-                    'ip' => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
-                    'transaction_data' => $transactionData1_updated
-                ];
-                Audits::store($user->id, AuditTypes::$transaction_debit, Configurations::getWhitelabel(), $auditDataTransaction1);
-
-            } else {
-                $ownerBalance = $ownerAgent->balance;
-            }
-
-            //Security::assignRole($user->id, 3); //TODO ROL AGENTS DEFAULT
-            Security::assignRole($user->id, Roles::$admin_Beet_sweet); //TODO NUEVO ROL OF AGENT
-
-            $data = [
-                'title' => _i('Agent created'),
-                'message' => _i('Agent created successfully'),
-                'close' => _i('Close'),
-                'balance' => number_format($ownerBalance, 2),
-                'route' => route('agents.index'),
-            ];
-            return Utils::successResponse($data);
-
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Create agent balance
-     *
-     * @param object $agent Agent data
-     * @param string $currency Currency ISO
-     * @param float $balance Agent balance
-     */
-    private function createAgentBalance($agent, $currency, $balance = 0)
-    {
-        $agentData = [
-            'agent_id' => $agent,
-            'currency_iso' => $currency,
-        ];
-        $balance = [
-            'balance' => $balance
-        ];
-        $this->agentCurrenciesRepo->store($agentData, $balance);
     }
 
     /**
@@ -3649,6 +3626,9 @@ class AgentsController extends Controller
         $this->validate($request, [
             'whitelabel' => 'required'
         ]);
+
+        return [$request->all(),'test'];
+
         try {
             $whitelabel = $request->whitelabel;
             $admin = 'admin';
@@ -3657,18 +3637,18 @@ class AgentsController extends Controller
             $romeoAgent = null;
             $supportAgent = null;
             $adminAgent = null;
-            //$romeoUser = $this->usersRepo->getByUsername($romeo, $whitelabel);
+            $romeoUser = $this->usersRepo->getByUsername($romeo, $whitelabel);
             $supportUser = $this->usersRepo->getByUsername($support, $whitelabel);
             $adminUser = $this->usersRepo->getByUsername($admin, $whitelabel);
 
-//            if (is_null($romeoUser)) {
-//                $data = [
-//                    'title' => _i('User %s does not exist', [$romeo]),
-//                    'message' => _i('The %s user has not yet been created. Please create it first', [$romeo]),
-//                    'close' => _i('Close')
-//                ];
-//                return Utils::errorResponse(Codes::$forbidden, $data);
-//            }
+            if (is_null($romeoUser)) {
+                $data = [
+                    'title' => _i('User %s does not exist', [$romeo]),
+                    'message' => _i('The %s user has not yet been created. Please create it first', [$romeo]),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
 
             if (is_null($supportUser)) {
                 $data = [
@@ -3688,23 +3668,23 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
-            //$romeoAgent = $this->agentsRepo->existAgent($romeoUser->id);
+            $romeoAgent = $this->agentsRepo->existAgent($romeoUser->id);
             $supportAgent = $this->agentsRepo->existAgent($supportUser->id);
             $adminAgent = $this->agentsRepo->existAgent($adminUser->id);
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
 
-//            if (is_null($romeoAgent)) {
-//                $romeoAgentData = [
-//                    'user_id' => $romeoUser->id,
-//                    'master' => true
-//                ];
-//                $romeoAgent = $this->agentsRepo->store($romeoAgentData);
-//            }
+            if (is_null($romeoAgent)) {
+                $romeoAgentData = [
+                    'user_id' => $romeoUser->id,
+                    'master' => true
+                ];
+                $romeoAgent = $this->agentsRepo->store($romeoAgentData);
+            }
 
             if (is_null($supportAgent)) {
                 $supportAgentData = [
                     'user_id' => $supportUser->id,
-                    //'owner_id' => $romeoUser->id,
+                    'owner_id' => $romeoUser->id,
                     'master' => true
                 ];
                 $supportAgent = $this->agentsRepo->store($supportAgentData);
@@ -3744,13 +3724,13 @@ class AgentsController extends Controller
                     'balance' => 0
                 ];
 
-//                if (!is_null($romeoAgent)) {
-//                    $romeoAgentCurrencyData = [
-//                        'agent_id' => $romeoAgent->id,
-//                        'currency_iso' => $currency,
-//                    ];
-//                    $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, $balance);
-//                }
+                if (!is_null($romeoAgent)) {
+                    $romeoAgentCurrencyData = [
+                        'agent_id' => $romeoAgent->id,
+                        'currency_iso' => $currency,
+                    ];
+                    $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, $balance);
+                }
 
                 if (!is_null($supportAgent)) {
                     $supportAgentCurrencyData = [
@@ -3768,6 +3748,18 @@ class AgentsController extends Controller
                     $this->agentCurrenciesRepo->store($adminAgentCurrencyData, $balance);
                 }
             }
+
+            //TODO VALIDATE CURRENCY
+            if($request->has('update_currency') && $request->get('update_currency') == 'true'){
+
+                $data = [
+                    'title' => _i('Agents created'),
+                    'message' => _i('Agents were created successfully'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::successResponse($data);
+            }
+
             $data = [
                 'title' => _i('Agents created'),
                 'message' => _i('Agents were created successfully'),
@@ -3840,7 +3832,7 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
-            if(is_null($request->email)){
+            if (is_null($request->email)) {
                 $domain = strtolower($_SERVER['HTTP_HOST']);
                 $domain = str_replace('www.', '', $domain);
                 $email = "$username@$domain";
@@ -3962,6 +3954,26 @@ class AgentsController extends Controller
     }
 
     /**
+     * Update Owner User
+     * @param Request $request
+     * @return array
+     */
+    public function updateOwnerUser(Request $request)
+    {
+        return 'Update Owner in Agents';
+        $users = $this->usersRepo->sqlOwnerTmp('users', 'wolf');
+        foreach ($users as $value) {
+            $romeos = $this->usersRepo->sqlOwnerTmp('users', 'romeo', $value->whitelabel_id);
+            foreach ($romeos as $romeo) {
+                $user = $this->usersRepo->sqlOwnerTmp('update_agent', null, null, $value->id, $romeo->id);
+            }
+        }
+
+        return $users;
+
+    }
+
+    /**
      * Update percentage
      *
      * @param Request $request
@@ -3979,26 +3991,6 @@ class AgentsController extends Controller
             $data = [
                 'title' => _i('Percentage updated'),
                 'message' => _i('Percentage of agent successfully updated'),
-                'close' => _i('Close'),
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
-     * Sql temp change action by agent
-     */
-    public function changeActionByAgent()
-    {
-        try {
-            $this->agentsRepo->updateActionTemp();
-
-            $data = [
-                'title' => 'Campo Accion Cambiado',
-                'message' => 'Campo accion cambiado por id 10 solo los agentes...',
                 'close' => _i('Close'),
             ];
             return Utils::successResponse($data);
@@ -4155,5 +4147,30 @@ class AgentsController extends Controller
         $data['title'] = _i('Transaction Timeline');
 
         return view('back.agents.reports.transaction-timeline', $data);
+    }
+
+    /**
+     * Validate email
+     *
+     * @param string $email Email to validate
+     * @return bool
+     */
+    private function validateEmail($email)
+    {
+        $data = [
+            'address' => strtolower($email)
+        ];
+        $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
+            ->withOption('HTTPAUTH', CURLAUTH_BASIC)
+            ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
+            ->withData($data)
+            ->post();
+        $response = json_decode($curl);
+        $result = true;
+        if (!isset($response->result) || $response->result != 'deliverable') {
+            Log::debug('validateEmail', [$response]);
+            $result = false;
+        }
+        return $result;
     }
 }

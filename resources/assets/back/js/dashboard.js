@@ -3,17 +3,17 @@ const {swalSuccessWithButton, swalError} = require("../../commons/js/core");
 
 class Dashboard {
     // Constructor
-     constructor() {
-         this.newUsers();
-         this.completedProfiles();
-         this.incompleteProfiles();
-         this.pendingWithdrawals();
-         this.resetEmail();
-         this.todayDeposits();
-         this.totalUsers();
-         this.todayWithdrawals();
-         this.totalUsersConnected();
-     }
+    // constructor() {
+    //     this.newUsers();
+    //     this.completedProfiles();
+    //     this.incompleteProfiles();
+    //     this.pendingWithdrawals();
+    //     //this.resetEmail();
+    //     this.todayDeposits();
+    //     this.totalUsers();
+    //     this.todayWithdrawals();
+    //     this.totalUsersConnected();
+    // }
 
     // Completed profiles
     completedProfiles() {
@@ -50,7 +50,6 @@ class Dashboard {
                 $('#pending-withdrawals').text(response.data.data.count);
             });
     }
-
 
     // Get today deposits
     todayDeposits() {
