@@ -2154,7 +2154,8 @@ class BetPayController extends Controller
             PaymentMethods::$cryptocurrencies => 
             [
                 'cryptocurrency_cripto' => 'required',
-                'wallet_cripto' => 'required'
+                'wallet_cripto' => 'required',
+                'network_cripto' => 'required'
             ],
             PaymentMethods::$paypal => 
             [
