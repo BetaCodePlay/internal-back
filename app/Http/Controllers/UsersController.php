@@ -1588,28 +1588,34 @@ class UsersController extends Controller
     }
 
     /**
-     * Search users
+     * Search users, Option by agent or not.
      *
      * @param Request $request
      * @return Factory|View
      */
     public function search(Request $request)
     {
+
         try {
             $username = strtolower($request->username);
-            $user = Auth::user()->id;
-            if (Auth::user()->username == 'romeo') {
-                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
-            }
-            $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+            if(Configurations::getAgents()->active == true){
+                $user = Auth::user()->id;
+                if (Auth::user()->username == 'romeo') {
+                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
+                }
+                $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
 
-            $users = $this->usersRepo->searchTree($username, $idChildren);
+                $users = $this->usersRepo->searchTree($username, $idChildren);
+            }else{
+                $users = $this->usersRepo->search($username);
+            }
 
             $this->usersCollection->formatSearch($users);
             $data['username'] = $username;
             $data['users'] = $users;
             $data['title'] = _i('Users search');
+
             return view('back.users.search', $data);
 
         } catch (\Exception $ex) {

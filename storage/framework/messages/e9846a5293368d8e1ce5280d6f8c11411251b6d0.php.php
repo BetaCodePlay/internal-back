@@ -63,6 +63,8 @@
                     </div>
                     <?php echo $__env->make('back.betpay.clients.payment-methods.binance', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     <?php echo $__env->make('back.betpay.clients.payment-methods.cryptocurrency', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    <?php echo $__env->make('back.betpay.clients.payment-methods.paypal', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    <?php echo $__env->make('back.betpay.clients.payment-methods.mercado-pago', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     <div class="col-md-12">
                         <div class="form-group">
                             <button type="submit" class="btn u-btn-3d u-btn-primary" id="save"

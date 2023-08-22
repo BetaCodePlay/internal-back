@@ -33,11 +33,11 @@
         <?php echo $__env->make('back.layout.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             <?php echo $__env->make('back.layout.warning', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-            <?php if(isset($iphone)): ?>
-                <?php if($iphone): ?>
-                    <?php echo $__env->make('back.layout.search', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                <?php endif; ?>
-            <?php endif; ?>
+
+
+
+
+
 
             <div class="g-pa-20">
                 <?php echo $__env->yieldContent('content'); ?>

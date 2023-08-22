@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -33,11 +34,11 @@
         @include('back.layout.sidebar')
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
             @include('back.layout.warning')
-            @if(isset($iphone))
-                @if($iphone)
-                    @include('back.layout.search')
-                @endif
-            @endif
+{{--            @if(isset($iphone))--}}
+{{--                @if($iphone)--}}
+{{--                    @include('back.layout.search')--}}
+{{--                @endif--}}
+{{--            @endif--}}
 
             <div class="g-pa-20">
                 @yield('content')

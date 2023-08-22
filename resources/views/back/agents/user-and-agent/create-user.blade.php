@@ -1,8 +1,5 @@
 @extends('back.template')
 
-@section('styles')
-@endsection
-
 @section('content')
     <div class="row">
         <div class="col-xl-12">
@@ -23,28 +20,33 @@
                                     <div class="form-group">
                                         <label for="username">{{ _i('Username') }}</label>
                                         <input type="text" name="username" class="form-control" autocomplete="off">
-                                        <small class="form-text text-muted">{{ _i('Only letters and numbers without spaces (4-12 characters)') }}</small>
-                                        <small class="form-text text-muted">{{ _i('The username cannot be changed later') }}</small>
+                                        <small
+                                            class="form-text text-muted">{{ _i('Only letters and numbers without spaces (4-12 characters)') }}</small>
+                                        <small
+                                            class="form-text text-muted">{{ _i('The username cannot be changed later') }}</small>
                                     </div>
                                 </div>
-{{--                                <div class="col-12 col-sm-4">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="username">{{ _i('Email') }}</label>--}}
-{{--                                        <input type="email" name="email" class="form-control" autocomplete="off" required>--}}
-{{--                                        <small class="form-text text-muted">{{ _i('Email can be changed later') }}</small>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-12 col-sm-4">--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label for="username">{{ _i('Email') }}</label>--}}
+                                {{--                                        <input type="email" name="email" class="form-control" autocomplete="off" required>--}}
+                                {{--                                        <small class="form-text text-muted">{{ _i('Email can be changed later') }}</small>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="col-12 col-md-6">
                                     <label for="password">{{ _i('Password') }}</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="password">
                                         <div class="input-group-append">
-                                            <button class="btn u-input-btn--v1 g-width-40 u-btn-primary g-rounded-right-4 u-btn-3d refresh-password" type="button">
+                                            <button
+                                                class="btn u-input-btn--v1 g-width-40 u-btn-primary g-rounded-right-4 u-btn-3d refresh-password"
+                                                type="button">
                                                 <i class="hs-admin-reload g-absolute-centered g-font-size-16 g-color-white"></i>
                                             </button>
                                         </div>
                                     </div>
-                                    <small class="form-text text-muted">{{ _i('Minimum 8 characters, 1 letter and 1 number') }}</small>
+                                    <small
+                                        class="form-text text-muted">{{ _i('Minimum 8 characters, 1 letter and 1 number') }}</small>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
@@ -58,7 +60,8 @@
                                 <div class="col-12 col-sm-12">
                                     <div class="form-group">
                                         <label class="form-check-inline u-check g-pl-25">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="show_data_user"
+                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0"
+                                                   name="show_data_user"
                                                    id="show_data_user" type="checkbox">
                                             <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
                                                 <i class="fa" data-check-icon="&#xf00c"></i>

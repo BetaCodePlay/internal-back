@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
                 <header
-                        class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+                    class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
                     <div class="media">
                         <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 mb-0">
                             {{ $title }}
