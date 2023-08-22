@@ -1588,7 +1588,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Search users
+     * Search users, Option by agent or not.
      *
      * @param Request $request
      * @return Factory|View
@@ -1615,6 +1615,7 @@ class UsersController extends Controller
             $data['username'] = $username;
             $data['users'] = $users;
             $data['title'] = _i('Users search');
+
             return view('back.users.search', $data);
 
         } catch (\Exception $ex) {
