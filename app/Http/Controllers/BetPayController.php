@@ -614,7 +614,7 @@ class BetPayController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function creditPayapl()
+    public function creditPaypal()
     {
         $data['transaction_type'] = TransactionTypes::$credit;
         $data['payment_method'] = PaymentMethods::$paypal;
