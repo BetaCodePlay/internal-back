@@ -138,7 +138,6 @@ class TransactionsCollection
                     );
                 }
             }
-
             $transaction->actions = '';
             if (Gate::allows('access', Permissions::$process_credit)) {
                 $transaction->actions .= sprintf(
@@ -245,23 +244,49 @@ class TransactionsCollection
                     break;
                 }
                 case PaymentMethods::$binance:
+                case PaymentMethods::$paypal:
+                {
+                    if( $status == TransactionStatus::$approved || $status == TransactionStatus::$rejected){
+                        $transaction->details .= sprintf(
+                                '<li><strong>%s</strong>: %s</li>',
+                                _i('Date'),
+                                Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                        );
+                        if (!is_null($transaction->details_data)) {
+                            $transaction->details .= sprintf(
+                                '<li><strong>%s</strong>: %s</li>',
+                                _i('Transaction ID'),
+                                $transaction->details_data->order
+                            );
+                            $transaction->details .= sprintf(
+                                '<li><strong>%s</strong>: %s</li>',
+                                _i('PayPal ID'),
+                                $transaction->details_data->id
+                            );
+                       }
+                    }else{
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('Date'),
+                            Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$mercado_pago:
                 {
                     $transaction->details .= sprintf(
                         '<li><strong>%s</strong>: %s</li>',
                         _i('Date'),
                         Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                     );
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Cryptocurrency'),
-                        $transaction->data->cryptocurrency
-                    );
-                    $transaction->details .= sprintf(
-                        '<li><strong>%s</strong>: %s</li>',
-                        _i('Cryptocurrency amount'),
-                        $transaction->data->cryptocurrency_amount
-                    );
-                    break;
+                    if (!is_null($transaction->details_data)) {
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('MercadoPago ID'),
+                            $transaction->details_data->id_mercado_pago
+                        );
+                    }
                 }
             }
 
@@ -407,6 +432,38 @@ class TransactionsCollection
                             _i('Qr'),
                             $image,
                             _i('View')
+                        );
+                    }
+                }
+                case PaymentMethods::$mercado_pago:
+                {
+                    $transaction->payment_method = '';
+                    if(isset($transaction->user_account->email)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Email'),
+                            $transaction->user_account->email
+                        );
+                    }
+                    if(isset($transaction->user_account->cbu)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CBU'),
+                            $transaction->user_account->cbu
+                        );
+                    }
+                    if(isset($transaction->user_account->cvu)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CVU'),
+                            $transaction->user_account->cvu
+                        );
+                    }
+                    if(isset($transaction->user_account->alias)){
+                        $transaction->payment_method .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Alias'),
+                            $transaction->user_account->alias
                         );
                     }
                 }
@@ -564,6 +621,47 @@ class TransactionsCollection
                             '<strong>%s:</strong> %s<br>',
                             _i('Qr'),
                             $transaction->user_account->qr
+                        );
+                    }
+                    break;
+                }
+                case PaymentMethods::$paypal:
+                {
+                    $transaction->withdrawal_data .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('Email'),
+                        $transaction->data->email
+                    );
+                    break;
+                }
+                case PaymentMethods::$mercado_pago:
+                {
+                    if(isset($transaction->user_account->email)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Email'),
+                            $transaction->user_account->email
+                        );
+                    }
+                    if(isset($transaction->user_account->cbu)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CBU'),
+                            $transaction->user_account->cbu
+                        );
+                    }
+                    if(isset($transaction->user_account->cvu)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('CVU'),
+                            $transaction->user_account->cvu
+                        );
+                    }
+                    if(isset($transaction->user_account->alias)){
+                        $transaction->withdrawal_data .= sprintf(
+                            '<strong>%s:</strong> %s<br>',
+                            _i('Alias'),
+                            $transaction->user_account->alias
                         );
                     }
                     break;

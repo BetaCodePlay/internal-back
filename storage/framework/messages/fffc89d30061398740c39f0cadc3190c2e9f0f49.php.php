@@ -101,6 +101,24 @@
                             <input type="text" name="binance_id" id="binance_id" class="form-control">
                         </div>
                     </div>
+                    <div id="mercado_pago" class="account d-none">
+                        <div class="form-group">
+                            <label for="mercado_pago_email"><?php echo e(_i('MercadoPago Email')); ?></label>
+                            <input type="email" name="mercado_pago_email" id="mercado_pago_email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="mercado_pago_cbu"><?php echo e(_i('MercadoPago CBU')); ?></label>
+                            <input type="number" name="mercado_pago_cbu" id="mercado_pago_cbu" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="mercado_pago_cvu"><?php echo e(_i('MercadoPago CVU')); ?></label>
+                            <input type="number" name="mercado_pago_cvu" id="mercado_pago_cvu" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="mercado_pago_alias"><?php echo e(_i('MercadoPago Alias')); ?></label>
+                            <input type="text" name="mercado_pago_alias" id="mercado_pago_alias" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" name="payment_method" id="payment_method">

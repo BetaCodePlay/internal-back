@@ -2,19 +2,11 @@
 
 @section('content')
     <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
-        <header
-            class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
+        <header class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
             <div class="media">
                 <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 mb-0">
                     {{ $title }}
                 </h3>
-                <div class="media-body d-flex justify-content-end">
-                    <a href="{{ route('featured-images.create', [$template_element_type]) }}" class="btn u-btn-3d u-btn-primary float-right">
-                        <i class="hs-admin-upload"></i>
-                        {{ _i('Upload') }}
-                    </a>
-                </div>
-
             </div>
         </header>
         <div class="card-block g-pa-15">
@@ -24,26 +16,26 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered w-100" id="images-table" data-route="{{ route('featured-images.all', [$template_element_type]) }}">
+                <table class="table table-bordered w-100" id="paypal-table" data-route="{{ route('betpay.transactions.data', [$payment_method, $provider, $transaction_type]) }}">
                     <thead>
                     <tr>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Image') }}
+                            {{ _i('ID') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Front') }}
+                            {{ _i('Username') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Position') }}
+                            {{ _i('Level') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Size') }}
+                            {{ _i('Amount') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('URL') }}
+                            {{ _i('Currency') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                            {{ _i('Category') }}
+                            {{ _i('Requested') }}
                         </th>
                         <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                             {{ _i('Status') }}
@@ -53,18 +45,21 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+    @include('back.betpay.paypal.modals.process-debit')
 @endsection
 
 @section('scripts')
     <script>
         $(function () {
-            let sectionImages = new SectionImages();
-            sectionImages.all();
+            let betPay = new BetPay();
+            betPay.debitPaypal();
         });
     </script>
 @endsection

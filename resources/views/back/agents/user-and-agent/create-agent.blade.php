@@ -26,13 +26,13 @@
                                             class="form-text text-muted">{{ _i('The username cannot be changed later') }}</small>
                                     </div>
                                 </div>
-{{--                                <div class="col-12 col-sm-4">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="username">{{ _i('Email') }}</label>--}}
-{{--                                        <input type="email" name="email" class="form-control" autocomplete="off" required>--}}
-{{--                                        <small class="form-text text-muted">{{ _i('Email can be changed later') }}</small>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-12 col-sm-4">--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label for="username">{{ _i('Email') }}</label>--}}
+                                {{--                                        <input type="email" name="email" class="form-control" autocomplete="off" required>--}}
+                                {{--                                        <small class="form-text text-muted">{{ _i('Email can be changed later') }}</small>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="col-12 col-sm-6">
                                     <label for="password">{{ _i('Password') }}</label>
                                     <div class="input-group">

@@ -1126,6 +1126,13 @@ class Users {
                     $('#binance_id').val($target.data('binance-id'));
                     break;
                 }
+                case 'mercado-pago': {
+                    $('#mercado_pago_email').val($target.data('mercado_pago_email'));
+                    $('#mercado_pago_cbu').val($target.data('mercado_pago_cbu'));
+                    $('#mercado_pago_cvu').val($target.data('mercado_pago_cvu'));
+                    $('#mercado_pago_alias').val($target.data('mercado_pago_alias'));
+                    break;
+                }
             }
         });
 
