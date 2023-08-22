@@ -58,7 +58,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -366,24 +365,15 @@ class UsersController extends Controller
                     'users' => []
                 ];
             } else {
-
-                if (Gate::allows('access', Permissions::$users_search)) {
-
-                    $users = $this->usersRepo->advancedSearch($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode);
-
-                }else{
-
-                    $user = Auth::user()->id;
-                    if (Auth::user()->username == 'romeo') {
-                        $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-                        $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
-                    }
-
-                    $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
-
-                    $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $idChildren);
+                $user = Auth::user()->id;
+                if (Auth::user()->username == 'romeo') {
+                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
                 }
 
+                $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+
+                $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $idChildren);
                 $this->usersCollection->formatSearch($users);
 
                 $data = [
@@ -1605,14 +1595,10 @@ class UsersController extends Controller
      */
     public function search(Request $request)
     {
+
         try {
             $username = strtolower($request->username);
-
-            if (Gate::allows('access', Permissions::$users_search)) {
-
-                $users = $this->usersRepo->search($username);
-            }else{
-
+            if(Configurations::getAgents()->active == true){
                 $user = Auth::user()->id;
                 if (Auth::user()->username == 'romeo') {
                     $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
@@ -1621,6 +1607,8 @@ class UsersController extends Controller
                 $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
 
                 $users = $this->usersRepo->searchTree($username, $idChildren);
+            }else{
+                $users = $this->usersRepo->search($username);
             }
 
             $this->usersCollection->formatSearch($users);
@@ -2280,8 +2268,7 @@ class UsersController extends Controller
                         'whitelabel_id' => $whitelabel,
                         'web_register' => false,
                         'main' => true,
-                        'action'=>ActionUser::$active,
-                        'type_user' => TypeUser::$agentMater
+                        'action'=>ActionUser::$active
                     ];
                     $profileData = [
                         'country_iso' => $request->country,
