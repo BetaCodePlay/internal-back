@@ -610,6 +610,20 @@ class BetPayController extends Controller
     }
 
     /**
+     * Show pending credit paypal
+     *
+     * @return Application|Factory|View
+     */
+    public function creditPayapl()
+    {
+        $data['transaction_type'] = TransactionTypes::$credit;
+        $data['payment_method'] = PaymentMethods::$paypal;
+        $data['provider'] = Providers::$paypal;
+        $data['title'] = _i('Pending Paypal credit transactions');
+        return view('back.betpay.paypal.credit', $data);
+    }
+
+    /**
      * Show credit report
      *
      * @param int $paymentMethod Payment method ID
