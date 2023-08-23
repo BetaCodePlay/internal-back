@@ -624,6 +624,20 @@ class BetPayController extends Controller
     }
 
     /**
+     * Show pending credit MercadoPago
+     *
+     * @return Application|Factory|View
+     */
+    public function creditMercadoPago()
+    {
+        $data['transaction_type'] = TransactionTypes::$credit;
+        $data['payment_method'] = PaymentMethods::$mercado_pago;
+        $data['provider'] = Providers::$mercado_pago;
+        $data['title'] = _i('Pending MercadoPago credit transactions');
+        return view('back.betpay.mercado-pago.credit', $data);
+    }
+
+    /**
      * Show credit report
      *
      * @param int $paymentMethod Payment method ID
