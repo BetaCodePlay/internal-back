@@ -13,7 +13,7 @@
                         <label for="action">{{ _i('Action') }}</label>
                         <select name="action" id="action" class="form-control">
                             <option value="">{{ _i('Select...') }}</option>
-                            <option value="1">{{ _i('Send to processor') }}</option>
+                            <option value="1">{{ _i('Approve') }}</option>
                             <option value="0">{{ _i('Reject') }}</option>
                         </select>
                     </div>
