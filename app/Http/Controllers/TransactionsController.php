@@ -179,7 +179,6 @@ class TransactionsController extends Controller
                 $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment];
                 $transactions = $this->transactionsRepo->getByUserAndProviderTypes($user, $currency, $providerTypes);
                 $this->transactionsCollection->formatTransactions($transactions);
-                \Log::debug($transactions);
                 $data = [
                     'transactions' => $transactions
                 ];
