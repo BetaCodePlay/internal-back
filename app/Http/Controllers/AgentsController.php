@@ -2464,6 +2464,8 @@ class AgentsController extends Controller
         try {
             $id = auth()->user()->id;
             $currency = session('currency');
+            $bonus = Configurations::getBonus(Configurations::getWhitelabel());
+            $whitelabel = Configurations::getWhitelabel();
             $type = $request->get('type');
             $user = $request->get('user');
             $amount = $request->get('amount');
@@ -2538,6 +2540,22 @@ class AgentsController extends Controller
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
+
+                        if($bonus) {
+                            $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$next_deposit_bonus);
+                            \Log::debug(['$campaigns' => $campaigns]);
+                             // Comprobar si $campaigns no está vacío antes de continuar
+                            if (!empty($campaigns)) {
+                                //Create wallet bonus
+                                $bonusLib = new Bonus;
+                                $session = Sessions::findUserByWallet($wallet);
+                                $walletBonus = Wallet::get($currency, true, $session->wallet_access_token);
+                                \Log::debug(['$$walletBonus' => $walletBonus]);
+                                // $walletBonus = Wallet::store($userData->id, $userData->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
+
+                                $participation = $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
+                            }
+                        }
                     } else {
 
                         $agentBalanceFinal = $walletData->data->wallet->balance;
