@@ -1346,8 +1346,6 @@ class TransactionsCollection
             $transaction->debit = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
             $transaction->credit = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
             $transaction->provider = Providers::getName($transaction->provider_id);
-            \Log::debug($transaction->provider_id);
-            \Log::debug($transaction->provider);
             if (isset($transaction->data->betpay_transaction)) {
                 $description = Providers::getDescription($transaction->provider_id, $transaction->transaction_type_id, $action = null, $transaction->data);
                 $betPay = _i('BetPay ID');
