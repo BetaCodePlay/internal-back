@@ -178,8 +178,8 @@ class TransactionsController extends Controller
             if (!is_null($user) && !is_null($currency)) {
                 $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment];
                 $transactions = $this->transactionsRepo->getByUserAndProviderTypes($user, $currency, $providerTypes);
-                \Log::debug($transactions);
                 $this->transactionsCollection->formatTransactions($transactions);
+                \Log::debug($transactions);
                 $data = [
                     'transactions' => $transactions
                 ];
