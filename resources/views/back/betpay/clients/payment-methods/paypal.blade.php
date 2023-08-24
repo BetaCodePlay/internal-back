@@ -10,3 +10,10 @@
             <input type="text" name="client_secret_paypal" class="form-control" autocomplete="off">
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="text-left">
+            <p>
+                {{ _i('Attention! Please note that fees will apply to paypal transactions.') }}
+            </p>
+        </div> 
+    </div>
