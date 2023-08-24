@@ -1599,7 +1599,7 @@ class UsersController extends Controller
 
         try {
             $username = strtolower($request->username);
-            if(Configurations::getAgents()->active == true){
+            if(Configurations::getAgents()->active == true && empty($request->get('type'))){
                 $user = Auth::user()->id;
                 if (Auth::user()->username == 'romeo') {
                     $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
