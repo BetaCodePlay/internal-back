@@ -10,7 +10,7 @@
             <input type="text" name="client_secret_paypal" class="form-control" autocomplete="off">
         </div>
     </div>
-    <div class="col-md-6 d-none paypal">
+    <div class="col-md-12 d-none paypal">
         <div class="noty_bar noty_type__warning noty_theme__unify--v1--dark g-mb-25">
             <div class="noty_body">
                     <div class="g-mr-20">
