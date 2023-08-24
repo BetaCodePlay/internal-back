@@ -1503,7 +1503,9 @@ class BonusSystemController extends Controller
                     $configData['bonus'] = (float)$bonus[$currency];
 
                 } else {
-                    $configData['percentage'] = $percentages[$currency] / 100;
+                    $configData['percentage'] = $percentages[$currency];
+                    //Asi estaba anteriormente
+                    // $configData['percentage'] = $percentages[$currency] / 100;
                     $configData['limit'] = (float)$limits[$currency];
                 }
 
