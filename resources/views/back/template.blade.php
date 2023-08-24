@@ -9,8 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=13">
-    <link rel="stylesheet"
-          href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
     @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)
         <link rel="shortcut icon" href="{{ asset('commons/img/bloko-favicon.png') }}">
     @else
@@ -55,7 +54,7 @@
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
-<script src="{{ asset('back/js/scripts.min.js') }}?v=22"></script>
+<script src="{{ asset('back/js/scripts.min.js') }}?v=23"></script>
 
 {{--TODO AGREGAR CDN PARA EXPORTAR PDF--}}
 {{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}

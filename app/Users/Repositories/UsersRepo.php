@@ -1222,15 +1222,20 @@ class UsersRepo
      * Search users by username
      *
      * @param string $username User username
+     * @param int $type Type User
      * @return mixed
      */
-    public function search(string $username)
+    public function search(string $username,int $type = null)
     {
+
         $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
             ->where('username', 'ilike', '%'.$username.'%');
             if (Auth::user()->username != 'wolf') {
                 $users =  $users->where('username','!=', 'wolf');
+            }
+            if (!is_null($type)) {
+                $users =  $users->where('type_user','=', $type);
             }
         $users = $users->orderBy('username', 'ASC')->get();
         return $users;

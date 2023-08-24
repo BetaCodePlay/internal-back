@@ -454,6 +454,7 @@ class UsersController extends Controller
             'timezone' => 'required',
             'currency' => 'required'
         ];
+
         $this->validate($request, $rules);
 
         try {

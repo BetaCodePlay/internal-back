@@ -19,7 +19,16 @@ if (!function_exists('menu')) {
                 'permission' => Permissions::$dashboard,
                 'submenu' => []
             ],
-
+            'ChangeRolAdmin' => [
+                'text' => _i('Change rol admin'),
+                'level_class' => 'top',
+                'route' => 'core.change.rol.admin',
+                'params' => [],
+                'icon' => 'hs-admin-dashboard',
+                'permission' => 273,
+                //'permission' => Permissions::$update_rol_admin,
+                'submenu' => []
+            ],
             'Users' => [
                 'text' => _i('See users'),
                 'level_class' => 'top',
@@ -850,7 +859,7 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$mercado_pago_menu,
                         'payment_method' => PaymentMethods::$mercado_pago,
                         'submenu' => [
-                            
+
                             'Debit' => [
                                 'text' => _i('Debit'),
                                 'level_class' => 'third',

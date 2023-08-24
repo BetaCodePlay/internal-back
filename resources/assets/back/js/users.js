@@ -858,6 +858,32 @@ class Users {
             });
         });
     }
+    //Change Rol Admin
+    changeRolAdmin() {
+        let $button = $('#changeRolAdmin');
+        let $form = $('#change-rol-form');
+        clearForm($form);
+
+        $button.click(function () {
+            $button.button('loading');
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                data: $form.serialize()
+            }).done(function (json) {
+                swalSuccessWithButton(json);
+                //clearForm($form);
+                $("#rol_id").val("").trigger( "change" );
+                $("#username_search").val("").trigger( "change" );
+                $('#listRoles').html('');
+
+            }).fail(function (json) {
+                swalError(json);
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+    }
 
     // Store main users
     storeMain() {
