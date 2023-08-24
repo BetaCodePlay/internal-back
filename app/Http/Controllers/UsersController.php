@@ -1599,7 +1599,7 @@ class UsersController extends Controller
 
         try {
             $username = strtolower($request->username);
-            if(Configurations::getAgents()->active == true && !$request->has('type')){
+            if(Configurations::getAgents()->active == true){
                 $user = Auth::user()->id;
                 if (Auth::user()->username == 'romeo') {
                     $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
@@ -1609,7 +1609,7 @@ class UsersController extends Controller
 
                 $users = $this->usersRepo->searchTree($username, $idChildren);
             }else{
-                $users = $this->usersRepo->search($username,TypeUser::$agentMater);
+                $users = $this->usersRepo->search($username);
             }
 
             $this->usersCollection->formatSearch($users);

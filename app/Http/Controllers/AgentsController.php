@@ -3629,7 +3629,7 @@ class AgentsController extends Controller
         try {
 
             $name = strtolower($request->user);
-            if (Configurations::getAgents()->active == true) {
+            if (Configurations::getAgents()->active == true && !$request->has('type')) {
                 $user = auth()->user()->id;
                 $currency = session('currency');
                 $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
