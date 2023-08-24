@@ -1609,7 +1609,7 @@ class UsersController extends Controller
 
                 $users = $this->usersRepo->searchTree($username, $idChildren);
             }else{
-                $users = $this->usersRepo->search($username);
+                $users = $this->usersRepo->search($username,TypeUser::$agentMater);
             }
 
             $this->usersCollection->formatSearch($users);
