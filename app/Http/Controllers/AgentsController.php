@@ -1235,6 +1235,41 @@ class AgentsController extends Controller
         return response()->json($json_data);
     }
 
+    public static function changeUserGlTmp($usersRepo,$agentRepo){
+
+       //TODO buscar supportgl
+       $gls = $usersRepo->sqlShareTmp('user_gl');
+       foreach ($gls as $index => $value){
+
+           //TODO buscando a admin
+           $adms = $usersRepo->sqlShareTmp('user_admin',null,null,$value->whitelabel_id);
+           foreach ($adms as $a => $admin){
+
+               //TODO SI EXISTE RELACION DE AGENTE
+               $agentAdminExist = $agentRepo->existAgent($admin->id);
+
+               //TODO GUARDANDO EL ID WOLF
+               $wolf_id = $agentAdminExist->owner_id;
+
+               if(isset($agentAdminExist->id)){
+
+                   //TODO supportgl new agent de bajo del wolf
+                   $agentRepo->store([
+                        'owner_id' =>$wolf_id,
+                        'user_id'  =>$value->id,
+                        'master'   =>true
+                   ]);
+
+                   //TODO gent admin por debajo de supportgl
+                   $agentRepo->update($agentAdminExist->id,[
+                       'owner_id'=>$value->id
+                   ]);
+               }
+
+           }
+       }
+    }
+
     /**
      * Data Example Sql and Datatable
      * Data Of Example
@@ -1243,6 +1278,8 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
+        return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo);
+
         $currency = session('currency');
         $agent = 76;
 
@@ -3750,11 +3787,30 @@ class AgentsController extends Controller
             //TODO VALIDATE CURRENCY
             if($request->has('update_currency') && $request->get('update_currency') == 'true'){
 
-                $users = $this->usersRepo->getUserIdsByWhitelabel($whitelabel);
+
+                $userId = Auth::user()->id;
+                if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
+                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                    $userId = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+                }
+
+                $users = $this->agentsCollection->childrenTreeSql($userId);
                 foreach ($users as $index => $value){
-                    //TODO NO EXISTE LA RELACION => CREARLA
-                    $issetUserRol = $this->usersRepo->getCurrencyUser();
-                    if(!isset($issetUserRol->id)){
+                    //TODO TYPE USER AGENT
+                    if(in_array($value->type_user,[1,2])){
+
+                        foreach ($currencies as $currency) {
+                            //TODO NO EXISTE LA RELACION CURRENCY => CREARLA
+                            $issetUserRol = $this->usersRepo->findCurrencyAgent($currency,$value->id_agent);
+                            if(!isset($issetUserRol->id)){
+                                $romeoAgentCurrencyData = [
+                                    'agent_id' => $value->id_agent,
+                                    'currency_iso' => $currency,
+                                ];
+                                $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, ['balance' => 0]);
+                            }
+
+                        }
 
                     }
 

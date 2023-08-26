@@ -2241,6 +2241,7 @@ class UsersController extends Controller
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
             $users = ['wolf', 'admin', 'panther', 'romeo', 'supportgl', 'supportnb', 'supportvj'];
+            //TODO $users = ['wolf', 'supportgl', 'admin'];
 
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
