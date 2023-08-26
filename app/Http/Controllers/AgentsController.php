@@ -3627,8 +3627,6 @@ class AgentsController extends Controller
             'whitelabel' => 'required'
         ]);
 
-        return [$request->all(),'test'];
-
         try {
             $whitelabel = $request->whitelabel;
             $admin = 'admin';
@@ -3752,12 +3750,16 @@ class AgentsController extends Controller
             //TODO VALIDATE CURRENCY
             if($request->has('update_currency') && $request->get('update_currency') == 'true'){
 
-                $data = [
-                    'title' => _i('Agents created'),
-                    'message' => _i('Agents were created successfully'),
-                    'close' => _i('Close'),
-                ];
-                return Utils::successResponse($data);
+                $users = $this->usersRepo->getUserIdsByWhitelabel($whitelabel);
+                foreach ($users as $index => $value){
+                    //TODO NO EXISTE LA RELACION => CREARLA
+                    $issetUserRol = $this->usersRepo->getCurrencyUser();
+                    if(!isset($issetUserRol->id)){
+
+                    }
+
+                }
+
             }
 
             $data = [

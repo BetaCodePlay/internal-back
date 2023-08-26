@@ -233,7 +233,6 @@ class UsersRepo
             ->first();
     }
 
-
     /**
      * Find exclude provider user
      *
@@ -322,6 +321,21 @@ class UsersRepo
         $users = User::select('users.*')
             ->where('id', $id)
             ->get();
+        return $users;
+    }
+
+    /**
+     * Get users all
+     *
+     * @param $whitelabel int Whitelabel Id
+     * @return mixed
+     */
+    public function getUserIdsByWhitelabel($whitelabel)
+    {
+        $users = User::select('users.id')
+            ->where('whitelabel_id', $whitelabel)
+            ->get();
+
         return $users;
     }
 

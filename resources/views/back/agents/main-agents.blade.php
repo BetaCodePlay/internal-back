@@ -28,7 +28,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3" hidden>
                                 <div class="form-group">
                                     <label for="defaultCurrency">{{ _i('Update Currency') }}</label>
                                     <div class="form-check">
