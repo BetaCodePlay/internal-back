@@ -1077,68 +1077,13 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
+        return 'changeUserGlTmp';
+
         return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo);
 
         $currency = session('currency');
-        $agent = 76;
+        return $agent = 76;
 
-        //TODO PROBAR TRANSACCION DE SUPERIOR A UN 3er INFERIOR
-        $offset = $request->has('start') ? $request->get('start') : 0;
-        $limit = $request->has('length') ? $request->get('length') : 100;
-
-        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('2020-m-d'));
-        $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-        $username = $request->has('search') ? $request->get('search')['value'] : null;
-        $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
-
-        $providers = [Providers::$agents, Providers::$agents_users];
-
-        $agents = $this->agentsRepo->getAgentsByOwner($agent, $currency);
-        $users = $this->agentsCollection->formatAgentsId($agents, $currency);
-        if (!in_array($agent, $users)) {
-            $users[] = $agent;
-        }
-
-        $users = [76, 81, 82, 83, 84];
-        $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateV1($agent, $providers, $currency, $startDate, $endDate, $limit, $offset, $username, $typeUser, $users);
-
-        $data = $this->agentsCollection->formatAgentTransactionsPaginate($transactions[0], $transactions[1], $request);
-
-        return response()->json($data);
-
-        //TODO DATA_TMP PAGIANTE
-        $currency = session('currency');
-        $whitelabel = Configurations::getWhitelabel();
-        $providers = [Providers::$agents, Providers::$agents_users];
-        //TODO CONVERSION OF ARRAY '{16,25}';
-        $providers = '{' . implode(', ', $providers) . '}';
-        $startDate = Utils::startOfDayUtc(date('2020-m-d'));
-        $endDate = Utils::endOfDayUtc(date('Y-m-d'));
-
-        $start = $request->has('start') ? $request->get('start') : 0;
-        $limit = $request->has('length') ? $request->get('length') : 10;
-        //$transactions = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerpage($whitelabel, $currency,$startDate,$endDate,$providers,null,$limit,$start);
-        $transactions = $this->closuresUsersTotals2023Repo->getClosureTmp($whitelabel, $currency, $startDate, $endDate, $providers, null, $limit, $start);
-        $total = empty($transactions) ? 0 : $transactions[0]->total_items;
-
-        $data = array();
-        if (!empty($transactions)) {
-            foreach ($transactions as $value) {
-                $nestedData['name_maker'] = $value->name_maker;
-                $nestedData['username'] = $value->username;
-                $nestedData['total_played'] = $value->total_played;
-
-                $data[] = $nestedData;
-            }
-        }
-        $json_data = array(
-            "draw" => intval($request->input('draw')),
-            "recordsTotal" => intval($total),
-            "recordsFiltered" => intval($total),
-            "data" => $data
-        );
-
-        return response()->json($json_data);
 
     }
 
@@ -3857,7 +3802,7 @@ class AgentsController extends Controller
                 $users = $this->agentsCollection->childrenTreeSql($userId);
                 foreach ($users as $index => $value){
                     //TODO TYPE USER AGENT
-                    if(in_array($value->type_user,[1,2])){
+                    if(in_array($value->type_user,[TypeUser::$agentMater,TypeUser::$agentCajero])){
 
                         foreach ($currencies as $currency) {
                             //TODO NO EXISTE LA RELACION CURRENCY => CREARLA

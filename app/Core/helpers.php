@@ -25,8 +25,7 @@ if (!function_exists('menu')) {
                 'route' => 'core.change.rol.admin',
                 'params' => [],
                 'icon' => 'hs-admin-dashboard',
-                'permission' => 273,
-                //'permission' => Permissions::$update_rol_admin,
+                'permission' => Permissions::$update_rol_admin,
                 'submenu' => []
             ],
             'Users' => [
