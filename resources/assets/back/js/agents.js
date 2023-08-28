@@ -1989,7 +1989,6 @@ class Agents {
         })
     }
 
-
     // Select agent or user
     selectAgentOrUser(placeholder) {
         $('select').select2();

@@ -2,6 +2,7 @@
 
 namespace App\Users\Repositories;
 
+use App\Agents\Entities\AgentCurrency;
 use App\Audits\Entities\Audit;
 use App\Audits\Enums\AuditTypes;
 use App\Users\Entities\User;
@@ -233,7 +234,6 @@ class UsersRepo
             ->first();
     }
 
-
     /**
      * Find exclude provider user
      *
@@ -322,6 +322,21 @@ class UsersRepo
         $users = User::select('users.*')
             ->where('id', $id)
             ->get();
+        return $users;
+    }
+
+    /**
+     * Get users all
+     *
+     * @param $whitelabel int Whitelabel Id
+     * @return mixed
+     */
+    public function getUserIdsByWhitelabel($whitelabel)
+    {
+        $users = User::select('users.id')
+            ->where('whitelabel_id', $whitelabel)
+            ->get();
+
         return $users;
     }
 
@@ -510,6 +525,23 @@ class UsersRepo
             ->whitelabel()
             ->get();
         return $user;
+    }
+
+    /**
+     * Find Currency Agent
+     *
+     * @param int $currency Currency Iso
+     * @param int $agent User ID
+     * @return mixed
+     */
+    public function findCurrencyAgent($currency, $agent)
+    {
+        $agentCurrency = AgentCurrency::where([
+            'agent_id'=>$agent,
+            'currency_iso'=>$currency
+        ])->first();
+
+        return $agentCurrency;
     }
 
     /**
@@ -1286,14 +1318,18 @@ class UsersRepo
         return [];
     }
 
-    public function sqlShareTmp($type, $id = null, $typeUser = null)
+    public function sqlShareTmp($type, $id = null, $typeUser = null,$whitelabel = null)
     {
-//        if ($type === 'users_agent') {
-//            //limit 1000
-//            // order by asc
-//            //where type_user = null
-//            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
-//        }
+        if ($type === 'user_gl') {
+            $nameTmp = 'supportgl';
+            return DB::select('select id,username,whitelabel_id from users where username = ? order by whitelabel_id asc limit ? ', [$nameTmp,1000]);
+        }
+        if ($type === 'user_admin') {
+            $nameTmp = 'admin';
+            return DB::select('select id,username,whitelabel_id from users where username = ? and whitelabel_id = ? order by whitelabel_id asc limit ? ', [$nameTmp,$whitelabel,1000]);
+        }
+
+        return ['Test:false'];
 //
 //        if ($type === 'update_rol') {
 //            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);

@@ -141,6 +141,10 @@ class AuthController extends Controller
                     if(Auth::user()->type_user == TypeUser::$agentMater){
                         $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
                     }
+                    //TODO ADD PERMISSION TO AGENT
+                    if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles) && Auth::user()->username == 'admin') {
+                        $permissionsMerge = array_merge($permissions,[Permissions::$dashboard,Permissions::$dashboard_widgets]);
+                    }
 
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
@@ -169,6 +173,9 @@ class AuthController extends Controller
                     //TODO ROL 19 Nuevo rol
                     if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles)) {
                         $route = route('agents.index');
+                        if(Auth::user()->username == 'admin'){
+                            $route = route('core.dashboard');
+                        }
                     }
 
                     if (in_array(Roles::$marketing, $roles)) {
