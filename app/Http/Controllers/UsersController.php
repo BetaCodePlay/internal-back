@@ -2240,7 +2240,7 @@ class UsersController extends Controller
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
-            $users = ['wolf', 'admin', 'panther', 'romeo', 'supportgl', 'supportnb', 'supportvj'];
+            $users = ['wolf','supportgl', 'admin', 'panther', 'romeo',  'supportnb', 'supportvj'];
             //TODO $users = ['wolf', 'supportgl', 'admin'];
 
             foreach ($users as $user) {

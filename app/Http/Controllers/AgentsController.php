@@ -1235,6 +1235,7 @@ class AgentsController extends Controller
         return response()->json($json_data);
     }
 
+    //TODO MODIFICAR SUPPORGL DEBAJO DE WOLF Y POR ECNIMA DE ADMIN
     public static function changeUserGlTmp($usersRepo,$agentRepo){
 
        //TODO buscar supportgl
