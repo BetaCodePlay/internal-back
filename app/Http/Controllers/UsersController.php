@@ -2230,8 +2230,7 @@ class UsersController extends Controller
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
-            $users = ['wolf','supportgl', 'admin', 'panther', 'romeo',  'supportnb', 'supportvj'];
-            //TODO $users = ['wolf', 'supportgl', 'admin'];
+            $users = ['romeo','wolf','supportgl', 'admin', 'panther',   'supportnb', 'supportvj'];
 
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
@@ -2271,7 +2270,8 @@ class UsersController extends Controller
                         'whitelabel_id' => $whitelabel,
                         'web_register' => false,
                         'main' => true,
-                        'action'=>ActionUser::$active
+                        'action'=>ActionUser::$active,
+                        'type_user'=>TypeUser::$agentMater,
                     ];
                     $profileData = [
                         'country_iso' => $request->country,

@@ -1034,38 +1034,53 @@ class AgentsController extends Controller
     }
 
     //TODO MODIFICAR SUPPORGL DEBAJO DE WOLF Y POR ECNIMA DE ADMIN
-    public static function changeUserGlTmp($usersRepo,$agentRepo){
+    public static function changeUserGlTmp($usersRepo,$agentRepo,$agentCurrenciesRepo){
 
-       //TODO buscar supportgl
+       //TODO buscar supportgl   id = 117
        $gls = $usersRepo->sqlShareTmp('user_gl');
        foreach ($gls as $index => $value){
 
-           //TODO buscando a admin
-           $adms = $usersRepo->sqlShareTmp('user_admin',null,null,$value->whitelabel_id);
-           foreach ($adms as $a => $admin){
+           if($value->whitelabel_id == 7){
 
-               //TODO SI EXISTE RELACION DE AGENTE
-               $agentAdminExist = $agentRepo->existAgent($admin->id);
+               //TODO buscando a admin  id = 114
+               $adms = $usersRepo->sqlShareTmp('user_admin',null,null,$value->whitelabel_id);
+               foreach ($adms as $a => $admin){
+                   Log::debug('admin',[$admin]);
+                   //TODO SI EXISTE RELACION DE AGENTE
+                   $agentAdminExist = $agentRepo->existAgent($admin->id);
 
-               //TODO GUARDANDO EL ID WOLF
-               $wolf_id = $agentAdminExist->owner_id;
+                   //TODO GUARDANDO EL ID WOLF
+                   if(!empty($agentAdminExist) && !is_null($agentAdminExist->owner_id)){
+                       $wolf_id = $agentAdminExist->owner_id;
 
-               if(isset($agentAdminExist->id)){
+                       if(isset($agentAdminExist->id)){
 
-                   //TODO supportgl new agent de bajo del wolf
-                   $agentRepo->store([
-                        'owner_id' =>$wolf_id,
-                        'user_id'  =>$value->id,
-                        'master'   =>true
-                   ]);
+                           //TODO supportgl new agent de bajo del wolf
+                           $newAgent = $agentRepo->store([
+                               'user_id'  =>$value->id,
+                               'owner_id' =>$wolf_id,
+                               'master'   =>true
+                           ]);
+                           //TODO gent admin por debajo de supportgl
+                           $agentRepo->update($agentAdminExist->id,[
+                               'owner_id'=>$value->id
+                           ]);
+                           $currencies = Configurations::getCurrencies();
+                           foreach ($currencies as $itemCurrency => $cu){
+                               $agentData = [
+                                   'agent_id' => $newAgent->id,
+                                   'currency_iso' => $cu,
+                               ];
+                               $agentCurrenciesRepo->store($agentData, ['balance' => 0]);
+                           }
 
-                   //TODO gent admin por debajo de supportgl
-                   $agentRepo->update($agentAdminExist->id,[
-                       'owner_id'=>$value->id
-                   ]);
+
+                       }
+                   }
+
                }
-
            }
+
        }
     }
 
@@ -1077,9 +1092,9 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
-        return 'changeUserGlTmp';
+        //return 'changeUserGlTmp';
 
-        return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo);
+        return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo,$this->agentCurrenciesRepo);
 
         $currency = session('currency');
         return $agent = 76;
@@ -3673,13 +3688,16 @@ class AgentsController extends Controller
             $whitelabel = $request->whitelabel;
             $admin = 'admin';
             $support = 'wolf';
+            $supportgl = 'supportgl';
             $romeo = 'romeo';
             $romeoAgent = null;
             $supportAgent = null;
+            $supportAgl = null;
             $adminAgent = null;
             $romeoUser = $this->usersRepo->getByUsername($romeo, $whitelabel);
             $supportUser = $this->usersRepo->getByUsername($support, $whitelabel);
             $adminUser = $this->usersRepo->getByUsername($admin, $whitelabel);
+            $supportglUser = $this->usersRepo->getByUsername($supportgl, $whitelabel);
 
             if (is_null($romeoUser)) {
                 $data = [
@@ -3699,6 +3717,15 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
+            if (is_null($supportglUser)) {
+                $data = [
+                    'title' => _i('User %s does not exist', [$supportgl]),
+                    'message' => _i('The %s user has not yet been created. Please create it first', [$supportgl]),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
             if (is_null($adminUser)) {
                 $data = [
                     'title' => _i('User %s does not exist', [$admin]),
@@ -3710,6 +3737,7 @@ class AgentsController extends Controller
 
             $romeoAgent = $this->agentsRepo->existAgent($romeoUser->id);
             $supportAgent = $this->agentsRepo->existAgent($supportUser->id);
+            $supportAgl = $this->agentsRepo->existAgent($supportglUser->id);
             $adminAgent = $this->agentsRepo->existAgent($adminUser->id);
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
 
@@ -3728,22 +3756,21 @@ class AgentsController extends Controller
                     'master' => true
                 ];
                 $supportAgent = $this->agentsRepo->store($supportAgentData);
-                $auditData = [
-                    'ip' => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
-                    'agents_data' => [
-                        'type' => $support,
-                        'data' => $supportAgentData
-                    ]
+            }
+
+            if (is_null($supportAgl)) {
+                $supportAgentData = [
+                    'user_id' => $supportglUser->id,
+                    'owner_id' => $supportUser->id,
+                    'master' => true
                 ];
-                //Audits::store($user, AuditTypes::$agent_creation, Configurations::getWhitelabel(), $auditData);
+                $supportAgentgl = $this->agentsRepo->store($supportAgentData);
             }
 
             if (is_null($adminAgent)) {
                 $adminAgentData = [
                     'user_id' => $adminUser->id,
-                    'owner_id' => $supportUser->id,
+                    'owner_id' => $supportglUser->id,
                     'master' => true
                 ];
                 $adminAgent = $this->agentsRepo->store($adminAgentData);
@@ -3779,6 +3806,13 @@ class AgentsController extends Controller
                     ];
                     $this->agentCurrenciesRepo->store($supportAgentCurrencyData, $balance);
                 }
+                if (!is_null($supportAgentgl)) {
+                    $supportAgentCurrencyData = [
+                        'agent_id' => $supportAgentgl->id,
+                        'currency_iso' => $currency,
+                    ];
+                    $this->agentCurrenciesRepo->store($supportAgentCurrencyData, $balance);
+                }
 
                 if (!is_null($adminAgent)) {
                     $adminAgentCurrencyData = [
@@ -3792,33 +3826,34 @@ class AgentsController extends Controller
             //TODO VALIDATE CURRENCY
             if($request->has('update_currency') && $request->get('update_currency') == 'true'){
 
+                if(Configurations::getAgents()->active == true){
+                    $userId = Auth::user()->id;
+                    if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
+                        $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                        $userId = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+                    }
 
-                $userId = Auth::user()->id;
-                if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
-                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-                    $userId = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
-                }
+                    $users = $this->agentsCollection->childrenTreeSql($userId);
+                    foreach ($users as $index => $value){
+                        //TODO TYPE USER AGENT
+                        if(in_array($value->type_user,[TypeUser::$agentMater,TypeUser::$agentCajero])){
 
-                $users = $this->agentsCollection->childrenTreeSql($userId);
-                foreach ($users as $index => $value){
-                    //TODO TYPE USER AGENT
-                    if(in_array($value->type_user,[TypeUser::$agentMater,TypeUser::$agentCajero])){
+                            foreach ($currencies as $currency) {
+                                //TODO NO EXISTE LA RELACION CURRENCY => CREARLA
+                                $issetUserRol = $this->usersRepo->findCurrencyAgent($currency,$value->id_agent);
+                                if(!isset($issetUserRol->id)){
+                                    $romeoAgentCurrencyData = [
+                                        'agent_id' => $value->id_agent,
+                                        'currency_iso' => $currency,
+                                    ];
+                                    $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, ['balance' => 0]);
+                                }
 
-                        foreach ($currencies as $currency) {
-                            //TODO NO EXISTE LA RELACION CURRENCY => CREARLA
-                            $issetUserRol = $this->usersRepo->findCurrencyAgent($currency,$value->id_agent);
-                            if(!isset($issetUserRol->id)){
-                                $romeoAgentCurrencyData = [
-                                    'agent_id' => $value->id_agent,
-                                    'currency_iso' => $currency,
-                                ];
-                                $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, ['balance' => 0]);
                             }
 
                         }
 
                     }
-
                 }
 
             }
