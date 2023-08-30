@@ -2596,7 +2596,7 @@ class AgentsController extends Controller
 
                             $campaignNext  = $this->campaignsRepo->findCampaign($whitelabel, $currency, $criteria[0]);
 
-                            if($campaignNext->data->allocation_criteria[0] ==  $criteria[0]) {
+                            if(!is_null($campaignNext) && isset($campaignNext->data->allocation_criteria[0]) && $campaignNext->data->allocation_criteria[0] ==  $criteria[0]) {
                                 // \Log::debug(['$campaignNext' => $campaignNext]);
                                 $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount, $campaignNext);
                             }
@@ -2604,7 +2604,7 @@ class AgentsController extends Controller
 
                             $campaignUnlimited  = $this->campaignsRepo->findCampaign($whitelabel, $currency, $criteria[1]);
 
-                            if($campaignUnlimited->data->allocation_criteria[0] == $criteria[1] ) {
+                            if(!is_null($campaignUnlimited) && isset($campaignUnlimited->data->allocation_criteria[0]) && $campaignUnlimited->data->allocation_criteria[0] == $criteria[1] ) {
                                 // \Log::debug(['$campaignUnlimited' => $campaignUnlimited]);
                                 $bonusLib->unlimitedDepositBonus($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount, $campaignUnlimited);
                             }
