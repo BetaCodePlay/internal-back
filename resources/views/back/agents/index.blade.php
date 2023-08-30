@@ -69,11 +69,11 @@
 @endsection
 
 @section('content')
-    {{-- @if($mailgun_notifications->active == true)
+    @if($mailgun_notifications->active == true)
         @if($confirmation_email == false)
             @include('back.layout.email-verify')
         @endif
-    @endif --}}
+    @endif
     <div class="row">
         <div class="col-lg-3 col-xl-4">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -468,8 +468,7 @@
                                     @endif
 
                                     <div class="row g-mb-15">
-                                        <div
-                                            class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
+                                        <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
                                                 <strong>{{ _i('Balance') }}</strong>
                                             </label>

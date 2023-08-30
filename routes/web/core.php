@@ -20,6 +20,24 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'CoreController@dashboard'
     ]);
 
+    // Change rol admin
+    Route::get('change/rol/admin', [
+        'as' => 'core.change.rol.admin',
+        'uses' => 'CoreController@changeRolAdmin'
+    ]);
+
+    // Add rol admin
+    Route::post('add/rol/admin', [
+        'as' => 'core.add.rol.admin',
+        'uses' => 'CoreController@addRolAdmin'
+    ]);
+
+    // Delete rol admin
+    Route::get('delete/rol/admin', [
+        'as' => 'core.delete.rol.admin',
+        'uses' => 'CoreController@deleteRolAdmin'
+    ]);
+
     // Show exchange rates view
     Route::get('exchange-rates', [
         'as' => 'core.exchange-rates',

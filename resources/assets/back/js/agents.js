@@ -1989,7 +1989,6 @@ class Agents {
         })
     }
 
-
     // Select agent or user
     selectAgentOrUser(placeholder) {
         $('select').select2();
@@ -2148,6 +2147,96 @@ class Agents {
                 return markup;
             }
         });
+    }
+
+    // select user search
+    selectUserSearch(placeholder) {
+        $('.username_search').select2();
+        let $username_search = $('#username_search');
+
+        $username_search.select2({
+            width: '100%',
+            placeholder,
+            allowClear: true,
+            language: 'es',
+            id: $username_search.id || $username_search.id,
+            text: $username_search.text || $username_search.username,
+
+            ajax: {
+                type: "POST",
+                url: $username_search.data('route'),
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        user: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (json, params) {
+                    let results = [];
+
+                    $.each(json.data.agents, function (usersIndex, value) {
+                        results.push({
+                            id: value.id,
+                            text: value.username,
+                            roles: value.roles
+                        });
+                    });
+                    return {
+                        results: results,
+                        paginate: {
+                            more: false
+                        }
+                    };
+                },
+                cache: true
+            },
+
+            minimumInputLength: 3,
+            templateSelection: function (repo) {
+                return repo.username || repo.text;
+            },
+
+            escapeMarkup: function (markup) {
+                return markup;
+            },
+            templateResult: function (res) {
+                if (res.loading) {
+                    return res.text;
+                }
+
+                let markup = "<div class='select2-result-repository clearfix'>" +
+                    "<div class='select2-result-repository__meta'>" +
+                    "<div class='select2-result-repository__title'>" + res.text + "</div>" +
+                    "</div></div>";
+                return markup;
+            }
+        });
+
+        $username_search.on('select2:select', function (e) {
+            var data = e.params.data;
+            $('#listRoles').html('');
+            let optionTmp = '';
+            $.each(data.roles, function (usersIndex, value) {
+                optionTmp += '<div class="modal-header deleteHtml_'+value.id+'" style="background-color: #20c997" >\n' +
+        '  <strong>'+value.description+'</strong>\n' +
+        '     <button type="button" class="close removeRoleUser" data-user="'+data.id+'" data-rol="'+value.id+'" data-dismiss="modal" aria-label="Close">\n' +
+        '    <span aria-hidden="true" style="color: red!important;font-size: larger!important;">&times;</span>\n' +
+        '  </button>\n' +
+        '  </div>'
+            });
+            $('#listRoles').append(optionTmp);
+        });
+
+        $(document).on('click', '.removeRoleUser', function () {
+            let $route = $('#listRoles').data('route_delete')+'?user_id='+$(this).data('user')+'&rol_id='+$(this).data('rol');
+            let $rol = $(this).data('rol');
+            swalConfirm($route, function () {
+                $('.deleteHtml_'+$rol).remove();
+            });
+        });
+
     }
 
     selectWhitelabelMakers() {

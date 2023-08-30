@@ -19,7 +19,15 @@ if (!function_exists('menu')) {
                 'permission' => Permissions::$dashboard,
                 'submenu' => []
             ],
-
+            'ChangeRolAdmin' => [
+                'text' => _i('Change rol admin'),
+                'level_class' => 'top',
+                'route' => 'core.change.rol.admin',
+                'params' => [],
+                'icon' => 'hs-admin-dashboard',
+                'permission' => Permissions::$update_rol_admin,
+                'submenu' => []
+            ],
             'Users' => [
                 'text' => _i('See users'),
                 'level_class' => 'top',
@@ -830,6 +838,15 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$paypal_menu,
                         'payment_method' => PaymentMethods::$paypal,
                         'submenu' => [
+                            'Credit' => [
+                                'text' => _i('Credit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.paypal.credit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-left',
+                                'permission' => Permissions::$credit_paypal_menu,
+                                'submenu' => []
+                            ],
                             'Debit' => [
                                 'text' => _i('Debit'),
                                 'level_class' => 'third',
@@ -850,7 +867,15 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$mercado_pago_menu,
                         'payment_method' => PaymentMethods::$mercado_pago,
                         'submenu' => [
-                            
+                            'Credit' => [
+                                'text' => _i('Credit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.mercado-pago.credit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-left',
+                                'permission' => Permissions::$credit_mercado_pago_menu,
+                                'submenu' => []
+                            ],
                             'Debit' => [
                                 'text' => _i('Debit'),
                                 'level_class' => 'third',
