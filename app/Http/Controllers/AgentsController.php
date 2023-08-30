@@ -2595,17 +2595,15 @@ class AgentsController extends Controller
                             $walletBonus = Wallet::get($currency, true, $session->wallet_access_token);
 
                             $campaignNext  = $this->campaignsRepo->findCampaign($whitelabel, $currency, $criteria[0]);
-
+                            \Log::debug(['$campaignNext' => $campaignNext]);
                             if(!is_null($campaignNext) && isset($campaignNext->data->allocation_criteria[0]) && $campaignNext->data->allocation_criteria[0] ==  $criteria[0]) {
-                                // \Log::debug(['$campaignNext' => $campaignNext]);
                                 $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount, $campaignNext);
                             }
 
 
                             $campaignUnlimited  = $this->campaignsRepo->findCampaign($whitelabel, $currency, $criteria[1]);
-
+                            \Log::debug(['$campaignUnlimited' => $campaignUnlimited]);
                             if(!is_null($campaignUnlimited) && isset($campaignUnlimited->data->allocation_criteria[0]) && $campaignUnlimited->data->allocation_criteria[0] == $criteria[1] ) {
-                                // \Log::debug(['$campaignUnlimited' => $campaignUnlimited]);
                                 $bonusLib->unlimitedDepositBonus($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount, $campaignUnlimited);
                             }
 
