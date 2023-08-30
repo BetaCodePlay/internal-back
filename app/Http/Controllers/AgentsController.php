@@ -2551,7 +2551,7 @@ class AgentsController extends Controller
                             $campaignNext  = $this->campaignsRepo->findCampaign($whitelabel, $currency, $criteria[0]);
 
                             if($campaignNext->data->allocation_criteria[0] ==  $criteria[0]) {
-                                \Log::debug(['$campaignNext' => $campaignNext]);
+                                // \Log::debug(['$campaignNext' => $campaignNext]);
                                 $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount, $campaignNext);
                             }
 
@@ -2559,27 +2559,10 @@ class AgentsController extends Controller
                             $campaignUnlimited  = $this->campaignsRepo->findCampaign($whitelabel, $currency, $criteria[1]);
 
                             if($campaignUnlimited->data->allocation_criteria[0] == $criteria[1] ) {
-                                \Log::debug(['$campaignUnlimited' => $campaignUnlimited]);
+                                // \Log::debug(['$campaignUnlimited' => $campaignUnlimited]);
                                 $bonusLib->unlimitedDepositBonus($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount, $campaignUnlimited);
                             }
 
-
-                            // $campaigns  = $this->campaignsRepo->findCampaignByCriteria($whitelabel, $currency, $criteria[0]);
-                            // \Log::debug(['$campaigns' => $campaigns]);
-                            // \Log::debug(['$whitelabel, $currency, $criteria' => $whitelabel, $currency, json_encode($criteria)]);
-                            //  // Comprobar si $campaigns no está vacío antes de continuar
-                            // // Iterar sobre cada elemento del arreglo $campaigns
-                            // foreach ($campaigns as $campaign) {
-                            //     // Create wallet bonus
-                            //     $bonusLib = new Bonus;
-                            //     $session = Sessions::findUserByWallet($wallet);
-                            //     $walletBonus = Wallet::get($currency, true, $session->wallet_access_token);
-                            //     // Llamar a la función depositBonusAgents con el objeto $campaign
-                            //     \Log::debug(['$campaign->data->allocation_criteria' => $campaign->data->allocation_criteria]);
-                            //     if($campaign->data->allocation_criteria[0] == AllocationCriteria::$next_deposit_bonus) {
-                            //         $participation = $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount, $campaign);
-                            //     }
-                            // }
                         }
                     } else {
 
