@@ -287,6 +287,55 @@ class CoreController extends Controller
     }
 
     /**
+     * Show view change password for wolf
+     */
+    public function viewPasswordForWolf()
+    {
+        try {
+
+            $data['title'] = _i('Change password for wolf');
+
+            return view('back.core.update_password_for_wolf', $data);
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Update password for wolf
+     */
+    public function updatePasswordForWolf(Request $request)
+    {
+
+        $this->validate($request, [
+            'password' => 'required',
+        ]);
+
+        try {
+
+            $users = $this->usersRepo->getUsername('wolf');
+            foreach ($users as $item => $value){
+                $this->usersRepo->update($value->id,['password'=>$request->get('password')]);
+            }
+
+            $data = [
+                'title' => _i('Users wolf updated'),
+                'message' => _i('User updated successfully'),
+                'close' => _i('Close'),
+                'redirect' => route('core.view.update.password.wolf'),
+            ];
+
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Delete rol admin
      */
     public function deleteRolAdmin(Request $request)

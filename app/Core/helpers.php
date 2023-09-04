@@ -28,6 +28,15 @@ if (!function_exists('menu')) {
                 'permission' => Permissions::$update_rol_admin,
                 'submenu' => []
             ],
+            'UpdatePasswordOfWolf' => [
+                'text' => _i('Change password of wolf'),
+                'level_class' => 'top',
+                'route' => 'core.view.update.password.wolf',
+                'params' => [],
+                'icon' => 'hs-admin-dashboard',
+                'permission' => Permissions::$update_password_wolf,
+                'submenu' => []
+            ],
             'Users' => [
                 'text' => _i('See users'),
                 'level_class' => 'top',
@@ -182,6 +191,16 @@ if (!function_exists('menu')) {
                         'params' => [],
                         'icon' => 'hs-admin-lock',
                         'permission' => Permissions::$report_auto_lock_users,
+                        'submenu' => []
+                    ],
+
+                    'MyUser' => [
+                        'text' => _i('My users'),
+                        'level_class' => 'third',
+                        'route' => 'users.list.by.owner',
+                        'params' => [],
+                        'icon' => 'hs-admin-lock',
+                        'permission' => Permissions::$update_rol_admin,
                         'submenu' => []
                     ],
 

@@ -4164,8 +4164,13 @@ class AgentsController extends Controller
     public function viewCreateAgent(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
         try {
+            $id = auth()->user()->id;
+            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
+                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                $id = isset($userTmp[0]->id) ? $userTmp[0]->id : auth()->user()->id;
+            }
 
-            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency(auth()->user()->id, session('currency'));
+            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
             $data['countries'] = $countriesRepo->all();
             $data['timezones'] = \DateTimeZone::listIdentifiers();
 
@@ -4190,8 +4195,13 @@ class AgentsController extends Controller
     public function viewCreateUser(CountriesRepo $countriesRepo, ProvidersRepo $providersRepo, ClosuresUsersTotalsRepo $closuresUsersTotalsRepo, ReportsCollection $reportsCollection)
     {
         try {
+            $id = auth()->user()->id;
+            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
+                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                $id = isset($userTmp[0]->id) ? $userTmp[0]->id : auth()->user()->id;
+            }
 
-            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency(auth()->user()->id, session('currency'));
+            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
             $data['countries'] = $countriesRepo->all();
             $data['timezones'] = \DateTimeZone::listIdentifiers();
 

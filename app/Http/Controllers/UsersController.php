@@ -2758,6 +2758,52 @@ class UsersController extends Controller
     }
 
     /**
+     * Show view of list users
+     */
+    public function listMyUsers()
+    {
+        try {
+
+            $description = Configurations::getWhitelabelDescription();
+            $data['title'] = _i('Lista de usuarios') . ' ' . $description;
+            $data['roles'] = [];
+
+            return view('back.users.list_users_by_owner', $data);
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * list users
+     * @param Request $request
+     * @return Response
+     */
+    public function getMyUsers(Request $request)
+    {
+        try {
+
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+
+            $offset = $request->has('start') ? $request->get('start') : 0;
+            $limit = $request->has('length') ? $request->get('length') : 2000;
+
+            $users = $this->usersRepo->getMyUsers(Auth::id(),$whitelabel, $currency,$limit,$offset);
+
+            $data = $this->usersCollection->formatMyUsers($request,$users);
+
+            return response()->json($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Validate email
      *
      * @param string $email Email to validate

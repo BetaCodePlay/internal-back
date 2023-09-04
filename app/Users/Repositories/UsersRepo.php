@@ -326,6 +326,30 @@ class UsersRepo
     }
 
     /**
+     * Get my users
+     *
+     * @param $user int id User
+     * @param $whitelabel int Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
+     * @return mixed
+     */
+    public function getMyUsers($user,$whitelabel, $currency,$limit = 10, $offset = 0)
+    {
+
+        return Audit::select('users.id','users.username','users.type_user as type','users.action','users.status','audits.created_at')
+            ->join('users', 'users.id', '=', 'audits.user_id')
+            ->whereRaw("data::json->>'user_id' = ?", $user)
+            ->where([
+                'audit_type_id' => AuditTypes::$user_creation,
+                'audits.whitelabel_id' => $whitelabel
+            ])
+            ->get();
+
+    }
+
+    /**
      * Get users all
      *
      * @param $whitelabel int Whitelabel Id
@@ -1248,6 +1272,17 @@ class UsersRepo
             ->where('users.id', $id)
             ->whitelabel()
             ->first();
+    }
+
+    /**
+     * Get user wolf
+     *
+     * @param int $username User name
+     * @return mixed
+     */
+    public function getUsername($username)
+    {
+        return User::where('username', $username)->get(['id','username']);
     }
 
     /**

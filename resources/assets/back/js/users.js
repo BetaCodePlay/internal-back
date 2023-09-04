@@ -2,7 +2,7 @@ import {
     clearForm,
     initDatepickerEndToday,
     initDateRangePickerEndToday,
-    initFileInput,
+    initFileInput, initLitepickerEndToday,
     initSelect2,
     refreshRandomPassword
 } from "./commons";
@@ -885,6 +885,78 @@ class Users {
         });
     }
 
+    // Table Transaction Timeline
+    getMyUsers(lengthMenu) {
+
+        let $tableMyUsers = $('#tableMyUsers');
+
+        let api;
+
+        $tableMyUsers.DataTable({
+            responsive: true,
+            bFilter: false,
+            bInfo: false,
+            searching: true,
+            order: [[0, 'asc']],
+            ordering: true,
+            processing: false,
+            serverSide: false,
+            lengthMenu: lengthMenu,
+            ajax: {
+                url: $tableMyUsers.data('route') ,
+                dataType: 'json',
+                type: 'get',
+            },
+            columns: [
+                {data: 'id'},
+                {data: 'names'},
+                {data: 'date'},
+                {data: 'details'},
+                // {data: 'action'}
+            ],
+            buttons: [
+                { extend: 'pdf', text:'PDF',className: 'pdfButton' },
+                { extend: 'copy', text:'Copy',className: 'btn btn-info u-btn-3d' },
+                { extend: 'excel', text:'Excel', className: 'btn btn-success u-btn-3d' },
+                // { extend: 'pdfHtml5', text:'PDF-5',className: 'pdfButton' },
+                // { extend: 'pdfHtml5',
+                //     text: 'Save current page',
+                //     download: 'open',
+                //     exportOptions: {
+                //         modifier: {
+                //             page: 'current'
+                //         }
+                //     }
+                // }
+            ],
+            initComplete: function () {
+                api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+            }
+        });
+
+        $button.click(function () {
+            $button.button('loading');
+
+            let getStart = picker.getStartDate();
+            let getEnd = picker.getEndDate();
+            picker.destroy()
+            picker = initLitepickerEndToday(moment(getStart),moment(getEnd));
+
+            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let dateFinal = '?start_date=' + startDate + '&end_date=' + endDate
+            let route = $tableTransaction.data('route') + dateFinal;
+            api.ajax.url(route).load();
+            $tableTransaction.on('draw.dt', function () {
+                $button.button('reset');
+            });
+        });
+
+    }
+
+
     // Store main users
     storeMain() {
         initSelect2();
@@ -1496,6 +1568,36 @@ class Users {
         });
 
     };
+
+    // Update Password of wolf
+    updatePasswordForWold() {
+        refreshRandomPassword();
+        let $form = $('#updatePassword-of-wolf');
+        let $button = $('#updatePasswordOfWolf');
+
+        $button.click(function () {
+            $button.button('loading');
+
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'post',
+                dataType: 'json',
+                data: $form.serialize()
+            }).done(function (json) {
+                $form.trigger('reset');
+                swalSuccessNoButton(json);
+                setTimeout(() => {
+                    window.location.href = json.data.redirect;
+                }, 1000)
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+    }
 
 }
 
