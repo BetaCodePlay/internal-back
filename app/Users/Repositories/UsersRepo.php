@@ -1357,7 +1357,12 @@ class UsersRepo
     {
         if ($type === 'user_gl') {
             $nameTmp = 'supportgl';
-            return DB::select('select id,username,whitelabel_id from users where username = ? order by whitelabel_id asc limit ? ', [$nameTmp,1000]);
+            //return DB::select('select id,username,whitelabel_id from users where username = ? order by whitelabel_id asc limit ? ', [$nameTmp,1000]);
+            return DB::select("
+                                    select id,username,u.whitelabel_id,(c.data->>'agents')::json->>'active' as active_agent from site.users u inner join site.configurations c on u.whitelabel_id = c.whitelabel_id
+                                         where u.username = ?
+                                         and c.component_id = ?
+                                         order by u.whitelabel_id asc limit ?", [$nameTmp,5,100]);
         }
         if ($type === 'user_admin') {
             $nameTmp = 'admin';

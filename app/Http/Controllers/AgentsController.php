@@ -1038,9 +1038,10 @@ class AgentsController extends Controller
 
        //TODO buscar supportgl   id = 117
        $gls = $usersRepo->sqlShareTmp('user_gl');
+       $arrayWl = [1,7];
        foreach ($gls as $index => $value){
 
-           if($value->whitelabel_id == 7){
+           if(in_array($value->whitelabel_id,$arrayWl) && $value->active_agent){
 
                //TODO buscando a admin  id = 114
                $adms = $usersRepo->sqlShareTmp('user_admin',null,null,$value->whitelabel_id);
@@ -1066,6 +1067,7 @@ class AgentsController extends Controller
                                'owner_id'=>$value->id
                            ]);
                            $currencies = Configurations::getCurrencies();
+                           //TODO SALDO 0 por ser supportgl
                            foreach ($currencies as $itemCurrency => $cu){
                                $agentData = [
                                    'agent_id' => $newAgent->id,

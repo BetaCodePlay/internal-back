@@ -386,7 +386,6 @@ class CoreController extends Controller
         }
     }
 
-
     /**
      * Show exchange rates view
      *
