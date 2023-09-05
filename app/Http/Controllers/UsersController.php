@@ -2765,7 +2765,7 @@ class UsersController extends Controller
         try {
 
             $description = Configurations::getWhitelabelDescription();
-            $data['title'] = _i('Lista de usuarios') . ' ' . $description;
+            $data['title'] = _i('List of users') . ' ' . $description;
             $data['roles'] = [];
 
             return view('back.users.list_users_by_owner', $data);

@@ -876,6 +876,7 @@ class Users {
                 $("#rol_id").val("").trigger( "change" );
                 $("#username_search").val("").trigger( "change" );
                 $('#listRoles').html('');
+                $('.textTitleRol').text('');
 
             }).fail(function (json) {
                 swalError(json);

@@ -29,8 +29,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="rol_id">{{ _i('Rol') }}</label>
-                                    <select name="rol_id" id="rol_id" class="form-control"
-                                            required="required">
+                                    <select name="rol_id[]" id="rol_id" class="form-control"
+                                            required="required" multiple>
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach($roles as $value)
                                             <option value="{{$value->id}}">{{$value->description}}</option>
@@ -50,6 +50,10 @@
                         </div>
                     </form>
                     <div class="row">
+                        <div class="col-12">
+                            <h4 class="textTitleRol"></h4>
+                        </div>
+
                         <div class="col-6" id="listRoles" data-route_delete="{{ route('core.delete.rol.admin')}}">
 
                         </div>
@@ -65,7 +69,7 @@
         $(function () {
             let agents = new Agents();
             let users = new Users();
-            agents.selectUserSearch('{{ _i('User search...') }}');
+            agents.selectUserSearch('{{ _i('User search...') }}','{{_i('Roles current')}}','{{_i('No role assigned')}}');
             users.changeRolAdmin();
         });
     </script>

@@ -263,13 +263,16 @@ class CoreController extends Controller
 
             $user = $this->usersRepo->find($request->get('user_id'));
             if(isset($user->id)){
-               $rolUser = $this->rolesRepo->findRolUser($user->id, $request->get('rol_id'));
-                if(!isset($rolUser->id)){
-                    $this->rolesRepo->assignRole([
-                        'user_id'=>$user->id,
-                        'role_id'=> $request->get('rol_id')
-                    ]);
+                foreach ($request->get('rol_id') as $item => $rol_id){
+                    $rolUser = $this->rolesRepo->findRolUser($user->id, $rol_id);
+                    if(!isset($rolUser->id)){
+                        $this->rolesRepo->assignRole([
+                            'user_id'=>$user->id,
+                            'role_id'=> $rol_id
+                        ]);
+                    }
                 }
+
             }
 
             $data = [

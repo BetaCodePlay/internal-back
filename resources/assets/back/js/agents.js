@@ -2150,7 +2150,7 @@ class Agents {
     }
 
     // select user search
-    selectUserSearch(placeholder) {
+    selectUserSearch(placeholder,title1,title2) {
         $('.username_search').select2();
         let $username_search = $('#username_search');
 
@@ -2217,22 +2217,33 @@ class Agents {
         $username_search.on('select2:select', function (e) {
             var data = e.params.data;
             $('#listRoles').html('');
+            $('.textTitleRol').text('');
             let optionTmp = '';
-            $.each(data.roles, function (usersIndex, value) {
-                optionTmp += '<div class="modal-header deleteHtml_'+value.id+'" style="background-color: #20c997" >\n' +
-        '  <strong>'+value.description+'</strong>\n' +
-        '     <button type="button" class="close removeRoleUser" data-user="'+data.id+'" data-rol="'+value.id+'" data-dismiss="modal" aria-label="Close">\n' +
-        '    <span aria-hidden="true" style="color: red!important;font-size: larger!important;">&times;</span>\n' +
-        '  </button>\n' +
-        '  </div>'
-            });
+            $('.textTitleRol').text(title2);
+            if(data.roles.length > 0){
+                $('.textTitleRol').text(title1);
+                $.each(data.roles, function (usersIndex, value) {
+                    optionTmp += '<div class="modal-header deleteHtml_'+value.id+'" style="background-color: #20c997" >\n' +
+                        '  <strong>'+value.description+'</strong>\n' +
+                        '     <button type="button" class="close removeRoleUser" data-user="'+data.id+'" data-rol="'+value.id+'" data-dismiss="modal" aria-label="Close">\n' +
+                        '    <span aria-hidden="true" style="color: red!important;font-size: larger!important;">&times;</span>\n' +
+                        '  </button>\n' +
+                        '  </div>'
+                });
+            }
+
             $('#listRoles').append(optionTmp);
         });
 
         $(document).on('click', '.removeRoleUser', function () {
+            $("#rol_id").val("").trigger( "change" );
+            $("#username_search").val("").trigger( "change" );
+
             let $route = $('#listRoles').data('route_delete')+'?user_id='+$(this).data('user')+'&rol_id='+$(this).data('rol');
             let $rol = $(this).data('rol');
             swalConfirm($route, function () {
+                $('#listRoles').html('');
+                $('.textTitleRol').text('');
                 $('.deleteHtml_'+$rol).remove();
             });
         });
