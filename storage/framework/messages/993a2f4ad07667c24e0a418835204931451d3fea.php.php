@@ -451,14 +451,14 @@ class AgentsRepo
                       JOIN all_agents ON agents.owner_id = all_agents.user_id
                       )
 
-                    SELECT u.id, u.username, a.owner_id, u.type_user, ac.currency_iso as currency, u.status, level
+                    SELECT u.id, a.id as id_agent, u.username, a.owner_id, u.type_user, ac.currency_iso as currency, u.status, level
                         FROM site.users u
                         INNER JOIN  all_agents a on u.id=a.user_id
                         INNER JOIN site.agent_currencies AS ac ON a.id = ac.agent_id
                         WHERE u.whitelabel_id = ?
                         AND ac.currency_iso = ?
                     UNION
-                        SELECT u.id,u.username, a.user_id, u.type_user, ac.currency_iso as currency,u.status, level+1 as level FROM site.agent_user AS au
+                        SELECT u.id,a.id as id_agent,u.username, a.user_id, u.type_user, ac.currency_iso as currency,u.status, level+1 as level FROM site.agent_user AS au
                         INNER JOIN site.users AS u ON u.id = au.user_id
                         INNER JOIN  all_agents  a on au.agent_id=a.id
                         INNER JOIN site.agent_currencies AS ac ON a.id = ac.agent_id
@@ -630,6 +630,11 @@ class AgentsRepo
             ->get();
     }
 
+    /**
+     *
+     * @param $user
+     * @return mixed
+     */
     public function iAgent($user)
     {
         $iAgent = DB::select('SELECT a.percentage
