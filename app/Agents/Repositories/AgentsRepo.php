@@ -630,6 +630,11 @@ class AgentsRepo
             ->get();
     }
 
+    /**
+     *
+     * @param $user
+     * @return mixed
+     */
     public function iAgent($user)
     {
         $iAgent = DB::select('SELECT a.percentage

@@ -1036,55 +1036,62 @@ class AgentsController extends Controller
     //TODO MODIFICAR SUPPORGL DEBAJO DE WOLF Y POR ECNIMA DE ADMIN
     public static function changeUserGlTmp($usersRepo,$agentRepo,$agentCurrenciesRepo){
 
-       //TODO buscar supportgl   id = 117
+       //TODO buscar supportgl
        $gls = $usersRepo->sqlShareTmp('user_gl');
        $arrayWl = [1,7];
        foreach ($gls as $index => $value){
 
+           //TODO SI ES LA WL Y SI TIENE AGENTS ACTIVADO
            if(in_array($value->whitelabel_id,$arrayWl) && $value->active_agent){
 
-               //TODO buscando a admin  id = 114
-               $adms = $usersRepo->sqlShareTmp('user_admin',null,null,$value->whitelabel_id);
-               foreach ($adms as $a => $admin){
+               //TODO VER SI YA EXISTE EL USUARIO SUPPORTGL COMO AGENTE
+               $existAgentGl = $agentRepo->existAgent($value->id);
+               if(!isset($existAgentGl->id)){
 
-                   //TODO SI EXISTE RELACION DE AGENTE
-                   $agentAdminExist = $agentRepo->existAgent($admin->id);
-                   Log::debug('changeUserGlTmp',[
-                       'userGl'=>$value,
-                       'userAdmin'=>$admin,
-                       'UserAdmin-Agent'=>$agentAdminExist
-                   ]);
-                   //TODO GUARDANDO EL ID WOLF
-                   if(!empty($agentAdminExist) && !is_null($agentAdminExist->owner_id)){
-                       $wolf_id = $agentAdminExist->owner_id;
+                   $adms = $usersRepo->sqlShareTmp('user_admin',null,null,$value->whitelabel_id);
+                   foreach ($adms as $a => $admin){
 
-                       if(isset($agentAdminExist->id)){
+                       //TODO SI EXISTE RELACION DE AGENTE
+                       $agentAdminExist = $agentRepo->existAgent($admin->id);
+                       Log::debug('changeUserGlTmp',[
+                           'userGl'=>$value,
+                           'userAdmin'=>$admin,
+                           'UserAdmin-Agent'=>$agentAdminExist
+                       ]);
+                       //TODO GUARDANDO EL ID WOLF
+                       if(!empty($agentAdminExist) && !is_null($agentAdminExist->owner_id)){
+                           $wolf_id = $agentAdminExist->owner_id;
 
-                           //TODO supportgl new agent de bajo del wolf
-                           $newAgent = $agentRepo->store([
-                               'user_id'  =>$value->id,
-                               'owner_id' =>$wolf_id,
-                               'master'   =>true
-                           ]);
-                           //TODO gent admin por debajo de supportgl
-                           $agentRepo->update($agentAdminExist->id,[
-                               'owner_id'=>$value->id
-                           ]);
-                           $currencies = Configurations::getCurrencies();
-                           //TODO SALDO 0 por ser supportgl
-                           foreach ($currencies as $itemCurrency => $cu){
-                               $agentData = [
-                                   'agent_id' => $newAgent->id,
-                                   'currency_iso' => $cu,
-                               ];
-                               $agentCurrenciesRepo->store($agentData, ['balance' => 0]);
+                           if(isset($agentAdminExist->id)){
+
+                               //TODO supportgl new agent de bajo del wolf
+                               $newAgent = $agentRepo->store([
+                                   'user_id'  =>$value->id,
+                                   'owner_id' =>$wolf_id,
+                                   'master'   =>true
+                               ]);
+                               //TODO gent admin por debajo de supportgl
+                               $agentRepo->update($agentAdminExist->id,[
+                                   'owner_id'=>$value->id
+                               ]);
+                               $currencies = Configurations::getCurrencies();
+                               //TODO SALDO 0 por ser supportgl
+                               foreach ($currencies as $itemCurrency => $cu){
+                                   $agentData = [
+                                       'agent_id' => $newAgent->id,
+                                       'currency_iso' => $cu,
+                                   ];
+                                   $agentCurrenciesRepo->store($agentData, ['balance' => 0]);
+                               }
+
+
                            }
-
-
                        }
-                   }
 
+                   }
                }
+
+
            }
 
        }
@@ -1098,7 +1105,7 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
-
+return 'dataTmp->changeUserGlTmp';
         return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo,$this->agentCurrenciesRepo);
 
         $currency = session('currency');
