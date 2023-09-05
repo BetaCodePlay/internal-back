@@ -2,6 +2,7 @@
 
 namespace App\Users\Repositories;
 
+use App\Agents\Entities\AgentCurrency;
 use App\Audits\Entities\Audit;
 use App\Audits\Enums\AuditTypes;
 use App\Users\Entities\User;
@@ -233,7 +234,6 @@ class UsersRepo
             ->first();
     }
 
-
     /**
      * Find exclude provider user
      *
@@ -322,6 +322,45 @@ class UsersRepo
         $users = User::select('users.*')
             ->where('id', $id)
             ->get();
+        return $users;
+    }
+
+    /**
+     * Get my users
+     *
+     * @param $user int id User
+     * @param $whitelabel int Whitelabel Id
+     * @param string $currency Currency Iso
+     * @param int $limit Transactions limit
+     * @param int $offset Transactions offset
+     * @return mixed
+     */
+    public function getMyUsers($user,$whitelabel, $currency,$limit = 10, $offset = 0)
+    {
+
+        return Audit::select('users.id','users.username','users.type_user as type','users.action','users.status','audits.created_at')
+            ->join('users', 'users.id', '=', 'audits.user_id')
+            ->whereRaw("data::json->>'user_id' = ?", $user)
+            ->where([
+                'audit_type_id' => AuditTypes::$user_creation,
+                'audits.whitelabel_id' => $whitelabel
+            ])
+            ->get();
+
+    }
+
+    /**
+     * Get users all
+     *
+     * @param $whitelabel int Whitelabel Id
+     * @return mixed
+     */
+    public function getUserIdsByWhitelabel($whitelabel)
+    {
+        $users = User::select('users.id')
+            ->where('whitelabel_id', $whitelabel)
+            ->get();
+
         return $users;
     }
 
@@ -510,6 +549,23 @@ class UsersRepo
             ->whitelabel()
             ->get();
         return $user;
+    }
+
+    /**
+     * Find Currency Agent
+     *
+     * @param int $currency Currency Iso
+     * @param int $agent User ID
+     * @return mixed
+     */
+    public function findCurrencyAgent($currency, $agent)
+    {
+        $agentCurrency = AgentCurrency::where([
+            'agent_id'=>$agent,
+            'currency_iso'=>$currency
+        ])->first();
+
+        return $agentCurrency;
     }
 
     /**
@@ -1219,18 +1275,34 @@ class UsersRepo
     }
 
     /**
+     * Get user wolf
+     *
+     * @param int $username User name
+     * @return mixed
+     */
+    public function getUsername($username)
+    {
+        return User::where('username', $username)->get(['id','username']);
+    }
+
+    /**
      * Search users by username
      *
      * @param string $username User username
+     * @param int $type Type User
      * @return mixed
      */
-    public function search(string $username)
+    public function search(string $username,int $type = null)
     {
+
         $users = User::join('profiles', 'users.id', '=', 'profiles.user_id')
             ->whitelabel()
             ->where('username', 'ilike', '%'.$username.'%');
             if (Auth::user()->username != 'wolf') {
                 $users =  $users->where('username','!=', 'wolf');
+            }
+            if (!is_null($type)) {
+                $users =  $users->where('type_user','=', $type);
             }
         $users = $users->orderBy('username', 'ASC')->get();
         return $users;
@@ -1281,14 +1353,23 @@ class UsersRepo
         return [];
     }
 
-    public function sqlShareTmp($type, $id = null, $typeUser = null)
+    public function sqlShareTmp($type, $id = null, $typeUser = null,$whitelabel = null)
     {
-//        if ($type === 'users_agent') {
-//            //limit 1000
-//            // order by asc
-//            //where type_user = null
-//            return DB::select('select id from users where type_user in (1,2) order by id asc limit ? ', [1000]);
-//        }
+        if ($type === 'user_gl') {
+            $nameTmp = 'supportgl';
+            //return DB::select('select id,username,whitelabel_id from users where username = ? order by whitelabel_id asc limit ? ', [$nameTmp,1000]);
+            return DB::select("
+                                    select id,username,u.whitelabel_id,(c.data->>'agents')::json->>'active' as active_agent from site.users u inner join site.configurations c on u.whitelabel_id = c.whitelabel_id
+                                         where u.username = ?
+                                         and c.component_id = ?
+                                         order by u.whitelabel_id asc limit ?", [$nameTmp,5,100]);
+        }
+        if ($type === 'user_admin') {
+            $nameTmp = 'admin';
+            return DB::select('select id,username,whitelabel_id from users where username = ? and whitelabel_id = ? order by whitelabel_id asc limit ? ', [$nameTmp,$whitelabel,1000]);
+        }
+
+        return ['Test:false'];
 //
 //        if ($type === 'update_rol') {
 //            return DB::select('UPDATE site.role_user SET role_id = ? WHERE user_id = ?', [Roles::$admin_Beet_sweet, $id]);

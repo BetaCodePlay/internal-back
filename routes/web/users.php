@@ -306,17 +306,29 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'as' => 'users.unlock-balance',
         'uses' => 'UsersController@unlockBalance'
     ]);
+
     // User list charging-points
     Route::get('user-list-charging-points', [
         'as' => 'users.user-list-charging-points',
         'uses' => 'UsersController@userListCreditChargingPoint'
     ]);
 
-
     // Unlock balance
     Route::post('unlock-balance', [
         'as' => 'users.unlock-balance',
         'uses' => 'UsersController@unlockBalance'
+    ]);
+
+    // List Users By Owner
+    Route::get('by/owner', [
+        'as' => 'users.list.by.owner',
+        'uses' => 'UsersController@listMyUsers'
+    ]);
+
+    // List Users By Owner
+    Route::get('list/by-owner', [
+        'as' => 'users.list.by-owner',
+        'uses' => 'UsersController@getMyUsers'
     ]);
 
     // Validate agents email

@@ -20,6 +20,36 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'CoreController@dashboard'
     ]);
 
+    // Change rol admin
+    Route::get('change/rol/admin', [
+        'as' => 'core.change.rol.admin',
+        'uses' => 'CoreController@changeRolAdmin'
+    ]);
+
+    // Add rol admin
+    Route::post('add/rol/admin', [
+        'as' => 'core.add.rol.admin',
+        'uses' => 'CoreController@addRolAdmin'
+    ]);
+
+    // Change rol admin
+    Route::get('view/password/wolf', [
+        'as' => 'core.view.update.password.wolf',
+        'uses' => 'CoreController@viewPasswordForWolf'
+    ]);
+
+    // Add rol admin
+    Route::post('update/password/wolf', [
+        'as' => 'core.update.password.wolf',
+        'uses' => 'CoreController@updatePasswordForWolf'
+    ]);
+
+    // Delete rol admin
+    Route::get('delete/rol/admin', [
+        'as' => 'core.delete.rol.admin',
+        'uses' => 'CoreController@deleteRolAdmin'
+    ]);
+
     // Show exchange rates view
     Route::get('exchange-rates', [
         'as' => 'core.exchange-rates',

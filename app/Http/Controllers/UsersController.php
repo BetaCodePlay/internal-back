@@ -58,7 +58,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -366,24 +365,15 @@ class UsersController extends Controller
                     'users' => []
                 ];
             } else {
-
-                if (Gate::allows('access', Permissions::$users_search)) {
-
-                    $users = $this->usersRepo->advancedSearch($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode);
-
-                }else{
-
-                    $user = Auth::user()->id;
-                    if (Auth::user()->username == 'romeo') {
-                        $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-                        $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
-                    }
-
-                    $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
-
-                    $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $idChildren);
+                $user = Auth::user()->id;
+                if (Auth::user()->username == 'romeo') {
+                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
                 }
 
+                $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+
+                $users = $this->usersRepo->advancedSearchTree($id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $wallet, $referralCode, $idChildren);
                 $this->usersCollection->formatSearch($users);
 
                 $data = [
@@ -464,6 +454,7 @@ class UsersController extends Controller
             'timezone' => 'required',
             'currency' => 'required'
         ];
+
         $this->validate($request, $rules);
 
         try {
@@ -1598,21 +1589,17 @@ class UsersController extends Controller
     }
 
     /**
-     * Search users
+     * Search users, Option by agent or not.
      *
      * @param Request $request
      * @return Factory|View
      */
     public function search(Request $request)
     {
+
         try {
             $username = strtolower($request->username);
-
-            if (Gate::allows('access', Permissions::$users_search)) {
-
-                $users = $this->usersRepo->search($username);
-            }else{
-
+            if(Configurations::getAgents()->active == true){
                 $user = Auth::user()->id;
                 if (Auth::user()->username == 'romeo') {
                     $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
@@ -1621,12 +1608,15 @@ class UsersController extends Controller
                 $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
 
                 $users = $this->usersRepo->searchTree($username, $idChildren);
+            }else{
+                $users = $this->usersRepo->search($username);
             }
 
             $this->usersCollection->formatSearch($users);
             $data['username'] = $username;
             $data['users'] = $users;
             $data['title'] = _i('Users search');
+
             return view('back.users.search', $data);
 
         } catch (\Exception $ex) {
@@ -2240,7 +2230,7 @@ class UsersController extends Controller
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
-            $users = ['wolf', 'admin', 'panther', 'romeo', 'supportgl', 'supportnb', 'supportvj'];
+            $users = ['romeo','wolf','supportgl', 'admin', 'panther',   'supportnb', 'supportvj'];
 
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
@@ -2281,7 +2271,7 @@ class UsersController extends Controller
                         'web_register' => false,
                         'main' => true,
                         'action'=>ActionUser::$active,
-                        'type_user' => TypeUser::$agentMater
+                        'type_user'=>TypeUser::$agentMater,
                     ];
                     $profileData = [
                         'country_iso' => $request->country,
@@ -2765,6 +2755,52 @@ class UsersController extends Controller
             $route = route('auth.logout');
 
             return redirect()->to($route);
+    }
+
+    /**
+     * Show view of list users
+     */
+    public function listMyUsers()
+    {
+        try {
+
+            $description = Configurations::getWhitelabelDescription();
+            $data['title'] = _i('List of users') . ' ' . $description;
+            $data['roles'] = [];
+
+            return view('back.users.list_users_by_owner', $data);
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * list users
+     * @param Request $request
+     * @return Response
+     */
+    public function getMyUsers(Request $request)
+    {
+        try {
+
+            $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+
+            $offset = $request->has('start') ? $request->get('start') : 0;
+            $limit = $request->has('length') ? $request->get('length') : 2000;
+
+            $users = $this->usersRepo->getMyUsers(Auth::id(),$whitelabel, $currency,$limit,$offset);
+
+            $data = $this->usersCollection->formatMyUsers($request,$users);
+
+            return response()->json($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**

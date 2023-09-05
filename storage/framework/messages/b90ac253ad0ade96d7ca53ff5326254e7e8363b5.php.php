@@ -3,6 +3,7 @@
 namespace App\Users\Collections;
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Users\Enums\ActionUser;
 use App\Users\Enums\DocumentStatus;
 use App\Users\Repositories\AutoLockUsersRepo;
 use Carbon\Carbon;
@@ -51,6 +52,47 @@ class UsersCollection
                 $agent->username
             );
         }
+    }
+
+    /**
+     * Format my users
+     *
+     * @param object $agent Agent data
+     */
+    public function formatMyUsers($request, $users)
+    {
+        $total = 0;
+        $data = array();
+        foreach ($users as $index => $value){
+
+            $textTmo = $value->status ? ActionUser::getName($value->action) : _i('Blocked');
+            $statusTextTmp =  (int)$value->action == 1 && $value->status ?  _i('Active'):$textTmo;
+            $statusClassTmp = (int)$value->action == 1 && $value->status ?  'teal':'lightred';
+            $statusTmp = sprintf(
+                '<a href="javascript:void(0)" id=""><span class="u-label g-bg-%s g-rounded-20 g-px-15">%s</span></a>',
+                $statusClassTmp,
+                $statusTextTmp
+            );
+
+            $data[] = [
+                'id'=>$value->id,
+                'names'=>'<strong>'.$value->username.' </strong>',
+                'date'=>date("d-m-Y", strtotime($value->created_at)),
+                'details'=> $statusTmp,
+                'action'=>'',
+            ];
+
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($total),
+            "recordsFiltered" => intval($total),
+            "data"            => $data
+        );
+
+        return $json_data;
+
     }
 
     /**

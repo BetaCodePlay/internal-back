@@ -14,7 +14,9 @@ use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Security\Entities\Role;
 use Dotworkers\Security\Enums\Roles;
+use Dotworkers\Security\Security;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -1111,6 +1113,30 @@ class AgentsCollection
             return mb_strpos($element->username, $username) === false;
         });
         return $collection->unique('id')->values()->all();
+    }
+
+    /**
+     * Format users select
+     *
+     * @param array $agents Agents data
+     * @param array $users Users data
+     * @param var $username Username
+     * @return array
+     */
+    public function formatUsersSelect($users,$rolesRepo)
+    {
+        $data = collect();
+
+        foreach ($users as $user) {
+            $itemObject = new \stdClass();
+            $itemObject->id = $user->id;
+            $itemObject->username = $user->username;
+            $itemObject->type = 'user';
+            $itemObject->roles = $rolesRepo->getRolesUser($user->id);
+            $data->push($itemObject);
+        }
+
+        return $data->unique('id')->values()->all();
     }
 
     /**

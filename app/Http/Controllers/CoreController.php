@@ -6,18 +6,23 @@ use App\Core\Collections\CoreCollection;
 use App\Core\Core;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\ManualExchangesRepo;
+use App\Security\Repositories\RolesRepo;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Entities\Role;
 use Dotworkers\Security\Enums\Permissions;
+use Dotworkers\Security\Enums\Roles;
+use Dotworkers\Security\Security;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,6 +66,13 @@ class CoreController extends Controller
     private $gamesRepo;
 
     /**
+     * RolesRepo
+     *
+     * @var RolesRepo
+     */
+    private $rolesRepo;
+
+    /**
      * ManualExchangesRepo
      *
      * @var ManualExchangesRepo
@@ -82,13 +94,14 @@ class CoreController extends Controller
      * @param ManualExchangesRepo $manualExchangesRepo
      * @param CoreCollection $coreCollection
      */
-    public function __construct(AgentsRepo $agentsRepo, UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection, GamesRepo $gamesRepo)
+    public function __construct(AgentsRepo $agentsRepo, UsersRepo $usersRepo, ManualExchangesRepo $manualExchangesRepo, CoreCollection $coreCollection, GamesRepo $gamesRepo,RolesRepo $rolesRepo)
     {
         $this->agentsRepo = $agentsRepo;
         $this->usersRepo = $usersRepo;
         $this->manualExchangesRepo = $manualExchangesRepo;
         $this->coreCollection = $coreCollection;
         $this->gamesRepo = $gamesRepo;
+        $this->rolesRepo = $rolesRepo;
     }
 
     /**
@@ -175,7 +188,6 @@ class CoreController extends Controller
         }
     }
 
-
     /**
      * Show dashboard
      *
@@ -218,6 +230,147 @@ class CoreController extends Controller
     }
 
     /**
+     * Show view change rol admin
+     */
+    public function changeRolAdmin()
+    {
+        try {
+
+            $description = Configurations::getWhitelabelDescription();
+            $data['title'] = _i('Dashboard') . ' ' . $description;
+            $data['roles'] = $this->rolesRepo->all();
+
+            return view('back.core.change_rol_admin', $data);
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Add rol admin
+     */
+    public function addRolAdmin(Request $request)
+    {
+
+        $this->validate($request, [
+            'user_id' => 'required',
+            'rol_id' => 'required'
+        ]);
+
+        try {
+
+            $user = $this->usersRepo->find($request->get('user_id'));
+            if(isset($user->id)){
+                foreach ($request->get('rol_id') as $item => $rol_id){
+                    $rolUser = $this->rolesRepo->findRolUser($user->id, $rol_id);
+                    if(!isset($rolUser->id)){
+                        $this->rolesRepo->assignRole([
+                            'user_id'=>$user->id,
+                            'role_id'=> $rol_id
+                        ]);
+                    }
+                }
+
+            }
+
+            $data = [
+                'title' => _i('User updated'),
+                'message' => _i('User updated successfully'),
+                'close' => _i('Close')
+            ];
+
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Show view change password for wolf
+     */
+    public function viewPasswordForWolf()
+    {
+        try {
+
+            $data['title'] = _i('Change password for wolf');
+
+            return view('back.core.update_password_for_wolf', $data);
+
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Update password for wolf
+     */
+    public function updatePasswordForWolf(Request $request)
+    {
+
+        $this->validate($request, [
+            'password' => 'required',
+        ]);
+
+        try {
+
+            $users = $this->usersRepo->getUsername('wolf');
+            foreach ($users as $item => $value){
+                $this->usersRepo->update($value->id,['password'=>$request->get('password')]);
+            }
+
+            $data = [
+                'title' => _i('Users wolf updated'),
+                'message' => _i('User updated successfully'),
+                'close' => _i('Close'),
+                'redirect' => route('core.view.update.password.wolf'),
+            ];
+
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Delete rol admin
+     */
+    public function deleteRolAdmin(Request $request)
+    {
+
+        $this->validate($request, [
+            'user_id' => 'required',
+            'rol_id' => 'required'
+        ]);
+
+        try {
+
+            $this->rolesRepo->deleteRoles([
+                'user_id' => $request->get('user_id'),
+                'role_id'=> $request->get('rol_id')
+            ]);
+
+            $data = [
+                'title' => _i('User updated'),
+                'message' => _i('User updated successfully'),
+                'close' => _i('Close')
+            ];
+
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Confirmed email
      *
      * @param Request $request
@@ -235,7 +388,6 @@ class CoreController extends Controller
             return Utils::failedResponse();
         }
     }
-
 
     /**
      * Show exchange rates view

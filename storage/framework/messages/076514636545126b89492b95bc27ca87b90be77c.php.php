@@ -13,7 +13,7 @@
                         <label for="action"><?php echo e(_i('Action')); ?></label>
                         <select name="action" id="action" class="form-control">
                             <option value=""><?php echo e(_i('Select...')); ?></option>
-                            <option value="1"><?php echo e(_i('Send to processor')); ?></option>
+                            <option value="1"><?php echo e(_i('Approve')); ?></option>
                             <option value="0"><?php echo e(_i('Reject')); ?></option>
                         </select>
                     </div>

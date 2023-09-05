@@ -38,6 +38,7 @@ class SlidersCollection
                 !is_null($slider->url) ? $slider->url : _i('Without URL')
             );
             $front = $slider->front;
+            $slider->front = _i('Without front image');
             if (!is_null($front)) {
                 $urlFront = s3_asset("sliders/static/{$slider->front}");
                 $slider->front = "<img src='$urlFront' class='img-responsive g-mb-10' width='200'><br>";
@@ -46,10 +47,7 @@ class SlidersCollection
                     _i('URL'),
                     !is_null($slider->url) ? $slider->url : _i('Without URL')
                 );
-            }else{
-                $slider->front = _i('Without front image');
             }
-
             $slider->language = $slider->language == '*' ? _i('All languages') : Languages::getName($slider->language);
             $slider->currency_iso = $slider->currency_iso == '*' ? _i('All currencies') : $slider->currency_iso;
             $slider->mobile = $slider->mobile == '*' ? _i('All devices') : ($slider->mobile == 'true' ? _i('Mobile') : _i('Desktop'));
@@ -61,7 +59,9 @@ class SlidersCollection
                 $statusClass,
                 $statusText
             );
-
+            if (is_null($slider->route)) {
+                $slider->route = _i('Without menu');
+            }
             foreach ($menu as $item) {
                 if ($item->route == $slider->route) {
                     if ($item->route == 'core.index') {
@@ -99,6 +99,7 @@ class SlidersCollection
         $timezone = session('timezone');
         $url = s3_asset("sliders/static/{$slider->image}");
         $slider->image = "<img src='$url' class='img-responsive' width='600'>";
+        $slider->front = null;
         if (!is_null($slider->front)) {
             $urlFront = s3_asset("sliders/static/{$slider->front}");
             $slider->front = "<img src='$urlFront' class='img-responsive' width='600'>";
