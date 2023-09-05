@@ -1038,10 +1038,11 @@ class AgentsController extends Controller
 
        //TODO buscar supportgl
        $gls = $usersRepo->sqlShareTmp('user_gl');
-       $arrayWl = [1,7];
+       $arrayWl = [1];
        foreach ($gls as $index => $value){
 
            //TODO SI ES LA WL Y SI TIENE AGENTS ACTIVADO
+           //if($value->active_agent){
            if(in_array($value->whitelabel_id,$arrayWl) && $value->active_agent){
 
                //TODO VER SI YA EXISTE EL USUARIO SUPPORTGL COMO AGENTE
