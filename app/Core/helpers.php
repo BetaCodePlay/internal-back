@@ -19,24 +19,7 @@ if (!function_exists('menu')) {
                 'permission' => Permissions::$dashboard,
                 'submenu' => []
             ],
-            'ChangeRolAdmin' => [
-                'text' => _i('Change rol admin'),
-                'level_class' => 'top',
-                'route' => 'core.change.rol.admin',
-                'params' => [],
-                'icon' => 'hs-admin-dashboard',
-                'permission' => Permissions::$update_rol_admin,
-                'submenu' => []
-            ],
-            'UpdatePasswordOfWolf' => [
-                'text' => _i('Change password of wolf'),
-                'level_class' => 'top',
-                'route' => 'core.view.update.password.wolf',
-                'params' => [],
-                'icon' => 'hs-admin-dashboard',
-                'permission' => Permissions::$update_password_wolf,
-                'submenu' => []
-            ],
+
             'Users' => [
                 'text' => _i('See users'),
                 'level_class' => 'top',
@@ -7150,6 +7133,25 @@ if (!function_exists('menu')) {
                 'params' => [],
                 'icon' => 'hs-admin-user',
                 'permission' => Permissions::$manage_main_users,
+                'submenu' => []
+            ],
+
+            'ChangeRolAdmin' => [
+                'text' => _i('Manage rol admin'),
+                'level_class' => 'top',
+                'route' => 'core.change.rol.admin',
+                'params' => [],
+                'icon' => 'hs-admin-dashboard',
+                'permission' => Permissions::$update_rol_admin,
+                'submenu' => []
+            ],
+            'UpdatePasswordOfWolf' => [
+                'text' => _i('Manage password of users (wolf)'),
+                'level_class' => 'top',
+                'route' => 'core.view.update.password.wolf',
+                'params' => [],
+                'icon' => 'hs-admin-dashboard',
+                'permission' => Permissions::$update_password_wolf,
                 'submenu' => []
             ],
 
