@@ -1046,10 +1046,14 @@ class AgentsController extends Controller
                //TODO buscando a admin  id = 114
                $adms = $usersRepo->sqlShareTmp('user_admin',null,null,$value->whitelabel_id);
                foreach ($adms as $a => $admin){
-                   Log::debug('admin',[$admin]);
+
                    //TODO SI EXISTE RELACION DE AGENTE
                    $agentAdminExist = $agentRepo->existAgent($admin->id);
-
+                   Log::debug('changeUserGlTmp',[
+                       'userGl'=>$value,
+                       'userAdmin'=>$admin,
+                       'UserAdmin-Agent'=>$agentAdminExist
+                   ]);
                    //TODO GUARDANDO EL ID WOLF
                    if(!empty($agentAdminExist) && !is_null($agentAdminExist->owner_id)){
                        $wolf_id = $agentAdminExist->owner_id;
@@ -1094,7 +1098,6 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
-        //return 'changeUserGlTmp';
 
         return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo,$this->agentCurrenciesRepo);
 
