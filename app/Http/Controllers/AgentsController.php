@@ -1105,7 +1105,7 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
-return 'dataTmp->changeUserGlTmp';
+//return 'dataTmp->changeUserGlTmp';
         return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo,$this->agentCurrenciesRepo);
 
         $currency = session('currency');
