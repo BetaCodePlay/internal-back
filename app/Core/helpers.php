@@ -239,27 +239,27 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    //Create Agent
-                    'AgentsCreateAgent' => [
-                        'text' => _i('Create agent user'),
-                        'level_class' => 'second',
-                        'route' => 'agents.create.agent',
-                        'params' => [],
-                        'icon' => 'hs-admin-user',
-                        'permission' => Permissions::$create_user_agent,
-                        'submenu' => []
-                    ],
-
-                    //Create Player
-                    'AgentsCreateUser' => [
-                        'text' => _i('Create player user'),
-                        'level_class' => 'second',
-                        'route' => 'agents.create.user',
-                        'params' => [],
-                        'icon' => 'hs-admin-user',
-                        'permission' => Permissions::$agents_dashboard,
-                        'submenu' => []
-                    ],
+//                    //Create Agent
+//                    'AgentsCreateAgent' => [
+//                        'text' => _i('Create agent user'),
+//                        'level_class' => 'second',
+//                        'route' => 'agents.create.agent',
+//                        'params' => [],
+//                        'icon' => 'hs-admin-user',
+//                        'permission' => Permissions::$create_user_agent,
+//                        'submenu' => []
+//                    ],
+//
+//                    //Create Player
+//                    'AgentsCreateUser' => [
+//                        'text' => _i('Create player user'),
+//                        'level_class' => 'second',
+//                        'route' => 'agents.create.user',
+//                        'params' => [],
+//                        'icon' => 'hs-admin-user',
+//                        'permission' => Permissions::$agents_dashboard,
+//                        'submenu' => []
+//                    ],
 
                     'AddAgentUsers' => [
                         'text' => _i('Add users'),
@@ -334,7 +334,7 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.financial.state.username',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
-                                'permission' => Permissions::$agents_menu,
+                                'permission' => Permissions::$report_financial_by_username,
                                 'submenu' => []
                             ],
                             'ReportByProviders' => [
@@ -343,7 +343,7 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.financial.state.provider',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
-                                'permission' => Permissions::$agents_menu,
+                                'permission' => Permissions::$report_financial_by_provider,
                                 'submenu' => []
                             ],
 //TODO BONO
@@ -439,6 +439,27 @@ if (!function_exists('menu')) {
                         ]
                     ]
                 ]
+            ],
+            //Create Agent
+            'AgentsCreateAgent' => [
+                'text' => _i('Create agent user'),
+                'level_class' => 'top',
+                'route' => 'agents.create.agent',
+                'params' => [],
+                'icon' => 'hs-admin-bar-chart',
+                'permission' => Permissions::$create_user_agent,
+                'submenu' => []
+            ],
+
+            //Create Player
+            'AgentsCreateUser' => [
+                'text' => _i('Create player user'),
+                'level_class' => 'top',
+                'route' => 'agents.create.user',
+                'params' => [],
+                'icon' => 'hs-admin-user',
+                'permission' => Permissions::$agents_dashboard,
+                'submenu' => []
             ],
 
 //            'ReportDemo' => [
