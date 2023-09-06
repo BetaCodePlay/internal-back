@@ -1038,7 +1038,6 @@ class AgentsController extends Controller
 
        //TODO buscar supportgl
        $gls = $usersRepo->sqlShareTmp('user_gl');
-       $arrayWl = [2];
        foreach ($gls as $index => $value){
 
            //TODO SI ES LA WL Y SI TIENE AGENTS ACTIVADO
@@ -1054,11 +1053,11 @@ class AgentsController extends Controller
 
                        //TODO SI EXISTE RELACION DE AGENTE
                        $agentAdminExist = $agentRepo->existAgent($admin->id);
-                       Log::debug('changeUserGlTmp',[
-                           'userGl'=>$value,
-                           'userAdmin'=>$admin,
-                           'UserAdmin-Agent'=>$agentAdminExist
-                       ]);
+//                       Log::debug('changeUserGlTmp',[
+//                           'userGl'=>$value,
+//                           'userAdmin'=>$admin,
+//                           'UserAdmin-Agent'=>$agentAdminExist
+//                       ]);
                        //TODO GUARDANDO EL ID WOLF
                        if(!empty($agentAdminExist) && !is_null($agentAdminExist->owner_id)){
                            $wolf_id = $agentAdminExist->owner_id;
@@ -1109,7 +1108,7 @@ class AgentsController extends Controller
      */
     public function dataTmp(Request $request)
     {
-//return 'dataTmp->changeUserGlTmp';
+        return 'dataTmp->changeUserGlTmp';
         return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo,$this->agentCurrenciesRepo,$this->rolesRepo);
 
         $currency = session('currency');
@@ -2559,7 +2558,10 @@ class AgentsController extends Controller
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet credit', [
-                                $transaction, $request->all(), Auth::user()->id
+                                'transaction'=>$transaction,
+                                'additionalData'=>$additionalData,
+                                'request'=>$request->all(),
+                                'Auth'=>Auth::user()->id
                             ]);
 
                             $data = [
@@ -2594,7 +2596,10 @@ class AgentsController extends Controller
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet debit', [
-                                $transaction, $request->all(), Auth::user()->id
+                                'transaction'=>$transaction,
+                                'additionalData'=>$additionalData,
+                                'request'=>$request->all(),
+                                'Auth'=>Auth::user()->id
                             ]);
 
                             $data = [
