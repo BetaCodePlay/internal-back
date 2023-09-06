@@ -440,6 +440,27 @@ if (!function_exists('menu')) {
                     ]
                 ]
             ],
+            //Create Agent
+            'AgentsCreateAgent' => [
+                'text' => _i('Create agent user'),
+                'level_class' => 'top',
+                'route' => 'agents.create.agent',
+                'params' => [],
+                'icon' => 'hs-admin-user',
+                'permission' => Permissions::$create_user_agent,
+                'submenu' => []
+            ],
+
+            //Create Player
+            'AgentsCreateUser' => [
+                'text' => _i('Create player user'),
+                'level_class' => 'top',
+                'route' => 'agents.create.user',
+                'params' => [],
+                'icon' => 'hs-admin-user',
+                'permission' => Permissions::$agents_dashboard,
+                'submenu' => []
+            ],
 
 //            'ReportDemo' => [
 //                'text' => _i('Demo Report'),
