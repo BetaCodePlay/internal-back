@@ -56,7 +56,7 @@ class RolesRepo
     }
 
     /**
-     * find rol
+     * find rol user
      *
      * @return mixed
      */
