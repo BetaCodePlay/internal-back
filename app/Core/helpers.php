@@ -334,7 +334,7 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.financial.state.username',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
-                                'permission' => Permissions::$agents_menu,
+                                'permission' => Permissions::$report_financial_by_username,
                                 'submenu' => []
                             ],
                             'ReportByProviders' => [
@@ -343,7 +343,7 @@ if (!function_exists('menu')) {
                                 'route' => 'agents.reports.financial.state.provider',
                                 'params' => [],
                                 'icon' => 'hs-admin-pie-chart',
-                                'permission' => Permissions::$agents_menu,
+                                'permission' => Permissions::$report_financial_by_provider,
                                 'submenu' => []
                             ],
 //TODO BONO
