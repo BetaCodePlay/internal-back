@@ -1042,8 +1042,8 @@ class AgentsController extends Controller
        foreach ($gls as $index => $value){
 
            //TODO SI ES LA WL Y SI TIENE AGENTS ACTIVADO
-           //if($value->active_agent){
-           if(in_array($value->whitelabel_id,$arrayWl) && $value->active_agent){
+           if($value->active_agent){
+           //if(in_array($value->whitelabel_id,$arrayWl) && $value->active_agent){
 
                //TODO VER SI YA EXISTE EL USUARIO SUPPORTGL COMO AGENTE
                $existAgentGl = $agentRepo->existAgent($value->id);
