@@ -35,7 +35,7 @@ class SectionImagesController extends Controller
      * @var SectionImagesRepo
      */
     private $sectionImagesRepo;
-      /**
+    /**
      * @var AuditsRepo
      */
     private $auditsRepo;
@@ -60,7 +60,7 @@ class SectionImagesController extends Controller
      * @param SectionImagesRepo $sectionImagesRepo
      * @param SectionImagesCollection $sectionImagesCollection
      */
-    public function __construct(SectionImagesRepo $sectionImagesRepo, SectionImagesCollection $sectionImagesCollection,AuditsRepo $auditsRepo)
+    public function __construct(SectionImagesRepo $sectionImagesRepo, SectionImagesCollection $sectionImagesCollection, AuditsRepo $auditsRepo)
     {
         $this->sectionImagesRepo = $sectionImagesRepo;
         $this->sectionImagesCollection = $sectionImagesCollection;
@@ -105,7 +105,7 @@ class SectionImagesController extends Controller
                     break;
                 }
             }
-            if (empty($positions))  {
+            if (empty($positions)) {
                 $imagesData = $this->sectionImagesRepo->getBySection($section);
                 $this->sectionImagesCollection->formatAll($imagesData, $configuration->$section->section_images);
             } else {
@@ -140,7 +140,7 @@ class SectionImagesController extends Controller
                     $data['front'] = $image;
                 }
             }
-            $categories=['popular','new','featured'];
+            $categories = ['popular', 'new', 'featured'];
             $data['categories'] = $categories;
             $data['template_element_type'] = $templateElementType;
             $data['section'] = $section;
@@ -205,7 +205,7 @@ class SectionImagesController extends Controller
                 $props = $configuration->$section->section_images->props;
             }
 
-            if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position ==  ImagesPositions::$mobile_light || $position ==  ImagesPositions::$mobile_dark) {
+            if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark) {
                 $image = new \stdClass();
                 switch ($position) {
                     case ImagesPositions::$logo_light:
@@ -251,15 +251,14 @@ class SectionImagesController extends Controller
                 } else {
                     if (is_null($section)) {
                         $image = $this->sectionImagesRepo->findByPosition($position, $templateElementType);
-                    }
-                    else {
+                    } else {
                         $image = $this->sectionImagesRepo->findByPositionAndSection($position, $templateElementType, $section);
                     }
                 }
             }
 
             $imageData = $this->sectionImagesCollection->formatDetails($image, $position, $positions);
-            $categories=['popular','new','featured'];
+            $categories = ['popular', 'new', 'featured'];
             $data['categories'] = $categories;
             $data['template_element_type'] = $templateElementType;
             $data['position'] = $position;
@@ -290,7 +289,7 @@ class SectionImagesController extends Controller
             $positions = $home->$section->section_images->positions ?? [];
             $data['positions'] = $positions;
         }
-        $categories=['popular','new','featured'];
+        $categories = ['popular', 'new', 'featured'];
         $data['categories'] = $categories;
         $data['template_element_type'] = $templateElementType;
         $data['section'] = $section;
@@ -339,7 +338,7 @@ class SectionImagesController extends Controller
             Storage::delete($oldFilePath);
             $front = $request->file('front');
             $category = $request->category;
-            if(!is_null($front)){
+            if (!is_null($front)) {
                 $fileFront = $request->file;
                 $filePath = "$s3Directory/section-images/";
                 $extensionFront = $front->getClientOriginalExtension();
@@ -349,7 +348,7 @@ class SectionImagesController extends Controller
                 $oldFilePath = "{$filePath}{$fileFront}";
                 Storage::put($newFilePath, file_get_contents($front->getRealPath()), 'public');
                 Storage::delete($oldFilePath);
-            }else{
+            } else {
                 $nameFront = null;
             }
             $imageData = [
@@ -475,7 +474,7 @@ class SectionImagesController extends Controller
             $startDate = !is_null($request->start_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->start_date, $timezone)->setTimezone('UTC') : null;
             $endDate = !is_null($request->end_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->end_date, $timezone)->setTimezone('UTC') : null;
             $category = $request->category;
-            if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark){
+            if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark) {
                 $filePath = "$s3Directory/commons/";
 
             } else {
@@ -509,7 +508,7 @@ class SectionImagesController extends Controller
                 $imageData['image'] = $name;
                 $file = $name;
                 $front = $request->file('front');
-                if(!is_null($front)){
+                if (!is_null($front)) {
                     $fileFront = $request->file;
                     $extensionFront = $front->getClientOriginalExtension();
                     $originalNameFront = str_replace(".$extensionFront", '', $front->getClientOriginalName());
@@ -522,7 +521,7 @@ class SectionImagesController extends Controller
                 }
             }
 
-            if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position ==  ImagesPositions::$mobile_light || $position ==  ImagesPositions::$mobile_dark) {
+            if ($position == ImagesPositions::$logo_light || $position == ImagesPositions::$logo_dark || $position == ImagesPositions::$favicon || $position == ImagesPositions::$mobile_light || $position == ImagesPositions::$mobile_dark) {
                 $configuration = Configurations::getComponentConfiguration($whitelabel, Components::$design);
                 switch ($position) {
                     case ImagesPositions::$logo_light:
@@ -563,7 +562,7 @@ class SectionImagesController extends Controller
                         'username' => auth()->user()->username,
                         'image_data' => [
                             'id' => $id,
-                            'data' =>$imageData
+                            'data' => $imageData
                         ]
                     ];
 
@@ -579,7 +578,7 @@ class SectionImagesController extends Controller
                             'position' => $position,
                             'template_element_type' => $templateElementType,
                             'section' => $section,
-                            'data' =>$imageData
+                            'data' => $imageData
                         ]
                     ];
                 }

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,8 +9,7 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('back/css/vendor.min.css')); ?>?v=2">
     <link rel="stylesheet" href="<?php echo e(asset('back/css/custom.min.css')); ?>?v=13">
-    <link rel="stylesheet"
-          href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
     <?php if(\Dotworkers\Configurations\Configurations::getWhitelabel() == 109): ?>
         <link rel="shortcut icon" href="<?php echo e(asset('commons/img/bloko-favicon.png')); ?>">
     <?php else: ?>
@@ -54,7 +54,7 @@
 <script src="<?php echo e(mix('js/manifest.js', 'back')); ?>"></script>
 <script src="<?php echo e(mix('js/vendor.js', 'back')); ?>"></script>
 <script src="<?php echo e(mix('js/custom.min.js', 'back')); ?>"></script>
-<script src="<?php echo e(asset('back/js/scripts.min.js')); ?>?v=22"></script>
+<script src="<?php echo e(asset('back/js/scripts.min.js')); ?>?v=23"></script>
 
 
 

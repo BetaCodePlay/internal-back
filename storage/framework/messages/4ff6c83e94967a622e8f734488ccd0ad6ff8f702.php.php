@@ -30,6 +30,18 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="defaultCurrency"><?php echo e(_i('Update Currency')); ?></label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="true" name="update_currency" id="defaultCurrency">
+                                        <label class="form-check-label" for="defaultCurrency">
+                                            <?php echo e(_i('Update Currency all users')); ?>
+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <button type="button" class="btn u-btn-3d u-btn-primary" id="save"
