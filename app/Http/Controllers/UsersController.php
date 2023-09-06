@@ -1616,7 +1616,6 @@ class UsersController extends Controller
                 }
             }
 
-
             $this->usersCollection->formatSearch($users);
             $data['username'] = $username;
             $data['users'] = $users;
