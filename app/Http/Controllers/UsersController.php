@@ -1599,18 +1599,23 @@ class UsersController extends Controller
 
         try {
             $username = strtolower($request->username);
-            if(Configurations::getAgents()->active == true){
-                $user = Auth::user()->id;
-                if (Auth::user()->username == 'romeo') {
-                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
-                }
-                $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
-
-                $users = $this->usersRepo->searchTree($username, $idChildren);
-            }else{
+            if(Auth::user()->username == 'wolf'){
                 $users = $this->usersRepo->search($username);
+            }else{
+                if(Configurations::getAgents()->active == true){
+                    $user = Auth::user()->id;
+                    if (Auth::user()->username == 'romeo') {
+                        $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+                        $user = isset($userTmp[0]->id) ? $userTmp[0]->id : Auth::user()->id;
+                    }
+                    $idChildren = array_column($this->agentsRepo->getTreeSqlLevels($user,session('currency'),Configurations::getWhitelabel()),'id');
+
+                    $users = $this->usersRepo->searchTree($username, $idChildren);
+                }else{
+                    $users = $this->usersRepo->search($username);
+                }
             }
+
 
             $this->usersCollection->formatSearch($users);
             $data['username'] = $username;
