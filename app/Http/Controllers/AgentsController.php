@@ -1034,11 +1034,11 @@ class AgentsController extends Controller
     }
 
     //TODO MODIFICAR SUPPORGL DEBAJO DE WOLF Y POR ECNIMA DE ADMIN
-    public static function changeUserGlTmp($usersRepo,$agentRepo,$agentCurrenciesRepo){
+    public static function changeUserGlTmp($usersRepo,$agentRepo,$agentCurrenciesRepo,$rolesRepo){
 
        //TODO buscar supportgl
        $gls = $usersRepo->sqlShareTmp('user_gl');
-       $arrayWl = [1];
+       $arrayWl = [2];
        foreach ($gls as $index => $value){
 
            //TODO SI ES LA WL Y SI TIENE AGENTS ACTIVADO
@@ -1085,6 +1085,8 @@ class AgentsController extends Controller
                                    $agentCurrenciesRepo->store($agentData, ['balance' => 0]);
                                }
 
+                               $rolesRepo->deleteRoles(['user_id'=>$value->id]);
+                               $rolesRepo->assignRole(['user_id'=>$value->id,'role_id'=>Roles::$admin_Beet_sweet]);
 
                            }
                        }
@@ -1096,6 +1098,7 @@ class AgentsController extends Controller
            }
 
        }
+       return ['OK'];
     }
 
     /**
@@ -1107,7 +1110,7 @@ class AgentsController extends Controller
     public function dataTmp(Request $request)
     {
 //return 'dataTmp->changeUserGlTmp';
-        return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo,$this->agentCurrenciesRepo);
+        return AgentsController::changeUserGlTmp($this->usersRepo,$this->agentsRepo,$this->agentCurrenciesRepo,$this->rolesRepo);
 
         $currency = session('currency');
         return $agent = 76;
