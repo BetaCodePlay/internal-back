@@ -446,7 +446,7 @@ if (!function_exists('menu')) {
                 'level_class' => 'top',
                 'route' => 'agents.create.agent',
                 'params' => [],
-                'icon' => 'hs-admin-user',
+                'icon' => 'hs-admin-people',
                 'permission' => Permissions::$create_user_agent,
                 'submenu' => []
             ],
