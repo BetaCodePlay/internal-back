@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use App\Agents\Collections\AgentsCollection;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
+use App\Agents\Services\TransactionService;
 use App\Audits\Enums\AuditTypes;
 use App\Core\Collections\TransactionsCollection;
-use App\Core\Entities\Transaction;
-use App\Core\Notifications\TransactionNotAllowed;
 use App\Core\Repositories\CountriesRepo;
 use App\Core\Repositories\CurrenciesRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Core\Repositories\ProvidersRepo;
 use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
-use App\Core\Repositories\GamesRepo;
 use App\Core\Repositories\WhitelabelsGamesRepo;
+use App\Http\Requests\TransactionRequest;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
@@ -57,11 +57,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\DataTables;
 use function GuzzleHttp\Promise\all;
 
 /**
@@ -198,7 +196,24 @@ class AgentsController extends Controller
      * @param UsersCollection $usersCollection
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(ReportAgentRepo $reportAgentRepo, ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo, TransactionsCollection $transactionsCollection, AgentsRepo $agentsRepo, AgentsCollection $agentsCollection, UsersRepo $usersRepo, TransactionsRepo $transactionsRepo, WhitelabelsGamesRepo $whitelabelsGamesRepo, AgentCurrenciesRepo $agentCurrenciesRepo, GenerateReferenceCode $generateReferenceCode, WhitelabelsRepo $whitelabelsRepo, CurrenciesRepo $currenciesRepo, UsersCollection $usersCollection, GamesRepo $gamesRepo,RolesRepo $rolesRepo)
+    public function __construct(
+        ReportAgentRepo             $reportAgentRepo,
+        ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo,
+        TransactionsCollection      $transactionsCollection,
+        AgentsRepo                  $agentsRepo,
+        AgentsCollection            $agentsCollection,
+        UsersRepo                   $usersRepo,
+        TransactionsRepo            $transactionsRepo,
+        WhitelabelsGamesRepo        $whitelabelsGamesRepo,
+        AgentCurrenciesRepo         $agentCurrenciesRepo,
+        GenerateReferenceCode       $generateReferenceCode,
+        WhitelabelsRepo             $whitelabelsRepo,
+        CurrenciesRepo              $currenciesRepo,
+        UsersCollection             $usersCollection,
+        GamesRepo                   $gamesRepo,
+        RolesRepo                   $rolesRepo,
+        TransactionService          $transactionService
+    )
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo = $agentsRepo;
@@ -215,6 +230,7 @@ class AgentsController extends Controller
         $this->usersCollection = $usersCollection;
         $this->transactionsCollection = $transactionsCollection;
         $this->rolesRepo = $rolesRepo;
+        $this->transactionService = $transactionService;
     }
 
     /**
@@ -2871,6 +2887,37 @@ class AgentsController extends Controller
                     'close' => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    public function performTransactionsOptimization(TransactionRequest $request)
+    {
+        try {
+            /* TODO: Cambiar variables en el nuevo código
+
+            1. $id por $userAuthId
+            2. $user por $userToAddBalance
+
+            */
+
+            $userAuthId = auth()->user()->id;
+            $userToAddBalance = $request->get('user');
+            $amount = $request->get('amount');
+            $transactionType = $request->get('transaction_type');
+
+            $currency = session('currency');
+
+            /* If the logged in user is different from the user that the balance is added to*/
+            if ($userAuthId != $userToAddBalance) {
+                $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
+
+                if ($errorResponseInsufficientBalance  = $this->transactionService->checkInsufficientBalance($transactionType, $amount, $ownerAgent)) {
+                    return $errorResponseInsufficientBalance;
+                }
             }
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
