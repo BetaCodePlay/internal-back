@@ -2571,24 +2571,29 @@ class AgentsController extends Controller
                             'from' => $ownerAgent->username,
                             'to' => $userData->username
                         ];
-                       // $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
-                        function microtime_float()
-                        {
-                            list($usec, $sec) = explode(" ", microtime());
-                            return ((float)$usec + (float)$sec);
+
+                        if ( Configurations::getWhitelabel() == 1 ){
+                            function microtime_float()
+                            {
+                                list($usec, $sec) = explode(" ", microtime());
+                                return ((float)$usec + (float)$sec);
+                            }
+
+                            $time_start = microtime_float();
+
+                            $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+
+                            $time_end = microtime_float();
+
+                            $time = $time_end - $time_start;
+
+                            Log::debug('Tiempo que tarda', [
+                                'segundos'=>  $time
+                            ]);
+                        } else {
+                            $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         }
 
-                        $time_start = microtime_float();
-
-                        $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
-
-                        $time_end = microtime_float();
-
-                        $time = $time_end - $time_start;
-
-                        Log::debug('Tiempo que tarda', [
-                            'segundos'=>  $time
-                        ]);
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet credit', [
                                 'transaction'=>$transaction,
