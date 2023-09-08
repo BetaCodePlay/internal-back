@@ -45,7 +45,7 @@ class Kernel extends ConsoleKernel
        // $schedule->command('closure:users-totals')->hourly()->withoutOverlapping();
         $schedule->command('crm:send-emails')->everyMinute()->withoutOverlapping();
         $schedule->command('crm:update-segments')->twiceDaily(0, 12)->withoutOverlapping();
-        $schedule->command('points:cashback')->dailyAt('00:00');
+       // $schedule->command('points:cashback')->dailyAt('00:00');
       //  $schedule->command('closure:finances-totals')->hourly()->withoutOverlapping();
     }
 
