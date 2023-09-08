@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Collections\AgentsCollection;
+use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Agents\Services\TransactionService;
@@ -2503,7 +2504,8 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions(Request $request)
+    // TODO: Método actual en producción.
+    public function performTransactions1(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -2894,33 +2896,46 @@ class AgentsController extends Controller
         }
     }
 
-    public function performTransactionsOptimization(TransactionRequest $request)
+    public function performTransactions(TransactionRequest $request)
     {
         try {
             /* TODO: Cambiar variables en el nuevo código
-
-            1. $id por $userAuthId
-            2. $user por $userToAddBalance
-
-            */
+               1. $id por $userAuthId
+               2. $user por $userToAddBalance
+               3. $type por $userType
+               4. $amount por $transactionAmount
+               5. $userData por
+         */
 
             $userAuthId = auth()->user()->id;
             $userToAddBalance = $request->get('user');
-            $amount = $request->get('amount');
-            $transactionType = $request->get('transaction_type');
 
             $currency = session('currency');
 
-            /* If the logged in user is different from the user that the balance is added to*/
-            if ($userAuthId != $userToAddBalance) {
-                $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
 
-                if ($errorResponseInsufficientBalance  = $this->transactionService->checkInsufficientBalance($transactionType, $amount, $ownerAgent)) {
-                    return $errorResponseInsufficientBalance;
+            $transactionAmount = $request->get('amount');
+            $transactionType = $request->get('transaction_type');
+
+            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
+
+
+            if ($userAuthId == $userToAddBalance) {
+                return $this->transactionService->sendSelfTransactionError();
+            }
+
+            if ($request->get('type') == UserType::USER_TYPE_PLAYER) {
+                $playerUserManagementResult =  $this->transactionService->managePlayerUser($request);
+
+                if ($playerUserManagementResult instanceof Response) {
+                    return $playerUserManagementResult;
                 }
             }
+
+
+
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            dd($ex->getMessage());
+            Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
     }
