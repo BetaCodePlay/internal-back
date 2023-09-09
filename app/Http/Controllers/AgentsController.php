@@ -2591,10 +2591,26 @@ class AgentsController extends Controller
                                 'segundos'=>  $time
                             ]);
                         } else {
+                            function microtime_float()
+                            {
+                                list($usec, $sec) = explode(" ", microtime());
+                                return ((float)$usec + (float)$sec);
+                            }
+
+                            $time_start = microtime_float();
+
                             $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         }
 
                         if (empty($transaction) || empty($transaction->data)) {
+
+                            $time_end = microtime_float();
+
+                            $time = $time_end - $time_start;
+
+                            Log::debug('Tiempo que tarda', [
+                                'segundos'=>  $time
+                            ]);
                             Log::debug('error data, wallet credit', [
                                 'transaction'=>$transaction,
                                 'additionalData'=>$additionalData,
