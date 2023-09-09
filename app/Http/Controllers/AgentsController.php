@@ -2904,9 +2904,7 @@ class AgentsController extends Controller
             $userAuthId = auth()->user()->id;
             $userToAddBalance = $request->get('user');
 
-            if ($userAuthId == $userToAddBalance) {
-                return $this->transactionService->sendSelfTransactionError();
-            }
+            if ($userAuthId == $userToAddBalance) return $this->transactionService->sendSelfTransactionError();
 
             $userType = $request->get('type');
             $userManagementResult = null;
