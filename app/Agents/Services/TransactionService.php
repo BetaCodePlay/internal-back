@@ -54,6 +54,22 @@ class TransactionService
         return null;
     }
 
+    /**
+     * Creates and returns an error response for insufficient balance.
+     *
+     * @param string $title The title of the error message.
+     * @param string $message The detailed error message.
+     *
+     * @return Response The generated error response.
+     */
+    public function customErrorResponse(string $title, string $message): Response
+    {
+        return Utils::errorResponse(Codes::$forbidden, [
+            'title' => $title,
+            'message' => $message
+        ]);
+    }
+
     public function isGameAmountGreaterThanBalance($request, $walletDetail): bool|Response
     {
         if ($request->get('amount') > $walletDetail->data->wallet->balance) {
@@ -98,7 +114,7 @@ class TransactionService
      * @return bool|\Illuminate\Http\Response False if the wallet is not empty, or a forbidden
      *                                        response if the wallet is empty.
      */
-    public function handleEmptyWallet(TransactionRequest $request, string $currency, $transaction): bool|Response
+    public function handleEmptyTransactionObject(TransactionRequest $request, string $currency, $transaction): bool|Response
     {
         if (empty($transaction) || empty($transaction->data)) {
             Log::error('error data, wallet getByClient', [
@@ -118,56 +134,35 @@ class TransactionService
         return false;
     }
 
-
     public function managePlayerUser(TransactionRequest $request)
     {
         $userToAddBalance = $request->get('user');
         $playerDetails = $this->agentsRepo->findUser($userToAddBalance);
         $userIsBlocked = $this->isUserBlocked($playerDetails);
+
         if ($userIsBlocked instanceof Response) {
             return $userIsBlocked;
         }
 
         $currency = session('currency');
         $walletDetail = Wallet::getByClient($playerDetails->id, $currency);
-        $walletHandlingResult = $this->handleEmptyWallet($request, $currency, $walletDetail);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $walletDetail);
 
-        if ($walletHandlingResult instanceof Response) {
-            return $walletHandlingResult;
-        }
+        if ($walletHandlingResult instanceof Response) return $walletHandlingResult;
 
         $transactionType = $request->get('transaction_type');
 
         if ($transactionType == TransactionTypes::$credit) {
-            $creditTransactionResult = $this->performCreditTransaction($request, $playerDetails, $walletDetail);
-
-            if ($creditTransactionResult instanceof Response) {
-                return $walletHandlingResult;
-            }
-
-            $ownerBalance = $creditTransactionResult->ownerBalance;
-            $agentBalanceFinal = $creditTransactionResult->agentBalanceFinal;
-            $transaction = $creditTransactionResult->transaction;
-            $additionalData = $creditTransactionResult->additionalData;
-        }
-
-        if ($transactionType == TransactionTypes::$debit) {
+            $transactionResult = $this->performCreditTransaction($request, $playerDetails, $walletDetail);
+        } else {
             $isAmountGreaterThanBalance = $this->isGameAmountGreaterThanBalance($request, $walletDetail);
 
-            if ($isAmountGreaterThanBalance instanceof Response) {
-                return $isAmountGreaterThanBalance;
-            }
+            if ($isAmountGreaterThanBalance instanceof Response) return $isAmountGreaterThanBalance;
 
-            $debitTransactionResult = $this->performDebitTransaction($request, $playerDetails, $walletDetail);
-
-            if ($debitTransactionResult instanceof Response) {
-                return $debitTransactionResult;
-            }
-
-            $ownerBalance = $debitTransactionResult->ownerBalance;
-            $transaction = $debitTransactionResult->transaction;
-            $additionalData = $debitTransactionResult->additionalData;
+            $transactionResult = $this->performDebitTransaction($request, $playerDetails, $walletDetail);
         }
+
+        if ($transactionResult instanceof Response) return $transactionResult;
 
         $transactionData = [
             'user_id' => $userToAddBalance,
@@ -176,17 +171,14 @@ class TransactionService
             'transaction_type_id' => $transactionType,
             'transaction_status_id' => TransactionStatus::$approved,
             'provider_id' => Providers::$agents_users,
-            'data' => $additionalData ?? [],
+            'data' => $transactionResult->additionalData ?? [],
             'whitelabel_id' => Configurations::getWhitelabel()
         ];
 
         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+        $response = $this->handleEmptyTransactionObject($request, $currency, $ticket);
 
-        $response = $this->handleEmptyWallet($request, $currency, $ticket);
-
-        if ($response instanceof Response) {
-            return $response;
-        }
+        if ($response instanceof Response) return $response;
 
         $button = sprintf(
             '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
@@ -194,14 +186,15 @@ class TransactionService
             _i('Print ticket')
         );
 
-        return arrayToObject([
-            'agentBalanceFinal' => $agentBalanceFinal ?? 0,
-            'ownerBalance' => $ownerBalance ?? 0,
+        return (object)[
+            'agentBalanceFinal' => $transactionResult->agentBalanceFinal ?? 0,
+            'ownerBalance' => $transactionResult->ownerBalance ?? 0,
             'transactionIdCreated' => $ticket->id,
-            'balance' => $transaction?->data?->wallet?->balance ?? 0,
-            'status' => $transaction?->status ?? '',
-            'button' => $button
-        ]);
+            'balance' => $transactionResult->transaction?->data?->wallet?->balance ?? 0,
+            'status' => $transactionResult->transaction?->status ?? '',
+            'button' => $button,
+            'additionalData' => $transactionResult->additionalData,
+        ];
     }
 
     public function performCreditTransaction($request, $userData, $walletDetail)
@@ -223,18 +216,18 @@ class TransactionService
             $request->get('wallet'),
         );
 
-        $walletHandlingResult = $this->handleEmptyWallet($request, $currency, $transaction);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transaction);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
         }
 
-        return arrayToObject([
+        return (object)[
             'additionalData' => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
             'ownerBalance' => $ownerAgent->balance - $transactionAmount,
             'transaction' => $transaction,
-        ]);
+        ];
     }
 
     public function performDebitTransaction($request, $userData, $walletDetail)
@@ -256,17 +249,17 @@ class TransactionService
             $walletDetail
         );
 
-        $walletHandlingResult = $this->handleEmptyWallet($request, $currency, $transaction);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transaction);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
         }
 
-        return arrayToObject([
+        return (object)[
             'additionalData' => $additionalData,
             'ownerBalance' => $ownerAgent->balance + $transactionAmount,
             'transaction' => $transaction,
-        ]);
+        ];
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Collections\AgentsCollection;
+use App\Agents\Enums\AgentType;
 use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
@@ -54,6 +55,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -2896,45 +2898,101 @@ class AgentsController extends Controller
         }
     }
 
-    public function performTransactions(TransactionRequest $request)
+    public function performTransactions(TransactionRequest $request): \Illuminate\Http\Response|Response
     {
         try {
-            /* TODO: Cambiar variables en el nuevo código
-               1. $id por $userAuthId
-               2. $user por $userToAddBalance
-               3. $type por $userType
-               4. $amount por $transactionAmount
-               5. $userData por
-         */
-
             $userAuthId = auth()->user()->id;
             $userToAddBalance = $request->get('user');
-
-            $currency = session('currency');
-
-
-            $transactionAmount = $request->get('amount');
-            $transactionType = $request->get('transaction_type');
-
-            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
-
 
             if ($userAuthId == $userToAddBalance) {
                 return $this->transactionService->sendSelfTransactionError();
             }
 
-            if ($request->get('type') == UserType::USER_TYPE_PLAYER) {
-                $playerUserManagementResult =  $this->transactionService->managePlayerUser($request);
+            $userType = $request->get('type');
+            $userManagementResult = null;
+            if ($userType == UserType::USER_TYPE_PLAYER) {
+                $userManagementResult = $this->transactionService->managePlayerUser($request);
 
-                if ($playerUserManagementResult instanceof Response) {
-                    return $playerUserManagementResult;
-                }
+                if ($userManagementResult instanceof Response) return $userManagementResult;
             }
 
+            if ($userManagementResult?->status != Status::$ok) {
+                return $this->transactionService->customErrorResponse(
+                    _i('Insufficient balance'),
+                    _i("The user's balance is insufficient to perform the transaction")
+                );
+            }
 
+            $currency = session('currency');
+            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
 
+            if ($ownerAgent->username != AgentType::WOLF) {
+                $this->agentCurrenciesRepo->store(
+                    [ 'agent_id' => $ownerAgent->agent, 'currency_iso' => $currency],
+                    [ 'balance' => $userManagementResult->ownerBalance ]
+                );
+            }
+
+            $transactionType = $request->get('transaction_type');
+            $transactionAmount = $request->get('amount');
+            $balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
+                ? $userManagementResult->ownerBalance
+                : 0;
+
+            $secondBalance = $transactionType == TransactionTypes::$credit
+                ? round($userManagementResult->agentBalanceFinal, 2)
+                : round($userManagementResult->agentBalanceFinal, 2) - $transactionAmount;
+
+            $additionalData = Arr::collapse([$userManagementResult->additionalData, [
+                'balance' => $balance,
+                'transaction_id' => $userManagementResult->transactionIdCreated,
+                'second_balance' => $secondBalance,
+            ]]);
+
+            $transactionData = [
+                'user_id' => $userAuthId,
+                'amount' => $transactionAmount,
+                'currency_iso' => $currency,
+                'transaction_type_id' => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
+                'transaction_status_id' => TransactionStatus::$approved,
+                'provider_id' => Providers::$agents,
+                'data' => $additionalData,
+                'whitelabel_id' => Configurations::getWhitelabel()
+            ];
+
+            $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+            if (empty($transactionFinal)) {
+                return $this->transactionService->customErrorResponse(
+                    _i('An error occurred'),
+                    _i('please contact support"')
+                );
+            }
+
+            $calculatedAmount = $transactionType == TransactionTypes::$credit
+                ? round($userManagementResult->ownerBalance, 2) - $transactionAmount
+                : round($userManagementResult->ownerBalance, 2) + $transactionAmount;
+
+            $transactionUpdate = $this->transactionsRepo->updateData(
+                $userManagementResult->transactionIdCreated,
+                $transactionFinal->id,
+                $calculatedAmount,
+            );
+
+            if (empty($transactionUpdate)) {
+                return $this->transactionService->customErrorResponse(
+                    _i('An error occurred'),
+                    _i('please contact support"')
+                );
+            }
+
+            return Utils::successResponse([
+                'title' => _i('Transaction performed'),
+                'message' => _i('The transaction was successfully made to the user'),
+                'close' => _i('Close'),
+                'balance' => number_format($balance, 2),
+                'button' => $userManagementResult->button,
+            ]);
         } catch (\Exception $ex) {
-            dd($ex->getMessage());
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }

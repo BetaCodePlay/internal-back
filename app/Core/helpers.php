@@ -7190,20 +7190,3 @@ if (!function_exists('menu')) {
         return json_decode(json_encode($menu));
     }
 }
-
-/**
- * Convert an associative array to an object.
- *
- * This function takes an associative array as input and converts it into
- * an object in PHP. It uses JSON encoding and decoding to perform the conversion.
- *
- * @param array $array The associative array to be converted to an object.
- *
- * @return object|null Returns an object representing the input array, or null
- *                    if the conversion fails.
- */
-if (!function_exists('arrayToObject')) {
-    function arrayToObject(array $array) {
-        return json_decode(json_encode($array));
-    }
-}
