@@ -2044,15 +2044,17 @@ class AgentsController extends Controller
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
                 $balance = $user->balance;
+                $balanceBonus = 0.00;
                 $master = $user->master;
                 $agent = true;
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
-                $father = $this->usersRepo->findUsername($user->owner_id);
+                $father = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master = false;
-                $wallet = Wallet::getByClient($id, $currency);
+                $wallet = Wallet::getByClient($id, $currency, true);
                 $balance = $wallet->data->wallet->balance;
+                $balanceBonus = (property_exists($wallet->data, 'bonus')) ? $wallet->data->bonus[0]->balance : 0.00;
                 $agent = false;
                 $walletId = $wallet->data->wallet->id;
                 $myself = false;
@@ -2067,6 +2069,7 @@ class AgentsController extends Controller
                 'fathers' => [],
                 'user' => $user,
                 'balance' => number_format($balance, 2),
+                'balance_bonus' => number_format($balanceBonus, 2),
                 'master' => $master,
                 'agent' => $agent,
                 'wallet' => $walletId,
