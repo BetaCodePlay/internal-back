@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Collections\AgentsCollection;
-use App\Agents\Enums\AgentType;
-use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Agents\Services\TransactionService;
@@ -55,7 +53,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -2506,7 +2503,6 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    // TODO: Método actual en producción.
     public function performTransactions1(Request $request)
     {
         $this->validate($request, [
@@ -2529,8 +2525,8 @@ class AgentsController extends Controller
             /* If the logged in user is different from the user that the balance is added to*/
             if ($id != $user) {
 
-                /*Insufficient balance (ready) */
-                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance) {
+                /*Insufficient balance */
+                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
                     $data = [
                         'title' => _i('Insufficient balance'),
                         'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
@@ -2554,7 +2550,6 @@ class AgentsController extends Controller
 
                     }
 
-                    /* ready */
                     $walletData = Wallet::getByClient($userData->id, $currency);
                     if (empty($walletData)) {
                         Log::error('error data, wallet getByClient', [
@@ -2579,10 +2574,10 @@ class AgentsController extends Controller
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet credit', [
-                                'transaction'=>$transaction,
-                                'additionalData'=>$additionalData,
-                                'request'=>$request->all(),
-                                'Auth'=>Auth::user()->id
+                                'transaction' => $transaction,
+                                'additionalData' => $additionalData,
+                                'request' => $request->all(),
+                                'Auth' => Auth::user()->id
                             ]);
 
                             $data = [
@@ -2593,7 +2588,6 @@ class AgentsController extends Controller
                             return Utils::errorResponse(Codes::$forbidden, $data);
 
                         }
-                        // TODO: ver uilidad
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
@@ -2618,10 +2612,10 @@ class AgentsController extends Controller
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet debit', [
-                                'transaction'=>$transaction,
-                                'additionalData'=>$additionalData,
-                                'request'=>$request->all(),
-                                'Auth'=>Auth::user()->id
+                                'transaction' => $transaction,
+                                'additionalData' => $additionalData,
+                                'request' => $request->all(),
+                                'Auth' => Auth::user()->id
                             ]);
 
                             $data = [
@@ -2899,6 +2893,7 @@ class AgentsController extends Controller
             return Utils::failedResponse();
         }
     }
+
 
     /**
      * Perform credit and debit transactions.
