@@ -208,15 +208,12 @@ class TransactionService
 
         $userType = $request->get('type');
 
-        $userManagementResult = null;
-        if ($userType == UserType::USER_TYPE_PLAYER) {
-            $userManagementResult = $this->managePlayerUser($request, $userToAddBalance);
+        $userManagementResult = ($userType == UserType::USER_TYPE_PLAYER)
+            ? $this->managePlayerUser($request, $userToAddBalance, $currency)
+            : $this->manageAgentUser($request, $userToAddBalance, $currency);
 
-            if ($userManagementResult instanceof Response) {
-                return $userManagementResult;
-            }
-        } else {
-            // TODO: implementar
+        if ($userManagementResult instanceof Response) {
+            return $userManagementResult;
         }
 
         if ($userManagementResult?->status != Status::$ok) {
@@ -253,12 +250,12 @@ class TransactionService
      * the provided TransactionRequest and the user's balance.
      *
      * @param TransactionRequest $request The request object containing transaction details.
-     * @param int|string $userToAddBalance The user identifier for whom the transaction is being processed.
+     * @param string $userToAddBalance The user identifier for whom the transaction is being processed.
      *
      * @return mixed The response object indicating the result of the transaction.
      *                  It can be a success response or an error response.
      */
-    public function managePlayerUser(TransactionRequest $request, int|string $userToAddBalance): mixed
+    public function managePlayerUser(TransactionRequest $request, string $userToAddBalance, string $currency): mixed
     {
         $playerDetails = $this->agentsRepo->findUser($userToAddBalance);
         $userIsBlocked = $this->isUserBlocked($playerDetails);
@@ -267,7 +264,6 @@ class TransactionService
             return $userIsBlocked;
         }
 
-        $currency = session('currency');
         $walletDetail = Wallet::getByClient($playerDetails->id, $currency);
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $walletDetail);
 
@@ -292,6 +288,65 @@ class TransactionService
         $transactionResult = $this->processDebitTransaction($request, $playerDetails, $walletDetail);
 
         return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $transactionResult);
+    }
+
+    public function manageAgentUser(TransactionRequest $request, string $userToAddBalance, $currency)
+    {
+        $agentDetails = $this->agentsRepo->findByUserIdAndCurrency($userToAddBalance, $currency);
+        $userIsBlocked = $this->isUserBlocked($agentDetails);
+
+        if ($userIsBlocked instanceof Response) {
+            return $userIsBlocked;
+        }
+
+        $transactionType = $request->get('transaction_type');
+        $transactionAmount = $request->get('amount');
+        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userToAddBalance, $currency);
+
+        $agentBalance = round($agentDetails->balance, 2);
+
+        if ($transactionType == TransactionTypes::$credit) {
+            $balance = $agentBalance + $transactionAmount;
+
+            if ($agentDetails->username != AgentType::WOLF) {
+                $this->agentCurrenciesRepo->store(
+                    ['agent_id' => $agentDetails->agent, 'currency_iso' => $currency],
+                    ['balance' => $balance]
+                );
+            }
+
+            $agentBalanceFinal = $agentDetails->balance + $transactionAmount;
+            $ownerBalance = $ownerAgent->balance - $transactionAmount;
+
+            $additionalData = [
+                'from' => $ownerAgent->username,
+                'to' => $agentDetails->username,
+                'balance' => $balance
+            ];
+
+        } else {
+            if ($transactionAmount > $agentBalance) {
+                $balance = $agentBalance;
+                $status = Status::$failed;
+            }
+
+            $balance = $agentBalance - $transactionAmount;
+
+            if ($agentDetails->username != AgentType::WOLF) {
+                $this->agentCurrenciesRepo->store(
+                    ['agent_id' => $agentDetails->agent, 'currency_iso' => $currency],
+                    ['balance' => $balance]
+                );
+            }
+
+            $agentBalanceFinal = $agentDetails->balance;
+            $ownerBalance = $ownerAgent->balance + $transactionAmount;
+            $additionalData = [
+                'from' => $ownerAgent->username,
+                'to' => $agentDetails->username,
+                'balance' => $balance
+            ];
+        }
     }
 
 
