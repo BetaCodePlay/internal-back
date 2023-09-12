@@ -2529,8 +2529,8 @@ class AgentsController extends Controller
             /* If the logged in user is different from the user that the balance is added to*/
             if ($id != $user) {
 
-                /*Insufficient balance */
-                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
+                /*Insufficient balance (ready) */
+                if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance) {
                     $data = [
                         'title' => _i('Insufficient balance'),
                         'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
@@ -2554,6 +2554,7 @@ class AgentsController extends Controller
 
                     }
 
+                    /* ready */
                     $walletData = Wallet::getByClient($userData->id, $currency);
                     if (empty($walletData)) {
                         Log::error('error data, wallet getByClient', [
@@ -2592,6 +2593,7 @@ class AgentsController extends Controller
                             return Utils::errorResponse(Codes::$forbidden, $data);
 
                         }
+                        // TODO: ver uilidad
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
@@ -2898,98 +2900,21 @@ class AgentsController extends Controller
         }
     }
 
-    public function performTransactions(TransactionRequest $request): \Illuminate\Http\Response|Response
+    /**
+     * Perform credit and debit transactions.
+     *
+     * This method handles credit and debit transactions based on the provided
+     * TransactionRequest, which includes transaction details.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     *
+     * @return Response The response object indicating the result of the transaction.
+     *                  It can be a success response or an error response.
+     */
+    public function performTransactions(TransactionRequest $request): Response
     {
         try {
-            $userAuthId = auth()->user()->id;
-            $userToAddBalance = $request->get('user');
-
-            if ($userAuthId == $userToAddBalance) return $this->transactionService->sendSelfTransactionError();
-
-            $userType = $request->get('type');
-            $userManagementResult = null;
-            if ($userType == UserType::USER_TYPE_PLAYER) {
-                $userManagementResult = $this->transactionService->managePlayerUser($request);
-
-                if ($userManagementResult instanceof Response) return $userManagementResult;
-            }
-
-            if ($userManagementResult?->status != Status::$ok) {
-                return $this->transactionService->customErrorResponse(
-                    _i('Insufficient balance'),
-                    _i("The user's balance is insufficient to perform the transaction")
-                );
-            }
-
-            $currency = session('currency');
-            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
-
-            if ($ownerAgent->username != AgentType::WOLF) {
-                $this->agentCurrenciesRepo->store(
-                    [ 'agent_id' => $ownerAgent->agent, 'currency_iso' => $currency],
-                    [ 'balance' => $userManagementResult->ownerBalance ]
-                );
-            }
-
-            $transactionType = $request->get('transaction_type');
-            $transactionAmount = $request->get('amount');
-            $balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
-                ? $userManagementResult->ownerBalance
-                : 0;
-
-            $secondBalance = $transactionType == TransactionTypes::$credit
-                ? round($userManagementResult->agentBalanceFinal, 2)
-                : round($userManagementResult->agentBalanceFinal, 2) - $transactionAmount;
-
-            $additionalData = Arr::collapse([$userManagementResult->additionalData, [
-                'balance' => $balance,
-                'transaction_id' => $userManagementResult->transactionIdCreated,
-                'second_balance' => $secondBalance,
-            ]]);
-
-            $transactionData = [
-                'user_id' => $userAuthId,
-                'amount' => $transactionAmount,
-                'currency_iso' => $currency,
-                'transaction_type_id' => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
-                'transaction_status_id' => TransactionStatus::$approved,
-                'provider_id' => Providers::$agents,
-                'data' => $additionalData,
-                'whitelabel_id' => Configurations::getWhitelabel()
-            ];
-
-            $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-            if (empty($transactionFinal)) {
-                return $this->transactionService->customErrorResponse(
-                    _i('An error occurred'),
-                    _i('please contact support"')
-                );
-            }
-
-            $calculatedAmount = $transactionType == TransactionTypes::$credit
-                ? round($userManagementResult->ownerBalance, 2) - $transactionAmount
-                : round($userManagementResult->ownerBalance, 2) + $transactionAmount;
-
-            $transactionUpdate = $this->transactionsRepo->updateData(
-                $userManagementResult->transactionIdCreated,
-                $transactionFinal->id,
-                $calculatedAmount,
-            );
-
-            if (empty($transactionUpdate)) {
-                return $this->transactionService->customErrorResponse(
-                    _i('An error occurred'),
-                    _i('please contact support"')
-                );
-            }
-
-            return Utils::successResponse([
-                'title' => _i('Transaction performed'),
-                'message' => _i('The transaction was successfully made to the user'),
-                'close' => _i('Close'),
-                'balance' => number_format($balance, 2),
-                'button' => $userManagementResult->button,
-            ]);
+            return $this->transactionService->manageCreditDebitTransactions($request);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();

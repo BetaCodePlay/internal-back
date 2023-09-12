@@ -3,6 +3,8 @@
 namespace App\Agents\Services;
 
 use App\Agents\Enums\AgentType;
+use App\Agents\Enums\UserType;
+use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Agents\Services\App\Models\User;
 use App\Core\Repositories\TransactionsRepo;
@@ -11,10 +13,12 @@ use App\Users\Enums\ActionUser;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
+use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,97 +28,65 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class TransactionService
 {
-
+    /**
+     * Constructor for the TransactionManager class.
+     *
+     * @param AgentsRepo $agentsRepo The AgentsRepo instance.
+     * @param TransactionsRepo $transactionsRepo The TransactionsRepo instance.
+     * @param AgentCurrenciesRepo $agentCurrenciesRepo The AgentCurrenciesRepo instance.
+     */
     public function __construct(
         private AgentsRepo       $agentsRepo,
         private TransactionsRepo $transactionsRepo,
+        private AgentCurrenciesRepo $agentCurrenciesRepo
     )
     {
     }
 
     /**
-     * @param $transactionType
-     * @param $amount
-     * @param $ownerAgent
-     * @return Response|null
+     * Generate additional transaction data.
+     *
+     * @param object $ownerAgent The owner agent object.
+     * @param object $playerDetails The player details object.
+     *
+     * @return array Additional transaction data.
      */
-    public function checkInsufficientBalance($transactionType, $amount, $ownerAgent): ?Response
+    public function generateAdditionalTransactionData(object $ownerAgent, object $playerDetails): array
     {
-        $isCreditTransaction = $transactionType == TransactionTypes::$credit;
-        $isWolfAgent = $ownerAgent->username == AgentType::WOLF;
-
-        if ($isCreditTransaction && $amount > $ownerAgent->balance && !$isWolfAgent) {
-            return Utils::errorResponse(Codes::$forbidden, [
-                'title' => _i('Insufficient balance'),
-                'message' => _i("The agent's operational balance is insufficient to perform the transaction"),
-                'close' => _i('Close')
-            ]);
-        }
-
-        return null;
+        return [
+            'provider_transaction' => Str::uuid()->toString(),
+            'from' => $ownerAgent->username,
+            'to' => $playerDetails->username
+        ];
     }
 
     /**
-     * Creates and returns an error response for insufficient balance.
+     * Generate an error response.
      *
-     * @param string $title The title of the error message.
-     * @param string $message The detailed error message.
+     * @param string $title The error title.
+     * @param string $message The error message.
      *
-     * @return Response The generated error response.
+     * @return Response The error response.
      */
-    public function customErrorResponse(string $title, string $message): Response
+    public function generateErrorResponse(string $title, string $message): Response
     {
         return Utils::errorResponse(Codes::$forbidden, [
             'title' => $title,
-            'message' => $message
+            'message' => $message,
+            'close' => _i('Close')
         ]);
     }
 
-    public function isGameAmountGreaterThanBalance($request, $walletDetail): bool|Response
-    {
-        if ($request->get('amount') > $walletDetail->data->wallet->balance) {
-            $data = [
-                'title' => _i('Insufficient balance'),
-                'message' => _i("The user's balance is insufficient to perform the transaction"),
-                'close' => _i('Close')
-            ];
-            return Utils::errorResponse(Codes::$forbidden, $data);
-        }
-
-        return false;
-    }
-
     /**
-     * @param $user
-     * @return bool|Response
+     * Handle an empty transaction object.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     * @param string $currency The currency ISO code.
+     * @param mixed $transaction The transaction object.
+     *
+     * @return bool|Response False if the transaction is not empty, otherwise a response indicating an error.
      */
-    public function isUserBlocked($user): bool|Response
-    {
-        if ($user->action == ActionUser::$locked_higher) {
-            return Utils::errorResponse(Codes::$not_found, [
-                'title' => _i('Blocked by a superior!'),
-                'message' => _i('Contact your superior...'),
-                'close' => _i('Close')
-            ]);
-        }
-
-        return false;
-    }
-
-    /**
-     * Handle the case of an empty wallet and return an appropriate response.
-     *
-     * This method checks if the wallet is empty for a specific user and currency.
-     * If the wallet is empty, it logs an error and returns a forbidden response.
-     * Otherwise, it returns false, indicating that the wallet is not empty.
-     *
-     * @param TransactionRequest $request The HTTP request object.
-     * @param string $currency The currency for which to check the wallet.
-     *
-     * @return bool|\Illuminate\Http\Response False if the wallet is not empty, or a forbidden
-     *                                        response if the wallet is empty.
-     */
-    public function handleEmptyTransactionObject(TransactionRequest $request, string $currency, $transaction): bool|Response
+    public function handleEmptyTransactionObject(TransactionRequest $request, string $currency, mixed $transaction): bool|Response
     {
         if (empty($transaction) || empty($transaction->data)) {
             Log::error('error data, wallet getByClient', [
@@ -124,19 +96,170 @@ class TransactionService
                 'transaction' => $transaction,
             ]);
 
-            return Utils::errorResponse(Codes::$forbidden, [
-                'title' => _i('An error occurred'),
-                'message' => _i('please contact support'),
-                'close' => _i('Close')
-            ]);
+            return $this->generateErrorResponse(
+                _i('An error occurred'),
+                _i('please contact support')
+            );
         }
 
         return false;
     }
 
-    public function managePlayerUser(TransactionRequest $request)
+    /**
+     * Check if the game amount is greater than the wallet balance.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     * @param object $walletDetail The wallet detail object.
+     *
+     * @return bool|Response False if the game amount is not greater than the balance, otherwise a response indicating an error.
+     */
+    public function isGameAmountGreaterThanBalance(TransactionRequest $request, object $walletDetail): bool|Response
     {
+        if ($request->get('amount') > $walletDetail->data->wallet->balance) {
+            return $this->generateErrorResponse(
+                _i('Insufficient balance'),
+                _i("The user's balance is insufficient to perform the transaction")
+            );
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if there is insufficient balance for a transaction.
+     *
+     * @param string $transactionType The transaction type.
+     * @param string $transactionAmount The transaction amount.
+     * @param object $ownerAgent The owner agent object.
+     *
+     * @return Response|null A response indicating an error if there is insufficient balance, otherwise null.
+     */
+    public function isInsufficientBalance(string $transactionType, string $transactionAmount, object $ownerAgent): ?Response
+    {
+        $isCreditTransaction = $transactionType == TransactionTypes::$credit;
+        $isWolfAgent = $ownerAgent->username == AgentType::WOLF;
+
+        if ($isCreditTransaction && $transactionAmount > $ownerAgent->balance && !$isWolfAgent) {
+            return $this->generateErrorResponse(
+                _i('Insufficient balance'),
+                _i("The agents's operational balance is insufficient to perform the transaction")
+            );
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if a user is blocked.
+     *
+     * @param object $user The user object.
+     *
+     * @return bool|Response False if the user is not blocked, otherwise a response indicating a block.
+     */
+    public function isUserBlocked(object $user): bool|Response
+    {
+        if ($user->action == ActionUser::$locked_higher) {
+            return $this->generateErrorResponse(
+                _i('Blocked by a superior!'),
+                _i('Contact your superior...'),
+            );
+        }
+
+        return false;
+    }
+
+    /**
+     * Manage credit and debit transactions based on the provided request.
+     *
+     * This method orchestrates the processing of credit and debit transactions
+     * based on the information provided in the TransactionRequest object.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     *
+     * @return mixed The response object indicating the result of the transaction.
+     *                  It can be a success response or an error response.
+     */
+    public function manageCreditDebitTransactions(TransactionRequest $request): mixed
+    {
+        /*
+         * Cambiar nombre de variables por mejores nombres.
+         *  $id por $userAuthId
+         *  $user por $userToAddBalance
+         *  $userData por $playerDetails
+         * */
+        $userAuthId = $request->user()->id;
         $userToAddBalance = $request->get('user');
+
+        if ($userAuthId == $userToAddBalance) {
+            return $this->generateErrorResponse(
+                _i('Error'),
+                _i('You cannot make transactions to yourself')
+            );
+        }
+
+        $transactionType = $request->get('transaction_type');
+        $transactionAmount = $request->get('amount');
+        $currency = session('currency');
+        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
+
+        if ($isBalanceInsufficient = $this->isInsufficientBalance($transactionType, $transactionAmount, $ownerAgent)) {
+            return $isBalanceInsufficient;
+        }
+
+        $userType = $request->get('type');
+
+        $userManagementResult = null;
+        if ($userType == UserType::USER_TYPE_PLAYER) {
+            $userManagementResult = $this->managePlayerUser($request, $userToAddBalance);
+
+            if ($userManagementResult instanceof Response) {
+                return $userManagementResult;
+            }
+        } else {
+            // TODO: implementar
+        }
+
+        if ($userManagementResult?->status != Status::$ok) {
+            return $this->generateErrorResponse(
+                _i('Insufficient balance'),
+                _i("The user's balance is insufficient to perform the transaction")
+            );
+        }
+
+        if ($ownerAgent->username != AgentType::WOLF) {
+            $this->agentCurrenciesRepo->store(
+                ['agent_id' => $ownerAgent->agent, 'currency_iso' => $currency],
+                ['balance' => $userManagementResult->ownerBalance]
+            );
+        }
+
+        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
+
+        return $this->processTransactionAndGenerateResponse(
+            $userType,
+            $ownerAgent,
+            $userManagementResult,
+            $userAuthId,
+            $transactionAmount,
+            $currency,
+            $transactionType
+        );
+    }
+
+    /**
+     * Manage player user transactions.
+     *
+     * This method orchestrates the processing of transactions for a player user based on
+     * the provided TransactionRequest and the user's balance.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     * @param int|string $userToAddBalance The user identifier for whom the transaction is being processed.
+     *
+     * @return mixed The response object indicating the result of the transaction.
+     *                  It can be a success response or an error response.
+     */
+    public function managePlayerUser(TransactionRequest $request, int|string $userToAddBalance): mixed
+    {
         $playerDetails = $this->agentsRepo->findUser($userToAddBalance);
         $userIsBlocked = $this->isUserBlocked($playerDetails);
 
@@ -148,22 +271,51 @@ class TransactionService
         $walletDetail = Wallet::getByClient($playerDetails->id, $currency);
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $walletDetail);
 
-        if ($walletHandlingResult instanceof Response) return $walletHandlingResult;
+        if ($walletHandlingResult instanceof Response) {
+            return $walletHandlingResult;
+        }
 
         $transactionType = $request->get('transaction_type');
 
         if ($transactionType == TransactionTypes::$credit) {
-            $transactionResult = $this->performCreditTransaction($request, $playerDetails, $walletDetail);
-        } else {
-            $isAmountGreaterThanBalance = $this->isGameAmountGreaterThanBalance($request, $walletDetail);
+            $transactionResult = $this->processCreditTransaction($request, $playerDetails, $walletDetail);
 
-            if ($isAmountGreaterThanBalance instanceof Response) return $isAmountGreaterThanBalance;
-
-            $transactionResult = $this->performDebitTransaction($request, $playerDetails, $walletDetail);
+            return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $transactionResult);
         }
 
-        if ($transactionResult instanceof Response) return $transactionResult;
+        $isAmountGreaterThanBalance = $this->isGameAmountGreaterThanBalance($request, $walletDetail);
 
+        if ($isAmountGreaterThanBalance instanceof Response) {
+            return $isAmountGreaterThanBalance;
+        }
+
+        $transactionResult = $this->processDebitTransaction($request, $playerDetails, $walletDetail);
+
+        return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $transactionResult);
+    }
+
+
+    /**
+     * Process and store a transaction, and generate a response.
+     *
+     * This method processes a transaction based on the provided details, stores it,
+     * and generates a response object with transaction information and a ticket link.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     * @param int|string $userToAddBalance The user identifier for whom the transaction is being processed.
+     * @param string $currency The currency ISO code.
+     * @param string $transactionType The transaction type identifier.
+     * @param mixed $transactionResult The result of the transaction processing.
+     *
+     * @return mixed An object containing transaction and ticket information or a Response object in case of an error.
+     */
+    public function processAndStoreTransaction(
+        TransactionRequest $request,
+        int|string $userToAddBalance,
+        string $currency,
+        string $transactionType,
+        mixed $transactionResult): mixed
+    {
         $transactionData = [
             'user_id' => $userToAddBalance,
             'amount' => $request->get('amount'),
@@ -178,7 +330,9 @@ class TransactionService
         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
         $response = $this->handleEmptyTransactionObject($request, $currency, $ticket);
 
-        if ($response instanceof Response) return $response;
+        if ($response instanceof Response) {
+            return $response;
+        }
 
         $button = sprintf(
             '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
@@ -197,22 +351,31 @@ class TransactionService
         ];
     }
 
-    public function performCreditTransaction($request, $userData, $walletDetail)
+    /**
+     * Process a credit transaction for a player user.
+     *
+     * This method handles the processing of a credit transaction for a player user,
+     * including generating additional data, performing the transaction, and updating balances.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     * @param object $playerDetails The player details object.
+     * @param object $walletDetail The wallet detail object.
+     *
+     * @return mixed An object containing additional data, agent and owner balances, and transaction information
+     *               or a Response object in case of an error.
+     */
+    public function processCreditTransaction(TransactionRequest $request, object $playerDetails, object $walletDetail): mixed
     {
         $currency = session('currency');
         $transactionAmount = $request->get('amount');
         $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($request->user()->id, $currency);
 
-        $additionalData = [
-            'provider_transaction' => Str::uuid()->toString(),
-            'from' => $ownerAgent->username,
-            'to' => $userData->username
-        ];
+        $additionalData = $this->generateAdditionalTransactionData($ownerAgent, $playerDetails);
 
         $transaction = Wallet::creditManualTransactions(
             $transactionAmount,
             Providers::$agents_users,
-            $additionalData,
+            $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
 
@@ -230,22 +393,28 @@ class TransactionService
         ];
     }
 
-    public function performDebitTransaction($request, $userData, $walletDetail)
+    /**
+     * Process a debit transaction.
+     *
+     * @param TransactionRequest $request The request object.
+     * @param object $playerDetails The player details object.
+     * @param int|string $walletDetail The wallet detail object.
+     *
+     * @return mixed An object containing additional data, owner balance, and transaction information
+     *               or a Response object in case of an error.
+     */
+    public function processDebitTransaction(TransactionRequest $request, object $playerDetails, int|string $walletDetail): mixed
     {
         $currency = session('currency');
         $transactionAmount = $request->get('amount');
         $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($request->user()->id, $currency);
 
-        $additionalData = [
-            'provider_transaction' => Str::uuid()->toString(),
-            'from' => $ownerAgent->username,
-            'to' => $userData->username
-        ];
+        $additionalData = $this->generateAdditionalTransactionData($ownerAgent, $playerDetails);
 
         $transaction = Wallet::debitManualTransactions(
             $transactionAmount,
             Providers::$agents_users,
-            $additionalData,
+            $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $walletDetail
         );
 
@@ -262,22 +431,68 @@ class TransactionService
         ];
     }
 
-
     /**
-     * Send an error response for self-transaction attempt.
+     * Process a transaction and generate a response.
      *
-     * This method generates and returns an error response with a specific message
-     * when a user attempts to make a transaction to themselves.
+     * @param string $userType The user type.
+     * @param object $ownerAgent The owner agent object.
+     * @param object $userManagementResult The user management result object.
+     * @param int $userAuthId The user authentication ID.
+     * @param float $transactionAmount The transaction amount.
+     * @param string $currency The currency ISO code.
+     * @param string $transactionType The transaction type identifier.
      *
-     * @return Response
+     * @return Response The generated response.
      */
-    public static function sendSelfTransactionError(): Response
+    public function processTransactionAndGenerateResponse(
+        string $userType,
+        object $ownerAgent,
+        object $userManagementResult,
+        int    $userAuthId,
+        float  $transactionAmount,
+        string $currency,
+        string $transactionType
+    ): Response
     {
-        return Utils::errorResponse(Codes::$forbidden, [
-            'title' => _i('Error'),
-            'message' => _i('You cannot make transactions to yourself'),
-            'close' => _i('Close')
+        $balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
+            ? $userManagementResult->ownerBalance
+            : 0;
+
+        $secondBalance = $transactionType == TransactionTypes::$credit
+            ? round($userManagementResult->agentBalanceFinal, 2)
+            : round($userManagementResult->agentBalanceFinal, 2) - $transactionAmount;
+
+        $additionalData = Arr::collapse([$userManagementResult->additionalData, [
+            'balance' => $balance,
+            'transaction_id' => $userManagementResult->transactionIdCreated,
+            'second_balance' => $secondBalance,
+        ]]);
+
+        $transactionData = [
+            'user_id' => $userAuthId,
+            'amount' => $transactionAmount,
+            'currency_iso' => $currency,
+            'transaction_type_id' => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
+            'transaction_status_id' => TransactionStatus::$approved,
+            'provider_id' => Providers::$agents,
+            'data' => $additionalData,
+            'whitelabel_id' => Configurations::getWhitelabel()
+        ];
+
+        $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+        if (empty($transactionFinal)) {
+            return $this->generateErrorResponse(
+                _i('An error occurred'),
+                _i('please contact support"')
+            );
+        }
+
+        return Utils::successResponse([
+            'title' => _i('Transaction performed'),
+            'message' => _i('The transaction was successfully made to the user'),
+            'close' => _i('Close'),
+            'balance' => number_format($balance, 2),
+            'button' => $userManagementResult->button,
         ]);
     }
-
 }
