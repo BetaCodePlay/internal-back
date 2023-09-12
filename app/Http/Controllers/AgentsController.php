@@ -2503,7 +2503,7 @@ class AgentsController extends Controller
      * @return Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function performTransactions(Request $request)
+    public function performTransactions1(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
@@ -2612,10 +2612,10 @@ class AgentsController extends Controller
                                 'segundos'=>  $time
                             ]);
                             Log::debug('error data, wallet credit', [
-                                'transaction'=>$transaction,
-                                'additionalData'=>$additionalData,
-                                'request'=>$request->all(),
-                                'Auth'=>Auth::user()->id
+                                'transaction' => $transaction,
+                                'additionalData' => $additionalData,
+                                'request' => $request->all(),
+                                'Auth' => Auth::user()->id
                             ]);
 
                             $data = [
@@ -2650,10 +2650,10 @@ class AgentsController extends Controller
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet debit', [
-                                'transaction'=>$transaction,
-                                'additionalData'=>$additionalData,
-                                'request'=>$request->all(),
-                                'Auth'=>Auth::user()->id
+                                'transaction' => $transaction,
+                                'additionalData' => $additionalData,
+                                'request' => $request->all(),
+                                'Auth' => Auth::user()->id
                             ]);
 
                             $data = [
@@ -2932,33 +2932,24 @@ class AgentsController extends Controller
         }
     }
 
-    public function performTransactionsOptimization(TransactionRequest $request)
+
+    /**
+     * Perform credit and debit transactions.
+     *
+     * This method handles credit and debit transactions based on the provided
+     * TransactionRequest, which includes transaction details.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     *
+     * @return Response The response object indicating the result of the transaction.
+     *                  It can be a success response or an error response.
+     */
+    public function performTransactions(TransactionRequest $request): Response
     {
         try {
-            /* TODO: Cambiar variables en el nuevo código
-
-            1. $id por $userAuthId
-            2. $user por $userToAddBalance
-
-            */
-
-            $userAuthId = auth()->user()->id;
-            $userToAddBalance = $request->get('user');
-            $amount = $request->get('amount');
-            $transactionType = $request->get('transaction_type');
-
-            $currency = session('currency');
-
-            /* If the logged in user is different from the user that the balance is added to*/
-            if ($userAuthId != $userToAddBalance) {
-                $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
-
-                if ($errorResponseInsufficientBalance  = $this->transactionService->checkInsufficientBalance($transactionType, $amount, $ownerAgent)) {
-                    return $errorResponseInsufficientBalance;
-                }
-            }
+            return $this->transactionService->manageCreditDebitTransactions($request);
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
     }
