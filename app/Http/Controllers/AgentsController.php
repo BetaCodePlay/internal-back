@@ -2523,6 +2523,7 @@ class AgentsController extends Controller
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $ownerBalanceFinal = $ownerAgent->balance;
             $transactionIdCreated = null;
+            $bonusLib = new Bonus;
 
             /* If the logged in user is different from the user that the balance is added to*/
             if ($id != $user) {
@@ -2577,15 +2578,8 @@ class AgentsController extends Controller
                         /* Es usado con la finalidad de disponer de la wallet de bonos tanto en debito
                         como credito, si esta activo el bono. */
                         if($bonus) {
-                            \Log::notice(['session(Wallet)' => session('wallet_access_token'),  $walletData ]);
-                           dd($walletData);
-                            $bonusLib = new Bonus;
-                            $session = Sessions::findUserByWallet($wallet);
-                            $walletBonus = Wallet::get($currency, true, session('wallet_access_token'));
+                            $walletBonus = Wallet::getByClient($userData->id, $currency, true);
                             \Log::debug(['$walletBonus' => $walletBonus]);
-                            \Log::debug(['$session' => $session]);
-                            \Log::debug(['session(Wallet)' => session('wallet_access_token')]);
-
                         }
                         //--- End Bonus ---
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
