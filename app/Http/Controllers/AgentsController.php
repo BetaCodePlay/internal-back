@@ -2546,7 +2546,7 @@ class AgentsController extends Controller
                     if($bonus) {
                         $bonusLib = new Bonus;
                         $session = Sessions::findUserByWallet($wallet);
-                        $walletBonus = Wallet::get($currency, true, $session->wallet_access_token);
+                        $walletBonus = Wallet::get($currency, true, session('wallet_access_token'), $wallet);
                         \Log::debug(['$walletBonus' => $walletBonus]);
                         \Log::debug(['$session' => $session]);
                     }
