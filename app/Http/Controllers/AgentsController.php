@@ -2607,7 +2607,7 @@ class AgentsController extends Controller
                             de estar activo */
 
                             //Deposit Bonus Agents
-                            // $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
+                            $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
                             //Unlimited Deposit Bonus
                             $balanceBonus = $bonusLib->unlimitedDepositBonus($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
                             /* Este log es para probar el correcto funcionamiento del codigo de bonus */
