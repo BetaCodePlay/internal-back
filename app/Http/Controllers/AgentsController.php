@@ -2,72 +2,72 @@
 
 namespace App\Http\Controllers;
 
-use App\Agents\Collections\AgentsCollection;
-use App\Agents\Repositories\AgentCurrenciesRepo;
-use App\Agents\Repositories\AgentsRepo;
-use App\Audits\Enums\AuditTypes;
-use App\Core\Collections\TransactionsCollection;
-use App\Core\Entities\Transaction;
-use App\Core\Notifications\TransactionNotAllowed;
-use App\Core\Repositories\CountriesRepo;
-use App\Core\Repositories\CurrenciesRepo;
-use App\Core\Repositories\ProvidersRepo;
-use App\Core\Repositories\ProvidersTypesRepo;
-use App\Core\Repositories\TransactionsRepo;
-use App\Core\Repositories\GamesRepo;
-use App\Core\Repositories\WhitelabelsGamesRepo;
-use App\Reports\Collections\ReportsCollection;
-use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
-use App\Reports\Repositories\ClosuresUsersTotalsRepo;
-use App\Reports\Repositories\ReportAgentRepo;
-use App\Security\Repositories\RolesRepo;
-use App\Users\Collections\UsersCollection;
-use App\Users\Enums\ActionUser;
-use App\Users\Enums\TypeUser;
-use App\Users\Repositories\UserCurrenciesRepo;
-use App\Users\Repositories\UsersRepo;
-use App\Users\Repositories\UsersTempRepo;
+use Carbon\Carbon;
+use Illuminate\View\View;
 use App\Users\Rules\Email;
+use Dotworkers\Bonus\Bonus;
+use Dotworkers\Store\Store;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Users\Enums\TypeUser;
 use App\Users\Rules\Password;
 use App\Users\Rules\Username;
-use App\Users\Users as GenerateReferenceCode;
-use App\Whitelabels\Repositories\WhitelabelsRepo;
-use Barryvdh\DomPDF\Facade as PDF;
-use Carbon\Carbon;
 use Dotworkers\Audits\Audits;
-use Dotworkers\Bonus\Bonus;
-use Dotworkers\Bonus\Repositories\CampaignsRepo;
-use Dotworkers\Bonus\Repositories\CampaignParticipationRepo;
-use Dotworkers\Bonus\Enums\AllocationCriteria;
-use Dotworkers\Bonus\Enums\CampaignParticipationStatus;
-use Dotworkers\Configurations\Configurations;
-use Dotworkers\Configurations\Enums\Codes;
-use Dotworkers\Configurations\Enums\Providers;
-use Dotworkers\Configurations\Enums\ProviderTypes;
-use Dotworkers\Configurations\Enums\Status;
-use Dotworkers\Configurations\Enums\TransactionStatus;
-use Dotworkers\Configurations\Enums\TransactionTypes;
-use Dotworkers\Configurations\Utils;
-use Dotworkers\Security\Enums\Permissions;
-use Dotworkers\Security\Enums\Roles;
+use Dotworkers\Wallet\Wallet;
+use Ixudra\Curl\Facades\Curl;
+use App\Users\Enums\ActionUser;
+use Illuminate\Validation\Rule;
+use App\Audits\Enums\AuditTypes;
+use Yajra\DataTables\DataTables;
 use Dotworkers\Security\Security;
 use Dotworkers\Sessions\Sessions;
-use Dotworkers\Store\Store;
-use Dotworkers\Wallet\Wallet;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Core\Entities\Transaction;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Log;
+use App\Core\Repositories\GamesRepo;
+use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Roles;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
-use Illuminate\View\View;
-use Ixudra\Curl\Facades\Curl;
+use App\Users\Repositories\UsersRepo;
+use Illuminate\Contracts\View\Factory;
+use App\Agents\Repositories\AgentsRepo;
+use App\Core\Repositories\CountriesRepo;
+use App\Core\Repositories\ProvidersRepo;
+use App\Security\Repositories\RolesRepo;
+use App\Core\Repositories\CurrenciesRepo;
+use App\Users\Repositories\UsersTempRepo;
+use App\Users\Collections\UsersCollection;
+use Dotworkers\Configurations\Enums\Codes;
+use Dotworkers\Security\Enums\Permissions;
+use App\Core\Repositories\TransactionsRepo;
+use Dotworkers\Configurations\Enums\Status;
+use App\Agents\Collections\AgentsCollection;
+use App\Core\Repositories\ProvidersTypesRepo;
+use App\Reports\Repositories\ReportAgentRepo;
+use App\Users\Users as GenerateReferenceCode;
+use Dotworkers\Configurations\Configurations;
+use App\Reports\Collections\ReportsCollection;
+use App\Users\Repositories\UserCurrenciesRepo;
+use Dotworkers\Bonus\Enums\AllocationCriteria;
+use Dotworkers\Configurations\Enums\Providers;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\DataTables;
-use function GuzzleHttp\Promise\all;
+use App\Core\Repositories\WhitelabelsGamesRepo;
+use App\Agents\Repositories\AgentCurrenciesRepo;
+use App\Core\Collections\TransactionsCollection;
+use Dotworkers\Bonus\Repositories\CampaignsRepo;
+use Illuminate\Contracts\Foundation\Application;
+use App\Core\Notifications\TransactionNotAllowed;
+use App\Whitelabels\Repositories\WhitelabelsRepo;
+use Dotworkers\Configurations\Enums\ProviderTypes;
+use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Configurations\Enums\TransactionStatus;
+use Dotworkers\Bonus\Enums\CampaignParticipationStatus;
+use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
+use Dotworkers\Bonus\Repositories\CampaignParticipationRepo;
 
 /**
  * Class AgentsController
@@ -2514,6 +2514,7 @@ class AgentsController extends Controller
             $id = auth()->user()->id;
             $currency = session('currency');
             $bonus = Configurations::getBonus(Configurations::getWhitelabel());
+            $balanceBonus = 0.00;
             $whitelabel = Configurations::getWhitelabel();
             $type = $request->get('type');
             $user = $request->get('user');
@@ -2539,7 +2540,15 @@ class AgentsController extends Controller
                 /* User Type: User */
                 if ($type == 'user') {
                     $wallet = $request->wallet;
-
+                    //--- Bonus ---
+                    /* Es usado con la finalidad de disponer de la wallet de bonos tanto en debito
+                    como credito, si esta activo el bono. */
+                    if($bonus) {
+                        $bonusLib = new Bonus;
+                        $session = Sessions::findUserByWallet($wallet);
+                        $walletBonus = Wallet::get($currency, true, $session->wallet_access_token);
+                    }
+                    //--- End Bonus ---
                     $userData = $this->agentsRepo->findUser($user);
                     if ($userData->action == ActionUser::$locked_higher) {
                         $data = [
@@ -2565,6 +2574,7 @@ class AgentsController extends Controller
                         return Utils::errorResponse(Codes::$forbidden, $data);
 
                     }
+
                     if ($transactionType == TransactionTypes::$credit) {
                         $uuid = Str::uuid()->toString();
                         $additionalData = [
@@ -2589,12 +2599,9 @@ class AgentsController extends Controller
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
-
+                        // --- Bonus Credit ---
                         if($bonus) {
 
-                            $bonusLib = new Bonus;
-                            $session = Sessions::findUserByWallet($wallet);
-                            $walletBonus = Wallet::get($currency, true, $session->wallet_access_token);
                             /* Existen dos tipos de bonos que pueden ser asignados el momento del deposito, los dos pueden estar activos
                             al mismo tiempo. En las funciones correspondientes se hacen las respectivas verificaciones y se asigna en caso
                             de estar activo */
@@ -2602,8 +2609,11 @@ class AgentsController extends Controller
                             //Deposit Bonus Agents
                             $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
                             //Unlimited Deposit Bonus
-                            $bonusLib->unlimitedDepositBonus($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
+                            $balanceBonus = $bonusLib->unlimitedDepositBonus($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
+                            /* Este log es para probar el correcto funcionamiento del codigo de bonus */
+                            \Log::debug(['Se ha añadido un bono de deposito ilimitado' => [$whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount]]);
                         }
+                        // --- End Bonus ---
                     } else {
 
                         $agentBalanceFinal = $walletData->data->wallet->balance;
@@ -2623,6 +2633,15 @@ class AgentsController extends Controller
                             'to' => $userData->username
                         ];
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        // --- Bonus Debit---
+                        if($bonus) {
+                            /* Hacemos un update del balance en la billetera de bonus, llevandolo a cero.*/
+                            $dataWalletBonus = ['balance' => 0, 'campaign_id' => null];
+                            $clearWallet = Wallet::update($walletBonus->data->bonus[0]->id, $dataWalletBonus);
+                            /* Este log es para probar el correcto funcionamiento del codigo de bonus */
+                            \Log::debug(['Se ha quitado saldo a la wallet' => json_encode($clearWallet)]);
+                        }
+                        // --- End Bonus ---
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet debit', [
                                 $transaction, $request->all(), Auth::user()->id
@@ -2879,6 +2898,7 @@ class AgentsController extends Controller
                         'message' => _i('The transaction was successfully made to the user'),
                         'close' => _i('Close'),
                         'balance' => number_format($balance, 2),
+                        'balance_bonus' => number_format($balanceBonus, 2),
                         'button' => $button
                     ];
                     return Utils::successResponse($data);
