@@ -2579,7 +2579,7 @@ class AgentsController extends Controller
                         como credito, si esta activo el bono. */
                         if($bonus) {
                             $walletBonus = Wallet::getByClient($userData->id, $currency, true);
-                            \Log::debug(['$walletBonus' => $walletBonus]);
+                            \Log::debug(['credit $walletBonus' => $walletBonus]);
                         }
                         //--- End Bonus ---
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
@@ -2635,6 +2635,9 @@ class AgentsController extends Controller
                         $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         // --- Bonus Debit---
                         if($bonus) {
+
+                            $walletBonus = Wallet::getByClient($userData->id, $currency, true);
+                            \Log::debug(['credit $walletBonus' => $walletBonus]);
                             /* Hacemos un update del balance en la billetera de bonus, llevandolo a cero.*/
                             $removeBalance = $bonusLib->removeBalanceBonus($walletBonus->data->bonus[0]->id);
                             /* Este log es para probar el correcto funcionamiento del codigo de bonus */
