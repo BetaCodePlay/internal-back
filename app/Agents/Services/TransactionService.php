@@ -567,9 +567,17 @@ class TransactionService
         string $transactionType
     ): Response
     {
-        $balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
+        /*$balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
             ? $userManagementResult->balance
-            : 0;
+            : 0;*/
+
+        if ($ownerAgent->username == AgentType::WOLF) {
+            $balance = 0;
+        }
+
+        if ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF) {
+            $balance = $userManagementResult->balance;
+        }
 
         $secondBalance = $transactionType == TransactionTypes::$credit
             ? round($userManagementResult->agentBalanceFinal, 2)
