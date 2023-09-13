@@ -2607,7 +2607,7 @@ class AgentsController extends Controller
                             de estar activo */
 
                             //Deposit Bonus Agents
-                            $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
+                            // $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
                             //Unlimited Deposit Bonus
                             $balanceBonus = $bonusLib->unlimitedDepositBonus($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
                             /* Este log es para probar el correcto funcionamiento del codigo de bonus */
@@ -2636,8 +2636,6 @@ class AgentsController extends Controller
                         // --- Bonus Debit---
                         if($bonus) {
                             /* Hacemos un update del balance en la billetera de bonus, llevandolo a cero.*/
-                            // $dataWalletBonus = ['balance' => 0, 'campaign_id' => null];
-                            // $clearWallet = Wallet::update($walletBonus->data->bonus[0]->id, $dataWalletBonus);
                             $removeBalance = $bonusLib->removeBalanceBonus($walletBonus->data->bonus[0]->id);
                             /* Este log es para probar el correcto funcionamiento del codigo de bonus */
                             \Log::debug(['Se ha quitado saldo a la wallet' => json_encode($removeBalance)]);
