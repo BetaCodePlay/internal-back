@@ -2540,18 +2540,6 @@ class AgentsController extends Controller
                 /* User Type: User */
                 if ($type == 'user') {
                     $wallet = $request->wallet;
-                    //--- Bonus ---
-                    /* Es usado con la finalidad de disponer de la wallet de bonos tanto en debito
-                    como credito, si esta activo el bono. */
-                    if($bonus) {
-                        $bonusLib = new Bonus;
-                        $session = Sessions::findUserByWallet($wallet);
-                        $walletBonus = Wallet::get($currency, true, session('wallet_access_token'));
-                        \Log::debug(['$walletBonus' => $walletBonus]);
-                        \Log::debug(['$session' => $session]);
-                        \Log::debug(['session(Wallet)' => session('wallet_access_token')]);
-                    }
-                    //--- End Bonus ---
                     $userData = $this->agentsRepo->findUser($user);
                     if ($userData->action == ActionUser::$locked_higher) {
                         $data = [
@@ -2585,6 +2573,21 @@ class AgentsController extends Controller
                             'from' => $ownerAgent->username,
                             'to' => $userData->username
                         ];
+                        //--- Bonus ---
+                        /* Es usado con la finalidad de disponer de la wallet de bonos tanto en debito
+                        como credito, si esta activo el bono. */
+                        if($bonus) {
+                            \Log::notice(['session(Wallet)' => session('wallet_access_token'),  $walletData ]);
+                           dd($walletData);
+                            $bonusLib = new Bonus;
+                            $session = Sessions::findUserByWallet($wallet);
+                            $walletBonus = Wallet::get($currency, true, session('wallet_access_token'));
+                            \Log::debug(['$walletBonus' => $walletBonus]);
+                            \Log::debug(['$session' => $session]);
+                            \Log::debug(['session(Wallet)' => session('wallet_access_token')]);
+
+                        }
+                        //--- End Bonus ---
                         $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet credit', [
@@ -4086,6 +4089,7 @@ class AgentsController extends Controller
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
                     \Log::notice(['con campaña' =>   $walletBonus]);
                     $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1, $balance);
+                    \Log::notice(['$participation' =>   $participation]);
                 } else {
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
                     \Log::notice(['sin campaña' =>   $walletBonus]);
