@@ -4084,10 +4084,11 @@ class AgentsController extends Controller
                 if (!empty($campaigns)) {
                     //Create wallet bonus
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
-
+                    \Log::notice(['con campaña' =>   $walletBonus]);
                     $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1, $balance);
                 } else {
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
+                    \Log::notice(['sin campaña' =>   $walletBonus]);
                 }
             }
 
