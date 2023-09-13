@@ -2636,10 +2636,11 @@ class AgentsController extends Controller
                         // --- Bonus Debit---
                         if($bonus) {
                             /* Hacemos un update del balance en la billetera de bonus, llevandolo a cero.*/
-                            $dataWalletBonus = ['balance' => 0, 'campaign_id' => null];
-                            $clearWallet = Wallet::update($walletBonus->data->bonus[0]->id, $dataWalletBonus);
+                            // $dataWalletBonus = ['balance' => 0, 'campaign_id' => null];
+                            // $clearWallet = Wallet::update($walletBonus->data->bonus[0]->id, $dataWalletBonus);
+                            $removeBalance = $bonusLib->removeBalanceBonus($walletBonus->data->bonus[0]->id);
                             /* Este log es para probar el correcto funcionamiento del codigo de bonus */
-                            \Log::debug(['Se ha quitado saldo a la wallet' => json_encode($clearWallet)]);
+                            \Log::debug(['Se ha quitado saldo a la wallet' => json_encode($removeBalance)]);
                         }
                         // --- End Bonus ---
                         if (empty($transaction) || empty($transaction->data)) {
