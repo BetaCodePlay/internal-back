@@ -2271,8 +2271,8 @@ class AgentsController extends Controller
 
             $data['agent'] = $this->agentsRepo->findUserProfile($user, session('currency'));
             $data['makers'] = [];
-            $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner($user, session('currency'), Configurations::getWhitelabel())), true);
-            $data['tree'] = json_encode([]);
+         /*   $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner($user, session('currency'), Configurations::getWhitelabel())), true);
+            $data['tree'] = json_encode([]);*/
             $data['action'] = auth()->user()->action;
             $data['iagent'] = $agentUser;
             $data['confirmation_email'] = $confirmation;
