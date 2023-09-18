@@ -2605,7 +2605,6 @@ class AgentsController extends Controller
                             /* Existen dos tipos de bonos que pueden ser asignados el momento del deposito, los dos pueden estar activos
                             al mismo tiempo. En las funciones correspondientes se hacen las respectivas verificaciones y se asigna en caso
                             de estar activo */
-                            \Log::debug(['Se quiere añadir un bono de deposito ilimitado' => [$whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount]]);
                             //Deposit Bonus Agents
                             $bonusLib->depositBonusAgents($whitelabel, $currency, $userData->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), $amount);
                             //Unlimited Deposit Bonus
@@ -2638,7 +2637,7 @@ class AgentsController extends Controller
                         if($bonus) {
 
                             $walletBonus = Wallet::getByClient($userData->id, $currency, true);
-                            \Log::debug(['debit $walletBonus' => $walletBonus]);
+                            // \Log::debug(['debit $walletBonus' => $walletBonus]);
                             /* Hacemos un update del balance en la billetera de bonus, llevandolo a cero.*/
                             $removeBalance = $bonusLib->removeBalanceBonus($walletBonus->data->bonus[0]->id);
                             /* Este log es para probar el correcto funcionamiento del codigo de bonus */
