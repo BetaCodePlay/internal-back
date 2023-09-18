@@ -902,6 +902,18 @@ class BonusSystem {
         });
     };
 
+    static updateCommissionBonus() {
+        console.log('La función updateCommissionBonus se ha llamado.');
+
+        var totalPercentage = 100;
+        var commissionReal = parseFloat($('#commission_real').val());
+        var commissionBonus = totalPercentage - commissionReal;
+
+        if (!isNaN(commissionBonus)) {
+            $('#commission_bonus_v').val(commissionBonus);
+            $('#commission_bonus').val(commissionBonus);
+        }
+    }
     // Users restriction type
     static usersRestrictionType() {
         $('#users_restriction_type').change(function () {

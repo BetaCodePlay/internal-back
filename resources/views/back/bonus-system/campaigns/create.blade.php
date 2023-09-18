@@ -148,7 +148,7 @@
                                         <i class="fa fa-info-circle" aria-hidden="true" data-container="body" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="{{ _i('Assign the percentage of your actual balance that you want to spend along with the bonus') }}">
                                         </i>
                                     </label>
-                                    <input type="text" name="commission_real" id="commission_real" onkeyup="updateCommissionBonus()" class="form-control">
+                                    <input type="text" name="commission_real" id="commission_real" onkeyup="BonusSystem.updateCommissionBonus()" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -452,16 +452,5 @@
             bonusSystem.addTranslations(@json($languages));
             $('[data-toggle="popover"]').popover();
         });
-
-        function updateCommissionBonus() {
-                var totalPercentage = 100;
-                var commissionReal = parseFloat($('#commission_real').val());
-                var commissionBonus = totalPercentage - commissionReal;
-
-                if (!isNaN(commissionBonus)) {
-                    $('#commission_bonus_v').val(commissionBonus);
-                    $('#commission_bonus').val(commissionBonus);
-                }
-        }
     </script>
 @endsection

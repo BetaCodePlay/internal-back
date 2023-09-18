@@ -171,7 +171,7 @@
                                         </i>
                                     </label>
                                     <input type="text" name="commission_real" id="commission_real"
-                                        onkeyup="updateCommissionBonus()" class="form-control"
+                                        onkeyup="BonusSystem.updateCommissionBonus()" class="form-control"
                                         value="{{ $campaign->data->commission_real }}">
                                 </div>
                             </div>
@@ -544,7 +544,7 @@
 @section('scripts')
     <script>
         $(function() {
-            let bonusSystem = new BonusSystem()
+            let bonusSystem = new BonusSystem();
             bonusSystem.addTranslations(@json($languages));
             bonusSystem.setTranslations(@json($languages), @json($campaign->translations));
             // bonusSystem.versions();
@@ -577,7 +577,8 @@
             //     bonusSystem.fillSelects('#exclude_providers_bet', @json($campaign->exclude_provider_bet))
             // @endif
 
-            bonusSystem.update(@json($languages), @json($campaign->promo_codes));
+            // bonusSystem.update(@json($languages), @json($campaign->promo_codes));
+
         });
     </script>
 @endsection
