@@ -563,7 +563,7 @@ class CampaignsCollection
     public function formatDetails($campaign)
     {
         $usersRepo = new UsersRepo();
-        $segmentsRepo = new SegmentsRepo();
+        // $segmentsRepo = new SegmentsRepo();
         $providersRepo = new ProvidersRepo();
         $timezone = session('timezone');
         $start = $campaign->start_date->setTimezone($timezone)->format('d-m-Y h:i a');
@@ -601,31 +601,31 @@ class CampaignsCollection
             $campaign->exclude_users = $usersData;
         }
 
-        if (isset($campaign->data->include_segments)) {
-            $segments = $segmentsRepo->getByIDs($campaign->data->include_segments);
-            $segmentsData = [];
+        // if (isset($campaign->data->include_segments)) {
+        //     $segments = $segmentsRepo->getByIDs($campaign->data->include_segments);
+        //     $segmentsData = [];
 
-            foreach ($segments as $segment) {
-                $segmentObject = new \stdClass();
-                $segmentObject->id = $segment->id;
-                $segmentObject->title = $segment->name;
-                $segmentsData[] = $segmentObject;
-            }
-            $campaign->include_segments = $segmentsData;
-        }
+        //     foreach ($segments as $segment) {
+        //         $segmentObject = new \stdClass();
+        //         $segmentObject->id = $segment->id;
+        //         $segmentObject->title = $segment->name;
+        //         $segmentsData[] = $segmentObject;
+        //     }
+        //     $campaign->include_segments = $segmentsData;
+        // }
 
-        if (isset($campaign->data->exclude_segments)) {
-            $segments = $segmentsRepo->getByIDs($campaign->data->exclude_segments);
-            $segmentsData = [];
+        // if (isset($campaign->data->exclude_segments)) {
+        //     $segments = $segmentsRepo->getByIDs($campaign->data->exclude_segments);
+        //     $segmentsData = [];
 
-            foreach ($segments as $segment) {
-                $segmentObject = new \stdClass();
-                $segmentObject->id = $segment->id;
-                $segmentObject->title = $segment->name;
-                $segmentsData[] = $segmentObject;
-            }
-            $campaign->exclude_segments = $segmentsData;
-        }
+        //     foreach ($segments as $segment) {
+        //         $segmentObject = new \stdClass();
+        //         $segmentObject->id = $segment->id;
+        //         $segmentObject->title = $segment->name;
+        //         $segmentsData[] = $segmentObject;
+        //     }
+        //     $campaign->exclude_segments = $segmentsData;
+        // }
 
         if (isset($campaign->data->include_payment_methods)) {
             $paymentMethods = $providersRepo->getByIDs($campaign->data->include_payment_methods);

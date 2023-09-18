@@ -162,163 +162,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <table class="table align-middle g-mb-0">
-                            <tr>
-                                <td width="20%">
-                                    <div class="form-check">
-                                        <label class="u-check g-pl-25">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ 'false' }}" id="registration" onchange="actualizarValor(this)">
-                                            <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
-                                                <i class="fa" data-check-icon="&#xf00c"></i>
-                                            </div>
-                                            {{ _i('Registration') }}
-                                        </label>
-                                    </div>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="u-check g-pl-25">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$complete_profile }}" onchange="actualizarValor(this)">
-                                            <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
-                                                <i class="fa" data-check-icon="&#xf00c"></i>
-                                            </div>
-                                            {{ _i('Complete profile') }}
-                                        </label>
-                                    </div>
-                                </td>
-                                <td><input type="hidden" name="allocation_criteria[]" value="" id="allocation-criteria-input"></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check">
-                                        <label class="u-check g-pl-25 disabled">
-                                            <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" id="deposits" disabled value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$deposit }}" onchange="actualizarValor(this)">
-                                            <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
-                                                <i class="fa" data-check-icon="&#xf00c"></i>
-                                            </div>
-                                            {{ _i('Deposits') }}
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="deposits-table d-none">
-                                        <table class="table table-bordered">
-                                            @foreach ($whitelabel_currencies as $key => $currency)
-                                                <tr class="deposits-row deposit-row-{{ $currency->iso }} d-none">
-                                                    <td class="align-middle text-center">
-                                                        {{ $currency->iso }}
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="deposit_types">{{ _i('Deposit type') }}</label>
-                                                                    <select name="deposit_types[{{ $currency->iso }}]" class="form-control">
-                                                                        <option value="{{ \Dotworkers\Bonus\Enums\DepositTypes::$first }}">
-                                                                            {{ _i('First') }}
-                                                                        </option>
-                                                                        <option value="{{ \Dotworkers\Bonus\Enums\DepositTypes::$next }}">
-                                                                            {{ _i('Next') }}
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="min_deposits">{{ _i('Minimum') }}</label>
-                                                                    <input type="number" min="0" name="min_deposits[{{ $currency->iso }}]" class="form-control">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="include_payment_methods">{{ _i('Include payment methods') }}</label>
-                                                                    <select name="include_payment_methods[{{ $currency->iso }}][]" class="form-control" multiple id="include-payment-methods-{{ $currency->iso }}">
-                                                                        <option value="{{ \Dotworkers\Configurations\Enums\Providers::$dotworkers }}">
-                                                                            {{ _i('Manual transactions') }}
-                                                                        </option>
-                                                                        <option value="{{ \Dotworkers\Configurations\Enums\Providers::$agents_users }}">
-                                                                            {{ _i('Agents transactions') }}
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-3">
-                                                                <div class="form-group">
-                                                                    <label for="exclude_payment_methods">{{ _i('Exclude payment methods') }}</label>
-                                                                    <select name="exclude_payment_methods[{{ $currency->iso }}][]" class="form-control" multiple id="exclude-payment-methods-{{ $currency->iso }}">
-                                                                        <option value="{{ \Dotworkers\Configurations\Enums\Providers::$dotworkers }}">
-                                                                            {{ _i('Manual transactions') }}
-                                                                        </option>
-                                                                        <option value="{{ \Dotworkers\Configurations\Enums\Providers::$agents_users }}">
-                                                                            {{ _i('Agents transactions') }}
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                           <tr>
-                               <td>
-                                   <div class="form-check">
-                                       <label class="u-check g-pl-25 disabled">
-                                           <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" name="allocation_criteria[]" id="bets" disabled value="{{ \Dotworkers\Bonus\Enums\AllocationCriteria::$bet }}">
-                                           <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
-                                               <i class="fa" data-check-icon="&#xf00c"></i>
-                                           </div>
-                                           {{ _i('Bets') }}
-                                       </label>
-                                   </div>
-                               </td>
-                               <td>
-                                   <div class="bets-table d-none">
-                                       <table class="table table-bordered">
-                                           @foreach ($whitelabel_currencies as $currency)
-                                               <tr class="bet-row bet-row-{{ $currency->iso }} d-none">
-                                                   <td class="align-middle text-center">
-                                                       {{ $currency->iso }}
-                                                   </td>
-                                                   <td class="align-middle">
-                                                       <div class="row">
-                                                           <div class="col-md-4">
-                                                               <div class="form-group">
-                                                                   <label for="nim_bet">{{ _i('Bet') }}</label>
-                                                                   <input type="number" min="0" name="nim_bet[{{ $currency->iso }}]" class="form-control">
-                                                               </div>
-                                                           </div>
-                                                           <div class="col-md-4">
-                                                               <div class="form-group">
-                                                                   <label for="provider_type_bet">{{ _i('Provider type') }}</label>
-                                                                   <select name="provider_type_bet[{{ $currency->iso }}]" id="provider_type_bet" data-route="{{ route('bonus-system.campaigns.exclude-providers') }}" class="form-control">
-                                                                       <option value="">{{ _i('Select...') }}</option>
-                                                                   </select>
-                                                               </div>
-                                                           </div>
-                                                           <div class="col-md-4">
-                                                               <div class="form-group">
-                                                                   <label for="exclude_providers_bet">{{ _i('Exclude providers') }}</label>
-                                                                   <select name="exclude_providers_bet[{{ $currency->iso }}][]" id="exclude_providers_bet-{{ $currency->iso }}" class="form-control" multiple>
-                                                                       <option value="">{{ _i('Select...') }}</option>
-                                                                   </select>
-                                                               </div>
-                                                           </div>
-                                                       </div>
-                                                   </td>
-                                               </tr>
-                                           @endforeach
-                                       </table>
-                                   </div>
-                               </td>
-                           </tr>
-                        </table> --}}
+
                     </div>
                 </div>
                 <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-10">
@@ -413,8 +257,6 @@
                                 <div class="form-group">
                                     <label for="complete_rollovers">{{ _i('Complete rollovers') }}</label>
                                     <select name="complete_rollovers" id="complete_rollovers" class="form-control">
-                                        <option value="">{{ _i('Select...') }}</option>
-                                        <option value="yes">{{ _i('Yes') }}</option>
                                         <option value="no">{{ _i('No') }}</option>
                                     </select>
                                 </div>
@@ -488,7 +330,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-10">
+                {{-- <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-10">
                     <header
                         class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">
                         <div class="media">
@@ -566,7 +408,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-10">
                     <header
                         class="card-header g-bg-transparent g-brd-gray-light-v7 g-px-15 g-pt-15 g-pt-20--sm g-pb-10 g-pb-15--sm">

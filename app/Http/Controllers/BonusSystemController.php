@@ -656,9 +656,9 @@ class BonusSystemController extends Controller
     public function create()
     {
         try {
-            $segments = $this->segmentsRepo->all();
+            // $segments = $this->segmentsRepo->all();
             $allocation = $this->allocationCriteriaRepo->all();
-            $data['segments'] = $segments;
+            // $data['segments'] = $segments;
             $data['criterias'] = $allocation;
             $data['title'] = _i('New campaign');
             // dd($data['allocation_criteria_type_bonus']['registration']);
@@ -713,59 +713,18 @@ class BonusSystemController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        if (is_null($request->versions)) {
-            $campaign = $this->campaignsRepo->find($id);
-
-        } else {
-            $campaign = $this->campaignsRepo->find($request->versions);
-        }
+        $campaign = $this->campaignsRepo->find($id);
 
         if (!is_null($campaign)) {
             try {
-                $segments = $this->segmentsRepo->all();
                 $this->campaignsCollection->formatDetails($campaign);
-                $providersTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-                $providerTypesData = $this->providersTypesRepo->getByWhitelabel($campaign->whitelabel_id, $campaign->currency_iso, $providersTypes);
-                $this->campaignsCollection->formatTypeProviders($providerTypesData);
-                $paymentMethods = BetPay::getClientPaymentMethods($campaign->currency_iso);
-                $paymentMethodsData = $this->paymentMethodsCollection->fomartByProviderAndCurrency($paymentMethods);
 
-                if (is_null($campaign->original_campaign) && is_null($request->versions)) {
-                    $campaignVersions = $this->campaignsRepo->getVersions($id);
-                    $maxVersion = null;
-
-                } elseif (is_null($campaign->original_campaign) && !is_null($request->versions)) {
-                    $campaignVersions = $this->campaignsRepo->getVersions($request->versions);
-                    $maxVersion = null;
-
-                } else {
-                    $campaignVersions = $this->campaignsRepo->getVersions($campaign->original_campaign);
-                    $maxVersion = $this->campaignsRepo->getMaxByOriginalCampaign($campaign->original_campaign);
-                }
-
-                $campaignVersionsData = $this->campaignsCollection->formatVersion($campaignVersions);
-                $data['versions'] = $campaignVersionsData;
-                $data['provider_types'] = $providerTypesData;
-
-                if (is_null($request->versions)) {
-                    $data['rollovers'] = $this->rolloversTypesRepo->getByCampaign($id);
-                } else {
-                    $data['rollovers'] = $this->rolloversTypesRepo->getByCampaign($request->versions);
-                }
-
-                $data['segments'] = $segments;
                 $data['campaign'] = $campaign;
-                $data['payment_methods'] = $paymentMethodsData;
                 $data['title'] = _i('Update campaign');
-                if (is_null($request->versions)) {
-                    return view('back.bonus-system.campaigns.edit', $data);
+                //Criteria
+                $data['criterias'] = $this->allocationCriteriaRepo->all();
 
-                } elseif (!is_null($maxVersion) && $maxVersion->id == $request->versions) {
-                    return view('back.bonus-system.campaigns.edit', $data);
-
-                } else {
-                    return view('back.bonus-system.campaigns.view', $data);
-                }
+                return view('back.bonus-system.campaigns.edit', $data);
             } catch (\Exception $ex) {
                 \Log::error(__METHOD__, ['exception' => $ex, 'slider' => $id]);
                 abort(500);
@@ -1260,7 +1219,6 @@ class BonusSystemController extends Controller
             $allocationCriteria = $request->allocation_criteria;
             $commissionReal = $request->commission_real;
             $commissionBonus = $request->commission_bonus;
-            // dd($allocationCriteria);
             $depositTypes = $request->deposit_types;
             $minDeposits = $request->min_deposits;
             $includePaymentMethods = $request->include_payment_methods;
@@ -1279,8 +1237,8 @@ class BonusSystemController extends Controller
             $promoCodesData = [];
             $includeUsers = null;
             $excludeUsers = null;
-            $includeSegments = null;
-            $excludeSegments = null;
+            // $includeSegments = null;
+            // $excludeSegments = null;
             $excludeProviders = null;
 
             $campaignsWithPromoCodes = $this->campaignsRepo->getWithPromoCodes($whitelabel);
@@ -1411,81 +1369,81 @@ class BonusSystemController extends Controller
             $configData['promo_codes'] = $promoCodesData;
             $configData['rollovers'] = $completeRollovers;
 
-            if (!is_null($usersRestriction)) {
-                $configData['users_restriction_type'] = $usersRestriction;
+            // if (!is_null($usersRestriction)) {
+            //     $configData['users_restriction_type'] = $usersRestriction;
 
-                switch ($usersRestriction) {
-                    case 'users':
-                    {
-                        if (!is_null($request->include_users)) {
-                            $includeUsers = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->include_users);
-                        }
+            //     switch ($usersRestriction) {
+            //         case 'users':
+            //         {
+            //             if (!is_null($request->include_users)) {
+            //                 $includeUsers = array_map(function ($item) {
+            //                     return (int)$item;
+            //                 }, $request->include_users);
+            //             }
 
-                        if (!is_null($request->exclude_users)) {
-                            $excludeUsers = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->exclude_users);
-                        }
-                        $configData['include_users'] = $includeUsers;
-                        $configData['exclude_users'] = $excludeUsers;
-                        break;
-                    }
-                    case 'segments':
-                    {
-                        if (!is_null($request->include_segments)) {
-                            $includeSegments = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->include_segments);
-                        }
+            //             if (!is_null($request->exclude_users)) {
+            //                 $excludeUsers = array_map(function ($item) {
+            //                     return (int)$item;
+            //                 }, $request->exclude_users);
+            //             }
+            //             $configData['include_users'] = $includeUsers;
+            //             $configData['exclude_users'] = $excludeUsers;
+            //             break;
+            //         }
+            //         case 'segments':
+            //         {
+            //             if (!is_null($request->include_segments)) {
+            //                 $includeSegments = array_map(function ($item) {
+            //                     return (int)$item;
+            //                 }, $request->include_segments);
+            //             }
 
-                        if (!is_null($request->exclude_segments)) {
-                            $excludeSegments = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->exclude_segments);
-                        }
-                        $configData['include_segments'] = $includeSegments;
-                        $configData['exclude_segments'] = $excludeSegments;
-                        break;
-                    }
-                    case 'excel':
-                    {
-                        if (!is_null($request->include_excel)) {
-                            $excel = $request->file('include_excel');
-                            $import = new ImportUsers();
-                            $import->import($excel);
-                            $excelUsers = $import->data;
+            //             if (!is_null($request->exclude_segments)) {
+            //                 $excludeSegments = array_map(function ($item) {
+            //                     return (int)$item;
+            //                 }, $request->exclude_segments);
+            //             }
+            //             $configData['include_segments'] = $includeSegments;
+            //             $configData['exclude_segments'] = $excludeSegments;
+            //             break;
+            //         }
+            //         case 'excel':
+            //         {
+            //             if (!is_null($request->include_excel)) {
+            //                 $excel = $request->file('include_excel');
+            //                 $import = new ImportUsers();
+            //                 $import->import($excel);
+            //                 $excelUsers = $import->data;
 
-                            foreach ($excelUsers as $user) {
-                                $username = strtolower($user->username);
-                                $userData = $this->usersRepo->getByUsername($username, $whitelabel);
-                                if (!is_null($userData)) {
-                                    $includeUsers[] = $userData->id;
-                                }
-                            }
-                        }
+            //                 foreach ($excelUsers as $user) {
+            //                     $username = strtolower($user->username);
+            //                     $userData = $this->usersRepo->getByUsername($username, $whitelabel);
+            //                     if (!is_null($userData)) {
+            //                         $includeUsers[] = $userData->id;
+            //                     }
+            //                 }
+            //             }
 
-                        if (!is_null($request->exclude_excel)) {
-                            $excel = $request->file('exclude_excel');
-                            $import = new ImportUsers();
-                            $import->import($excel);
-                            $excelUsers = $import->data;
+            //             if (!is_null($request->exclude_excel)) {
+            //                 $excel = $request->file('exclude_excel');
+            //                 $import = new ImportUsers();
+            //                 $import->import($excel);
+            //                 $excelUsers = $import->data;
 
-                            foreach ($excelUsers as $user) {
-                                $username = strtolower($user->username);
-                                $userData = $this->usersRepo->getByUsername($username, $whitelabel);
-                                if (!is_null($userData)) {
-                                    $excludeUsers[] = $userData->id;
-                                }
-                            }
-                        }
-                        $configData['include_users'] = $includeUsers;
-                        $configData['exclude_users'] = $excludeUsers;
-                        break;
-                    }
-                }
-            }
+            //                 foreach ($excelUsers as $user) {
+            //                     $username = strtolower($user->username);
+            //                     $userData = $this->usersRepo->getByUsername($username, $whitelabel);
+            //                     if (!is_null($userData)) {
+            //                         $excludeUsers[] = $userData->id;
+            //                     }
+            //                 }
+            //             }
+            //             $configData['include_users'] = $includeUsers;
+            //             $configData['exclude_users'] = $excludeUsers;
+            //             break;
+            //         }
+            //     }
+            // }
 
             if (!is_null($request->odd)) {
                 if ($request->bet_type == '1') {
@@ -1625,33 +1583,10 @@ class BonusSystemController extends Controller
             'start_date' => 'required',
             'currency' => 'required',
             'allocation_criteria' => 'required',
-            'complete_rollovers' => 'required',
-            'include_deposit' => 'required_if:complete_rollovers,true',
-            'provider_type' => 'required_if:complete_rollovers,true',
-            'multiplier' => [
-                'nullable',
-                'required_if:complete_rollovers,true',
-                'integer',
-                'gt:0'
-            ],
-            'days' => [
-                'nullable',
-                'required_if:complete_rollovers,true',
-                'integer',
-                'gt:0'
-            ],
-            'odd' => [
-                'nullable',
-                'required_if:provider_type,' . ProviderTypes::$sportbook,
-                'numeric',
-                'gt:0'
-            ]
         ];
         $this->validate($request, $rules);
 
         try {
-            $version = Campaigns::version($request);
-            Campaigns::withoutVersion($request);
             $id = $request->id;
             $parent = $request->parent_campaign;
             $whitelabel = Configurations::getWhitelabel();
@@ -1664,27 +1599,21 @@ class BonusSystemController extends Controller
             $bonusType = $request->bonus_type;
             $promoCodes = $request->promo_codes;
             $allocationCriteria = $request->allocation_criteria;
+            $commissionReal = $request->commission_real;
+            $commissionBonus = $request->commission_bonus;
             $depositType = $request->deposit_type;
             $minDeposit = $request->min_deposit;
-            $includePaymentMethods = $request->include_payment_methods;
-            $excludePaymentMethods = $request->exclude_payment_methods;
             $bonusTypeAwarded = $request->bonus_type_awarded;
             $bonus = $request->bonus;
             $percentage = $request->percentage;
             $limit = $request->limit;
             $maxBalanceConvert = $request->max_balance_convert;
             $completeRollovers = $request->complete_rollovers == 'yes';
-            $usersRestriction = $request->users_restriction_type;
             $translations = json_decode($request->translations);
             $minBets = $request->nim_bet;
             $providersTypeBet = $request->provider_type_bet;
             $excludeProvidersBet = $request->exclude_providers_bet;
             $promoCodesData = [];
-            $includeUsers = null;
-            $excludeUsers = null;
-            $includeSegments = null;
-            $excludeSegments = null;
-            $excludeProviders = null;
 
             if (!is_null($promoCodes)) {
                 $campaignsWithPromoCodes = $this->campaignsRepo->getWithPromoCodes($whitelabel, $id, $parent);
@@ -1711,84 +1640,10 @@ class BonusSystemController extends Controller
             }
 
             $configData['allocation_criteria'] = $allocationCriteria;
+            $configData['commission_real'] = $commissionReal;
+            $configData['commission_bonus'] = $commissionBonus;
             $configData['promo_codes'] = $promoCodesData;
             $configData['rollovers'] = $completeRollovers;
-
-            if (!is_null($usersRestriction)) {
-                $configData['users_restriction_type'] = $usersRestriction;
-
-                switch ($usersRestriction) {
-                    case 'users':
-                    {
-                        if (!is_null($request->include_users)) {
-                            $includeUsers = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->include_users);
-                        }
-
-                        if (!is_null($request->exclude_users)) {
-                            $excludeUsers = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->exclude_users);
-                        }
-                        $configData['include_users'] = $includeUsers;
-                        $configData['exclude_users'] = $excludeUsers;
-                        break;
-                    }
-                    case 'segments':
-                    {
-                        if (!is_null($request->include_segments)) {
-                            $includeSegments = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->include_segments);
-                        }
-
-                        if (!is_null($request->exclude_segments)) {
-                            $excludeSegments = array_map(function ($item) {
-                                return (int)$item;
-                            }, $request->exclude_segments);
-                        }
-                        $configData['include_segments'] = $includeSegments;
-                        $configData['exclude_segments'] = $excludeSegments;
-                        break;
-                    }
-                    case 'excel':
-                    {
-                        if (!is_null($request->include_excel)) {
-                            $excel = $request->file('include_excel');
-                            $import = new ImportUsers();
-                            $import->import($excel);
-                            $excelUsers = $import->data;
-
-                            foreach ($excelUsers as $user) {
-                                $username = strtolower($user->username);
-                                $userData = $this->usersRepo->getByUsername($username, $whitelabel);
-                                if (!is_null($userData)) {
-                                    $includeUsers[] = $userData->id;
-                                }
-                            }
-                        }
-
-                        if (!is_null($request->exclude_excel)) {
-                            $excel = $request->file('exclude_excel');
-                            $import = new ImportUsers();
-                            $import->import($excel);
-                            $excelUsers = $import->data;
-
-                            foreach ($excelUsers as $user) {
-                                $username = strtolower($user->username);
-                                $userData = $this->usersRepo->getByUsername($username, $whitelabel);
-                                if (!is_null($userData)) {
-                                    $excludeUsers[] = $userData->id;
-                                }
-                            }
-                        }
-                        $configData['include_users'] = $includeUsers;
-                        $configData['exclude_users'] = $excludeUsers;
-                        break;
-                    }
-                }
-            }
 
             if (!is_null($request->odd)) {
                 if ($request->bet_type != 1) {
@@ -1833,26 +1688,6 @@ class BonusSystemController extends Controller
                 $configData['exclude_providers'] = $excludeBet;
             }
 
-            $includeMethods = null;
-            $excludeMethods = null;
-
-            if (!is_null($includePaymentMethods) || !is_null($excludePaymentMethods)) {
-                if (!is_null($includePaymentMethods)) {
-                    $includeMethods = array_map(function ($item) {
-                        return (int)$item;
-                    }, $includePaymentMethods);
-                }
-
-                if (!is_null($excludePaymentMethods)) {
-                    $excludeMethods = array_map(function ($item) {
-                        return (int)$item;
-                    }, $excludePaymentMethods);
-                }
-
-                $configData['include_payment_methods'] = $includeMethods;
-                $configData['exclude_payment_methods'] = $excludeMethods;
-            }
-
             $campaignData = [
                 'whitelabel_id' => $whitelabel,
                 'name' => $name,
@@ -1871,54 +1706,9 @@ class BonusSystemController extends Controller
             } else {
                 $campaignData['original_campaign'] = $id;
             }
-            $campaignData['device'] = 1;
-            $campaignData['whitelabel_id'] = Configurations::getWhitelabel();
-            $newVersion = $request->version + 1;
-            $campaignData['version'] = $newVersion;
             $campaignData['parent_campaign'] = $id;
-            $versionDuplicate = $this->campaignsRepo->getVersionDuplicate($campaignData['original_campaign'], $newVersion);
 
-            if ($version) {
-                if (is_null($versionDuplicate)) {
-                    $campaignData['parent_campaign'] = $id;
-                    $campaignId = $this->campaignsRepo->store($campaignData);
-                } else {
-                    $campaignData['parent_campaign'] = $versionDuplicate->id;
-                    $campaignData['version'] = $newVersion + 1;
-                    $campaignId = $this->campaignsRepo->store($campaignData);
-                }
-            } else {
-                $campaign = $this->campaignsRepo->update($id, $campaignData);
-            }
-
-            if ($completeRollovers == 'yes') {
-                $rolloverData = [
-                    'multiplier' => (int)$request->multiplier,
-                    'provider_type_id' => $request->provider_type,
-                    'days' => (int)$request->days
-                ];
-
-                if ($request->include_deposit == 'both') {
-                    $rolloverData['include_deposit'] = null;
-                } else {
-                    $rolloverData['include_deposit'] = $request->include_deposit == 'deposit';
-                }
-
-                if (!is_null($request->exclude_providers)) {
-                    $excludeProviders = array_map(function ($item) {
-                        return (int)$item;
-                    }, $request->exclude_providers);
-                }
-                $rolloverData['exclude_providers'] = $excludeProviders;
-
-                if ($version) {
-                    $rolloverData['campaign_id'] = $campaign->id;
-                    $this->rolloversTypesRepo->store($rolloverData);
-                } else {
-                    $rolloverData['campaign_id'] = $id;
-                    $this->rolloversTypesRepo->update($request->rollover_id, $rolloverData);
-                }
-            }
+            $campaign = $this->campaignsRepo->update($id, $campaignData);
 
             $data = [
                 'title' => _i('Campaign updated'),
