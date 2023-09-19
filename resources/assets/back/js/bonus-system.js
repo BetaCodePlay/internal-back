@@ -427,7 +427,6 @@ class BonusSystem {
         BonusSystem.registration();
         let $form = $('#campaigns-form');
         let $button = $('#store');
-
         $('#currencies').on('change', function () {
             let currencies = [$(this).val()];
             $('.deposits-row').addClass('d-none');
@@ -517,7 +516,7 @@ class BonusSystem {
             tinymce.triggerSave();
             let formData = new FormData(this);
             let translations = BonusSystem.getTranslations(languages);
-            console.log([languages, translations]);
+            console.log(['data translation',languages, translations]);
             if (!translations) {
                 return translations;
             }
@@ -536,7 +535,7 @@ class BonusSystem {
             }).done(function (json) {
                 swalSuccessNoButton(json);
                 setTimeout(() => {
-                    console.log(json.data);
+                    // console.log(json.data);
                     window.location.href = json.data.route;
                 }, 1000);
 

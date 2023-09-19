@@ -246,7 +246,7 @@
                                             class="col-md-4 deposit-percentage {{ $campaign->data->bonus_type_awarded != \Dotworkers\Bonus\Enums\BonusTypeAwarded::$percentage ? 'd-none' : '' }}">
                                             <div class="form-group">
                                                 <label for="percentage">{{ _i('Percentage') }}</label>
-                                                <input type="number" min="0" name="percentage"
+                                                <input type="text" name="percentage"
                                                     class="form-control"
                                                     value="{{ isset($campaign->data->percentage) ? $campaign->data->percentage  : '' }}">
                                             </div>
@@ -577,7 +577,7 @@
             //     bonusSystem.fillSelects('#exclude_providers_bet', @json($campaign->exclude_provider_bet))
             // @endif
 
-            // bonusSystem.update(@json($languages), @json($campaign->promo_codes));
+            bonusSystem.update(@json($languages), @json($campaign->promo_codes));
 
         });
     </script>

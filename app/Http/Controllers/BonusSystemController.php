@@ -1718,7 +1718,7 @@ class BonusSystemController extends Controller
                 $configData['bonus'] = (float)$bonus;
 
             } else {
-                $configData['percentage'] = $percentage / 100;
+                $configData['percentage'] = $percentage;
                 $configData['limit'] = (float)$limit;
             }
 
@@ -1750,17 +1750,19 @@ class BonusSystemController extends Controller
                 'end_date' => $endDate,
                 'currency_iso' => $currency,
                 'status' => $status,
-                'translations' => $translations,
                 'bonus_type_id' => $bonusType
             ];
 
+            if (!is_null($translations)) {
+                $campaignData['translations'] = $translations;
+            }
             if (!is_null($request->original_campaign)) {
                 $campaignData['original_campaign'] = $request->original_campaign;
             } else {
                 $campaignData['original_campaign'] = $id;
             }
             $campaignData['parent_campaign'] = $id;
-            dd($campaignData);
+            // dd($campaignData);
             $campaign = $this->campaignsRepo->update($id, $campaignData);
 
             $data = [
