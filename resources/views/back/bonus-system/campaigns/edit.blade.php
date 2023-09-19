@@ -248,7 +248,7 @@
                                                 <label for="percentage">{{ _i('Percentage') }}</label>
                                                 <input type="number" min="0" name="percentage"
                                                     class="form-control"
-                                                    value="{{ isset($campaign->data->percentage) ? $campaign->data->percentage * 100 : '' }}">
+                                                    value="{{ isset($campaign->data->percentage) ? $campaign->data->percentage  : '' }}">
                                             </div>
                                         </div>
                                         <div

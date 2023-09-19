@@ -517,6 +517,7 @@ class BonusSystem {
             tinymce.triggerSave();
             let formData = new FormData(this);
             let translations = BonusSystem.getTranslations(languages);
+            console.log([languages, translations]);
             if (!translations) {
                 return translations;
             }

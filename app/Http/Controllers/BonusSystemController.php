@@ -713,18 +713,71 @@ class BonusSystemController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $campaign = $this->campaignsRepo->find($id);
+        // $campaign = $this->campaignsRepo->find($id);
+
+        // if (!is_null($campaign)) {
+        //     try {
+        //         $segments = $this->segmentsRepo->all();
+        //         $this->campaignsCollection->formatDetails($campaign);
+
+        //         $data['campaign'] = $campaign;
+        //         $data['segments'] = $segments;
+        //         $data['title'] = _i('Update campaign');
+        //         //Criteria
+        //         $data['criterias'] = $this->allocationCriteriaRepo->all();
+
+        //         return view('back.bonus-system.campaigns.edit', $data);
+
+        if (is_null($request->versions)) {
+            $campaign = $this->campaignsRepo->find($id);
+
+        } else {
+            $campaign = $this->campaignsRepo->find($request->versions);
+        }
 
         if (!is_null($campaign)) {
             try {
+                $segments = $this->segmentsRepo->all();
                 $this->campaignsCollection->formatDetails($campaign);
+                $providersTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+                $providerTypesData = $this->providersTypesRepo->getByWhitelabel($campaign->whitelabel_id, $campaign->currency_iso, $providersTypes);
+                $this->campaignsCollection->formatTypeProviders($providerTypesData);
+                $paymentMethods = BetPay::getClientPaymentMethods($campaign->currency_iso);
+                $paymentMethodsData = $this->paymentMethodsCollection->fomartByProviderAndCurrency($paymentMethods);
 
-                $data['campaign'] = $campaign;
-                $data['title'] = _i('Update campaign');
-                //Criteria
+                // if (is_null($campaign->original_campaign) && is_null($request->versions)) {
+                //     $campaignVersions = $this->campaignsRepo->getVersions($id);
+                //     $maxVersion = null;
+
+                // } elseif (is_null($campaign->original_campaign) && !is_null($request->versions)) {
+                //     $campaignVersions = $this->campaignsRepo->getVersions($request->versions);
+                //     $maxVersion = null;
+
+                // } else {
+                //     $campaignVersions = $this->campaignsRepo->getVersions($campaign->original_campaign);
+                //     $maxVersion = $this->campaignsRepo->getMaxByOriginalCampaign($campaign->original_campaign);
+                // }
+
+                // $campaignVersionsData = $this->campaignsCollection->formatVersion($campaignVersions);
+                // $data['versions'] = $campaignVersionsData;
+                $data['provider_types'] = $providerTypesData;
+
+                if (is_null($request->versions)) {
+                    $data['rollovers'] = $this->rolloversTypesRepo->getByCampaign($id);
+                } else {
+                    $data['rollovers'] = $this->rolloversTypesRepo->getByCampaign($request->versions);
+                }
                 $data['criterias'] = $this->allocationCriteriaRepo->all();
+                $data['segments'] = $segments;
+                $data['campaign'] = $campaign;
+                $data['payment_methods'] = $paymentMethodsData;
+                $data['title'] = _i('Update campaign');
+                if (is_null($request->versions)) {
+                    return view('back.bonus-system.campaigns.edit', $data);
 
-                return view('back.bonus-system.campaigns.edit', $data);
+                } else {
+                    return view('back.bonus-system.campaigns.view', $data);
+                }
             } catch (\Exception $ex) {
                 \Log::error(__METHOD__, ['exception' => $ex, 'slider' => $id]);
                 abort(500);
@@ -1707,7 +1760,7 @@ class BonusSystemController extends Controller
                 $campaignData['original_campaign'] = $id;
             }
             $campaignData['parent_campaign'] = $id;
-
+            dd($campaignData);
             $campaign = $this->campaignsRepo->update($id, $campaignData);
 
             $data = [
