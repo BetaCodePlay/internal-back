@@ -535,6 +535,7 @@ class BonusSystem {
             }).done(function (json) {
                 swalSuccessNoButton(json);
                 setTimeout(() => {
+                    console.log(json.data);
                     window.location.href = json.data.route;
                 }, 1000);
 
