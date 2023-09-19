@@ -155,7 +155,7 @@
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($criterias as $criteria)
                                             <option value="{{ $criteria->id }}"
-                                                {{ $campaign->data->allocation_criteria[0] ? 'selected' : '' }}>
+                                                {{ $criteria->id == $campaign->data->allocation_criteria[0] ? 'selected' : '' }}>
                                                 {{ _i($criteria->name) }}
                                             </option>
                                         @endforeach

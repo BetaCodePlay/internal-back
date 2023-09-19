@@ -1692,7 +1692,12 @@ class BonusSystemController extends Controller
                 }
             }
 
-            $configData['allocation_criteria'] = $allocationCriteria;
+            $integerAllocationCriteria = [];
+            foreach ($allocationCriteria as $value) {
+                $integerAllocationCriteria[] = (int)$value;
+            }
+
+            $configData['allocation_criteria'] = $integerAllocationCriteria;
             $configData['commission_real'] = $commissionReal;
             $configData['commission_bonus'] = $commissionBonus;
             $configData['promo_codes'] = $promoCodesData;
