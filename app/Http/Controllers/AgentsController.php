@@ -2629,6 +2629,7 @@ class AgentsController extends Controller
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance + $amount;
                     }
+
                     $balance = $transaction->data->wallet->balance;
                     $status = $transaction->status;
                     $userAdditionalData = $additionalData;
@@ -2816,6 +2817,8 @@ class AgentsController extends Controller
                         /*I assign the balance */
                         $additionalData['balance'] = 0;
                     }
+
+                    dd($agentBalanceFinal);
                     /*it is assigned the id of the transaction created first */
                     $additionalData['transaction_id'] = $transactionIdCreated;
 

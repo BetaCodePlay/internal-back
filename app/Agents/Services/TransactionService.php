@@ -137,9 +137,9 @@ class TransactionService
     public function isInsufficientBalance(string $transactionType, string $transactionAmount, object $ownerAgent): ?Response
     {
         $isCreditTransaction = $transactionType == TransactionTypes::$credit;
-        $isWolfAgent = $ownerAgent->username == AgentType::WOLF;
+        $isWolfAgent = $ownerAgent?->username == AgentType::WOLF;
 
-        if ($isCreditTransaction && $transactionAmount > $ownerAgent->balance && !$isWolfAgent) {
+        if ($isCreditTransaction && $transactionAmount > $ownerAgent?->balance && ! $isWolfAgent) {
             return $this->generateErrorResponse(
                 _i('Insufficient balance'),
                 _i("The agents's operational balance is insufficient to perform the transaction")
@@ -242,6 +242,7 @@ class TransactionService
         if ($isBalanceInsufficient = $this->isInsufficientBalance($transactionType, $transactionAmount, $ownerAgent)) {
             return $isBalanceInsufficient;
         }
+
         $userType = $request->get('type');
 
         $userManagementResult = ($userType == UserType::USER_TYPE_PLAYER)
@@ -300,6 +301,11 @@ class TransactionService
         string             $transactionType,
         mixed              $transactionResult): mixed
     {
+        $transaction = $transactionResult->transaction;
+        $additionalData = $transaction->data?->transaction->data;
+        $additionalData->wallet_transaction = $transaction->data->transaction->id;
+        $additionalData = get_object_vars((object)$additionalData);
+
         $transactionData = [
             'user_id' => $userToAddBalance,
             'amount' => $request->get('amount'),
@@ -307,7 +313,7 @@ class TransactionService
             'transaction_type_id' => $transactionType,
             'transaction_status_id' => TransactionStatus::$approved,
             'provider_id' => Providers::$agents_users,
-            'data' => $transactionResult->additionalData ?? [],
+            'data' => $additionalData,
             'whitelabel_id' => Configurations::getWhitelabel()
         ];
 
@@ -325,13 +331,13 @@ class TransactionService
         );
 
         return (object)[
+            'additionalData' => $additionalData,
             'agentBalanceFinal' => $transactionResult->agentBalanceFinal ?? 0,
-            'ownerBalance' => $transactionResult->ownerBalance ?? 0,
+            'balance'        => $transaction?->data?->wallet?->balance ?? 0,
+            'button'         => $button,
+            'ownerBalance'   => $transactionResult->ownerBalance ?? 0,
+            'status'         => $transaction?->status,
             'transactionIdCreated' => $ticket->id,
-            'balance' => $transactionResult->transaction?->data?->wallet?->balance ?? 0,
-            'status' => $transactionResult->transaction?->status ?? $transactionResult->status,
-            'button' => $button,
-            'additionalData' => $transactionResult->additionalData,
         ];
     }
 
@@ -366,9 +372,9 @@ class TransactionService
         $transactionType = $request->get('transaction_type');
 
         if ($transactionType == TransactionTypes::$credit) {
-            $transactionResult = $this->processCreditTransactionForPlayerUser($request, $playerDetails, $walletDetail);
+            $creditTransactionInfo = $this->processCreditTransactionForPlayerUser($request, $playerDetails, $walletDetail);
 
-            return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $transactionResult);
+            return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $creditTransactionInfo);
         }
 
         $isAmountGreaterThanBalance = $this->isGameAmountGreaterThanBalance($request, $walletDetail);
@@ -439,9 +445,8 @@ class TransactionService
     {
         $currency = session('currency');
         $transactionAmount = $request->get('amount');
-        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($request->user()->id, $currency);
-
-        $additionalData = $this->generateAdditionalTransactionData($ownerAgent, $playerDetails);
+        $userAuthId = $request->user()->id;
+        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
 
         $transaction = Wallet::creditManualTransactions(
             $transactionAmount,
@@ -457,7 +462,6 @@ class TransactionService
         }
 
         return (object)[
-            'additionalData' => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
             'ownerBalance' => $ownerAgent->balance - $transactionAmount,
             'transaction' => $transaction,
@@ -567,21 +571,15 @@ class TransactionService
         string $transactionType
     ): Response
     {
-        /*$balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
-            ? $userManagementResult->balance
-            : 0;*/
+        $balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
+            ? $userManagementResult->ownerBalance
+            : 0;
 
-        if ($ownerAgent->username == AgentType::WOLF) {
-            $balance = 0;
-        }
-
-        if ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF) {
-            $balance = $userManagementResult->balance;
-        }
+        $agentBalanceFinal = $userManagementResult->agentBalanceFinal;
 
         $secondBalance = $transactionType == TransactionTypes::$credit
-            ? round($userManagementResult->agentBalanceFinal, 2)
-            : round($userManagementResult->agentBalanceFinal, 2) - $transactionAmount;
+            ? round($agentBalanceFinal, 2)
+            : round($agentBalanceFinal, 2) - $transactionAmount;
 
         $additionalData = Arr::collapse([$userManagementResult->additionalData, [
             'balance' => $balance,
@@ -629,7 +627,7 @@ class TransactionService
             'title' => _i('Transaction performed'),
             'message' => _i('The transaction was successfully made to the user'),
             'close' => _i('Close'),
-            'balance' => number_format($balance, 2),
+            'balance' => number_format($userManagementResult->balance, 2),
             'button' => $userManagementResult->button,
         ]);
     }
