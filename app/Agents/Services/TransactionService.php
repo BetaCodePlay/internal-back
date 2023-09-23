@@ -6,8 +6,6 @@ use App\Agents\Enums\AgentType;
 use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
-use App\Agents\Services\App\Models\User;
-use App\Agents\Services\Illuminate\Http\Request;
 use App\Core\Repositories\TransactionsRepo;
 use App\Http\Requests\TransactionRequest;
 use App\Users\Enums\ActionUser;
@@ -100,14 +98,15 @@ class TransactionService
      * Handle an empty transaction object.
      *
      * @param TransactionRequest $request The request object containing transaction details.
-     * @param string $currency The currency ISO code.
      * @param mixed $transaction The transaction object.
      *
      * @return bool|Response False if the transaction is not empty, otherwise a response indicating an error.
      */
-    public function handleEmptyTransactionObject(TransactionRequest $request, string $currency, mixed $transaction): bool|Response
+    public function handleEmptyTransactionObject(TransactionRequest $request, mixed $transaction)
+    : bool|Response
     {
         if (empty($transaction) || empty($transaction->data)) {
+            $currency = session('currency');
             Log::error('error data, wallet getByClient', [
                 'currency' => $currency,
                 'request' => $request->all(),
@@ -193,16 +192,15 @@ class TransactionService
      * This method processes and manages the balance of an agent user based on a transaction request.
      *
      * @param TransactionRequest $request The transaction request object.
-     * @param string $userToAddBalance The user for whom the balance is managed.
-     * @param string $currency The currency of the transaction.
-     *
      * @return mixed An object containing the result of the transaction with the following properties:
      *   - balance: The final balance of the agent user after the transaction.
      *   - status: The status of the transaction (e.g., Status::$ok or Status::$failed).
-     *
      */
-    public function manageAgentUser(TransactionRequest $request, string $userToAddBalance, string $currency): mixed
+    public function manageAgentUser(TransactionRequest $request)
+    : mixed
     {
+        $userToAddBalance = $request->get('user');
+        $currency = session('currency');
         $agentDetails = $this->agentsRepo->findByUserIdAndCurrency($userToAddBalance, $currency);
         $userIsBlocked = $this->isUserBlocked($agentDetails);
 
@@ -220,10 +218,7 @@ class TransactionService
         if ($transactionType == TransactionTypes::$credit) {
             return $this->processAndStoreTransaction(
                 $request,
-                $userToAddBalance,
-                $currency,
-                $transactionType,
-                $this->processCreditTransactionForAgent($agentDetails, $agentBalance, $transactionAmount, $currency, $ownerAgent)
+                $this->processCreditTransactionForAgent($request, $agentDetails, $agentBalance, $ownerAgent)
             );
         }
 
@@ -233,10 +228,7 @@ class TransactionService
 
         return $this->processAndStoreTransaction(
             $request,
-            $userToAddBalance,
-            $currency,
-            $transactionType,
-            $this->processDebitTransactionForAgent($agentDetails, $agentBalance, $transactionAmount, $currency, $ownerAgent)
+            $this->processDebitTransactionForAgent($request, $agentDetails, $agentBalance, $ownerAgent)
         );
     }
 
@@ -272,11 +264,9 @@ class TransactionService
             return $isBalanceInsufficient;
         }
 
-        $userType = $request->get('type');
-
-        $userManagementResult = ($userType == UserType::USER_TYPE_PLAYER)
-            ? $this->managePlayerUser($request, $userToAddBalance, $currency)
-            : $this->manageAgentUser($request, $userToAddBalance, $currency);
+        $userManagementResult = ($request->get('type') == UserType::USER_TYPE_PLAYER)
+            ? $this->managePlayerUser($request)
+            : $this->manageAgentUser($request);
 
         if ($userManagementResult instanceof Response) {
             return $userManagementResult;
@@ -296,15 +286,7 @@ class TransactionService
             );
         }
 
-        return $this->processTransactionAndGenerateResponse(
-            $userType,
-            $ownerAgent,
-            $userManagementResult,
-            $userAuthId,
-            $transactionAmount,
-            $currency,
-            $transactionType
-        );
+        return $this->processTransactionAndGenerateResponse($request, $ownerAgent, $userManagementResult);
     }
 
     /**
@@ -314,25 +296,18 @@ class TransactionService
      * and generates a response object with transaction information and a ticket link.
      *
      * @param TransactionRequest $request The request object containing transaction details.
-     * @param int|string $userToAddBalance The user identifier for whom the transaction is being processed.
-     * @param string $currency The currency ISO code.
-     * @param string $transactionType The transaction type identifier.
      * @param mixed $transactionResult The result of the transaction processing.
      *
      * @return mixed An object containing transaction and ticket information or a Response object in case of an error.
      */
-    public function processAndStoreTransaction(
-        TransactionRequest $request,
-        int|string         $userToAddBalance,
-        string             $currency,
-        string             $transactionType,
-        mixed              $transactionResult): mixed
+    public function processAndStoreTransaction(TransactionRequest $request, mixed $transactionResult)
+    : mixed
     {
         $transactionData = [
-            'user_id' => $userToAddBalance,
+            'user_id'             => $request->get('user'),
             'amount' => $request->get('amount'),
-            'currency_iso' => $currency,
-            'transaction_type_id' => $transactionType,
+            'currency_iso'        => session('currency'),
+            'transaction_type_id' => $request->get('transaction_type'),
             'transaction_status_id' => TransactionStatus::$approved,
             'provider_id' => Providers::$agents_users,
             'data' => $transactionResult->additionalData,
@@ -340,7 +315,7 @@ class TransactionService
         ];
 
         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-        $response = $this->handleEmptyTransactionObject($request, $currency, $ticket);
+        $response = $this->handleEmptyTransactionObject($request, $ticket);
 
         if ($response instanceof Response) {
             return $response;
@@ -353,8 +328,6 @@ class TransactionService
             route('agents.ticket', [$ticketId]),
             _i('Print ticket')
         );
-
-        //dd($transactionResult);
 
         return (object)[
             'additionalData'       => $transactionResult->additionalData,
@@ -374,13 +347,13 @@ class TransactionService
      * the provided TransactionRequest and the user's balance.
      *
      * @param TransactionRequest $request The request object containing transaction details.
-     * @param string $userToAddBalance The user identifier for whom the transaction is being processed.
-     *
      * @return mixed The response object indicating the result of the transaction.
      *                  It can be a success response or an error response.
      */
-    public function managePlayerUser(TransactionRequest $request, string $userToAddBalance, string $currency): mixed
+    public function managePlayerUser(TransactionRequest $request)
+    : mixed
     {
+        $userToAddBalance = $request->get('user');
         $playerDetails = $this->agentsRepo->findUser($userToAddBalance);
         $userIsBlocked = $this->isUserBlocked($playerDetails);
 
@@ -388,23 +361,18 @@ class TransactionService
             return $userIsBlocked;
         }
 
+        $currency = session('currency');
         $walletDetail = Wallet::getByClient($playerDetails->id, $currency);
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $walletDetail);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
         }
 
-        $transactionType = $request->get('transaction_type');
+        if ($request->get('transaction_type') == TransactionTypes::$credit) {
+            $creditTransactionResult = $this->processCreditTransactionForPlayerUser($request, $playerDetails, $walletDetail);
 
-        if ($transactionType == TransactionTypes::$credit) {
-            return $this->processAndStoreTransaction(
-                $request,
-                $userToAddBalance,
-                $currency,
-                $transactionType,
-                $this->processCreditTransactionForPlayerUser($request, $playerDetails, $walletDetail)
-            );
+            return $this->processAndStoreTransaction($request, $creditTransactionResult);
         }
 
         $isAmountGreaterThanBalance = $this->isGameAmountGreaterThanBalance($request, $walletDetail);
@@ -413,13 +381,9 @@ class TransactionService
             return $isAmountGreaterThanBalance;
         }
 
-        return $this->processAndStoreTransaction(
-            $request,
-            $userToAddBalance,
-            $currency,
-            $transactionType,
-            $this->processDebitTransactionForPlayerUser($request, $playerDetails, $walletDetail)
-        );
+        $debitTransactionResult = $this->processDebitTransactionForPlayerUser($request, $playerDetails, $walletDetail);
+
+        return $this->processAndStoreTransaction($request, $debitTransactionResult);
     }
 
     /**
@@ -427,10 +391,9 @@ class TransactionService
      *
      * This method handles a credit transaction for a given agent and updates their balance.
      *
+     * @param TransactionRequest $request
      * @param object $agentDetails An object containing agent details.
      * @param float $agentBalance The current balance of the agent.
-     * @param float $transactionAmount The amount of the credit transaction.
-     * @param string $currency The currency of the transaction.
      * @param object $ownerAgent An object representing the owner agent.
      *
      * @return object An object containing the result of the transaction with the following properties:
@@ -440,18 +403,18 @@ class TransactionService
      *   - status: The status of the transaction (e.g., Status::$ok).
      */
     public function processCreditTransactionForAgent(
+        TransactionRequest $request,
         object $agentDetails,
         float  $agentBalance,
-        float  $transactionAmount,
-        string $currency,
         object $ownerAgent
     )
     : object
     {
+        $transactionAmount = $request->get('amount');
         $balance = $agentBalance + $transactionAmount;
         if ($agentDetails->username != AgentType::WOLF) {
             $this->agentCurrenciesRepo->store(
-                ['agent_id' => $agentDetails->agent, 'currency_iso' => $currency],
+                ['agent_id' => $agentDetails->agent, 'currency_iso' => session('currency')],
                 ['balance' => $balance]
             );
         }
@@ -483,7 +446,12 @@ class TransactionService
      * @return mixed An object containing additional data, agent and owner balances, and transaction information
      *               or a Response object in case of an error.
      */
-    public function processCreditTransactionForPlayerUser(TransactionRequest $request, object $playerDetails, object $walletDetail): mixed
+    public function processCreditTransactionForPlayerUser(
+        TransactionRequest $request,
+        object             $playerDetails,
+        object             $walletDetail
+    )
+    : mixed
     {
         $currency = session('currency');
         $transactionAmount = $request->get('amount');
@@ -497,7 +465,7 @@ class TransactionService
             $request->get('wallet'),
         );
 
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transactionResult);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
@@ -522,10 +490,9 @@ class TransactionService
      *
      * This method handles a debit transaction for a given agent and updates their balance.
      *
+     * @param TransactionRequest $request
      * @param object $agentDetails An object containing agent details.
      * @param float $agentBalance The current balance of the agent.
-     * @param float $transactionAmount The amount of the debit transaction.
-     * @param string $currency The currency of the transaction.
      * @param object $ownerAgent An object representing the owner agent.
      *
      * @return object An object containing the result of the transaction with the following properties:
@@ -534,13 +501,20 @@ class TransactionService
      *   - ownerBalance: The balance of the owner agent after adding the transaction amount.
      *   - status: The status of the transaction (e.g., Status::$ok).
      */
-    public function processDebitTransactionForAgent(object $agentDetails, float $agentBalance, float $transactionAmount, string $currency, object $ownerAgent): object
+    public function processDebitTransactionForAgent(
+        TransactionRequest $request,
+        object             $agentDetails,
+        float              $agentBalance,
+        object             $ownerAgent
+    )
+    : object
     {
+        $transactionAmount = $request->get('amount');
         $balance = $agentBalance - $transactionAmount;
 
         if ($agentDetails->username != AgentType::WOLF) {
             $this->agentCurrenciesRepo->store(
-                ['agent_id' => $agentDetails->agent, 'currency_iso' => $currency],
+                ['agent_id' => $agentDetails->agent, 'currency_iso' => session('currency')],
                 ['balance' => $balance]
             );
         }
@@ -582,7 +556,7 @@ class TransactionService
             $request->get('wallet')
         );
 
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transactionResult);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
@@ -605,26 +579,20 @@ class TransactionService
     /**
      * Process a transaction and generate a response.
      *
-     * @param string $userType The user type.
+     * @param TransactionRequest $request
      * @param object $ownerAgent The owner agent object.
      * @param object $userManagementResult The user management result object.
-     * @param int $userAuthId The user authentication ID.
-     * @param float $transactionAmount The transaction amount.
-     * @param string $currency The currency ISO code.
-     * @param string $transactionType The transaction type identifier.
-     *
      * @return Response The generated response.
      */
     public function processTransactionAndGenerateResponse(
-        string $userType,
+        TransactionRequest $request,
         object $ownerAgent,
-        object $userManagementResult,
-        int    $userAuthId,
-        float  $transactionAmount,
-        string $currency,
-        string $transactionType
+        object             $userManagementResult
     ): Response
     {
+        $userType = $request->get('type');
+        $transactionAmount = $request->get('amount');
+        $transactionType = $request->get('transaction_type');
         $balance = ($userType == UserType::USER_TYPE_PLAYER || $ownerAgent->username != AgentType::WOLF)
             ? $userManagementResult->ownerBalance
             : 0;
@@ -642,9 +610,9 @@ class TransactionService
         ]]);
 
         $transactionData = [
-            'user_id' => $userAuthId,
+            'user_id'      => $request->user()->id,
             'amount' => $transactionAmount,
-            'currency_iso' => $currency,
+            'currency_iso' => session('currency'),
             'transaction_type_id' => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
             'transaction_status_id' => TransactionStatus::$approved,
             'provider_id' => Providers::$agents,
