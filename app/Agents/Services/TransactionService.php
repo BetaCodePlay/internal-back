@@ -7,6 +7,7 @@ use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Agents\Services\App\Models\User;
+use App\Agents\Services\Illuminate\Http\Request;
 use App\Core\Repositories\TransactionsRepo;
 use App\Http\Requests\TransactionRequest;
 use App\Users\Enums\ActionUser;
@@ -18,6 +19,7 @@ use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Wallet\Wallet;
+use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -75,6 +77,23 @@ class TransactionService
             'message' => $message,
             'close' => _i('Close')
         ]);
+    }
+
+    /**
+     * Handle an error and respond with an error response.
+     *
+     * This method logs an error in the log and returns a standard error response.
+     *
+     * @param Exception $ex The exception object to be logged.
+     * @param TransactionRequest $request The HTTP request related to the error.
+     *
+     * @return Response The error response in JSON format.
+     */
+    public function handleAndRespondToError(TransactionRequest $request, Exception $ex)
+    : Response
+    {
+        Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+        return Utils::failedResponse();
     }
 
     /**
@@ -193,22 +212,32 @@ class TransactionService
 
         $transactionType = $request->get('transaction_type');
         $transactionAmount = $request->get('amount');
-        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userToAddBalance, $currency);
+        $userAuthId = $request->user()->id;
 
+        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
         $agentBalance = round($agentDetails->balance, 2);
 
         if ($transactionType == TransactionTypes::$credit) {
-            $transactionResult = $this->processCreditTransactionForAgent($agentDetails, $agentBalance, $transactionAmount, $currency, $ownerAgent);
-
-            return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $transactionResult);
+            return $this->processAndStoreTransaction(
+                $request,
+                $userToAddBalance,
+                $currency,
+                $transactionType,
+                $this->processCreditTransactionForAgent($agentDetails, $agentBalance, $transactionAmount, $currency, $ownerAgent)
+            );
         }
 
         if ($transactionAmount > $agentBalance) {
             return (object)['balance' => $agentBalance, 'status' => Status::$failed,];
         }
 
-        $transactionResult = $this->processDebitTransactionForAgent($agentDetails, $agentBalance, $transactionAmount, $currency, $ownerAgent);
-        return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $transactionResult);
+        return $this->processAndStoreTransaction(
+            $request,
+            $userToAddBalance,
+            $currency,
+            $transactionType,
+            $this->processDebitTransactionForAgent($agentDetails, $agentBalance, $transactionAmount, $currency, $ownerAgent)
+        );
     }
 
     /**
@@ -267,8 +296,6 @@ class TransactionService
             );
         }
 
-        $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
-
         return $this->processTransactionAndGenerateResponse(
             $userType,
             $ownerAgent,
@@ -301,11 +328,6 @@ class TransactionService
         string             $transactionType,
         mixed              $transactionResult): mixed
     {
-        $transaction = $transactionResult->transaction;
-        $additionalData = $transaction->data?->transaction->data;
-        $additionalData->wallet_transaction = $transaction->data->transaction->id;
-        $additionalData = get_object_vars((object)$additionalData);
-
         $transactionData = [
             'user_id' => $userToAddBalance,
             'amount' => $request->get('amount'),
@@ -313,7 +335,7 @@ class TransactionService
             'transaction_type_id' => $transactionType,
             'transaction_status_id' => TransactionStatus::$approved,
             'provider_id' => Providers::$agents_users,
-            'data' => $additionalData,
+            'data' => $transactionResult->additionalData,
             'whitelabel_id' => Configurations::getWhitelabel()
         ];
 
@@ -324,20 +346,24 @@ class TransactionService
             return $response;
         }
 
+        $ticketId = $ticket->id;
+
         $button = sprintf(
             '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
-            route('agents.ticket', [$ticket->id]),
+            route('agents.ticket', [$ticketId]),
             _i('Print ticket')
         );
 
+        //dd($transactionResult);
+
         return (object)[
-            'additionalData' => $additionalData,
+            'additionalData'       => $transactionResult->additionalData,
             'agentBalanceFinal' => $transactionResult->agentBalanceFinal ?? 0,
-            'balance'        => $transaction?->data?->wallet?->balance ?? 0,
+            'balance'              => $transactionResult->balance,
             'button'         => $button,
             'ownerBalance'   => $transactionResult->ownerBalance ?? 0,
-            'status'         => $transaction?->status,
-            'transactionIdCreated' => $ticket->id,
+            'status'               => $transactionResult->status,
+            'transactionIdCreated' => $ticketId,
         ];
     }
 
@@ -372,9 +398,13 @@ class TransactionService
         $transactionType = $request->get('transaction_type');
 
         if ($transactionType == TransactionTypes::$credit) {
-            $creditTransactionInfo = $this->processCreditTransactionForPlayerUser($request, $playerDetails, $walletDetail);
-
-            return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $creditTransactionInfo);
+            return $this->processAndStoreTransaction(
+                $request,
+                $userToAddBalance,
+                $currency,
+                $transactionType,
+                $this->processCreditTransactionForPlayerUser($request, $playerDetails, $walletDetail)
+            );
         }
 
         $isAmountGreaterThanBalance = $this->isGameAmountGreaterThanBalance($request, $walletDetail);
@@ -383,9 +413,13 @@ class TransactionService
             return $isAmountGreaterThanBalance;
         }
 
-        $transactionResult = $this->processDebitTransactionForPlayerUser($request, $playerDetails, $walletDetail);
-
-        return $this->processAndStoreTransaction($request, $userToAddBalance, $currency, $transactionType, $transactionResult);
+        return $this->processAndStoreTransaction(
+            $request,
+            $userToAddBalance,
+            $currency,
+            $transactionType,
+            $this->processDebitTransactionForPlayerUser($request, $playerDetails, $walletDetail)
+        );
     }
 
     /**
@@ -405,7 +439,14 @@ class TransactionService
      *   - ownerBalance: The balance of the owner agent after deducting the transaction amount.
      *   - status: The status of the transaction (e.g., Status::$ok).
      */
-    public function processCreditTransactionForAgent(object $agentDetails, float $agentBalance, float $transactionAmount, string $currency, object $ownerAgent): object
+    public function processCreditTransactionForAgent(
+        object $agentDetails,
+        float  $agentBalance,
+        float  $transactionAmount,
+        string $currency,
+        object $ownerAgent
+    )
+    : object
     {
         $balance = $agentBalance + $transactionAmount;
         if ($agentDetails->username != AgentType::WOLF) {
@@ -423,6 +464,7 @@ class TransactionService
         return (object)[
             'additionalData' => $additionalData,
             'agentBalanceFinal' => $agentDetails->balance + $transactionAmount,
+            'balance' => $balance,
             'ownerBalance' => $ownerAgent->balance - $transactionAmount,
             'status' => Status::$ok,
         ];
@@ -448,23 +490,30 @@ class TransactionService
         $userAuthId = $request->user()->id;
         $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
 
-        $transaction = Wallet::creditManualTransactions(
+        $transactionResult = Wallet::creditManualTransactions(
             $transactionAmount,
             Providers::$agents_users,
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
 
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transaction);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
         }
 
+        $transaction = $transactionResult->data;
+        $additionalData = $transaction?->transaction->data;
+        $additionalData->wallet_transaction = $transaction?->transaction->id;
+        $additionalData = get_object_vars((object)$additionalData);
+
         return (object)[
+            'additionalData' => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
+            'balance'        => $transaction?->wallet?->balance ?? 0,
             'ownerBalance' => $ownerAgent->balance - $transactionAmount,
-            'transaction' => $transaction,
+            'status'         => $transactionResult->status
         ];
     }
 
@@ -504,6 +553,7 @@ class TransactionService
         return (object)[
             'additionalData' => $additionalData,
             'agentBalanceFinal' => $agentDetails->balance,
+            'balance' => $balance,
             'ownerBalance' => $ownerAgent->balance + $transactionAmount,
             'status' => Status::$ok,
         ];
@@ -525,26 +575,30 @@ class TransactionService
         $transactionAmount = $request->get('amount');
         $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($request->user()->id, $currency);
 
-        $additionalData = $this->generateAdditionalTransactionData($ownerAgent, $playerDetails);
-
-        $transaction = Wallet::debitManualTransactions(
+        $transactionResult = Wallet::debitManualTransactions(
             $transactionAmount,
             Providers::$agents_users,
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet')
         );
 
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transaction);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $currency, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
         }
 
+        $transaction = $transactionResult->data;
+        $additionalData = $transaction?->transaction->data;
+        $additionalData->wallet_transaction = $transaction->transaction->id;
+        $additionalData = get_object_vars((object)$additionalData);
+
         return (object)[
             'additionalData' => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
+            'balance' => $transaction?->wallet?->balance ?? 0,
             'ownerBalance' => $ownerAgent->balance + $transactionAmount,
-            'transaction' => $transaction,
+            'status'  => $transactionResult->status
         ];
     }
 
