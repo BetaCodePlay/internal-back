@@ -57,6 +57,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
@@ -254,7 +255,7 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function addUsersData(Request $request)
     {
@@ -519,7 +520,7 @@ class AgentsController extends Controller
      * @param null $startDate
      * @param null $endDate
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function agentsTransactionsByDatesData($startDate = null, $endDate = null)
     {
@@ -1317,7 +1318,7 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function excludeProvidersAgentsData(Request $request)
     {
@@ -2500,7 +2501,8 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
+     * @deprecated
      */
     public function performTransactions1(Request $request)
     {
@@ -2854,8 +2856,6 @@ class AgentsController extends Controller
                         /*I assign the balance */
                         $additionalData['balance'] = 0;
                     }
-
-                    dd($agentBalanceFinal);
                     /*it is assigned the id of the transaction created first */
                     $additionalData['transaction_id'] = $transactionIdCreated;
 
@@ -2960,7 +2960,7 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function performTransactions_new(Request $request)
     {
@@ -3426,7 +3426,7 @@ class AgentsController extends Controller
      * @param UsersTempRepo $usersTempRepo
      * @param UserCurrenciesRepo $userCurrenciesRepo
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
@@ -3674,7 +3674,7 @@ class AgentsController extends Controller
      *
      * @param int $agent Agent ID
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function relocationAgentsData($agentMoveId = null)
     {
@@ -3707,7 +3707,7 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function searchAgent(Request $request)
     {
@@ -3735,7 +3735,7 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function searchUsername(Request $request)
     {
@@ -3774,7 +3774,7 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function storeMainAgents(Request $request)
     {
@@ -3975,7 +3975,7 @@ class AgentsController extends Controller
      * @param UsersTempRepo $usersTempRepo
      * @param UserCurrenciesRepo $userCurrenciesRepo
      * @return Response
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function storeUser(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
