@@ -226,7 +226,7 @@ class TransactionService
                 $agentBalance,
                 $ownerAgent,
             );
-            return $this->processAndStoreTransaction($request, $creditTransactionInfoForAgent);
+            return $this->processAndStoreTransaction($request, $creditTransactionInfoForAgent, Providers::$agents);
         }
 
         if ($transactionAmount > $agentBalance) {
@@ -243,7 +243,7 @@ class TransactionService
             $ownerAgent,
         );
 
-        return $this->processAndStoreTransaction($request, $debitTransactionInfoForAgent);
+        return $this->processAndStoreTransaction($request, $debitTransactionInfoForAgent, Providers::$agents);
     }
 
     /**
@@ -314,10 +314,11 @@ class TransactionService
      *
      * @param TransactionRequest $request The request object containing transaction details.
      * @param mixed $transactionResult The result of the transaction processing.
+     * @param int $providerId The provider ID.
      *
      * @return mixed An object containing transaction and ticket information or a Response object in case of an error.
      */
-    public function processAndStoreTransaction(TransactionRequest $request, mixed $transactionResult): mixed
+    public function processAndStoreTransaction(TransactionRequest $request, mixed $transactionResult, int $providerId): mixed
     {
         $transactionData = [
             'user_id'               => $request->get('user'),
@@ -325,7 +326,7 @@ class TransactionService
             'currency_iso'          => session('currency'),
             'transaction_type_id'   => $request->get('transaction_type'),
             'transaction_status_id' => TransactionStatus::$approved,
-            'provider_id'           => Providers::$agents_users,
+            'provider_id'           => $providerId,
             'data'                  => $transactionResult->additionalData,
             'whitelabel_id'         => Configurations::getWhitelabel(),
         ];
@@ -390,7 +391,7 @@ class TransactionService
                 $walletDetail,
             );
 
-            return $this->processAndStoreTransaction($request, $creditTransactionResult);
+            return $this->processAndStoreTransaction($request, $creditTransactionResult, Providers::$agents_users);
         }
 
         $isAmountGreaterThanBalance = $this->isGameAmountGreaterThanBalance($request, $walletDetail);
@@ -401,7 +402,7 @@ class TransactionService
 
         $debitTransactionResult = $this->processDebitTransactionForPlayerUser($request, $playerDetails, $walletDetail);
 
-        return $this->processAndStoreTransaction($request, $debitTransactionResult);
+        return $this->processAndStoreTransaction($request, $debitTransactionResult, Providers::$agents_users);
     }
 
     /**
