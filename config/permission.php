@@ -36,7 +36,7 @@ return [
          * default value but you may easily change it to any table you like.
          */
 
-        'roles' => 'roles_dot',
+        'roles' => 'security_roles',
 
         /*
          * When using the "HasPermissions" trait from this package, we need to know which
@@ -44,7 +44,7 @@ return [
          * default value but you may easily change it to any table you like.
          */
 
-        'permissions' => 'permissions_dot',
+        'permissions' => 'security_permissions',
 
         /*
          * When using the "HasPermissions" trait from this package, we need to know which
