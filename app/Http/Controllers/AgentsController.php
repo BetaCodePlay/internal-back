@@ -3792,6 +3792,7 @@ class AgentsController extends Controller
             $supportAgent = null;
             $supportAgl = null;
             $adminAgent = null;
+            $supportAgentgl = null;
             $romeoUser = $this->usersRepo->getByUsername($romeo, $whitelabel);
             $supportUser = $this->usersRepo->getByUsername($support, $whitelabel);
             $adminUser = $this->usersRepo->getByUsername($admin, $whitelabel);
