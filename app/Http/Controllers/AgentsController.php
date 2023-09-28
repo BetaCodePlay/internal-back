@@ -49,6 +49,7 @@ use Dotworkers\Security\Security;
 use Dotworkers\Sessions\Sessions;
 use Dotworkers\Store\Store;
 use Dotworkers\Wallet\Wallet;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -61,6 +62,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
+
 use function GuzzleHttp\Promise\all;
 
 /**
@@ -2576,7 +2578,7 @@ class AgentsController extends Controller
                         if ( Configurations::getWhitelabel() == 1 ){
                             function microtime_float()
                             {
-                                list($usec, $sec) = explode(" ", microtime());
+                                [$usec, $sec] = explode(" ", microtime());
                                 return ((float)$usec + (float)$sec);
                             }
 
@@ -2594,7 +2596,7 @@ class AgentsController extends Controller
                         } else {
                             function microtime_float()
                             {
-                                list($usec, $sec) = explode(" ", microtime());
+                                [$usec, $sec] = explode(" ", microtime());
                                 return ((float)$usec + (float)$sec);
                             }
 
@@ -2950,7 +2952,7 @@ class AgentsController extends Controller
     {
         try {
             return $this->transactionService->manageCreditDebitTransactions($request);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             return $this->transactionService->handleAndRespondToError($request, $ex);
         }
     }
@@ -3731,41 +3733,24 @@ class AgentsController extends Controller
     }
 
     /**
-     * Search username
+     * Search for a user by their username.
      *
-     * @param Request $request
-     * @return Response
-     * @throws ValidationException
+     * This method searches for a user by their username and returns a Response containing
+     * the results. The search can be influenced by the configuration settings, such as
+     * the status of agents and user type.
+     *
+     * @param Request $request The HTTP request object containing user input.
+     *
+     * @return Response A JSON response containing the search results.
+     *
+     * @throws Exception If an error occurs during the search process.
      */
-    public function searchUsername(Request $request)
+    public function searchUserByUsername(Request $request): Response
     {
         try {
-
-            $name = strtolower($request->user);
-            if (Configurations::getAgents()->active == true && !$request->has('type')) {
-                $user = auth()->user()->id;
-                $currency = session('currency');
-                $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-                $whitelabel = Configurations::getWhitelabel();
-
-                $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
-                $users = $this->agentsRepo->getSearchUsersByAgent($currency, $agent->agent, $whitelabel);
-                $status = true;
-                $selectUsers = $this->agentsCollection->dependencySelect($name, $agents, $users, $whitelabel, $status);
-            } else {
-                $users = $this->usersRepo->search($name, TypeUser::$agentMater);
-                $selectUsers = $this->agentsCollection->formatUsersSelect($users,$this->rolesRepo);
-            }
-
-            $data = [
-                'agents' => $selectUsers
-            ];
-
-            return Utils::successResponse($data);
-
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
+            return $this->transactionService->searchUserByUsername($request);
+        } catch (Exception $ex) {
+            return $this->transactionService->handleAndRespondToError($request, $ex);
         }
     }
 

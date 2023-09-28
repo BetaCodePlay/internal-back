@@ -2,13 +2,17 @@
 
 namespace App\Agents\Services;
 
+use App\Agents\Collections\AgentsCollection;
 use App\Agents\Enums\AgentType;
 use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Http\Requests\TransactionRequest;
+use App\Security\Repositories\RolesRepo;
 use App\Users\Enums\ActionUser;
+use App\Users\Enums\TypeUser;
+use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
@@ -18,6 +22,7 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Wallet\Wallet;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -29,16 +34,25 @@ use Symfony\Component\HttpFoundation\Response;
 class TransactionService
 {
     /**
-     * Constructor for the TransactionManager class.
+     * Create a new instance of the TransactionService class.
      *
-     * @param AgentsRepo $agentsRepo The AgentsRepo instance.
-     * @param TransactionsRepo $transactionsRepo The TransactionsRepo instance.
-     * @param AgentCurrenciesRepo $agentCurrenciesRepo The AgentCurrenciesRepo instance.
+     * This constructor initializes an instance of the TransactionService class with the
+     * provided dependencies for various repositories. These repositories are used
+     * for performing operations within the class.
+     *
+     * @param AgentCurrenciesRepo $agentCurrenciesRepo The repository for agent currencies.
+     * @param AgentsRepo $agentsRepo The repository for agents.
+     * @param RolesRepo $rolesRepo The repository for roles.
+     * @param TransactionsRepo $transactionsRepo The repository for transactions.
+     * @param UsersRepo $usersRepo The repository for users.
      */
     public function __construct(
+        private AgentsCollection $agentsCollection,
+        private AgentCurrenciesRepo $agentCurrenciesRepo,
         private AgentsRepo $agentsRepo,
+        private RolesRepo $rolesRepo,
         private TransactionsRepo $transactionsRepo,
-        private AgentCurrenciesRepo $agentCurrenciesRepo
+        private UsersRepo $usersRepo
     ) {
     }
 
@@ -81,12 +95,12 @@ class TransactionService
      *
      * This method logs an error in the log and returns a standard error response.
      *
-     * @param Exception $ex The exception object to be logged.
-     * @param TransactionRequest $request The HTTP request related to the error.
+     * @param Request $request The HTTP request related to the error.
      *
+     * @param Exception $ex The exception object to be logged.
      * @return Response The error response in JSON format.
      */
-    public function handleAndRespondToError(TransactionRequest $request, Exception $ex): Response
+    public function handleAndRespondToError(Request $request, Exception $ex): Response
     {
         Log::error(
             __METHOD__,
@@ -307,56 +321,6 @@ class TransactionService
     }
 
     /**
-     * Process and store a transaction, and generate a response.
-     *
-     * This method processes a transaction based on the provided details, stores it,
-     * and generates a response object with transaction information and a ticket link.
-     *
-     * @param TransactionRequest $request The request object containing transaction details.
-     * @param mixed $transactionResult The result of the transaction processing.
-     * @param int $providerId The provider ID.
-     *
-     * @return mixed An object containing transaction and ticket information or a Response object in case of an error.
-     */
-    public function processAndStoreTransaction(TransactionRequest $request, mixed $transactionResult, int $providerId): mixed
-    {
-        $transactionData = [
-            'user_id'               => $request->get('user'),
-            'amount'                => $request->get('amount'),
-            'currency_iso'          => session('currency'),
-            'transaction_type_id'   => $request->get('transaction_type'),
-            'transaction_status_id' => TransactionStatus::$approved,
-            'provider_id'           => $providerId,
-            'data'                  => $transactionResult->additionalData,
-            'whitelabel_id'         => Configurations::getWhitelabel(),
-        ];
-
-        $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
-        $response = $this->handleEmptyTransactionObject($request, $ticket);
-
-        if ($response instanceof Response) {
-            return $response;
-        }
-
-        $ticketId = $ticket->id;
-
-        $buttonHTML = view('back.partials.ticket_print_button', [
-            'ticketRoute'     => route('agents.ticket', [$ticketId]),
-            'printTicketText' => __('Print ticket'),
-        ])->render();
-
-        return (object)[
-            'additionalData'       => $transactionResult->additionalData,
-            'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
-            'balance'              => $transactionResult->balance,
-            'button'               => $buttonHTML,
-            'ownerBalance'         => $transactionResult->ownerBalance ?? 0,
-            'status'               => $transactionResult->status,
-            'transactionIdCreated' => $ticketId,
-        ];
-    }
-
-    /**
      * Manage player user transactions.
      *
      * This method orchestrates the processing of transactions for a player user based on
@@ -403,6 +367,59 @@ class TransactionService
         $debitTransactionResult = $this->processDebitTransactionForPlayerUser($request, $playerDetails, $walletDetail);
 
         return $this->processAndStoreTransaction($request, $debitTransactionResult, Providers::$agents_users);
+    }
+
+    /**
+     * Process and store a transaction, and generate a response.
+     *
+     * This method processes a transaction based on the provided details, stores it,
+     * and generates a response object with transaction information and a ticket link.
+     *
+     * @param TransactionRequest $request The request object containing transaction details.
+     * @param mixed $transactionResult The result of the transaction processing.
+     * @param int $providerId The provider ID.
+     *
+     * @return mixed An object containing transaction and ticket information or a Response object in case of an error.
+     */
+    public function processAndStoreTransaction(
+        TransactionRequest $request,
+        mixed $transactionResult,
+        int $providerId
+    ): mixed {
+        $transactionData = [
+            'user_id'               => $request->get('user'),
+            'amount'                => $request->get('amount'),
+            'currency_iso'          => session('currency'),
+            'transaction_type_id'   => $request->get('transaction_type'),
+            'transaction_status_id' => TransactionStatus::$approved,
+            'provider_id'           => $providerId,
+            'data'                  => $transactionResult->additionalData,
+            'whitelabel_id'         => Configurations::getWhitelabel(),
+        ];
+
+        $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+        $response = $this->handleEmptyTransactionObject($request, $ticket);
+
+        if ($response instanceof Response) {
+            return $response;
+        }
+
+        $ticketId = $ticket->id;
+
+        $buttonHTML = view('back.partials.ticket_print_button', [
+            'ticketRoute'     => route('agents.ticket', [$ticketId]),
+            'printTicketText' => __('Print ticket'),
+        ])->render();
+
+        return (object)[
+            'additionalData'       => $transactionResult->additionalData,
+            'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
+            'balance'              => $transactionResult->balance,
+            'button'               => $buttonHTML,
+            'ownerBalance'         => $transactionResult->ownerBalance ?? 0,
+            'status'               => $transactionResult->status,
+            'transactionIdCreated' => $ticketId,
+        ];
     }
 
     /**
@@ -675,6 +692,45 @@ class TransactionService
             'close'   => _i('Close'),
             'balance' => number_format($userManagementResult->balance, 2),
             'button'  => $userManagementResult->button,
+        ]);
+    }
+
+    /**
+     * Search for a user by their username.
+     *
+     * This method searches for a user by their username and returns a Response containing
+     * the results. The search can be influenced by the configuration settings, such as
+     * the status of agents and user type.
+     *
+     * @param Request $request The HTTP request object containing user input.
+     *
+     * @return Response A JSON response containing the search results.
+     *
+     * @throws Exception If an error occurs during the search process.
+     */
+    public function searchUserByUsername(Request $request): Response
+    {
+        $username = Str::lower($request->get('user'));
+
+        if (!Configurations::getAgents()?->active && $request->has('type')) {
+            $users = $this->usersRepo->search($username, TypeUser::$agentMater);
+
+            return Utils::successResponse(
+                ['agents' => $this->agentsCollection->formatUsersSelect($users, $this->rolesRepo)],
+            );
+        }
+
+        $userAuthId = $request->user()->id;
+        $whitelabelId = Configurations::getWhitelabel();
+        $currency = session('currency');
+
+        return Utils::successResponse([
+            'agents' => $this->agentsRepo->searchAgentsAndUsersInTree(
+                $userAuthId,
+                $currency,
+                $whitelabelId,
+                $username,
+            ),
         ]);
     }
 }

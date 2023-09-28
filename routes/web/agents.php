@@ -123,9 +123,9 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     ]);
 
     // Search username agent
-    Route::post('search-username', [
+    Route::post('search-user-by-username', [
         'as' => 'agents.search-username',
-        'uses' => 'AgentsController@searchUsername'
+        'uses' => 'AgentsController@searchUserByUsername'
     ]);
 
     // Store agents

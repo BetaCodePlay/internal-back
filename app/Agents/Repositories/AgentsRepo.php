@@ -7,6 +7,7 @@ use App\Users\Entities\User;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
 use Dotworkers\Security\Enums\Roles;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -761,6 +762,69 @@ class AgentsRepo
         $iAgent = DB::select('SELECT * FROM get_my_percentage_by_currency(?,?)', [$user,
                                                                                   $currency]);
         return $iAgent;
+    }
+
+    /**
+     * Search for agents and users by username in a hierarchical tree structure.
+     *
+     * This method performs a recursive search for users and agents whose usernames match
+     * the provided pattern in a hierarchical tree structure. It returns a list of matching users
+     * and agents along with additional information such as user type, currency, and status.
+     *
+     * @param int    $userAuthId   The authenticated user's ID.
+     * @param string $currency     The desired currency.
+     * @param int    $whitelabelId The whitelabel ID.
+     * @param string $username     The username pattern to search for.
+     *
+     * @return array An array containing the matching users and agents.
+     *
+     * @throws Exception If an error occurs during the database query.
+     */
+    public function searchAgentsAndUsersInTree(
+        int $userAuthId,
+        string $currency,
+        int $whitelabelId,
+        string $username
+    ): array {
+        $usernameLike = '%' . $username . '%';
+
+        return DB::select(
+            'WITH RECURSIVE all_agents AS (SELECT agents.id, agents.user_id, agents.owner_id, 0 AS level
+                              FROM site.agents AS agents
+                              WHERE agents.user_id = ?
+                              UNION
+                              SELECT agents.id, agents.user_id, agents.owner_id, level + 1 AS level
+                              FROM site.agents AS agents
+                                       JOIN all_agents ON agents.owner_id = all_agents.user_id)
+
+                    SELECT u.id, u.username, a.owner_id, u.type_user, ac.currency_iso as currency, u.status, level
+                    FROM site.users u
+                             INNER JOIN all_agents a on u.id = a.user_id
+                             INNER JOIN site.agent_currencies AS ac ON a.id = ac.agent_id
+                    WHERE u.whitelabel_id = ?
+                      AND ac.currency_iso = ?
+                      AND u.username like ?
+                    UNION
+                    SELECT u.id, u.username, a.user_id, u.type_user, ac.currency_iso as currency, u.status, level + 1 as level
+                    FROM site.agent_user AS au
+                             INNER JOIN site.users AS u ON u.id = au.user_id
+                             INNER JOIN all_agents a on au.agent_id = a.id
+                             INNER JOIN site.agent_currencies AS ac ON a.id = ac.agent_id
+                             inner join site.user_currencies uc on uc.user_id=u.id
+                    WHERE u.whitelabel_id = ? and uc.currency_iso=ac.currency_iso
+                      AND ac.currency_iso = ?
+                      AND u.username like ?
+                    ORDER BY type_user, username',
+            [
+                $userAuthId,
+                $whitelabelId,
+                $currency,
+                $usernameLike,
+                $whitelabelId,
+                $currency,
+                $usernameLike,
+            ],
+        );
     }
 
     /**
