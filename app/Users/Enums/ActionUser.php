@@ -13,7 +13,6 @@ class ActionUser
     public static $delete = 3;
 
     public static $hide = 4;
-
     public static $locked_login_attempts = 5;
 
     public static $locked_higher = 6;

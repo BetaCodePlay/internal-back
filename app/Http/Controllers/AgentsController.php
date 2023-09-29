@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Agents\Collections\AgentsCollection;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
+use App\Agents\Services\AgentService;
 use App\Agents\Services\TransactionService;
 use App\Audits\Enums\AuditTypes;
 use App\Core\Collections\TransactionsCollection;
@@ -181,23 +182,36 @@ class AgentsController extends Controller
      */
     private $closuresUsersTotals2023Repo;
 
+    /**
+     * @var TransactionService
+     */
+    private TransactionService $transactionService;
+
+    /**
+     * @var AgentService
+     */
+    private AgentService $agentService;
+
     /***
      * AgentsController constructor.
      *
-     * @param UsersRepo $usersRepo
+     * @param ReportAgentRepo $reportAgentRepo
+     * @param ClosuresUsersTotals2023Repo $closuresUsersTotals2023Repo
+     * @param TransactionsCollection $transactionsCollection
      * @param AgentsRepo $agentsRepo
      * @param AgentsCollection $agentsCollection
-     * @param CountriesRepo $countriesRepo
+     * @param UsersRepo $usersRepo
      * @param TransactionsRepo $transactionsRepo
-     * @param GamesRepo $gamesRepo
      * @param WhitelabelsGamesRepo $whitelabelsGamesRepo
-     * @param UsersTempRepo $usersTempRepo
      * @param AgentCurrenciesRepo $agentCurrenciesRepo
      * @param GenerateReferenceCode $generateReferenceCode
      * @param WhitelabelsRepo $whitelabelsRepo
      * @param CurrenciesRepo $currenciesRepo
      * @param UsersCollection $usersCollection
-     * @param TransactionsCollection $transactionsCollection
+     * @param GamesRepo $gamesRepo
+     * @param RolesRepo $rolesRepo
+     * @param TransactionService $transactionService
+     * @param AgentService $agentService
      */
     public function __construct(
         ReportAgentRepo             $reportAgentRepo,
@@ -215,7 +229,8 @@ class AgentsController extends Controller
         UsersCollection             $usersCollection,
         GamesRepo                   $gamesRepo,
         RolesRepo                   $rolesRepo,
-        TransactionService          $transactionService
+        TransactionService          $transactionService,
+        AgentService                $agentService
     )
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
@@ -234,6 +249,7 @@ class AgentsController extends Controller
         $this->transactionsCollection = $transactionsCollection;
         $this->rolesRepo = $rolesRepo;
         $this->transactionService = $transactionService;
+        $this->agentService = $agentService;
     }
 
     /**
@@ -1053,6 +1069,14 @@ class AgentsController extends Controller
     }
 
     //TODO MODIFICAR SUPPORGL DEBAJO DE WOLF Y POR ECNIMA DE ADMIN
+
+    /**
+     * @param $usersRepo
+     * @param $agentRepo
+     * @param $agentCurrenciesRepo
+     * @param $rolesRepo
+     * @return string[]
+     */
     public static function changeUserGlTmp($usersRepo,$agentRepo,$agentCurrenciesRepo,$rolesRepo){
 
        //TODO buscar supportgl
@@ -3748,9 +3772,9 @@ class AgentsController extends Controller
     public function searchUserByUsername(Request $request): Response
     {
         try {
-            return $this->transactionService->searchUserByUsername($request);
+            return $this->agentService->searchUserByUsername($request);
         } catch (Exception $ex) {
-            return $this->transactionService->handleAndRespondToError($request, $ex);
+            return $this->agentService->handleAndRespondToError($request, $ex);
         }
     }
 
