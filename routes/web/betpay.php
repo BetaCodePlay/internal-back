@@ -136,6 +136,24 @@ Route::group(['prefix' => 'betpay', 'middleware' => ['auth']], function () {
         ]);
     });
 
+     /**
+     *  Pix routes
+     */
+    Route::group(['prefix' => 'pix', 'middleware' => ['auth']], function () {
+
+        // Debit pix
+        Route::get('debit', [
+            'as' => 'betpay.pix.debit',
+            'uses' => 'BetPayController@debitPix'
+        ]);
+
+        // Process debit
+        Route::post('process-debit', [
+            'as' => 'betpay.pix.process-debit',
+            'uses' => 'BetPayController@processDebitPix'
+        ]);
+    });
+
     /**
      *  MercadoPago routes
      */

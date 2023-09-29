@@ -879,6 +879,26 @@ if (!function_exists('menu')) {
                             ],
                         ]
                     ],
+                    'Pix' => [
+                        'text' => _i('Pix'),
+                        'level_class' => 'second',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-control-shuffle',
+                        'permission' => Permissions::$pix_menu,
+                        'payment_method' => PaymentMethods::$pix,
+                        'submenu' => [
+                            'Debit' => [
+                                'text' => _i('Debit'),
+                                'level_class' => 'third',
+                                'route' => 'betpay.pix.debit',
+                                'params' => [],
+                                'icon' => 'hs-admin-shift-right',
+                                'permission' => Permissions::$debit_pix_menu,
+                                'submenu' => []
+                            ],
+                        ]
+                    ],
                     'BetPayReports' => [
                         'text' => _i('Reports'),
                         'level_class' => 'second',
@@ -1003,6 +1023,35 @@ if (!function_exists('menu')) {
                                         'level_class' => 'fourth',
                                         'route' => 'betpay.reports.debit',
                                         'params' => [PaymentMethods::$mercado_pago],
+                                        'icon' => 'hs-admin-shift-right',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                ]
+                            ],
+                            'ReportPix' => [
+                                'text' => _i('Pix'),
+                                'level_class' => 'third',
+                                'route' => null,
+                                'params' => [],
+                                'icon' => 'hs-admin-control-shuffle',
+                                'permission' => Permissions::$betpay_reports_menu,
+                                'payment_method' => PaymentMethods::$pix,
+                                'submenu' => [
+                                    'ReportCredit' => [
+                                        'text' => _i('Credit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.credit',
+                                        'params' => [PaymentMethods::$pix],
+                                        'icon' => 'hs-admin-shift-left',
+                                        'permission' => Permissions::$betpay_reports_menu,
+                                        'submenu' => []
+                                    ],
+                                    'ReportDebit' => [
+                                        'text' => _i('Debit'),
+                                        'level_class' => 'fourth',
+                                        'route' => 'betpay.reports.debit',
+                                        'params' => [PaymentMethods::$pix],
                                         'icon' => 'hs-admin-shift-right',
                                         'permission' => Permissions::$betpay_reports_menu,
                                         'submenu' => []

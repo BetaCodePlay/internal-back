@@ -813,6 +813,22 @@ class BetPayController extends Controller
     }
 
     /**
+     * Show pending debit pix
+     *
+     * @return Application|Factory|View
+     */
+    public function debitPix()
+    {
+        $paymentMethod = PaymentMethods::$pix;
+        $data['transaction_type'] = TransactionTypes::$debit;
+        $data['payment_method'] = $paymentMethod;
+        $data['provider'] = Providers::$pix;
+        $data['accounts'] = $this->clientAccounts($paymentMethod);
+        $data['title'] = _i('Pending Pix debit transactions');
+        return view('back.betpay.pix.debit', $data);
+    }
+
+    /**
      * Show debit report
      *
      * @param int $paymentMethod Payment method ID
@@ -1612,6 +1628,150 @@ class BetPayController extends Controller
     }
 
     /**
+     * Process debit Pix
+     *
+     * @param Request $request
+     * @return Response
+     * @throws ValidationException
+     */
+    public function processDebitPix(Request $request)
+    {
+        $this->validate($request, [
+            'description' => 'required_if:action,0',
+            'action' => 'required'
+        ]);
+        $requestData = null;
+        $curl = null;
+
+        try {
+            $user = $request->user;
+            $currency = session('currency');
+            $wallet = Wallet::getByClient($user, $currency);
+            $action = $request->action;
+            $provider = $request->provider;
+            $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
+
+            if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
+                if ($wallet->data->wallet->balance_locked == 0 && $action) {
+                    $data = [
+                        'title' => _i('Withdrawal not processed'),
+                        'message' => _i('Before processing a withdrawal you must lock the user\'s balance'),
+                        'close' => _i('Close')
+                    ];
+                    return Utils::errorResponse(Codes::$forbidden, $data);
+
+                } else {
+                    $betPayToken = session('betpay_client_access_token');
+                    $operator = auth()->user()->username;
+                    $requestData = [
+                        'transaction' => $request->transaction,
+                        'action' => $action,
+                        'description' => $request->description,
+                        'operator' => $operator,
+                    ];
+                    $url = "{$this->betPayURL}/transactions/pix/process-debit";
+                    $curl = Curl::to($url)
+                        ->withData($requestData)
+                        ->withHeader('Accept: application/json')
+                        ->withHeader("Authorization: Bearer $betPayToken")
+                        ->post();
+                    $response = json_decode($curl);
+                    if ($response->status == Status::$ok) {
+                        $betPayTransaction = $response->data->transaction;
+                        $transaction = $this->transactionsRepo->findByBetPayTransaction($betPayTransaction->id);
+                        $detailsData = [];
+
+                        $transactionAdditionalData = [
+                            'betpay_transaction' => $betPayTransaction->id,
+                            'reference' => $betPayTransaction->reference,
+                            'provider_transaction' => Str::uuid()->toString(),
+                        ];
+
+                        if ($action) {
+                            $status = TransactionStatus::$processing;
+                            $walletTransaction = Wallet::debitUnlockTransactions($betPayTransaction->amount, $provider, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
+                            if ($walletTransaction->status != 'OK') {
+                                $data = [
+                                    'title' => _i('Error'),
+                                    'message' => _i('The amount to be unlock must be the same as the amount locked'),
+                                    'close' => _i('Close')
+                                ];
+                                return Utils::errorResponse(Codes::$forbidden, $data);
+                            }
+                            $detailsAdditionalData = [
+                                'wallet_transaction' => $walletTransaction->data->transaction->id,
+                                'operator' => $operator
+                            ];
+                            $detailsData = [
+                                'data' => json_encode($detailsAdditionalData)
+                            ];
+
+                            $userData = [
+                                'last_debit' => Carbon::now(),
+                                'last_debit_amount' => $betPayTransaction->amount,
+                                'last_debit_currency' => $betPayTransaction->currency_iso
+                            ];
+                            $this->usersRepo->update($user, $userData);
+
+                        } else {
+                            $status = TransactionStatus::$rejected;
+                            $wallet = Wallet::getByClient($transaction->user_id, $transaction->currency_iso);
+                            if ($wallet->data->wallet->balance_locked > 0) {
+                                $walletTransaction = Wallet::creditUnlockTransactions($betPayTransaction->amount, $provider, $transactionAdditionalData, $wallet->data->wallet->id, session('wallet_access_token'));
+                                if ($walletTransaction->status != 'OK') {
+                                    $data = [
+                                        'title' => _i('Error'),
+                                        'message' => _i('The amount to be unlock must be the same as the amount locked'),
+                                        'close' => _i('Close')
+                                    ];
+                                    return Utils::errorResponse(Codes::$forbidden, $data);
+                                }
+                                $detailsAdditionalData = [
+                                    'wallet_transaction' => $walletTransaction->data->transaction->id,
+                                    'operator' => $operator,
+                                    'reason' => $request->description
+                                ];
+                                $detailsData = [
+                                    'data' => json_encode($detailsAdditionalData)
+                                ];
+                            }
+                        }
+                        $this->transactionsRepo->storeTransactionsDetails($transaction->id, $status, $detailsData);
+                        $transactionData = [
+                            'data' => $transactionAdditionalData
+                        ];
+                        $this->transactionsRepo->update($transaction->id, $transactionData);
+                        $data = [
+                            'title' => _i('Withdrawal processed'),
+                            'message' => _i('The withdrawal was processed correctly'),
+                            'close' => _i('Close')
+                        ];
+                        return Utils::successResponse($data);
+
+                    } else {
+                        $data = [
+                            'title' => _i('Failed transaction'),
+                            'message' => _i('The transaction could not be executed. Please reload and try again'),
+                            'close' => _i('Close'),
+                        ];
+                        return Utils::errorResponse(Codes::$forbidden, $data);
+                    }
+                }
+            } else {
+                $data = [
+                    'title' => _i('Withdrawal already processed'),
+                    'message' => _i('The withdrawal is already processed. Please refresh the page to update the list'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+        } catch (Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'curl' => $curl, 'curl_request' => $requestData]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * status Client account
      *
      * @param Request $request
@@ -2163,6 +2323,12 @@ class BetPayController extends Controller
                     'public_key' => $request->public_key_mercado_pago,
                 ];
             },
+            PaymentMethods::$pix => function ($request) {
+                return [
+                    'client_id' => $request->client_id_pix,
+                    'client_secret' => $request->client_secret_pix
+                ];
+            },
         ];
         $clientAccountDataFunction = $clientAccountDataFunctions[$paymentMethod] ?? function () {
             return [];
@@ -2203,6 +2369,11 @@ class BetPayController extends Controller
             [
                 'access_token_mercado_pago' => 'required',
                 'public_key_mercado_pago' => 'required'
+            ],
+            PaymentMethods::$pix => 
+            [
+                'client_id_pix' => 'required',
+                'client_secret_pix' => 'required'
             ],
         ];
 
@@ -2552,6 +2723,14 @@ class BetPayController extends Controller
                         'cbu' => $request->mercado_pago_cbu,
                         'cvu' => $request->mercado_pago_cvu,
                         'alias' => $request->mercado_pago_alias
+                    ];
+                    break;
+                }
+                case PaymentMethods::$pix:
+                {
+                    $requestData = [
+                        'client_id' => $request->client_id_pix,
+                        'client_secret' => $request->client_secret_pix
                     ];
                     break;
                 }

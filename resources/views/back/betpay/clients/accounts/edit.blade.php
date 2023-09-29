@@ -181,6 +181,20 @@
                         </div>
                     </div>
                     @endif
+                    @if($client->payment_method_id == \Dotworkers\Configurations\Enums\PaymentMethods::$pix)
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="client_id_pix">{{ _i('Client ID') }}</label>
+                                <input type="text" name="client_id_pix" class="form-control" autocomplete="off" value="{{$client->data->client_id}}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="client_secret_pix">{{ _i('Secret Key') }}</label>
+                                <input type="text" name="client_secret_pix" class="form-control" autocomplete="off" value="{{$client->data->client_secret}}">
+                        </div>
+                    </div>
+                    @endif
                     <div class="col-md-12">
                         <input type="hidden" name="client_account" id="client_account" value="{{$client->id}}">
                         <input type="hidden" name="payments" id="payments" value="{{$client->payment_method_id}}">
