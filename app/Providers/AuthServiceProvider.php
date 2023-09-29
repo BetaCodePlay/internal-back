@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 //        $arraySession = session()->has('permissions')?session('permissions'):session('permissions');
 //        use ($arraySession)
         Gate::define('access', function ($user, $permission) {
-            return Security::checkPermissions($permission,session('permissions'));
+            return Security::checkPermissions($permission, session()->get('permissions', []));
         });
     }
 }
