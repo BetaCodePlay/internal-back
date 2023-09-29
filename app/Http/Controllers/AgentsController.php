@@ -2296,7 +2296,7 @@ class AgentsController extends Controller
                 $confirmation = $users->confirmation_email;
             }
 
-            $data['agent'] = $this->agentsRepo->findUserProfile($user, session('currency'));
+            $data['agent'] = $this->agentsRepo->findUserProfile($user, session('currency') ?? '');
             $data['makers'] = [];
             $data['agents'] = json_decode(json_encode($this->agentsRepo->getAgentsAllByOwner($user, session('currency'), Configurations::getWhitelabel())), true);
             $data['action'] = auth()->user()->action;

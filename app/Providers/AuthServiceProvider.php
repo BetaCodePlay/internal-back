@@ -22,11 +22,11 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
-//        $arraySession = session()->has('permissions')?session('permissions'):session('permissions');
-//        use ($arraySession)
+        // $arraySession = session()->has('permissions')?session('permissions'):session('permissions');
+        // use ($arraySession)
         Gate::define('access', function ($user, $permission) {
             return Security::checkPermissions($permission, session()->get('permissions', []));
         });
