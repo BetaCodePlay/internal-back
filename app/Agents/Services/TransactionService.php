@@ -2,36 +2,30 @@
 
 namespace App\Agents\Services;
 
-use App\Agents\Collections\AgentsCollection;
 use App\Agents\Enums\AgentType;
 use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Core\Services\BaseService;
 use App\Http\Requests\TransactionRequest;
-use App\Security\Repositories\RolesRepo;
 use App\Users\Enums\ActionUser;
-use App\Users\Enums\TypeUser;
-use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
-use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Wallet\Wallet;
-use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  *
  */
-class TransactionService
+class TransactionService extends BaseService
 {
     /**
      * Create a new instance of the TransactionService class.
@@ -42,17 +36,12 @@ class TransactionService
      *
      * @param AgentCurrenciesRepo $agentCurrenciesRepo The repository for agent currencies.
      * @param AgentsRepo $agentsRepo The repository for agents.
-     * @param RolesRepo $rolesRepo The repository for roles.
      * @param TransactionsRepo $transactionsRepo The repository for transactions.
-     * @param UsersRepo $usersRepo The repository for users.
      */
     public function __construct(
-        private AgentsCollection $agentsCollection,
         private AgentCurrenciesRepo $agentCurrenciesRepo,
         private AgentsRepo $agentsRepo,
-        private RolesRepo $rolesRepo,
-        private TransactionsRepo $transactionsRepo,
-        private UsersRepo $usersRepo
+        private TransactionsRepo $transactionsRepo
     ) {
     }
 
@@ -71,72 +60,6 @@ class TransactionService
             'from'                 => $ownerAgent->username,
             'to'                   => $playerDetails->username,
         ];
-    }
-
-    /**
-     * Generate an error response.
-     *
-     * @param string $title The error title.
-     * @param string $message The error message.
-     *
-     * @return Response The error response.
-     */
-    public function generateErrorResponse(string $title, string $message): Response
-    {
-        return Utils::errorResponse(Codes::$forbidden, [
-            'title'   => $title,
-            'message' => $message,
-            'close'   => _i('Close'),
-        ]);
-    }
-
-    /**
-     * Handle an error and respond with an error response.
-     *
-     * This method logs an error in the log and returns a standard error response.
-     *
-     * @param Request $request The HTTP request related to the error.
-     *
-     * @param Exception $ex The exception object to be logged.
-     * @return Response The error response in JSON format.
-     */
-    public function handleAndRespondToError(Request $request, Exception $ex): Response
-    {
-        Log::error(
-            __METHOD__,
-            [
-                'exception' => $ex,
-                'request'   => $request->all(),
-            ],
-        );
-        return Utils::failedResponse();
-    }
-
-    /**
-     * Handle an empty transaction object.
-     *
-     * @param TransactionRequest $request The request object containing transaction details.
-     * @param mixed $transaction The transaction object.
-     *
-     * @return bool|Response False if the transaction is not empty, otherwise a response indicating an error.
-     */
-    public function handleEmptyTransactionObject(TransactionRequest $request, mixed $transaction): bool|Response
-    {
-        if (empty($transaction) || empty($transaction->data)) {
-            Log::error('error data, wallet getByClient', [
-                'currency'    => session('currency'),
-                'request'     => $request->all(),
-                'userAuthId'  => $request->user()->id,
-                'transaction' => $transaction,
-            ]);
-
-            return $this->generateErrorResponse(
-                _i('An error occurred'),
-                _i('please contact support'),
-            );
-        }
-
-        return false;
     }
 
     /**
@@ -692,45 +615,6 @@ class TransactionService
             'close'   => _i('Close'),
             'balance' => number_format($userManagementResult->balance, 2),
             'button'  => $userManagementResult->button,
-        ]);
-    }
-
-    /**
-     * Search for a user by their username.
-     *
-     * This method searches for a user by their username and returns a Response containing
-     * the results. The search can be influenced by the configuration settings, such as
-     * the status of agents and user type.
-     *
-     * @param Request $request The HTTP request object containing user input.
-     *
-     * @return Response A JSON response containing the search results.
-     *
-     * @throws Exception If an error occurs during the search process.
-     */
-    public function searchUserByUsername(Request $request): Response
-    {
-        $username = Str::lower($request->get('user'));
-
-        if (!Configurations::getAgents()?->active && $request->has('type')) {
-            $users = $this->usersRepo->search($username, TypeUser::$agentMater);
-
-            return Utils::successResponse(
-                ['agents' => $this->agentsCollection->formatUsersSelect($users, $this->rolesRepo)],
-            );
-        }
-
-        $userAuthId = $request->user()->id;
-        $whitelabelId = Configurations::getWhitelabel();
-        $currency = session('currency');
-
-        return Utils::successResponse([
-            'agents' => $this->agentsRepo->searchAgentsAndUsersInTree(
-                $userAuthId,
-                $currency,
-                $whitelabelId,
-                $username,
-            ),
         ]);
     }
 }

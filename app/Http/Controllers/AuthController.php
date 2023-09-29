@@ -132,7 +132,7 @@ class AuthController extends Controller
                     $defaultCurrency = $userCurrenciesRepo->findFirst($user);
                 }
 
-                $permissions = Security::getUserPermissions($user);
+                $permissions = Security::getUserPermissions($user) ?? [];
                 $roles = Security::getUserRoles($user);
 
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
