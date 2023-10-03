@@ -642,7 +642,7 @@ class AgentsCollection
             //TODO TOTALES
             if (!is_null($percentage)) {
                 // TODO Eliminar este log una vez sepamos que información trae.
-                if (Configurations::getWhitelabel() == 1) {
+                if (Configurations::getWhitelabel() == 5) {
                     Log::debug('closuresTotalsByAgentGroupProviderHour', ['arrayProviderTmp'=>  $arrayProviderTmp]);
                 }
 
