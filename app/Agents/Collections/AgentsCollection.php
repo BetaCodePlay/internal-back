@@ -717,15 +717,15 @@ class AgentsCollection
         $closureRepo = new ClosuresUsersTotals2023Repo();
 
         if (! empty($userSonData)) {
-            $providerData = array_map(function ($val) {
-                return [
-                    $val->id => [
-                        'total_played' => 0,
-                        'total_won' => 0,
-                        'total_profit' => 0,
-                    ]
+            $providerData = array_reduce($closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId), function ($carry, $val) {
+                $carry[$val->id] = [
+                    'total_played' => 0,
+                    'total_won' => 0,
+                    'total_profit' => 0,
                 ];
-            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId));
+                return $carry;
+            }, []);
+
 
             $providerData = array_merge(...$providerData);
 
