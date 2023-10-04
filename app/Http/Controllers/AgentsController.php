@@ -1434,10 +1434,10 @@ class AgentsController extends Controller
      * @param $startDate
      * @param $endDate
      * @return Response
+     * @deprecated
      */
     public function financialStateData(Request $request, ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
-
         //try {
         if (is_null($user)) {
             $user = Auth::id();
@@ -1468,6 +1468,17 @@ class AgentsController extends Controller
 
     }
 
+    public function showFinancialStatement(String $userId = null, String $startDate = null, String $endDate = null)
+    {
+        $userId = is_null($userId) ? Auth::id() : $userId;
+        $currency = session('currency');
+        $percentage = $this->agentsRepo->myPercentageByCurrency($userId, $currency);
+
+        $percentage = $percentage[0]->percentage ?? null;
+
+        dd($userId, $startDate, $endDate, $percentage);
+    }
+
     /**
      * Data Financial State Details
      * @param Request $request
@@ -1478,7 +1489,6 @@ class AgentsController extends Controller
      */
     public function financialStateDataDetails(Request $request, $user = null, $startDate = null, $endDate = null)
     {
-
         try {
             if (is_null($user)) {
                 $user = Auth::id();
