@@ -729,24 +729,6 @@ class AgentsCollection
         }
     }
 
-    public function generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
-    {
-        return DB::table('closures_users_totals_2023_hour as cut')
-            ->selectRaw('provider_id, p.name, p.username, user_id,
-                ROUND(SUM(played)::numeric, 2) as total_played,
-                ROUND(SUM(won)::numeric, 2) as total_won,
-                SUM(bets)::numeric as total_bet,
-                ROUND(SUM(profit)::numeric, 2) as total_profit,
-                ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100), 2) as rtp')
-            ->join('site.providers as p', 'p.id', '=', 'cut.provider_id')
-            ->where('cut.whitelabel_id', $whitelabelId)
-            ->where('cut.currency_iso', $currency)
-            ->whereBetween('cut.start_date', [$startDate, $endDate])
-            ->whereIn('cut.user_id', $userSonData)
-            ->groupBy('provider_id', 'p.name', 'p.username', 'user_id')
-            ->orderBy('p.username', 'DESC')
-            ->get();
-    }
 
     /**
      * @param $tableDb

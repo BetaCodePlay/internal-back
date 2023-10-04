@@ -1496,7 +1496,7 @@ class AgentsController extends Controller
         );*/
 
         dd(
-            $this->agentsCollection->generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
+            $this->closuresUsersTotals2023Repo->generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
         );
 
         return view('back.reports.financial.statement');
