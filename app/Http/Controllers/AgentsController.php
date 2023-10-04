@@ -1496,7 +1496,7 @@ class AgentsController extends Controller
         );
 
 
-        //dd($userId, $startDate, $endDate, $percentage, $userSonData);
+        return view('back.reports.financial.statement');
     }
 
     /**

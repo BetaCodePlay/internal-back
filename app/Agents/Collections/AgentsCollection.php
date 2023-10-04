@@ -727,23 +727,7 @@ class AgentsCollection
             }, []);
 
 
-            $arrayProviderTmp = array_map(function ($val) {
-                return $val->id;
-            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId));
-            //            $arrayProviderTmp[]=171;
-            //            $arrayProviderTmp[]=166;
-            //            $arrayProviderTmp[]=5;
-            $providerNull = [];
-            foreach ($arrayProviderTmp as $index => $provider) {
-                $providerNull[$provider] = [
-                    'total_played' => 0,
-                    'total_won' => 0,
-                    'total_profit' => 0,
-                ];
-            }
-
-
-            dd($providerData, $providerNull);
+            dd($providerData);
         }
     }
 
