@@ -1495,6 +1495,8 @@ class AgentsController extends Controller
             $percentage
         );*/
 
+        dd($userSonData);
+
         dd(
             $this->closuresUsersTotals2023Repo->generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
         );
