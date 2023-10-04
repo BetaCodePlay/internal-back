@@ -1486,15 +1486,18 @@ class AgentsController extends Controller
 
         $userSonData = $this->closuresUsersTotals2023Repo->getUsersAgentsSon($whitelabelId, $currency, $userId);
 
-        $this->agentsCollection->hourlyAgentGroupTotals(
+        /*$this->agentsCollection->hourlyAgentGroupTotals(
             $userSonData,
             $whitelabelId,
             $currency,
             $startDate,
             $endDate,
             $percentage
-        );
+        );*/
 
+        dd(
+            $this->agentsCollection->generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
+        );
 
         return view('back.reports.financial.statement');
     }
