@@ -361,16 +361,16 @@ class CampaignsCollection
                 $campaignCurrencyIso = $user->currency_iso == 'VES' ? 'VEF' : $user->currency_iso;
                 $exchangeRate = $exchangeRates->{$campaignCurrencyIso}->rates->{$now}->{$convert};
             }
-            if (!is_null($user->original_campaign)) {
-                $allVersionCampaignData = $campaignsRepo->getVersions($user->original_campaign);
-            } else {
-                $allVersionCampaignData = $campaignsRepo->getVersions($user->campaign_id);
-            }
+            // if (!is_null($user->original_campaign)) {
+            //     $allVersionCampaignData = $campaignsRepo->getVersions($user->original_campaign);
+            // } else {
+            //     $allVersionCampaignData = $campaignsRepo->getVersions($user->campaign_id);
+            // }
 
-            foreach ($allVersionCampaignData as $versions) {
-                $allVersionCampaign[] = $versions->id;
-                $campaignsIds[] = $versions->id;
-            }
+            // foreach ($allVersionCampaignData as $versions) {
+            //     $allVersionCampaign[] = $versions->id;
+            //     $campaignsIds[] = $versions->id;
+            // }
 
             $usedBonuses = $campaignParticipationDetailsRepo->getByCampaignStatusAndUser($allVersionCampaign, [CampaignParticipationStatus::$in_use], $user->user_id);
             $endedBonuses = $campaignParticipationDetailsRepo->getByCampaignStatusAndUser($allVersionCampaign, [CampaignParticipationStatus::$canceled_by_user, CampaignParticipationStatus::$canceled_by_administrator, CampaignParticipationStatus::$canceled_by_withdrawal, CampaignParticipationStatus::$completed_rollover, CampaignParticipationStatus::$expired_rollover], $user->user_id);

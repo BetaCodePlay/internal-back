@@ -544,15 +544,7 @@ class BonusSystemController extends Controller
             if (!is_null($campaigns) && $campaigns != '*') {
                 $campaignData = $this->campaignsRepo->find($campaigns);
 
-                if (!is_null($campaignData->original_campaign)) {
-                    $campaignVersionsData = $this->campaignsRepo->getVersions($campaignData->original_campaign);
-
-                    foreach ($campaignVersionsData as $version) {
-                        $campaignVersions[] = $version->id;
-                    }
-                } else {
-                    $campaignVersions[] = $campaigns;
-                }
+                $campaignVersions[] = $campaigns;
             } else {
                 $campaignVersions[] = $campaigns;
             }
@@ -620,15 +612,16 @@ class BonusSystemController extends Controller
             $campaignData = $request->campaign_data;
             $campaignVersions = [];
             if (!is_null($campaignData) && $campaignData != '*') {
-                $originalCampaignData = $this->campaignsRepo->find($campaignData);
-                if (!is_null($originalCampaignData->original_campaign)) {
-                    $campaignVersionsData = $this->campaignsRepo->getVersions($originalCampaignData->original_campaign);
-                    foreach ($campaignVersionsData as $versions) {
-                        $campaignVersions[] = $versions->id;
-                    }
-                } else {
-                    $campaignVersions[] = $campaignData;
-                }
+                // $originalCampaignData = $this->campaignsRepo->find($campaignData);
+                // if (!is_null($originalCampaignData->original_campaign)) {
+                //     $campaignVersionsData = $this->campaignsRepo->getVersions($originalCampaignData->original_campaign);
+                //     foreach ($campaignVersionsData as $versions) {
+                //         $campaignVersions[] = $versions->id;
+                //     }
+                // } else {
+                //     $campaignVersions[] = $campaignData;
+                // }
+                $campaignVersions[] = $campaignData;
             } else {
                 $campaignVersions[] = $campaignData;
             }
@@ -657,10 +650,12 @@ class BonusSystemController extends Controller
     {
         try {
             // $segments = $this->segmentsRepo->all();
-            $allocation = $this->allocationCriteriaRepo->all();
             // $data['segments'] = $segments;
-            $data['criterias'] = $allocation;
+            $data['criterias'] = $this->allocationCriteriaRepo->all();
+            $providersTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            $data['providers'] = $this->providersRepo->getByTypes($providersTypes);
             $data['title'] = _i('New campaign');
+            // dd($data);
             // dd($data['allocation_criteria_type_bonus']['registration']);
             return view('back.bonus-system.campaigns.create', $data);
 
@@ -1236,7 +1231,8 @@ class BonusSystemController extends Controller
             'commission_bonus' => 'required',
             'complete_rollovers' => 'required',
             'include_deposit' => 'required_if:complete_rollovers,true',
-            'provider_type' => 'required_if:complete_rollovers,true',
+            'provider_type' => 'required',
+            // 'provider_type' => 'required_if:complete_rollovers,true',
             'multiplier' => [
                 'nullable',
                 'required_if:complete_rollovers,true',
