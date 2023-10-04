@@ -706,6 +706,25 @@ class AgentsCollection
 
     }
 
+    public function hourlyAgentGroupTotals(
+        $userSonData,
+        $whitelabelId,
+        $currency,
+        $startDate,
+        $endDate,
+        $percentage = null
+    ) {
+        $closureRepo = new ClosuresUsersTotals2023Repo();
+
+        if (! empty($userSonData)) {
+            $providerIds  = array_map(function ($val) {
+                return $val->id;
+            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId));
+
+            dd($providerIds);
+        }
+    }
+
     /**
      * @param $tableDb
      * @param $percentage

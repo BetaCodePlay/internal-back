@@ -1484,10 +1484,19 @@ class AgentsController extends Controller
             $percentage = null;
         }
 
-        $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon($whitelabelId, $currency, $userId);
-        $son2 = $this->agentsRepo->getTreeSqlLevels($userId, $currency, $whitelabelId);
+        $userSonData = $this->closuresUsersTotals2023Repo->getUsersAgentsSon($whitelabelId, $currency, $userId);
 
-        dd($userId, $startDate, $endDate, $percentage, $sons, $son2);
+        $this->agentsCollection->hourlyAgentGroupTotals(
+            $userSonData,
+            $whitelabelId,
+            $currency,
+            $startDate,
+            $endDate,
+            $percentage
+        );
+
+
+        //dd($userId, $startDate, $endDate, $percentage, $userSonData);
     }
 
     /**
