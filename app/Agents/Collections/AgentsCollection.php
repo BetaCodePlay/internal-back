@@ -727,9 +727,6 @@ class AgentsCollection
             }, []);
 
 
-            $providerData = array_merge(...$providerData);
-
-
             $arrayProviderTmp = array_map(function ($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId));
