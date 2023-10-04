@@ -725,9 +725,6 @@ class AgentsCollection
                 ];
                 return $carry;
             }, []);
-
-
-            dd($providerData);
         }
     }
 
