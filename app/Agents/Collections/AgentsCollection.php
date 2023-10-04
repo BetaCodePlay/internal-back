@@ -719,12 +719,16 @@ class AgentsCollection
         if (! empty($userSonData)) {
             $providerData = array_map(function ($val) {
                 return [
-                    'id' => $val->id,
-                    'total_played' => 0,
-                    'total_won' => 0,
-                    'total_profit' => 0,
+                    $val->id => [
+                        'total_played' => 0,
+                        'total_won' => 0,
+                        'total_profit' => 0,
+                    ]
                 ];
-            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId));
+            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));
+
+            $providerData = array_merge(...$providerData);
+
 
             $arrayProviderTmp = array_map(function ($val) {
                 return $val->id;
