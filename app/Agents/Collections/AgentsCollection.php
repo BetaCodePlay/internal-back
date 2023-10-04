@@ -725,7 +725,7 @@ class AgentsCollection
                         'total_profit' => 0,
                     ]
                 ];
-            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabel));
+            }, $closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId));
 
             $providerData = array_merge(...$providerData);
 
