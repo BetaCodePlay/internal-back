@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Collections\AgentsCollection;
+use App\Agents\Enums\AgentType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Agents\Services\AgentService;
@@ -1475,8 +1476,18 @@ class AgentsController extends Controller
         $percentage = $this->agentsRepo->myPercentageByCurrency($userId, $currency);
 
         $percentage = $percentage[0]->percentage ?? null;
+        $whitelabelId = Configurations::getWhitelabel();
 
-        dd($userId, $startDate, $endDate, $percentage);
+        if (Auth::user()->username === \App\Agents\Enums\Username::ROMEO) {
+            $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel(AgentType::WOLF, $currency, $whitelabelId);
+            $userId = $userTmp[0]->id ?? null;
+            $percentage = null;
+        }
+
+        $sons = $this->closuresUsersTotals2023Repo->getUsersAgentsSon($whitelabelId, $currency, $userId);
+        $son2 = $this->agentsRepo->getTreeSqlLevels($userId, $currency, $whitelabelId);
+
+        dd($userId, $startDate, $endDate, $percentage, $sons, $son2);
     }
 
     /**
