@@ -4,9 +4,11 @@
         <th>ProviderId</th>
         <th>Nombre</th>
         <th>Username</th>
-        <th>Ganancia total</th>
         <th>Total jugado</th>
         <th>Total premiado</th>
+        <th>Apuesta total</th>
+        <th>Beneficio total</th>
+        <th>rtp</th>
     </tr>
     <tr>
         <td>171</td>
@@ -17,8 +19,6 @@
         <td>10</td>
         <td>5000</td>
         <td>17.76</td>
-        <td>0.00</td>
-        <td>0.00</td>
     </tr>
     <tr>
         <td class='text-center' colspan='36'><br></td>
