@@ -531,26 +531,26 @@ class ClosuresUsersTotals2023Repo
         ", [$whitelabelId, $currency, $startDate, $endDate, $userSonData]);
     }
 
-    public function generateClosureReport($userIds, $whitelabelId, $currency, $startDate, $endDate)
+    public function generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
     {
-        return ClosureUserTotal2023Hour::selectRaw('
-                provider_id, providers.name, username, user_id,
-                ROUND(SUM(played)::numeric, 2) as total_played,
-                ROUND(SUM(won)::numeric, 2) as total_won,
-                SUM(bets)::numeric as total_bet,
-                ROUND(SUM(profit)::numeric, 2) as total_profit,
-                ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100), 2) as rtp
-            ')
-            ->join('providers', 'providers.id', '=', 'closures_users_totals_2023_hour.provider_id')
-            ->where('closures_users_totals_2023_hour.whitelabel_id', $whitelabelId)
-            ->where('closures_users_totals_2023_hour.currency_iso', $currency)
-            ->whereBetween('closures_users_totals_2023_hour.start_date', [$startDate, $endDate])
-            ->whereIn('closures_users_totals_2023_hour.user_id', $userIds)
+        return DB::table('public.closures_users_totals_2023_hour as cut')
+            ->selectRaw('
+            provider_id, providers.name, username, user_id,
+            ROUND(SUM(played)::numeric, 2) as total_played,
+            ROUND(SUM(won)::numeric, 2) as total_won,
+            SUM(bets)::numeric as total_bet,
+            ROUND(SUM(profit)::numeric, 2) as total_profit,
+            ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100), 2) as rtp
+        ')
+            ->join('site.providers as providers', 'providers.id', '=', 'cut.provider_id')
+            ->where('cut.whitelabel_id', $whitelabelId)
+            ->where('cut.currency_iso', $currency)
+            ->whereBetween('cut.start_date', [$startDate, $endDate])
+            ->whereIn('cut.user_id', $userSonData)
             ->groupBy('provider_id', 'providers.name', 'username', 'user_id')
             ->orderBy('username', 'DESC')
             ->get();
     }
-
 
 
 
