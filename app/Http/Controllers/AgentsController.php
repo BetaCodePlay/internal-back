@@ -1495,10 +1495,16 @@ class AgentsController extends Controller
             $percentage
         );*/
 
-        dd($userSonData);
+        $userIds = array_map(function($item) {
+            return $item->user_id;
+        }, $userSonData);
+
+        $userIdsString = implode(', ', $userIds);
+
+        dd($userIdsString);
 
         dd(
-            $this->closuresUsersTotals2023Repo->generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
+            $this->closuresUsersTotals2023Repo->generateClosureReport($userIdsString, $whitelabelId, $currency, $startDate, $endDate)
         );
 
         return view('back.reports.financial.statement');
