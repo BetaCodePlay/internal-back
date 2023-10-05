@@ -523,9 +523,9 @@ class ClosuresUsersTotals2023Repo
                  (ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100),2)) as  rtp
             FROM  public.closures_users_totals_2023_hour cut   inner join site.providers p on p.id = provider_id
             WHERE
-                cut.whitelabel_id = 5
+                cut.whitelabel_id = 1
                 AND cut.currency_iso = 'ARS'
-                AND cut.start_date BETWEEN '2023-08-31 20:00' AND '2023-9-30 20:59'
+                AND cut.start_date BETWEEN '2023-10-04 20:00' AND '2023-10-04 20:59'
                 AND cut.user_id in(222, 182, 175, 190, 172, 94, 45)
                 GROUP BY provider_id, name, username, user_id
                 ORDER BY username DESC
