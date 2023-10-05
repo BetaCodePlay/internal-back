@@ -1501,8 +1501,6 @@ class AgentsController extends Controller
 
         $userIdsString = implode(', ', $userIds);
 
-        dd($userIdsString);
-
         dd(
             $this->closuresUsersTotals2023Repo->generateClosureReport($userIdsString, $whitelabelId, $currency, $startDate, $endDate)
         );
