@@ -15,7 +15,7 @@
         <td>{{$item->provider_id}}</td>
         <td>{{$item->name}}</td>
         <td class="init_agent">{{$item->username}}</td>
-        <td>{{$item->total_played}}}</td>
+        <td>{{$item->total_played}}</td>
         <td>{{$item->total_won}}</td>
         <td>{{$item->total_bet}}</td>
         <td>{{$item->total_profit}}</td>
