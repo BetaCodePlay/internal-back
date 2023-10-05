@@ -513,8 +513,7 @@ class ClosuresUsersTotals2023Repo
     {
         //dd($userSonData, $whitelabelId, $currency, $startDate, $endDate);
         return DB::select("
-        SELECT
-            SELECT
+           SELECT
                 provider_id, name , username, user_id,
                  (ROUND(SUM(played)::numeric, 2)) as total_played,
                  (ROUND(SUM(won)::numeric,2)) as total_won,
