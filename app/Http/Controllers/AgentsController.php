@@ -1499,10 +1499,10 @@ class AgentsController extends Controller
             return $item->user_id;
         }, $userSonData);
 
-        $userIdsString = implode(', ', $userIds);
+        //$userIdsString = implode(', ', $userIds);
 
         dd(
-            $this->closuresUsersTotals2023Repo->generateClosureReport($userIdsString, $whitelabelId, $currency, $startDate, $endDate)
+            $this->closuresUsersTotals2023Repo->generateClosureReport($userIds, $whitelabelId, $currency, $startDate, $endDate)
         );
 
         return view('back.reports.financial.statement');

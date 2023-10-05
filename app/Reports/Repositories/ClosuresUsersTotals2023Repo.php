@@ -531,7 +531,7 @@ class ClosuresUsersTotals2023Repo
         ", [$whitelabelId, $currency, $startDate, $endDate, $userSonData]);
     }
 
-    public function generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
+    public function generateClosureReport($userIds, $whitelabelId, $currency, $startDate, $endDate)
     {
         return ClosureUserTotal2023Hour::selectRaw('
                 provider_id, providers.name, username, user_id,
@@ -545,7 +545,7 @@ class ClosuresUsersTotals2023Repo
             ->where('closures_users_totals_2023_hour.whitelabel_id', $whitelabelId)
             ->where('closures_users_totals_2023_hour.currency_iso', $currency)
             ->whereBetween('closures_users_totals_2023_hour.start_date', [$startDate, $endDate])
-            ->whereIn('closures_users_totals_2023_hour.user_id', $userSonData)
+            ->whereIn('closures_users_totals_2023_hour.user_id', $userIds)
             ->groupBy('provider_id', 'providers.name', 'username', 'user_id')
             ->orderBy('username', 'DESC')
             ->get();
