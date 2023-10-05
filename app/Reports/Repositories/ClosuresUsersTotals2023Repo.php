@@ -3,6 +3,7 @@
 
 namespace App\Reports\Repositories;
 
+use App\Reports\Entities\ClosureUserTotal2023Hour;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Security\Enums\Roles;
 use Illuminate\Support\Facades\DB;
@@ -509,7 +510,7 @@ class ClosuresUsersTotals2023Repo
                                     ', [$arrayProvider,$whitelabel, $currency, $startDate, $endDate, $ownerId,$currency,$whitelabel]);
     }
 
-    public function generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
+    public function generateClosureReport1($userSonData, $whitelabelId, $currency, $startDate, $endDate)
     {
         return DB::select("
            SELECT
@@ -529,6 +530,28 @@ class ClosuresUsersTotals2023Repo
                 ORDER BY username DESC
         ", [$whitelabelId, $currency, $startDate, $endDate, $userSonData]);
     }
+
+    public function generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
+    {
+        return ClosureUserTotal2023Hour::selectRaw('
+                provider_id, providers.name, username, user_id,
+                ROUND(SUM(played)::numeric, 2) as total_played,
+                ROUND(SUM(won)::numeric, 2) as total_won,
+                SUM(bets)::numeric as total_bet,
+                ROUND(SUM(profit)::numeric, 2) as total_profit,
+                ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100), 2) as rtp
+            ')
+            ->join('providers', 'providers.id', '=', 'closures_users_totals_2023_hour.provider_id')
+            ->where('closures_users_totals_2023_hour.whitelabel_id', $whitelabelId)
+            ->where('closures_users_totals_2023_hour.currency_iso', $currency)
+            ->whereBetween('closures_users_totals_2023_hour.start_date', [$startDate, $endDate])
+            ->whereIn('closures_users_totals_2023_hour.user_id', $userSonData)
+            ->groupBy('provider_id', 'providers.name', 'username', 'user_id')
+            ->orderBy('username', 'DESC')
+            ->get();
+    }
+
+
 
 
     /** FOR AGENT STATE FINANCIAL
