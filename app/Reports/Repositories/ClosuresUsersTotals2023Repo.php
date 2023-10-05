@@ -511,7 +511,7 @@ class ClosuresUsersTotals2023Repo
 
     public function generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
     {
-        dd($userSonData, $whitelabelId, $currency, $startDate, $endDate);
+        //dd($userSonData, $whitelabelId, $currency, $startDate, $endDate);
         return DB::select("
         SELECT
             SELECT
