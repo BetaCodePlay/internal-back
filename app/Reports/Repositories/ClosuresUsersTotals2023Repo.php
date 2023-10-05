@@ -524,10 +524,10 @@ class ClosuresUsersTotals2023Repo
                 cut.whitelabel_id = ?
                 AND cut.currency_iso = ?
                 AND DATE(cut.start_date) BETWEEN ? AND ?
-                AND cut.user_id in(222, 182, 175, 190, 172, 94, 45)
+                AND cut.user_id in(?)
                 GROUP BY provider_id, name, username, user_id
                 ORDER BY username DESC
-        ", [$whitelabelId, $currency, $startDate, $endDate]);
+        ", [$whitelabelId, $currency, $startDate, $endDate, $userSonData]);
     }
 
 
