@@ -522,12 +522,12 @@ class ClosuresUsersTotals2023Repo
             FROM  public.closures_users_totals_2023_hour cut   inner join site.providers p on p.id = provider_id
             WHERE
                 cut.whitelabel_id = ?
-                AND cut.currency_iso = 'ARS'
+                AND cut.currency_iso = ?
                 AND cut.start_date BETWEEN '2023-10-04 20:00' AND '2023-10-04 20:59'
                 AND cut.user_id in(222, 182, 175, 190, 172, 94, 45)
                 GROUP BY provider_id, name, username, user_id
                 ORDER BY username DESC
-        ", [$whitelabelId]);
+        ", [$whitelabelId, $currency]);
     }
 
 
