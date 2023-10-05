@@ -511,27 +511,6 @@ class ClosuresUsersTotals2023Repo
 
     public function generateClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate)
     {
-        /*return DB::select('
-            SELECT
-                provider_id,
-                name, 
-                username,
-                user_id,
-                 (ROUND(SUM(played)::numeric, 2)) as total_played,
-                 (ROUND(SUM(won)::numeric,2)) as total_won,
-                 (SUM(bets)::numeric) as total_bet,
-                (ROUND(SUM(profit)::numeric,2)) as total_profit,
-                 (ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100),2)) as  rtp
-            FROM public.closures_users_totals_2023_hour cut inner join site.providers p on p.id = provider_id
-            WHERE 
-                (cut.whitelabel_id = ?)
-                AND (cut.currency_iso = ?)
-                AND (cut.start_date BETWEEN ? AND ?)
-                AND (cut.user_id in (?)),	
-                GROUP BY provider_id, name, username, user_id
-                ORDER BY username DESC
-        ', [$whitelabelId, $currency, $startDate, $endDate, $userSonData]);*/
-
         return DB::select("
         SELECT
             provider_id, name , username, user_id,
