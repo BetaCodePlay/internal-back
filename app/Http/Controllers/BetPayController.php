@@ -1506,7 +1506,6 @@ class BetPayController extends Controller
             $action = $request->action;
             $provider = $request->provider;
             $transactionData = $this->transactionsRepo->findByBetPayTransaction($request->transaction);
-            \Log::debug([$transactionData,$request->transaction]);
             if ($transactionData->transaction_status_id == TransactionStatus::$pending) {
                 if ($wallet->data->wallet->balance_locked == 0 && $action) {
                     $data = [
