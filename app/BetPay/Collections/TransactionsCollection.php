@@ -281,6 +281,7 @@ class TransactionsCollection
                         _i('Date'),
                         Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                     );
+                    break;
                 }
                 case PaymentMethods::$pix:
                 {
@@ -294,6 +295,7 @@ class TransactionsCollection
                         _i('Qr Text'),
                         $transaction->data->qr_code
                     );
+                    break;
                 }
             }
 
