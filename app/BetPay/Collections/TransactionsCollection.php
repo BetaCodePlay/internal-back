@@ -252,18 +252,11 @@ class TransactionsCollection
                                 _i('Date'),
                                 Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                         );
-                        if (!is_null($transaction->details_data)) {
-                            $transaction->details .= sprintf(
-                                '<li><strong>%s</strong>: %s</li>',
-                                _i('Transaction ID'),
-                                $transaction->details_data->order
-                            );
-                            $transaction->details .= sprintf(
-                                '<li><strong>%s</strong>: %s</li>',
-                                _i('PayPal ID'),
-                                $transaction->details_data->id
-                            );
-                       }
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('Paypal ID'),
+                            $transaction->data->paypal_reference
+                        );
                     }else{
                         $transaction->details .= sprintf(
                             '<li><strong>%s</strong>: %s</li>',
