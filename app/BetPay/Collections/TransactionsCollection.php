@@ -171,7 +171,6 @@ class TransactionsCollection
      */
     public function formatCreditTransactionsReport($transactions, $paymentMethod, $status)
     {
-        \Log::debug([$transactions, $paymentMethod, $status]);
         $total = 0;
         foreach ($transactions as $transaction) {
             $total += $transaction->amount;
