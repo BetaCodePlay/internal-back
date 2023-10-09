@@ -280,13 +280,6 @@ class TransactionsCollection
                         _i('Date'),
                         Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                     );
-                    if (!is_null($transaction->details_data)) {
-                        $transaction->details .= sprintf(
-                            '<li><strong>%s</strong>: %s</li>',
-                            _i('MercadoPago ID'),
-                            $transaction->details_data->id_mercado_pago
-                        );
-                    }
                 }
                 case PaymentMethods::$pix:
                 {
