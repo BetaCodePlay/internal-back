@@ -628,7 +628,7 @@ class TransactionsCollection
                 }
                 case PaymentMethods::$paypal:
                 {
-                    \Log::debug($transaction);
+                    \Log::debug([$transaction]);
                     $transaction->withdrawal_data .= sprintf(
                         '<strong>%s:</strong> %s<br>',
                         _i('Email'),
