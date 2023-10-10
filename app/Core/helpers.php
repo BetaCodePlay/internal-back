@@ -177,36 +177,36 @@ if (!function_exists('menu')) {
                         'submenu' => []
                     ],
 
-                    'Referrals' => [
-                        'text' => _i('Referrals'),
-                        'level_class' => 'second',
-                        'route' => null,
-                        'params' => [],
-                        'icon' => 'hs-admin-user',
-                        'permission' => Permissions::$referrals_menu,
-                        'submenu' => [
+                    // 'Referrals' => [
+                    //     'text' => _i('Referrals'),
+                    //     'level_class' => 'second',
+                    //     'route' => null,
+                    //     'params' => [],
+                    //     'icon' => 'hs-admin-user',
+                    //     'permission' => Permissions::$referrals_menu,
+                    //     'submenu' => [
 
-                            'referralAdd' => [
-                                'text' => _i('Add'),
-                                'level_class' => 'third',
-                                'route' => 'referrals.create',
-                                'params' => [],
-                                'icon' => 'hs-admin-plus',
-                                'permission' => Permissions::$referral_create,
-                                'submenu' => []
-                            ],
+                    //         'referralAdd' => [
+                    //             'text' => _i('Add'),
+                    //             'level_class' => 'third',
+                    //             'route' => 'referrals.create',
+                    //             'params' => [],
+                    //             'icon' => 'hs-admin-plus',
+                    //             'permission' => Permissions::$referral_create,
+                    //             'submenu' => []
+                    //         ],
 
-                            'ReportReferral' => [
-                                'text' => _i('List'),
-                                'level_class' => 'third',
-                                'route' => 'referrals.index',
-                                'params' => [],
-                                'icon' => 'hs-admin-list',
-                                'permission' => Permissions::$report_referrals,
-                                'submenu' => []
-                            ],
-                        ]
-                    ],
+                    //         'ReportReferral' => [
+                    //             'text' => _i('List'),
+                    //             'level_class' => 'third',
+                    //             'route' => 'referrals.index',
+                    //             'params' => [],
+                    //             'icon' => 'hs-admin-list',
+                    //             'permission' => Permissions::$report_referrals,
+                    //             'submenu' => []
+                    //         ],
+                    //     ]
+                    // ],
                 ]
             ],
 
@@ -664,36 +664,36 @@ if (!function_exists('menu')) {
                 ]
             ],
 
-            // 'Referrals' => [
-            //     'text' => _i('Referrals'),
-            //     'level_class' => 'top',
-            //     'route' => null,
-            //     'params' => [],
-            //     'icon' => 'hs-admin-user',
-            //     //'permission' => Permissions::$referrals_menu,
-            //     'submenu' => [
+            'Referrals' => [
+                'text' => _i('Referrals'),
+                'level_class' => 'top',
+                'route' => null,
+                'params' => [],
+                'icon' => 'hs-admin-user',
+                'permission' => Permissions::$referrals_menu,
+                'submenu' => [
 
-            //         'referralAdd' => [
-            //             'text' => _i('Add'),
-            //             'level_class' => 'second',
-            //             'route' => 'referrals.create',
-            //             'params' => [],
-            //             'icon' => 'hs-admin-plus',
-            //             //'permission' => Permissions::$referral_create,
-            //             'submenu' => []
-            //         ],
+                    'referralAdd' => [
+                        'text' => _i('Add'),
+                        'level_class' => 'second',
+                        'route' => 'referrals.create',
+                        'params' => [],
+                        'icon' => 'hs-admin-plus',
+                        'permission' => Permissions::$referral_create,
+                        'submenu' => []
+                    ],
 
-            //         'ReportReferral' => [
-            //             'text' => _i('List'),
-            //             'level_class' => 'second',
-            //             'route' => 'referrals.index',
-            //             'params' => [],
-            //             'icon' => 'hs-admin-list',
-            //             //'permission' => Permissions::$report_referrals,
-            //             'submenu' => []
-            //         ],
-            //     ]
-            // ],
+                    'ReportReferral' => [
+                        'text' => _i('List'),
+                        'level_class' => 'second',
+                        'route' => 'referrals.index',
+                        'params' => [],
+                        'icon' => 'hs-admin-list',
+                        'permission' => Permissions::$report_referrals,
+                        'submenu' => []
+                    ],
+                ]
+            ],
 
             'BetPay' => [
                 'text' => _i('BetPay'),
