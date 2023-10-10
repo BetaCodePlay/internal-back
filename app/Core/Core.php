@@ -294,10 +294,6 @@ class Core
 //                    continue;
 //                }
 
-                if ($key == 'Referrals' && Configurations::getReferFriend()) {
-                    continue;
-                }
-
                 if ($key == 'ManualTransactionsAgents' && Configurations::getWhitelabel() == 68) {
                     continue;
                 }
