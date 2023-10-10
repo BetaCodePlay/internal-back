@@ -94,7 +94,7 @@ class Referrals {
 
     // Get referral totals
     referralTotals() {
-        initSelect2();
+        initDateRangePickerEndToday(open = 'right');
         let $table = $('#referral-totals-list-table');
         let $button = $('#search');
         let api;
