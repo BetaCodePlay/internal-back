@@ -204,11 +204,12 @@ class ReferralsController extends Controller
             $startDate = $request->start_date;
             $endDate = $request->end_date;
             if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
                 $currency = $request->currency;
                 $user = auth()->user()->id;
                 $whitelabel = Configurations::getWhitelabel();
                 $usersData = $this->usersRepo->getTotalsReferralListByUser($user, $currency, $whitelabel, $startDate, $endDate);
-                \Log::debug([$usersData,$user, $currency, $whitelabel, $startDate, $endDate]);
                 $this->usersCollection->formatReferralListTotals($usersData);
             } else {
                 $usersData = [];
