@@ -208,6 +208,7 @@ class ReferralsController extends Controller
                 $user = auth()->user()->id;
                 $whitelabel = Configurations::getWhitelabel();
                 $usersData = $this->usersRepo->getTotalsReferralListByUser($user, $currency, $whitelabel, $startDate, $endDate);
+                Log::debug($usersData);
                 $this->usersCollection->formatReferralListTotals($usersData);
             } else {
                 $usersData = [];
