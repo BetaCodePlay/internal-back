@@ -662,7 +662,7 @@ class UsersRepo
             ->where('referrals.referral_id', $id)
             ->where('user.whitelabel_id', $whitelabel)
             ->whereBetween('referrals.created_at', [$startDate, $endDate])
-            ->groupBy('user.register_currency');
+            ->groupBy('user.register_currency','referrals.created_at');
 
         if (!is_null($currency)) {
             $user->where('user.register_currency', $currency);
