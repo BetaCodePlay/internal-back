@@ -670,7 +670,7 @@ if (!function_exists('menu')) {
                 'route' => null,
                 'params' => [],
                 'icon' => 'hs-admin-user',
-                'permission' => Permissions::$referrals_menu,
+                //'permission' => Permissions::$referrals_menu,
                 'submenu' => [
 
                     'referralAdd' => [
@@ -679,7 +679,7 @@ if (!function_exists('menu')) {
                         'route' => 'referrals.create',
                         'params' => [],
                         'icon' => 'hs-admin-plus',
-                        'permission' => Permissions::$referral_create,
+                        //'permission' => Permissions::$referral_create,
                         'submenu' => []
                     ],
 
@@ -689,7 +689,7 @@ if (!function_exists('menu')) {
                         'route' => 'referrals.index',
                         'params' => [],
                         'icon' => 'hs-admin-list',
-                        'permission' => Permissions::$report_referrals,
+                        //'permission' => Permissions::$report_referrals,
                         'submenu' => []
                     ],
                 ]
