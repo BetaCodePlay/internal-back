@@ -12,7 +12,6 @@
         </header>
         <div class="card-block g-pa-15">
             <div class="row">
-                @include('back.layout.litepicker')
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="currency">{{ _i('Currency') }}</label>
@@ -26,6 +25,14 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="tester">{{ _i('Date range') }}</label>
+                                <input type="text" id="daterange" class="form-control daterange g-pr-80 g-pl-15 g-py-9" autocomplete="off">
+                                <input type="hidden" id="start_date" name="start_date">
+                                <input type="hidden" id="end_date" name="end_date">
+                            </div>
+                        </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <button type="button" class="btn u-btn-3d u-btn-primary" id="search"
