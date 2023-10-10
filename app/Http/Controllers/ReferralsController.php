@@ -190,6 +190,6 @@ class ReferralsController extends Controller
     {
         $data['title'] = _i('List of totals referred');
         $data['filter'] = _i('filter by user');
-        return view('back.referrals.referal-totals', $data);
+        return view('back.referrals.referral-totals', $data);
     }
 }
