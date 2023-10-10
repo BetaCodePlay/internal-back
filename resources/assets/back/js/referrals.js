@@ -106,7 +106,7 @@ class Referrals {
             },
             "order": [[0, 'asc']],
             "columns": [
-                {"data": "date"},
+                // {"data": "date"},
                 {"data": "currency"},
                 {"data": "totals"}
             ],
@@ -119,9 +119,10 @@ class Referrals {
 
         $button.click(function () {
             $button.button('loading');
-            let user = $('#user').val();
             let currency = $('#currency').val();
-            let route = `${$table.data('route')}?user=${user}&currency=${currency}`;
+            let startDate = $('#start_date').val();
+            let endDate = $('#end_date').val();
+            let route = `${$table.data('route')}?start_date=${startDate}&end_date=${endDate}&currency=${currency}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');

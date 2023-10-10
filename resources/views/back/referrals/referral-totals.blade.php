@@ -61,12 +61,12 @@
             <div class="card-block g-pa-15">
                 <div class="table-responsive">
                     <table class="table table-bordered w-100" id="referral-totals-list-table"
-                           data-route="{{route('referrals.referral-users-list-data')}}">
+                           data-route="{{route('referrals.referral-totals-list-data')}}">
                         <thead>
                             <tr>
-                                <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                <!-- <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                     {{ _i('Date') }}
-                                </th>
+                                </th> -->
                                 <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                     {{ _i('Currency') }}
                                 </th>

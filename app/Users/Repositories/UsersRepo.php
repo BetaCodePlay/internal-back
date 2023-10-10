@@ -646,6 +646,31 @@ class UsersRepo
     }
 
     /**
+     * * Get referred totals users
+     *
+     * @param int $id Agent ID
+     * @param array $data Agent data
+     * @param string $currency Currency iso
+     * @return mixed
+     */
+    public function getTotalsReferralListByUser($id, $currency, $whitelabel, $startDate, $endDate)
+    {  
+        $user = \DB::table('referrals')
+            ->select(\DB::raw('count(*) AS totals'),'user.register_currency','referrals.created_at')
+            ->join('users AS user', 'user.id', '=', 'referrals.user_id')
+            ->join('users AS referral', 'referral.id', '=', 'referrals.referral_id')
+            ->where('referrals.referral_id', $id)
+            ->where('user.whitelabel_id', $whitelabel)
+            ->whereBetween('referrals.created_at', [$startDate, $endDate]);
+
+        if (!is_null($currency)) {
+            $user->where('user.register_currency', $currency);
+        }
+        $data = $user->get();
+        return $data;
+    }
+
+    /**
      * Get referred users
      *
      * @param int $whitelabel Whitelabel ID
