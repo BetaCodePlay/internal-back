@@ -1,6 +1,5 @@
 import {swalConfirm, swalError, swalSuccessWithButton, swalSuccessNoButton, swalInput} from "../../commons/js/core";
-import {clearForm, initSelect2} from "./commons";
-
+import {clearForm, initSelect2, initDateRangePickerEndToday} from "./commons";
 class Referrals {
 
     // Add referral user
@@ -94,6 +93,7 @@ class Referrals {
 
     // Get referral totals
     referralTotals() {
+        initSelect2();
         initDateRangePickerEndToday(open = 'right');
         let $table = $('#referral-totals-list-table');
         let $button = $('#search');
