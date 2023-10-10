@@ -34,4 +34,10 @@ Route::group(['prefix' => 'referrals'], function () {
         'as' => 'referrals.remove-referral-user',
         'uses' => 'ReferralsController@removeReferralUserData'
     ]);
+
+    // Show referral totals
+    Route::get('referral-totals-list', [
+        'as' => 'referrals.referral-totals-list-data',
+        'uses' => 'ReferralsController@referralsTotals'
+    ]);
 });

@@ -179,4 +179,17 @@ class ReferralsController extends Controller
             return Utils::failedResponse();
         }
     }
+
+    /**
+     * Referral totals list
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function referralsTotals(Request $request)
+    {
+        $data['title'] = _i('List of totals referred');
+        $data['filter'] = _i('filter by user');
+        return view('back.referrals.referal-totals', $data);
+    }
 }
