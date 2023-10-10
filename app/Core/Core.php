@@ -294,7 +294,7 @@ class Core
 //                    continue;
 //                }
 
-                if ($key == 'Referrals' && Configurations::getWhitelabel() == 68) {
+                if ($key == 'Referrals' && Configurations::getReferFriend()) {
                     continue;
                 }
 
