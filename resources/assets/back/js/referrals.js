@@ -92,6 +92,43 @@ class Referrals {
         });
     }
 
+    // Get referral totals
+    referralTotals() {
+        initSelect2();
+        let $table = $('#referral-totals-list-table');
+        let $button = $('#search');
+        let api;
+
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.users"
+            },
+            "order": [[0, 'asc']],
+            "columns": [
+                {"data": "date"},
+                {"data": "currency"},
+                {"data": "totals"}
+            ],
+            "initComplete": function () {
+                api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+            }
+        });
+
+        $button.click(function () {
+            $button.button('loading');
+            let user = $('#user').val();
+            let currency = $('#currency').val();
+            let route = `${$table.data('route')}?user=${user}&currency=${currency}`;
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
+                $button.button('reset');
+            });
+        });
+    }
+
     // Select2  user
     select2Users(placeholder) {
         $('select2').select2();
