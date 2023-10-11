@@ -223,4 +223,41 @@ class ReferralsController extends Controller
             return Utils::failedResponse();
         }
     }
+
+    /**
+     * Referral top 
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function referralsTop()
+    {
+        $data['title'] = _i('List of top referred');
+        $data['filter'] = _i('filter by user');
+        return view('back.referrals.referral-top', $data);
+    }
+
+    /**
+     * Referral total list
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function referralsTopList(Request $request)
+    {
+        try {
+            $user = $request->user;
+            $currency = $request->currency;
+            $whitelabel = Configurations::getWhitelabel();
+            $usersData = $this->usersRepo->getReferralListByUser($user, $currency, $whitelabel);
+            $this->usersCollection->formatReferralTopList($usersData);
+            $data = [
+                'users' => $usersData
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
 }

@@ -46,4 +46,16 @@ Route::group(['prefix' => 'referrals'], function () {
         'as' => 'referrals.referral-totals-list-data',
         'uses' => 'ReferralsController@referralsTotalsList'
     ]);
+
+    // Show referral top totals
+    Route::get('referral-top', [
+        'as' => 'referrals.referral-top',
+        'uses' => 'ReferralsController@referralsTop'
+    ]);
+
+    // List referral top
+    Route::get('referral-top-list', [
+        'as' => 'referrals.referral-top-list-data',
+        'uses' => 'ReferralsController@referralsTopList'
+    ]);
 });

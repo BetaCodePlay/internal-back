@@ -672,6 +672,32 @@ class UsersRepo
     }
 
     /**
+     * * Get referred top 
+     *
+     * @param int $id user ID
+     * @param string $currency Currency iso
+     * @param int $whitelabel Whitelabel id
+     * @return mixed
+     */
+    public function getReferralTopList($id, $currency, $whitelabel)
+    {
+        $user = \DB::table('referrals')
+            ->select('referral.id', 'referral.username', 'referral.email', 'referral.register_currency',\DB::raw('count(*) AS totals') )
+            ->join('users AS user', 'user.id', '=', 'referrals.user_id')
+            ->join('users AS referral', 'referral.id', '=', 'referrals.referral_id')
+            ->where('referrals.referral_id', $id)
+            ->where('user.whitelabel_id', $whitelabel)
+            ->groupBy('referral.id', 'referral.username', 'referral.email', 'referral.register_currency');
+
+        if (!is_null($currency)) {
+            $user->where('referral.register_currency', $currency);
+        }
+
+        $data = $user->get();
+        return $data;
+    }
+
+    /**
      * Get referred users
      *
      * @param int $whitelabel Whitelabel ID

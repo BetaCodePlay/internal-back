@@ -702,6 +702,16 @@ if (!function_exists('menu')) {
                         'permission' => Permissions::$report_referrals,
                         'submenu' => []
                     ],
+
+                    'ReportReferralTop' => [
+                        'text' => _i('List Referral Top'),
+                        'level_class' => 'second',
+                        'route' => 'referrals.referral-top',
+                        'params' => [],
+                        'icon' => 'hs-admin-list',
+                        'permission' => Permissions::$report_referrals,
+                        'submenu' => []
+                    ],
                 ]
             ],
 
