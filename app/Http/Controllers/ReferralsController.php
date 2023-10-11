@@ -138,7 +138,6 @@ class ReferralsController extends Controller
             } else {
                 $usersData = [];
             }
-            \Log::debug($usersData);
             $data = [
                 'users' => $usersData
             ];
@@ -250,9 +249,7 @@ class ReferralsController extends Controller
             $currency = $request->currency;
             $whitelabel = Configurations::getWhitelabel();
             $usersData = $this->usersRepo->getReferralTopList($user, $currency, $whitelabel);
-            \Log::debug("top1",[$usersData,$user, $currency, $whitelabel]);
             $this->usersCollection->formatReferralTopList($usersData);
-            \Log::debug("top2",[$usersData]);
             $data = [
                 'users' => $usersData
             ];
