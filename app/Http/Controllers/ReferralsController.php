@@ -249,9 +249,10 @@ class ReferralsController extends Controller
             $user = $request->user;
             $currency = $request->currency;
             $whitelabel = Configurations::getWhitelabel();
-            $usersData = $this->usersRepo->getReferralListByUser($user, $currency, $whitelabel);
+            $usersData = $this->usersRepo->getReferralTopList($user, $currency, $whitelabel);
+            \Log::debug("top1",[$usersData,$user, $currency, $whitelabel]);
             $this->usersCollection->formatReferralTopList($usersData);
-            \Log::debug("top",[$usersData]);
+            \Log::debug("top2",[$usersData]);
             $data = [
                 'users' => $usersData
             ];
