@@ -685,12 +685,15 @@ class UsersRepo
             ->select('referral.id', 'referral.username', 'referral.email', 'referral.register_currency',\DB::raw('count(*) AS totals') )
             ->join('users AS user', 'user.id', '=', 'referrals.user_id')
             ->join('users AS referral', 'referral.id', '=', 'referrals.referral_id')
-            ->where('referrals.referral_id', $id)
             ->where('user.whitelabel_id', $whitelabel)
             ->groupBy('referral.id', 'referral.username', 'referral.email', 'referral.register_currency');
 
         if (!is_null($currency)) {
             $user->where('referral.register_currency', $currency);
+        }
+
+        if (!is_null($id)) {
+            $user->where('referral.referral_id', $id);
         }
 
         $data = $user->get();
