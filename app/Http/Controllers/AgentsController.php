@@ -2639,7 +2639,7 @@ class AgentsController extends Controller
                             $walletBonus = Wallet::getByClient($userData->id, $currency, true);
                             // \Log::debug(['debit $walletBonus' => $walletBonus]);
                             /* Hacemos un update del balance en la billetera de bonus, llevandolo a cero.*/
-                            $removeBalance = $bonusLib->removeBalanceBonus($walletBonus->data->bonus[0]->id);
+                            $removeBalance = $bonusLib->removeBalanceBonus($walletBonus->data->bonus[0]->id, $userData->id);
                             /* Este log es para probar el correcto funcionamiento del codigo de bonus */
                             \Log::debug(['Se ha quitado saldo a la wallet' => json_encode($removeBalance)]);
                         }
