@@ -272,12 +272,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4 rollovers-data ">
+                            {{-- <div class="col-md-4 rollovers-data ">
                                 <div class="form-group">
                                     <label for="provider_type">{{ _i('Provider type') }}</label>
                                     <select name="provider_type" id="provider_type" multiple data-route="{{ route('bonus-system.campaigns.exclude-providers') }}" class="form-control">
                                         <option value="">{{ _i('Select...') }}</option>
-                                        {{-- <option value="*" selected>{{ _i('All Providers') }}</option> --}}
                                         @foreach ($providers as $provider)
                                         <option value="{{ $provider->id }}">
                                             {{ _i($provider->name) }}
@@ -285,7 +284,7 @@
                                     @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-4 rollovers-data d-none">
                                 <div class="form-group">
                                     <label for="exclude_providers">{{ _i('Exclude providers') }}</label>

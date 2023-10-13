@@ -1231,7 +1231,8 @@ class BonusSystemController extends Controller
             'commission_bonus' => 'required',
             'complete_rollovers' => 'required',
             'include_deposit' => 'required_if:complete_rollovers,true',
-            'provider_type' => 'required',
+            //Descomentar cuando se active los providers para filtrar por proveedor.
+            // 'provider_type' => 'required',
             // 'provider_type' => 'required_if:complete_rollovers,true',
             'multiplier' => [
                 'nullable',
