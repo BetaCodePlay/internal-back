@@ -34,10 +34,11 @@ class CampaignsRepo
      */
     public function allByVersion()
     {
+
         return Campaign::select('campaigns.*')
-            ->whereNotIn('campaigns.id', function ($query) {
-                $query->select('parent_campaign')->from('campaigns')->whereNotNull('parent_campaign');
-            })
+            // ->whereNotIn('campaigns.id', function ($query) {
+            //     $query->select('parent_campaign')->from('campaigns')->whereNotNull('parent_campaign');
+            // })
             ->whitelabel()
             ->get();
     }

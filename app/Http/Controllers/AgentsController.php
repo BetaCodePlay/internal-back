@@ -539,7 +539,7 @@ class AgentsController extends Controller
      * @param null $startDate
      * @param null $endDate
      * @return Response
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function agentsTransactionsByDatesData($startDate = null, $endDate = null)
     {
@@ -2110,15 +2110,17 @@ class AgentsController extends Controller
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
                 $balance = $user->balance;
+                $balanceBonus = 0.00;
                 $master = $user->master;
                 $agent = true;
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
-                $father = $this->usersRepo->findUsername($user->owner_id);
+                $father = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master = false;
-                $wallet = Wallet::getByClient($id, $currency);
+                $wallet = Wallet::getByClient($id, $currency, true);
                 $balance = $wallet->data->wallet->balance;
+                $balanceBonus = (property_exists($wallet->data, 'bonus')) ? $wallet->data->bonus[0]->balance : 0.00;
                 $agent = false;
                 $walletId = $wallet->data->wallet->id;
                 $myself = false;
@@ -2133,6 +2135,7 @@ class AgentsController extends Controller
                 'fathers' => [],
                 'user' => $user,
                 'balance' => number_format($balance, 2),
+                'balance_bonus' => number_format($balanceBonus, 2),
                 'master' => $master,
                 'agent' => $agent,
                 'wallet' => $walletId,
@@ -4049,10 +4052,13 @@ class AgentsController extends Controller
         }
 
         try {
-
+            //Moneda
+            $currency = session('currency');
+            //Whitelabel id
+            $whitelabel = Configurations::getWhitelabel();
+            $bonus = Configurations::getBonus();
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
-            $currency = session('currency');
             $username = strtolower($request->username);
             $password = $request->password;
             //$email = $request->email;
@@ -4096,7 +4102,7 @@ class AgentsController extends Controller
                 $ip = $request->getClientIp();
             }
 
-            $whitelabel = Configurations::getWhitelabel();
+
             $userData = [
                 'username' => $username,
                 'email' => $email,
@@ -4142,6 +4148,23 @@ class AgentsController extends Controller
             $store = Configurations::getStore()->active;
             if ($store) {
                 Store::storeWallet($user->id, $currency);
+            }
+
+            //Bonus register
+            if($bonus) {
+                $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
+                \Log::debug(['$campaigns' => $campaigns]);
+                 // Comprobar si $campaigns no está vacío antes de continuar
+                if (!empty($campaigns)) {
+                    //Create wallet bonus
+                    $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
+                    \Log::notice(['con campaña' =>   $walletBonus]);
+                    $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1, $balance);
+                    \Log::notice(['$participation' =>   $participation]);
+                } else {
+                    $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
+                    \Log::notice(['sin campaña' =>   $walletBonus]);
+                }
             }
 
             if ($balance > 0) {
@@ -4346,7 +4369,6 @@ class AgentsController extends Controller
             $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
             $data['countries'] = $countriesRepo->all();
             $data['timezones'] = \DateTimeZone::listIdentifiers();
-
             $data['title'] = _i('Create player');
 
             return view('back.agents.user-and-agent.create-user', $data);

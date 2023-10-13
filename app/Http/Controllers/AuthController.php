@@ -246,6 +246,7 @@ class AuthController extends Controller
                         }
                     }
                 }
+
                 $data = [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),

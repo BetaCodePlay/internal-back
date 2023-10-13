@@ -57,7 +57,7 @@ class CampaignsRepo
         return Campaign::on(config('bonus.connection'))
             ->where('whitelabel_id', $whitelabel)
             ->where('currency_iso', $currency)
-            ->where('allocation_criteria_id', $criteria)
+            ->whereJsonContains('data->allocation_criteria', [$criteria])
             ->first();
     }
 
