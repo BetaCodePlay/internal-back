@@ -37,6 +37,10 @@ use App\Whitelabels\Repositories\WhitelabelsRepo;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Dotworkers\Audits\Audits;
+use Dotworkers\Bonus\Bonus;
+use Dotworkers\Bonus\Enums\AllocationCriteria;
+use Dotworkers\Bonus\Repositories\CampaignParticipationRepo;
+use Dotworkers\Bonus\Repositories\CampaignsRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
@@ -193,6 +197,14 @@ class AgentsController extends Controller
      */
     private AgentService $agentService;
 
+     /**
+     * $CampaignsRepo
+     *
+     * @var CampaignsRepo
+     */
+    private $campaignsRepo;
+
+
     /***
      * AgentsController constructor.
      *
@@ -213,6 +225,8 @@ class AgentsController extends Controller
      * @param RolesRepo $rolesRepo
      * @param TransactionService $transactionService
      * @param AgentService $agentService
+     * @param AgentService $agentService
+     * @param CampaignsRepo $ CampaignsRepo
      */
     public function __construct(
         ReportAgentRepo             $reportAgentRepo,
@@ -231,7 +245,8 @@ class AgentsController extends Controller
         GamesRepo                   $gamesRepo,
         RolesRepo                   $rolesRepo,
         TransactionService          $transactionService,
-        AgentService                $agentService
+        AgentService                $agentService,
+        CampaignsRepo               $campaignsRepo
     )
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
@@ -251,6 +266,7 @@ class AgentsController extends Controller
         $this->rolesRepo = $rolesRepo;
         $this->transactionService = $transactionService;
         $this->agentService = $agentService;
+        $this->campaignsRepo = $campaignsRepo;
     }
 
     /**
@@ -4056,7 +4072,7 @@ class AgentsController extends Controller
             $currency = session('currency');
             //Whitelabel id
             $whitelabel = Configurations::getWhitelabel();
-            $bonus = Configurations::getBonus();
+            $bonus = Configurations::getBonus($whitelabel);
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
             $username = strtolower($request->username);
@@ -4150,22 +4166,28 @@ class AgentsController extends Controller
                 Store::storeWallet($user->id, $currency);
             }
 
-            //Bonus register
-            if($bonus) {
-                $campaigns  = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
+            // Bonus registration
+            if ($bonus) {
+                // Fetch campaigns
+                $campaigns = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
                 \Log::debug(['$campaigns' => $campaigns]);
-                 // Comprobar si $campaigns no está vacío antes de continuar
+
+                // Check if $campaigns is not empty before proceeding
                 if (!empty($campaigns)) {
-                    //Create wallet bonus
+                    // Create a wallet for bonuses
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
-                    \Log::notice(['con campaña' =>   $walletBonus]);
+                    \Log::notice(['with campaign' => $walletBonus]);
+
+                    // Participate in the welcome bonus program
                     $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1, $balance);
-                    \Log::notice(['$participation' =>   $participation]);
+                    \Log::notice(['$participation' => $participation]);
                 } else {
+                    // Create a wallet without a campaign
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
-                    \Log::notice(['sin campaña' =>   $walletBonus]);
+                    \Log::notice(['without campaign' => $walletBonus]);
                 }
             }
+
 
             if ($balance > 0) {
                 $providerTransaction = Str::uuid()->toString();

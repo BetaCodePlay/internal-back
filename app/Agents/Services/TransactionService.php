@@ -10,6 +10,7 @@ use App\Core\Repositories\TransactionsRepo;
 use App\Core\Services\BaseService;
 use App\Http\Requests\TransactionRequest;
 use App\Users\Enums\ActionUser;
+use Dotworkers\Bonus\Bonus;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Status;
@@ -264,8 +265,8 @@ class TransactionService extends BaseService
         }
 
         $currency = session('currency');
-        $walletDetail = Wallet::getByClient($playerDetails->id, $currency);
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail);
+        $walletDetail = Wallet::getByClient($playerDetails->id, $currency, true);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail, true);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
@@ -338,12 +339,64 @@ class TransactionService extends BaseService
             'additionalData'       => $transactionResult->additionalData,
             'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
             'balance'              => $transactionResult->balance,
+            'balanceBonus'         => $transactionResult->balanceBonus,
             'button'               => $buttonHTML,
             'ownerBalance'         => $transactionResult->ownerBalance ?? 0,
             'status'               => $transactionResult->status,
             'transactionIdCreated' => $ticketId,
         ];
     }
+
+    /**
+     * Process a bonus transaction for a player.
+     *
+     * This method handles a bonus transaction for a given player and updates their balance.
+     *
+     * @param string $typeTransaction The type of transaction (e.g., 'credit' or 'debit').
+     * @param object $playerDetails An object containing player details.
+     * @param float $transactionAmount The transaction amount.
+     * @param object $walletDetail An object containing wallet details.
+     *
+     * @return float The updated bonus balance of the player.
+     */
+    public function processBonusForPlayer(
+        string $typeTransaction,
+        object $playerDetails,
+        float $transactionAmount,
+        object $walletDetail
+    ) {
+        if (Configurations::getBonus(Configurations::getWhitelabel())) {
+            if ($typeTransaction == TransactionTypes::$credit) {
+                // Deposit Bonus Agents
+                Bonus::depositBonusAgents(
+                    Configurations::getWhitelabel(),
+                    session('currency'),
+                    $playerDetails->id,
+                    $walletDetail->data->bonus[0]->id,
+                    session('wallet_access_token'),
+                    $transactionAmount
+                );
+
+                // Unlimited Deposit Bonus
+                Bonus::unlimitedDepositBonus(
+                    Configurations::getWhitelabel(),
+                    session('currency'),
+                    $playerDetails->id,
+                    $walletDetail->data->bonus[0]->id,
+                    session('wallet_access_token'),
+                    $transactionAmount
+                );
+            } else {
+                Bonus::removeBalanceBonus($walletDetail->data->bonus[0]->id, $playerDetails->id);
+            }
+
+            // Update Balance Wallet
+            $updateBalanceBonus = Wallet::getByClient($playerDetails->id, session('currency'), true);
+
+            return $updateBalanceBonus->data->bonus[0]->balance;
+        }
+    }
+
 
     /**
      * Process a credit transaction for an agent.
@@ -423,6 +476,8 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
 
+        $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
+
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
@@ -438,6 +493,7 @@ class TransactionService extends BaseService
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
             'balance'           => $transaction?->wallet?->balance ?? 0,
+            'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance - $transactionAmount,
             'status'            => $transactionResult->status,
         ];
@@ -518,6 +574,8 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
 
+        $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
+
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
@@ -533,6 +591,7 @@ class TransactionService extends BaseService
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
             'balance'           => $transaction?->wallet?->balance ?? 0,
+            'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance + $transactionAmount,
             'status'            => $transactionResult->status,
         ];
