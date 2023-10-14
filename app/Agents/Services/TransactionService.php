@@ -673,6 +673,7 @@ class TransactionService extends BaseService
             'message' => _i('The transaction was successfully made to the user'),
             'close'   => _i('Close'),
             'balance' => number_format($userManagementResult->balance, 2),
+            'balanceBonus' => number_format($userManagementResult->balanceBonus, 2),
             'button'  => $userManagementResult->button,
         ]);
     }
