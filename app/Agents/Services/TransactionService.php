@@ -392,7 +392,7 @@ class TransactionService extends BaseService
 
             // Update Balance Wallet
             $updateBalanceBonus = Wallet::getByClient($playerDetails->id, session('currency'), true);
-
+            \Log::debug(['BalanceBonusUpdate' => $updateBalanceBonus]);
             return $updateBalanceBonus->data->bonus[0]->balance;
         }
     }
