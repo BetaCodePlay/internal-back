@@ -667,7 +667,7 @@ class TransactionService extends BaseService
                 _i('please contact support"'),
             );
         }
-
+        \Log::debug(['processTransactionAndGenerateResponse' => $userManagementResult->balanceBonus]);
         return Utils::successResponse([
             'title'   => _i('Transaction performed'),
             'message' => _i('The transaction was successfully made to the user'),
