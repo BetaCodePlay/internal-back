@@ -334,7 +334,7 @@ class TransactionService extends BaseService
             'ticketRoute'     => route('agents.ticket', [$ticketId]),
             'printTicketText' => __('Print ticket'),
         ])->render();
-
+        \Log::debug(['balanceBonus processAndStoreTransaction' => $transactionResult->balanceBonus]);
         return (object)[
             'additionalData'       => $transactionResult->additionalData,
             'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
