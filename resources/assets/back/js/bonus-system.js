@@ -415,7 +415,7 @@ class BonusSystem {
         BonusSystem.bonusType();
         BonusSystem.bets();
         BonusSystem.deposits();
-        BonusSystem.paymentMethods();
+        // BonusSystem.paymentMethods();
         BonusSystem.providers();
         BonusSystem.providersBets();
         BonusSystem.providerTypes();
@@ -498,7 +498,7 @@ class BonusSystem {
         BonusSystem.bonusType();
         BonusSystem.bets();
         BonusSystem.deposits();
-        BonusSystem.paymentMethods();
+        // BonusSystem.paymentMethods();
         BonusSystem.providers();
         BonusSystem.providersBets();
         BonusSystem.providerTypes();
