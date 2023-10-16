@@ -482,7 +482,7 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
 
-        if($walletDetail->data->wallet->bonus) {
+        if($walletDetail?->data?->bonus) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
         } else {
             $walletBonus = Wallet::store($playerDetails->id, $playerDetails->username, $playerDetails->uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
@@ -589,7 +589,7 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
         \Log::debug(['$walletDetail' => $walletDetail]);
-        if($walletDetail->data->wallet->bonus) {
+        if($walletDetail?->data?->bonus) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
         }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
