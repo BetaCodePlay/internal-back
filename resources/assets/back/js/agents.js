@@ -1653,7 +1653,7 @@ class Agents {
 
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
-                $('.balance_bonus').text(json.data.balance_bonus);
+                $('.balance_bonus').text(json.data.balanceBonus);
                 let userInput = json.data.balance_auth;
                 let userclass = 'balanceAuth_'+json.data.auth_balance;
                 let userclass2 = '.balanceAuth_'+json.data.auth_balance;
