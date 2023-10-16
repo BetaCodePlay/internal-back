@@ -336,12 +336,12 @@ class TransactionService extends BaseService
             'ticketRoute'     => route('agents.ticket', [$ticketId]),
             'printTicketText' => __('Print ticket'),
         ])->render();
-        \Log::debug(['balanceBonus processAndStoreTransaction' => $transactionResult->balanceBonus]);
+        // \Log::debug(['balanceBonus processAndStoreTransaction' => $transactionResult->balanceBonus]);
         return (object)[
             'additionalData'       => $transactionResult->additionalData,
             'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
             'balance'              => $transactionResult->balance,
-            'balanceBonus'         => $transactionResult->balanceBonus,
+            'balanceBonus'         => $transactionResult?->balanceBonus ?? 0,
             'button'               => $buttonHTML,
             'ownerBalance'         => $transactionResult->ownerBalance ?? 0,
             'status'               => $transactionResult->status,
@@ -478,7 +478,9 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
 
-        $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
+        if($walletDetail->data->bonus) {
+            $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
+        }
 
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
@@ -576,8 +578,9 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
 
-        $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
-
+        if($walletDetail->data->bonus) {
+            $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
+        }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
