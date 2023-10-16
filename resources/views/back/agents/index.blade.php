@@ -479,7 +479,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if($bonus && $agent->type_user == 5)
+                                    @if($bonus)
                                     <div class="row g-mb-15">
                                         <div class="col-4 col-sm-4 col-md-3 g-mb-5 g-mb-0--md g-mb-10 align-self-center">
                                             <label class="g-mb-0">
