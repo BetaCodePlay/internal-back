@@ -338,7 +338,7 @@ class TransactionService extends BaseService
             'ticketRoute'     => route('agents.ticket', [$ticketId]),
             'printTicketText' => __('Print ticket'),
         ])->render();
-        // \Log::debug(['balanceBonus processAndStoreTransaction' => $transactionResult->balanceBonus]);
+        \Log::debug(['balanceBonus processAndStoreTransaction' => $transactionResult]);
         return (object)[
             'additionalData'       => $transactionResult->additionalData,
             'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
@@ -593,6 +593,7 @@ class TransactionService extends BaseService
         if($walletDetail && isset($walletDetail->data->bonus)) {
             \Log::debug(['$walletDetailDebit 4' => $walletDetail]);
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
+             \Log::debug(['balanceBonus test' => $balanceBonus]);
         }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
