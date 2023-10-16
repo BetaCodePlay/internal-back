@@ -391,7 +391,7 @@ class TransactionService extends BaseService
                     $transactionAmount
                 );
             } else {
-                \Log::info(['$walletDetailCredit' => $walletDetail->data->bonus ,  $playerDetails->i]);
+                \Log::info(['$walletDetailCredit' => $walletDetail->data->bonus ,  $playerDetails->id]);
                 Bonus::removeBalanceBonus($walletDetail->data->bonus[0]->id, $playerDetails->id);
             }
 
