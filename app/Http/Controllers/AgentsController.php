@@ -4171,21 +4171,18 @@ class AgentsController extends Controller
             if ($bonus) {
                 // Fetch campaigns
                 $campaigns = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
-                \Log::debug(['$campaigns' => $campaigns]);
+
 
                 // Check if $campaigns is not empty before proceeding
                 if (!empty($campaigns)) {
                     // Create a wallet for bonuses
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
-                    \Log::notice(['with campaign' => $walletBonus]);
 
                     // Participate in the welcome bonus program
                     $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1, $balance);
-                    \Log::notice(['$participation' => $participation]);
                 } else {
                     // Create a wallet without a campaign
                     $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
-                    \Log::notice(['without campaign' => $walletBonus]);
                 }
             }
 
