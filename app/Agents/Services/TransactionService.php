@@ -588,7 +588,7 @@ class TransactionService extends BaseService
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
-
+        \Log::debug(['$walletDetail' => $walletDetail]);
         if($walletDetail->data->wallet->bonus) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
         }
