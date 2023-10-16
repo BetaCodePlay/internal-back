@@ -590,6 +590,7 @@ class TransactionService extends BaseService
         );
         \Log::debug(['$walletDetailDebit' => $walletDetail]);
         if($walletDetail && isset($walletDetail->data->bonus)) {
+            \Log::debug(['$walletDetailDebit 4' => $walletDetail]);
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
         }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
