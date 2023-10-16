@@ -265,7 +265,9 @@ class TransactionService extends BaseService
         }
 
         $currency = session('currency');
-        $walletDetail = Wallet::getByClient($playerDetails->id, $currency, true);
+        $bonus = Configurations::getBonus(Configurations::getWhitelabel());
+        $walletDetail = Wallet::getByClient($playerDetails->id, $currency, $bonus);
+        \Log::debug(['$walletDetail' => $walletDetail]);
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail, true);
 
         if ($walletHandlingResult instanceof Response) {
