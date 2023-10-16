@@ -481,8 +481,8 @@ class TransactionService extends BaseService
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
-
-        if(isset($walletDetail->data->bonus)) {
+        \Log::debug(['$walletDetailCredit' => $walletDetail]);
+        if(($walletDetail && isset($walletDetail->data->bonus))) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
         } else {
             $walletBonus = Wallet::store($playerDetails->id, $playerDetails->username, $playerDetails->uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
@@ -588,8 +588,8 @@ class TransactionService extends BaseService
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
-
-        if(isset($walletDetail->data->bonus)) {
+        \Log::debug(['$walletDetailDebit' => $walletDetail]);
+        if($walletDetail && isset($walletDetail->data->bonus)) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
         }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
