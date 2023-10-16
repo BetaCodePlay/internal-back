@@ -478,7 +478,7 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
 
-        if($walletDetail->data->bonus) {
+        if($walletDetail->data->wallet->bonus) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
         }
 
@@ -578,7 +578,7 @@ class TransactionService extends BaseService
             $request->get('wallet'),
         );
 
-        if($walletDetail->data->bonus) {
+        if($walletDetail->data->wallet->bonus) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
         }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
