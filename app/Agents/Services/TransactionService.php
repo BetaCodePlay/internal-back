@@ -269,7 +269,6 @@ class TransactionService extends BaseService
         $currency = session('currency');
         $bonus = Configurations::getBonus(Configurations::getWhitelabel());
         $walletDetail = Wallet::getByClient($playerDetails->id, $currency, $bonus);
-        \Log::debug(['$walletDetail' => $walletDetail]);
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail, true);
 
         if ($walletHandlingResult instanceof Response) {
@@ -338,7 +337,6 @@ class TransactionService extends BaseService
             'ticketRoute'     => route('agents.ticket', [$ticketId]),
             'printTicketText' => __('Print ticket'),
         ])->render();
-        \Log::debug(['balanceBonus processAndStoreTransaction' => $transactionResult]);
         return (object)[
             'additionalData'       => $transactionResult->additionalData,
             'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
@@ -391,13 +389,11 @@ class TransactionService extends BaseService
                     $transactionAmount
                 );
             } else {
-                \Log::info(['$walletDetailCredit' => $walletDetail->data->bonus ,  $playerDetails->id]);
                 Bonus::removeBalanceBonus($walletDetail->data->bonus[0]->id, $playerDetails->id);
             }
 
             // Update Balance Wallet
             $updateBalanceBonus = Wallet::getByClient($playerDetails->id, session('currency'), true);
-            \Log::debug(['BalanceBonusUpdate' => $updateBalanceBonus]);
             return $updateBalanceBonus->data->bonus[0]->balance;
         }
     }
@@ -482,7 +478,6 @@ class TransactionService extends BaseService
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
-        \Log::debug(['$walletDetailCredit' => $walletDetail]);
         if(($walletDetail && isset($walletDetail->data->bonus))) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
         } else {
@@ -589,11 +584,9 @@ class TransactionService extends BaseService
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
-        \Log::debug(['$walletDetailDebit' => $walletDetail]);
+
         if($walletDetail && isset($walletDetail->data->bonus)) {
-            \Log::debug(['$walletDetailDebit 4' => $walletDetail]);
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
-             \Log::debug(['balanceBonus test' => $balanceBonus]);
         }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
@@ -686,7 +679,6 @@ class TransactionService extends BaseService
                 _i('please contact support"'),
             );
         }
-        \Log::debug(['processTransactionAndGenerateResponse' => $userManagementResult->balanceBonus]);
         return Utils::successResponse([
             'title'   => _i('Transaction performed'),
             'message' => _i('The transaction was successfully made to the user'),
