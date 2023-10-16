@@ -642,10 +642,6 @@ class AgentsCollection
             //return [$arrayTmp,$arrayProviderTmp,$htmlProvider];
             //TODO TOTALES
             if (!is_null($percentage)) {
-                // TODO Eliminar este log una vez sepamos que información trae.
-                if (Configurations::getWhitelabel() == 5) {
-                    Log::debug('closuresTotalsByAgentGroupProviderHour', ['arrayProviderTmp'=>  $arrayProviderTmp]);
-                }
 
                 $totalComission = $totalProfit * ($percentage / 100);
                 $htmlProvider .= "<tr>
