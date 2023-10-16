@@ -1089,46 +1089,46 @@ if (!function_exists('menu')) {
                 ]
             ],
 
-//TODO BONO
-//            'BonusSystem' => [
-//                'text' => _i('Bonus system'),
-//                'level_class' => 'top',
-//                'route' => null,
-//                'params' => [],
-//                'icon' => 'hs-admin-money',
-//                'permission' => Permissions::$system_bonus_menu,
-//                'submenu' => [
-//
-//                    'Campaigns' => [
-//                        'text' => _i('Campaigns'),
-//                        'level_class' => 'top',
-//                        'route' => null,
-//                        'params' => [],
-//                        'icon' => 'hs-admin-menu-alt',
-//                        'permission' => Permissions::$campaigns_menu,
-//                        'submenu' => [
-//
-//                            'New' => [
-//                                'text' => _i('New'),
-//                                'level_class' => 'second',
-//                                'route' => 'bonus-system.campaigns.create',
-//                                'params' => [],
-//                                'icon' => 'hs-admin-plus',
-//                                'permission' => Permissions::$manage_campaigns,
-//                                'submenu' => []
-//                            ],
-//
-//                            'List' => [
-//                                'text' => _i('List'),
-//                                'level_class' => 'second',
-//                                'route' => 'bonus-system.campaigns.index',
-//                                'params' => [],
-//                                'icon' => 'hs-admin-list',
-//                                'permission' => Permissions::$manage_campaigns,
-//                                'submenu' => []
-//                            ],
-//                        ]
-//                    ],
+
+          'BonusSystem' => [
+               'text' => _i('Bonus system'),
+               'level_class' => 'top',
+               'route' => null,
+               'params' => [],
+               'icon' => 'hs-admin-money',
+                'permission' => Permissions::$system_bonus_menu,
+               'submenu' => [
+
+                    'Campaigns' => [
+                        'text' => _i('Campaigns'),
+                        'level_class' => 'top',
+                        'route' => null,
+                        'params' => [],
+                        'icon' => 'hs-admin-menu-alt',
+                        'permission' => Permissions::$campaigns_menu,
+                        'submenu' => [
+
+                            'New' => [
+                                'text' => _i('New'),
+                                'level_class' => 'second',
+                                'route' => 'bonus-system.campaigns.create',
+                                'params' => [],
+                                'icon' => 'hs-admin-plus',
+                                'permission' => Permissions::$manage_campaigns,
+                                'submenu' => []
+                            ],
+
+                            'List' => [
+                                'text' => _i('List'),
+                                'level_class' => 'second',
+                                'route' => 'bonus-system.campaigns.index',
+                                'params' => [],
+                                'icon' => 'hs-admin-list',
+                                'permission' => Permissions::$manage_campaigns,
+                                'submenu' => []
+                            ],
+                        ]
+                    ],
 //
 //                    'CampaignsReports' => [
 //                        'text' => _i('Reports'),
@@ -1160,8 +1160,8 @@ if (!function_exists('menu')) {
 //                            ],
 //                        ]
 //                    ],
-//                ]
-//            ],
+                ]
+            ],
 
 //            'Dotsuite' => [
 //                'text' => _i('Dotsuite'),
