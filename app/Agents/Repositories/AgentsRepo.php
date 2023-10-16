@@ -256,7 +256,7 @@ class AgentsRepo
     public function findUserProfile(int|null $user, string|null $currency): mixed
     {
         $sql = DB::select(
-            'SELECT u.id,u.id AS user_id,u.created_at AS created,u.email,u.username,u.status,u.action,p.timezone,a.id AS agent,u.referral_code,a.master,a.owner_id AS owner,
+            'SELECT u.id,u.id AS user_id,u.created_at AS created,u.email,u.username,u.status,u.action,p.timezone,u.type_user,a.id AS agent,u.referral_code,a.master,a.owner_id AS owner,
                            p.country_iso,ac.balance,ac.currency_iso
                     FROM site.agents a
                       INNER JOIN site.agent_currencies ac ON a.id = ac.agent_id
@@ -500,7 +500,7 @@ class AgentsRepo
                              INNER JOIN all_agents a on u.id = a.user_id
                              INNER JOIN site.agent_currencies AS ac ON a.id = ac.agent_id
                     WHERE u.whitelabel_id = ?
-                      AND ac.currency_iso = ? 
+                      AND ac.currency_iso = ?
                     UNION
                     SELECT u.id, u.username, a.user_id, u.type_user, ac.currency_iso as currency, u.status, level + 1 as level
                     FROM site.agent_user AS au
