@@ -4,6 +4,7 @@ namespace App\Agents\Services;
 
 use App\Agents\Enums\AgentType;
 use App\Agents\Enums\UserType;
+
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
@@ -12,6 +13,7 @@ use App\Http\Requests\TransactionRequest;
 use App\Users\Enums\ActionUser;
 use Dotworkers\Bonus\Bonus;
 use Dotworkers\Configurations\Configurations;
+use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
@@ -467,6 +469,8 @@ class TransactionService extends BaseService
         object $walletDetail
     ): mixed {
         $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $bonus = Configurations::getBonus($whitelabel);
         $transactionAmount = $request->get('amount');
         $userAuthId = $request->user()->id;
         $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
@@ -480,6 +484,13 @@ class TransactionService extends BaseService
 
         if($walletDetail->data->wallet->bonus) {
             $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
+        } else {
+            $walletBonus = Wallet::store($playerDetails->id, $playerDetails->username, $playerDetails->uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
+            if($walletBonus->code == Codes::$ok) {
+                $walletDetail = Wallet::getByClient($playerDetails->id, $currency, $bonus);
+                $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
+            }
+
         }
 
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);

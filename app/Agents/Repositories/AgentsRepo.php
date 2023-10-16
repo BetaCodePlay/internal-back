@@ -283,7 +283,7 @@ class AgentsRepo
     {
         $user = Agent::on('replica')
                      ->select('users.id', 'users.created_at as created', 'users.email', 'users.username',
-                         'users.status', 'users.action', 'profiles.timezone', 'agents.user_id as owner_id',
+                         'users.status', 'users.action', 'users.uuid','profiles.timezone', 'agents.user_id as owner_id',
                          'agent_user.agent_id as owner', 'users.referral_code')
                      ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
                      ->join('users', 'agent_user.user_id', '=', 'users.id')
