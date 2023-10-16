@@ -21,6 +21,7 @@ use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -711,6 +712,29 @@ class AgentsCollection
         return $htmlProvider;
 
     }
+
+    public function hourlyAgentGroupTotals(
+        $userSonData,
+        $whitelabelId,
+        $currency,
+        $startDate,
+        $endDate,
+        $percentage = null
+    ) {
+        $closureRepo = new ClosuresUsersTotals2023Repo();
+
+        if (! empty($userSonData)) {
+            $providerData = array_reduce($closureRepo->getProvidersActiveByCredentials(true, $currency, $whitelabelId), function ($carry, $val) {
+                $carry[$val->id] = [
+                    'total_played' => 0,
+                    'total_won' => 0,
+                    'total_profit' => 0,
+                ];
+                return $carry;
+            }, []);
+        }
+    }
+
 
     /**
      * @param $tableDb

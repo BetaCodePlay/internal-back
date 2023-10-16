@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Collections\AgentsCollection;
+use App\Agents\Enums\AgentType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Agents\Services\AgentService;
@@ -36,6 +37,10 @@ use App\Whitelabels\Repositories\WhitelabelsRepo;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Dotworkers\Audits\Audits;
+use Dotworkers\Bonus\Bonus;
+use Dotworkers\Bonus\Enums\AllocationCriteria;
+use Dotworkers\Bonus\Repositories\CampaignParticipationRepo;
+use Dotworkers\Bonus\Repositories\CampaignsRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
@@ -192,6 +197,14 @@ class AgentsController extends Controller
      */
     private AgentService $agentService;
 
+     /**
+     * $CampaignsRepo
+     *
+     * @var CampaignsRepo
+     */
+    private $campaignsRepo;
+
+
     /***
      * AgentsController constructor.
      *
@@ -212,6 +225,8 @@ class AgentsController extends Controller
      * @param RolesRepo $rolesRepo
      * @param TransactionService $transactionService
      * @param AgentService $agentService
+     * @param AgentService $agentService
+     * @param CampaignsRepo $ CampaignsRepo
      */
     public function __construct(
         ReportAgentRepo             $reportAgentRepo,
@@ -230,7 +245,8 @@ class AgentsController extends Controller
         GamesRepo                   $gamesRepo,
         RolesRepo                   $rolesRepo,
         TransactionService          $transactionService,
-        AgentService                $agentService
+        AgentService                $agentService,
+        CampaignsRepo               $campaignsRepo
     )
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
@@ -250,6 +266,7 @@ class AgentsController extends Controller
         $this->rolesRepo = $rolesRepo;
         $this->transactionService = $transactionService;
         $this->agentService = $agentService;
+        $this->campaignsRepo = $campaignsRepo;
     }
 
     /**
@@ -538,7 +555,7 @@ class AgentsController extends Controller
      * @param null $startDate
      * @param null $endDate
      * @return Response
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function agentsTransactionsByDatesData($startDate = null, $endDate = null)
     {
@@ -1434,10 +1451,10 @@ class AgentsController extends Controller
      * @param $startDate
      * @param $endDate
      * @return Response
+     * @deprecated
      */
     public function financialStateData(Request $request, ProvidersRepo $providersRepo, $user = null, $startDate = null, $endDate = null)
     {
-
         //try {
         if (is_null($user)) {
             $user = Auth::id();
@@ -1468,6 +1485,41 @@ class AgentsController extends Controller
 
     }
 
+    public function showFinancialStatement(String $userId = null, String $startDate = null, String $endDate = null)
+    {
+        $userId = is_null($userId) ? Auth::id() : $userId;
+        $currency = session('currency');
+        $percentage = $this->agentsRepo->myPercentageByCurrency($userId, $currency);
+
+        $percentage = $percentage[0]->percentage ?? null;
+        $whitelabelId = Configurations::getWhitelabel();
+
+        if (Auth::user()->username === \App\Agents\Enums\Username::ROMEO) {
+            $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel(AgentType::WOLF, $currency, $whitelabelId);
+            $userId = $userTmp[0]->id ?? null;
+            $percentage = null;
+        }
+
+        $userSonData = $this->closuresUsersTotals2023Repo->getUsersAgentsSon($whitelabelId, $currency, $userId);
+
+        /*$this->agentsCollection->hourlyAgentGroupTotals(
+            $userSonData,
+            $whitelabelId,
+            $currency,
+            $startDate,
+            $endDate,
+            $percentage
+        );*/
+
+        $userIds = array_map(function($item) {
+            return $item->user_id;
+        }, $userSonData);
+
+        return view('back.reports.financial.statement', [
+            'items' =>  $this->closuresUsersTotals2023Repo->getClosureReport($userIds, $whitelabelId, $currency, $startDate, $endDate)
+        ]);
+    }
+
     /**
      * Data Financial State Details
      * @param Request $request
@@ -1478,7 +1530,6 @@ class AgentsController extends Controller
      */
     public function financialStateDataDetails(Request $request, $user = null, $startDate = null, $endDate = null)
     {
-
         try {
             if (is_null($user)) {
                 $user = Auth::id();
@@ -2075,15 +2126,17 @@ class AgentsController extends Controller
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
                 $balance = $user->balance;
+                $balanceBonus = 0.00;
                 $master = $user->master;
                 $agent = true;
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
-                $father = $this->usersRepo->findUsername($user->owner_id);
+                $father = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master = false;
-                $wallet = Wallet::getByClient($id, $currency);
+                $wallet = Wallet::getByClient($id, $currency, true);
                 $balance = $wallet->data->wallet->balance;
+                $balanceBonus = (property_exists($wallet->data, 'bonus')) ? $wallet->data->bonus[0]->balance : 0.00;
                 $agent = false;
                 $walletId = $wallet->data->wallet->id;
                 $myself = false;
@@ -2098,6 +2151,7 @@ class AgentsController extends Controller
                 'fathers' => [],
                 'user' => $user,
                 'balance' => number_format($balance, 2),
+                'balance_bonus' => number_format($balanceBonus, 2),
                 'master' => $master,
                 'agent' => $agent,
                 'wallet' => $walletId,
@@ -4015,10 +4069,13 @@ class AgentsController extends Controller
         }
 
         try {
-
+            //Moneda
+            $currency = session('currency');
+            //Whitelabel id
+            $whitelabel = Configurations::getWhitelabel();
+            $bonus = Configurations::getBonus($whitelabel);
             $uuid = Str::uuid()->toString();
             $owner = auth()->user()->id;
-            $currency = session('currency');
             $username = strtolower($request->username);
             $password = $request->password;
             //$email = $request->email;
@@ -4062,7 +4119,7 @@ class AgentsController extends Controller
                 $ip = $request->getClientIp();
             }
 
-            $whitelabel = Configurations::getWhitelabel();
+
             $userData = [
                 'username' => $username,
                 'email' => $email,
@@ -4109,6 +4166,29 @@ class AgentsController extends Controller
             if ($store) {
                 Store::storeWallet($user->id, $currency);
             }
+
+            // Bonus registration
+            if ($bonus) {
+                // Fetch campaigns
+                $campaigns = $this->campaignsRepo->findCampaign($whitelabel, $currency, AllocationCriteria::$welcome_bonus_without_deposit);
+                \Log::debug(['$campaigns' => $campaigns]);
+
+                // Check if $campaigns is not empty before proceeding
+                if (!empty($campaigns)) {
+                    // Create a wallet for bonuses
+                    $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, $campaigns->id);
+                    \Log::notice(['with campaign' => $walletBonus]);
+
+                    // Participate in the welcome bonus program
+                    $participation = Bonus::welcomeRegister($whitelabel, $currency, $user->id, $walletBonus->data->bonus[0]->id, session('wallet_access_token'), 1, $balance);
+                    \Log::notice(['$participation' => $participation]);
+                } else {
+                    // Create a wallet without a campaign
+                    $walletBonus = Wallet::store($user->id, $user->username, $uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
+                    \Log::notice(['without campaign' => $walletBonus]);
+                }
+            }
+
 
             if ($balance > 0) {
                 $providerTransaction = Str::uuid()->toString();
@@ -4312,7 +4392,6 @@ class AgentsController extends Controller
             $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
             $data['countries'] = $countriesRepo->all();
             $data['timezones'] = \DateTimeZone::listIdentifiers();
-
             $data['title'] = _i('Create player');
 
             return view('back.agents.user-and-agent.create-user', $data);

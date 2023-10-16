@@ -717,6 +717,7 @@ class UsersController extends Controller
         ]);
 
         try {
+
             $user = $request->user;
             $wallet = $request->wallet;
             $amount = $request->amount;
@@ -760,6 +761,7 @@ class UsersController extends Controller
                     'data' => $additionalData,
                     'whitelabel_id' => Configurations::getWhitelabel()
                 ];
+                // dd($transaction);
                 $additionalData['wallet_transaction'] = $transaction->data->transaction->id;
                 $detailsData = [
                     'data' => json_encode($additionalData)
@@ -815,6 +817,7 @@ class UsersController extends Controller
                 return Utils::successResponse($data);
             }
         } catch (\Exception $ex) {
+            // dd($ex);
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -1700,7 +1703,7 @@ class UsersController extends Controller
             if ($transactionType == TransactionTypes::$credit) {
                 $transaction = Wallet::creditManualTransactions($amount, Providers::$manual_adjustments, $additionalData, $wallet);
                 //new TransactionNotAllowed($amount, $user, Providers::$manual_adjustments, $transactionType);
-
+                // dd($transaction);
             } else {
                 $transaction = Wallet::debitManualTransactions($amount, Providers::$manual_adjustments, $additionalData, $wallet);
                 //new TransactionNotAllowed($amount, $user, Providers::$manual_adjustments, $transactionType);

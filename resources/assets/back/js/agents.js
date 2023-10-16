@@ -590,10 +590,11 @@ class Agents {
                             Agents.getFatherRecursive($('#details-user-get').data('route'), id, type);
                         }, 500)
                         //TODO Finish Set Modal
-
+                        console.log(json.data);
                         $('#username').text(json.data.user.username);
                         $('#agent_timezone').text(json.data.user.timezone);
                         $('.balance').text(json.data.balance);
+                        $('.balance-bonus').text(json.data.balance-bonus);
                         $('.balanceAuth_' + json.data.user.id).text('');
                         $('.balanceAuth_' + json.data.user.id).text(json.data.balance);
                         $('#user_type').html(json.data.user.type);
@@ -822,6 +823,7 @@ class Agents {
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);
+                $('.balance_bonus').text(json.data.balance_bonus);
                 $('.balanceAuth_' + json.data.user.id).text('');
                 $('.balanceAuth_' + json.data.user.id).text(json.data.balance);
                 $('#user_type').html(json.data.user.type);
@@ -1616,6 +1618,7 @@ class Agents {
 
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
+                $('.balance_bonus').text(json.data.balanceBonus);
                 let userInput = json.data.balance_auth;
                 let userclass = 'balanceAuth_'+json.data.auth_balance;
                 let userclass2 = '.balanceAuth_'+json.data.auth_balance;
@@ -1650,6 +1653,7 @@ class Agents {
 
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
+                $('.balance_bonus').text(json.data.balance_bonus);
                 let userInput = json.data.balance_auth;
                 let userclass = 'balanceAuth_'+json.data.auth_balance;
                 let userclass2 = '.balanceAuth_'+json.data.auth_balance;

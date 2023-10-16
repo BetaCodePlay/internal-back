@@ -183,6 +183,10 @@ class BonusSystem {
         });
     }
 
+    actualizarValor(checkbox) {
+        checkbox.setAttribute('value', checkbox.checked ? 'true' : 'false');
+    }
+
     // Campaigns
     campaigns() {
         initSelect2();
@@ -423,18 +427,21 @@ class BonusSystem {
         BonusSystem.registration();
         let $form = $('#campaigns-form');
         let $button = $('#store');
-
         $('#currencies').on('change', function () {
-            let currencies = $(this).val();
+            let currencies = [$(this).val()];
             $('.deposits-row').addClass('d-none');
             $('.bonus-row').addClass('d-none');
             $('.bet-row').addClass('d-none');
+            $(`.deposit-row-${currencies}`).removeClass('d-none');
+            $(`.bonus-row-${currencies}`).removeClass('d-none');
+            $(`.bet-row-${currencies}`).removeClass('d-none');
 
-            for (let currency of currencies) {
-                $(`.deposit-row-${currency}`).removeClass('d-none');
-                $(`.bonus-row-${currency}`).removeClass('d-none');
-                $(`.bet-row-${currency}`).removeClass('d-none');
-            }
+            //Si es multiple currencies se agrega est for
+            // for (let currency of currencies) {
+            //     $(`.deposit-row-${currency}`).removeClass('d-none');
+            //     $(`.bonus-row-${currency}`).removeClass('d-none');
+            //     $(`.bet-row-${currency}`).removeClass('d-none');
+            // }
 
             if (currencies.length > 0) {
                 $('#deposits').removeClass('disabled').removeAttr('disabled').parent().removeClass('disabled');
@@ -509,6 +516,7 @@ class BonusSystem {
             tinymce.triggerSave();
             let formData = new FormData(this);
             let translations = BonusSystem.getTranslations(languages);
+            console.log(['data translation',languages, translations]);
             if (!translations) {
                 return translations;
             }
@@ -527,6 +535,7 @@ class BonusSystem {
             }).done(function (json) {
                 swalSuccessNoButton(json);
                 setTimeout(() => {
+                    // console.log(json.data);
                     window.location.href = json.data.route;
                 }, 1000);
 
@@ -582,7 +591,9 @@ class BonusSystem {
         });
 
         $('#deposit-percentage').change(function () {
+            console.log('Estoy pasando por el deposit-percentage');
             if (this.checked) {
+                console.log('Estoy pasando por el deposit-percentage despues del checked');
                 $('.deposit-percentage, .max-convert, .bonus-table').removeClass('d-none');
                 $('.fixed-bonus').addClass('d-none');
             }
@@ -687,8 +698,40 @@ class BonusSystem {
 
     // Payment methods
     static paymentMethods() {
+        // $('#currencies').on('change', function () {
+        //     let currencies = $(this).val();
+        //     let route = $(this).data('payments-route');
+
+        //     if (currencies.length > 0) {
+        //         $.ajax({
+        //             url: route,
+        //             type: 'get',
+        //             dataType: 'json',
+        //             data: {
+        //                 currencies: currencies
+        //             }
+        //         }).done(function (json) {
+        //             let paymentMethods = json.data.payment_methods;
+
+        //             for (let currency of currencies) {
+        //                 $(`#include-payment-methods-${currency} option[value!="1"], #exclude-payment-methods-${currency} option[value!="1"]`).remove();
+
+        //                 for (let paymentMethod in paymentMethods) {
+        //                     if (paymentMethod === currency) {
+        //                         for (let currencyPaymentMethod of paymentMethods[paymentMethod]) {
+        //                             let include = new Option(currencyPaymentMethod.name, currencyPaymentMethod.id, false, false);
+        //                             $(`#include-payment-methods-${currency}`).append(include).trigger('change');
+        //                             let exclude = new Option(currencyPaymentMethod.name, currencyPaymentMethod.id, false, false);
+        //                             $(`#exclude-payment-methods-${currency}`).append(exclude).trigger('change');
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         });
+        //     }
+        // });
         $('#currencies').on('change', function () {
-            let currencies = $(this).val();
+            let currencies = [$(this).val()];
             let route = $(this).data('payments-route');
 
             if (currencies.length > 0) {
@@ -785,7 +828,7 @@ class BonusSystem {
     static providerTypes() {
         initSelect2();
         $('#currencies').on('change', function () {
-            let currencies = $(this).val();
+            let currencies = [$(this).val()];
             let route = $(this).data('route');
             let $providerTypes = $('#provider_type');
             let $providerTypesBets = $('#provider_type_bet');
@@ -860,6 +903,18 @@ class BonusSystem {
         });
     };
 
+    static updateCommissionBonus() {
+        console.log('La función updateCommissionBonus se ha llamado.');
+
+        var totalPercentage = 100;
+        var commissionReal = parseFloat($('#commission_real').val());
+        var commissionBonus = totalPercentage - commissionReal;
+
+        if (!isNaN(commissionBonus)) {
+            $('#commission_bonus_v').val(commissionBonus);
+            $('#commission_bonus').val(commissionBonus);
+        }
+    }
     // Users restriction type
     static usersRestrictionType() {
         $('#users_restriction_type').change(function () {

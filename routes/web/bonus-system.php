@@ -105,6 +105,12 @@ Route::group(['prefix' => 'bonus-system', 'middleware' => ['auth']], function ()
             'uses' => 'BonusSystemController@paymentMethds'
         ]);
 
+        // Payment methods
+        Route::get('allocation-criteria-all', [
+            'as' => 'bonus-system.campaigns.allocation-criteria-all',
+            'uses' => 'BonusSystemController@allocationCriteriaAll'
+        ]);
+
         Route::group(['prefix' => 'users'], function () {
 
             // Update campaigns

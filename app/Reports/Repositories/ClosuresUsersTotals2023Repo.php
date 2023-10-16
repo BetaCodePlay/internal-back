@@ -3,8 +3,10 @@
 
 namespace App\Reports\Repositories;
 
+use App\Reports\Entities\ClosureUserTotal2023Hour;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Security\Enums\Roles;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -169,6 +171,38 @@ class ClosuresUsersTotals2023Repo
 
         return $closure;
 
+    }
+
+    /**
+     * Generate a closure report based on specified parameters.
+     *
+     * @param array $userSonData An array of user IDs for filtering the report.
+     * @param int $whitelabelId The whitelabel ID for filtering the report.
+     * @param string $currency The currency ISO code for filtering the report.
+     * @param string $startDate The start date (YYYY-MM-DD HH:MM) for filtering the report.
+     * @param string $endDate The end date (YYYY-MM-DD HH:MM) for filtering the report.
+     *
+     * @return Collection A collection of closure report data.
+     */
+    public function getClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate): Collection
+    {
+        return DB::table('public.closures_users_totals_2023_hour as cut')
+            ->selectRaw('
+            provider_id, providers.name, username, user_id,
+            ROUND(SUM(played)::numeric, 2) as total_played,
+            ROUND(SUM(won)::numeric, 2) as total_won,
+            SUM(bets)::numeric as total_bet,
+            ROUND(SUM(profit)::numeric, 2) as total_profit,
+            ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100), 2) as rtp
+        ')
+            ->join('site.providers as providers', 'providers.id', '=', 'cut.provider_id')
+            ->where('cut.whitelabel_id', $whitelabelId)
+            ->where('cut.currency_iso', $currency)
+            ->whereBetween('cut.start_date', [$startDate, $endDate])
+            ->whereIn('cut.user_id', $userSonData)
+            ->groupBy('provider_id', 'providers.name', 'username', 'user_id')
+            ->orderBy('username', 'DESC')
+            ->get();
     }
 
     /**
