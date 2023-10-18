@@ -1474,6 +1474,7 @@ class Agents {
                 data: $form.serialize()
             }).done(function (json) {
                 $('.balance').text(json.data.balance);
+                $('.balance_bonus').text(json.data.balanceBonus);
                 $form.trigger('reset');
                 $('#transaction-modal').modal('hide');
                 swalSuccessWithButton(json);
