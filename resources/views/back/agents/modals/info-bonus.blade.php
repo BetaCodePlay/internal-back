@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <ul style="padding-left: 20px">
+                <ul style="padding-left: 20px; list-style: none">
                     <li><b>1</b>. Cada vez que deposites se te asignará el 200% de tu carga en saldo de billetera de
                         bono.
                         Por ejemplo: si cargas 1.000,00$ se le dará un bono de 2.000,00$ ya que porcentaje configurado
