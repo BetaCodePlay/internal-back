@@ -629,6 +629,7 @@ class Agents {
                             $('#users-transactions-mobile').addClass('d-none');
                             $('#move-agents-user').addClass('d-none');
                             $('#move-agents').removeClass('d-none');
+                            $('#bonus-show').addClass('d-none');
                         } else {
                             $('#users-tab').addClass('d-none');
                             $('#agents-transactions-tab').addClass('d-none');
@@ -640,6 +641,7 @@ class Agents {
                             $('#users-transactions-mobile').removeClass('d-none');
                             $('#move-agents-user').removeClass('d-none');
                             $('#move-agents').addClass('d-none');
+                            $('#bonus-show').removeClass('d-none');
                         }
 
                         if (json.data.myself) {
@@ -858,6 +860,7 @@ class Agents {
                     $('#users-transactions-mobile').addClass('d-none');
                     $('#move-agents-user').addClass('d-none');
                     $('#move-agents').removeClass('d-none');
+                    $('#bonus-show').addClass('d-none');
                 } else {
                     $('#users-tab').addClass('d-none');
                     $('#agents-transactions-tab').addClass('d-none');
@@ -869,6 +872,7 @@ class Agents {
                     $('#users-transactions-mobile').removeClass('d-none');
                     $('#move-agents-user').removeClass('d-none');
                     $('#move-agents').addClass('d-none');
+                    $('#bonus-show').removeClass('d-none');
                 }
 
                 if (json.data.myself) {
@@ -889,6 +893,9 @@ class Agents {
                     $('#locks, #locks-mobile').removeClass('d-none');
                     $('#transactions-form-container').removeClass('d-none');
                     $('#modals-transaction').removeClass('d-none');
+                }
+                if(json.data.user.type_user !== 5) {
+
                 }
 
             }).fail(function (json) {
@@ -1956,6 +1963,7 @@ class Agents {
                     $('#users-transactions-mobile').addClass('d-none');
                     $('#move-agents-user').addClass('d-none');
                     $('#move-agents').removeClass('d-none');
+                    $('#bonus-show').addClass('d-none');
                 } else {
                     $('#users-tab').addClass('d-none');
                     $('#agents-transactions-tab').addClass('d-none');
@@ -1967,6 +1975,7 @@ class Agents {
                     $('#users-transactions-mobile').removeClass('d-none');
                     $('#move-agents-user').removeClass('d-none');
                     $('#move-agents').addClass('d-none');
+                    $('#bonus-show').removeClass('d-none');
                 }
 
                 if (json.data.myself) {
