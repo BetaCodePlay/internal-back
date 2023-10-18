@@ -65,6 +65,9 @@
             text-align: left !important;
         }
 
+        .info-icon {
+
+        }
     </style>
 @endsection
 
@@ -489,6 +492,7 @@
                                         <div class="col-8 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
                                                 <span class="balance_bonus"></span>
+                                                <span class="info-icon"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
                                     </div>
