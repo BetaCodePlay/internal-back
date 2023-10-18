@@ -1231,10 +1231,10 @@
     @include('back.agents.modals.move-agents')
     @include('back.agents.modals.move-agents-users')
     @include('back.agents.modals.details-user')
+    @include('back.agents.modals.info-bonus')
     {{--        TODO THE OPTION TO CREATE USER IS DISABLED WITHIN THE DASHBOARD--}}
     {{--    @include('back.agents.modals.add-users')--}}
     @include('back.users.modals.reset-password')
-    @include('back.users.modals.info-bonus')
 @endsection
 
 @section('scripts')
