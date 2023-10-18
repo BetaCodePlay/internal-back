@@ -66,7 +66,17 @@
         }
 
         .info-icon {
-
+            padding: 1px;
+            border: 1px solid #38a7ef;
+            line-height: 1;
+            border-radius: 50px;
+            display: inline-block;
+            color: #38a7ef;
+            width: 21px;
+            text-align: center;
+            font-size: 17px;
+            cursor: pointer;
+            margin-left: 5px;
         }
     </style>
 @endsection
@@ -492,7 +502,7 @@
                                         <div class="col-8 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
                                                 <span class="balance_bonus"></span>
-                                                <span class="info-icon"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                                                <span class="info-icon" href="#info-bonus" data-toggle="modal"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -1224,6 +1234,7 @@
     {{--        TODO THE OPTION TO CREATE USER IS DISABLED WITHIN THE DASHBOARD--}}
     {{--    @include('back.agents.modals.add-users')--}}
     @include('back.users.modals.reset-password')
+    @include('back.users.modals.info-bonus')
 @endsection
 
 @section('scripts')
