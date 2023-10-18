@@ -65,6 +65,29 @@
             text-align: left !important;
         }
 
+        .info-icon {
+            padding: 1px;
+            border: 1px solid #38a7ef;
+            line-height: 1;
+            border-radius: 50px;
+            display: inline-block;
+            color: #38a7ef;
+            width: 21px;
+            text-align: center;
+            font-size: 17px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .ul-info-bonus {
+            padding-left: 20px;
+            list-style: none
+        }
+
+        .ul-info-bonus li {
+            list-style: none;
+            margin-bottom: 8px;
+        }
     </style>
 @endsection
 
@@ -489,6 +512,7 @@
                                         <div class="col-8 col-sm-8 col-md-9 align-self-center">
                                             <div class="form-group g-pos-rel g-mb-0">
                                                 <span class="balance_bonus"></span>
+                                                <span class="info-icon" href="#info-bonus" data-toggle="modal"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -1217,6 +1241,7 @@
     @include('back.agents.modals.move-agents')
     @include('back.agents.modals.move-agents-users')
     @include('back.agents.modals.details-user')
+    @include('back.agents.modals.info-bonus')
     {{--        TODO THE OPTION TO CREATE USER IS DISABLED WITHIN THE DASHBOARD--}}
     {{--    @include('back.agents.modals.add-users')--}}
     @include('back.users.modals.reset-password')
