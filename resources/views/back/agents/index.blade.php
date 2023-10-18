@@ -78,6 +78,16 @@
             cursor: pointer;
             margin-left: 5px;
         }
+
+        .ul-info-bonus {
+            padding-left: 20px;
+            list-style: none
+        }
+
+        .ul-info-bonus li {
+            list-style: none;
+            margin-bottom: 8px;
+        }
     </style>
 @endsection
 
