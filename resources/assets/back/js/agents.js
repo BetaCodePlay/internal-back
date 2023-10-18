@@ -822,6 +822,10 @@ class Agents {
                 }, 500)
                 //TODO Finish Set Modal
 
+                //TODO Init Set Modal Bonus
+                $('#info-bonus-description').html(json.data.campaignDescription);
+                //TODO Finish Set Modal Bonus
+
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);

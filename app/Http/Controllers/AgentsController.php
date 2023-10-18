@@ -203,6 +203,12 @@ class AgentsController extends Controller
      * @var CampaignsRepo
      */
     private $campaignsRepo;
+     /**
+     * $CampaignParticipationRepo
+     *
+     * @var CampaignParticipationRepo
+     */
+    private $campaignParticipationRepo;
 
 
     /***
@@ -226,7 +232,8 @@ class AgentsController extends Controller
      * @param TransactionService $transactionService
      * @param AgentService $agentService
      * @param AgentService $agentService
-     * @param CampaignsRepo $ CampaignsRepo
+     * @param CampaignsRepo $campaignsRepo
+     * @param CampaignParticipationRepo $campaignParticipationRepo
      */
     public function __construct(
         ReportAgentRepo             $reportAgentRepo,
@@ -246,7 +253,8 @@ class AgentsController extends Controller
         RolesRepo                   $rolesRepo,
         TransactionService          $transactionService,
         AgentService                $agentService,
-        CampaignsRepo               $campaignsRepo
+        CampaignsRepo               $campaignsRepo,
+        CampaignParticipationRepo   $campaignParticipationRepo
     )
     {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
@@ -267,6 +275,7 @@ class AgentsController extends Controller
         $this->transactionService = $transactionService;
         $this->agentService = $agentService;
         $this->campaignsRepo = $campaignsRepo;
+        $this->campaignParticipationRepo = $campaignParticipationRepo;
     }
 
     /**
@@ -2114,7 +2123,10 @@ class AgentsController extends Controller
                 $agent_player = true;
             }
             $currency = session('currency');
+            $whitelabel = Configurations::getWhitelabel();
+            $lang = Configurations::getDefaultLanguage();
             $id = $request->id;
+            $campaignDescription = _i('Without description...');
 //            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
 //                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
 //                $id = isset($userTmp[0]->id) ? $userTmp[0]->id : $request->get('id');
@@ -2132,6 +2144,7 @@ class AgentsController extends Controller
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
+                $campaign = $this->campaignsRepo->findCampaignActive($whitelabel, $currency);
                 $father = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master = false;
                 $wallet = Wallet::getByClient($id, $currency, true);
@@ -2140,6 +2153,9 @@ class AgentsController extends Controller
                 $agent = false;
                 $walletId = $wallet->data->wallet->id;
                 $myself = false;
+                if($campaign) {
+                    $campaignDescription = $campaign->translations->$lang->description;
+                }
             }
 
             $this->agentsCollection->formatAgent($user);
@@ -2157,7 +2173,8 @@ class AgentsController extends Controller
                 'wallet' => $walletId,
                 'type' => $type,
                 'myself' => $myself,
-                'agent_player' => $agent_player
+                'agent_player' => $agent_player,
+                'campaignDescription' => $campaignDescription
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
