@@ -80,13 +80,13 @@
         }
 
         .ul-info-bonus {
-            padding-left: 20px;
+            padding-left: 16px;
             list-style: none
         }
 
         .ul-info-bonus li {
             list-style: none;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
     </style>
 @endsection
