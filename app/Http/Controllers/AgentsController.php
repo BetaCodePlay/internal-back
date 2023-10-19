@@ -2127,6 +2127,7 @@ class AgentsController extends Controller
             $bonus = Configurations::getBonus();
             $lang = LaravelGettext::getLocale();
             $id = $request->id;
+            $balanceBonus = 0.00;
             $campaignDescription = _i('Without description...');
 //            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
 //                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
@@ -2139,7 +2140,6 @@ class AgentsController extends Controller
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
                 $balance = $user->balance;
-                $balanceBonus = 0.00;
                 $master = $user->master;
                 $agent = true;
                 $myself = $userId == $user->id;
@@ -2159,7 +2159,7 @@ class AgentsController extends Controller
                         $campaignDescription = $campaign->translations->$lang->description;
                     }
                 }
-                
+
             }
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d', strtotime($user->created));
