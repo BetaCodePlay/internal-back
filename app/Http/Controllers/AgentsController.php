@@ -68,7 +68,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
 use Symfony\Component\HttpFoundation\Response;
-
+use Xinax\LaravelGettext\Facades\LaravelGettext;
 use function GuzzleHttp\Promise\all;
 
 /**
@@ -2124,7 +2124,7 @@ class AgentsController extends Controller
             }
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $lang = Configurations::getDefaultLanguage();
+            $lang = LaravelGettext::getLocale();
             $id = $request->id;
             $campaignDescription = _i('Without description...');
 //            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
@@ -2157,7 +2157,6 @@ class AgentsController extends Controller
                     $campaignDescription = $campaign->translations->$lang->description;
                 }
             }
-
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d', strtotime($user->created));
             $data = [
