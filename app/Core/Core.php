@@ -294,9 +294,9 @@ class Core
 //                    continue;
 //                }
 
-                if ($key == 'Referrals' && Configurations::getWhitelabel() == 68) {
-                    continue;
-                }
+                // if ($key == 'Referrals') {
+                //     continue;
+                // }
 
                 if ($key == 'ManualTransactionsAgents' && Configurations::getWhitelabel() == 68) {
                     continue;
@@ -594,9 +594,9 @@ class Core
                 if (($key == 'BetPay' && !Configurations::getPayments()) || ($key == 'BetPay' && is_null(session('betpay_client_id')))) {
                     continue;
                 }
-                if (($key == 'Referrals') || ($key == 'ManualTransactionsAgents') || ($key == 'ManualAdjustments') && $whitelabel == 68) {
-                    continue;
-                }
+                // if (($key == 'Referrals') || ($key == 'ManualTransactionsAgents') || ($key == 'ManualAdjustments')) {
+                //     continue;
+                // }
                 if ($key == 'CasinoSliders' && !$casinoConfiguration->data->slider->active || $key == 'VirtualSliders' && !$virtualConfiguration->data->slider->active) {
                     continue;
                 }

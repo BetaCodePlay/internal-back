@@ -61,6 +61,7 @@
                     @include('back.betpay.clients.payment-methods.cryptocurrency')
                     @include('back.betpay.clients.payment-methods.paypal')
                     @include('back.betpay.clients.payment-methods.mercado-pago')
+                    @include('back.betpay.clients.payment-methods.pix')
                     <div class="col-md-12">
                         <div class="form-group">
                             <button type="submit" class="btn u-btn-3d u-btn-primary" id="save"

@@ -702,6 +702,61 @@ class UsersRepo
     }
 
     /**
+     * * Get referred totals users
+     *
+     * @param int $id Agent ID
+     * @param array $data Agent data
+     * @param string $currency Currency iso
+     * @return mixed
+     */
+    public function getTotalsReferralListByUser($id, $currency, $whitelabel, $startDate, $endDate)
+    {  
+        $user = \DB::table('referrals')
+            ->select(\DB::raw('count(*) AS totals'),'user.register_currency', 'referrals.created_at')
+            ->join('users AS user', 'user.id', '=', 'referrals.user_id')
+            ->join('users AS referral', 'referral.id', '=', 'referrals.referral_id')
+            ->where('referrals.referral_id', $id)
+            ->where('user.whitelabel_id', $whitelabel)
+            ->whereBetween('referrals.created_at', [$startDate, $endDate])
+            ->groupBy('user.register_currency','referrals.created_at');
+
+        if (!is_null($currency)) {
+            $user->where('user.register_currency', $currency);
+        }
+        $data = $user->get();
+        return $data;
+    }
+
+    /**
+     * * Get referred top 
+     *
+     * @param int $id user ID
+     * @param string $currency Currency iso
+     * @param int $whitelabel Whitelabel id
+     * @return mixed
+     */
+    public function getReferralTopList($id, $currency, $whitelabel)
+    {
+        $user = \DB::table('referrals')
+            ->select('referral.id', 'referral.username', 'referral.email', 'referral.register_currency',\DB::raw('count(*) AS totals') )
+            ->join('users AS user', 'user.id', '=', 'referrals.user_id')
+            ->join('users AS referral', 'referral.id', '=', 'referrals.referral_id')
+            ->where('user.whitelabel_id', $whitelabel)
+            ->groupBy('referral.id', 'referral.username', 'referral.email', 'referral.register_currency');
+
+        if (!is_null($currency)) {
+            $user->where('referral.register_currency', $currency);
+        }
+
+        if (!is_null($id)) {
+            $user->where('referral.referral_id', $id);
+        }
+
+        $data = $user->get();
+        return $data;
+    }
+
+    /**
      * Get referred users
      *
      * @param int $whitelabel Whitelabel ID
