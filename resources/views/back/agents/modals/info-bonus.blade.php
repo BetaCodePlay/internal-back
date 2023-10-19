@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="info-bonus-description">
                 <ul class="ul-info-bonus">
                     <li><b>1</b>. Cada vez que deposites se te asignará el 200% de tu carga en saldo de billetera de
                         bono.
