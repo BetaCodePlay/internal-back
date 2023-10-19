@@ -2124,6 +2124,7 @@ class AgentsController extends Controller
             }
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
+            $bonus = Configurations::getBonus();
             $lang = LaravelGettext::getLocale();
             $id = $request->id;
             $campaignDescription = _i('Without description...');
@@ -2144,18 +2145,21 @@ class AgentsController extends Controller
                 $myself = $userId == $user->id;
             } else {
                 $user = $this->agentsRepo->findUser($id);
-                $campaign = $this->campaignsRepo->findCampaignActive($whitelabel, $currency);
                 $father = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master = false;
-                $wallet = Wallet::getByClient($id, $currency, true);
+                $wallet = Wallet::getByClient($id, $currency, $bonus);
                 $balance = $wallet->data->wallet->balance;
-                $balanceBonus = (property_exists($wallet->data, 'bonus')) ? $wallet->data->bonus[0]->balance : 0.00;
                 $agent = false;
                 $walletId = $wallet->data->wallet->id;
                 $myself = false;
-                if($campaign) {
-                    $campaignDescription = $campaign->translations->$lang->description;
+                if($bonus) {
+                    $balanceBonus = (property_exists($wallet->data, 'bonus')) ? $wallet->data->bonus[0]->balance : 0.00;
+                    $campaign = $this->campaignsRepo->findCampaignActive($whitelabel, $currency);
+                    if($campaign) {
+                        $campaignDescription = $campaign->translations->$lang->description;
+                    }
                 }
+                
             }
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d', strtotime($user->created));
