@@ -574,6 +574,38 @@ class UsersCollection
     }
 
     /**
+     * Format referral list totals
+     *
+     * @param array $users Users data
+     */
+    public function formatReferralListTotals($users)
+    {
+        $timezone = session('timezone');
+        foreach ($users as $user) {
+            //$user->date = Carbon::createFromFormat('Y-m-d H:i:s', $user->created_at)->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $user->currency = $user->register_currency;
+        }
+    }
+
+    /**
+     * Format referral top list
+     *
+     * @param array $users Users data
+     */
+    public function formatReferralTopList($users)
+    {
+        $timezone = session('timezone');
+        foreach ($users as $user) {
+            $user->user = sprintf(
+                '<a href="%s" class="btn u-btn-3d u-btn-primary btn-sm" target="_blank">%s</a>',
+                route('users.details', [$user->id]),
+                $user->id
+            );
+            $user->currency = $user->register_currency;
+        }
+    }
+
+    /**
      * Format status users
      *
      * @param array $users Users data

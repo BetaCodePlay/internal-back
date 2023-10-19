@@ -179,4 +179,85 @@ class ReferralsController extends Controller
             return Utils::failedResponse();
         }
     }
+
+    /**
+     * Referral totals 
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function referralsTotals()
+    {
+        $data['title'] = _i('List of totals referred');
+        $data['filter'] = _i('filter by user');
+        return view('back.referrals.referral-totals', $data);
+    }
+
+    /**
+     * Referral total list
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function referralsTotalsList(Request $request)
+    {
+        try {
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $currency = $request->currency;
+                $user = auth()->user()->id;
+                $whitelabel = Configurations::getWhitelabel();
+                $usersData = $this->usersRepo->getTotalsReferralListByUser($user, $currency, $whitelabel, $startDate, $endDate);
+                $this->usersCollection->formatReferralListTotals($usersData);
+            } else {
+                $usersData = [];
+            }
+            $data = [
+                'users' => $usersData
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Referral top 
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function referralsTop()
+    {
+        $data['title'] = _i('List of top referred');
+        $data['filter'] = _i('filter by user');
+        return view('back.referrals.referral-top', $data);
+    }
+
+    /**
+     * Referral total list
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function referralsTopList(Request $request)
+    {
+        try {
+            $user = $request->user;
+            $currency = $request->currency;
+            $whitelabel = Configurations::getWhitelabel();
+            $usersData = $this->usersRepo->getReferralTopList($user, $currency, $whitelabel);
+            $this->usersCollection->formatReferralTopList($usersData);
+            $data = [
+                'users' => $usersData
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }
+
 }

@@ -225,6 +225,7 @@ class TransactionsCollection
 
             switch ($paymentMethod) {
                 case PaymentMethods::$cryptocurrencies:
+                case PaymentMethods::$binance:
                 {
                     $transaction->details .= sprintf(
                         '<li><strong>%s</strong>: %s</li>',
@@ -243,7 +244,6 @@ class TransactionsCollection
                     );
                     break;
                 }
-                case PaymentMethods::$binance:
                 case PaymentMethods::$paypal:
                 {
                     if( $status == TransactionStatus::$approved || $status == TransactionStatus::$rejected){
@@ -252,18 +252,11 @@ class TransactionsCollection
                                 _i('Date'),
                                 Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                         );
-                        if (!is_null($transaction->details_data)) {
-                            $transaction->details .= sprintf(
-                                '<li><strong>%s</strong>: %s</li>',
-                                _i('Transaction ID'),
-                                $transaction->details_data->order
-                            );
-                            $transaction->details .= sprintf(
-                                '<li><strong>%s</strong>: %s</li>',
-                                _i('PayPal ID'),
-                                $transaction->details_data->id
-                            );
-                       }
+                        $transaction->details .= sprintf(
+                            '<li><strong>%s</strong>: %s</li>',
+                            _i('Paypal ID'),
+                            $transaction->data->paypal_reference
+                        );
                     }else{
                         $transaction->details .= sprintf(
                             '<li><strong>%s</strong>: %s</li>',
@@ -280,13 +273,21 @@ class TransactionsCollection
                         _i('Date'),
                         Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
                     );
-                    if (!is_null($transaction->details_data)) {
-                        $transaction->details .= sprintf(
-                            '<li><strong>%s</strong>: %s</li>',
-                            _i('MercadoPago ID'),
-                            $transaction->details_data->id_mercado_pago
-                        );
-                    }
+                    break;
+                }
+                case PaymentMethods::$pix:
+                {
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Date'),
+                        Carbon::createFromFormat('Y-m-d', $transaction->data->date)->format('d-m-Y')
+                    );
+                    $transaction->details .= sprintf(
+                        '<li><strong>%s</strong>: %s</li>',
+                        _i('Qr Text'),
+                        $transaction->data->qr_code
+                    );
+                    break;
                 }
             }
 
@@ -664,6 +665,15 @@ class TransactionsCollection
                             $transaction->user_account->alias
                         );
                     }
+                    break;
+                }
+                case PaymentMethods::$pix:
+                {
+                    $transaction->withdrawal_data .= sprintf(
+                        '<strong>%s:</strong> %s<br>',
+                        _i('CPF/CNPJ'),
+                        $transaction->data->document
+                    );
                     break;
                 }
             }

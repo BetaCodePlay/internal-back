@@ -1,6 +1,5 @@
 import {swalConfirm, swalError, swalSuccessWithButton, swalSuccessNoButton, swalInput} from "../../commons/js/core";
-import {clearForm, initSelect2} from "./commons";
-
+import {clearForm, initSelect2, initDateRangePickerEndToday} from "./commons";
 class Referrals {
 
     // Add referral user
@@ -77,6 +76,84 @@ class Referrals {
                         $table.DataTable().ajax.url(route).load();
                     });
                 });
+            }
+        });
+
+        $button.click(function () {
+            $button.button('loading');
+            let user = $('#user').val();
+            let currency = $('#currency').val();
+            let route = `${$table.data('route')}?user=${user}&currency=${currency}`;
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
+                $button.button('reset');
+            });
+        });
+    }
+
+    // Get referral totals
+    referralTotals() {
+        initSelect2();
+        initDateRangePickerEndToday(open = 'right');
+        let $table = $('#referral-totals-list-table');
+        let $button = $('#search');
+        let api;
+
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.users"
+            },
+            "order": [[0, 'asc']],
+            "columns": [
+                // {"data": "date"},
+                {"data": "currency"},
+                {"data": "totals"}
+            ],
+            "initComplete": function () {
+                api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+            }
+        });
+
+        $button.click(function () {
+            $button.button('loading');
+            let currency = $('#currency').val();
+            let startDate = $('#start_date').val();
+            let endDate = $('#end_date').val();
+            let route = `${$table.data('route')}?start_date=${startDate}&end_date=${endDate}&currency=${currency}`;
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
+                $button.button('reset');
+            });
+        });
+    }
+
+    // Get referral users list
+    referralTopList() {
+        initSelect2();
+        let $table = $('#referral-top-list-table');
+        let $button = $('#search');
+        let api;
+
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.users"
+            },
+            "order": [[0, 'asc']],
+            "columns": [
+                {"data": "user"},
+                {"data": "username"},
+                {"data": "email"},
+                {"data": "currency"},
+                {"data": "totals"}
+            ],
+            "initComplete": function () {
+                api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
             }
         });
 

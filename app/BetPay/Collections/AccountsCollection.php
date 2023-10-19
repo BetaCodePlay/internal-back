@@ -128,6 +128,22 @@ class AccountsCollection
                     );
                     break;
                 }
+                case PaymentMethods::$pix:
+                {
+                    $account->details = sprintf(
+                        '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                        _i('Client ID'),
+                        ': ',
+                        $details->client_id,
+                    );
+                    $account->details .= sprintf(
+                        '<ul><li><strong>%s</strong>%s%s</li></ul>',
+                        _i('Client Secret'),
+                        ': ',
+                        $details->client_secret
+                    );
+                    break;
+                }
             }
             $account->status = sprintf(
                 '<div class="checkbox checkbox-primary">
