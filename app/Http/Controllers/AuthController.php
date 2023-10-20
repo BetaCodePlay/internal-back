@@ -137,14 +137,17 @@ class AuthController extends Controller
 
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
                     $permissionsMerge = $permissions;
-                    //TODO IF AGENT ADD NEW PERMISSIONS
-                    if(Auth::user()->type_user == TypeUser::$agentMater){
-                        $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
+                    if ($user !== 89985){
+                        //TODO IF AGENT ADD NEW PERMISSIONS
+                        if(Auth::user()->type_user == TypeUser::$agentMater){
+                            $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
+                        }
+                        //TODO ADD PERMISSION TO AGENT
+                        if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles) && Auth::user()->username == 'admin') {
+                            $permissionsMerge = array_merge($permissions,[Permissions::$dashboard,Permissions::$dashboard_widgets]);
+                        }
                     }
-                    //TODO ADD PERMISSION TO AGENT
-                    if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles) && Auth::user()->username == 'admin') {
-                        $permissionsMerge = array_merge($permissions,[Permissions::$dashboard,Permissions::$dashboard_widgets]);
-                    }
+
 
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
