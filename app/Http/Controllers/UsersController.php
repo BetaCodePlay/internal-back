@@ -499,7 +499,7 @@ class UsersController extends Controller
             }
 
             $ip = Utils::userIp($request);
-
+            \Log::info(__METHOD__, ['paso', 'request' => $request->all()]);
             $whitelabel = Configurations::getWhitelabel();
             $userData = [
                 'username' => $username,
@@ -2237,8 +2237,8 @@ class UsersController extends Controller
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
-            $users = ['romeo','wolf','supportgl', 'admin', 'panther',   'supportnb', 'supportvj'];
-
+            $users = ['wolf','supportgl', 'admin', 'panther',   'supportnb', 'supportvj'];
+            \Log::notice(__METHOD__, ['paso por aca' => $ex, 'request' => $request->all()]);
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
 
