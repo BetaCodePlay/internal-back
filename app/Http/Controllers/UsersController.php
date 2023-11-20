@@ -2238,7 +2238,7 @@ class UsersController extends Controller
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
             $users = ['wolf','supportgl', 'admin', 'panther',   'supportnb', 'supportvj'];
-            \Log::notice(__METHOD__, ['paso por aca', 'request' => $request->all()]);
+            \Log::notice(__METHOD__, ['paso por aca 1', 'request' => $request->all()]);
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
 
@@ -2285,8 +2285,9 @@ class UsersController extends Controller
                         'timezone' => $request->timezone,
                         'level' => 1
                     ];
+                    \Log::notice(__METHOD__, ['paso por aca 2', 'newUserData' =>   $newUserData, 'profileData' =>   $profileData ]);
                     $newUser = $this->usersRepo->store($newUserData, $profileData);
-                    \Log::notice(__METHOD__, ['paso por aca', 'newUser' =>  $newUser]);
+                    \Log::notice(__METHOD__, ['paso por aca 3', 'newUser' =>  $newUser]);
                     Security::assignRole($newUser->id, 1);
 
                     $wallet = Wallet::store($newUser->id, $newUser->username, $newUser->uuid, $currencies[0], $whitelabel, session('wallet_access_token'));
