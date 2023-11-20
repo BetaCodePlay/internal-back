@@ -3870,7 +3870,6 @@ class AgentsController extends Controller
             $admin = 'admin';
             $support = 'wolf';
             $supportgl = 'supportgl';
-            $romeo = 'romeo';
             $romeoAgent = null;
             $supportAgent = null;
             $supportAgl = null;
