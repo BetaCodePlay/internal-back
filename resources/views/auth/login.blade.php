@@ -33,35 +33,37 @@
                         {{ _i("Today is a new day. It's your day. You shape it.")}}<br>
                         {{ _i('Sign in to start managing your project.')}}
                     </div>
-                    <div class="wrap-input-login validate-input">
-                        <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Username')}}" required>
-                    </div>
+                    <div class="login-form-line">
+                        <div class="wrap-input-login validate-input">
+                            <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Username')}}" required>
+                        </div>
 
-                    <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
+                        <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-                        <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('Password') }}" required>
-                    </div>
+                            <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('Password') }}" required>
+                        </div>
 
-                    <div class="wrap-input-login">
-                        <a href="#" class="a-login">have you forgotten your password?</a>
-                    </div>
+                        <div class="wrap-input-login">
+                            <a href="#" class="a-login">have you forgotten your password?</a>
+                        </div>
 
-                    <div class="container-login-form-btn">
-                        <button class="btn-login" id="login" type="button" data-loading-text="{{ _i('Please wait...') }}">
-                            {{ _i('Login') }}
-                        </button>
-                    </div>
+                        <div class="container-login-form-btn">
+                            <button class="btn-login" id="login" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                                {{ _i('Login') }}
+                            </button>
+                        </div>
 
-                    <div class="wrap-input-divider">
-                        O
-                    </div>
+                        <div class="wrap-input-divider">
+                            O
+                        </div>
 
-                    <div class="container-login-form-btn">
-                        <button class="btn-login-google" type="button" data-loading-text="{{ _i('Please wait...') }}">
-                           <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
-                        </button>
+                        <div class="container-login-form-btn">
+                            <button class="btn-login-google" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                                <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
