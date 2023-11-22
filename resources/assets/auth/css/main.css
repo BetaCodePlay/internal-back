@@ -422,6 +422,10 @@ iframe {
     border: 1px solid #fff;
 }
 
+.input-login:focus {
+    border-color: #7D2DF5;
+}
+
 .a-login {
     font-weight: 600;
     color: #7D2DF5;
