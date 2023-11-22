@@ -213,7 +213,7 @@ iframe {
     justify-content: center;
     align-items: center;
     padding: 15px;
-    background: #0f1218;
+    background: #f7fbff;
 }
 
 .wrap-login100 {
@@ -382,43 +382,23 @@ iframe {
 
 /*---------------------------------------------*/
 .btn-show-pass {
-    font-size: 15px;
-    color: #999999;
-
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
+    font-size: 18px;
+    color: #999;
     display: flex;
     align-items: center;
     position: absolute;
-    height: 100%;
-    top: 0;
-    right: 0;
-    padding-right: 5px;
+    padding: 8px;
     cursor: pointer;
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    transition: all 0.4s;
+    border-radius: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 3px;
+    transition: 0.15s;
 }
 
 .btn-show-pass:hover {
-    color: #6a7dfe;
-    color: -webkit-linear-gradient(left, #EAFF6A, #b721ff);
-    color: -o-linear-gradient(left, #EAFF6A, #b721ff);
-    color: -moz-linear-gradient(left, #EAFF6A, #b721ff);
-    color: linear-gradient(left, #EAFF6A, #b721ff);
+    color: #333;
 }
-
-.btn-show-pass.active {
-    color: #6a7dfe;
-    color: -webkit-linear-gradient(left, #EAFF6A, #b721ff);
-    color: -o-linear-gradient(left, #EAFF6A, #b721ff);
-    color: -moz-linear-gradient(left, #EAFF6A, #b721ff);
-    color: linear-gradient(left, #EAFF6A, #b721ff);
-}
-
 
 /*------------------------------------------------------------------
 [ Button ]*/
@@ -468,7 +448,6 @@ iframe {
     color: #000;
     line-height: 1.2;
     text-transform: uppercase;
-
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
