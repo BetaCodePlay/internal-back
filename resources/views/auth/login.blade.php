@@ -21,6 +21,10 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
+            <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v1.jpg')">
+                <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
+            </div>
+
             <form class="login100-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="login100-form-ex">
                     <div class="wrap-input100 validate-input">
@@ -44,9 +48,6 @@
                     </div>
                 </div>
             </form>
-            <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v1.jpg')">
-                <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
-            </div>
         </div>
     </div>
 </div>
