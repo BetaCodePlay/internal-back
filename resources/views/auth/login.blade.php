@@ -23,10 +23,6 @@
         <div class="wrap-login100">
             <form class="login100-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="login100-form-ex">
-                    	<span class="login100-form-title p-b-48">
-						<img class="LogoPrincipal" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
-					</span>
-
                     <div class="wrap-input100 validate-input">
                         <input class="input100" type="text" name="username" id="username" autocomplete="off" required>
                         <span class="focus-input100" data-placeholder="{{ _i('Username')}}"></span>
@@ -51,6 +47,9 @@
                     </div>
                 </div>
             </form>
+            <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v1.jpg')">
+                <img class="LogoPrincipal" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
+            </div>
         </div>
     </div>
 </div>
