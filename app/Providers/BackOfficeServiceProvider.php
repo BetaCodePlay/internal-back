@@ -36,7 +36,7 @@ class BackOfficeServiceProvider extends ServiceProvider
      * @param CurrenciesRepo $currenciesRepo
      * @param Agent $agent
      */
-    public function boot(Request $request, CoreCollection $coreCollection, UsersRepo $usersRepo, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
+    public function bootOld(Request $request, CoreCollection $coreCollection, UsersRepo $usersRepo, PushNotificationsRepo $pushNotificationsRepo, PushNotificationsCollection $pushNotificationsCollection, CurrenciesRepo $currenciesRepo, CurrenciesCollection $currenciesCollection, Agent $agent)
     {
         if (isset($_SERVER['HTTP_HOST'])) {
             $regex = '/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/';
@@ -212,7 +212,7 @@ class BackOfficeServiceProvider extends ServiceProvider
      *
      * @throws InvalidArgumentException
      */
-    public function bootNew(
+    public function boot(
         Request $request,
         CoreCollection $coreCollection,
         PushNotificationsRepo $pushNotificationsRepo,
