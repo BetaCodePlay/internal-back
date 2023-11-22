@@ -29,7 +29,7 @@
             <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="login-form-ex">
                     <div class="login-nav">
-                        <button type="button" class="btn">Por email</button>
+                        <button type="button" class="btn active">Por email</button>
                         <button type="button" class="btn">Por usuario</button>
                     </div>
                     <div class="wrap-input-title">{{ _i('Welcome')}}</div>
