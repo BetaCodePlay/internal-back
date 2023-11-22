@@ -201,7 +201,7 @@ iframe {
     margin: 0 auto;
 }
 
-.container-login100 {
+.container-login {
     width: 100%;
     min-height: 100vh;
     display: -webkit-box;
@@ -216,7 +216,7 @@ iframe {
     background: #f7fbff;
 }
 
-.wrap-login100 {
+.wrap-login {
     width: 880px;
     background: #1e1e1e;
     border-radius: 0;
@@ -224,7 +224,7 @@ iframe {
     position: relative;
 }
 
-.wrap-login100 .login100-form {
+.wrap-login .login-form {
     width: 480px;
     min-height: 720px;
     padding: 50px 70px;
@@ -243,11 +243,11 @@ iframe {
     text-align: center;
 }
 
-.wrap-login100 .login100-form .login100-form-ex {
+.wrap-login .login-form .login-form-ex {
     width: 100%;
 }
 
-.wrap-login100 .login-preview-bg {
+.wrap-login .login-preview-bg {
     position: absolute;
     width: 400px;
     top: 0;
@@ -260,7 +260,7 @@ iframe {
     z-index: 3;
 }
 
-.wrap-login100 .login-preview-bg .login-logo {
+.wrap-login .login-preview-bg .login-logo {
     display: block;
     position: absolute;
     max-width: calc(100% - 100px);
@@ -273,11 +273,11 @@ iframe {
 /*------------------------------------------------------------------
 [ Form ]*/
 
-.login100-form {
+.login-form {
     width: 100%;
 }
 
-.login100-form-title {
+.login-form-title {
     display: block;
     font-family: Poppins-Bold;
     font-size: 30px;
@@ -286,27 +286,26 @@ iframe {
     text-align: center;
 }
 
-.login100-form-title i {
+.login-form-title i {
     font-size: 60px;
 }
 
 /*------------------------------------------------------------------
 [ Input ]*/
 
-.wrap-input100 {
+.wrap-input-login {
     width: 100%;
     position: relative;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 }
 
-.input100 {
+.input-login {
     background: #f7fbff;
     border: 0;
-    color: #333;
+    color: #555;
     border-radius: 10px;
     padding: 12px 15px;
     font-size: 15px;
-    font-weight: 500;
     line-height: 1;
     width: 100%;
     display: block;
@@ -402,7 +401,7 @@ iframe {
 
 /*------------------------------------------------------------------
 [ Button ]*/
-.container-login100-form-btn {
+.container-login-form-btn {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -413,65 +412,27 @@ iframe {
     padding-top: 13px;
 }
 
-.wrap-login100-form-btn {
-    width: 100%;
-    display: block;
-    position: relative;
-    z-index: 1;
-    border-radius: 25px;
-    overflow: hidden;
-    margin: 0 auto;
-}
-
-.login100-form-bgbtn {
-    position: absolute;
-    z-index: -1;
-    width: 300%;
-    height: 100%;
-    background: #a64bf4;
-    background: -webkit-linear-gradient(right, #EAFF6A, #b721ff, #EAFF6A, #b721ff);
-    background: -o-linear-gradient(right, #EAFF6A, #b721ff, #EAFF6A, #b721ff);
-    background: -moz-linear-gradient(right, #EAFF6A, #b721ff, #EAFF6A, #b721ff);
-    background: linear-gradient(right, #EAFF6A, #b721ff, #EAFF6A, #b721ff);
-    top: 0;
-    left: -100%;
-
-    -webkit-transition: all 0.4s;
-    -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    transition: all 0.4s;
-}
-
-.login100-form-btn {
-    font-family: Poppins-Medium;
+.btn-login {
     font-size: 15px;
-    color: #000;
+    color: #fff;
     line-height: 1.2;
-    text-transform: uppercase;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 20px;
+    display: block;
+    padding: 14px 20px;
     width: 100%;
-    height: 50px;
+    background: #323232;
+    border-radius: 10px;
+    transition: 0.3s;
 }
 
-.wrap-login100-form-btn:hover .login100-form-bgbtn {
-    left: 0;
+.btn-login:hover, .btn-login:focus {
+    background: #666;
 }
-
 
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
 @media (max-width: 576px) {
-    .wrap-login100 {
-        padding: 77px 15px 33px 15px;
-    }
+
 }
 
 

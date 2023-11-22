@@ -20,27 +20,27 @@
 <body class="body-login">
 
 <div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
+    <div class="container-login">
+        <div class="wrap-login">
             <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v1.jpg')">
                 <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
             </div>
 
-            <form class="login100-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
-                <div class="login100-form-ex">
-                    <div class="wrap-input100 validate-input">
-                        <input class="input100" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Username')}}" required>
+            <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
+                <div class="login-form-ex">
+                    <div class="wrap-input-login validate-input">
+                        <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Username')}}" required>
                     </div>
 
-                    <div class="wrap-input100 validate-input" data-validate="{{ _i('Enter password')}}">
+                    <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-                        <input class="input100" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('Password') }}" required>
+                        <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('Password') }}" required>
                     </div>
 
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" id="login" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                    <div class="container-login-form-btn">
+                        <button class="btn-login" id="login" type="button" data-loading-text="{{ _i('Please wait...') }}">
                             {{ _i('Login') }}
                         </button>
                     </div>
