@@ -242,6 +242,12 @@ iframe {
     text-align: center;
 }
 
+@media screen and (max-height: 800px) {
+    .wrap-login .login-form {
+        min-height: calc(100vh - 30px);
+    }
+}
+
 .wrap-login .login-form .login-form-ex {
     width: 100%;
 }
