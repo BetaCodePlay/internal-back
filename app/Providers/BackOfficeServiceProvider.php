@@ -129,6 +129,7 @@ class BackOfficeServiceProvider extends ServiceProvider
                     $data['mailgun_notifications'] = Configurations::getMailgunNotifications();
                     $data['reset_main_password'] = Configurations::getResetMainPassword();
                     $data['locale'] = LaravelGettext::getLocale();
+                    $data['bonus'] = Configurations::getBonus();
                     //dd($data);
                     view()->share($data);
                 } catch (\Exception $ex) {
