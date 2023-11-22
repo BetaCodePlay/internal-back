@@ -496,6 +496,10 @@ iframe {
     transition: .3s;
 }
 
+.btn-login-google:hover {
+    box-shadow: 0 0 10px #fff;
+}
+
 .btn-login-google img {
     display: inline-block;
     vertical-align: middle;
