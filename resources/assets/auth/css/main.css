@@ -247,6 +247,12 @@ iframe {
     margin: auto;
 }
 
+.wrap-login .login-form .login-form-ex {
+    .login-nav {
+        
+    }
+}
+
 .wrap-login .login-form .login-form-ex .login-form-line {
     max-width: 320px;
     margin: auto;
