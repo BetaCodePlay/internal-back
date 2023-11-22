@@ -1,6 +1,9 @@
-/*
-sass --style compressed resources/assets/back/scss/template.scss:public/commons/css/template.min.css
-*/
+body {
+    &.body-login {
+        background: red;
+    }
+}
+
 #header-search-form {
     .form-control {
         width: 100%;
