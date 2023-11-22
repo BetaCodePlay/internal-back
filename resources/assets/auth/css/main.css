@@ -283,6 +283,7 @@ iframe {
     width: 100%;
     color: #fff;
     text-align: left;
+    margin-bottom: 5px;
 }
 
 .wrap-login .login-form .login-form-ex .wrap-input-title {
