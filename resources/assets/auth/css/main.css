@@ -247,6 +247,21 @@ iframe {
     width: 100%;
 }
 
+.wrap-login .login-form .login-form-ex .wrap-input-title {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.wrap-login .login-form .login-form-ex .wrap-input-subtitle {
+    color: #fff;
+    line-height: 1.2;
+    font-size: 15px;
+    text-align: left;
+    margin-bottom: 40px;
+}
+
 .wrap-login .login-preview-bg {
     position: absolute;
     width: 400px;
