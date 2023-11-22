@@ -29,6 +29,7 @@
                 <div class="wrap-input100 validate-input">
                     <input class="input100" type="text" name="username" id="username" autocomplete="off" required>
                     <span class="focus-input100" data-placeholder="{{ _i('Username')}}"></span>
+                    Clandor
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="{{ _i('Enter password')}}">
