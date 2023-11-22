@@ -257,11 +257,6 @@ iframe {
     position: relative;
 }
 
-.wrap-login .login-form .login-form-ex .login-nav::before {
-    content: "";
-    position: absolute;
-}
-
 .wrap-login .login-form .login-form-ex .login-nav .btn {
     width: 50%;
     color: #fff;
@@ -269,6 +264,14 @@ iframe {
     font-size: 18px;
     position: relative;
     z-index: 5;
+    transition: 0.15s;
+}
+
+.wrap-login .login-form .login-form-ex .login-nav .btn.active {
+    background: #6f6f6f;
+    border-radius: 50px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 8px #fff;
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line {
