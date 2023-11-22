@@ -212,15 +212,15 @@ iframe {
     justify-content: center;
     align-items: center;
     padding: 15px;
-    background: #f7fbff;
+    background: #181818;
 }
 
 .wrap-login {
     width: 920px;
     background: #1e1e1e;
-    border-radius: 0;
     overflow: hidden;
     position: relative;
+    border-radius: 10px;
 }
 
 .wrap-login .login-form {
