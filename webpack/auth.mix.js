@@ -21,8 +21,7 @@ mix.styles([
         'node_modules/animsition/dist/css/animsition.css',
         'node_modules/animate/animate.css',
         'resources/assets/auth/css/main.css',
-        'resources/assets/auth/css/util.ccs',
-        'resources/assets/auth/scss/template.scss',
+        'resources/assets/auth/css/util.ccs'
     ],
     'public/auth/css/custom.min.css')
     .version();

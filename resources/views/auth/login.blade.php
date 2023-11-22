@@ -22,39 +22,40 @@
     <div class="container-login100">
         <div class="wrap-login100">
             <form class="login100-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
-					<span class="login100-form-title p-b-48">
+                <div class="login100-form-ex">
+                    	<span class="login100-form-title p-b-48">
 						<img class="LogoPrincipal" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
 					</span>
 
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" name="username" id="username" autocomplete="off" required>
-                    <span class="focus-input100" data-placeholder="{{ _i('Username')}}"></span>
-                </div>
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" type="text" name="username" id="username" autocomplete="off" required>
+                        <span class="focus-input100" data-placeholder="{{ _i('Username')}}"></span>
+                    </div>
 
-                <div class="wrap-input100 validate-input" data-validate="{{ _i('Enter password')}}">
+                    <div class="wrap-input100 validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-                    <input class="input100" type="password" name="password" id="password" autocomplete="off" required>
-                    <span class="focus-input100" data-placeholder="{{ _i('Password') }}"></span>
-                </div>
+                        <input class="input100" type="password" name="password" id="password" autocomplete="off" required>
+                        <span class="focus-input100" data-placeholder="{{ _i('Password') }}"></span>
+                    </div>
 
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button class="login100-form-btn" id="login" type="button"
-                                data-loading-text="{{ _i('Please wait...') }}">
-                            {{ _i('Login') }}
-                        </button>
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn" id="login" type="button"
+                                    data-loading-text="{{ _i('Please wait...') }}">
+                                {{ _i('Login') }}
+                            </button>
+                        </div>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
 </div>
 
-<footer>
+{{--<footer>
 
     <div class="dropdown text-center p-b-20">
         <div class="languages-menu" id="languages-menu">
@@ -87,8 +88,8 @@
     </p>
 
 
-</footer>
-@include('auth.modals.change-password');
+</footer>--}}
+@include('auth.modals.change-password')
 
 <script src="{{ mix('js/manifest.js', 'auth') }}"></script>
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>

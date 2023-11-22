@@ -31,10 +31,6 @@
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
-body {
-    background: red !important;
-}
-
 * {
 	margin: 0px;
 	padding: 0px;
@@ -184,21 +180,37 @@ iframe {
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #000;
+  background: #0f1218;
 }
 
 .wrap-login100 {
-  width: 390px;
-  background: #27282D;
-  border-radius: 10px;
+  width: 880px;
+  background: #1e1e1e;
+  border-radius: 0;
   overflow: hidden;
-  padding: 77px 55px 33px 55px;
+}
 
-  box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
-  -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+.wrap-login100 .login100-form {
+    width: 480px;
+    min-height: 720px;
+    padding: 30px;
+    box-shadow: 0 0 8px #111;
+    position: relative;
+    z-index: 1;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
+}
+
+.wrap-login100 .login100-form .login100-form-ex {
+    width: 100%;
 }
 
 
