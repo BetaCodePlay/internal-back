@@ -242,7 +242,7 @@ iframe {
 }
 
 .wrap-login .login-form .login-form-ex {
-    width: 380px;
+    width: 420px;
     max-width: 100%;
     margin: auto;
 }
@@ -251,7 +251,7 @@ iframe {
     display: flex;
     background: #4b4b4b;
     border-radius: 50px;
-    width: 280px;
+    width: 300px;
     margin: auto;
     margin-bottom: 50px;
     position: relative;
@@ -261,7 +261,7 @@ iframe {
     width: 50%;
     color: #fff;
     padding: 8px;
-    font-size: 18px;
+    font-size: 16px;
     position: relative;
     z-index: 5;
     transition: 0.15s;
@@ -275,7 +275,7 @@ iframe {
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line {
-    max-width: 320px;
+    max-width: 360px;
     margin: auto;
 }
 
