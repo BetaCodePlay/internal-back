@@ -211,7 +211,7 @@ iframe {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    background: #181818;
+    background: #1e1e1e;
 }
 
 .wrap-login {
@@ -223,9 +223,9 @@ iframe {
 }
 
 .wrap-login .login-form {
-    width: 60%;
+    width: 56%;
     min-height: 100vh;
-    padding: 50px 70px;
+    padding: 50px;
     box-shadow: 0 0 8px #111;
     position: relative;
     z-index: 5;
@@ -269,7 +269,7 @@ iframe {
 
 .wrap-login .login-preview-bg {
     position: absolute;
-    width: 40%;
+    width: 44%;
     top: 0;
     right: 0;
     bottom: 0;
@@ -317,6 +317,35 @@ iframe {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+}
+
+@media screen and (max-width: 767px) {
+    .container-login {
+        display: block;
+    }
+
+    .wrap-login .login-form {
+        width: 100%;
+        min-height: auto;
+        padding: 40px 25px;
+    }
+
+    .wrap-login .login-preview-bg {
+        position: relative;
+        width: 100%;
+        padding: 12px;
+    }
+
+    .wrap-login .login-preview-bg .login-logo {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        display: block;
+        margin: auto;
+        max-height: 78px;
+        max-width: 100%;
+    }
 }
 /*------------------------------------------------------------------
 [ Form ]*/
