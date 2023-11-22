@@ -294,11 +294,23 @@ iframe {
 .wrap-login .wrap-input-divider::before {
     content: '';
     position: absolute;
+    height: 1px;
+    width: calc(50% - 25px);
+    background: #D2D2D2;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .wrap-login .wrap-input-divider::after {
     content: '';
     position: absolute;
+    height: 1px;
+    width: calc(50% - 25px);
+    background: #D2D2D2;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 /*------------------------------------------------------------------
 [ Form ]*/

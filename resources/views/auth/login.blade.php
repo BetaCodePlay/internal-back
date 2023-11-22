@@ -57,6 +57,12 @@
                     <div class="wrap-input-divider">
                         O
                     </div>
+
+                    <div class="container-login-form-btn">
+                        <button class="btn-login-google" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                           <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
