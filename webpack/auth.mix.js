@@ -18,8 +18,6 @@ mix.sass(
 |--------------------------------------------------------------------------
 */
 mix.styles([
-        'node_modules/animsition/dist/css/animsition.css',
-        'node_modules/animate/animate.css',
         'resources/assets/auth/css/main.css',
         'resources/assets/auth/css/util.ccs'
     ],

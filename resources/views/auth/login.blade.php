@@ -24,23 +24,20 @@
             <form class="login100-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="login100-form-ex">
                     <div class="wrap-input100 validate-input">
-                        <input class="input100" type="text" name="username" id="username" autocomplete="off" required>
-                        <span class="focus-input100" data-placeholder="{{ _i('Username')}}"></span>
+                        <input class="input100" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Username')}}" required>
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-                        <input class="input100" type="password" name="password" id="password" autocomplete="off" required>
-                        <span class="focus-input100" data-placeholder="{{ _i('Password') }}"></span>
+                        <input class="input100" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('Password') }}" required>
                     </div>
 
                     <div class="container-login100-form-btn">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" id="login" type="button"
-                                    data-loading-text="{{ _i('Please wait...') }}">
+                            <button class="login100-form-btn" id="login" type="button" data-loading-text="{{ _i('Please wait...') }}">
                                 {{ _i('Login') }}
                             </button>
                         </div>
