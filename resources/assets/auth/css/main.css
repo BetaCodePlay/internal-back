@@ -223,9 +223,9 @@ iframe {
 }
 
 .wrap-login .login-form {
-    width: 60%;
+    width: 58%;
     min-height: 100vh;
-    padding: 50px 70px;
+    padding: 50px;
     box-shadow: 0 0 8px #111;
     position: relative;
     z-index: 5;
@@ -269,7 +269,7 @@ iframe {
 
 .wrap-login .login-preview-bg {
     position: absolute;
-    width: 40%;
+    width: 42%;
     top: 0;
     right: 0;
     bottom: 0;
