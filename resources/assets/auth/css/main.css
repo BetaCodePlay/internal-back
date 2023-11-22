@@ -493,7 +493,7 @@ iframe {
     width: 100%;
     background: #fff;
     border-radius: 10px;
-    transition: .3s;
+    transition: .15s;
 }
 
 .btn-login-google:hover {
