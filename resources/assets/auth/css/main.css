@@ -211,7 +211,6 @@ iframe {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 15px;
     background: #181818;
 }
 
@@ -220,12 +219,12 @@ iframe {
     background: #1e1e1e;
     overflow: hidden;
     position: relative;
-    border-radius: 10px;
+    border-radius: 0;
 }
 
 .wrap-login .login-form {
-    width: 520px;
-    min-height: 720px;
+    width: 60%;
+    min-height: 100vh;
     padding: 50px 70px;
     box-shadow: 0 0 8px #111;
     position: relative;
@@ -242,14 +241,10 @@ iframe {
     text-align: center;
 }
 
-@media screen and (max-height: 800px) {
-    .wrap-login .login-form {
-        min-height: calc(100vh - 30px);
-    }
-}
-
 .wrap-login .login-form .login-form-ex {
-    width: 100%;
+    width: 380px;
+    max-width: 100%;
+    margin: auto;
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line {
@@ -274,7 +269,7 @@ iframe {
 
 .wrap-login .login-preview-bg {
     position: absolute;
-    width: 400px;
+    width: 40%;
     top: 0;
     right: 0;
     bottom: 0;
@@ -349,7 +344,7 @@ iframe {
 .wrap-input-login {
     width: 100%;
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .input-login {
