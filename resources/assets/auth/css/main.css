@@ -479,6 +479,28 @@ iframe {
     background: #666;
 }
 
+.btn-login-google {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.2;
+    display: block;
+    padding: 12px 20px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    transition: .3s;
+}
+
+.btn-login-google img {
+    display: inline-block;
+    vertical-align: middle;
+    height: 18px;
+    position: relative;
+    top: -2px;
+    margin-right: 5px;
+    transform: scale(1.2);
+}
+
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
