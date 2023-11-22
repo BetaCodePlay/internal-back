@@ -1,40 +1,24 @@
 {
     "name": "dotworkers/dotpanel",
     "type": "project",
-    "description": "Dotpanel project",
+    "description": "BESTCASINOS back",
     "keywords": [
-        "dotpanel",
-        "project"
+        "bestcasinos",
+        "back"
     ],
     "license": "Proprietary",
     "authors": [
         {
-            "name": "Damelys Espinoza",
-            "email": "damelys.espinoza@dotworkers.com"
+            "name": "Carlos Mejias",
+            "email": "carlosmejias1000@gmail.com"
         },
         {
-            "name": "Eborio Linárez",
-            "email": "eborio.linarez@dotworkers.com"
-        },
-        {
-            "name": "Gabriel Santiago",
-            "email": "gabriel.santiago@dotworkers.com"
-        },
-        {
-            "name": "Mayinis Torrealba",
-            "email": "miguel@dotworkers.com"
-        },
-        {
-            "name": "Miguel Sira",
-            "email": "miguel.sira@dotworkers.com"
+            "name": "Emilio Hernández",
+            "email": "emilio25informatic@gmail.com"
         },
         {
             "name": "Orlando Bravo",
-            "email": "orlando.bravo@dotworkers.com"
-        },
-        {
-            "name": "Yeltsin Linares",
-            "email": "yeltsin.linares@dotworkers.com"
+            "email": "jbravocadevilla@gmail.com"
         }
     ],
     "repositories": [
