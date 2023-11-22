@@ -28,21 +28,27 @@
 
             <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="login-form-ex">
+                    <div class="login-nav">
+                        <button type="button" class="btn active">Por email</button>
+                        <button type="button" class="btn">Por usuario</button>
+                    </div>
                     <div class="wrap-input-title">{{ _i('Welcome')}}</div>
                     <div class="wrap-input-subtitle">
                         {{ _i("Today is a new day. It's your day. You shape it.")}}<br>
                         {{ _i('Sign in to start managing your project.')}}
                     </div>
                     <div class="login-form-line">
+                        <label>E-mail</label>
                         <div class="wrap-input-login validate-input">
-                            <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Username')}}" required>
+                            <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
                         </div>
 
+                        <label>Password</label>
                         <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-                            <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('Password') }}" required>
+                            <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
                         </div>
 
                         <div class="wrap-input-login">
