@@ -44,10 +44,18 @@
                         <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('Password') }}" required>
                     </div>
 
+                    <div class="wrap-input-login">
+                        <a href="#" class="a-login">have you forgotten your password?</a>
+                    </div>
+
                     <div class="container-login-form-btn">
                         <button class="btn-login" id="login" type="button" data-loading-text="{{ _i('Please wait...') }}">
                             {{ _i('Login') }}
                         </button>
+                    </div>
+
+                    <div class="wrap-input-divider">
+                        O
                     </div>
                 </div>
             </form>
