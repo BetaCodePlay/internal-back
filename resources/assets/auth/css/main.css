@@ -216,7 +216,7 @@ iframe {
 }
 
 .wrap-login {
-    width: 880px;
+    width: 920px;
     background: #1e1e1e;
     border-radius: 0;
     overflow: hidden;
@@ -224,7 +224,7 @@ iframe {
 }
 
 .wrap-login .login-form {
-    width: 480px;
+    width: 520px;
     min-height: 720px;
     padding: 50px 70px;
     box-shadow: 0 0 8px #111;
@@ -244,6 +244,11 @@ iframe {
 
 .wrap-login .login-form .login-form-ex {
     width: 100%;
+}
+
+.wrap-login .login-form .login-form-ex .login-form-line {
+    max-width: 320px;
+    margin: auto;
 }
 
 .wrap-login .login-form .login-form-ex .wrap-input-title {
