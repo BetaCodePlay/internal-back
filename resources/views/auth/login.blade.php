@@ -28,6 +28,11 @@
 
             <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="login-form-ex">
+                    <div class="wrap-input-title">{{ _i('Welcome')}}</div>
+                    <div class="wrap-input-subtitle">
+                        {{ _i("Today is a new day. It's your day. You shape it.")}}<br>
+                        {{ _i('Sign in to start managing your project.')}}
+                    </div>
                     <div class="wrap-input-login validate-input">
                         <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Username')}}" required>
                     </div>
