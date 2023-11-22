@@ -242,7 +242,7 @@ iframe {
 }
 
 .wrap-login .login-form .login-form-ex {
-    width: 420px;
+    width: 400px;
     max-width: 100%;
     margin: auto;
 }
@@ -275,8 +275,7 @@ iframe {
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line {
-    max-width: 360px;
-    margin: auto;
+    width: 100%;
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line label {
@@ -290,7 +289,7 @@ iframe {
     color: #fff;
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .wrap-login .login-form .login-form-ex .wrap-input-subtitle {
@@ -298,7 +297,7 @@ iframe {
     line-height: 1.2;
     font-size: 15px;
     text-align: left;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .wrap-login .login-preview-bg {
@@ -424,7 +423,7 @@ iframe {
 }
 
 .input-login:focus {
-    border-color: #7D2DF5;
+    border-color: #7D2DF5 !important;
 }
 
 .a-login {
