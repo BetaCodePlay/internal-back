@@ -59,6 +59,7 @@ class Auth {
                 } else {
                     console.log(json.responseJSON);
                     console.log(json.responseJSON.errors);
+                    console.log(Object.values(json.responseJSON.errors));
                     console.log(json.responseJSON.errors.length);
                 }
             }).always(function () {
