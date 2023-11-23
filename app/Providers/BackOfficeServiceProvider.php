@@ -160,7 +160,7 @@ class BackOfficeServiceProvider extends ServiceProvider
     private function configureHttpsUrlScheme()
     : void
     {
-        if ((env('APP_ENV') == 'production') || (env('APP_ENV') == 'testing')) {
+        if ($this->app->environment() != 'local') {
             URL::forceScheme('https');
         }
     }
