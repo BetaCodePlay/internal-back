@@ -54,8 +54,13 @@ class Auth {
                 } else {
                     swalError(json);
                 }*/
-                console.log(json);
-                Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
+                if (json.status === 404) {
+                    Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
+                } else {
+                    console.log(json.responseJSON);
+                    console.log(json.responseJSON.errors);
+                    console.log(json.responseJSON.errors.length);
+                }
             }).always(function () {
                 $button.button('reset');
             });
