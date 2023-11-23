@@ -60,7 +60,7 @@ class Auth {
                     console.log(json.responseJSON);
                     console.log(json.responseJSON.errors);
                     console.log(Object.values(json.responseJSON.errors));
-                    console.log(json.responseJSON.errors.length);
+                    console.log(Object.values(json.responseJSON.errors).length);
                 }
             }).always(function () {
                 $button.button('reset');
