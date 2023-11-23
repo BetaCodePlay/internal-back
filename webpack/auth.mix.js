@@ -36,6 +36,7 @@ mix.autoload({
 }).js([
         'resources/assets/auth/js/bootstrap.js',
         'resources/assets/auth/js/main.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js',
         'resources/assets/auth/js/auth.js',
     ],
     'public/auth/js/custom.min.js')

@@ -126,7 +126,6 @@
 </footer>--}}
 @include('auth.modals.change-password')
 
-<script src=" https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js "></script>
 <script src="{{ mix('js/manifest.js', 'auth') }}"></script>
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'auth') }}"></script>
