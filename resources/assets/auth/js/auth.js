@@ -17,7 +17,6 @@ class Auth {
 
             }).done(function (json) {
                 setCookie('language-js', json.data.language, 365)
-                swalSuccessNoButton(json);
                 console.log(json)
                 /*setTimeout(() => window.location.href = json.data.route, 1000);*/
 
@@ -57,9 +56,7 @@ class Auth {
                 } else {
                     swalError(json);
                 }*/
-
-                console.log(json.responseJSON.data)
-                Toastr.notifyToastr('$json.title', '$json.message', 'success');
+                Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
             }).always(function () {
                 $button.button('reset');
             });
