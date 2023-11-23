@@ -129,7 +129,7 @@
 <script src="{{ mix('js/manifest.js', 'auth') }}"></script>
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'auth') }}"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     class Toastr {
         static notifyToastr(title, message, type, timeout) {
