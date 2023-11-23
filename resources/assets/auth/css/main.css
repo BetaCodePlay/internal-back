@@ -501,6 +501,7 @@ iframe {
 
 .btn-login {
     font-size: 15px;
+    font-weight: 500;
     color: #fff;
     line-height: 1.2;
     display: block;
@@ -517,6 +518,7 @@ iframe {
 
 .btn-login-google {
     font-size: 15px;
+    font-weight: 500;
     color: #555;
     line-height: 1.2;
     display: block;
