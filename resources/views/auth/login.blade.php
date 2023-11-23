@@ -132,6 +132,11 @@
     $(function () {
         Auth.login();
     });
+
+    $(window).on('load', function() {
+        $('.loader-login').hide();
+        $('.login-form-ex').addClass('load');
+    });
 </script>
 </body>
 </html>
