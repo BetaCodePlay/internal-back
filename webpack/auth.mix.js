@@ -35,6 +35,7 @@ mix.autoload({
     'popper.js/dist/umd/popper.js': ['Popper']
 }).js([
         'resources/assets/auth/js/bootstrap.js',
+        'resources/assets/auth/js/toastr.min.js',
         'resources/assets/auth/js/main.js',
         'resources/assets/auth/js/auth.js',
     ],
