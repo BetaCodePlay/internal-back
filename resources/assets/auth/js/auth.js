@@ -50,11 +50,11 @@ class Auth {
             }).done(function (json) {
                 setCookie('language-js', json.data.language, 365)
                 swalSuccessNoButton(json);
-
-                setTimeout(() => window.location.href = json.data.route, 1000);
+                console.log(json)
+                /*setTimeout(() => window.location.href = json.data.route, 1000);*/
 
             }).fail(function (json) {
-                if (json.responseJSON.data.changePassword === true) {
+                /*if (json.responseJSON.data.changePassword === true) {
                     $('#change-password').modal('show');
                     let $button = $('#update-button');
                     let $formCP = $('#change-password-form');
@@ -88,8 +88,10 @@ class Auth {
                     });
                 } else {
                     swalError(json);
-                }
+                }*/
 
+                console.log(json)
+                Toastr.notifyToastr('$json.title', '$json.message', 'success');
             }).always(function () {
                 $button.button('reset');
             });
