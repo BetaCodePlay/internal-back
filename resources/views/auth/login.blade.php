@@ -12,6 +12,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'auth') }} ">
     <link rel="stylesheet" href="{{ mix('css/custom.min.css', 'auth') }} ">
@@ -125,6 +126,7 @@
 </footer>--}}
 @include('auth.modals.change-password')
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{ mix('js/manifest.js', 'auth') }}"></script>
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'auth') }}"></script>
