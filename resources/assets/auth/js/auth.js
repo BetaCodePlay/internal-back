@@ -82,13 +82,23 @@ class Auth {
 
             $('.login-tag').removeClass('show-tag');
             $('.' + $class).addClass('show-tag');
+            localStorage.setItem('login',$class);
         });
 
         function getLoginOption() {
+            let $button = $('.btn-tab-login');
             let $select = localStorage.getItem('login');
-            console.log($select);
+            let $count = $button.length;
 
-            console.log($select === null);
+            if($count > 0) {
+                if ($select === null) {
+                    $button.eq(0).click();
+                } else {
+                    $('[data-tag="'+ $select +'"]');
+                }
+            }
+
+            console.log($select);
         }
 
         getLoginOption();
