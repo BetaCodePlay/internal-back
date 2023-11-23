@@ -57,10 +57,12 @@ class Auth {
                 if (json.status === 404) {
                     Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
                 } else {
-                    console.log(json.responseJSON);
-                    console.log(json.responseJSON.errors);
-                    console.log(Object.values(json.responseJSON.errors));
-                    console.log(Object.values(json.responseJSON.errors).length);
+                    let array = Object.values(json.responseJSON.errors);
+                    let title = json.responseJSON.message;
+
+                    $.each(array, function (index, value) {
+                        Toastr.notifyToastr(title, value, 'error');
+                    })
                 }
             }).always(function () {
                 $button.button('reset');
