@@ -101,7 +101,8 @@ class Auth {
 
         getLoginOption();
 
-        $(window).on('load', function (){
+        $(window).on('load', function() {
+            $('.loader-login').hide();
             $('.login-form-ex').addClass('load');
         });
     }
