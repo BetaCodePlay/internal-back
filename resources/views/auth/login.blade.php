@@ -49,7 +49,7 @@
                         <div class="login-tag show-input-user">
                             <label>{{ _i('Username')}}</label>
                             <div class="wrap-input-login validate-input">
-                                <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
+                                <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Enter name')}}" required>
                             </div>
                         </div>
 
