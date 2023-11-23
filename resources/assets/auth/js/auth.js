@@ -85,7 +85,7 @@ class Auth {
         });
 
         function getLoginOption() {
-            let $select = localStorage.getItem(key);
+            let $select = localStorage.getItem('login');
             console.log($select);
 
             console.log($select === null);
