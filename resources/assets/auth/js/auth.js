@@ -83,6 +83,15 @@ class Auth {
             $('.login-tag').removeClass('show-tag');
             $('.' + $class).addClass('show-tag');
         });
+
+        function getLoginOption() {
+            let $select = localStorage.getItem(key);
+            console.log($select);
+
+            console.log($select === null);
+        }
+
+        getLoginOption();
     }
 }
 
