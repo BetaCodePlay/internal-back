@@ -29,8 +29,8 @@
             <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="login-form-ex">
                     <div class="login-nav">
-                        <button type="button" class="btn active">Por email</button>
-                        <button type="button" class="btn">Por usuario</button>
+                        <button type="button" class="btn btn-tab-login active" data-tag="show-input-email">{{ _i('Por email')}}</button>
+                        <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('Por usuario')}}</button>
                     </div>
                     <div class="wrap-input-title">{{ _i('Welcome')}}</div>
                     <div class="wrap-input-subtitle">
@@ -38,12 +38,21 @@
                         {{ _i('Sign in to start managing your project.')}}
                     </div>
                     <div class="login-form-line">
-                        <label>E-mail</label>
-                        <div class="wrap-input-login validate-input">
-                            <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
+                        <div class="login-tag show-input-email" style="display: block">
+                            <label>{{ _i('E-mail')}}</label>
+                            <div class="wrap-input-login validate-input">
+                                <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
+                            </div>
                         </div>
 
-                        <label>Password</label>
+                        <div class="login-tag show-input-user">
+                            <label>{{ _i('Username')}}</label>
+                            <div class="wrap-input-login validate-input">
+                                <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
+                            </div>
+                        </div>
+
+                        <label>{{ _i('Password')}}</label>
                         <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
@@ -52,7 +61,7 @@
                         </div>
 
                         <div class="wrap-input-login">
-                            <a href="#" class="a-login">have you forgotten your password?</a>
+                            <a href="#" class="a-login">{{ _i('have you forgotten your password?')}}</a>
                         </div>
 
                         <div class="container-login-form-btn">
@@ -61,14 +70,16 @@
                             </button>
                         </div>
 
-                        <div class="wrap-input-divider">
-                            O
-                        </div>
+                        <div class="login-tag show-input-email"  style="display: block">
+                            <div class="wrap-input-divider">
+                                O
+                            </div>
 
-                        <div class="container-login-form-btn">
-                            <button class="btn-login-google" type="button" data-loading-text="{{ _i('Please wait...') }}">
-                                <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
-                            </button>
+                            <div class="container-login-form-btn">
+                                <button class="btn-login-google" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                                    <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

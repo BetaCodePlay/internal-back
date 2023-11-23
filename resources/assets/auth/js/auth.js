@@ -5,7 +5,7 @@ class Auth {
     // Login users
     static login() {
         let $button = $('#login');
-        $button.click(function() {
+        $button.click(function () {
             let $form = $('#login-form');
             $button.button('loading');
 
@@ -72,6 +72,18 @@ class Auth {
         $('.languages-menu').click(function () {
             $(this).children('.languages-submenu').slideToggle();
         });
+
+        $(document).on('click', '.btn-tab-login', function () {
+            let $this = $(this);
+            let $class = $this.data('tag');
+
+            $('.btn-tab-login').removeClass('active');
+            $this.addClass('active');
+
+            $('.login-tag').hide();
+            $('.' + $class).show();
+        });
     }
 }
+
 window.Auth = Auth;
