@@ -366,7 +366,7 @@ class AuthController extends Controller
 
     public function resetPassword()
     {
-        return view('auth.password-reset-notification');
+        return view('auth.reset-password');
     }
 
     /**
