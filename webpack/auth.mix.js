@@ -19,6 +19,7 @@ mix.sass(
 */
 mix.styles([
         'resources/assets/auth/css/main.css',
+        'resources/assets/commons/plugins/toastr/css/toastr.min.css',
         'resources/assets/auth/css/util.ccs'
     ],
     'public/auth/css/custom.min.css')
@@ -35,7 +36,7 @@ mix.autoload({
     'popper.js/dist/umd/popper.js': ['Popper']
 }).js([
         'resources/assets/auth/js/bootstrap.js',
-        'resources/assets/auth/js/toastr.min.js',
+        'resources/assets/commons/plugins/toastr/js/toastr.min.js',
         'resources/assets/auth/js/main.js',
         'resources/assets/auth/js/auth.js',
     ],

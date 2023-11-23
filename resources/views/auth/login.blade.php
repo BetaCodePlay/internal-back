@@ -130,38 +130,6 @@
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'auth') }}"></script>
 <script>
-    class Toastr {
-        static notifyToastr(title, message, type, timeout) {
-            timeout = (timeout) ? timeout : '5000';
-
-            toastr.options = {
-                "closeButton": false,
-                "debug": false,
-                "newestOnTop": false,
-                "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": false,
-                "onclick": null,
-                "showDuration": "3000",
-                "hideDuration": "1000",
-                "timeOut": timeout,
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
-            }
-
-            if (type === 'success') {
-                toastr["success"](message, title)
-            } else if (type === 'error') {
-                toastr["error"](message, title)
-            }
-        }
-    }
-
-    window.Toastr = Toastr;
-
     $(function () {
         Auth.login();
     });
