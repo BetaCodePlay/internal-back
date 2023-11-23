@@ -102,7 +102,7 @@ class Auth {
         getLoginOption();
 
         $(window).on('load', function (){
-            $('.login-form-ex').addClass('load')
+            $('.login-form-ex').addClass('load');
         });
     }
 }
