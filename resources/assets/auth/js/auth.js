@@ -94,7 +94,7 @@ class Auth {
                 if ($select === null) {
                     $button.eq(0).click();
                 } else {
-                    $('[data-tag="'+ $select +'"]');
+                    $('[data-tag="'+ $select +'"]').click();
                 }
             }
 
