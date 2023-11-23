@@ -90,7 +90,7 @@ class Auth {
                     swalError(json);
                 }*/
 
-                console.log(json)
+                console.log(json.responseJSON.data)
                 Toastr.notifyToastr('$json.title', '$json.message', 'success');
             }).always(function () {
                 $button.button('reset');
