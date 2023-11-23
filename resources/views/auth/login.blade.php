@@ -70,7 +70,7 @@
                             </button>
                         </div>
 
-                        <div class="login-tag show-input-email"  style="display: block">
+                        <div class="login-tag login-tag-invisible show-input-email"  style="display: block">
                             <div class="wrap-input-divider">
                                 O
                             </div>

@@ -287,6 +287,12 @@ iframe {
     display: none;
 }
 
+.wrap-login .login-form .login-form-ex .login-form-line .login-tag.login-tag-invisible {
+    display: block !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
 .wrap-login .login-form .login-form-ex .login-form-line label {
     width: 100%;
     color: #fff;
