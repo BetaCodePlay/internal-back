@@ -38,7 +38,7 @@
                         {{ _i('Sign in to start managing your project.')}}
                     </div>
                     <div class="login-form-line">
-                        <div class="login-tag show-input-email" style="display: block">
+                        <div class="login-tag show-tag show-input-email">
                             <label>{{ _i('E-mail')}}</label>
                             <div class="wrap-input-login validate-input">
                                 <input class="input-login" type="text" name="email" id="email" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
@@ -70,7 +70,7 @@
                             </button>
                         </div>
 
-                        <div class="login-tag login-tag-invisible show-input-email"  style="display: block">
+                        <div class="login-tag login-tag-invisible show-tag show-input-email">
                             <div class="wrap-input-divider">
                                 O
                             </div>

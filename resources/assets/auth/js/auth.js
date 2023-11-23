@@ -80,8 +80,8 @@ class Auth {
             $('.btn-tab-login').removeClass('active');
             $this.addClass('active');
 
-            $('.login-tag').hide();
-            $('.' + $class).show();
+            $('.login-tag').removeClass('show-tag');
+            $('.' + $class).addClass('show-tag');
         });
     }
 }
