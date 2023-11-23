@@ -82,7 +82,7 @@ class Auth {
 
             $('.login-tag').removeClass('show-tag');
             $('.' + $class).addClass('show-tag');
-            localStorage.setItem('login',$class);
+            localStorage.setItem('login', $class);
         });
 
         function getLoginOption() {
@@ -90,18 +90,20 @@ class Auth {
             let $select = localStorage.getItem('login');
             let $count = $button.length;
 
-            if($count > 0) {
+            if ($count > 0) {
                 if ($select === null) {
                     $button.eq(0).click();
                 } else {
-                    $('[data-tag="'+ $select +'"]').click();
+                    $('[data-tag="' + $select + '"]').click();
                 }
             }
-
-            console.log($select);
         }
 
         getLoginOption();
+
+        $(window).on('load', function (){
+            $('.login-form-ex').addClass('load')
+        });
     }
 }
 

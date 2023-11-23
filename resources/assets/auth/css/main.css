@@ -250,6 +250,12 @@ iframe {
     width: 400px;
     max-width: 100%;
     margin: auto;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.wrap-login .login-form .login-form-ex.load {
+    opacity: 1;
 }
 
 .wrap-login .login-form .login-form-ex .login-nav {
@@ -269,7 +275,7 @@ iframe {
     font-size: 16px;
     position: relative;
     z-index: 5;
-    transition: 0.15s;
+    transition: 0.3s;
     border-radius: 50px;
     border: 2px solid transparent;
 }
@@ -633,4 +639,34 @@ iframe {
 }
 
 
+.loader-login {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid #FFF;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
 
+.loader-login::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border-bottom: 4px solid #7D2DF5;
+    border-left: 4px solid transparent;
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

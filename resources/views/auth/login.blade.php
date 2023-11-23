@@ -27,10 +27,11 @@
             </div>
 
             <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
+                <div class="loader-login"></div>
                 <div class="login-form-ex">
                     <div class="login-nav">
-                        <button type="button" class="btn btn-tab-login active" data-tag="show-input-email">{{ _i('Por email')}}</button>
-                        <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('Por usuario')}}</button>
+                        <button type="button" class="btn btn-tab-login" data-tag="show-input-email">{{ _i('By email')}}</button>
+                        <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('By user')}}</button>
                     </div>
                     <div class="wrap-input-title">{{ _i('Welcome')}}</div>
                     <div class="wrap-input-subtitle">
