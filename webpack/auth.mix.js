@@ -36,7 +36,6 @@ mix.autoload({
 }).js([
         'resources/assets/auth/js/bootstrap.js',
         'resources/assets/auth/js/main.js',
-        'resources/assets/auth/js/toastr.min.js',
         'resources/assets/auth/js/auth.js',
     ],
     'public/auth/js/custom.min.js')
