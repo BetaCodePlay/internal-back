@@ -270,6 +270,7 @@ iframe {
     position: relative;
     z-index: 5;
     transition: 0.15s;
+    border: 2px solid transparent;
 }
 
 .wrap-login .login-form .login-form-ex .login-nav .btn.active {
