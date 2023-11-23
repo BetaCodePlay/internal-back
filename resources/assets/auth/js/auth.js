@@ -54,6 +54,7 @@ class Auth {
                 } else {
                     swalError(json);
                 }*/
+                console.log(json);
                 Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
             }).always(function () {
                 $button.button('reset');
