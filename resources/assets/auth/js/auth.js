@@ -1,4 +1,3 @@
-import {swalError, swalSuccessNoButton} from "../../commons/js/core";
 import {setCookie} from "../../back/js/commons";
 
 class Auth {
@@ -17,9 +16,8 @@ class Auth {
 
             }).done(function (json) {
                 setCookie('language-js', json.data.language, 365)
-                console.log(json)
-                /*setTimeout(() => window.location.href = json.data.route, 1000);*/
-
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                setTimeout(() => window.location.href = json.data.route, 1000);
             }).fail(function (json) {
                 /*if (json.responseJSON.data.changePassword === true) {
                     $('#change-password').modal('show');
