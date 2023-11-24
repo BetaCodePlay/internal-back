@@ -12,49 +12,84 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <!--===============================================================================================-->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'auth') }} ">
     <link rel="stylesheet" href="{{ mix('css/custom.min.css', 'auth') }} ">
     <!--===============================================================================================-->
 </head>
-<body>
+<body class="body-login">
 
 <div class="limiter">
-    <div class="container-login100">
-        <div class="wrap-login100">
-            <form class="login100-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
-					<span class="login100-form-title p-b-48">
-						<img class="LogoPrincipal" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
-					</span>
+    <div class="container-login">
+        <div class="wrap-login">
+            <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v2.jpg')">
+                <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
+            </div>
 
-                <div class="wrap-input100 validate-input">
-                    <input class="input100" type="text" name="username" id="username" autocomplete="off" required>
-                    <span class="focus-input100" data-placeholder="{{ _i('Username')}}"></span>
-                </div>
+            <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
+                <div class="loader-login"></div>
+                <div class="login-form-ex">
+                    <div class="login-nav">
+                        <button type="button" class="btn btn-tab-login" data-tag="show-input-email">{{ _i('By email')}}</button>
+                        <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('By user')}}</button>
+                    </div>
+                    <div class="wrap-input-title">{{ _i('Welcome')}}</div>
+                    <div class="wrap-input-subtitle">
+                        {{ _i("Today is a new day. It's your day. You shape it.")}}<br>
+                        {{ _i('Sign in to start managing your project.')}}
+                    </div>
+                    <div class="login-form-line">
+                        <div class="login-tag show-tag show-input-email">
+                            <label>{{ _i('E-mail')}}</label>
+                            <div class="wrap-input-login validate-input">
+                                <input class="input-login" type="text" name="email" id="email" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
+                            </div>
+                        </div>
 
-                <div class="wrap-input100 validate-input" data-validate="{{ _i('Enter password')}}">
+                        <div class="login-tag show-input-user">
+                            <label>{{ _i('Username')}}</label>
+                            <div class="wrap-input-login validate-input">
+                                <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Enter name')}}" required>
+                            </div>
+                        </div>
+
+                        <label>{{ _i('Password')}}</label>
+                        <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
 						</span>
-                    <input class="input100" type="password" name="password" id="password" autocomplete="off" required>
-                    <span class="focus-input100" data-placeholder="{{ _i('Password') }}"></span>
-                </div>
+                            <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
+                        </div>
 
-                <div class="container-login100-form-btn">
-                    <div class="wrap-login100-form-btn">
-                        <div class="login100-form-bgbtn"></div>
-                        <button class="login100-form-btn" id="login" type="button"
-                                data-loading-text="{{ _i('Please wait...') }}">
-                            {{ _i('Login') }}
-                        </button>
+                        <div class="wrap-input-login">
+                            <a href="#" class="a-login">{{ _i('have you forgotten your password?')}}</a>
+                        </div>
+
+                        <div class="container-login-form-btn">
+                            <button class="btn-login" id="login" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                                {{ _i('Login') }}
+                            </button>
+                        </div>
+
+                        <div class="login-tag login-tag-invisible show-tag show-input-email">
+                            <div class="wrap-input-divider">
+                                O
+                            </div>
+
+                            <div class="container-login-form-btn">
+                                <button class="btn-login-google" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                                    <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
 </div>
 
-<footer>
+{{--<footer>
 
     <div class="dropdown text-center p-b-20">
         <div class="languages-menu" id="languages-menu">
@@ -87,8 +122,8 @@
     </p>
 
 
-</footer>
-@include('auth.modals.change-password');
+</footer>--}}
+@include('auth.modals.change-password')
 
 <script src="{{ mix('js/manifest.js', 'auth') }}"></script>
 <script src="{{ mix('js/vendor.js', 'auth') }}"></script>
@@ -96,6 +131,11 @@
 <script>
     $(function () {
         Auth.login();
+    });
+
+    $(window).on('load', function() {
+        $('.loader-login').hide();
+        $('.login-form-ex').addClass('load');
     });
 </script>
 </body>

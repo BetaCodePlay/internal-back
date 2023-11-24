@@ -710,7 +710,7 @@ class UsersRepo
      * @return mixed
      */
     public function getTotalsReferralListByUser($id, $currency, $whitelabel, $startDate, $endDate)
-    {  
+    {
         $user = \DB::table('referrals')
             ->select(\DB::raw('count(*) AS totals'),'user.register_currency', 'referrals.created_at')
             ->join('users AS user', 'user.id', '=', 'referrals.user_id')
@@ -728,7 +728,7 @@ class UsersRepo
     }
 
     /**
-     * * Get referred top 
+     * * Get referred top
      *
      * @param int $id user ID
      * @param string $currency Currency iso
@@ -1505,6 +1505,7 @@ class UsersRepo
     public function store($data, $profileData)
     {
         $user = User::create($data);
+        \Log::notice(__METHOD__, ['paso por aca 4', 'user' =>  $user]);
         $user->profile()->create($profileData);
         return $user;
     }

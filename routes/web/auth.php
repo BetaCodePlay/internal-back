@@ -10,6 +10,16 @@ Route::group(['middleware' => ['guest']], function() {
         'as' => 'auth.login',
         'uses' => 'AuthController@login'
     ]);
+
+    Route::get('password/reset/notification', [
+        'as' => 'auth.password.reset.notification',
+        'uses' => 'AuthController@passwordResetNotification'
+    ]);
+
+    Route::get('reset-password', [
+        'as' => 'auth.reset.password',
+        'uses' => 'AuthController@resetPassword'
+    ]);
 });
 
 /**

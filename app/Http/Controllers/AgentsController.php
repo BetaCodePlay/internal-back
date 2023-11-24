@@ -2127,6 +2127,7 @@ class AgentsController extends Controller
             $bonus = Configurations::getBonus();
             $lang = LaravelGettext::getLocale();
             $id = $request->id;
+            $balanceBonus = 0.00;
             $campaignDescription = _i('Without description...');
 //            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
 //                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
@@ -2139,7 +2140,6 @@ class AgentsController extends Controller
                 $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
                 $father = $this->usersRepo->findUsername($user->owner);
                 $balance = $user->balance;
-                $balanceBonus = 0.00;
                 $master = $user->master;
                 $agent = true;
                 $myself = $userId == $user->id;
@@ -2159,7 +2159,7 @@ class AgentsController extends Controller
                         $campaignDescription = $campaign->translations->$lang->description;
                     }
                 }
-                
+
             }
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d', strtotime($user->created));
@@ -3870,25 +3870,14 @@ class AgentsController extends Controller
             $admin = 'admin';
             $support = 'wolf';
             $supportgl = 'supportgl';
-            $romeo = 'romeo';
             $romeoAgent = null;
             $supportAgent = null;
             $supportAgl = null;
             $adminAgent = null;
             $supportAgentgl = null;
-            $romeoUser = $this->usersRepo->getByUsername($romeo, $whitelabel);
             $supportUser = $this->usersRepo->getByUsername($support, $whitelabel);
             $adminUser = $this->usersRepo->getByUsername($admin, $whitelabel);
             $supportglUser = $this->usersRepo->getByUsername($supportgl, $whitelabel);
-
-            if (is_null($romeoUser)) {
-                $data = [
-                    'title' => _i('User %s does not exist', [$romeo]),
-                    'message' => _i('The %s user has not yet been created. Please create it first', [$romeo]),
-                    'close' => _i('Close')
-                ];
-                return Utils::errorResponse(Codes::$forbidden, $data);
-            }
 
             if (is_null($supportUser)) {
                 $data = [
@@ -3917,24 +3906,15 @@ class AgentsController extends Controller
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
-            $romeoAgent = $this->agentsRepo->existAgent($romeoUser->id);
             $supportAgent = $this->agentsRepo->existAgent($supportUser->id);
             $supportAgl = $this->agentsRepo->existAgent($supportglUser->id);
             $adminAgent = $this->agentsRepo->existAgent($adminUser->id);
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
 
-            if (is_null($romeoAgent)) {
-                $romeoAgentData = [
-                    'user_id' => $romeoUser->id,
-                    'master' => true
-                ];
-                $romeoAgent = $this->agentsRepo->store($romeoAgentData);
-            }
-
             if (is_null($supportAgent)) {
                 $supportAgentData = [
                     'user_id' => $supportUser->id,
-                    'owner_id' => $romeoUser->id,
+                    'owner_id' => null,
                     'master' => true
                 ];
                 $supportAgent = $this->agentsRepo->store($supportAgentData);

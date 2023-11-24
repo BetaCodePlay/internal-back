@@ -3,36 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Audits\Enums\AuditTypes;
 use App\BetPay\BetPay;
 use App\Users\Enums\ActionUser;
-use App\Core\Repositories\SectionImagesRepo;
 use App\Users\Enums\TypeUser;
+use App\Users\Mailers\Users;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UsersRepo;
+use App\Users\Rules\Password;
+use Dotworkers\Audits\Audits;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
+use Dotworkers\Configurations\Enums\EmailTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Security\Security;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Dotworkers\Audits\Audits;
-use App\Audits\Enums\AuditTypes;
-use App\Users\Mailers\Users;
-use Dotworkers\Configurations\Enums\EmailTypes;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
-use App\Users\Rules\Password;
 
 /**
  * Class AuthController
@@ -137,14 +136,17 @@ class AuthController extends Controller
 
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
                     $permissionsMerge = $permissions;
-                    //TODO IF AGENT ADD NEW PERMISSIONS
-                    if(Auth::user()->type_user == TypeUser::$agentMater){
-                        $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
+                    if ($user !== 89985){
+                        //TODO IF AGENT ADD NEW PERMISSIONS
+                        if(Auth::user()->type_user == TypeUser::$agentMater){
+                            $permissionsMerge = array_merge($permissions,[Permissions::$create_user_agent]);
+                        }
+                        //TODO ADD PERMISSION TO AGENT
+                        if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles) && Auth::user()->username == 'admin') {
+                            $permissionsMerge = array_merge($permissions,[Permissions::$dashboard,Permissions::$dashboard_widgets]);
+                        }
                     }
-                    //TODO ADD PERMISSION TO AGENT
-                    if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles) && Auth::user()->username == 'admin') {
-                        $permissionsMerge = array_merge($permissions,[Permissions::$dashboard,Permissions::$dashboard_widgets]);
-                    }
+
 
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
@@ -352,6 +354,19 @@ class AuthController extends Controller
         auth()->logout();
         $route = route('auth.login') . '?action=logout';
         return redirect()->to($route);
+    }
+
+    /**
+     * @return Factory|\Illuminate\Contracts\View\View|Application
+     */
+    public function passwordResetNotification(): Factory|\Illuminate\Contracts\View\View|Application
+    {
+        return view('auth.password-reset-notification');
+    }
+
+    public function resetPassword()
+    {
+        return view('auth.reset-password');
     }
 
     /**

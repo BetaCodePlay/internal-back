@@ -499,7 +499,7 @@ class UsersController extends Controller
             }
 
             $ip = Utils::userIp($request);
-
+            \Log::info(__METHOD__, ['paso', 'request' => $request->all()]);
             $whitelabel = Configurations::getWhitelabel();
             $userData = [
                 'username' => $username,
@@ -2237,8 +2237,8 @@ class UsersController extends Controller
             $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
             $store = Configurations::getStore()->active;
             $ip = Utils::userIp($request);
-            $users = ['romeo','wolf','supportgl', 'admin', 'panther',   'supportnb', 'supportvj'];
-
+            $users = ['wolf','supportgl', 'admin', 'panther',   'supportnb', 'supportvj'];
+            \Log::notice(__METHOD__, ['paso por aca 1', 'request' => $request->all()]);
             foreach ($users as $user) {
                 $userData = $this->usersRepo->getByUsername($user, $whitelabel);
 
@@ -2285,10 +2285,13 @@ class UsersController extends Controller
                         'timezone' => $request->timezone,
                         'level' => 1
                     ];
+                    \Log::notice(__METHOD__, ['paso por aca 2', 'newUserData' =>   $newUserData, 'profileData' =>   $profileData ]);
                     $newUser = $this->usersRepo->store($newUserData, $profileData);
+                    \Log::notice(__METHOD__, ['paso por aca 3', 'newUser' =>  $newUser]);
                     Security::assignRole($newUser->id, 1);
 
                     $wallet = Wallet::store($newUser->id, $newUser->username, $newUser->uuid, $currencies[0], $whitelabel, session('wallet_access_token'));
+                    \Log::notice(__METHOD__, [ 'wallet' => $wallet, 'wallet_access_token' => session('wallet_access_token')]);
                     Configurations::generateReferenceCode($newUser->id);
 
                     $currencyData = [
