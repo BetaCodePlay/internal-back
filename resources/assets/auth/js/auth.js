@@ -90,7 +90,7 @@ class Auth {
             localStorage.setItem('login', $class);
         });
 
-        $(document).on('click', '.modal-reset-password .reset-password-close', function (){
+        $(document).on('click', '.modal-reset-password .reset-password-close,.modal-reset-password .reset-password-bg', function (){
             $('.modal-reset-password').hide();
         });
 
