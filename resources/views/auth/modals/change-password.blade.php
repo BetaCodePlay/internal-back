@@ -54,7 +54,7 @@
     </div>
 </div>--}}
 
-<div class="modal-reset-password">
+<div class="modal-reset-password" data-success="{{ _i('Password changed successfully, wait a moment, you will be redirected shortly...') }}">
     <div class="modal-reset-password-ex">
         <div class="reset-password-bg"></div>
         <div class="reset-password-content">

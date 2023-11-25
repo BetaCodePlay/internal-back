@@ -732,6 +732,14 @@ iframe {
     max-width: 100%;
 }
 
+.modal-reset-password .reset-password-content .reset-password-content-ex .reset-password-success {
+    display: none;
+    color: #7D2DF5;
+    font-size: 62px;
+    line-height: 1;
+}
+
+
 .modal-reset-password .reset-password-content .reset-password-content-ex .reset-password-title {
     font-size: 22px;
     color: #fff;

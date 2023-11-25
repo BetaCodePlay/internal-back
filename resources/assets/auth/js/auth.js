@@ -71,14 +71,18 @@ class Auth {
 
             $(document).on('click', '.btn-reset-password', function () {
                 let $this = $(this);
+                let $modal = $('.modal-reset-password');
                 let $route = $this.data('route');
-                let $password = $('#reset-password').val();
-                let $user = $('#username').val();
-                let $oldPassword = $('#password').val();
+                let $password = $('#reset-password');
+                let $passwordVal = $password.val();
+                let $user = $('#username');
+                let $userVal = $user.val();
+                let $passwordForm = $('#password');
+                let $oldPassword = $passwordForm.val();
                 let $data = {
-                    newPassword: $password,
-                    repeatNewPassword: $password,
-                    pUsername: $user,
+                    newPassword: $passwordVal,
+                    repeatNewPassword: $passwordVal,
+                    pUsername: $userVal,
                     oldPassword: $oldPassword,
                 }
 
@@ -89,8 +93,20 @@ class Auth {
                     method: 'post',
                     data: $data
                 }).done(function (json) {
+                    $button.button('loading');
+                    $modal.hide();
+                    Toastr.notifyToastr(json.data.title, $modal.data('success'), 'success', 15000);
 
+                    $user.val($userVal);
+                    $passwordForm.va($passwordVal);
+                    $user.addClass('disabled');
+                    $passwordForm.addClass('disabled');
+                    $passwordForm.attr('type','password');
+                    $('.btn-show-pass').remove();
 
+                    setTimeout(function (){
+                        $button.click();
+                    }, 3000)
                 }).fail(function (json) {
                     errorResponse(json);
                 }).always(function () {
