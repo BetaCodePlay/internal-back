@@ -78,8 +78,8 @@
         }
         else {
             $(this).next('input').attr('type','password');
-            $(this).find('i').addClass('fa-eye');
-            $(this).find('i').removeClass('fa-eye-slash');
+            $(this).find('i').removeClass('fa-eye');
+            $(this).find('i').addClass('fa-eye-slash');
             showPass = 0;
         }
 
