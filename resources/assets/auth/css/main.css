@@ -453,6 +453,13 @@ iframe {
     border: 1px solid #fff;
 }
 
+.input-login.disabled {
+    pointer-events: none;
+    color: #999;
+    border-color: #999;
+    opacity: .5;
+}
+
 .input-login:focus {
     border-color: #7D2DF5 !important;
 }

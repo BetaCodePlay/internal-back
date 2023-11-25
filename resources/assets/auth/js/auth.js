@@ -98,7 +98,7 @@ class Auth {
                     Toastr.notifyToastr(json.data.title, $modal.data('success'), 'success', 15000);
 
                     $user.val($userVal);
-                    $passwordForm.va($passwordVal);
+                    $passwordForm.val($passwordVal);
                     $user.addClass('disabled');
                     $passwordForm.addClass('disabled');
                     $passwordForm.attr('type','password');
