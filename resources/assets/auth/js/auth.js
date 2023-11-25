@@ -21,48 +21,17 @@ class Auth {
             }).fail(function (json) {
                 if (json.status === 404) {
                     if (json.responseJSON.data.changePassword === true) {
-                        /*$('#change-password').modal('show');
-                        let $button = $('#update-button');
-                        let $formCP = $('#change-password-form');
-                        $('#change-password').on('shown.bs.modal', function (event) {
-                            $('#pUsername').val(json.responseJSON.data.username);
-                            $('#oldPassword').val(json.responseJSON.data.password);
-
-                            $button.click(function () {
-                                $button.button('loading');
-
-                                $.ajax({
-                                    url: $formCP.attr('action'),
-                                    method: 'post',
-                                    data: $formCP.serialize()
-
-                                }).done(function (json) {
-                                    swalSuccessNoButton(json);
-                                    setTimeout(() => {
-                                        $('#change-password').modal('hide');
-                                    }, 5000);
-
-
-                                }).fail(function (json) {
-                                    swalError(json);
-
-                                }).always(function () {
-                                    $button.button('reset');
-                                });
-                            });
-
-                        });*/
-
                         changePassword();
-
                     } else {
                         Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
                     }
                 } else {
                     errorResponse(json);
                 }
-            }).always(function () {
+
                 $button.button('reset');
+            }).always(function () {
+
             });
         });
 
