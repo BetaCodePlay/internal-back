@@ -77,7 +77,7 @@
                             </div>
 
                             <div class="container-login-form-btn">
-                                <button class="btn-login-google" type="button" data-loading-text="{{ _i('Please wait...') }}">
+                                <button class="btn-login-google" type="button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                                     <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
                                 </button>
                             </div>

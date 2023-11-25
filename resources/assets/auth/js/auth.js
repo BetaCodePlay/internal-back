@@ -110,7 +110,7 @@ class Auth {
                 }).fail(function (json) {
                     errorResponse(json);
                 }).always(function () {
-                    $button.button('reset');
+                    $this.button('reset');
                 });
             });
         }
