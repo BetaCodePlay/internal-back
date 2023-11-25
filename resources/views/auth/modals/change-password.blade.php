@@ -67,9 +67,10 @@
     <div class="reset-password-bg"></div>
     <div class="reset-password-content">
         <div class="reset-password-content-ex">
-            <div class="reset-password-title">{{ _i('Change password') }}</div>
+            <div class="reset-password-title">{{ _i('Reset password') }}</div>
             <div class="reset-password-subtitle">{{ _i('Enter the new password, remember that it has to be 8 characters and (,) or (.) as special.') }}</div>
             <form class="reset-password-body">
+                <label>{{ _i('Password')}}</label>
                 <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
 							<i class="fa fa-eye"></i>
@@ -80,8 +81,8 @@
                     <label for="repeatNewPassword">{{ _i('Repeat New Password') }}</label>
                     <input type="password" class="form-control" name="repeatNewPassword" id="repeatNewPassword">
                 </div>--}}
-                <button type="button" class="btn u-btn-primary u-btn-3d btn-color-gradient" id="update-button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
-                    {{ _i('Update') }}
+                <button type="button" class="btn-reset-password" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
+                    {{ _i('Reset') }}
                 </button>
             </form>
         </div>
