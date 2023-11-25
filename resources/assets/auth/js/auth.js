@@ -103,6 +103,12 @@ class Auth {
             }
         });
 
+        $('.modal-reset-password').keypress(function (event) {
+            if (event.keyCode === 13) {
+                $('.btn-reset-password').click();
+            }
+        });
+
         $('.languages-menu').click(function () {
             $(this).children('.languages-submenu').slideToggle();
         });

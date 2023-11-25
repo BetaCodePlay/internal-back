@@ -62,7 +62,7 @@
                 <div class="reset-password-close"><i class="fa fa-times"></i></div>
                 <div class="reset-password-title">{{ _i('Reset password') }}</div>
                 <div class="reset-password-subtitle">{{ _i('Enter the new password, remember that it has to be 8 characters and (,) or (.) as special.') }}</div>
-                <form class="reset-password-body">
+                <div class="reset-password-body">
                     <label>{{ _i('Password')}}</label>
                     <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
@@ -73,7 +73,7 @@
                     <button type="button" class="btn-reset-password" data-route="{{ route('auth.change-password') }}" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                         {{ _i('Reset') }}
                     </button>
-                </form>
+                </div>
             </div>
         </div>
     </div>
