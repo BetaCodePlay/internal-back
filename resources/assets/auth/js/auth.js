@@ -17,11 +17,11 @@ class Auth {
             }).done(function (json) {
                 setCookie('language-js', json.data.language, 365)
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
-                setTimeout(() => window.location.href = json.data.route, 1000);
+                setTimeout(() => window.location.href = json.data.route, 300);
             }).fail(function (json) {
                 if (json.status === 404) {
                     if (json.responseJSON.data.changePassword === true) {
-                        $('#change-password').modal('show');
+                        /*$('#change-password').modal('show');
                         let $button = $('#update-button');
                         let $formCP = $('#change-password-form');
                         $('#change-password').on('shown.bs.modal', function (event) {
@@ -51,22 +51,62 @@ class Auth {
                                 });
                             });
 
-                        });
+                        });*/
+
+                        changePassword();
+
                     } else {
                         Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
                     }
                 } else {
-                    let array = Object.values(json.responseJSON.errors);
-                    let title = json.responseJSON.message;
-
-                    $.each(array, function (index, value) {
-                        Toastr.notifyToastr(title, value, 'error');
-                    })
+                    errorResponse(json);
                 }
             }).always(function () {
                 $button.button('reset');
             });
         });
+
+        function changePassword() {
+            $('.modal-reset-password').fadeIn();
+
+            $(document).on('click', '.btn-reset-password', function () {
+                let $this = $(this);
+                let $route = $this.data('route');
+                let $password = $('#reset-password').val();
+                let $user = $('#username').val();
+                let $oldPassword = $('#password').val();
+                let $data = {
+                    newPassword: $password,
+                    repeatNewPassword: $password,
+                    pUsername: $user,
+                    oldPassword: $oldPassword,
+                }
+
+                $this.button('loading');
+
+                $.ajax({
+                    url: $route,
+                    method: 'post',
+                    data: $data
+                }).done(function (json) {
+
+
+                }).fail(function (json) {
+                    errorResponse(json);
+                }).always(function () {
+                    $button.button('reset');
+                });
+            });
+        }
+
+        function errorResponse(json) {
+            let array = Object.values(json.responseJSON.errors);
+            let title = json.responseJSON.message;
+
+            $.each(array, function (index, value) {
+                Toastr.notifyToastr(title, value, 'error');
+            })
+        }
 
         $('#login-form').keypress(function (event) {
             if (event.keyCode === 13) {
@@ -90,7 +130,7 @@ class Auth {
             localStorage.setItem('login', $class);
         });
 
-        $(document).on('click', '.modal-reset-password .reset-password-close,.modal-reset-password .reset-password-bg', function (){
+        $(document).on('click', '.modal-reset-password .reset-password-close,.modal-reset-password .reset-password-bg', function () {
             $('.modal-reset-password').hide();
         });
 
