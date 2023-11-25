@@ -683,13 +683,23 @@ iframe {
     bottom: 0;
     right: 0;
     left: 0;
+    z-index: 50;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-align: center;
 }
 
 .modal-reset-password .reset-password-bg {
     position: absolute;
-    background: #000;
-    opacity: 0.9;
-    filter: blur(2px);
+    background: #0e0e11;
+    opacity: 0.95;
     left: 0;
     right: 0;
     bottom: 0;
