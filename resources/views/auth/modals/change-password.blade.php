@@ -68,13 +68,8 @@
 						<span class="btn-show-pass">
 							<i class="fa fa-eye-slash"></i>
 						</span>
-                        <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
+                        <input class="input-login" type="password" name="password" id="reset-password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
                     </div>
-                    <div class="form-group">
-                        <label for="repeatNewPassword">{{ _i('Repeat New Password') }}</label>
-                        <input type="password" class="form-control" name="repeatNewPassword" id="reset-password">
-                    </div>
-
                     <button type="button" class="btn-reset-password" data-route="{{ route('auth.change-password') }}" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                         {{ _i('Reset') }}
                     </button>
