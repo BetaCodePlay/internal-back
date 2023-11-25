@@ -38,6 +38,10 @@ class Auth {
         function changePassword() {
             $('.modal-reset-password').fadeIn();
 
+            setTimeout(function (){
+                $('#reset-password').focus();
+            }, 300);
+
             $(document).on('click', '.btn-reset-password', function () {
                 let $this = $(this);
                 let $modal = $('.modal-reset-password');
