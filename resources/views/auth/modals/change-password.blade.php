@@ -67,6 +67,7 @@
     <div class="reset-password-bg"></div>
     <div class="reset-password-content">
         <div class="reset-password-content-ex">
+            <div class="reset-password-close"><i class="fa fa-times"></i></div>
             <div class="reset-password-title">{{ _i('Reset password') }}</div>
             <div class="reset-password-subtitle">{{ _i('Enter the new password, remember that it has to be 8 characters and (,) or (.) as special.') }}</div>
             <form class="reset-password-body">
