@@ -90,6 +90,10 @@ class Auth {
             localStorage.setItem('login', $class);
         });
 
+        $(document).on('click', '.modal-reset-password .reset-password-close', function (){
+            $('.modal-reset-password').hide();
+        });
+
         function getLoginOption() {
             let $button = $('.btn-tab-login');
             let $select = localStorage.getItem('login');
