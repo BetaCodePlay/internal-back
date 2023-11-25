@@ -41,52 +41,52 @@ class Auth {
             setTimeout(function (){
                 $('#reset-password').focus();
             }, 300);
-
-            $(document).on('click', '.btn-reset-password', function () {
-                let $this = $(this);
-                let $modal = $('.modal-reset-password');
-                let $route = $this.data('route');
-                let $password = $('#reset-password');
-                let $passwordVal = $password.val();
-                let $user = $('#username');
-                let $userVal = $user.val();
-                let $passwordForm = $('#password');
-                let $oldPassword = $passwordForm.val();
-                let $data = {
-                    newPassword: $passwordVal,
-                    repeatNewPassword: $passwordVal,
-                    pUsername: $userVal,
-                    oldPassword: $oldPassword,
-                }
-
-                $this.button('loading');
-
-                $.ajax({
-                    url: $route,
-                    method: 'post',
-                    data: $data
-                }).done(function (json) {
-                    $button.button('loading');
-                    $modal.hide();
-                    Toastr.notifyToastr(json.data.title, $modal.data('success'), 'success', 15000);
-
-                    $user.val($userVal);
-                    $passwordForm.val($passwordVal);
-                    $user.addClass('disabled');
-                    $passwordForm.addClass('disabled');
-                    $passwordForm.attr('type','password');
-                    $('.btn-show-pass').remove();
-
-                    setTimeout(function (){
-                        $button.click();
-                    }, 3000)
-                }).fail(function (json) {
-                    errorResponse(json);
-                }).always(function () {
-                    $this.button('reset');
-                });
-            });
         }
+
+        $(document).on('click', '.btn-reset-password', function () {
+            let $this = $(this);
+            let $modal = $('.modal-reset-password');
+            let $route = $this.data('route');
+            let $password = $('#reset-password');
+            let $passwordVal = $password.val();
+            let $user = $('#username');
+            let $userVal = $user.val();
+            let $passwordForm = $('#password');
+            let $oldPassword = $passwordForm.val();
+            let $data = {
+                newPassword: $passwordVal,
+                repeatNewPassword: $passwordVal,
+                pUsername: $userVal,
+                oldPassword: $oldPassword,
+            }
+
+            $this.button('loading');
+
+            $.ajax({
+                url: $route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                $button.button('loading');
+                $modal.hide();
+                Toastr.notifyToastr(json.data.title, $modal.data('success'), 'success', 15000);
+
+                $user.val($userVal);
+                $passwordForm.val($passwordVal);
+                $user.addClass('disabled');
+                $passwordForm.addClass('disabled');
+                $passwordForm.attr('type','password');
+                $('.btn-show-pass').remove();
+
+                setTimeout(function (){
+                    $button.click();
+                }, 3000)
+            }).fail(function (json) {
+                errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
+        });
 
         function errorResponse(json) {
             let array = Object.values(json.responseJSON.errors);
