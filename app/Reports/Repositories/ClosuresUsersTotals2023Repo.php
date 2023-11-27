@@ -186,7 +186,7 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureReport($userSonData, $whitelabelId, $currency, $startDate, $endDate): Collection
     {
-        return DB::table('public.closures_users_totals_2023_hour as cut')
+        return DB::table('site.closures_users_totals_2023_hour as cut')
             ->selectRaw('
             provider_id, providers.name, username, user_id,
             ROUND(SUM(played)::numeric, 2) as total_played,
@@ -411,7 +411,7 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureTotalsByWhitelabelAndProvidersAndUserHour(int $whitelabel, string $currency, string $startDate, string $endDate, int $userId, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM public.get_closure_totals_hour_by_whitelabel_and_providers_and_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $userId, $arrayProvider]);
+        return DB::select('SELECT * FROM site.get_closure_totals_hour_by_whitelabel_and_providers_and_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $userId, $arrayProvider]);
     }
 
     /**
@@ -436,7 +436,7 @@ class ClosuresUsersTotals2023Repo
                                     case p.id when cut.provider_id then (ROUND(SUM(profit)::numeric,2)) else 0 end  total_profit,
                                     case p.id when cut.provider_id then (ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100),2)) else 0 end  rtp
                                     FROM site.providers p
-                                    LEFT  JOIN  public.closures_users_totals_2023_hour cut ON cut.provider_id = p.id
+                                    LEFT  JOIN  site.closures_users_totals_2023_hour cut ON cut.provider_id = p.id
                                     WHERE (p.id=any(?) )
                                     AND (cut.whitelabel_id = ? or cut.whitelabel_id is null)
                                     AND (cut.currency_iso = ? or cut.currency_iso is null)
@@ -506,7 +506,7 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureTotalsByWhitelabelAndProvidersWithSonHour(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM public.get_closure_totals_hour_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
+        return DB::select('SELECT * FROM site.get_closure_totals_hour_by_whitelabel_and_providers_with_son(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
     }
 
     /**
@@ -532,7 +532,7 @@ class ClosuresUsersTotals2023Repo
                                     case p.id when cut.provider_id then (ROUND(SUM(profit)::numeric,2)) else 0 end  total_profit,
                                     case p.id when cut.provider_id then (ROUND((SUM(won)::numeric / NULLIF(SUM(played)::numeric, 0) * 100),2)) else 0 end  rtp
                                     FROM site.providers p
-                                    LEFT  JOIN  public.closures_users_totals_2023_hour cut ON cut.provider_id = p.id
+                                    LEFT  JOIN  site.closures_users_totals_2023_hour cut ON cut.provider_id = p.id
                                     WHERE (p.id=any(?) )
                                     AND (cut.whitelabel_id = ? or cut.whitelabel_id is null)
                                     AND (cut.currency_iso = ? or cut.currency_iso is null)
@@ -569,7 +569,7 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureTotalsByWhitelabelWithSonHour(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId)
     {
-        return DB::select('SELECT * FROM public.get_closure_totals_hour_by_whitelabel_with_son(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId]);
+        return DB::select('SELECT * FROM site.get_closure_totals_hour_by_whitelabel_with_son(?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId]);
     }
 
     /**
