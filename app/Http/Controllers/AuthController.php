@@ -294,7 +294,6 @@ class AuthController extends Controller
                 $user = auth()->user();
 
                 $usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$update_email);
-                // dd($usersRepo->changePassword($user->id, $request->newPassword, ActionUser::$active));
                 $data = [
                     'title' => _i('Password changed'),
                     'message' => _i('Your password has been changed successfully'),
@@ -326,17 +325,15 @@ class AuthController extends Controller
      * @param Request $request
      * @return Factory|View
      */
-    public function login(Request $request)
-    {
+    public function login(Request $request): Factory|View {
         try {
-            $logo = Configurations::getLogo($mobile = true);
-            if (!isset($request->action)) {
+            if (! isset($request->action)) {
                 session()->put('intended_url', url()->previous());
             }
-            $data['title'] = Configurations::getWhitelabelDescription();
-            $data['logo'] = $logo;
-            return view('auth.login', $data);
-
+            return view('auth.login', [
+                'title' => Configurations::getWhitelabelDescription(),
+                'logo'  => Configurations::getLogo(true),
+            ]);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
@@ -371,13 +368,12 @@ class AuthController extends Controller
     /**
      * Get wallet access token
      */
-    private function walletAccessToken()
+    private function walletAccessToken(): void
     {
         try {
             $walletAccessToken = Wallet::clientAccessToken();
-            $accessToken = $walletAccessToken->access_token;
+            $accessToken       = $walletAccessToken->access_token;
             session()->put('wallet_access_token', $accessToken);
-
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
         }
