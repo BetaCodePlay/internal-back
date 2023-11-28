@@ -361,12 +361,12 @@ class AuthController extends Controller
      */
     public function passwordResetNotification(): Factory|\Illuminate\Contracts\View\View|Application
     {
-        return view('auth.password-reset-notification');
+        return view('auth.password-reset-notification', ['title' => 'Password Reset Notification']);
     }
 
-    public function resetPassword()
+    public function resetPassword(): Factory|\Illuminate\Contracts\View\View|Application
     {
-        return view('auth.reset-password');
+        return view('auth.reset-password', ['title' => 'Reset Password']);
     }
 
     /**
