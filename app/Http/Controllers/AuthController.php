@@ -352,8 +352,7 @@ class AuthController extends Controller
     {
         session()->flush();
         auth()->logout();
-        $route = route('auth.login') . '?action=logout';
-        return redirect()->to($route);
+        return redirect()->to(route('auth.login'));
     }
 
     /**
