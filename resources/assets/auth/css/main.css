@@ -344,6 +344,17 @@ iframe {
     z-index: 3;
 }
 
+.wrap-login .login-preview-bg .bg-opacity {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #000;
+    opacity: .5;
+    z-index: 1;
+}
+
 .wrap-login .login-preview-bg .login-logo {
     display: block;
     position: absolute;
@@ -353,6 +364,7 @@ iframe {
     transform: translate(-50%, -50%);
     max-height: 140px;
     width: auto;
+    z-index: 5;
 }
 
 .wrap-login .wrap-input-divider {
