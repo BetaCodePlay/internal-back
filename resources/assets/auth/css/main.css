@@ -262,9 +262,8 @@ iframe {
 }
 
 .container-auth .error-figure img {
-    max-height: 80px;
-    margin-top: -15px;
-    margin-bottom: 15px;
+    max-height: 150px;
+    margin-bottom: 20px;
     max-width: 100%;
     width: auto;
 }
