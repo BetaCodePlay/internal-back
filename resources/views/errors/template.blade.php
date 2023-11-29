@@ -20,7 +20,7 @@
         <div class="bg-opacity"></div>
         <div class="content">
             <div class="content-ex">
-                <div class="error-figure"><img src="https://dl.kraken.io/web/8dcf9476ea2aac5ceb936779cbd7ce58/icon_errorPage.png"></div>
+                <div class="error-figure"><img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/error-page.png"></div>
                 <div class="error-title">@yield('code')</div>
                 <div class="error-subtitle">@yield('message')</div>
             </div>
