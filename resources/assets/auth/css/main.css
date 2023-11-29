@@ -231,6 +231,7 @@ iframe {
     justify-content: center;
     align-items: center;
     background: #1e1e1e;
+    padding: 15px;
 }
 
 .container-auth .container-auth-bg {
@@ -252,7 +253,7 @@ iframe {
     left: 0;
     bottom: 0;
     background: #000;
-    opacity: .3;
+    opacity: .5;
     z-index: 2;
 }
 
