@@ -34,7 +34,7 @@
 body, html {
     height: 100%;
     font-family: 'Outfit', sans-serif;
-    background-color: #000;
+    background-color: #1e1e1e;
 }
 
 /*---------------------------------------------*/
@@ -217,6 +217,111 @@ iframe {
     justify-content: center;
     align-items: center;
     background: #1e1e1e;
+}
+
+.container-auth {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background: #1e1e1e;
+    padding: 15px;
+}
+
+.container-auth .container-auth-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+.container-auth .bg-opacity {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #000;
+    opacity: .5;
+    z-index: 2;
+}
+
+.container-auth .auth-figure {
+    text-align: center;
+}
+
+.container-auth .auth-figure img {
+    max-height: 140px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    width: auto;
+}
+
+.container-auth .content {
+    position: relative;
+    z-index: 5;
+    background: #1e1e1e;
+    border-radius: 15px;
+    padding: 60px 25px;
+    width: 720px;
+    max-width: 100%;
+}
+
+.container-auth .content .content-ex {
+    width: 400px;
+    margin: auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+.container-auth .content .content-ex label {
+    width: 100%;
+    color: #fff;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.btn-send {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.2;
+    display: block;
+    padding: 14px 20px;
+    width: 100%;
+    background: #7D2DF5;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.btn-send:hover, .btn-send:focus {
+    background: #964FFF;
+}
+
+.container-auth .content .auth-title {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.container-auth .content .auth-subtitle {
+    color: #fff;
+    text-align: left;
+    margin-bottom: 25px;
+    font-size: 15px;
 }
 
 .wrap-login {
