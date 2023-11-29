@@ -1,5 +1,15 @@
 @extends('auth.template')
 
 @section('content')
-    <h1>Password reset notification</h1>
+    <div class="container-auth">
+        <div class="container-auth-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v2.jpg')"></div>
+        <div class="bg-opacity"></div>
+        <div class="content">
+            <div class="content-ex">
+                <div class="auth-figure"><img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/air-decorate-auth.png"></div>
+                <div class="auth-title">{{ _i('We send you an email.') }}</div>
+                <div class="auth-subtitle">{{ _i('To reset the account we send you a link to your email for security, enter the new password below.') }}</div>
+            </div>
+        </div>
+    </div>
 @endsection

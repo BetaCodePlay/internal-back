@@ -6,8 +6,8 @@
         <div class="bg-opacity"></div>
         <div class="content">
             <div class="content-ex">
-                <div class="auth-title">{{ _i('We send you an email.') }}</div>
-                <div class="auth-subtitle">{{ _i('To reset the account we send you a link to your email for security, enter the new password below.') }}</div>
+                <div class="auth-title">{{ _i('Reset password') }}</div>
+                <div class="auth-subtitle">{{ _i('Enter the new password, remember that it has to be 8 characters and (,) or (.) as special.') }}</div>
                 <div class="auth-body">
                     <label>{{ _i('Password')}}</label>
                     <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
