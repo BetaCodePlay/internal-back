@@ -66,8 +66,8 @@ class UserTransactionService extends BaseTransactionService
         }
 
         $userManagementResult = ($request->get('type') == UserType::USER_TYPE_PLAYER)
-            ? $this->playerTransactionService->managePlayerUser($request)
-            : $this->agentTransactionService->manageAgentUser($request);
+            ? $this->playerTransactionService->processTransaction($request)
+            : $this->agentTransactionService->processTransaction($request);
 
         if ($userManagementResult instanceof Response) {
             return $userManagementResult;

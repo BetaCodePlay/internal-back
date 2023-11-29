@@ -37,7 +37,7 @@ class UserPlayerTransactionService extends BaseTransactionService
      * @return mixed The response object indicating the result of the transaction.
      *                  It can be a success response or an error response.
      */
-    public function managePlayerUser(TransactionRequest $request)
+    public function processTransaction(TransactionRequest $request)
     : mixed {
         $userToAddBalance = $request->get('user');
         $playerDetails    = $this->agentsRepo->findUser($userToAddBalance);
@@ -50,18 +50,14 @@ class UserPlayerTransactionService extends BaseTransactionService
         $currency             = session('currency');
         $bonus                = Configurations::getBonus(Configurations::getWhitelabel());
         $walletDetail         = Wallet::getByClient($playerDetails->id, $currency, $bonus);
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail, true);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
         }
 
         if ($request->get('transaction_type') == TransactionTypes::$credit) {
-            $creditTransactionResult = $this->processCreditTransactionForPlayerUser(
-                $request,
-                $playerDetails,
-                $walletDetail,
-            );
+            $creditTransactionResult = $this->processCreditTransaction($request, $playerDetails, $walletDetail);
 
             return $this->processAndStoreTransaction($request, $creditTransactionResult, Providers::$agents_users);
         }
@@ -72,7 +68,7 @@ class UserPlayerTransactionService extends BaseTransactionService
             return $isAmountGreaterThanBalance;
         }
 
-        $debitTransactionResult = $this->processDebitTransactionForPlayerUser($request, $playerDetails, $walletDetail);
+        $debitTransactionResult = $this->processDebitTransaction($request, $playerDetails, $walletDetail);
 
         return $this->processAndStoreTransaction($request, $debitTransactionResult, Providers::$agents_users);
     }
@@ -89,7 +85,7 @@ class UserPlayerTransactionService extends BaseTransactionService
      *
      * @return float The updated bonus balance of the player.
      */
-    public function processBonusForPlayer(
+    public function processBonus(
         string $typeTransaction,
         object $playerDetails,
         float $transactionAmount,
@@ -140,7 +136,7 @@ class UserPlayerTransactionService extends BaseTransactionService
      * @return mixed An object containing additional data, agent and owner balances, and transaction information
      *               or a Response object in case of an error.
      */
-    public function processCreditTransactionForPlayerUser(
+    public function processCreditTransaction(
         TransactionRequest $request,
         object $playerDetails,
         object $walletDetail
@@ -160,7 +156,7 @@ class UserPlayerTransactionService extends BaseTransactionService
             $request->get('wallet'),
         );
         if (($walletDetail && isset($walletDetail->data->bonus))) {
-            $balanceBonus = $this->processBonusForPlayer(
+            $balanceBonus = $this->processBonus(
                 TransactionTypes::$credit,
                 $playerDetails,
                 $transactionAmount,
@@ -178,7 +174,7 @@ class UserPlayerTransactionService extends BaseTransactionService
             );
             if ($walletBonus->code == Codes::$ok) {
                 $walletDetail = Wallet::getByClient($playerDetails->id, $currency, $bonus);
-                $balanceBonus = $this->processBonusForPlayer(
+                $balanceBonus = $this->processBonus(
                     TransactionTypes::$credit,
                     $playerDetails,
                     $transactionAmount,
@@ -218,7 +214,7 @@ class UserPlayerTransactionService extends BaseTransactionService
      * @return mixed An object containing additional data, owner balance, and transaction information
      *               or a Response object in case of an error.
      */
-    public function processDebitTransactionForPlayerUser(
+    public function processDebitTransaction(
         TransactionRequest $request,
         object $playerDetails,
         object $walletDetail
@@ -236,7 +232,7 @@ class UserPlayerTransactionService extends BaseTransactionService
         );
 
         if ($walletDetail && isset($walletDetail->data->bonus)) {
-            $balanceBonus = $this->processBonusForPlayer(
+            $balanceBonus = $this->processBonus(
                 TransactionTypes::$debit,
                 $playerDetails,
                 $transactionAmount,

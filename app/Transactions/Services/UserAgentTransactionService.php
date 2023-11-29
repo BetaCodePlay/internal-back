@@ -40,7 +40,7 @@ class UserAgentTransactionService extends BaseTransactionService
      *   - balance: The final balance of the agent user after the transaction.
      *   - status: The status of the transaction (e.g., Status::$ok or Status::$failed).
      */
-    public function manageAgentUser(TransactionRequest $request)
+    public function processTransaction(TransactionRequest $request)
     : mixed {
         $userToAddBalance = $request->get('user');
         $currency         = session('currency');
@@ -59,13 +59,13 @@ class UserAgentTransactionService extends BaseTransactionService
         $agentBalance = round($agentDetails->balance, 2);
 
         if ($transactionType == TransactionTypes::$credit) {
-            $creditTransactionInfoForAgent = $this->processCreditTransactionForAgent(
+            $creditTransactionInfo = $this->processCreditTransaction(
                 $request,
                 $agentDetails,
                 $agentBalance,
-                $ownerAgent,
+                $ownerAgent
             );
-            return $this->processAndStoreTransaction($request, $creditTransactionInfoForAgent, Providers::$agents);
+            return $this->processAndStoreTransaction($request, $creditTransactionInfo, Providers::$agents);
         }
 
         if ($transactionAmount > $agentBalance) {
@@ -75,7 +75,7 @@ class UserAgentTransactionService extends BaseTransactionService
             ];
         }
 
-        $debitTransactionInfoForAgent = $this->processDebitTransactionForAgent(
+        $debitTransactionInfoForAgent = $this->processDebitTransaction(
             $request,
             $agentDetails,
             $agentBalance,
@@ -101,7 +101,7 @@ class UserAgentTransactionService extends BaseTransactionService
      *   - ownerBalance: The balance of the owner agent after deducting the transaction amount.
      *   - status: The status of the transaction (e.g., Status::$ok).
      */
-    public function processCreditTransactionForAgent(
+    public function processCreditTransaction(
         TransactionRequest $request,
         object $agentDetails,
         float $agentBalance,
@@ -150,7 +150,7 @@ class UserAgentTransactionService extends BaseTransactionService
      *   - ownerBalance: The balance of the owner agent after adding the transaction amount.
      *   - status: The status of the transaction (e.g., Status::$ok).
      */
-    public function processDebitTransactionForAgent(
+    public function processDebitTransaction(
         TransactionRequest $request,
         object $agentDetails,
         float $agentBalance,

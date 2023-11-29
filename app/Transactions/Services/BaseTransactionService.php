@@ -30,7 +30,8 @@ class BaseTransactionService extends BaseService
      */
     private ?TransactionsRepo $transactionsRepo;
 
-    public function __construct(?TransactionsRepo $transactionsRepo) {
+    public function __construct(?TransactionsRepo $transactionsRepo)
+    {
         $this->transactionsRepo = $transactionsRepo;
     }
 
@@ -212,11 +213,7 @@ class BaseTransactionService extends BaseService
      *
      * @return mixed An object containing transaction and ticket information or a Response object in case of an error.
      */
-    public function processAndStoreTransaction(
-        TransactionRequest $request,
-        mixed $transactionResult,
-        int $providerId
-    )
+    public function processAndStoreTransaction(TransactionRequest $request, mixed $transactionResult, int $providerId)
     : mixed {
         $transactionData = [
             'user_id'               => $request->get('user'),
