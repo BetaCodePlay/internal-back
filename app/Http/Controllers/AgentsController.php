@@ -2965,7 +2965,7 @@ class AgentsController extends Controller
         try {
             return $this->userTransactionService->manageCreditDebitTransactions($request);
         } catch (Exception $ex) {
-            return $this->transactionService->handleAndRespondToError($request, $ex);
+            return $this->userTransactionService->handleAndRespondToError($request, $ex);
         }
     }
 
