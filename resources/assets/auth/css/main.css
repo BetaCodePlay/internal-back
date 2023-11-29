@@ -252,7 +252,7 @@ iframe {
     left: 0;
     bottom: 0;
     background: #000;
-    opacity: .75;
+    opacity: .3;
     z-index: 2;
 }
 
@@ -264,6 +264,20 @@ iframe {
     padding: 60px 25px;
     width: 720px;
     max-width: 100%;
+}
+
+.container-auth .content .auth-title {
+    font-size: 22px;
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.container-auth .content .auth-subtitle {
+    color: #fff;
+    text-align: left;
+    margin-bottom: 25px;
+    font-size: 15px;
 }
 
 .wrap-login {
