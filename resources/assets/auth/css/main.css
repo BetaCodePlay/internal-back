@@ -266,6 +266,13 @@ iframe {
     max-width: 100%;
 }
 
+.container-auth .content .content-ex {
+    width: 400px;
+    margin: auto;
+    max-width: 100%;
+    text-align: center;
+}
+
 .container-auth .content .auth-title {
     font-size: 22px;
     color: #fff;
