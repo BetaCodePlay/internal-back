@@ -269,7 +269,7 @@ iframe {
     width: auto;
 }
 
-.container-auth .error-figure .error-title {
+.container-auth .error-title {
     font-size: 68px;
     color: #fff;
     font-weight: 600;
@@ -277,7 +277,7 @@ iframe {
     line-height: 1;
 }
 
-.container-auth .error-figure .error-subtitle {
+.container-auth .error-subtitle {
     color: #aaa;
     text-align: center;
     font-size: 22px;
