@@ -257,6 +257,18 @@ iframe {
     z-index: 2;
 }
 
+.container-auth .auth-figure {
+    text-align: center;
+}
+
+.container-auth .auth-figure img {
+    max-height: 140px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    width: auto;
+}
+
 .container-auth .content {
     position: relative;
     z-index: 5;
