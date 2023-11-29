@@ -273,6 +273,30 @@ iframe {
     text-align: center;
 }
 
+.container-auth .content .content-ex label {
+    width: 100%;
+    color: #fff;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.btn-send {
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.2;
+    display: block;
+    padding: 14px 20px;
+    width: 100%;
+    background: #7D2DF5;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.btn-send:hover, .btn-send:focus {
+    background: #964FFF;
+}
+
 .container-auth .content .auth-title {
     font-size: 22px;
     color: #fff;

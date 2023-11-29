@@ -70,7 +70,7 @@
 						</span>
                         <input class="input-login" type="password" name="password" id="reset-password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
                     </div>
-                    <button type="button" class="btn-reset-password" data-route="{{ route('auth.change-password') }}" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
+                    <button type="button" class="btn-send" data-route="{{ route('auth.change-password') }}" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                         {{ _i('Reset') }}
                     </button>
                 </div>
