@@ -14,7 +14,7 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('BackOffice') }}</title>
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=6.24">
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.28">
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
