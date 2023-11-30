@@ -3,13 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=2">
-    <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=13">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
     @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)
         <link rel="shortcut icon" href="{{ asset('commons/img/bloko-favicon.png') }}">
     @else
@@ -18,7 +14,9 @@
     <link rel="apple-touch-icon" sizes="57x57" href="{{ $favicon }}">
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('BackOffice') }}</title>
-    <link rel="stylesheet" href="{{ asset('commons/css/template.min.css') }}?v=0.47">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700%7CPlayfair+Display%7CRoboto%7CRaleway%7CSpectral%7CRubik">
+    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=13">
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
