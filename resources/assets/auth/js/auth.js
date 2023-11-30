@@ -43,7 +43,7 @@ class Auth {
             }, 300);
         }
 
-        $(document).on('click', '.btn-reset-password', function () {
+        $(document).on('click', '#send-reset-password', function () {
             let $this = $(this);
             let $modal = $('.modal-reset-password');
             let $route = $this.data('route');
