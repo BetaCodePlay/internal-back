@@ -1,11 +1,117 @@
 body {
-    .u-header__section--admin-dark {
-        .u-header-logo-toggler {
-            background: #2c2c2c;
-        }
+    .u-side-nav--top-level-menu {
+        padding-top: 25px;
+        padding-bottom: 25px;
     }
 
     .u-sidebar-navigation--dark {
         background: #2c2c2c;
+
+        .u-header-logo-toggler {
+            background: #2c2c2c;
+        }
+
+        .has-active {
+            background: transparent !important;
+            padding: 0 15px;
+
+            > a {
+                color: #fff;
+                font-weight: 400;
+                font-size: 14px;
+                border-radius: 8px;
+                position: relative;
+                padding: 12px 15px;
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                transition: 0.15s;
+                margin-bottom: 1px;
+
+                i {
+                    font-size: 16px;
+                    margin-right: 10px;
+                }
+
+                &::before {
+                    content: "";
+                    background: #7d2df5;
+                    position: absolute;
+                    height: calc(100% - 10px);
+                    left: 0;
+                    width: 3px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    border-radius: 50px;
+                    display: none;
+                }
+
+                &.active {
+                    color: #fff;
+                    background: #333;
+                    font-weight: 500;
+
+                    &::before {
+                        display: block;
+                    }
+
+                    i {
+                        color: #fff;
+                    }
+                }
+
+                &:hover, &:focus {
+                    color: #fff;
+                    background: #333;
+
+                    i {
+                        color: #fff;
+                    }
+                }
+            }
+
+            .u-sidebar-title {
+                font-size: 15px;
+                font-weight: 500;
+                color: #fff;
+                margin-bottom: 15px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            hr {
+                border-top: 2px solid #5a5a5a;
+                border-radius: 50px;
+                width: calc(100% - 12px);
+            }
+        }
+
+        &.u-side-nav--mini {
+            .has-active {
+                padding: 0 3px;
+
+                > a {
+                    text-align: center;
+                    padding: 12px 5px;
+
+                    i {
+                        margin-right: 0;
+                    }
+
+                    .media-body {
+                        display: none;
+                    }
+                }
+            }
+
+            .u-sidebar-title {
+                font-size: 12px;
+                padding: 0 5px;
+                color: #999;
+                font-weight: 600;
+            }
+        }
     }
 }
