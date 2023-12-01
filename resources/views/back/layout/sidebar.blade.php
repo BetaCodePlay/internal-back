@@ -1,6 +1,11 @@
 <div id="sideNav" class="col-auto u-sidebar-navigation-v1 u-sidebar-navigation--dark">
     <ul id="sideNavMenu" class="u-sidebar-navigation-v1-menu u-side-nav--top-level-menu g-min-height-100vh mb-0">
         {{--{!! \Core::buildMenu() !!}--}}
+
+        <li>
+            <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
+        </li>
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span class="media-body align-self-center">{{ _i('Home') }}</span>
