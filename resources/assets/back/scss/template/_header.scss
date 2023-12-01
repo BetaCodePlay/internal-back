@@ -31,7 +31,7 @@
 
     .u-header-logo-toggler {
         width: 50px;
-        padding: 8px !important;
+        padding: 5px !important;
     }
 
     .navbar-brand-mini {
@@ -41,6 +41,12 @@
         .img-logo-mini {
             width: 100%;
         }
+    }
+}
+
+@media (min-width: 576px) {
+    .u-side-nav-mini .u-header-logo-toggler {
+        padding: 5px !important;
     }
 }
 
