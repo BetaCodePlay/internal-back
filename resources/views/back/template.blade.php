@@ -15,8 +15,8 @@
     <link rel="apple-touch-icon" sizes="114x114" href="{{ $favicon }}">
     <title>{{ $title ?? _i('BackOffice') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=6.24">
-    <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.28">
+    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=6.25">
+    <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.29">
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     @yield('styles')
     <style>
