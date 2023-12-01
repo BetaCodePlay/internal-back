@@ -6,6 +6,11 @@
     border-bottom: 1px solid #5A5A5A;
 }
 
+.u-side-nav--top-level-menu {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
 .u-sidebar-navigation--dark {
     .has-active {
         background: transparent !important;
@@ -19,6 +24,9 @@
             position: relative;
             padding: 12px 15px;
             display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
 
             i {
                 font-size: 18px;
