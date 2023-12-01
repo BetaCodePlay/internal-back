@@ -1,5 +1,4 @@
-<footer id="footer"
-        class="u-footer--bottom-sticky g-bg-white g-color-gray-dark-v6 g-brd-top g-brd-gray-light-v7 g-pa-20">
+<footer id="footer" class="u-footer--bottom-sticky g-bg-white g-color-gray-dark-v6 g-brd-top g-brd-gray-light-v7 g-pa-20">
     <div class="row">
         <div class="offset-md-8 col-md-4 opt-footer">
 
