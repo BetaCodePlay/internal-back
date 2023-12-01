@@ -77,6 +77,9 @@
             font-weight: 500;
             color: #fff;
             margin-bottom: 15px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
     }
 
@@ -96,6 +99,13 @@
                     display: none;
                 }
             }
+        }
+
+        .u-sidebar-title {
+            font-size: 12px;
+            padding: 0 5px;
+            color: #999;
+            font-weight: 600;
         }
     }
 }
