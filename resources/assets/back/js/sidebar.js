@@ -105,9 +105,7 @@ var isSideMenuMini = $.cookie('isSideMenuMini') ? true : '';
                 });
                 // }
 
-                $('.collapse-menu-action-s').on('click', function (){
-                    $('.collapse-menu-action').click()
-                });
+
 
                 $(target).find('[data-hssm-target]').on('click', function (e) {
                     e.preventDefault();
