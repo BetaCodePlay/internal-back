@@ -2752,10 +2752,9 @@ class UsersController extends Controller
     public function usersThemeData($theme)
     {
         try {
-            \Log::notice(__METHOD__, ['usersThemeData', 'theme' =>  $theme]);
             $users = $this->usersRepo->themeUsers(Auth::id(), $theme);
             $data = [
-                'theme' => $users
+                'theme' => $users->theme
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
