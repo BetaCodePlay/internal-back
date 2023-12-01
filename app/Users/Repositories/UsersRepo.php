@@ -1720,12 +1720,12 @@ class UsersRepo
      * @param boolean $theme theme
      * @return mixed
      */
-    public function themeUsers($user, $theme) {
-        return \DB::table('users')
-            ->where('id', $user)
-            ->update([
-                'theme' => $theme
-            ]);
+    public function themeUsers($user, $theme)
+    {
+        $user = User::find($user);
+        $user->fill(['theme' => $theme]);
+        $user->save();
+        return $user;
     }
 
     /**
