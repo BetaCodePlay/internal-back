@@ -28,6 +28,7 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             transition: 0.15s;
+            margin-bottom: 1px;
 
             i {
                 font-size: 16px;
@@ -63,11 +64,19 @@
 
             &:hover, &:focus {
                 color: #fff;
+                background: #333;
 
                 i {
                     color: #fff;
                 }
             }
+        }
+
+        .u-sidebar-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 15px;
         }
     }
 
