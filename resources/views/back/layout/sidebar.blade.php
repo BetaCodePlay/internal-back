@@ -3,7 +3,7 @@
         {{--{!! \Core::buildMenu() !!}--}}
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="#" target="_self">
-                <span class="d-flex align-self-center g-pos-rel"><i class="hs-admin-bar-chart"></i></span><span class="media-body align-self-center">Crear usuario de agente</span>
+                <span class="g-pos-rel"><i class="hs-admin-bar-chart"></i></span><span class="media-body align-self-center">Crear usuario de agente</span>
             </a>
         </li>
 

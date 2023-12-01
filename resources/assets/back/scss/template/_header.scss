@@ -17,6 +17,13 @@
             font-size: 14px;
             border-radius: 8px;
             position: relative;
+            padding: 12px 15px;
+            display: block;
+
+            i {
+                font-size: 18px;
+                margin-right: 10px;
+            }
 
             &::before {
                 content: "";
@@ -24,7 +31,10 @@
                 position: absolute;
                 height: calc(100% - 10px);
                 left: 0;
-                width: 2px;
+                width: 3px;
+                top: 50%;
+                transform: translateY(-50%);
+                border-radius: 50px;
             }
 
             &.active, &.active i {
