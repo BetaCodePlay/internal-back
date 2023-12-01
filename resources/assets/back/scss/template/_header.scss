@@ -81,6 +81,12 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+
+        hr {
+            border-top: 2px solid #5a5a5a;
+            border-radius: 50px;
+            width: calc(100% - 12px);
+        }
     }
 
     &.u-side-nav--mini {
