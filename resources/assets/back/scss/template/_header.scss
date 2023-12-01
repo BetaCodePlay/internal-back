@@ -13,3 +13,16 @@
 .u-header--sticky-top {
     border-bottom: 1px solid #5A5A5A;
 }
+
+.u-header-logo-toggler {
+    .navbar-brand-mobile {
+        display: none;
+    }
+}
+
+.u-side-nav-mini .u-header-logo-toggler {
+    .navbar-brand {
+        display: block !important;
+        opacity: 1;
+    }
+}
