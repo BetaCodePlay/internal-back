@@ -55,7 +55,7 @@
         </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#">
+            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden collapse-menu-action-s" href="#">
                 <span class="g-pos-rel"><i class="fa-solid fa-arrows-left-right-to-line"></i></span> <span class="media-body align-self-center">{{ _i('Collapse') }}</span>
             </a>
         </li>

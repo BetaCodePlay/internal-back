@@ -52,6 +52,10 @@ var isSideMenuMini = $.cookie('isSideMenuMini') ? true : '';
 
             this.initSideNav();
 
+            $(document).on('click', '.collapse-menu-action-s', function (){
+                $('.collapse-menu-action').click()
+            });
+
             return this.pageCollection;
         },
 
