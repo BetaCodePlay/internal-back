@@ -25,6 +25,10 @@
         </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+            <hr>
+        </li>
+
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Account') }}</span></div>
         </li>
 
