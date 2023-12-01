@@ -2744,6 +2744,27 @@ class UsersController extends Controller
     }
 
     /**
+     * Get users theme data
+     *
+     * @param $theme
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function usersThemeData($theme)
+    {
+        try {
+            \Log::notice(__METHOD__, ['usersThemeData', 'theme' =>  $theme]);
+            $users = $this->usersRepo->themeUsers(Auth::id(), $theme);
+            $data = [
+                'theme' => $users
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Validate email
      *
      * @param Request $request
