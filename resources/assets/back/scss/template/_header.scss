@@ -22,6 +22,17 @@
     }
 }
 
+@media screen and (max-width: 991px) {
+    .u-header-logo-toggler {
+        .navbar-brand {
+            display: none !important;
+        }
+    }
+}
+
+
+
+
 .u-side-nav-mini .u-header-logo-toggler {
     .navbar-brand-mini {
         display: block !important;
