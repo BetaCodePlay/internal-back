@@ -31,6 +31,16 @@
 
     .u-header-logo-toggler {
         width: 50px;
+        padding: 8px !important;
+    }
+
+    .navbar-brand-mini {
+        display: block !important;
+        opacity: 1;
+
+        .img-logo-mini {
+            width: 100%;
+        }
     }
 }
 
