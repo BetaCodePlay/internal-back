@@ -1505,7 +1505,6 @@ class UsersRepo
     public function store($data, $profileData)
     {
         $user = User::create($data);
-        \Log::notice(__METHOD__, ['paso por aca 4', 'user' =>  $user]);
         $user->profile()->create($profileData);
         return $user;
     }
@@ -1711,6 +1710,21 @@ class UsersRepo
             ->where('user_currencies.currency_iso', $currency)
             ->whitelabel()
             ->first();
+        return $user;
+    }
+
+    /**
+     * Update theme user
+     *
+     * @param int $user User ID
+     * @param boolean $theme theme
+     * @return mixed
+     */
+    public function themeUsers($user, $theme)
+    {
+        $user = User::find($user);
+        $user->fill(['theme' => $theme]);
+        $user->save();
         return $user;
     }
 
