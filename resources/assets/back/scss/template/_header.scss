@@ -9,11 +9,23 @@
 .u-sidebar-navigation--dark {
     .has-active {
         background: transparent !important;
+        padding: 0 15px;
 
         > a {
             color: #fff;
             font-weight: 500;
             font-size: 14px;
+            border-radius: 8px;
+            position: relative;
+
+            &::before {
+                content: "";
+                background: #7d2df5;
+                position: absolute;
+                height: calc(100% - 10px);
+                left: 0;
+                width: 2px;
+            }
 
             &.active, &.active i {
                 color: #fff;
