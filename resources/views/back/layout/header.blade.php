@@ -19,12 +19,12 @@
                     {{--                        <img src="{{ asset('commons/img/dotpanel-light.png') }}" width="180" height="37" alt="Dotpanel">--}}
                     {{--                    @endif--}}
                 </a>
-                <a class="js-side-nav u-header__nav-toggler d-flex align-self-center ml-auto" href="#!"
+                {{--<a class="js-side-nav u-header__nav-toggler d-flex align-self-center ml-auto" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
                    data-hssm-body-class="u-side-nav-mini" data-hssm-is-close-all-except-this="true"
                    data-hssm-target="#sideNav">
                     <i class="hs-admin-align-left"></i>
-                </a>
+                </a>--}}
             </div>
 {{--            @if(isset($iphone))--}}
 {{--                @if($iphone)--}}
