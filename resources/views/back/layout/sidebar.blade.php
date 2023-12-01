@@ -44,6 +44,16 @@
             </a>
         </li>
 
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+            <hr>
+        </li>
+
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
+                <span class="g-pos-rel"><i class="fa-solid fa-right-from-bracket"></i></span> <span class="media-body align-self-center">{{ _i('Logout') }}</span>
+            </a>
+        </li>
+
         {{--<li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12 active" href="https://dev-back.bestcasinos.lat/agents/create-agent" target="_self">
                 <span class="d-flex align-self-center g-pos-rel g-font-size-18 g-mr-18"><i class="hs-admin-bar-chart"></i></span><span class="media-body align-self-center">Crear usuario de agente</span>
