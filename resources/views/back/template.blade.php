@@ -31,13 +31,6 @@
     <div class="row no-gutters g-pos-rel g-overflow-x-hidden">
         @include('back.layout.sidebar')
         <div class="col g-ml-45 g-ml-0--lg g-pb-65--md">
-            @include('back.layout.warning')
-{{--            @if(isset($iphone))--}}
-{{--                @if($iphone)--}}
-{{--                    @include('back.layout.search')--}}
-{{--                @endif--}}
-{{--            @endif--}}
-
             <div class="g-pa-20">
                 @yield('content')
                 @if(!empty($action))

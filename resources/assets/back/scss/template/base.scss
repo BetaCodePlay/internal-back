@@ -15,46 +15,6 @@ body {
     max-width: 150px;
 }
 
-.warning-general-template {
-    background: #eee;
-    padding: 10px 0;
-
-    .warning-container {
-        overflow: hidden;
-    }
-
-    .warning-title {
-        color: #4f2d8c;
-        font-weight: 600;
-    }
-
-    .warning-general-template-ex {
-        white-space: nowrap;
-        font-size: 16px;
-        color: #666;
-
-        .msg {
-            display: inline-block;
-            min-width: 100%;
-            padding-right: 150px;
-            -webkit-animation: marquee-inner 20s linear infinite;
-            animation: marquee-inner 20s linear infinite;
-        }
-    }
-
-    @keyframes marquee-inner {
-        0% {
-            -webkit-transform: translateX(0);
-            transform: translateX(0);
-        }
-
-        100% {
-            -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
-        }
-    }
-}
-
 .collapse {
     display: none !important;
 
@@ -97,57 +57,6 @@ body {
 
         @media (min-width: 992px) {
             display: block;
-        }
-    }
-}
-
-.u-sidebar-navigation-v1 {
-    .u-side-nav--top-level-menu {
-        padding-bottom: 45px !important;
-    }
-
-    .col-social-navigation {
-        background: #172031;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 250px;
-        text-align: center;
-        line-height: 1;
-        height: 40px;
-
-        a {
-            padding: 5px;
-            font-size: 28px;
-            display: inline-block;
-            text-decoration: none;
-
-            &.color-telegram {
-                color: #2AABEE;
-            }
-
-            i {
-                vertical-align: middle;
-            }
-
-            .social-name {
-                font-size: 15px;
-                font-weight: 600;
-                display: inline-block;
-                vertical-align: middle;
-            }
-        }
-    }
-
-    &.u-sidebar-navigation-v1--mini {
-        .col-social-navigation {
-            width: 50px;
-
-            a {
-                .social-name {
-                    display: none;
-                }
-            }
         }
     }
 }
