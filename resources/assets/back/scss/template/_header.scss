@@ -18,7 +18,7 @@
 
         > a {
             color: #fff;
-            font-weight: 500;
+            font-weight: 400;
             font-size: 14px;
             border-radius: 8px;
             position: relative;
@@ -48,6 +48,7 @@
             &.active, &.active i {
                 color: #fff;
                 background: #333;
+                font-weight: 500;
             }
         }
     }
