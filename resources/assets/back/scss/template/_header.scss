@@ -5,3 +5,20 @@
 .u-header--sticky-top {
     border-bottom: 1px solid #5A5A5A;
 }
+
+.u-sidebar-navigation--dark {
+    .has-active {
+        background: transparent !important;
+
+        > a {
+            color: #fff;
+            font-weight: 500;
+            font-size: 14px;
+
+            &.active, &.active i {
+                color: #fff;
+                background: #333;
+            }
+        }
+    }
+}
