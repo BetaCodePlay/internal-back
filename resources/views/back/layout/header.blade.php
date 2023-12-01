@@ -9,22 +9,13 @@
                             <img src="{{$logo->img_dark }}" alt="Bloko" width="180" height="37" class="img-logo">
                         @endif
                     @endif
-                    {{--                @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 109)--}}
-                    {{--                    <img src="{{ asset('commons/img/bloko-light.png') }}" alt="Bloko" width="180" height="37">--}}
-                    {{--                    @elseif(\Dotworkers\Configurations\Configurations::getWhitelabel() == 125)--}}
-                    {{--                        <img src="{{ asset('commons/img/lat-soft-demo.png') }}" alt="LatSoft" width="180" height="37">--}}
-                    {{--                    @elseif(\Dotworkers\Configurations\Configurations::getWhitelabel() == 132 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 133 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 141 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 142 || \Dotworkers\Configurations\Configurations::getWhitelabel() == 144)--}}
-                    {{--                        <img src="{{ asset('commons/img/lat-soft-logo.jpeg') }}" alt="LatSoft" width="180" height="37">--}}
-                    {{--                    @else--}}
-                    {{--                        <img src="{{ asset('commons/img/dotpanel-light.png') }}" width="180" height="37" alt="Dotpanel">--}}
-                    {{--                    @endif--}}
                 </a>
-                {{--<a class="js-side-nav u-header__nav-toggler d-flex align-self-center ml-auto" href="#!"
+                <a class="js-side-nav u-header__nav-toggler d-flex align-self-center ml-auto collapse-menu-action" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
                    data-hssm-body-class="u-side-nav-mini" data-hssm-is-close-all-except-this="true"
                    data-hssm-target="#sideNav">
                     <i class="hs-admin-align-left"></i>
-                </a>--}}
+                </a>
             </div>
 {{--            @if(isset($iphone))--}}
 {{--                @if($iphone)--}}
