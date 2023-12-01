@@ -43,7 +43,7 @@
                 top: 50%;
                 transform: translateY(-50%);
                 border-radius: 50px;
-                opacity: 0;
+                display: none;
             }
 
             &.active {
@@ -52,7 +52,7 @@
                 font-weight: 500;
 
                 &::before {
-                    opacity: 1;
+                    display: block;
                 }
 
                 i {
