@@ -241,6 +241,12 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
         'uses' => 'UsersController@usersTempData'
     ]);
 
+    // Update users theme
+    Route::get('theme-users-data/{theme}', [
+        'as' => 'users.theme-users-data',
+        'uses' => 'UsersController@usersThemeData'
+    ]);
+
     // Get total users
     Route::get('total', [
         'as' => 'users.total',

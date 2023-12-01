@@ -1505,7 +1505,6 @@ class UsersRepo
     public function store($data, $profileData)
     {
         $user = User::create($data);
-        \Log::notice(__METHOD__, ['paso por aca 4', 'user' =>  $user]);
         $user->profile()->create($profileData);
         return $user;
     }
@@ -1712,6 +1711,21 @@ class UsersRepo
             ->whitelabel()
             ->first();
         return $user;
+    }
+
+    /**
+     * Update theme user
+     *
+     * @param int $user User ID
+     * @param boolean $theme theme
+     * @return mixed
+     */
+    public function themeUsers($user, $theme) {
+        return \DB::table('users')
+            ->where('id', $user)
+            ->update([
+                'theme' => $theme
+            ]);
     }
 
     /**
