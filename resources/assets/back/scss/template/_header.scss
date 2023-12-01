@@ -63,13 +63,17 @@
 
             &:hover, &:focus {
                 color: #fff;
+
+                i {
+                    color: #fff;
+                }
             }
         }
     }
 
     &.u-side-nav--mini {
         .has-active {
-            padding: 0 5px;
+            padding: 0 3px;
 
             > a {
                 text-align: center;
