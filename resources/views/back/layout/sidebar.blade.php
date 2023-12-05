@@ -70,9 +70,9 @@
 
 <div class="nav-mobile">
     <div class="nav-mobile-ex">
-        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-house-chimney"></i></a></div>
-        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-people-group"></i></a></div>
-        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i></a></div>
-        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-bars"></i></a></div>
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-house-chimney"> <span class="name">{{ _i('Home') }}</span></i></a></div>
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Roles') }}</span></a></div>
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i> <span class="name">{{ _i('Reports') }}</span></a></div>
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span></a></div>
     </div>
 </div>
