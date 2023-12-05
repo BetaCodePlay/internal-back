@@ -4,7 +4,9 @@ $('.collapse-menu-action-s').on('click', function (){
 });
 
 $(document).on('click', '.action-mobile-menu', function (){
-    $('.u-sidebar-navigation--dark').fadeToggle()
+    console.log('action');
+
+    $('.u-sidebar-navigation--dark').fadeToggle();
 })
 
 console.log('array')
