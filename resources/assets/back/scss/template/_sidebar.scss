@@ -105,17 +105,12 @@ body {
                     .media-body {
                         display: none;
                     }
-
-                    &.active {
-                        &::before {
-                            display: none;
-                        }
-                    }
                 }
             }
         }
 
         @media screen and (max-width: 991px) {
+            background: #1e1e1e;
             position: fixed;
             z-index: 501;
             width: 100%;
@@ -139,6 +134,14 @@ body {
 
                     .media-body {
                         display: inline-block;
+                    }
+
+                    &.active {
+                        background: #2b2c2d;
+
+                        &::before {
+                            display: none;
+                        }
                     }
                 }
             }
