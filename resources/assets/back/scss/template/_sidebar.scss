@@ -111,9 +111,19 @@ body {
 
         .has-menu {
             display: none;
+            text-align: left;
+            margin-bottom: 20px;
 
             .u-sidebar-menu {
-                padding: 0;
+                font-size: 18px;
+                font-weight: 500;
+                color: #fff;
+                padding: 5px 15px;
+                display: inline-block;
+
+                i {
+                    margin-right: 14px;
+                }
             }
         }
 

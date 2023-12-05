@@ -2,7 +2,7 @@
     <ul id="sideNavMenu" class="u-sidebar-navigation-v1-menu u-side-nav--top-level-menu mb-0">
         {{--{!! \Core::buildMenu() !!}--}}
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-menu">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-menu">
             <div class="u-sidebar-menu"><i class="fa-solid fa-arrow-left"></i> {{ _i('Menu') }}</div>
         </li>
 
