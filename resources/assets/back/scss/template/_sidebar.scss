@@ -30,6 +30,14 @@ body {
                 transition: 0.15s;
                 margin-bottom: 1px;
 
+                .icon-mobile {
+                    display: none;
+                    position: absolute;
+                    right: 5px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
                 i {
                     font-size: 16px;
                     margin-right: 10px;
@@ -177,6 +185,10 @@ body {
                     background: #2b2c2d;
                     margin-bottom: 10px;
                     position: relative;
+
+                    .icon-mobile {
+                        display: block;
+                    }
 
                     &::after {
                         content: "";
