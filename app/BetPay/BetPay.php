@@ -30,12 +30,10 @@ class BetPay
 
         try {
             $payments = Configurations::getPayments();
-            Log::info(__METHOD__, [' $payments ' => $payments ]);
             if ($payments) {
                 $whitelabel = Configurations::getWhitelabel();
                 $currency = session('currency');
                 $credentials = Utils::getCredentials($whitelabel, Providers::$betpay, $currency);
-                Log::info(__METHOD__, ['    $credentials' =>    $credentials, $whitelabel, Providers::$betpay, $currency]);
                 if (!is_null($credentials)) {
                     $requestData = [
                         'grant_type' => 'client_credentials',
@@ -48,7 +46,6 @@ class BetPay
                         ->withData($requestData)
                         ->post();
                     $response = json_decode($curl);
-                    Log::info(__METHOD__, ['  $response ' =>  $response ]);
                     if (!isset($response->error)) {
                         session()->put('betpay_client_id', $credentials->client_credentials_grant_id);
                         session()->put('betpay_client_access_token', $response->access_token);

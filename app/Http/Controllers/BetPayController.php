@@ -489,21 +489,18 @@ class BetPayController extends Controller
             $betPayToken = session('betpay_client_access_token');
             $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
-            Log::info(__METHOD__, [' $betPayToken ' => $betPayToken ]);
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
                     ->get();
                 $responsePaymentMethodsAll = json_decode($curlPaymentMethodsAll);
-                Log::info(__METHOD__, [' responsePaymentMethodsAll ' =>  $responsePaymentMethodsAll ]);
                 if ($responsePaymentMethodsAll->status == Status::$ok) {
                     $paymentMethods = $responsePaymentMethodsAll->data->payment_methods;
                 } else {
                     $paymentMethods = [];
                 }
             }
-            Log::info(__METHOD__, [' $paymentMethods ' =>  $paymentMethods ]);
             $data['payment_methods'] = $paymentMethods;
 
             return view('back.betpay.clients.create', $data);
