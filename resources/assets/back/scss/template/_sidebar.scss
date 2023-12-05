@@ -33,9 +33,13 @@ body {
                 .icon-mobile {
                     display: none;
                     position: absolute;
-                    right: 5px;
+                    right: 12px;
                     top: 50%;
                     transform: translateY(-50%);
+
+                    i {
+                        font-size: 12px;
+                    }
                 }
 
                 i {
@@ -163,6 +167,7 @@ body {
                         text-align: center;
                         border: 1px solid #fff;
                         margin-top: 30px;
+                        padding: 12px 15px;
 
                         .g-pos-rel {
                             &::before {
@@ -180,7 +185,7 @@ body {
 
                 > a {
                     text-align: left;
-                    padding: 12px 15px;
+                    padding: 12px 25px 12px 15px;
                     border-radius: 50px;
                     background: #2b2c2d;
                     margin-bottom: 10px;
