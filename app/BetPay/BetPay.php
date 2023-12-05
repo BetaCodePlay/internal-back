@@ -30,12 +30,12 @@ class BetPay
 
         try {
             $payments = Configurations::getPayments();
-
+            Log::info(__METHOD__, [' $payments ' => $payments ]);
             if ($payments) {
                 $whitelabel = Configurations::getWhitelabel();
                 $currency = session('currency');
                 $credentials = Utils::getCredentials($whitelabel, Providers::$betpay, $currency);
-
+                Log::info(__METHOD__, ['    $credentials' =>    $credentials ]);
                 if (!is_null($credentials)) {
                     $requestData = [
                         'grant_type' => 'client_credentials',
