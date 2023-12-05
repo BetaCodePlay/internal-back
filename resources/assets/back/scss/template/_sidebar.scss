@@ -105,6 +105,12 @@ body {
                     .media-body {
                         display: none;
                     }
+
+                    &.active {
+                        &::before {
+                            display: none;
+                        }
+                    }
                 }
             }
         }
@@ -126,6 +132,10 @@ body {
                     text-align: left;
                     padding: 12px 15px;
                     border-radius: 50px;
+
+                    i {
+                        margin-right: 10px;
+                    }
 
                     .media-body {
                         display: inline-block;
