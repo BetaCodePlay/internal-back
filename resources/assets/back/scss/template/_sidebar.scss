@@ -178,7 +178,7 @@ body {
                     }
 
                     i {
-                        margin-right: 10px;
+                        margin-right: 0;
                     }
 
                     .media-body {
@@ -200,10 +200,25 @@ body {
                         width: 20px;
                         text-align: center;
                         display: inline-block;
+                        margin-right: 12px;
 
                         &::before {
                             display: block;
                             content: "";
+                            background: #404142;
+                            height: 34px;
+                            width: 34px;
+                            position: absolute;
+                            border-radius: 50px;
+                            left: 50%;
+                            top: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 1;
+                        }
+
+                        i {
+                            position: relative;
+                            z-index: 2;
                         }
                     }
                 }
