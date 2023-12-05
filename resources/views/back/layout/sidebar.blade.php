@@ -24,7 +24,7 @@
             </a>
         </li>
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active mobile-hidde">
             <hr>
         </li>
 
@@ -44,7 +44,7 @@
             </a>
         </li>
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active mobile-hidde">
             <hr>
         </li>
 
@@ -54,7 +54,7 @@
             </a>
         </li>
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active mobile-hidde">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden collapse-menu-action-s" href="javascript:void(0)">
                 <span class="g-pos-rel"><i class="fa-solid fa-arrows-left-right-to-line"></i></span> <span class="media-body align-self-center">{{ _i('Collapse') }}</span>
             </a>

@@ -120,8 +120,18 @@ body {
             bottom: 0;
             height: 100%;
 
+            .mobile-hidde {
+                display: none;
+            }
+
             &.u-side-nav--mini .has-active, .has-active {
                 padding: 0 15px;
+
+                hr {
+                    border-color: transparent;
+                    margin-top: 1rem;
+                    margin-bottom: 1rem;
+                }
 
                 > a {
                     text-align: left;
