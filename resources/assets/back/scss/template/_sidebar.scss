@@ -115,15 +115,25 @@ body {
                 font-weight: 600;
             }
         }
-    }
-}
 
-@media screen and (max-width: 991px) {
-    body {
-        .u-sidebar-navigation--dark {
-            .u-side-nav--top-level-menu {
-                overflow: auto;
-                height: 100%;
+        @media screen and (max-width: 991px) {
+            position: fixed;
+            z-index: 501;
+            width: 100%;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            height: 100%;
+
+            &.u-side-nav--mini {
+                .has-active {
+                    > a {
+                        .media-body {
+                            display: inline-block;
+                        }
+                    }
+                }
             }
         }
     }
@@ -161,7 +171,7 @@ body {
                 font-size: 18px;
                 line-height: 1;
 
-                .name  {
+                .name {
                     display: inline-block;
                     width: 100%;
                     font-size: 10px;
@@ -169,7 +179,7 @@ body {
                 }
 
                 &:hover, &:focus {
-                    background: rgba(255,255,255,0.05);
+                    background: rgba(255, 255, 255, 0.05);
                 }
 
                 &.active {
