@@ -131,7 +131,7 @@ body {
                     margin-bottom: 10px;
                     position: relative;
 
-                    &::before {
+                    &::after {
                         content: "";
 
                     }
@@ -144,9 +144,11 @@ body {
                         display: inline-block;
                     }
 
+                    &:hover, &:focus {
+                        background: #333;
+                    }
+
                     &.active {
-
-
                         &::before {
                             display: none;
                         }
