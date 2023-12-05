@@ -140,9 +140,11 @@ body {
                 padding: 0 15px;
 
                 &.has-logout {
-                    text-align: center;
-                    border: 1px solid #fff;
-                    margin-top: 30px;
+                    a {
+                        text-align: center;
+                        border: 1px solid #fff;
+                        margin-top: 30px;
+                    }
                 }
 
                 hr {
