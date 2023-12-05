@@ -76,7 +76,7 @@ body {
                 font-size: 15px;
                 font-weight: 500;
                 color: #fff;
-                margin-bottom: 15px;
+                margin-bottom: 20px;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
@@ -126,12 +126,14 @@ body {
             bottom: 0;
             height: 100%;
 
-            &.u-side-nav--mini {
-                .has-active {
-                    > a {
-                        .media-body {
-                            display: inline-block;
-                        }
+            &.u-side-nav--mini .has-active, .has-active {
+                > a {
+                    text-align: left;
+                    padding: 12px 15px;
+                    border-radius: 50px;
+
+                    .media-body {
+                        display: inline-block;
                     }
                 }
             }
