@@ -93,13 +93,12 @@ body {
                 display: none;
                 text-align: left;
                 margin-bottom: 20px;
-                padding: 5px 0;
 
                 .u-sidebar-menu {
                     font-size: 16px;
                     font-weight: 500;
                     color: #fff;
-                    padding: 5px 15px;
+                    padding: 5px 0;
                     display: inline-block;
                     cursor: pointer;
 
@@ -129,8 +128,6 @@ body {
             }
         }
 
-
-
         @media screen and (max-width: 991px) {
             background: #1e1e1e;
             position: fixed;
@@ -142,9 +139,7 @@ body {
             bottom: 0;
             height: 100%;
 
-            .has-menu {
-                display: block;
-            }
+
 
             .mobile-hidde {
                 display: none;
@@ -152,6 +147,10 @@ body {
 
             &.u-side-nav--mini .has-active, .has-active {
                 padding: 0 15px;
+
+                &.has-menu {
+                    display: block;
+                }
 
                 &.has-logout {
                     a {

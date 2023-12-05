@@ -3,7 +3,7 @@
         {{--{!! \Core::buildMenu() !!}--}}
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-menu">
-            <div class="u-sidebar-menu"><i class="fa-solid fa-arrow-left"></i> {{ _i('Menu') }}</div>
+            <div class="u-sidebar-menu"><i class="fa-solid fa-arrow-left-long"></i> {{ _i('Menu') }}</div>
         </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
