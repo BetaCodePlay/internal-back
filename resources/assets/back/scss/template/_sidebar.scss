@@ -139,14 +139,12 @@ body {
             bottom: 0;
             height: 100%;
 
-
-
             .mobile-hidde {
                 display: none;
             }
 
             &.u-side-nav--mini .has-active, .has-active {
-                padding: 0 15px;
+                padding: 0 25px;
 
                 &.has-menu {
                     display: block;
@@ -196,13 +194,29 @@ body {
                             display: none;
                         }
                     }
+
+                    .g-pos-rel {
+                        height: 20px;
+                        width: 20px;
+                        text-align: center;
+                        display: inline-block;
+
+                        &::before {
+                            display: block;
+                            content: "";
+                        }
+                    }
+                }
+
+                .u-sidebar-title {
+                    margin-bottom: 15px;
                 }
             }
 
 
 
             .u-sidebar-navigation-v1-menu {
-                width: 320px;
+                width: 360px;
                 margin: auto;
                 max-width: 100%;
             }
