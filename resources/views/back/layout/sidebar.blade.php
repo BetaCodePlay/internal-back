@@ -24,7 +24,7 @@
             </a>
         </li>
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active mobile-hidde">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
 
@@ -44,7 +44,7 @@
             </a>
         </li>
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active mobile-hidde">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
 
