@@ -109,6 +109,14 @@ body {
             }
         }
 
+        .has-menu {
+            display: none;
+
+            .u-sidebar-menu {
+                padding: 0;
+            }
+        }
+
         @media screen and (max-width: 991px) {
             background: #1e1e1e;
             position: fixed;
@@ -120,12 +128,22 @@ body {
             bottom: 0;
             height: 100%;
 
+            .has-menu {
+                display: block;
+            }
+
             .mobile-hidde {
                 display: none;
             }
 
             &.u-side-nav--mini .has-active, .has-active {
                 padding: 0 15px;
+
+                &.has-logout {
+                    text-align: center;
+                    border: 1px solid #fff;
+                    margin-top: 30px;
+                }
 
                 hr {
                     border-color: transparent;
@@ -165,6 +183,8 @@ body {
                     }
                 }
             }
+
+
 
             .u-sidebar-navigation-v1-menu {
                 width: 320px;

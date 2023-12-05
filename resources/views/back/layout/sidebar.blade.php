@@ -2,6 +2,10 @@
     <ul id="sideNavMenu" class="u-sidebar-navigation-v1-menu u-side-nav--top-level-menu mb-0">
         {{--{!! \Core::buildMenu() !!}--}}
 
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-menu">
+            <div class="u-sidebar-menu"><i class="fa-solid fa-arrow-left"></i> {{ _i('Menu') }}</div>
+        </li>
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
@@ -48,7 +52,7 @@
             <hr>
         </li>
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-logout">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-right-from-bracket"></i></span> <span class="media-body align-self-center">{{ _i('Logout') }}</span>
             </a>
