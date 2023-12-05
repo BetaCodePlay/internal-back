@@ -132,7 +132,11 @@ body {
 .nav-mobile {
     position: fixed;
     display: none;
+    z-index: 101;
+    width: 100%;
     bottom: 0;
+    right: 0;
+    left: 0;
 
     .nav-mobile-ex {
         display: flex;
