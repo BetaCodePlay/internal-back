@@ -156,7 +156,7 @@ body {
 
             a {
                 display: block;
-                padding: 12px 6px;
+                padding: 10px 6px;
                 color: #fff;
                 font-size: 18px;
                 line-height: 1;
@@ -170,6 +170,12 @@ body {
 
                 &:hover, &:focus {
                     background: rgba(255,255,255,0.05);
+                }
+
+                &.active {
+                    i {
+                        color: #d7fe62;
+                    }
                 }
             }
         }
