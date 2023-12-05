@@ -144,10 +144,12 @@ body {
         flex-flow: row nowrap;
         background: #2b2c2d;
         text-align: center;
+        overflow: hidden;
         max-width: 100%;
         display: flex;
         width: 600px;
         margin: auto;
+
 
         .nav-mobile-opt {
             flex: 1 1 0;
