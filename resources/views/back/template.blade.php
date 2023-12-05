@@ -64,6 +64,7 @@
         //socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push-notifications.store') }}');
     });
     @endif
+    Global.sidebar();
 </script>
 </body>
 </html>

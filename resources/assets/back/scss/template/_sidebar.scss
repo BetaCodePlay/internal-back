@@ -1,4 +1,8 @@
 body {
+    &.no-overflow {
+        overflow: hidden;
+    }
+
     .u-side-nav--top-level-menu {
         padding-top: 25px;
         padding-bottom: 25px;
@@ -151,6 +155,7 @@ body {
             bottom: 0;
             height: 100%;
             display: none;
+            overflow: auto;
 
             .mobile-hidde {
                 display: none;

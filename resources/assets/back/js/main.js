@@ -1,12 +1,19 @@
 import {setCookie} from "../../back/js/commons";
-$('.collapse-menu-action-s').on('click', function (){
-    $('.collapse-menu-action').click()
-});
 
-$(document).on('click', '.action-mobile-menu', function (){
-    console.log('action');
 
-    $('.u-sidebar-navigation--dark').fadeToggle();
-})
+class Global {
+    // Sidebar controllers
+    static sidebar($button, $form) {
+        $('.collapse-menu-action-s').on('click', function (){
+            $('.collapse-menu-action').click()
+        });
 
-console.log('array')
+        $(document).on('click', '.action-mobile-menu', function (){
+            $('body').toggleClass('no-overflow');
+            $('.u-sidebar-navigation--dark').fadeToggle();
+        });
+
+        console.log('Sidebar success')
+    }
+}
+window.Global = Global;
