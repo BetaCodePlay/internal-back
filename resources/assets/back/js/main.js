@@ -10,10 +10,8 @@ class Global {
 
         $(document).on('click', '.action-mobile-menu', function (){
             $('body').toggleClass('no-overflow');
-            $('.u-sidebar-navigation--dark').fadeToggle();
+            $('.u-sidebar-navigation--dark').fadeToggle(150);
         });
-
-        console.log('Sidebar success')
     }
 }
 window.Global = Global;
