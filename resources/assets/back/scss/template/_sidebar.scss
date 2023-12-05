@@ -107,13 +107,6 @@ body {
                     }
                 }
             }
-
-            .u-sidebar-title {
-                font-size: 12px;
-                padding: 0 5px;
-                color: #999;
-                font-weight: 600;
-            }
         }
 
         @media screen and (max-width: 991px) {
@@ -127,6 +120,8 @@ body {
             height: 100%;
 
             &.u-side-nav--mini .has-active, .has-active {
+                padding: 0 15px;
+
                 > a {
                     text-align: left;
                     padding: 12px 15px;
@@ -136,6 +131,12 @@ body {
                         display: inline-block;
                     }
                 }
+            }
+
+            .u-sidebar-navigation-v1-menu {
+                width: 320px;
+                margin: auto;
+                max-width: 100%;
             }
         }
     }
@@ -161,7 +162,6 @@ body {
         display: flex;
         width: 600px;
         margin: auto;
-
 
         .nav-mobile-opt {
             flex: 1 1 0;
