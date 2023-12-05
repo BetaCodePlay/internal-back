@@ -88,6 +88,26 @@ body {
                 border-radius: 50px;
                 width: calc(100% - 12px);
             }
+
+            &.has-menu {
+                display: none;
+                text-align: left;
+                margin-bottom: 20px;
+                padding: 5px 0;
+
+                .u-sidebar-menu {
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #fff;
+                    padding: 5px 15px;
+                    display: inline-block;
+                    cursor: pointer;
+
+                    i {
+                        margin-right: 14px;
+                    }
+                }
+            }
         }
 
         &.u-side-nav--mini {
@@ -109,23 +129,7 @@ body {
             }
         }
 
-        .has-menu {
-            display: none;
-            text-align: left;
-            margin-bottom: 20px;
 
-            .u-sidebar-menu {
-                font-size: 18px;
-                font-weight: 500;
-                color: #fff;
-                padding: 5px 15px;
-                display: inline-block;
-
-                i {
-                    margin-right: 14px;
-                }
-            }
-        }
 
         @media screen and (max-width: 991px) {
             background: #1e1e1e;
