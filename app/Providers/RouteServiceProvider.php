@@ -88,4 +88,11 @@ class RouteServiceProvider extends ServiceProvider
             $this->getRoutes(base_path('routes/api/'));
         });
     }
+
+    protected function mapChannelsRoutes()
+    {
+        Route::group(['middleware' => 'web', 'namespace' => $this->namespace], function ($router) {
+            $this->getRoutes(base_path('routes/channels/'));
+        });
+    }
 }
