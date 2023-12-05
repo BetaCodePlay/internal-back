@@ -35,7 +35,7 @@ class BetPay
                 $whitelabel = Configurations::getWhitelabel();
                 $currency = session('currency');
                 $credentials = Utils::getCredentials($whitelabel, Providers::$betpay, $currency);
-                Log::info(__METHOD__, ['    $credentials' =>    $credentials ]);
+                Log::info(__METHOD__, ['    $credentials' =>    $credentials, $whitelabel, Providers::$betpay, $currency]);
                 if (!is_null($credentials)) {
                     $requestData = [
                         'grant_type' => 'client_credentials',
