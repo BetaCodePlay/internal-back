@@ -6,6 +6,7 @@ use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Utils;
+use Illuminate\Support\Facades\Log;
 use Ixudra\Curl\Facades\Curl;
 
 /**
@@ -47,6 +48,7 @@ class BetPay
                         ->withData($requestData)
                         ->post();
                     $response = json_decode($curl);
+                    Log::info(__METHOD__, ['  $response ' =>  $response ]);
                     if (!isset($response->error)) {
                         session()->put('betpay_client_id', $credentials->client_credentials_grant_id);
                         session()->put('betpay_client_access_token', $response->access_token);
