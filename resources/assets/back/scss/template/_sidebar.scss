@@ -131,13 +131,16 @@ body {
 
 .nav-mobile {
     position: fixed;
-    bottom: 0;
-    background: #1E1E1E;
-    flex-flow: row nowrap;
     display: none;
+    bottom: 0;
 
     .nav-mobile-ex {
         display: flex;
+        flex-flow: row nowrap;
+        width: 600px;
+        max-width: 100%;
+        background: #1E1E1E;
+        margin: auto;
 
         .nav-mobile-opt {
             flex: 1 1 0;
