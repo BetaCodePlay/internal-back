@@ -128,3 +128,27 @@ body {
         }
     }
 }
+
+.nav-mobile {
+    position: fixed;
+    bottom: 0;
+    background: #1E1E1E;
+    flex-flow: row nowrap;
+    display: none;
+
+    .nav-mobile-ex {
+        display: flex;
+
+        .nav-mobile-opt {
+            flex: 1 1 0;
+
+            a {
+                display: block;
+            }
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        display: block;
+    }
+}

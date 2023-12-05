@@ -67,3 +67,12 @@
         </li>--}}
     </ul>
 </div>
+
+<div class="nav-mobile">
+    <div class="nav-mobile-ex">
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-house-chimney"></i></a></div>
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-people-group"></i></a></div>
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i></a></div>
+        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-bars"></i></a></div>
+    </div>
+</div>
