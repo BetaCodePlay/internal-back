@@ -3,5 +3,8 @@ $('.collapse-menu-action-s').on('click', function (){
     $('.collapse-menu-action').click()
 });
 
+$(document).on('click', '.action-mobile-menu', function (){
+    $('.u-sidebar-navigation--dark').fadeToggle()
+})
 
 console.log('array')

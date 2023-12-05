@@ -3,7 +3,7 @@
         {{--{!! \Core::buildMenu() !!}--}}
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-menu">
-            <div class="u-sidebar-menu"><i class="fa-solid fa-arrow-left-long"></i> {{ _i('Menu') }}</div>
+            <div class="u-sidebar-menu action-mobile-menu"><i class="fa-solid fa-arrow-left-long"></i> {{ _i('Menu') }}</div>
         </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
@@ -76,6 +76,6 @@
         <div class="nav-mobile-opt"><a class="active" href="#"><i class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
         <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Roles') }}</span></a></div>
         <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i> <span class="name">{{ _i('Reports') }}</span></a></div>
-        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span></a></div>
+        <div class="nav-mobile-opt action-mobile-menu"><a href="#"><i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span></a></div>
     </div>
 </div>
