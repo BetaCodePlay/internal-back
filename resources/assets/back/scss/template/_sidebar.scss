@@ -127,6 +127,14 @@ body {
                     text-align: left;
                     padding: 12px 15px;
                     border-radius: 50px;
+                    background: #2b2c2d;
+                    margin-bottom: 10px;
+                    position: relative;
+
+                    &::before {
+                        content: "";
+
+                    }
 
                     i {
                         margin-right: 10px;
@@ -137,7 +145,7 @@ body {
                     }
 
                     &.active {
-                        background: #2b2c2d;
+
 
                         &::before {
                             display: none;
