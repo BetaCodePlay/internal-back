@@ -9,21 +9,22 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
-
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
-                <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span class="media-body align-self-center">{{ _i('Home') }}</span>
-                <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
-            </a>
-        </li>
-
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="#" target="_self">
-                <span class="g-pos-rel"><i class="fa-solid fa-laptop-code"></i></span> <span class="media-body align-self-center">{{ _i('Dashboard') }}</span>
-                <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
-            </a>
-        </li>
-
+        @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard])
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('core.dashboard') }}" target="_self">
+                    <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span class="media-body align-self-center">{{ _i('Home') }}</span>
+                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                </a>
+            </li>
+        @endif
+        @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_dashboard])
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="{{ route('agents.index') }}" target="_self">
+                    <span class="g-pos-rel"><i class="fa-solid fa-laptop-code"></i></span> <span class="media-body align-self-center">{{ _i('Dashboard') }}</span>
+                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                </a>
+            </li>
+        @endif
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
                 <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span class="media-body align-self-center">{{ _i('Usuarios') }}</span>
@@ -58,7 +59,7 @@
         </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-logout">
-            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
+            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('auth.logout') }}" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-right-from-bracket"></i></span> <span class="media-body align-self-center">{{ _i('Logout') }}</span>
             </a>
         </li>
@@ -73,8 +74,12 @@
 
 <div class="nav-mobile">
     <div class="nav-mobile-ex">
-        <div class="nav-mobile-opt"><a class="active" href="#"><i class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
-        <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Roles') }}</span></a></div>
+        @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard])
+            <div class="nav-mobile-opt"><a class="active" href="{{ route('core.dashboard') }}"><i class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
+        @endif
+        @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_dashboard])
+            <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Roles') }}</span></a></div>
+        @endif
         <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i> <span class="name">{{ _i('Reports') }}</span></a></div>
         <div class="nav-mobile-opt action-mobile-menu"><a href="#"><i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span></a></div>
     </div>
