@@ -20,7 +20,7 @@
         @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_dashboard])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
                 <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="{{ route('agents.index') }}" target="_self">
-                    <span class="g-pos-rel"><i class="fa-solid fa-laptop-code"></i></span> <span class="media-body align-self-center">{{ _i('Dashboard') }}</span>
+                    <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span class="media-body align-self-center">{{ _i('Role') }}</span>
                     <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
                 </a>
             </li>
@@ -78,7 +78,7 @@
             <div class="nav-mobile-opt"><a class="active" href="{{ route('core.dashboard') }}"><i class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
         @endif
         @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_dashboard])
-            <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Roles') }}</span></a></div>
+            <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Role') }}</span></a></div>
         @endif
         <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i> <span class="name">{{ _i('Reports') }}</span></a></div>
         <div class="nav-mobile-opt action-mobile-menu"><a href="#"><i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span></a></div>
