@@ -64,7 +64,7 @@ body {
                     &[aria-expanded="true"] {
                         .icon-mobile {
                             i {
-                                transform: rotate(180deg);
+                                transform: rotate(-180deg);
                             }
                         }
                     }
@@ -220,6 +220,7 @@ body {
                             transform: translateY(-50%);
 
                             i {
+                                color: #fff;
                                 font-size: 12px;
                                 transition: 0.15s;
                             }
@@ -237,7 +238,7 @@ body {
                             &[aria-expanded="true"] {
                                 .icon-mobile {
                                     i {
-                                        transform: rotate(180deg);
+                                        transform: rotate(-180deg);
                                     }
                                 }
                             }

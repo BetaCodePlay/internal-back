@@ -51,19 +51,19 @@
                     <ul id="collapseExampleTwo" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse">
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                             <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
-                                <span class="media-body align-self-center">Dashboard</span>
+                                <span class="media-body align-self-center">Estado</span>
                                 <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                             </a>
                         </li>
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
                             <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
-                                <span class="media-body align-self-center">Agregar usuarios</span>
+                                <span class="media-body align-self-center">Resumen</span>
                                 <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                             </a>
                         </li>
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link" href="#" target="_self" data-toggle="collapse" data-target="#collapseExampleTwo">
-                                <span class="media-body align-self-center">Reportes</span>
+                            <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
+                                <span class="media-body align-self-center">Transacciones</span>
                                 <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                             </a>
                         </li>
