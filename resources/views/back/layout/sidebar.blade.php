@@ -9,6 +9,22 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
+        @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard])
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('core.dashboard') }}" target="_self">
+                    <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span class="media-body align-self-center">{{ _i('Home') }}</span>
+                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                </a>
+            </li>
+        @endif
+        @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_dashboard])
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="{{ route('agents.index') }}" target="_self">
+                    <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span class="media-body align-self-center">{{ _i('Role') }}</span>
+                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                </a>
+            </li>
+        @endif
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)" data-toggle="collapse" data-target="#collapseExample">
                 <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span class="media-body align-self-center">{{ _i('Usuarios') }}</span>
@@ -18,11 +34,6 @@
                 <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                     <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
                         <span class="media-body align-self-center">Dashboard</span>
-                    </a>
-                </li>
-                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
-                    <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
-                        <span class="media-body align-self-center">Agregar usuarios</span>
                     </a>
                 </li>
                 <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
@@ -47,25 +58,13 @@
                         </li>
                     </ul>
                 </li>
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
+                    <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
+                        <span class="media-body align-self-center">Agregar usuarios</span>
+                    </a>
+                </li>
             </ul>
         </li>
-        @can('access', [\Dotworkers\Security\Enums\Permissions::$dashboard])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('core.dashboard') }}" target="_self">
-                    <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span class="media-body align-self-center">{{ _i('Home') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
-                </a>
-            </li>
-        @endif
-        @can('access', [\Dotworkers\Security\Enums\Permissions::$agents_dashboard])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="{{ route('agents.index') }}" target="_self">
-                    <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span class="media-body align-self-center">{{ _i('Role') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
-                </a>
-            </li>
-        @endif
-
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
