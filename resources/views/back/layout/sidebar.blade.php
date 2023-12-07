@@ -121,6 +121,6 @@
             <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Role') }}</span></a></div>
         @endif
         <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i> <span class="name">{{ _i('Reports') }}</span></a></div>
-        <div class="nav-mobile-opt action-mobile-menu"><a href="#"><i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span></a></div>
+        <div class="nav-mobile-opt action-mobile-menu"><a href="javascript:void(0)"><i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span></a></div>
     </div>
 </div>
