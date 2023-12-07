@@ -59,9 +59,13 @@ body {
                         i {
                             margin-right: 0;
                         }
+                    }
 
-                        [aria-expanded="true"] {
-                            transform: rotate(180deg);
+                    &[aria-expanded="true"] {
+                        .icon-mobile {
+                            i {
+                                transform: rotate(180deg);
+                            }
                         }
                     }
                 }
