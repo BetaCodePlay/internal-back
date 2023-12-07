@@ -156,23 +156,25 @@ body {
                     content: "";
                 }
 
-                .u-side-nav--second-level-menu-link {
-                    color: #fff;
-                    font-weight: 400;
-                    font-size: 14px;
-                    border-radius: 8px;
-                    position: relative;
-                    padding: 10px 15px;
-                    display: block;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    transition: 0.15s;
-                    margin-bottom: 2px;
-
-                    &:hover, &:focus {
+                a {
+                    &.u-side-nav--second-level-menu-link {
                         color: #fff;
-                        background: #333;
+                        font-weight: 400;
+                        font-size: 14px;
+                        border-radius: 8px;
+                        position: relative;
+                        padding: 10px 15px;
+                        display: block;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        transition: 0.15s;
+                        margin-bottom: 2px;
+
+                        &:hover, &:focus {
+                            color: #fff;
+                            background: #333;
+                        }
                     }
                 }
             }
