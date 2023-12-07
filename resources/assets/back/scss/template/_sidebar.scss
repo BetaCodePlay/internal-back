@@ -32,7 +32,7 @@ body {
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 transition: 0.15s;
-                margin-bottom: 1px;
+                margin-bottom: 2px;
 
                 .icon-mobile {
                     display: none;
@@ -147,7 +147,7 @@ body {
         .u-side-nav--second-level-menu-link {
             color: #fff;
             font-weight: 400;
-            font-size: 13px;
+            font-size: 14px;
             border-radius: 8px;
             position: relative;
             padding: 10px 15px;
@@ -156,7 +156,15 @@ body {
             white-space: nowrap;
             text-overflow: ellipsis;
             transition: 0.15s;
-            margin-bottom: 1px;
+            margin-bottom: 2px;
+
+            &::before {
+                content: "";
+            }
+
+            &::after {
+                content: "";
+            }
 
             &:hover, &:focus {
                 color: #fff;
