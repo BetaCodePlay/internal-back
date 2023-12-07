@@ -279,9 +279,40 @@ body {
                         border-radius: 0 8px 8px 0;
                         box-shadow: 0 0 5px #111;
 
+                        li {
+                            &.u-side-nav--second-level-menu-item {
+                                padding-left: 5px;
+
+                                &::before {
+                                    display: none;
+                                }
+
+                                &::after {
+                                    display: none;
+                                }
+                            }
+                        }
+
                         .u-side-nav--second-level-menu {
+                            background: transparent;
                             position: relative;
                             left: 0;
+
+                            li {
+                                &.u-side-nav--second-level-menu-item {
+                                    padding-left: 14px;
+
+                                    &::before {
+                                        left: 8px;
+                                        display: block;
+                                    }
+
+                                    &::after {
+                                        left: 10px;
+                                        display: block;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
