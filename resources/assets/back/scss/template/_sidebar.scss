@@ -273,7 +273,7 @@ body {
         @media screen and (min-width: 992px) {
             &.u-sidebar-navigation-v1--mini {
                 .u-side-nav--second-level-menu {
-                    &:first-child {
+                    &:nth-child(2) {
                         background: #2c2c2c;
                         padding: 10px 5px 10px 0;
                         border-radius: 0 8px 8px 0;
