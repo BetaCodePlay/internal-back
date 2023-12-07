@@ -30,7 +30,7 @@
                 <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span class="media-body align-self-center">{{ _i('Usuarios') }}</span>
                 <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
             </a>
-            <ul id="collapseExample" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse show">
+            <ul id="collapseExample" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
                 <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
                     <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
                         <span class="media-body align-self-center">Dashboard</span>
