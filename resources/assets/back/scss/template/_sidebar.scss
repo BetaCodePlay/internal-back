@@ -441,6 +441,10 @@ body {
                     position: relative;
                     left: 0;
                     background: transparent;
+
+                    &.u-side-nav--second-level-menu-top {
+                        padding: 0 10px;
+                    }
                 }
             }
 
