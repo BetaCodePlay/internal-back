@@ -144,6 +144,21 @@ body {
             }
         }
 
+        .u-side-nav--second-level-menu-link {
+            color: #fff;
+            font-weight: 400;
+            font-size: 13px;
+            border-radius: 8px;
+            position: relative;
+            padding: 10px 15px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: 0.15s;
+            margin-bottom: 1px;
+        }
+
         @media screen and (max-width: 991px) {
             background: #1e1e1e;
             position: fixed;
