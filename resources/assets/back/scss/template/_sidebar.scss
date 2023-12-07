@@ -157,6 +157,11 @@ body {
             text-overflow: ellipsis;
             transition: 0.15s;
             margin-bottom: 1px;
+
+            &:hover, &:focus {
+                color: #fff;
+                background: #333;
+            }
         }
 
         @media screen and (max-width: 991px) {
