@@ -387,15 +387,6 @@ body {
                     margin-bottom: 10px;
                     position: relative;
 
-                    .icon-mobile {
-                        display: block;
-                    }
-
-                    &::after {
-                        content: "";
-
-                    }
-
                     i {
                         margin-right: 0;
                     }
@@ -445,8 +436,13 @@ body {
                 .u-sidebar-title {
                     margin-bottom: 15px;
                 }
-            }
 
+                .u-side-nav--second-level-menu {
+                    position: relative;
+                    left: 0;
+                    background: transparent;
+                }
+            }
 
             .u-sidebar-navigation-v1-menu {
                 width: 360px;
