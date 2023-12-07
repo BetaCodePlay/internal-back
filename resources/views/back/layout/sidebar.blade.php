@@ -13,7 +13,7 @@
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
                 <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('core.dashboard') }}" target="_self">
                     <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span class="media-body align-self-center">{{ _i('Home') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                    <span class="icon-mobile"><i class="fa-solid fa-chevron-up"></i></span>
                 </a>
             </li>
         @endif
@@ -21,14 +21,14 @@
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
                 <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="{{ route('agents.index') }}" target="_self">
                     <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span class="media-body align-self-center">{{ _i('Role') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                    <span class="icon-mobile"><i class="fa-solid fa-chevron-up"></i></span>
                 </a>
             </li>
         @endif
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)" data-toggle="collapse" data-target="#collapseExample">
                 <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span class="media-body align-self-center">{{ _i('Usuarios') }}</span>
-                <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                <span class="icon-mobile"><i class="fa-solid fa-chevron-up"></i></span>
             </a>
             <ul id="collapseExample" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse show">
                 <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
@@ -77,14 +77,14 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
                 <span class="g-pos-rel"><i class="fa-regular fa-bell"></i></span> <span class="media-body align-self-center">{{ _i('Notifications') }}</span>
-                <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                <span class="icon-mobile"><i class="fa-solid fa-chevron-up"></i></span>
             </a>
         </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="#" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-gear"></i></span> <span class="media-body align-self-center">{{ _i('Setting') }}</span>
-                <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
+                <span class="icon-mobile"><i class="fa-solid fa-chevron-up"></i></span>
             </a>
         </li>
 
