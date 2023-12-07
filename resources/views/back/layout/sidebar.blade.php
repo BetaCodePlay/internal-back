@@ -31,7 +31,7 @@
                 <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
             </a>
             <ul id="collapseExample" class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse show">
-                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
                     <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
                         <span class="media-body align-self-center">Dashboard</span>
                         <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
@@ -61,7 +61,7 @@
                                 <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                             </a>
                         </li>
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
+                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                             <a class="media u-side-nav--second-level-menu-link" href="#" target="_self">
                                 <span class="media-body align-self-center">Transacciones</span>
                                 <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
