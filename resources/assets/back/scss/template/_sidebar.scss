@@ -272,49 +272,59 @@ body {
 
         @media screen and (min-width: 992px) {
             &.u-sidebar-navigation-v1--mini {
-                .u-side-nav--second-level-menu {
-                    &.u-side-nav--second-level-menu-top {
-                        background: #2c2c2c;
-                        padding: 10px 5px 10px 0;
-                        border-radius: 0 8px 8px 0;
-                        box-shadow: 0 0 5px #111;
-
-                        li {
-                            &.u-side-nav--second-level-menu-item {
-                                padding-left: 5px;
-
-                                &::before {
-                                    display: none;
-                                }
-
-                                &::after {
-                                    display: none;
-                                }
-                            }
+                .u-side-nav--top-level-menu-item {
+                    .u-side-nav--top-level-menu-link {
+                        .icon-mobile {
+                            display: none;
                         }
+                    }
 
-                        .u-side-nav--second-level-menu {
-                            background: transparent;
-                            position: relative;
-                            left: 0;
+                    .u-side-nav--second-level-menu {
+
+
+                        &.u-side-nav--second-level-menu-top {
+                            background: #2c2c2c;
+                            padding: 10px 5px 10px 0;
+                            border-radius: 0 8px 8px 0;
+                            box-shadow: 0 0 5px #111;
 
                             li {
                                 &.u-side-nav--second-level-menu-item {
-                                    padding-left: 14px;
+                                    padding-left: 5px;
 
                                     &::before {
-                                        left: 8px;
-                                        display: block;
+                                        display: none;
                                     }
 
                                     &::after {
-                                        left: 10px;
-                                        display: block;
+                                        display: none;
                                     }
+                                }
+                            }
 
-                                    &:last-child {
+                            .u-side-nav--second-level-menu {
+                                background: transparent;
+                                position: relative;
+                                left: 0;
+
+                                li {
+                                    &.u-side-nav--second-level-menu-item {
+                                        padding-left: 14px;
+
+                                        &::before {
+                                            left: 8px;
+                                            display: block;
+                                        }
+
                                         &::after {
-                                            display: none;
+                                            left: 10px;
+                                            display: block;
+                                        }
+
+                                        &:last-child {
+                                            &::after {
+                                                display: none;
+                                            }
                                         }
                                     }
                                 }
@@ -322,6 +332,7 @@ body {
                         }
                     }
                 }
+
             }
         }
 
