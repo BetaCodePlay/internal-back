@@ -271,6 +271,10 @@ body {
         }
 
         @media screen and (min-width: 992px) {
+            .u-sidebar-navigation-v1 {
+                display: block !important;
+            }
+
             &.u-sidebar-navigation-v1--mini {
                 .u-side-nav--top-level-menu-item {
                     .u-side-nav--top-level-menu-link {
