@@ -78,7 +78,7 @@ body {
                     }
                 }
 
-                &:hover, &:focus {
+                &:hover {
                     color: #fff;
                     background: #333;
 
@@ -194,7 +194,20 @@ body {
                         transition: 0.15s;
                         margin-bottom: 2px;
 
-                        &:hover, &:focus {
+                        &:hover {
+                            color: #fff;
+                            background: #333;
+                        }
+                    }
+                }
+
+                &.active {
+                    &::before {
+                        background: #fff;
+                    }
+
+                    a {
+                        &.u-side-nav--second-level-menu-link {
                             color: #fff;
                             background: #333;
                         }
