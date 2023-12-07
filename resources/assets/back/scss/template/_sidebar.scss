@@ -51,6 +51,12 @@ body {
                     margin-right: 10px;
                 }
 
+                &[data-toggle="collapse"] {
+                    .icon-mobile {
+                        display: block;
+                    }
+                }
+
                 &::before {
                     content: "";
                     background: #7d2df5;
