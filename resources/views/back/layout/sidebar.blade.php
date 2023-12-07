@@ -30,6 +30,23 @@
                 <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span class="media-body align-self-center">{{ _i('Usuarios') }}</span>
                 <span class="icon-mobile"><i class="fa-solid fa-chevron-right"></i></span>
             </a>
+            <ul class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse show">
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item" data-toggle="collapse">
+                    <a class="d-flex media u-side-nav--second-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="https://staging-back.bestcasinos.lat/agents" target="_self">
+                        <span class=" align-self-center g-pos-rel g-font-size-18 g-mr-18"><i class="hs-admin-dashboard"></i></span><span class="media-body align-self-center">Dashboard</span>
+                    </a>
+                </li>
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item" data-toggle="collapse">
+                    <a class="d-flex media u-side-nav--second-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="https://staging-back.bestcasinos.lat/agents" target="_self">
+                        <span class=" align-self-center g-pos-rel g-font-size-18 g-mr-18"><i class="hs-admin-dashboard"></i></span><span class="media-body align-self-center">Agregar usuarios</span>
+                    </a>
+                </li>
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item" data-toggle="collapse">
+                    <a class="d-flex media u-side-nav--second-level-menu-link u-side-nav--hide-on-hidden g-px-15 g-py-12" href="https://staging-back.bestcasinos.lat/agents" target="_self">
+                        <span class=" align-self-center g-pos-rel g-font-size-18 g-mr-18"><i class="hs-admin-dashboard"></i></span><span class="media-body align-self-center">Reportes</span>
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
