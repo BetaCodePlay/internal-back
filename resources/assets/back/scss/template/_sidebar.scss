@@ -37,7 +37,7 @@ body {
                 .icon-mobile {
                     display: none;
                     position: absolute;
-                    right: 15px;
+                    right: 12px;
                     top: 50%;
                     transform: translateY(-50%);
 
@@ -53,6 +53,8 @@ body {
                 }
 
                 &[data-toggle="collapse"] {
+                    padding-right: 30px;
+
                     .icon-mobile {
                         display: block;
 
@@ -227,6 +229,8 @@ body {
                         }
 
                         &[data-toggle="collapse"] {
+                            padding-right: 25px;
+
                             .icon-mobile {
                                 display: block;
 
