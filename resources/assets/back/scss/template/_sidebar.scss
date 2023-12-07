@@ -18,8 +18,7 @@ body {
 
         .has-active {
             background: transparent !important;
-            padding: 0 15px;
-            margin-bottom: 2px;
+            padding: 0 15px 2px 15px;
 
             > a {
                 color: #fff;
@@ -148,7 +147,7 @@ body {
 
         &.u-side-nav--mini {
             .has-active {
-                padding: 0 3px;
+                padding: 0 3px 2px 3px;
                 overflow: hidden;
 
                 > a {
