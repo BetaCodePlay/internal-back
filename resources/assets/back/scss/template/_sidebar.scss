@@ -311,6 +311,12 @@ body {
                                         left: 10px;
                                         display: block;
                                     }
+
+                                    &:last-child {
+                                        &::after {
+                                            display: none;
+                                        }
+                                    }
                                 }
                             }
                         }
