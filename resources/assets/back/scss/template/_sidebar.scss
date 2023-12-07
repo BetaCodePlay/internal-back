@@ -156,8 +156,7 @@ body {
                     width: 6px;
                     border-radius: 50px;
                     left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
+                    top: 18px;
                     background: #777;
                     z-index: 3;
                 }
@@ -173,7 +172,7 @@ body {
                     z-index: 2;
                 }
 
-                &:first-child {
+                &:last-child {
                     &::after {
                         display: none;
                     }
