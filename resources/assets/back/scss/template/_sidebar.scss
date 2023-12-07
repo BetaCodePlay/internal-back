@@ -147,13 +147,36 @@ body {
         li {
             &.u-side-nav--second-level-menu-item {
                 position: relative;
+                padding-left: 12px;
 
                 &::before {
                     content: "";
+                    position: absolute;
+                    height: 6px;
+                    width: 6px;
+                    border-radius: 50px;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: #777;
+                    z-index: 3;
                 }
 
                 &::after {
                     content: "";
+                    position: absolute;
+                    height: calc(100% + 2px);
+                    width: 2px;
+                    background: #777;
+                    left: 2px;
+                    bottom: 22px;
+                    z-index: 2;
+                }
+
+                &:first-child {
+                    &::after {
+                        display: none;
+                    }
                 }
 
                 a {
