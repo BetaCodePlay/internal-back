@@ -19,6 +19,7 @@ body {
         .has-active {
             background: transparent !important;
             padding: 0 15px;
+            margin-bottom: 2px;
 
             > a {
                 color: #fff;
@@ -32,7 +33,6 @@ body {
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 transition: 0.15s;
-                margin-bottom: 2px;
 
                 .icon-mobile {
                     display: none;
@@ -149,6 +149,7 @@ body {
         &.u-side-nav--mini {
             .has-active {
                 padding: 0 3px;
+                overflow: hidden;
 
                 > a {
                     text-align: center;
@@ -161,6 +162,10 @@ body {
                     .media-body {
                         display: none;
                     }
+                }
+
+                &:hover {
+                    overflow: visible;
                 }
             }
         }
