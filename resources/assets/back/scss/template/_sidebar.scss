@@ -212,6 +212,37 @@ body {
                         transition: 0.15s;
                         margin-bottom: 2px;
 
+                        .icon-mobile {
+                            display: none;
+                            position: absolute;
+                            right: 10px;
+                            top: 50%;
+                            transform: translateY(-50%);
+
+                            i {
+                                font-size: 12px;
+                                transition: 0.15s;
+                            }
+                        }
+
+                        &[data-toggle="collapse"] {
+                            .icon-mobile {
+                                display: block;
+
+                                i {
+                                    margin-right: 0;
+                                }
+                            }
+
+                            &[aria-expanded="true"] {
+                                .icon-mobile {
+                                    i {
+                                        transform: rotate(180deg);
+                                    }
+                                }
+                            }
+                        }
+
                         &:hover {
                             color: #fff;
                             background: #333;
