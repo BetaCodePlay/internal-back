@@ -222,7 +222,7 @@
                                 @endif
                                 @can('access', [\Dotworkers\Security\Enums\Permissions::$report_financial_by_username])
                                     <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link" href="{{ route('agents.reports.financial.state.username) }}" target="_self">
+                                        <a class="media u-side-nav--second-level-menu-link" href="{{ route('agents.reports.financial.state.username') }}" target="_self">
                                             <span class="media-body align-self-center">{{ _i('By users') }}</span>
                                             <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                                         </a>
