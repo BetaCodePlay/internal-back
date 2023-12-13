@@ -6,6 +6,7 @@ use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Utils;
+use Illuminate\Support\Facades\Log;
 use Ixudra\Curl\Facades\Curl;
 
 /**
@@ -29,12 +30,10 @@ class BetPay
 
         try {
             $payments = Configurations::getPayments();
-
             if ($payments) {
                 $whitelabel = Configurations::getWhitelabel();
                 $currency = session('currency');
                 $credentials = Utils::getCredentials($whitelabel, Providers::$betpay, $currency);
-
                 if (!is_null($credentials)) {
                     $requestData = [
                         'grant_type' => 'client_credentials',

@@ -459,11 +459,11 @@ class BetPayController extends Controller
                         $this->accountsCollection->formatClientAccount($accounts);
                     }else{
                         $accounts = [];
-                    }  
-                } 
+                    }
+                }
             }else{
                 $accounts = [];
-            }    
+            }
             $data = [
                 'accounts' => $accounts
             ];
@@ -489,21 +489,18 @@ class BetPayController extends Controller
             $betPayToken = session('betpay_client_access_token');
             $urlPaymentMethodsAll = "{$this->betPayURL}/payment-methods/get-all-active";
             $paymentMethods = [];
-
             if (!is_null($betPayToken)) {
                 $curlPaymentMethodsAll = Curl::to($urlPaymentMethodsAll)
                     ->withHeader('Accept: application/json')
                     ->withHeader("Authorization: Bearer $betPayToken")
                     ->get();
                 $responsePaymentMethodsAll = json_decode($curlPaymentMethodsAll);
-
                 if ($responsePaymentMethodsAll->status == Status::$ok) {
                     $paymentMethods = $responsePaymentMethodsAll->data->payment_methods;
                 } else {
                     $paymentMethods = [];
                 }
             }
-
             $data['payment_methods'] = $paymentMethods;
 
             return view('back.betpay.clients.create', $data);
@@ -2145,7 +2142,7 @@ class BetPayController extends Controller
         ]);
         $rules = $this->getRulesClientAccountData($request->payments);
         $this->validate($request, $rules);
-    
+
         try {
             $credential = $this->credentialsRepo->searchByCredential(Configurations::getWhitelabel(), Providers::$betpay, $request->currency);
             if (!is_null($credential)) {
@@ -2181,7 +2178,7 @@ class BetPayController extends Controller
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
-                    } 
+                    }
                     if ($transactionType == TransactionTypes::$debit) {
                         if (!$paymentStatusDebit) {
                             $data = [
@@ -2191,7 +2188,7 @@ class BetPayController extends Controller
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
-                    } 
+                    }
                     if (!$paymentStatusCredit || !$paymentStatusDebit) {
                         $data = [
                             'title' => _i('Payment method not available'),
@@ -2344,7 +2341,7 @@ class BetPayController extends Controller
     private function getRulesClientAccountData($paymentMethod)
     {
         $rulesClientAccountDataFunctions = [
-            PaymentMethods::$binance => 
+            PaymentMethods::$binance =>
             [
                 'cryptocurrency_binance' => 'required',
                 'email_binance' => 'required_without_all:pay_id_binance,binance_id,qr_binance,phone_binance',
@@ -2353,23 +2350,23 @@ class BetPayController extends Controller
                 'qr_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,phone_binance',
                 'phone_binance' => 'required_without_all:email_binance,pay_id_binance,binance_id,qr_binance',
             ],
-            PaymentMethods::$cryptocurrencies => 
+            PaymentMethods::$cryptocurrencies =>
             [
                 'cryptocurrency_cripto' => 'required',
                 'wallet_cripto' => 'required',
                 'network_cripto' => 'required'
             ],
-            PaymentMethods::$paypal => 
+            PaymentMethods::$paypal =>
             [
                 'client_id_paypal' => 'required',
                 'client_secret_paypal' => 'required'
             ],
-            PaymentMethods::$mercado_pago => 
+            PaymentMethods::$mercado_pago =>
             [
                 'access_token_mercado_pago' => 'required',
                 'public_key_mercado_pago' => 'required'
             ],
-            PaymentMethods::$pix => 
+            PaymentMethods::$pix =>
             [
                 'client_id_pix' => 'required',
                 'client_secret_pix' => 'required'
