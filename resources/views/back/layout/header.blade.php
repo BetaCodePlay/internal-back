@@ -25,28 +25,39 @@
             </div>
 
 
-
             <div class="col-auto d-flex g-py-12 ml-auto">
-                <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
-                    <div class="g-pos-rel">
-                        <span class="balanceAuth_{{\Illuminate\Support\Facades\Auth::id()}}"></span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
-                    </div>
-                </div>
 
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">
-                        <span class="d-block">
-                           <span class="g-pos-rel">
-                               @php
-                                   $avatar = \App\Users\Users::getAvatar();
-                               @endphp
-                               @if (!is_null ($avatar))
-                                   <img class="g-width-30 img-avatar g-width-40--md g-height-30 g-height-40--md rounded-circle g-mr-10--sm" src="{{ $avatar }}" alt="{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}">
-                               @else
-                                   <img class="g-width-30 img-avatar g-width-40--md g-height-30 g-height-40--md rounded-circle g-mr-10--sm" src="{{ asset('back/img/avatar-default.jpg') }}" alt="{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}">
-                               @endif
-                            </span>
-                        </span>
+                        <div class="d-block">
+                            <div class="d-inline-block g-pos-rel">
+                                300.000 {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                            </div>
+
+                            <div class="d-inline-block dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                    Dropdown button
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="d-inline-block g-pos-rel"><i class="fa-regular fa-bell"></i></div>
+                            <div class="d-inline-block g-pos-rel"><i class="fa-solid fa-gear"></i></div>
+                            <div class="d-inline-block g-pos-rel">
+                                @php
+                                    $avatar = \App\Users\Users::getAvatar();
+                                @endphp
+                                @if (!is_null ($avatar))
+                                    <img class="g-width-30 img-avatar g-width-40--md g-height-30 g-height-40--md rounded-circle g-mr-10--sm" src="{{ $avatar }}" alt="{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}">
+                                @else
+                                    <img class="g-width-30 img-avatar g-width-40--md g-height-30 g-height-40--md rounded-circle g-mr-10--sm" src="{{ asset('back/img/avatar-default.jpg') }}" alt="{{ isset(auth()->user()->username) ? auth()->user()->username : '' }}">
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
