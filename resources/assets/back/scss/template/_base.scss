@@ -9,6 +9,12 @@ body {
     }
 }
 
+.dropdown-menu {
+    &.show {
+        opacity: 1;
+    }
+}
+
 .img-logo {
     width: auto;
     transform: scale(1.45);
