@@ -25,7 +25,6 @@
             </div>
 
 
-
             <div class="col-auto d-flex g-py-12 ml-auto">
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-5">
                     <div class="g-pos-rel">
@@ -36,6 +35,11 @@
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">
                         <span class="d-block">
+                            <span class="g-pos-rel">
+                                    <span class="balanceAuth_{{\Illuminate\Support\Facades\Auth::id()}}"></span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                            </span>
+
+
                            <span class="g-pos-rel">
                                @php
                                    $avatar = \App\Users\Users::getAvatar();
