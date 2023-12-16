@@ -1,4 +1,10 @@
-@php use Dotworkers\Security\Enums\Permissions; @endphp
+@php
+    use Dotworkers\Security\Enums\Permissions;
+
+    $sectionsData = generateSections();
+    $sliderSections = $sectionsData['sliderSections'];
+    $imageSections = $sectionsData['imageSections'];
+@endphp
 
 <div id="sideNav" class="col-auto u-sidebar-navigation-v1 u-sidebar-navigation--dark">
     <ul id="sideNavMenu" class="u-sidebar-navigation-v1-menu u-side-nav--top-level-menu mb-0">
@@ -22,6 +28,7 @@
                 </a>
             </li>
         @endif
+
         @can('access', [Permissions::$agents_dashboard])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
                 <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden"
@@ -32,6 +39,7 @@
                 </a>
             </li>
         @endif
+
         @can('access', [Permissions::$users_menu])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
                 <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
@@ -644,6 +652,15 @@
             </li>
         @endif
 
+        @can('access', [Permissions::$manage_sliders])
+            @include('back.partials.sidebar.sliders', ['sliderSections' => $sliderSections])
+        @endif
+
+        @can('access', [Permissions::$section_images_menu])
+            @include('back.partials.sidebar.images', ['imageSections' => $imageSections])
+        @endif
+
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
@@ -734,6 +751,7 @@
 
 
 
+
 @endif
 @can('access', [Permissions::$agents_dashboard])
     <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
@@ -742,6 +760,7 @@
                     <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
             </li>
+
 
 
 
@@ -849,9 +868,11 @@
 
 
 
+
 @endif
 @can('access', [Permissions::$agents_dashboard])
     <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Role') }}</span></a></div>
+
 
 
 

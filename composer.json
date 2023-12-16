@@ -82,7 +82,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Core/helpers.php"
+            "app/Core/helpers.php",
+            "app/Core/sidebar/sections.php"
         ]
     },
     "autoload-dev": {
