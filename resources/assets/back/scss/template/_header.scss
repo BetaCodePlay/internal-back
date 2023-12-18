@@ -43,6 +43,12 @@ header {
                     content: "";
                     position: absolute;
                     background: #7d2df5;
+                    height: 8px;
+                    width: 8px;
+                    border-radius: 50px;
+                    z-index: 5;
+                    top: 6px;
+                    right: 6px;
                 }
             }
         }
