@@ -20,7 +20,7 @@ header {
         vertical-align: middle;
 
         &.btn-mini-h {
-            padding: 5px 9px;
+            padding: 5px 10px;
             border-radius: 8px;
             font-size: 16px;
             margin-right: 3px;
@@ -50,6 +50,10 @@ header {
             i {
                 margin-right: 5px;
             }
+
+            @media screen and (max-width: 991px) {
+                margin-right: 0;
+            }
         }
 
         &.dropdown {
@@ -64,6 +68,10 @@ header {
 
                 i {
                     margin-left: 6px;
+                }
+
+                @media screen and (max-width: 991px) {
+                    margin-right: 0;
                 }
             }
 
@@ -107,7 +115,7 @@ header {
 
         &.pos-mobile-hidden {
             @media screen and (max-width: 991px) {
-                display: none;
+                display: none !important;
             }
         }
     }
