@@ -43,6 +43,7 @@ mix.autoload({
         'resources/assets/back/js/whitelabels.js',
         'resources/assets/back/js/bonus-system.js',
         'resources/assets/back/js/socket.js',
+        'resources/assets/back/js/pusher-setup.js',
         'resources/assets/back/js/email-configurations.js',
         'resources/assets/back/js/lobby-games.js',
         'resources/assets/back/js/landing-pages.js',
@@ -57,6 +58,7 @@ mix.autoload({
         'resources/assets/back/js/invoices.js',
         'resources/assets/back/js/commons.js',
         'resources/assets/back/js/main.js',
+        'resources/assets/back/js/chat.js',
     ],
     'public/back/js/custom.min.js')
     .extract()

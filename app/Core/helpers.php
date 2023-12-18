@@ -7271,3 +7271,9 @@ if (! function_exists('isIpAddress')) {
         return filter_var($domain, FILTER_VALIDATE_IP) !== false;
     }
 }
+
+if (! function_exists('convertObjectToArray')) {
+    function convertObjectToArray($object): array {
+        return json_decode(json_encode($object), true);
+    }
+}

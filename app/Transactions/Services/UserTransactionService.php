@@ -7,6 +7,7 @@ use App\Agents\Enums\UserType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\Events\MessageSent;
 use App\Http\Requests\TransactionRequest;
 use Dotworkers\Configurations\Enums\Status;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,6 +49,9 @@ class UserTransactionService extends BaseTransactionService
     : mixed {
         $userAuthId       = $request->user()->id;
         $userToAddBalance = $request->get('user');
+
+        //$user = auth()->user();
+        //broadcast(new MessageSent($user))->toOthers();
 
         if ($userAuthId == $userToAddBalance) {
             return $this->generateErrorResponse(
