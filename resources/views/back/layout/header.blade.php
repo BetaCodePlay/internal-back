@@ -41,7 +41,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         @foreach ($whitelabel_currencies as $currency)
-                                            <li><a class="dropdown-item" href="{{ route('core.change-currency', [$currency->iso]) }}">{{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso  }}  <span class="mini-title">{{ $currency->name }}</span></a></li>
+                                            <li><a class="dropdown-item" href="{{ route('core.change-currency', [$currency->iso]) }}">{{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso  }}  <span class="mini-title">&nbsp {{ $currency->name }}</span></a></li>
                                         @endforeach
                                     </ul>
                                 </div>

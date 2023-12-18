@@ -82,6 +82,7 @@ header {
                         padding: 0.35rem 1rem;
                         border-radius: 6px;
                         transition: 0.15s;
+                        font-weight: 500;
 
                         &:hover {
                             background: rgba(255,255,255,0.05);
@@ -90,7 +91,6 @@ header {
                         .mini-title {
                             display: inline-block;
                             font-size: 10px;
-                            font-weight: 500;
                             vertical-align: top;
                             color: #aaa;
                         }
