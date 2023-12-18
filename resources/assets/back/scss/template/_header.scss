@@ -28,7 +28,6 @@ header {
             transition: 0.15s;
             cursor: pointer;
             line-height: 1.5;
-            animation: fade-animated 1s linear infinite;
 
             &:hover {
                 background: #1e1e1e;
@@ -50,6 +49,7 @@ header {
                     z-index: 5;
                     top: 6px;
                     right: 6px;
+                    animation: fade-animated 1s linear infinite;
                 }
             }
         }
