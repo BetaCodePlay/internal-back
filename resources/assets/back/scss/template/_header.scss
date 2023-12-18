@@ -20,7 +20,7 @@ header {
         vertical-align: middle;
 
         &.btn-mini-h {
-            padding: 4px 8px;
+            padding: 5px 9px;
             border-radius: 5px;
             font-size: 16px;
             margin-right: 3px;
@@ -56,6 +56,10 @@ header {
                 margin-right: 5px;
                 border: 0;
                 color: #fff;
+
+                i {
+                    margin-left: 6px;
+                }
             }
         }
     }
