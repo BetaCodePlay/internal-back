@@ -61,6 +61,33 @@ header {
                     margin-left: 6px;
                 }
             }
+
+            .dropdown-menu {
+                left: auto;
+                right: 0;
+                padding: 10px 5px;
+                background: #1e1e1e;
+                border-radius: 8px;
+                box-shadow: 0 0 3px #222;
+                top: calc(100% + 5px);
+
+                li {
+                    margin-top: 1px;
+
+                    &:first-child {
+                        margin-top: 0;
+                    }
+
+                    a {
+                        border-radius: 6px;
+                        transition: 0.15s;
+
+                        &:hover {
+                            background: rgba(255,255,255,0.05);
+                        }
+                    }
+                }
+            }
         }
     }
 }
