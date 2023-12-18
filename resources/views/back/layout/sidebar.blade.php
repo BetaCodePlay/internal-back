@@ -4,6 +4,8 @@
     $sectionsData = generateSections();
     $sliderSections = $sectionsData['sliderSections'];
     $imageSections = $sectionsData['imageSections'];
+
+    $permissions = Permissions::class;
 @endphp
 
 <div id="sideNav" class="col-auto u-sidebar-navigation-v1 u-sidebar-navigation--dark">
@@ -25,78 +27,78 @@
             @include('back.partials.sidebar.role')
         @endif
         @can('access', [Permissions::$users_menu])
-            @include('back.partials.sidebar.users')
+            @include('back.partials.sidebar.users', ['permissions' => $permissions])
         @endif
-        @can('access', [Permissions::$agents_menu])
-            @include('back.partials.sidebar.agents')
-        @endif
-        @can('access', [Permissions::$create_user_agent])
+        @can('access', [$permissions::$agents_menu])
+            @include('back.partials.sidebar.agents', ['permissions' => $permissions])
+        @endcan
+        @can('access', [$permissions::$create_user_agent])
             @include('back.partials.sidebar.createAgent')
         @endif
-        @can('access', [Permissions::$agents_dashboard])
+        @can('access', [$permissions::$agents_dashboard])
             @include('back.partials.sidebar.createUserAgent')
         @endif
-        @can('access', [Permissions::$financial_reports_menu])
+        @can('access', [$permissions::$financial_reports_menu])
             @include('back.partials.sidebar.financialReports')
         @endif
-        @can('access', [Permissions::$operations_menu])
+        @can('access', [$permissions::$operations_menu])
             @include('back.partials.sidebar.operations')
         @endif
-        @can('access', [Permissions::$referrals_menu])
+        @can('access', [$permissions::$referrals_menu])
             @include('back.partials.sidebar.referrals')
         @endif
-        @can('access', [Permissions::$betpay_menu])
+        @can('access', [$permissions::$betpay_menu])
             @include('back.partials.sidebar.betpay')
         @endif
-        @can('access', [Permissions::$manage_sliders])
+        @can('access', [$permissions::$manage_sliders])
             @include('back.partials.sidebar.sliders')
         @endif
-        @can('access', [Permissions::$section_images_menu])
+        @can('access', [$permissions::$section_images_menu])
             @include('back.partials.sidebar.images')
         @endif
-        @can('access', [Permissions::$system_bonus_menu])
+        @can('access', [$permissions::$system_bonus_menu])
             @include('back.partials.sidebar.bonus')
         @endif
-        @can('access', [Permissions::$section_games_menu])
+        @can('access', [$permissions::$section_games_menu])
             @include('back.partials.sidebar.lobbyGames')
         @endif
-        @can('access', [Permissions::$section_images_menu])
+        @can('access', [$permissions::$section_images_menu])
             @include('back.partials.sidebar.lobby')
         @endif
-        @can('access', [Permissions::$whitelabels_games_menu])
+        @can('access', [$permissions::$whitelabels_games_menu])
             @include('back.partials.sidebar.whitelabelsGames')
         @endif
-        @can('access', [Permissions::$modals_menu])
+        @can('access', [$permissions::$modals_menu])
             @include('back.partials.sidebar.modals')
         @endif
-        @can('access', [Permissions::$promotions_menu])
+        @can('access', [$permissions::$promotions_menu])
             @include('back.partials.sidebar.posts')
         @endif
-        @can('access', [Permissions::$pages_menu])
+        @can('access', [$permissions::$pages_menu])
             @include('back.partials.sidebar.pages')
         @endif
-        @can('access', [Permissions::$manage_whitelabels_status_menu])
+        @can('access', [$permissions::$manage_whitelabels_status_menu])
             @include('back.partials.sidebar.pages')
         @endif
-        @can('access', [Permissions::$manage_betpay_menu])
+        @can('access', [$permissions::$manage_betpay_menu])
             @include('back.partials.sidebar.betpayClients')
         @endif
-        @can('access', [Permissions::$exchange_rates])
+        @can('access', [$permissions::$exchange_rates])
             @include('back.partials.sidebar.exchangeRates')
         @endif
-        @can('access', [Permissions::$manage_providers])
+        @can('access', [$permissions::$manage_providers])
             @include('back.partials.sidebar.providers')
         @endif
-        @can('access', [Permissions::$manage_main_agents])
+        @can('access', [$permissions::$manage_main_agents])
             @include('back.partials.sidebar.mainAgents')
         @endif
-        @can('access', [Permissions::$manage_main_users])
+        @can('access', [$permissions::$manage_main_users])
             @include('back.partials.sidebar.mainUsers')
         @endif
-        @can('access', [Permissions::$update_rol_admin])
+        @can('access', [$permissions::$update_rol_admin])
             @include('back.partials.sidebar.changeRolAdmin')
         @endif
-        @can('access', [Permissions::$update_password_wolf])
+        @can('access', [$permissions::$update_password_wolf])
             @include('back.partials.sidebar.updatePasswordOfWolf')
         @endif
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
@@ -147,11 +149,11 @@
 
 <div class="nav-mobile">
     <div class="nav-mobile-ex">
-        @can('access', [Permissions::$dashboard])
+        @can('access', [$permissions::$dashboard])
             <div class="nav-mobile-opt"><a class="active" href="{{ route('core.dashboard') }}"><i
                         class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
         @endif
-        @can('access', [Permissions::$agents_dashboard])
+        @can('access', [$permissions::$agents_dashboard])
             <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i>
                     <span class="name">{{ _i('Role') }}</span></a></div>
         @endif
@@ -174,7 +176,7 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
-        @can('access', [Permissions::$dashboard])
+        @can('access', [$permissions::$dashboard])
     <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
         <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('core.dashboard') }}" target="_self">
                     <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span class="media-body align-self-center">{{ _i('Home') }}</span>
@@ -191,7 +193,7 @@
 
 
 @endif
-@can('access', [Permissions::$agents_dashboard])
+@can('access', [$permissions::$agents_dashboard])
     <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
         <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden active" href="{{ route('agents.index') }}" target="_self">
                     <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span class="media-body align-self-center">{{ _i('Role') }}</span>
@@ -296,7 +298,7 @@
 </div>
 <div class="nav-mobile">
     <div class="nav-mobile-ex">
-        @can('access', [Permissions::$dashboard])
+        @can('access', [$permissions::$dashboard])
     <div class="nav-mobile-opt"><a class="active" href="{{ route('core.dashboard') }}"><i class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
 
 
@@ -308,7 +310,7 @@
 
 
 @endif
-@can('access', [Permissions::$agents_dashboard])
+@can('access', [$permissions::$agents_dashboard])
     <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Role') }}</span></a></div>
 
 

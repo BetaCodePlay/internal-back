@@ -1,11 +1,3 @@
-@php
-    use Dotworkers\Security\Enums\Permissions;
-
-    $sectionsData = generateSections();
-    $sliderSections = $sectionsData['sliderSections'];
-    $imageSections = $sectionsData['imageSections'];
-@endphp
-
 <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
     <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
        data-toggle="collapse" data-target="#usersSidebar" aria-expanded="true">
@@ -15,7 +7,7 @@
     </a>
     <ul id="usersSidebar"
         class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-        @can('access', [Permissions::$create_users])
+        @can('access', [$permissions::$create_users])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
                 <a class="media u-side-nav--second-level-menu-link" href="{{ route('users.create') }}"
                    target="_self">
@@ -24,7 +16,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$advanced_users_search])
+        @can('access', [$permissions::$advanced_users_search])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('users.advanced-search') }}" target="_self">
@@ -33,7 +25,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$web_registers])
+        @can('access', [$permissions::$web_registers])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.users.registered-users') }}" target="_self">
@@ -42,7 +34,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$users_status])
+        @can('access', [$permissions::$users_status])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link" href="{{ route('users.users-status') }}"
                    target="_self">
@@ -51,7 +43,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$users_balances])
+        @can('access', [$permissions::$users_balances])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.users.balances') }}" target="_self">
@@ -60,7 +52,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$users_conversion])
+        @can('access', [$permissions::$users_conversion])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.users.users-conversion') }}" target="_self">
@@ -69,7 +61,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$users_logins])
+        @can('access', [$permissions::$users_logins])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.users.total-logins') }}" target="_self">
@@ -78,7 +70,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$temp_users])
+        @can('access', [$permissions::$temp_users])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link" href="{{ route('users.temp') }}"
                    target="_self">
@@ -87,7 +79,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$users_actives])
+        @can('access', [$permissions::$users_actives])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.users.active-users-platforms') }}" target="_self">
@@ -96,7 +88,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$document_verification])
+        @can('access', [$permissions::$document_verification])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('users.documents-verifications') }}" target="_self">
@@ -105,7 +97,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$users_birthdays_report])
+        @can('access', [$permissions::$users_birthdays_report])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.users.users-birthdays') }}" target="_self">
@@ -114,7 +106,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$report_auto_lock_users])
+        @can('access', [$permissions::$report_auto_lock_users])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('users.autolocked-users') }}" target="_self">
@@ -123,7 +115,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$update_rol_admin])
+        @can('access', [$permissions::$update_rol_admin])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('users.list.by.owner') }}" target="_self">
@@ -132,7 +124,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$update_rol_admin])
+        @can('access', [$permissions::$update_rol_admin])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('users.list.by.owner') }}" target="_self">
