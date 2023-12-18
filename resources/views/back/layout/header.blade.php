@@ -30,23 +30,25 @@
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">
                         <div class="d-block">
-                            <div class="d-inline-block g-pos-rel">
-                                300.000 {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                            <div class="d-inline-block g-pos-rel g-pos-rel-amount">
+                                <i class="fa-solid fa-coins"></i> 300.000,00
                             </div>
 
-                            <div class="d-inline-block dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
-                                    Dropdown button
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </div>
+                            @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
+                                <div class="d-inline-block dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                        {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        @foreach ($whitelabel_currencies as $currency)
+                                            <li><a class="dropdown-item" href="{{ route('core.change-currency', [$currency->iso]) }}">{{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
-                            <div class="d-inline-block g-pos-rel"><i class="fa-regular fa-bell"></i></div>
-                            <div class="d-inline-block g-pos-rel"><i class="fa-solid fa-gear"></i></div>
+                            <div class="d-inline-block g-pos-rel btn-mini-h"><i class="fa-regular fa-bell"></i></div>
+                            <div class="d-inline-block g-pos-rel btn-mini-h"><i class="fa-solid fa-gear"></i></div>
                             <div class="d-inline-block g-pos-rel">
                                 @php
                                     $avatar = \App\Users\Users::getAvatar();
