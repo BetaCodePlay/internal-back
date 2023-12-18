@@ -37,6 +37,14 @@ header {
                 background: #1e1e1e;
                 margin-right: 0;
             }
+
+            &.notified-active {
+                &::before{
+                    content: "";
+                    position: absolute;
+                    background: #7d2df5;
+                }
+            }
         }
 
         &.g-pos-rel-amount {
