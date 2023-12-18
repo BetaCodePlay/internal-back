@@ -16,15 +16,18 @@ header {
         border: 2px solid #7d2df5;
     }
 
-    .g-pos-rel{
+    .g-pos-rel {
+        vertical-align: middle;
+
         &.btn-mini-h {
-            padding: 3px 7px;
+            padding: 4px 8px;
             border-radius: 5px;
             font-size: 16px;
             margin-right: 3px;
             position: relative;
             transition: 0.15s;
             cursor: pointer;
+            line-height: 1.5;
 
             &:hover {
                 background: #1e1e1e;
@@ -33,10 +36,27 @@ header {
 
         &.g-pos-rel-amount {
             background: #1e1e1e;
-            padding: 4px 10px;
+            padding: 6px 12px;
             font-size: 14px;
             border-radius: 8px;
             margin-right: 5px;
+            line-height: 1.5;
+
+            i {
+                margin-right: 5px;
+            }
+        }
+
+        &.dropdown {
+            .dropdown-toggle {
+                background: #1e1e1e;
+                padding: 6px 12px;
+                font-size: 14px;
+                border-radius: 8px;
+                margin-right: 5px;
+                border: 0;
+                color: #fff;
+            }
         }
     }
 }
