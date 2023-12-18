@@ -7,7 +7,7 @@
     </a>
     <ul id="betpaySidebar"
         class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-        @can('access', [Permissions::$activate_payments_methods])
+        @can('access', [$permissions::$activate_payments_methods])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('betpay.clients.accounts.create') }}" target="_self">
@@ -16,7 +16,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$list_payments_methods])
+        @can('access', [$permissions::$list_payments_methods])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('betpay.clients.accounts') }}" target="_self">
@@ -25,7 +25,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$binance_menu])
+        @can('access', [$permissions::$binance_menu])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
                    data-toggle="collapse" data-target="#binanceSidebar" aria-expanded="false">
@@ -34,7 +34,7 @@
                 </a>
                 <ul id="binanceSidebar"
                     class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse">
-                    @can('access', [Permissions::$credit_binance_menu])
+                    @can('access', [$permissions::$credit_binance_menu])
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                             <a class="media u-side-nav--second-level-menu-link"
                                href="{{ route('betpay.binance.credit') }}" target="_self">
@@ -43,7 +43,7 @@
                             </a>
                         </li>
                     @endif
-                    @can('access', [Permissions::$debit_binance_menu])
+                    @can('access', [$permissions::$debit_binance_menu])
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                             <a class="media u-side-nav--second-level-menu-link"
                                href="{{ route('betpay.binance.debit') }}" target="_self">

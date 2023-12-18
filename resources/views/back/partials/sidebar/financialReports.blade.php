@@ -7,7 +7,7 @@
     </a>
     <ul id="financialReportsSidebar"
         class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-        @can('access', [Permissions::$payments_report])
+        @can('access', [$permissions::$payments_report])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.payment-methods.totals') }}" target="_self">
@@ -16,7 +16,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$totals_report])
+        @can('access', [$permissions::$totals_report])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.totals') }}" target="_self">
@@ -25,7 +25,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$deposits_report])
+        @can('access', [$permissions::$deposits_report])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.deposits') }}" target="_self">
@@ -34,7 +34,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$withdrawals_report])
+        @can('access', [$permissions::$withdrawals_report])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.deposits') }}" target="_self">
@@ -43,7 +43,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$manual_transactions_report])
+        @can('access', [$permissions::$manual_transactions_report])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.manual-transactions') }}" target="_self">
@@ -52,7 +52,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$daily_sales])
+        @can('access', [$permissions::$daily_sales])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.daily-sales') }}" target="_self">
@@ -61,7 +61,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$monthly_sales])
+        @can('access', [$permissions::$monthly_sales])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.monthly-sales') }}" target="_self">
@@ -70,7 +70,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$sales_by_whitelabels])
+        @can('access', [$permissions::$sales_by_whitelabels])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.whitelabels-sales') }}" target="_self">
@@ -79,7 +79,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$deposit_withdrawal_by_user])
+        @can('access', [$permissions::$deposit_withdrawal_by_user])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.profit-by-user') }}" target="_self">
@@ -88,7 +88,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$report_manual_adjustments])
+        @can('access', [$permissions::$report_manual_adjustments])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.manual-adjustments') }}" target="_self">
@@ -97,7 +97,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$manual_adjustments_whitelabel])
+        @can('access', [$permissions::$manual_adjustments_whitelabel])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link"
                    href="{{ route('reports.financial.manual-adjustments-users') }}" target="_self">
@@ -106,7 +106,7 @@
                 </a>
             </li>
         @endif
-        @can('access', [Permissions::$agents_financial])
+        @can('access', [$permissions::$agents_financial])
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
                    data-toggle="collapse" data-target="#collapseExampleTwo" aria-expanded="false">
@@ -115,7 +115,7 @@
                 </a>
                 <ul id="agentsFinancialSidebar"
                     class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse">
-                    @can('access', [Permissions::$sales_by_whitelabels_by_agents])
+                    @can('access', [$permissions::$sales_by_whitelabels_by_agents])
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                             <a class="media u-side-nav--second-level-menu-link"
                                href="{{ route('agents.reports.financial-state-makers-details') }}"
@@ -126,7 +126,7 @@
                             </a>
                         </li>
                     @endif
-                    @can('access', [Permissions::$sales_by_providers_by_agents])
+                    @can('access', [$permissions::$sales_by_providers_by_agents])
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                             <a class="media u-side-nav--second-level-menu-link"
                                href="{{ route('agents.reports.financial-state-makers') }}" target="_self">

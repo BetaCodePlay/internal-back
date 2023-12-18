@@ -39,16 +39,16 @@
             @include('back.partials.sidebar.createUserAgent')
         @endif
         @can('access', [$permissions::$financial_reports_menu])
-            @include('back.partials.sidebar.financialReports')
+            @include('back.partials.sidebar.financialReports', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$operations_menu])
-            @include('back.partials.sidebar.operations')
+            @include('back.partials.sidebar.operations', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$referrals_menu])
-            @include('back.partials.sidebar.referrals')
+            @include('back.partials.sidebar.referrals', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$betpay_menu])
-            @include('back.partials.sidebar.betpay')
+            @include('back.partials.sidebar.betpay', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$manage_sliders])
             @include('back.partials.sidebar.sliders')
@@ -57,10 +57,10 @@
             @include('back.partials.sidebar.images')
         @endif
         @can('access', [$permissions::$system_bonus_menu])
-            @include('back.partials.sidebar.bonus')
+            @include('back.partials.sidebar.bonus', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$section_games_menu])
-            @include('back.partials.sidebar.lobbyGames')
+            @include('back.partials.sidebar.lobbyGames', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$section_images_menu])
             @include('back.partials.sidebar.lobby')
@@ -69,16 +69,16 @@
             @include('back.partials.sidebar.whitelabelsGames')
         @endif
         @can('access', [$permissions::$modals_menu])
-            @include('back.partials.sidebar.modals')
+            @include('back.partials.sidebar.modals', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$promotions_menu])
-            @include('back.partials.sidebar.posts')
+            @include('back.partials.sidebar.posts', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$pages_menu])
             @include('back.partials.sidebar.pages')
         @endif
         @can('access', [$permissions::$manage_whitelabels_status_menu])
-            @include('back.partials.sidebar.pages')
+            @include('back.partials.sidebar.whitelabelsActiveProviders')
         @endif
         @can('access', [$permissions::$manage_betpay_menu])
             @include('back.partials.sidebar.betpayClients')
