@@ -47,7 +47,7 @@
                                 </div>
                             @endif
 
-                            <div class="d-inline-block g-pos-rel btn-mini-h"><i class="fa-regular fa-bell"></i></div>
+                            <div class="d-inline-block g-pos-rel btn-mini-h notified-active"><i class="fa-regular fa-bell"></i></div>
                             <div class="d-inline-block g-pos-rel btn-mini-h pos-mobile-hidden"><i class="fa-solid fa-gear"></i></div>
                             <div class="d-inline-block g-pos-rel pos-mobile-hidden">
                                 @php
