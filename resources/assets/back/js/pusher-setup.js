@@ -1,6 +1,10 @@
+/*
+TODO descomentar cuando usemos sockets
+
 import Echo from "laravel-echo"
 
 window.Pusher = require('pusher-js');
+
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -11,3 +15,4 @@ window.Echo = new Echo({
     disableStats: true,
     cluster: 'mt1'
 });
+*/

@@ -1,4 +1,7 @@
 
+/*
+TODO descomentar cuando usemos sockets
+
 Echo.private(`chat.2`)
     .listen('MessageSent', (e) => {
         console.log('MessageSent', e);
@@ -6,3 +9,4 @@ Echo.private(`chat.2`)
     .error((error) => {
         console.error('Error en la escucha del evento:', error);
     });
+*/
