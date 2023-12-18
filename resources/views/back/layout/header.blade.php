@@ -31,7 +31,7 @@
                     <div class="g-pos-rel">
                         <div class="d-block">
                             <div class="d-inline-block g-pos-rel g-pos-rel-amount">
-                                <i class="fa-solid fa-coins"></i> 300.000,00
+                                <i class="fa-solid fa-coins"></i> <span class="amount-refresh">300.000,00</span>
                             </div>
 
                             @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
@@ -48,8 +48,8 @@
                             @endif
 
                             <div class="d-inline-block g-pos-rel btn-mini-h"><i class="fa-regular fa-bell"></i></div>
-                            <div class="d-inline-block g-pos-rel btn-mini-h"><i class="fa-solid fa-gear"></i></div>
-                            <div class="d-inline-block g-pos-rel">
+                            <div class="d-inline-block g-pos-rel btn-mini-h pos-mobile-hidden"><i class="fa-solid fa-gear"></i></div>
+                            <div class="d-inline-block g-pos-rel pos-mobile-hidden">
                                 @php
                                     $avatar = \App\Users\Users::getAvatar();
                                 @endphp

@@ -21,7 +21,7 @@ header {
 
         &.btn-mini-h {
             padding: 5px 9px;
-            border-radius: 5px;
+            border-radius: 8px;
             font-size: 16px;
             margin-right: 3px;
             position: relative;
@@ -31,6 +31,11 @@ header {
 
             &:hover {
                 background: #1e1e1e;
+            }
+
+            @media screen and (max-width: 991px) {
+                background: #1e1e1e;
+                margin-right: 0;
             }
         }
 
@@ -97,6 +102,12 @@ header {
                         }
                     }
                 }
+            }
+        }
+
+        &.pos-mobile-hidden {
+            @media screen and (max-width: 991px) {
+                display: none;
             }
         }
     }
