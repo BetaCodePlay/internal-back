@@ -19,648 +19,86 @@
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
         @can('access', [Permissions::$dashboard])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden"
-                   href="{{ route('core.dashboard') }}" target="_self">
-                    <span class="g-pos-rel"><i class="fa-solid fa-house-chimney"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Home') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-            </li>
+            @include('back.partials.sidebar.dashboard')
         @endif
-{{----}}
         @can('access', [Permissions::$agents_dashboard])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden"
-                   href="{{ route('agents.index') }}" target="_self">
-                    <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Role') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-            </li>
+            @include('back.partials.sidebar.role')
         @endif
-
         @can('access', [Permissions::$users_menu])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
-                   data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
-                    <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Users') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <ul id="collapseExample"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-                    @can('access', [Permissions::$create_users])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
-                            <a class="media u-side-nav--second-level-menu-link" href="{{ route('users.create') }}"
-                               target="_self">
-                                <span class="media-body align-self-center">{{ _i('Create') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$advanced_users_search])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('users.advanced-search') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Advanced search') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$web_registers])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.users.registered-users') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Registered users') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$users_status])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link" href="{{ route('users.users-status') }}"
-                               target="_self">
-                                <span class="media-body align-self-center">{{ _i('Users status') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$users_balances])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.users.balances') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Users balances') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$users_conversion])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.users.users-conversion') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Users conversion') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$users_logins])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.users.total-logins') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Logins') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$temp_users])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link" href="{{ route('users.temp') }}"
-                               target="_self">
-                                <span class="media-body align-self-center">{{ _i('Temp users') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$users_actives])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.users.active-users-platforms') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Active users on platforms') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$document_verification])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('users.documents-verifications') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Documents verifications') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$users_birthdays_report])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.users.users-birthdays') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Users birthdays') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$report_auto_lock_users])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('users.autolocked-users') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Autolocked users') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$update_rol_admin])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('users.list.by.owner') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('My users') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$update_rol_admin])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('users.list.by.owner') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('My users') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
-            </li>
+            @include('back.partials.sidebar.users')
         @endif
-
         @can('access', [Permissions::$agents_menu])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
-                   data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
-                    <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span
-                        class="media-body align-self-center">{{ _i('See agents') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <ul id="collapseExample"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-                    @can('access', [Permissions::$agents_dashboard])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
-                            <a class="media u-side-nav--second-level-menu-link" href="{{ route('agents.index') }}"
-                               target="_self">
-                                <span class="media-body align-self-center">{{ _i('Dashboard') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$add_agent_users])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link" href="{{ route('agents.add-users') }}"
-                               target="_self">
-                                <span class="media-body align-self-center">{{ _i('Add users') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$agents_reports_menu])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
-                               data-toggle="collapse" data-target="#collapseExampleTwo" aria-expanded="false">
-                                <span class="media-body align-self-center">{{ _i('Reports') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                            <ul id="collapseExampleTwo"
-                                class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse">
-                                @can('access', [Permissions::$agents_financial_report])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.financial-state') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Financial state') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_financial_report])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.financial-state-summary') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Financial state - Summary') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$report_financial_by_username])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.financial.state.username') }}" target="_self">
-                                            <span class="media-body align-self-center">{{ _i('By users') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$report_financial_by_provider])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.financial.state.provider') }}" target="_self">
-                                            <span class="media-body align-self-center">{{ _i('By providers') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_menu])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('reports.view.transaction.timeline') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Transaction Timeline') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_transactions])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.agents-transactions') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Agents transactions') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_cash_flow])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.cash-flow') }}" target="_self">
-                                            <span class="media-body align-self-center">{{ _i('Cash flow') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_balances])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.agents-balances') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Agents balances') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_users_balances])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.users-balances') }}" target="_self">
-                                            <span class="media-body align-self-center">{{ _i('Users balances') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_balances])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.agents-balances') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Agents balances') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$agents_users_balances])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.users-balances') }}" target="_self">
-                                            <span class="media-body align-self-center">{{ _i('Users balances') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$locked_providers])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.locked-providers') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Locked providers') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$locked_providers])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.exclude-providers-agents') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Exclude agents from providers') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </li>
+            @include('back.partials.sidebar.agents')
         @endif
-
         @can('access', [Permissions::$create_user_agent])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden"
-                   href="{{ route('agents.create.agent') }}" target="_self">
-                    <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Create agent user') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-            </li>
+            @include('back.partials.sidebar.createAgent')
         @endif
-
         @can('access', [Permissions::$agents_dashboard])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden"
-                   href="{{ route('agents.create.user') }}" target="_self">
-                    <span class="g-pos-rel"><i class="fa-solid fa-people-group"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Create player user') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-            </li>
+            @include('back.partials.sidebar.createUserAgent')
         @endif
-
         @can('access', [Permissions::$financial_reports_menu])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
-                   data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
-                    <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Financial') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <ul id="collapseExample"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-                    @can('access', [Permissions::$payments_report])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.payment-methods.totals') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Totals by payment method') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$totals_report])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.totals') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Totals') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$deposits_report])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.deposits') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Deposits') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$withdrawals_report])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.deposits') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Withdrawals') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$manual_transactions_report])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.manual-transactions') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Manual transactions') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$daily_sales])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.daily-sales') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Daily sales') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$monthly_sales])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.monthly-sales') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Monthly sales') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$sales_by_whitelabels])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.whitelabels-sales') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Sales by whitelabels') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$deposit_withdrawal_by_user])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.profit-by-user') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Profit by user') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$report_manual_adjustments])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.manual-adjustments') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Manual adjustments') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$manual_adjustments_whitelabel])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.financial.manual-adjustments-users') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Manual adjustments users') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$agents_financial])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
-                               data-toggle="collapse" data-target="#collapseExampleTwo" aria-expanded="false">
-                                <span class="media-body align-self-center">{{ _i('By Agents') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                            <ul id="collapseExampleTwo"
-                                class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse">
-                                @can('access', [Permissions::$sales_by_whitelabels_by_agents])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.financial-state-makers-details') }}"
-                                           target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Sales by whitelabels') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$sales_by_providers_by_agents])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('agents.reports.financial-state-makers') }}" target="_self">
-                                            <span
-                                                class="media-body align-self-center">{{ _i('Sales by providers') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </li>
+            @include('back.partials.sidebar.financialReports')
         @endif
-
         @can('access', [Permissions::$operations_menu])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
-                   data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
-                    <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Operations') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <ul id="collapseExample"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-                    @can('access', [Permissions::$products_totals])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.products-totals') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Products totals') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$whitelabels_totals])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.whitelabels-totals') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Whitelabels totals') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$whitelabels_totals])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('reports.products-totals-overview') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Products totals') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
-            </li>
+            @include('back.partials.sidebar.operations')
         @endif
-
         @can('access', [Permissions::$referrals_menu])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
-                   data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
-                    <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span
-                        class="media-body align-self-center">{{ _i('Referrals') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <ul id="collapseExample"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-                    @can('access', [Permissions::$report_referrals])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('referrals.referral-totals') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('List Referral Totals') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$report_referrals])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('referrals.referral-top') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('List Referral Top') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
-            </li>
+            @include('back.partials.sidebar.referrals')
         @endif
-
         @can('access', [Permissions::$betpay_menu])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
-                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="javascript:void(0)"
-                   data-toggle="collapse" data-target="#collapseExample" aria-expanded="true">
-                    <span class="g-pos-rel"><i class="fa-regular fa-user"></i></span> <span
-                        class="media-body align-self-center">{{ _i('BetPay') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <ul id="collapseExample"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
-                    @can('access', [Permissions::$activate_payments_methods])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item active">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('betpay.clients.accounts.create') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Activate Payment Methods') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$list_payments_methods])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('betpay.clients.accounts') }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('List Accounts') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [Permissions::$binance_menu])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
-                               data-toggle="collapse" data-target="#collapseExampleTwo" aria-expanded="false">
-                                <span class="media-body align-self-center">{{ _i('Binance') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                            <ul id="collapseExampleTwo"
-                                class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse">
-                                @can('access', [Permissions::$credit_binance_menu])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('betpay.binance.credit') }}" target="_self">
-                                            <span class="media-body align-self-center">{{ _i('Credit') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @can('access', [Permissions::$debit_binance_menu])
-                                    <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                                        <a class="media u-side-nav--second-level-menu-link"
-                                           href="{{ route('betpay.binance.debit') }}" target="_self">
-                                            <span class="media-body align-self-center">{{ _i('Debit') }}</span>
-                                            <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                                        </a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </li>
+            @include('back.partials.sidebar.betpay')
         @endif
-
         @can('access', [Permissions::$manage_sliders])
             @include('back.partials.sidebar.sliders')
         @endif
-
         @can('access', [Permissions::$section_images_menu])
             @include('back.partials.sidebar.images')
         @endif
-
-
+        @can('access', [Permissions::$system_bonus_menu])
+            @include('back.partials.sidebar.bonus')
+        @endif
+        @can('access', [Permissions::$section_games_menu])
+            @include('back.partials.sidebar.lobbyGames')
+        @endif
+        @can('access', [Permissions::$section_images_menu])
+            @include('back.partials.sidebar.lobby')
+        @endif
+        @can('access', [Permissions::$whitelabels_games_menu])
+            @include('back.partials.sidebar.whitelabelsGames')
+        @endif
+        @can('access', [Permissions::$modals_menu])
+            @include('back.partials.sidebar.modals')
+        @endif
+        @can('access', [Permissions::$promotions_menu])
+            @include('back.partials.sidebar.posts')
+        @endif
+        @can('access', [Permissions::$pages_menu])
+            @include('back.partials.sidebar.pages')
+        @endif
+        @can('access', [Permissions::$manage_whitelabels_status_menu])
+            @include('back.partials.sidebar.pages')
+        @endif
+        @can('access', [Permissions::$manage_betpay_menu])
+            @include('back.partials.sidebar.betpayClients')
+        @endif
+        @can('access', [Permissions::$exchange_rates])
+            @include('back.partials.sidebar.exchangeRates')
+        @endif
+        @can('access', [Permissions::$manage_providers])
+            @include('back.partials.sidebar.providers')
+        @endif
+        @can('access', [Permissions::$manage_main_agents])
+            @include('back.partials.sidebar.mainAgents')
+        @endif
+        @can('access', [Permissions::$manage_main_users])
+            @include('back.partials.sidebar.mainUsers')
+        @endif
+        @can('access', [Permissions::$update_rol_admin])
+            @include('back.partials.sidebar.changeRolAdmin')
+        @endif
+        @can('access', [Permissions::$update_password_wolf])
+            @include('back.partials.sidebar.updatePasswordOfWolf')
+        @endif
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
