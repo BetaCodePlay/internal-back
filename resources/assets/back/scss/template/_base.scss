@@ -15,6 +15,10 @@ body {
     }
 }
 
+.dropdown-toggle::after {
+    display: none !important;
+}
+
 .img-logo {
     width: auto;
     transform: scale(1.45);
@@ -156,5 +160,20 @@ body {
             display: block;
             width: 100%;
         }
+    }
+}
+
+@keyframes fade-animated {
+    0% {
+        opacity: 0.3;
+    }
+    33.33% {
+        opacity: 1;
+    }
+    66.66% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
     }
 }
