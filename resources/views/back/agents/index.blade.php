@@ -97,9 +97,6 @@
             @include('back.layout.email-verify')
         @endif
     @endif
-
-    Test
-
     <div class="row">
         <div class="col-lg-3 col-xl-4">
             <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
