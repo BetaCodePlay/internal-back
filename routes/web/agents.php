@@ -208,6 +208,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@index'
     ]);
 
+    // Show role
+    Route::get('role', [
+        'as' => 'agents.role',
+        'uses' => 'AgentsController@role'
+    ]);
+
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
 

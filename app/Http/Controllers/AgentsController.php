@@ -3317,6 +3317,45 @@ class AgentsController extends Controller
     }
 
     /**
+     * Show role
+     *
+     * @param CountriesRepo $countriesRepo
+     * @param ProvidersRepo $providersRepo
+     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
+     * @param ReportsCollection $reportsCollection
+     * @return Application|Factory|View
+     */
+    public function role()
+    {
+        try {
+            $user = Auth::user()->id;
+            $whitelabel = Configurations::getWhitelabel();
+            $agentUser = $this->agentsRepo->findAgent($user, $whitelabel);
+            $userData = $this->usersRepo->getUsers($user);
+            foreach ($userData as $users) {
+                $confirmation = $users->confirmation_email;
+            }
+            $data['agent']  = $this->agentsRepo->findUserProfile($user, session('currency') ?? '');
+            $data['makers'] = [];
+            $data['agents'] = json_decode(
+                json_encode(
+                    $this->agentsRepo->getAgentsAllByOwner($user, session('currency'), Configurations::getWhitelabel())
+                ),
+                true
+            );
+            $data['action'] = auth()->user()->action;
+            $data['iagent'] = $agentUser;
+            $data['confirmation_email'] = $confirmation;
+            $data['title']  = _i('Agents module');
+            return view('back.agents.role', $data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+
+    /**
      * Search username
      *
      * @param Request $request

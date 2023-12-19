@@ -23,9 +23,9 @@
         @can('access', [Permissions::$dashboard])
             @include('back.partials.sidebar.dashboard')
         @endif
-        @can('access', [Permissions::$agents_dashboard])
-            @include('back.partials.sidebar.role')
-        @endif
+
+        @include('back.partials.sidebar.role')
+
         @can('access', [Permissions::$users_menu])
             @include('back.partials.sidebar.users', ['permissions' => $permissions])
         @endif
