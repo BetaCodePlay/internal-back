@@ -202,17 +202,19 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updateOwnerUser'
     ]);
 
+    // Show role
+    Route::get('role', [
+        'as' => 'agents.role',
+        'uses' => 'AgentsController@role'
+    ]);
+
     // Show dashboard
     Route::get('{token?}', [
         'as' => 'agents.index',
         'uses' => 'AgentsController@index'
     ]);
 
-    // Show role
-    Route::get('role', [
-        'as' => 'agents.role',
-        'uses' => 'AgentsController@role'
-    ]);
+
 
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
