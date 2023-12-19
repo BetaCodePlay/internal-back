@@ -590,6 +590,7 @@ class Agents {
                             Agents.getFatherRecursive($('#details-user-get').data('route'), id, type);
                         }, 500)
                         //TODO Finish Set Modal
+                        alert('Orlando 3')
                         console.log(json.data);
                         $('#username').text(json.data.user.username);
                         $('#agent_timezone').text(json.data.user.timezone);
@@ -793,6 +794,8 @@ class Agents {
             $('a.jstree-anchor').removeClass('jstree-clicked');
             $this.addClass('jstree-clicked');
 
+            console.log('this is a route', $container.data('route'));
+
             $.ajax({
                 url: $container.data('route'),
                 type: 'get',
@@ -825,7 +828,7 @@ class Agents {
                 //TODO Init Set Modal Bonus
                 $('#info-bonus-description').html(json.data.campaignDescription);
                 //TODO Finish Set Modal Bonus
-
+                console.log('orlando 4');
                 $('#username').text(json.data.user.username);
                 $('#agent_timezone').text(json.data.user.timezone);
                 $('.balance').text(json.data.balance);
@@ -1632,6 +1635,7 @@ class Agents {
                 $('.balance').text(json.data.balance);
                 $('.balance_bonus').text(json.data.balanceBonus);
                 let userInput = json.data.balance_auth;
+                alert('Orlando 1');
                 let userclass = 'balanceAuth_'+json.data.auth_balance;
                 let userclass2 = '.balanceAuth_'+json.data.auth_balance;
                 document.getElementsByClassName(userclass).innerHTML = userInput;
@@ -1664,6 +1668,7 @@ class Agents {
                 data: $form.serialize() + '&transaction_type=' + transactionType
 
             }).done(function (json) {
+                alert('Orlando 2');
                 $('.balance').text(json.data.balance);
                 $('.balance_bonus').text(json.data.balanceBonus);
                 let userInput = json.data.balance_auth;

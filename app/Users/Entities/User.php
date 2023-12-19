@@ -4,6 +4,7 @@ namespace App\Users\Entities;
 
 use App\Core\Entities\Provider;
 use Dotworkers\Configurations\Configurations;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -193,4 +194,19 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'referrals', 'user_id', 'referral_id')->withTimestamps();
     }
+
+    /**
+     * @return Attribute
+     */
+    protected function typeUser(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value, array $attributes) => match ($attributes['type_user']) {
+                1, 2 => 'agent',
+                5 => 'user',
+                default => null,
+            },
+        );
+    }
+
 }

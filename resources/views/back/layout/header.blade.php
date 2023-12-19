@@ -1,4 +1,4 @@
-<header id="js-header" class="u-header u-header--sticky-top">
+<header id="js-header" class="u-header u-header--sticky-top" data-route-find="{{ route('agents.find') }}" data-auth-user="{{ auth()->user()->id }}" data-user-type="{{ auth()->user()->typeUser }}">
     <div class="u-header__section u-header__section--admin-dark g-min-height-65">
         <nav class="navbar no-gutters g-pa-0">
             <div class="col-auto d-flex flex-nowrap u-header-logo-toggler g-py-12">
@@ -31,7 +31,7 @@
                     <div class="g-pos-rel">
                         <div class="d-block">
                             <div class="d-inline-block g-pos-rel g-pos-rel-amount">
-                                <i class="fa-solid fa-coins"></i> <span class="amount-refresh">300.000,00</span>
+                                <i class="fa-solid fa-coins"></i> <span class="amount-refresh-{{auth()->user()->id}}"></span>
                             </div>
 
                             @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
