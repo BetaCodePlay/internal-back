@@ -153,10 +153,10 @@
             <div class="nav-mobile-opt"><a class="active" href="{{ route('core.dashboard') }}"><i
                         class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
         @endif
-        @can('access', [$permissions::$agents_dashboard])
-            <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i>
-                    <span class="name">{{ _i('Role') }}</span></a></div>
-        @endif
+
+        <div class="nav-mobile-opt"><a href="{{ route('agents.role') }}"><i class="fa-solid fa-people-group"></i>
+                <span class="name">{{ _i('Role') }}</span></a></div>
+
         <div class="nav-mobile-opt"><a href="#"><i class="fa-solid fa-chart-column"></i> <span
                     class="name">{{ _i('Reports') }}</span></a></div>
         <div class="nav-mobile-opt action-mobile-menu"><a href="javascript:void(0)"><i class="fa-solid fa-bars"></i>
