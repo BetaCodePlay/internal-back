@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="wrapper-title">
+    <div class="wrapper-title g-pb-30">
         {{ _i('Role and permission management') }}
     </div>
 

@@ -32,7 +32,7 @@
     <div class="row no-gutters g-pos-rel">
         @include('back.layout.sidebar')
         <div class="col">
-            <div class="g-pa-20 g-pt-40 g-pb-40">
+            <div class="g-pa-20 g-pt-30 g-pb-30">
                 @yield('content')
                 @if(!empty($action))
                     @if($iagent == 1)
