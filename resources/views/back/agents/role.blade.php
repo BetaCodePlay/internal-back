@@ -260,7 +260,6 @@
 @section('scripts')
     <script>
         $(function () {
-            let Roles = new Roles();
             Roles.loadRoles();
         });
     </script>
