@@ -4,6 +4,9 @@ body {
     color: #fff;
 }
 
+$theme: #7d2df5;
+$theme-hover: lighten($theme, 10%);
+
 #header-search-form {
     .form-control {
         width: 100%;
@@ -32,6 +35,22 @@ body {
 
     &.show {
         display: block !important;
+    }
+}
+
+.btn {
+    border-radius: 8px;
+
+    &.btn-theme {
+        color: #fff;
+        background: $theme;
+        border-color: $theme;
+
+        &:hover, &:focus {
+            color: #fff;
+            background: $theme-hover;
+            border-color: $theme-hover;
+        }
     }
 }
 
