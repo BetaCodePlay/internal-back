@@ -59,7 +59,6 @@ mix.autoload({
         'resources/assets/back/js/commons.js',
         'resources/assets/back/js/main.js',
         'resources/assets/back/js/chat.js',
-        'resources/assets/back/js/global.js',
     ],
     'public/back/js/custom.min.js')
     .extract()

@@ -2437,7 +2437,7 @@ class AgentsController extends Controller
             $balanceBonus = 0.00;
             $campaignDescription = _i('Without description...');
 
-            [$type, $user] = $this->getUserInfo($id, $currency, $request->type, $bonus);
+            [$type, $user] = $this->getUserInfo($id, $currency, $request->type);
 
             $father = optional($user)->owner_id
                 ? $this->usersRepo->findUsername($user->owner_id)
@@ -2458,7 +2458,7 @@ class AgentsController extends Controller
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d', strtotime($user->created));
 
-            $data = [
+            return Utils::successResponse([
                 'cant_agents'         => 0,
                 'cant_players'        => 0,
                 'father'              => optional($father)->username ?? '---',
@@ -2473,9 +2473,7 @@ class AgentsController extends Controller
                 'myself'              => $userId == optional($user)->id,
                 'agent_player'        => $agent_player,
                 'campaignDescription' => $campaignDescription,
-            ];
-
-            return Utils::successResponse($data);
+            ]);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
