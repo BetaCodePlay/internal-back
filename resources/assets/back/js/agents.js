@@ -1632,17 +1632,18 @@ class Agents {
                 data: $form.serialize() + '&transaction_type=' + transactionType
 
             }).done(function (json) {
-                $('.balance').text(json.data.balance);
-                $('.balance_bonus').text(json.data.balanceBonus);
-                let userInput = json.data.balance_auth;
-                alert('Orlando 1');
-                let userclass = 'balanceAuth_'+json.data.auth_balance;
-                let userclass2 = '.balanceAuth_'+json.data.auth_balance;
-                document.getElementsByClassName(userclass).innerHTML = userInput;
+                let { auth_balance: authBalance, balance, balanceBonus } = json.data;
 
-                $(userclass2).text(userInput);
-                console.log(userInput,userclass,userclass2)
+                $('.balance').text(balance);
+                $('.balance_bonus').text(balanceBonus);
 
+                let amountRefreshTxt = `amount-refresh-${authBalance}`;
+                let amountRefreshClass = `.amount-refresh-${authBalance}`;
+
+                document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
+                $(amountRefreshClass).text(userInput);
+
+                console.log(authBalance, amountRefreshTxt, amountRefreshClass)
                 //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');
                 swalSuccessWithButton(json);
@@ -1668,16 +1669,17 @@ class Agents {
                 data: $form.serialize() + '&transaction_type=' + transactionType
 
             }).done(function (json) {
-                alert('Orlando 2');
-                $('.balance').text(json.data.balance);
-                $('.balance_bonus').text(json.data.balanceBonus);
-                let userInput = json.data.balance_auth;
-                let userclass = 'balanceAuth_'+json.data.auth_balance;
-                let userclass2 = '.balanceAuth_'+json.data.auth_balance;
-                document.getElementsByClassName(userclass).innerHTML = userInput;
+                let { auth_balance: authBalance, balance, balanceBonus } = json.data;
 
-                $(userclass2).text(userInput);
-                console.log(userInput,userclass,userclass2)
+                $('.balance').text(balance);
+                $('.balance_bonus').text(balanceBonus);
+
+                let amountRefreshTxt = `amount-refresh-${authBalance}`;
+                let amountRefreshClass = `.amount-refresh-${authBalance}`;
+
+                document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
+                $(amountRefreshClass).text(authBalance);
+                console.log(authBalance, amountRefreshTxt, amountRefreshClass)
 
                 //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');

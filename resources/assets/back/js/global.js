@@ -18,8 +18,6 @@ $.ajax({
         let {id, balance} = user;
 
         let formattedBalance = parseFloat("" + balance).toFixed(2);
-        console.log("formattedBalance", formattedBalance);
-
         let amountRefresh = $(`.amount-refresh-${id}`);
         amountRefresh.text(formattedBalance);
     } else {
