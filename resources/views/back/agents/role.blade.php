@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <table id="example" class="display nowrap" style="width:100%">
+        <table id="table-roles" class="display nowrap">
             <thead>
             <tr>
                 <th>First name</th>
