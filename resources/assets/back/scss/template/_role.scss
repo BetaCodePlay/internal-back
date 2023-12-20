@@ -1,0 +1,31 @@
+.page-role {
+    position: relative;
+
+    .page-top {
+        position: absolute;
+        right: 0;
+        top: -50px;
+
+        .search-input {
+            position: relative;
+            display: inline-block;
+
+            i {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                z-index: 3;
+                transform: translateY(-50%);
+            }
+
+            .form-control {
+                background: #333;
+                border-color: #333;
+                color: #fff;
+                border-radius: 8px;
+                padding-left: 34px;
+                width: 220px;
+            }
+        }
+    }
+}
