@@ -18,6 +18,7 @@
                 </a>
                 <a class="js-side-nav u-header__nav-toggler align-self-center ml-auto collapse-menu-action" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
+
                    data-hssm-body-class="u-side-nav-mini" data-hssm-is-close-all-except-this="true"
                    data-hssm-target="#sideNav">
                     <i class="hs-admin-align-left"></i>
@@ -31,7 +32,7 @@
                     <div class="g-pos-rel">
                         <div class="d-block">
                             <div class="d-inline-block g-pos-rel g-pos-rel-amount">
-                                <i class="fa-solid fa-coins"></i> <span class="amount-refresh-{{auth()->user()->id}}"></span>
+                                <i class="fa-solid fa-coins"></i> <span class="amount-refresh-{{auth()->user()->id}}">{{ getAuthenticatedUserBalance() }}</span>
                             </div>
 
                             @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)

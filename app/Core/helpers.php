@@ -1,5 +1,6 @@
 <?php
 
+use App\Agents\Repositories\AgentsRepo;
 use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Configurations\Enums\PaymentMethods;
 use Dotworkers\Configurations\Enums\Providers;
@@ -7273,7 +7274,31 @@ if (! function_exists('isIpAddress')) {
 }
 
 if (! function_exists('convertObjectToArray')) {
-    function convertObjectToArray($object): array {
+    function convertObjectToArray($object)
+    : array {
         return json_decode(json_encode($object), true);
+    }
+}
+
+if (! function_exists('authenticatedUserBalance')) {
+    function getAuthenticatedUserBalance(): string
+    {
+        $authenticatedUser = auth()->user();
+
+        if (! $authenticatedUser) {
+            return 'N/A';
+        }
+
+        $authenticatedUserId   = $authenticatedUser->id;
+        $authenticatedUserType = $authenticatedUser->typeUser;
+        $agentsRepo = new AgentsRepo();
+
+        $user = ($authenticatedUserType == 'agent')
+            ? $agentsRepo->findByUserIdAndCurrency($authenticatedUserId, session('currency'))
+            : $agentsRepo->findUser($authenticatedUserId);
+
+        $balance = ($authenticatedUserType == 'agent') ? $user->balance : $user->wallet->balance;
+
+        return number_format($balance, 2);
     }
 }
