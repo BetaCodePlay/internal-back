@@ -192,12 +192,14 @@ class BaseTransactionService extends BaseService
             );
         }
         return Utils::successResponse([
-            'title'        => _i('Transaction performed'),
-            'message'      => _i('The transaction was successfully made to the user'),
-            'close'        => _i('Close'),
+            'authUserId'   => $request->user()->id,
+            'authBalance'  => number_format($balance, 2),
             'balance'      => number_format($userManagementResult->balance, 2),
             'balanceBonus' => number_format($userManagementResult->balanceBonus, 2),
             'button'       => $userManagementResult->button,
+            'close'        => _i('Close'),
+            'message'      => _i('The transaction was successfully made to the user'),
+            'title'        => _i('Transaction performed'),
         ]);
     }
 

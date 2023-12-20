@@ -2939,26 +2939,6 @@ class AgentsController extends Controller
     }
 
     /**
-     * Perform credit and debit transactions.
-     *
-     * This method handles credit and debit transactions based on the provided
-     * TransactionRequest, which includes transaction details.
-     *
-     * @param TransactionRequest $request The request object containing transaction details.
-     *
-     * @return Response The response object indicating the result of the transaction.
-     *                  It can be a success response or an error response.
-     */
-    public function performTransactionsOld(TransactionRequest $request)
-    : Response {
-        try {
-            return $this->transactionService->manageCreditDebitTransactions($request);
-        } catch (Exception $ex) {
-            return $this->transactionService->handleAndRespondToError($request, $ex);
-        }
-    }
-
-    /**
      * @param TransactionRequest $request
      * @return Response
      */

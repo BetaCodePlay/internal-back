@@ -1632,19 +1632,17 @@ class Agents {
                 data: $form.serialize() + '&transaction_type=' + transactionType
 
             }).done(function (json) {
-                let { auth_balance: authBalance, balance, balanceBonus } = json.data;
+                let { authBalance, authUserId, balance, balanceBonus } = json.data;
 
                 $('.balance').text(balance);
                 $('.balance_bonus').text(balanceBonus);
 
-                let amountRefreshTxt = `amount-refresh-${authBalance}`;
-                let amountRefreshClass = `.amount-refresh-${authBalance}`;
+                let amountRefreshTxt = `amount-refresh-${authUserId}`;
+                let amountRefreshClass = `.amount-refresh-${authUserId}`;
 
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
-                $(amountRefreshClass).text(userInput);
+                $(amountRefreshClass).text(authBalance);
 
-                console.log(authBalance, amountRefreshTxt, amountRefreshClass)
-                //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');
                 swalSuccessWithButton(json);
 
@@ -1669,22 +1667,19 @@ class Agents {
                 data: $form.serialize() + '&transaction_type=' + transactionType
 
             }).done(function (json) {
-                let { auth_balance: authBalance, balance, balanceBonus } = json.data;
+                let { authBalance, authUserId, balance, balanceBonus } = json.data;
 
                 $('.balance').text(balance);
                 $('.balance_bonus').text(balanceBonus);
 
-                let amountRefreshTxt = `amount-refresh-${authBalance}`;
-                let amountRefreshClass = `.amount-refresh-${authBalance}`;
+                let amountRefreshTxt = `amount-refresh-${authUserId}`;
+                let amountRefreshClass = `.amount-refresh-${authUserId}`;
 
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
-                console.log(authBalance, amountRefreshTxt, amountRefreshClass)
 
-                //$('#ticket').html('').append(json.data.button);
                 $form.trigger('reset');
                 swalSuccessWithButton(json);
-
             }).fail(function (json) {
                 swalError(json);
 

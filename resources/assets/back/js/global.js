@@ -12,14 +12,13 @@ $.ajax({
         id: authUserId,
         type: userType
     }
-}).done(function (response) {
-    if (response && response.data && response.data.user) {
-        let user = response.data.user;
-        let {id, balance} = user;
+}).done(function (json) {
+    if (json && json.data) {
+        let { balance, user } = json.data;
+        let { id } = user;
 
-        let formattedBalance = parseFloat("" + balance).toFixed(2);
         let amountRefresh = $(`.amount-refresh-${id}`);
-        amountRefresh.text(formattedBalance);
+        amountRefresh.text(balance);
     } else {
         console.error('La respuesta no tiene la estructura esperada:', response);
     }
