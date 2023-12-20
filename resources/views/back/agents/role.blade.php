@@ -261,7 +261,7 @@
     <script>
         $(function () {
             let roles = new Roles();
-            roles.loadRoles();
+            roles.initTableRoles();
         });
     </script>
 @endsection
