@@ -18,22 +18,22 @@
             <button type="button" class="btn btn-theme"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
         <div class="page-header">
-            <div class="page-header-top">
-                {{ _i('My profile') }}
-
-                <div class="d-inline-block g-pos-rel dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                        <li><a class="dropdown-item" href="#">Option 1</a></li>
-                        <li><a class="dropdown-item" href="#">Option 2</a></li>
-                        <li><a class="dropdown-item" href="#">Option 3</a></li>
-                    </ul>
-                </div>
-            </div>
-
             <div class="page-body">
+                <div class="page-header-top">
+                    {{ _i('My profile') }}
+
+                    <div class="d-inline-block g-pos-rel dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                            <li><a class="dropdown-item" href="#">Option 1</a></li>
+                            <li><a class="dropdown-item" href="#">Option 2</a></li>
+                            <li><a class="dropdown-item" href="#">Option 3</a></li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="page-header-body">
                     <div class="page-data">
                         <div class="data-tile">{{ _i('Name') }}</div>
@@ -51,7 +51,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection
