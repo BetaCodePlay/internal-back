@@ -39,7 +39,7 @@
                 </div>
                 <div class="page-data">
                     <div class="data-tile">{{ _i('ID User') }}</div>
-                    <div class="data-text">{{ auth()->user()->id }}</div>
+                    <div class="data-text text-id">{{ auth()->user()->id }}</div>
                 </div>
                 <div class="page-data">
                     <div class="data-tile">{{ _i('Number of dependent agents') }}</div>

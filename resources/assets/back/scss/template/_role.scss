@@ -84,7 +84,7 @@
                             color: #fff;
 
                             &:hover {
-                                background: rgba(255,255,255,0.075);
+                                background: rgba(255, 255, 255, 0.075);
                             }
 
                             .mini-title {
@@ -102,9 +102,38 @@
 
         .page-header-body {
             position: relative;
+            padding: 12px 20px;
 
             .page-data {
                 display: inline-block;
+                padding: 5px 0;
+
+                .data-title {
+                    font-size: 14px;
+                    margin-bottom: 10px;
+                    padding: 5px 10px;
+                }
+
+
+                .data-text {
+                    font-size: 14px;
+                    margin-top: 10px;
+                    padding: 5px 10px;
+                    color: #aaa;
+                    border-right: 2px solid #3c3c3c;
+
+                    &.text-id {
+                        color: #fff;
+                    }
+
+                    .deco-role {
+                        color: #fff;
+                        border: 1px solid #fff;
+                        padding: 0 8px;
+                        border-radius: 50px;
+                        margin-left: 5px;
+                    }
+                }
             }
         }
     }
