@@ -1,3 +1,5 @@
+import {} from "../../commons/js/core";
+
 class Roles {
     static loadRoles () {
         new DataTable('#example', {
