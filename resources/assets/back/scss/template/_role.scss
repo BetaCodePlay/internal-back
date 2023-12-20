@@ -65,7 +65,7 @@
                     padding: 10px 5px;
                     background: #282828;
                     border-radius: 8px;
-                    box-shadow: 0 0 3px #1a1a1a;
+                    box-shadow: 0 0 3px #181818;
                     top: calc(100% + 5px) !important;
                     transform: none !important;
 
@@ -81,6 +81,7 @@
                             border-radius: 6px;
                             transition: 0.15s;
                             font-weight: 500;
+                            color: #fff;
 
                             &:hover {
                                 background: rgba(255,255,255,0.075);
@@ -96,6 +97,14 @@
                         }
                     }
                 }
+            }
+        }
+
+        .page-header-body {
+            position: relative;
+
+            .page-data {
+                display: inline-block;
             }
         }
     }
