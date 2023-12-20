@@ -18,37 +18,34 @@
             <button type="button" class="btn btn-theme"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
         <div class="page-header">
-            <div class="page-body">
-                <div class="page-header-top">
-                    {{ _i('My profile') }}
+            <div class="page-header-top">
+                {{ _i('My profile') }}
 
-                    <div class="d-inline-block g-pos-rel dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                            <li><a class="dropdown-item" href="#">Option 1</a></li>
-                            <li><a class="dropdown-item" href="#">Option 2</a></li>
-                            <li><a class="dropdown-item" href="#">Option 3</a></li>
-                        </ul>
-                    </div>
+                <div class="d-inline-block g-pos-rel dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                        <li><a class="dropdown-item" href="#">Option 1</a></li>
+                        <li><a class="dropdown-item" href="#">Option 2</a></li>
+                        <li><a class="dropdown-item" href="#">Option 3</a></li>
+                    </ul>
                 </div>
-
-                <div class="page-header-body">
-                    <div class="page-data">
-                        <div class="data-tile">{{ _i('Name') }}</div>
-                        <div class="data-text">{{ auth()->user()->username }} <span class="deco-role">Administrator</span></div>
-                    </div>
-                    <div class="page-data">
-                        <div class="data-tile">{{ _i('ID User') }}</div>
-                        <div class="data-text">{{ auth()->user()->id }}</div>
-                    </div>
-                    <div class="page-data">
-                        <div class="data-tile">{{ _i('Number of dependent agents') }}</div>
-                        <div class="data-text-inline">{{ _i('Master agents') }} <span class="number">00</span></div>
-                        <div class="data-text-inline">{{ _i('Support agents') }} <span class="number">00</span></div>
-                        <div class="data-text-inline">{{ _i('Players') }} <span class="number">00</span></div>
-                    </div>
+            </div>
+            <div class="page-header-body">
+                <div class="page-data">
+                    <div class="data-tile">{{ _i('Name') }}</div>
+                    <div class="data-text">{{ auth()->user()->username }} <span class="deco-role">Administrator</span></div>
+                </div>
+                <div class="page-data">
+                    <div class="data-tile">{{ _i('ID User') }}</div>
+                    <div class="data-text">{{ auth()->user()->id }}</div>
+                </div>
+                <div class="page-data">
+                    <div class="data-tile">{{ _i('Number of dependent agents') }}</div>
+                    <div class="data-text-inline">{{ _i('Master agents') }} <span class="number">00</span></div>
+                    <div class="data-text-inline">{{ _i('Support agents') }} <span class="number">00</span></div>
+                    <div class="data-text-inline">{{ _i('Players') }} <span class="number">00</span></div>
                 </div>
             </div>
         </div>
