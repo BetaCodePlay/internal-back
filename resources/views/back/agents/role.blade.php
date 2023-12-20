@@ -21,7 +21,7 @@
             <div class="page-header-top">
                 {{ _i('My profile') }}
 
-                <div class="d-inline-block g-pos-rel dropdown">
+                <div class="d-inline-block dropdown">
                     <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </button>
