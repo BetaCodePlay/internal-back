@@ -1,7 +1,7 @@
 import {} from "../../commons/js/core";
 
 class Roles {
-    static loadRoles () {
+    loadRoles () {
         new DataTable('#example', {
             fixedHeader: true,
             responsive: true
