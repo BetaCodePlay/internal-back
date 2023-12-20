@@ -60,13 +60,14 @@
                 }
 
                 .dropdown-menu {
-                    left: auto;
+                    left: auto !important;
                     right: 0;
                     padding: 10px 5px;
-                    background: #1e1e1e;
+                    background: #282828;
                     border-radius: 8px;
-                    box-shadow: 0 0 3px #222;
-                    top: calc(100% + 5px);
+                    box-shadow: 0 0 3px #1a1a1a;
+                    top: calc(100% + 5px) !important;
+                    transform: none !important;
 
                     li {
                         margin-top: 1px;
