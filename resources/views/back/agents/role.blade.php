@@ -5,7 +5,9 @@
 @endsection
 
 @section('content')
-
+    <div class="wrapper-title">
+        {{ _i('Role and permission management') }}
+    </div>
 @endsection
 
 @section('scripts')
