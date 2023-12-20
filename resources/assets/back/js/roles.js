@@ -1,7 +1,7 @@
 import {} from "../../commons/js/core";
 
 class Roles {
-    loadRoles () {
+    static loadRoles () {
         $('#table-roles').DataTable( {
             fixedHeader: true,
             responsive: true
