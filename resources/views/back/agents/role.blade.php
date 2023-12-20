@@ -34,15 +34,15 @@
             </div>
             <div class="page-header-body">
                 <div class="page-data">
-                    <div class="data-tile">{{ _i('Name') }}</div>
+                    <div class="data-title">{{ _i('Name') }}</div>
                     <div class="data-text">{{ auth()->user()->username }} <span class="deco-role">Administrator</span></div>
                 </div>
                 <div class="page-data">
-                    <div class="data-tile">{{ _i('ID User') }}</div>
+                    <div class="data-title">{{ _i('ID User') }}</div>
                     <div class="data-text text-id">{{ auth()->user()->id }}</div>
                 </div>
                 <div class="page-data">
-                    <div class="data-tile">{{ _i('Number of dependent agents') }}</div>
+                    <div class="data-title">{{ _i('Number of dependent agents') }}</div>
                     <div class="data-text-inline">{{ _i('Master agents') }} <span class="number">00</span></div>
                     <div class="data-text-inline">{{ _i('Support agents') }} <span class="number">00</span></div>
                     <div class="data-text-inline">{{ _i('Players') }} <span class="number">00</span></div>
