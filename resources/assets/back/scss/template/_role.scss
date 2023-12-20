@@ -137,6 +137,24 @@
 
                 .data-text-inline {
                     display: inline-block;
+                    font-size: 14px;
+                    padding: 5px 10px;
+                    color: #aaa;
+                    border-right: 2px solid #3c3c3c;
+
+                    &:last-child {
+                        border-right: 0;
+                    }
+
+                    .number {
+                        background: #7d2df5;
+                        font-weight: 500;
+                        color: #fff;
+                        padding: 2px 6px;
+                        border-radius: 5px;
+                        font-size: 12px;
+                        margin-left: 5px;
+                    }
                 }
             }
         }
