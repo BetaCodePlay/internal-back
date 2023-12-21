@@ -71,7 +71,7 @@
                     <td><span class="point-status green"></span> Activo</td>
                     <td>Normal</td>
                     <td>$12.000,00</td>
-                    <td><span class="deco-number"></span></td>
+                    <td><span class="deco-number">00</span></td>
                     <td>
                         <div class="d-inline-block dropdown">
                             <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
