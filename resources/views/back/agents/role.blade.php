@@ -73,15 +73,16 @@
                         <td>Normal</td>
                         <td>$12.000,00</td>
                         <td><span class="deco-number">00</span></td>
-                        <td>
+                        <td class="text-right">
                             <div class="d-inline-block dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                                    <li><a class="dropdown-item" href="#">Option 1</a></li>
-                                    <li><a class="dropdown-item" href="#">Option 2</a></li>
-                                    <li><a class="dropdown-item" href="#">Option 3</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
                                 </ul>
                             </div>
 

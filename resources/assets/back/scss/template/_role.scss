@@ -278,10 +278,18 @@
 
                         a {
                             padding: 0.35rem 1rem;
-                            border-radius: 6px;
                             transition: 0.15s;
-                            font-weight: 500;
                             color: #fff;
+                            border-bottom: 1px solid #555;
+
+                            &:first-child {
+                                border-radius: 6px 6px 0 0;
+                            }
+
+                            &:last-child {
+                                border-bottom: 0;
+                                border-radius: 0 0 6px 6px;
+                            }
 
                             &:hover {
                                 background: rgba(255, 255, 255, 0.075);
