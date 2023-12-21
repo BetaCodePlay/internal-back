@@ -208,6 +208,53 @@
                     &.even {
                         background: #252525;
                     }
+
+                    &.child {
+                        background: #2d2d2d;
+
+                        .dtr-details {
+                            margin: 0;
+                            padding-left: 20px;
+
+                            li {
+                                padding-left: 5px;
+                                padding-top: 5px;
+                                padding-bottom: 5px;
+                                border-bottom: 1px solid #444;
+
+                                &:last-child {
+                                    border-bottom: 0;
+                                }
+
+                                .dtr-title {
+                                    font-weight: 500;
+                                    margin-right: 10px;
+                                    min-width: 100px;
+                                    display: inline-block;
+                                }
+
+                                .dtr-data {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.collapsed {
+                tbody {
+                    tr {
+                        td {
+                            &:first-child {
+                                cursor: pointer;
+
+                                &::before {
+                                    content: "";
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -253,7 +300,7 @@
                     padding: 5px 15px;
                     transition: 0.15s;
 
-                    &:hover, &:focus {
+                    &:hover {
                         color: #fff;
                         background: #2a2a2a;
                     }
@@ -266,7 +313,7 @@
                     background: #333;
                     border-radius: 8px;
                     box-shadow: 0 0 5px #181818;
-                    top: calc(100% + 5px) !important;
+                    top: calc(100%) !important;
                     transform: none !important;
 
                     li {
@@ -274,6 +321,20 @@
 
                         &:first-child {
                             margin-top: 0;
+
+                            a {
+
+                                &:first-child {
+                                    border-radius: 6px 6px 0 0;
+                                }
+                            }
+                        }
+
+                        &:last-child {
+                            a {
+                                border-bottom: 0;
+                                border-radius: 0 0 6px 6px;
+                            }
                         }
 
                         a {
@@ -282,14 +343,6 @@
                             color: #fff;
                             border-bottom: 1px solid #555;
 
-                            &:first-child {
-                                border-radius: 6px 6px 0 0;
-                            }
-
-                            &:last-child {
-                                border-bottom: 0;
-                                border-radius: 0 0 6px 6px;
-                            }
 
                             &:hover {
                                 background: rgba(255, 255, 255, 0.075);
@@ -304,6 +357,17 @@
                             }
                         }
                     }
+                }
+            }
+
+            .btn-href {
+                color: #fff;
+                margin-left: 5px;
+                transition: .15s;
+
+                &:hover, &:focus {
+                    color: #fff;
+                    background: #2a2a2a;
                 }
             }
         }
@@ -350,6 +414,16 @@
                 border-color: #444;
                 border-radius: 6px;
                 color: #fff;
+
+                @media screen and (max-width: 767px) {
+                    width: calc(100% - 100px);
+                }
+            }
+
+            @media screen and (max-width: 767px) {
+                labe {
+                    text-align: center;
+                }
             }
         }
 
@@ -360,6 +434,16 @@
                 color: #fff;
                 border-radius: 6px;
                 margin: 0 5px;
+            }
+
+            @media screen and (max-width: 767px) {
+                margin-bottom: 15px;
+            }
+        }
+
+        .dataTables_info {
+            @media screen and (max-width: 767px) {
+                margin-bottom: 15px;
             }
         }
 

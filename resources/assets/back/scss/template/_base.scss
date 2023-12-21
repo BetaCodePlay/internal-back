@@ -2,6 +2,10 @@ body {
     font-family: 'Poppins', sans-serif !important;
     background-color: #111 !important;
     color: #fff;
+
+    @media screen and (max-width: 767px) {
+        padding-bottom: 65px;
+    }
 }
 
 $theme: #7d2df5;
