@@ -26,9 +26,9 @@
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                        <li><a class="dropdown-item" href="#">Option 1</a></li>
-                        <li><a class="dropdown-item" href="#">Option 2</a></li>
-                        <li><a class="dropdown-item" href="#">Option 3</a></li>
+                        <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                        <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                        <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
                     </ul>
                 </div>
             </div>
