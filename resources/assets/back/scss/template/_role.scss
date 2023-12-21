@@ -210,12 +210,21 @@
                     }
 
                     &.child {
+                        background: #2d2d2d;
+
                         .dtr-details {
                             margin: 0;
                             padding-left: 20px;
 
                             li {
                                 padding-left: 5px;
+                                padding-top: 5px;
+                                padding-bottom: 5px;
+                                border-bottom: 1px solid #444;
+
+                                &:last-child {
+                                    border-bottom: 0;
+                                }
 
                                 .dtr-title {
                                     font-weight: 500;
