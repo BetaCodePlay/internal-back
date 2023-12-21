@@ -245,6 +245,59 @@
                 padding: 1px 9px;
                 border-radius: 50px;
             }
+
+            .dropdown {
+                .dropdown-toggle {
+                    color: #fff;
+                    font-size: 16px;
+                    padding: 5px 15px;
+                    transition: 0.15s;
+
+                    &:hover, &:focus {
+                        color: #fff;
+                        background: #2a2a2a;
+                    }
+                }
+
+                .dropdown-menu {
+                    left: auto !important;
+                    right: 0;
+                    padding: 10px 5px;
+                    background: #333;
+                    border-radius: 8px;
+                    box-shadow: 0 0 5px #181818;
+                    top: calc(100% + 5px) !important;
+                    transform: none !important;
+
+                    li {
+                        margin-top: 1px;
+
+                        &:first-child {
+                            margin-top: 0;
+                        }
+
+                        a {
+                            padding: 0.35rem 1rem;
+                            border-radius: 6px;
+                            transition: 0.15s;
+                            font-weight: 500;
+                            color: #fff;
+
+                            &:hover {
+                                background: rgba(255, 255, 255, 0.075);
+                            }
+
+                            .mini-title {
+                                display: inline-block;
+                                font-size: 10px;
+                                vertical-align: top;
+                                color: #aaa;
+                                margin-left: 5px;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .dataTables_wrapper {
@@ -280,6 +333,25 @@
                     border-radius: 0 0 8px 8px;
                     border-top: 2px solid #434343;
                 }
+            }
+        }
+
+        .dataTables_filter {
+            input {
+                background: #333;
+                border-color: #444;
+                border-radius: 6px;
+                color: #fff;
+            }
+        }
+
+        .dataTables_length {
+            .custom-select {
+                background: #333;
+                border-color: #444;
+                color: #fff;
+                border-radius: 6px;
+                margin: 0 5px;
             }
         }
 
