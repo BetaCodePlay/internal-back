@@ -274,6 +274,20 @@
 
                         &:first-child {
                             margin-top: 0;
+
+                            a {
+
+                                &:first-child {
+                                    border-radius: 6px 6px 0 0;
+                                }
+                            }
+                        }
+
+                        &:last-child {
+                            a {
+                                border-bottom: 0;
+                                border-radius: 0 0 6px 6px;
+                            }
                         }
 
                         a {
@@ -282,14 +296,6 @@
                             color: #fff;
                             border-bottom: 1px solid #555;
 
-                            &:first-child {
-                                border-radius: 6px 6px 0 0;
-                            }
-
-                            &:last-child {
-                                border-bottom: 0;
-                                border-radius: 0 0 6px 6px;
-                            }
 
                             &:hover {
                                 background: rgba(255, 255, 255, 0.075);
