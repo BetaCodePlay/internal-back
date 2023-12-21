@@ -50,43 +50,45 @@
             </div>
         </div>
         <div class="page-body">
-            <table id="table-roles" class="display nowrap">
-                <thead>
-                <tr>
-                    <th>{{ _i('Name') }}</th>
-                    <th>{{ _i('Rol') }}</th>
-                    <th>{{ _i('ID User') }}</th>
-                    <th>{{ _i('Status') }}</th>
-                    <th>{{ _i('Label') }}</th>
-                    <th>{{ _i('Balance') }}</th>
-                    <th>{{ _i('Dependencies') }}</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Antonella93</td>
-                    <td><span class="deco-rol">Administrador</span></td>
-                    <td>BE8523</td>
-                    <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
-                    <td>Normal</td>
-                    <td>$12.000,00</td>
-                    <td><span class="deco-number">00</span></td>
-                    <td>
-                        <div class="d-inline-block dropdown">
-                            <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                                <li><a class="dropdown-item" href="#">Option 1</a></li>
-                                <li><a class="dropdown-item" href="#">Option 2</a></li>
-                                <li><a class="dropdown-item" href="#">Option 3</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="col">
+                <table id="table-roles" class="display nowrap">
+                    <thead>
+                    <tr>
+                        <th>{{ _i('Name') }}</th>
+                        <th>{{ _i('Rol') }}</th>
+                        <th>{{ _i('ID User') }}</th>
+                        <th>{{ _i('Status') }}</th>
+                        <th>{{ _i('Label') }}</th>
+                        <th>{{ _i('Balance') }}</th>
+                        <th>{{ _i('Dependencies') }}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td>
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">Option 1</a></li>
+                                    <li><a class="dropdown-item" href="#">Option 2</a></li>
+                                    <li><a class="dropdown-item" href="#">Option 3</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
