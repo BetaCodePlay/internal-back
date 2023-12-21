@@ -246,28 +246,24 @@
                 tbody {
                     tr {
                         td {
-                            &.odd, &.even {
-                                &:first-child {
-                                    cursor: pointer;
+                            &.dtr-control {
+                                cursor: pointer;
 
-                                    &::before {
-                                        content: "";
-                                        border-top: 10px solid #999;
-                                        border-left: 4px solid transparent;
-                                        border-right: 4px solid transparent;
-                                        display: inline-block;
-                                        margin-right: 8px;
-                                    }
+                                &::before {
+                                    content: "";
+                                    border-top: 10px solid #999;
+                                    border-left: 4px solid transparent;
+                                    border-right: 4px solid transparent;
+                                    display: inline-block;
+                                    margin-right: 8px;
                                 }
+                            }
+                        }
 
-                                &.dt-hasChild {
-                                    &:first-child {
-                                        cursor: pointer;
-
-                                        &::before {
-                                            transform: rotate(180deg);
-                                        }
-                                    }
+                        &.dt-hasChild {
+                            &.dtr-control {
+                                &::before {
+                                    transform: rotate(180deg);
                                 }
                             }
                         }
