@@ -785,7 +785,7 @@ class Agents {
             }
         });
 
-        /*$(document).on('click', 'a.jstree-anchor', function (){
+        $(document).on('click', 'a.jstree-anchor', function (){
             let $this = $(this);
             let type = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('typetreepro');
             let id = $this.parent().find('.jstree-icon.jstree-ocl').eq(0).data('idtreepro');
@@ -907,7 +907,7 @@ class Agents {
             }).fail(function (json) {
                 swalError(json);
             });
-        })*/
+        })
 
         $('#tree-pro-init').find('.jstree-anchor').eq(0).click();
     }
