@@ -261,9 +261,11 @@
                         }
 
                         &.dt-hasChild {
-                            &.dtr-control {
-                                &::before {
-                                    transform: rotate(180deg);
+                            td {
+                                &.dtr-control {
+                                    &::before {
+                                        transform: rotate(180deg);
+                                    }
                                 }
                             }
                         }
