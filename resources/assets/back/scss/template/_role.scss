@@ -206,5 +206,13 @@
                 }
             }
         }
+
+        .dataTables_wrapper {
+            .row {
+                &:nth-child(2) {
+                    background: #1e1e1e;
+                }
+            }
+        }
     }
 }
