@@ -68,7 +68,7 @@
                     <td>Antonella93</td>
                     <td><span class="deco-rol">Administrador</span></td>
                     <td>BE8523</td>
-                    <td><span class="point-status green"></span> Activo</td>
+                    <td><i class="fa-solid fa-circle green"></i> Activo</td>
                     <td>Normal</td>
                     <td>$12.000,00</td>
                     <td><span class="deco-number">00</span></td>
