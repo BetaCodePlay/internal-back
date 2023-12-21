@@ -208,6 +208,28 @@
                     &.even {
                         background: #252525;
                     }
+
+                    &.child {
+                        .dtr-details {
+                            margin: 0;
+                            padding-left: 20px;
+
+                            li {
+                                padding-left: 5px;
+
+                                .dtr-title {
+                                    font-weight: 500;
+                                    margin-right: 10px;
+                                    min-width: 100px;
+                                    display: inline-block;
+                                }
+
+                                .dtr-data {
+
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -253,7 +275,7 @@
                     padding: 5px 15px;
                     transition: 0.15s;
 
-                    &:hover, &:focus {
+                    &:hover {
                         color: #fff;
                         background: #2a2a2a;
                     }
