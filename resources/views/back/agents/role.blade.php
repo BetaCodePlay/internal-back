@@ -61,7 +61,7 @@
                         <th>{{ _i('Label') }}</th>
                         <th>{{ _i('Balance') }}</th>
                         <th>{{ _i('Dependencies') }}</th>
-                        <th></th>
+                        <th data-priority="1"></th>
                     </tr>
                     </thead>
                     <tbody>
