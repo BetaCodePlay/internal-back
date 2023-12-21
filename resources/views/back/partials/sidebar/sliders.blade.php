@@ -10,7 +10,7 @@
         <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
     </a>
     <ul id="agentsSidebar"
-        class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse show">
+        class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu u-side-nav--second-level-menu-top mb-0 collapse">
         @foreach($sliderSections as $sectionKey => $slider)
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                 <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
