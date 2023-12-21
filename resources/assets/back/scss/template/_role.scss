@@ -183,7 +183,7 @@
     }
 
     .page-body {
-        margin-top: 10px;
+        margin-top: 15px;
 
         table {
             width: 100% !important;
@@ -208,6 +208,10 @@
         }
 
         .dataTables_wrapper {
+            div.dataTables_info {
+                padding-top: 0.55em !important;
+            }
+
             .row {
                 &:nth-child(1) {
                     background: #1e1e1e;
@@ -228,6 +232,9 @@
 
                 &:nth-child(3) {
                     background: #1e1e1e;
+                    padding: 12px 5px;
+                    border-radius: 0 0 8px 8px;
+                    border-top: 2px solid #434343;
                 }
             }
         }
