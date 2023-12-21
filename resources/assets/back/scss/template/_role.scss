@@ -367,6 +367,16 @@
                 border-color: #444;
                 border-radius: 6px;
                 color: #fff;
+
+                @media screen and (max-width: 767px) {
+                    width: calc(100% - 100px);
+                }
+            }
+
+            @media screen and (max-width: 767px) {
+                labe {
+                    text-align: center;
+                }
             }
         }
 
@@ -377,6 +387,16 @@
                 color: #fff;
                 border-radius: 6px;
                 margin: 0 5px;
+            }
+
+            @media screen and (max-width: 767px) {
+                margin-bottom: 15px;
+            }
+        }
+
+        .dataTables_info {
+            @media screen and (max-width: 767px) {
+                margin-bottom: 15px;
             }
         }
 
