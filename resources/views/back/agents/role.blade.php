@@ -89,7 +89,174 @@
                             <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
                         </td>
                     </tr>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td class="text-right">
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                                </ul>
+                            </div>
 
+                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td class="text-right">
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td class="text-right">
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td class="text-right">
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td class="text-right">
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td class="text-right">
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Antonella93</td>
+                        <td><span class="deco-rol">Administrador</span></td>
+                        <td>BE8523</td>
+                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
+                        <td>Normal</td>
+                        <td>$12.000,00</td>
+                        <td><span class="deco-number">00</span></td>
+                        <td class="text-right">
+                            <div class="d-inline-block dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                                </ul>
+                            </div>
+
+                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
