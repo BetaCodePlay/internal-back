@@ -56,10 +56,10 @@
                     <tr>
                         <th data-priority="1">{{ _i('Name') }}</th>
                         <th>{{ _i('Rol') }}</th>
-                        <th data-priority="3">{{ _i('ID User') }}</th>
+                        <th>{{ _i('ID User') }}</th>
                         <th>{{ _i('Status') }}</th>
                         <th>{{ _i('Label') }}</th>
-                        <th>{{ _i('Balance') }}</th>
+                        <th data-priority="3">{{ _i('Balance') }}</th>
                         <th>{{ _i('Dependencies') }}</th>
                         <th data-priority="2"></th>
                     </tr>
