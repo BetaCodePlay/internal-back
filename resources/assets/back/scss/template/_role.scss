@@ -187,12 +187,13 @@
 
         table {
             width: 100% !important;
+            margin: 0 !important;
 
             thead {
                 tr{
                     th {
-                        padding: 10px 26px 10px 10px;
-                        border-bottom: 3px solid #414141;
+                        padding: 15px 26px 15px 10px;
+                        background: #292929;
                     }
                 }
             }
@@ -205,6 +206,40 @@
                     }
                 }
             }
+
+            .i-status {
+                font-size: 10px;
+                vertical-align: middle;
+                display: inline-block;
+                margin-right: 5px;
+
+                &.green {
+                    color: #d7fe62;
+                }
+
+                &.gray {
+                    color: #666;
+                }
+
+                &.red {
+                    color: #e84444;
+                }
+            }
+
+            .deco-number {
+                background: #7d2df5;
+                font-weight: 500;
+                color: #fff;
+                padding: 2px 6px;
+                border-radius: 5px;
+            }
+
+            .deco-rol {
+                color: #fff;
+                border: 1px solid #fff;
+                padding: 1px 9px;
+                border-radius: 50px;
+            }
         }
 
         .dataTables_wrapper {
@@ -215,7 +250,7 @@
             .row {
                 &:nth-child(1) {
                     background: #1e1e1e;
-                    padding: 12px 5px;
+                    padding: 15px 5px;
                     border-radius: 8px 8px 0 0;
                     border-bottom: 2px solid #434343;
 
@@ -228,11 +263,15 @@
                     background: #1e1e1e;
                     margin-top: 5px;
                     margin-bottom: 5px;
+
+                    .col-sm-12 {
+                        padding: 0;
+                    }
                 }
 
                 &:nth-child(3) {
                     background: #1e1e1e;
-                    padding: 12px 5px;
+                    padding: 10px 5px;
                     border-radius: 0 0 8px 8px;
                     border-top: 2px solid #434343;
                 }
