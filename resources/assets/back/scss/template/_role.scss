@@ -242,6 +242,20 @@
                 }
             }
 
+            &.collapsed {
+                tbody {
+                    tr {
+                        td {
+                            &:first-child {
+                                &::before {
+                                    content: "";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             .i-status {
                 font-size: 10px;
                 vertical-align: middle;
