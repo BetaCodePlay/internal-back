@@ -247,6 +247,8 @@
                     tr {
                         td {
                             &:first-child {
+                                cursor: pointer;
+
                                 &::before {
                                     content: "";
                                 }
