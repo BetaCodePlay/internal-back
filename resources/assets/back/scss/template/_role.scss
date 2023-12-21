@@ -190,10 +190,10 @@
             margin: 0 !important;
 
             thead {
-                tr{
+                tr {
                     th {
                         padding: 15px 26px 15px 10px;
-                        background: #292929;
+                        background: #333;
                     }
                 }
             }
@@ -206,7 +206,7 @@
                     }
 
                     &.even {
-                        background: #292929;
+                        background: #252525;
                     }
                 }
             }
@@ -279,6 +279,22 @@
                     padding: 10px 5px;
                     border-radius: 0 0 8px 8px;
                     border-top: 2px solid #434343;
+                }
+            }
+        }
+
+        .pagination {
+            .paginate_button {
+                .page-link {
+                    border-radius: 5px;
+                }
+
+                &.active {
+                    .page-link {
+                        background: transparent;
+                        border: #fff;
+                        color: #Fff;
+                    }
                 }
             }
         }
