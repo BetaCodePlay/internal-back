@@ -51,7 +51,7 @@
             @include('back.partials.sidebar.betpay', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$manage_sliders])
-            @include('back.partials.sidebar.sliders')
+            @include('back.partials.sidebar.sliders', ['permissions' => $permissions])
         @endif
         @can('access', [$permissions::$section_images_menu])
             @include('back.partials.sidebar.images')
