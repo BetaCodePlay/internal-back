@@ -37,10 +37,10 @@
 
                             @if(!empty($whitelabel_currencies) && count($whitelabel_currencies)>1)
                                 <div class="d-inline-block g-pos-rel dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownCurrency" data-toggle="dropdown" aria-expanded="false">
                                         {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <i class="fa-solid fa-angle-down"></i>
                                     </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownCurrency">
                                         @foreach ($whitelabel_currencies as $currency)
                                             <li><a class="dropdown-item" href="{{ route('core.change-currency', [$currency->iso]) }}">{{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso  }}  <span class="mini-title">{{ $currency->name }}</span></a></li>
                                         @endforeach

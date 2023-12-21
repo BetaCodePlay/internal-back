@@ -29,6 +29,7 @@ mix.autoload({
         'resources/assets/back/js/sliders.js',
         'resources/assets/back/js/pages.js',
         'resources/assets/back/js/agents.js',
+        'resources/assets/back/js/roles.js',
         'resources/assets/back/js/betpay.js',
         'resources/assets/back/js/reports.js',
         'resources/assets/back/js/section-images.js',
