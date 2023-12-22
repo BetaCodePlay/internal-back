@@ -33,19 +33,24 @@
                 </div>
             </div>
             <div class="page-header-body">
-                <div class="page-data">
-                    <div class="data-title">{{ _i('Name') }}</div>
-                    <div class="data-text">{{ auth()->user()->username }} <span class="deco-role">Administrator</span></div>
+
+                <div class="page-data-top">
+                    <div class="page-data">
+                        <div class="data-title">{{ _i('Name') }}</div>
+                        <div class="data-text">{{ auth()->user()->username }} <span class="deco-role">Administrator</span></div>
+                    </div>
+                    <div class="page-data">
+                        <div class="data-title">{{ _i('ID User') }}</div>
+                        <div class="data-text text-id">{{ auth()->user()->id }}</div>
+                    </div>
                 </div>
-                <div class="page-data">
-                    <div class="data-title">{{ _i('ID User') }}</div>
-                    <div class="data-text text-id">{{ auth()->user()->id }}</div>
-                </div>
+
+
                 <div class="page-data">
                     <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-                    <div class="data-text-inline">{{ _i('Master agents') }} <span class="number">00</span></div>
-                    <div class="data-text-inline">{{ _i('Support agents') }} <span class="number">00</span></div>
-                    <div class="data-text-inline">{{ _i('Players') }} <span class="number">00</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">00</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">00</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">00</span></div>
                 </div>
             </div>
         </div>
@@ -66,7 +71,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Antonella93</td>
+                        <td><span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span>  Antonella93</td>
                         <td><span class="deco-rol">Administrador</span></td>
                         <td>BE8523</td>
                         <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>

@@ -134,11 +134,48 @@
                     }
                 }
             }
+
+            @media screen and (max-width: 767px) {
+                padding: 12px 0;
+                border-color: transparent;
+            }
         }
 
         .page-header-body {
             position: relative;
             padding: 5px 20px;
+
+            .page-data-top {
+                display: inline-block;
+                position: relative;
+
+                @media screen and (max-width: 767px) {
+                    display: block;
+                    margin-bottom: 5px;
+                    padding-bottom: 5px;
+
+                    .page-data {
+                        .text-id {
+                            border-right: 0;
+                        }
+
+                        @media screen and (max-width: 767px) {
+                            display: inline-block;
+                        }
+                    }
+
+                    &::before {
+                        content: "";
+                        width: calc(100% + 40px);
+                        display: block;
+                        position: absolute;
+                        top: calc(100% + 5px);
+                        height: 2px;
+                        background: #3c3c3c;
+                        left: -20px;
+                    }
+                }
+            }
 
             .page-data {
                 display: inline-block;
@@ -149,7 +186,6 @@
                     margin-bottom: 10px;
                     padding: 5px 10px;
                 }
-
 
                 .data-text {
                     font-size: 14px;
@@ -191,8 +227,33 @@
                         font-size: 12px;
                         margin-left: 5px;
                     }
+
+                    @media screen and (max-width: 767px) {
+                        .name {
+                            display: block;
+                            margin-bottom: 10px;
+                        }
+
+                        .number {
+                            margin-left: 0;
+                        }
+                    }
+                }
+
+                @media screen and (max-width: 767px) {
+                    display: block;
                 }
             }
+
+            @media screen and (max-width: 767px) {
+                background: #1e1e1e;
+                border-radius: 12px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            background: transparent;
+            border-radius: 0;
         }
     }
 
@@ -208,6 +269,10 @@
                     th {
                         padding: 15px 26px 15px 10px;
                         background: #333;
+
+                        @media screen and (max-width: 767px) {
+                            padding: 15px 10px;
+                        }
                     }
                 }
             }
@@ -217,6 +282,19 @@
                     td {
                         padding: 10px;
                         border-bottom: 0 !important;
+
+                        .btn-tr-details {
+                            display: none;
+                            margin-right: 5px;
+                            color: #aaa;
+                            font-size: 16px;
+                            vertical-align: middle;
+                            transition: .15s;
+                        }
+
+                        @media screen and (max-width: 767px) {
+                            padding: 10px 8px;
+                        }
                     }
 
                     &.even {
@@ -263,13 +341,14 @@
                             &.dtr-control {
                                 cursor: pointer;
 
-                                &::before {
-                                    content: "";
-                                    border-top: 8px solid #999;
-                                    border-left: 4px solid transparent;
-                                    border-right: 4px solid transparent;
+                                .btn-tr-details {
                                     display: inline-block;
-                                    margin-right: 8px;
+                                }
+
+                                &:hover {
+                                    .btn-tr-details {
+                                        color: #fff;
+                                    }
                                 }
                             }
                         }
@@ -277,9 +356,7 @@
                         &.dt-hasChild {
                             td {
                                 &.dtr-control {
-                                    &::before {
-                                        transform: rotate(180deg);
-                                    }
+
                                 }
                             }
                         }

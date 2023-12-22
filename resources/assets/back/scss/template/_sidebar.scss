@@ -344,7 +344,7 @@ body {
         @media screen and (max-width: 991px) {
             background: #1e1e1e;
             position: fixed;
-            z-index: 501;
+            z-index: 1005;
             width: 100%;
             left: 0;
             right: 0;
@@ -467,7 +467,7 @@ body {
 .nav-mobile {
     position: fixed;
     display: none;
-    z-index: 101;
+    z-index: 1001;
     width: 100%;
     bottom: 0;
     right: 0;
