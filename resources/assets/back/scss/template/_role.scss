@@ -164,6 +164,13 @@
 
                     &::before {
                         content: "";
+                        width: calc(100% + 40px);
+                        display: block;
+                        position: absolute;
+                        top: calc(100% + 5px);
+                        height: 2px;
+                        background: #3c3c3c;
+                        left: -20px;
                     }
                 }
             }
