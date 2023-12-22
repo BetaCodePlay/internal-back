@@ -66,7 +66,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Antonella93</td>
+                        <td><span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span>  Antonella93</td>
                         <td><span class="deco-rol">Administrador</span></td>
                         <td>BE8523</td>
                         <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>

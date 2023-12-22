@@ -217,6 +217,10 @@
                     td {
                         padding: 10px;
                         border-bottom: 0 !important;
+
+                        .btn-tr-details {
+                            display: none;
+                        }
                     }
 
                     &.even {
@@ -263,13 +267,8 @@
                             &.dtr-control {
                                 cursor: pointer;
 
-                                &::before {
-                                    content: "";
-                                    border-top: 8px solid #999;
-                                    border-left: 4px solid transparent;
-                                    border-right: 4px solid transparent;
+                                .btn-tr-details {
                                     display: inline-block;
-                                    margin-right: 8px;
                                 }
                             }
                         }
@@ -277,9 +276,7 @@
                         &.dt-hasChild {
                             td {
                                 &.dtr-control {
-                                    &::before {
-                                        transform: rotate(180deg);
-                                    }
+
                                 }
                             }
                         }
