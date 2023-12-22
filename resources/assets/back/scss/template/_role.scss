@@ -134,6 +134,11 @@
                     }
                 }
             }
+
+            @media screen and (max-width: 767px) {
+                padding: 12px 0;
+                border-color: transparent;
+            }
         }
 
         .page-header-body {
@@ -145,6 +150,16 @@
 
                 @media screen and (max-width: 767px) {
                     display: block;
+
+                    .page-data {
+                        .text-id {
+                            border-right: 0;
+                        }
+
+                        @media screen and (max-width: 767px) {
+                            display: inline-block;
+                        }
+                    }
                 }
             }
 
@@ -205,7 +220,21 @@
                         }
                     }
                 }
+
+                @media screen and (max-width: 767px) {
+                    display: block;
+                }
             }
+
+            @media screen and (max-width: 767px) {
+                background: #1e1e1e;
+                border-radius: 12px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            background: transparent;
+            border-radius: 0;
         }
     }
 
@@ -245,7 +274,7 @@
                         }
 
                         @media screen and (max-width: 767px) {
-                            padding: 8px 8px;
+                            padding: 10px 8px;
                         }
                     }
 
