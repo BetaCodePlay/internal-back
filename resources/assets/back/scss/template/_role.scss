@@ -147,6 +147,7 @@
 
             .page-data-top {
                 display: inline-block;
+                position: relative;
 
                 @media screen and (max-width: 767px) {
                     display: block;
@@ -159,6 +160,10 @@
                         @media screen and (max-width: 767px) {
                             display: inline-block;
                         }
+                    }
+
+                    &::before {
+                        content: "";
                     }
                 }
             }
@@ -217,6 +222,11 @@
                     @media screen and (max-width: 767px) {
                         .name {
                             display: block;
+                            margin-bottom: 10px;
+                        }
+
+                        .number {
+                            margin-left: 0;
                         }
                     }
                 }
