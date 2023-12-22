@@ -124,14 +124,5 @@
                 </a>
             </li>
         @endif
-        @can('access', [$permissions::$update_rol_admin])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                <a class="media u-side-nav--second-level-menu-link"
-                   href="{{ route('users.list.by.owner') }}" target="_self">
-                    <span class="media-body align-self-center">{{ _i('My users') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-            </li>
-        @endif
     </ul>
 </li>
