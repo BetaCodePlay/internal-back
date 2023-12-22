@@ -33,7 +33,7 @@
                     <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
                 <ul id="binanceSidebar"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse">
+                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse {!! request()->is('betpay/binance*') ? 'show' : '' !!}">
                     @can('access', [$permissions::$credit_binance_menu])
                         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
                             <a class="media u-side-nav--second-level-menu-link"
