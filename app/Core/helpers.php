@@ -7397,6 +7397,18 @@ if (! function_exists('convertObjectToArray')) {
     }
 }
 
+if (! function_exists('convertArrayToObject')) {
+    /**
+     * @param $array
+     * @return mixed
+     */
+    function convertArrayToObject($array): mixed
+    {
+        return json_decode(json_encode($array));
+    }
+}
+
+
 if (! function_exists('authenticatedUserBalance')) {
     function getAuthenticatedUserBalance(): string
     {
