@@ -33,7 +33,6 @@ if (! function_exists('generateSections')) {
 if (! function_exists('lobbySections')) {
     function lobbySections(): array
     {
-        dd('Orlando', Configurations::getCasinoLobby());
         $lobbySections = isset(Configurations::getCasinoLobby()->home) ? Configurations::getCasinoLobby()->home: [];
         $lobby = [];
 
