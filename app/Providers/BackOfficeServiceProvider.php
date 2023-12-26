@@ -103,6 +103,11 @@ class BackOfficeServiceProvider extends ServiceProvider
         Agent $agent
     )
     : void {
+        $lobbies = lobbySections();
+
+        $lobbiesSections = $lobbies['lobby'];
+;
+
         if (! $hostHeader = $request->server('HTTP_HOST')) {
             throw new InvalidArgumentException('Wrong host');
         }
