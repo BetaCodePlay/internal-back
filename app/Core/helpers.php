@@ -2144,6 +2144,124 @@ if (! function_exists('menu')) {
                 ]
             ],
 
+            'Store1' => [
+                'text'        => _i('Store'),
+                'level_class' => 'top',
+                'route'       => null,
+                'params'      => [],
+                'icon'        => 'hs-admin-shopping-cart',
+                'permission'  => null,
+                'submenu'     => [
+
+                    'Rewards' => [
+                        'text'        => _i('Rewards'),
+                        'level_class' => 'second',
+                        'route'       => null,
+                        'params'      => [],
+                        'icon'        => 'hs-admin-gift',
+                        'permission'  => null,
+                        'submenu'     => [
+
+                            'Create' => [
+                                'text'        => _i('Create'),
+                                'level_class' => 'third',
+                                'route'       => 'store.rewards.create',
+                                'params'      => [],
+                                'icon'        => 'hs-admin-plus',
+                                'permission'  => null,
+                                'submenu'     => []
+                            ],
+
+                            'List' => [
+                                'text'        => _i('List'),
+                                'level_class' => 'third',
+                                'route'       => 'store.rewards.index',
+                                'params'      => [],
+                                'icon'        => 'hs-admin-list',
+                                'permission'  => null,
+                                'submenu'     => []
+                            ],
+                        ]
+                    ],
+
+                    'Categories' => [
+                        'text'        => _i('Categories'),
+                        'level_class' => 'second',
+                        'route'       => null,
+                        'params'      => [],
+                        'icon'        => 'hs-admin-view-list-alt',
+                        'permission'  => null,
+                        'submenu'     => [
+
+                            'Create' => [
+                                'text'        => _i('Manage'),
+                                'level_class' => 'third',
+                                'route'       => 'store.categories.create',
+                                'params'      => [],
+                                'icon'        => 'hs-admin-settings',
+                                'permission'  => null,
+                                'submenu'     => []
+                            ],
+
+                        ]
+                    ],
+
+
+                    'Reports' => [
+                        'text'        => _i('Reports'),
+                        'level_class' => 'second',
+                        'route'       => null,
+                        'params'      => [],
+                        'icon'        => 'hs-admin-bar-chart',
+                        'permission'  => Permissions::$reports_store,
+                        'submenu'     => [
+
+                            'Create' => [
+                                'text'        => _i('Redeemed rewards'),
+                                'level_class' => 'third',
+                                'route'       => 'store.reports.redeemed-rewards',
+                                'params'      => [],
+                                'icon'        => 'hs-admin-exchange-vertical',
+                                'permission'  => Permissions::$reports_rewards_exchange,
+                                'submenu'     => []
+                            ],
+
+                        ]
+                    ],
+
+                    //                    'Actions' => [
+                    //                        'text' => _i('Actions'),
+                    //                        'level_class' => 'second',
+                    //                        'route' => null,
+                    //                        'params' => [],
+                    //                        'icon' => 'hs-admin-settings',
+                    //                        'permission' => Permissions::$store_actions_menu,
+                    //                        'submenu' => [
+                    //
+                    //                            'Create' => [
+                    //                                'text' => _i('Create'),
+                    //                                'level_class' => 'third',
+                    //                                'route' => 'store.actions.create',
+                    //                                'params' => [],
+                    //                                'icon' => 'hs-admin-plus',
+                    //                                'permission' => Permissions::$manage_store_actions,
+                    //                                'submenu' => []
+                    //                            ],
+                    //
+                    //                            'List' => [
+                    //                                'text' => _i('List'),
+                    //                                'level_class' => 'third',
+                    //                                'route' => 'store.actions.index',
+                    //                                'params' => [],
+                    //                                'icon' => 'hs-admin-list',
+                    //                                'permission' => Permissions::$store_actions_list,
+                    //                                'submenu' => []
+                    //                            ],
+                    //                        ]
+                    //                    ],
+                ]
+            ],
+
             'Pages' => [
                 'text'        => _i('Pages'),
                 'level_class' => 'top',
