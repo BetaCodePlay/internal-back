@@ -56,9 +56,6 @@
         @can('access', [$permissions::$section_images_menu])
             @include('back.partials.sidebar.images')
         @endif
-      {{--  @can('access', [$permissions::$section_images_menu])
-            @include('back.partials.sidebar.lobbies')
-        @endif--}}
         @can('access', [$permissions::$system_bonus_menu])
             @include('back.partials.sidebar.bonus', ['permissions' => $permissions])
         @endif
