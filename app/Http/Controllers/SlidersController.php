@@ -332,12 +332,14 @@ class SlidersController extends Controller
                 foreach ($routes as $route) {
                     $name = Str::slug($originalName) . time() . mt_rand(1, 100) . '.' . $extension;
                     $path = "{$this->filePath}{$name}";
+
                     Storage::put($path, file_get_contents($image->getRealPath()), 'public');
                     $sliderData['image'] = $name;
                     $sliderData['route'] = $route;
                     if(!is_null($front)){
                         $nameFront = Str::slug($originalNameFront) . time() . mt_rand(1, 100) . '.' . $extensionFront;
                         $path = "{$this->filePath}{$nameFront}";
+                        \Log::info(__METHOD__, ['path 2' => $path]);
                         Storage::put($path, file_get_contents($front->getRealPath()), 'public');
                         $sliderData['front'] = $nameFront;
                         $sliderData['route'] = $route;
@@ -349,6 +351,7 @@ class SlidersController extends Controller
             } else {
                 $name = Str::slug($originalName) . time() . mt_rand(1, 100) . '.' . $extension;
                 $path = "{$this->filePath}{$name}";
+                \Log::info(__METHOD__, ['path 1' => $path]);
                 Storage::put($path, file_get_contents($image->getRealPath()), 'public');
                 $sliderData['image'] = $name;
                 if(!is_null($front)){
