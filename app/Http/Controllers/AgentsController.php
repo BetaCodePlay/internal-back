@@ -2693,16 +2693,6 @@ class AgentsController extends Controller
 //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
 //            }
 
-            $lobbySections = isset(Configurations::getCasinoLobby()->home)?Configurations::getCasinoLobby()->home:[];
-
-            if (is_object($lobbySections)) {
-                dd($lobbySections);
-                foreach ($lobbySections as $sectionKey => $section) {
-                    dd('hola', $sectionKey);
-                }
-            }
-
-
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user, $whitelabel);
             $userData = $this->usersRepo->getUsers($user);
