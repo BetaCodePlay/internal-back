@@ -35,6 +35,12 @@
             .modal-body {
                 .form {
                     margin-top: 40px;
+
+                    .label {
+                        i {
+                            margin-left: 8px;
+                        }
+                    }
                 }
 
                 @media screen and (min-width: 992px) {

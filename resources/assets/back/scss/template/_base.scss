@@ -248,3 +248,7 @@ $theme-hover: lighten($theme, 10%);
         background: $theme !important;
     }
 }
+
+.form-control:focus, .custom-select:focus {
+    border-color:$theme;
+}
