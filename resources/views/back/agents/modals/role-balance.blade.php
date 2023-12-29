@@ -8,28 +8,30 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p><span class="font-weight-bold">{{ _i('¿Qué monto quieres depositar o sacar?') }}</span></p>
-                <div class="form">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label>{{ _i('Amount') }}</label>
-                                <input type="text" class="form-control" placeholder="">
+                <div class="modal-body-mini">
+                    <p><span class="font-weight-bold">{{ _i('¿Qué monto quieres depositar o sacar?') }}</span></p>
+                    <div class="form">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>{{ _i('Amount') }}</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-theme btn-block">
-                                    {{ _i('Deposit') }}
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-theme btn-block">
+                                        {{ _i('Deposit') }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-dark btn-block">
+                                    {{ _i('Withdraw') }}
                                 </button>
                             </div>
-                        </div>
-                        <div class="col-6">
-                            <button type="button" class="btn btn-dark btn-block">
-                                {{ _i('Withdraw') }}
-                            </button>
                         </div>
                     </div>
                 </div>
