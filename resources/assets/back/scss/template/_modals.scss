@@ -32,6 +32,12 @@
             }
 
             .modal-body {
+                .modal-body-mini {
+                    width: 520px;
+                    margin: auto;
+                    max-width: 100%;
+                }
+
                 .form {
                     margin-top: 30px;
 
