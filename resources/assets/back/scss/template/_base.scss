@@ -68,6 +68,18 @@ $theme-hover: lighten($theme, 10%);
             border-color: #fff;
         }
     }
+
+    &.btn-dark {
+        color: #fff;
+        background: #1e1e1e;
+        border-color: #1e1e1e;
+
+        &:hover, &:focus {
+            color: #fff;
+            background: #222;
+            border-color: #222;
+        }
+    }
 }
 
 .row-div {
