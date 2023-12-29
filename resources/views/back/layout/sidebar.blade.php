@@ -33,13 +33,10 @@
             @include('back.partials.sidebar.agents', ['permissions' => $permissions])
         @endcan
         @can('access', [$permissions::$create_user_agent])
-            @include('back.partials.sidebar.createAgent')
+            @include('back.partials.sidebar.createUserAgent')
         @endif
         @can('access', [$permissions::$agents_dashboard])
             @include('back.partials.sidebar.createUserPlayer')
-        @endif
-        @can('access', [$permissions::$create_user_agent])
-            @include('back.partials.sidebar.createUserAgent')
         @endif
         @can('access', [$permissions::$financial_reports_menu])
             @include('back.partials.sidebar.financialReports', ['permissions' => $permissions])
