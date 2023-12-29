@@ -55,8 +55,8 @@
             </div>
         </div>
         <div class="page-body">
-            <div class="col">
-                <table id="table-roles" class="table-load display nowrap">
+            <div class="col table-load">
+                <table id="table-roles" class="display nowrap">
                     <thead>
                     <tr>
                         <th data-priority="1">{{ _i('Name') }}</th>
@@ -97,7 +97,6 @@
                     </tr>
                     </tbody>
                 </table>
-
                 <div class="loading-style"></div>
             </div>
         </div>
