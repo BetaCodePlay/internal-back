@@ -1,4 +1,4 @@
-<div class="modal fade modal-style" id="role-create">
+<div class="modal fade modal-style" id="role-create-simple">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -28,19 +28,6 @@
                                 <input type="text" class="form-control" placeholder="">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label>{{ _i('Dependence on') }} <i class="fa-solid fa-circle-info"></i></label>
-                                <select class="form-control">
-                                    <option>agentescasino01</option>
-                                    <option>tester123</option>
-                                    <option>123casino</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6"></div>
                     </div>
                 </div>
             </div>
