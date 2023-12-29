@@ -7,7 +7,6 @@
 
             .modal-header {
                 border-color: #464646;
-                padding: 15px 35px;
 
                 .close {
                     font-weight: 400;
@@ -62,11 +61,14 @@
                 }
             }
 
-            .username-password-reset {
+            .username-form {
                 background: #555;
                 padding: 2px 10px;
                 border-radius: 15px;
-                margin-left: 5px;
+            }
+
+            .text-form {
+               margin-right: 5px;
             }
 
             .form-control {
