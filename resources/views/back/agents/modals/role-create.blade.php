@@ -12,7 +12,7 @@
                 <p>{{ _i('You will be able to create master and support agents initially, then you can assign players if necessary.') }}</p>
                 <div class="form">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Role type') }} <i class="fa-solid fa-circle-info"></i></label>
                                 <select class="form-control">
@@ -22,7 +22,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Name') }}</label>
                                 <input type="text" class="form-control" placeholder="">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Dependence on') }} <i class="fa-solid fa-circle-info"></i></label>
                                 <select class="form-control">
@@ -40,7 +40,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col"></div>
+                        <div class="col-12 col-lg-6"></div>
                     </div>
                 </div>
             </div>
