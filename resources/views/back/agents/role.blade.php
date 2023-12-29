@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
                                     <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
                                     <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
-                                    <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                                    <li><a class="dropdown-item" href="javascript:void(0)"  data-toggle="modal" data-target="#role-create">{{ _i('Reset password') }}</a></li>
                                     <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
                                 </ul>
                             </div>
@@ -104,6 +104,7 @@
 
 @section('modals')
     @include('back.agents.modals.role-create')
+    @include('back.agents.modals.role-password-reset')
 @endsection
 
 @section('scripts')
