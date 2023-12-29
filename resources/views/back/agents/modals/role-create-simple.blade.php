@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p><span class="font-weight-bold">{{ _i('What role do you want to create?') }}</span></p>
+                <p><span class="font-weight-bold text-form">{{ _i('What role do you want to create?') }}</span> <span class="username-form">Antonella93</span></p>
                 <p>{{ _i('You will be able to create master and support agents initially, then you can assign players if necessary.') }}</p>
                 <div class="form">
                     <div class="row">
