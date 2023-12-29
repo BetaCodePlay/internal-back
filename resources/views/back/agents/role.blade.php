@@ -37,20 +37,20 @@
                 <div class="page-data-top">
                     <div class="page-data">
                         <div class="data-title">{{ _i('Name') }}</div>
-                        <div class="data-text">{{ auth()->user()->username }} <span class="deco-role">Administrator</span></div>
+                        <div class="data-text">{{ $authUser->username }} <span class="deco-role">{{ $authUser->typeUser }}</span></div>
                     </div>
                     <div class="page-data">
                         <div class="data-title">{{ _i('ID User') }}</div>
-                        <div class="data-text text-id">{{ auth()->user()->id }}</div>
+                        <div class="data-text text-id">{{ $authUser->id}}</div>
                     </div>
                 </div>
 
 
                 <div class="page-data">
                     <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-                    <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">00</span></div>
-                    <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">00</span></div>
-                    <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">00</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent->masterQuantity }}</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent->cashierQuantity }}</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent->playerQuantity }}</span></div>
                 </div>
             </div>
         </div>

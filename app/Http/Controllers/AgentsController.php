@@ -358,7 +358,7 @@ class AgentsController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -423,7 +423,7 @@ class AgentsController extends Controller
                 'agent_player' => $agentPlayer
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'Request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -442,7 +442,7 @@ class AgentsController extends Controller
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $agentsData = $this->agentsCollection->formatAgents($agents);
             return Utils::successResponse($agentsData);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -476,7 +476,7 @@ class AgentsController extends Controller
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $agentsData = $this->agentsCollection->formatAgents($agents);
             return Utils::successResponse($agentsData);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -540,7 +540,7 @@ class AgentsController extends Controller
             $data['title']  = _i('Agents Payments');
 
             return view('back.agents.reports.payments', $data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -563,7 +563,7 @@ class AgentsController extends Controller
                 'transactions' => $transactions
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -613,7 +613,7 @@ class AgentsController extends Controller
             }
             $financial = $this->agentsCollection->formatAgentsTransactionsTotals($transactions);
             return Utils::successResponse($financial);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -694,7 +694,7 @@ class AgentsController extends Controller
             );
 
             return response()->json($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -715,7 +715,7 @@ class AgentsController extends Controller
             $pdf = PDF::loadView('back.agents.ticket.ticket', ['ticket' => $ticket, 'filename' => $filename]);
             $pdf->setPaper('A4', 'portrait');
             return $pdf->stream();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'ticket_id' => $ticketId]);
             return Utils::failedResponse();
         }
@@ -746,7 +746,7 @@ class AgentsController extends Controller
             );
 
             return response()->json($this->agentsCollection->formatAgentTransactionsTotals($totals[0], $totals[1]));
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -773,7 +773,7 @@ class AgentsController extends Controller
 
             $tree = $this->agentsCollection->dependencyTreeFilter($agent, $agents, $users, $status);
             return Utils::successResponse($tree);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
         }
     }
 
@@ -925,7 +925,7 @@ class AgentsController extends Controller
                 }
             }
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -1016,7 +1016,7 @@ class AgentsController extends Controller
             );
 
             return Utils::successResponse($financial);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -1036,7 +1036,7 @@ class AgentsController extends Controller
                 'close' => _i('Close'),
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -1071,7 +1071,7 @@ class AgentsController extends Controller
                 //'user_type' => $user->type,
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -1165,7 +1165,7 @@ class AgentsController extends Controller
                 "status" => true,
                 "balance" => $balance
             );
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             $json_data = array(
                 "status" => false,
@@ -1315,7 +1315,7 @@ class AgentsController extends Controller
             );
 
             return response()->json($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -1361,7 +1361,7 @@ class AgentsController extends Controller
             }
             $data = $transactionsCollection->formatDeposistsWithdrawalsProvider($transactions);
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -1386,7 +1386,7 @@ class AgentsController extends Controller
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -1447,7 +1447,7 @@ class AgentsController extends Controller
                 ];
             }
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -1560,7 +1560,7 @@ class AgentsController extends Controller
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -1734,7 +1734,7 @@ class AgentsController extends Controller
 //                $table, $user, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
 //            ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
@@ -1783,7 +1783,7 @@ class AgentsController extends Controller
             ];
 
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
@@ -1811,7 +1811,7 @@ class AgentsController extends Controller
             );
 
             return response()->json($this->agentsCollection->formatAgentDataMakersTotals($totals));
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -1866,7 +1866,7 @@ class AgentsController extends Controller
                 'table' => $table
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
@@ -1926,7 +1926,7 @@ class AgentsController extends Controller
                 'table' => $table
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
@@ -2239,7 +2239,7 @@ class AgentsController extends Controller
                 'table' => $table
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
@@ -2296,7 +2296,7 @@ class AgentsController extends Controller
                 'table' => $table
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
@@ -2366,7 +2366,7 @@ class AgentsController extends Controller
                 'table' => $this->agentsCollection->closuresTotalsByWhitelabelsSymple($table, $percentage)
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
@@ -2474,7 +2474,7 @@ class AgentsController extends Controller
                 'agent_player'        => $agent_player,
                 'campaignDescription' => $campaignDescription,
             ]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -2532,7 +2532,7 @@ class AgentsController extends Controller
             }
 
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -2617,7 +2617,7 @@ class AgentsController extends Controller
                 ]
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -2634,7 +2634,7 @@ class AgentsController extends Controller
                 'tree' => $this->agentsCollection->childrenTreeSql(Auth::id()),
                 'makers' => $this->gamesRepo->getMakers()
             ]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -2714,7 +2714,7 @@ class AgentsController extends Controller
             $data['title']  = _i('Agents module');
 
             return view('back.agents.index', $data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -2753,7 +2753,7 @@ class AgentsController extends Controller
                 'agents' => $agents
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -2827,7 +2827,7 @@ class AgentsController extends Controller
                 'transactions' => $transactions
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'currency' => $currency]);
             return Utils::failedResponse();
         }
@@ -2885,7 +2885,7 @@ class AgentsController extends Controller
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -2930,7 +2930,7 @@ class AgentsController extends Controller
                 'close' => _i('Close')
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -3224,7 +3224,7 @@ class AgentsController extends Controller
                 'route' => route('agents.index'),
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -3252,7 +3252,7 @@ class AgentsController extends Controller
             ];
             $providers     = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
             return Utils::successResponse($providers);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'currency' => $currency]);
             return Utils::failedResponse();
         }
@@ -3290,7 +3290,7 @@ class AgentsController extends Controller
                 'agents' => $selectUsers
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'agent' => $agent]);
             return Utils::failedResponse();
         }
@@ -3299,37 +3299,31 @@ class AgentsController extends Controller
     /**
      * Show role
      *
-     * @param CountriesRepo $countriesRepo
-     * @param ProvidersRepo $providersRepo
-     * @param ClosuresUsersTotalsRepo $closuresUsersTotalsRepo
-     * @param ReportsCollection $reportsCollection
      * @return Application|Factory|View
      */
     public function role()
     {
         try {
-            $user = Auth::user()->id;
+            $authUser = Auth::user();
+            $authUserId = $authUser->id;
             $whitelabel = Configurations::getWhitelabel();
-            $agentUser = $this->agentsRepo->findAgent($user, $whitelabel);
-            $userData = $this->usersRepo->getUsers($user);
-            foreach ($userData as $users) {
-                $confirmation = $users->confirmation_email;
-            }
-            $data['agent']  = $this->agentsRepo->findUserProfile($user, session('currency') ?? '');
-            $data['makers'] = [];
-            $data['agents'] = json_decode(
-                json_encode(
-                    $this->agentsRepo->getAgentsAllByOwner($user, session('currency'), Configurations::getWhitelabel())
-                ),
-                true
-            );
-            $data['action'] = auth()->user()->action;
-            $data['iagent'] = $agentUser;
-            $data['confirmation_email'] = $confirmation;
-            $data['title']  = _i('Agents module');
-            return view('back.agents.role', $data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
+
+            $agentUser = $authUser->agent;
+            $userData = $this->usersRepo->getUsers($authUserId);
+            $confirmation = $userData->pluck('confirmation_email')->first();
+
+            return view('back.agents.role',  [
+                'agent' => $this->agentsRepo->findUserProfile($authUserId, session('currency') ?? ''),
+                'makers' => [],
+                'agents' => $this->agentsRepo->getAgentsAllByOwner($authUserId, session('currency'), $whitelabel),
+                'action' => $authUser->action,
+                'iagent' => $agentUser,
+                'confirmation_email' => $confirmation,
+                'title' => _i('Agents module'),
+                'authUser' => $authUser,
+            ]);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
     }
@@ -3357,7 +3351,7 @@ class AgentsController extends Controller
                 'agents' => $selectUsers
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -3557,7 +3551,7 @@ class AgentsController extends Controller
                 'close' => _i('Close'),
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -3804,7 +3798,7 @@ class AgentsController extends Controller
                 'route' => route('agents.index')
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -3831,7 +3825,7 @@ class AgentsController extends Controller
                 'close' => _i('Close'),
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -3854,7 +3848,7 @@ class AgentsController extends Controller
                 'users' => $users
             ];
             return Utils::successResponse($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -3895,7 +3889,7 @@ class AgentsController extends Controller
                 ];
             }
             return Utils::successResponse($usersData);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -3944,7 +3938,7 @@ class AgentsController extends Controller
             $data['title'] = _i('Create agent');
 
             return view('back.agents.user-and-agent.create-agent', $data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -3981,7 +3975,7 @@ class AgentsController extends Controller
             $data['title'] = _i('Create player');
 
             return view('back.agents.user-and-agent.create-user', $data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }

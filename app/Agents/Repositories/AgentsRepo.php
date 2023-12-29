@@ -254,22 +254,33 @@ class AgentsRepo
      */
     public function findUserProfile(int|null $user, string|null $currency): mixed
     {
-        $sql = DB::select(
-            'SELECT u.id,u.id AS user_id,u.created_at AS created,u.email,u.username,u.status,u.action,p.timezone,u.type_user,a.id AS agent,u.referral_code,a.master,a.owner_id AS owner,
-                           p.country_iso,ac.balance,ac.currency_iso
-                    FROM site.agents a
-                      INNER JOIN site.agent_currencies ac ON a.id = ac.agent_id
-                      INNER JOIN site.users u ON a.user_id = u.id
-                      INNER JOIN site.profiles p ON u.id = p.user_id
-                    WHERE ac.currency_iso = ?
-                      and u.id = ? LIMIT 1',
-            [
-                $currency,
-                $user,
-            ],
-        );
-
-        return isset($sql[0]->id) ? $sql[0] : null;
+        return User::join('agents', 'users.id', '=', 'agents.user_id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('users.id', $user)
+            ->limit(1)
+            ->first([
+                'users.id',
+                'users.id as user_id',
+                'users.created_at as created',
+                'users.email',
+                'users.username',
+                'users.status',
+                'users.action',
+                'profiles.timezone',
+                'users.type_user',
+                'agents.id as agent',
+                'users.referral_code',
+                'agents.master',
+                'agents.owner_id as owner',
+                'profiles.country_iso',
+                'agent_currencies.balance',
+                'agent_currencies.currency_iso',
+                'agents.master_quantity as masterQuantity',
+                'agents.cashier_quantity as cashierQuantity',
+                'agents.player_quantity as playerQuantity',
+            ]);
     }
 
     /**
@@ -459,21 +470,19 @@ class AgentsRepo
 
     /**
      * Find Agent (not admin)
-     * @param int $user User ID
-     * @param string $currency Currency ISO
-     * @param int $whitelabel Whitelabel ID
-     * @return mixed
+     * @param int $userId User ID
+     * @param int $whitelabelId Whitelabel ID
+     * @return int
      */
-    public function findAgent(int $user, int $whitelabel)
-    {
-        $response = DB::select('select u.id as id_agent
-                    from site.users u inner join site.role_user rl on u.id = rl.user_id where rl.role_id = ? and u.username != ? and u.whitelabel_id = ? and u.id = ?;',
-            [Roles::$admin_Beet_sweet,
-             'admin',
-             $whitelabel,
-             $user]);
+    public function findAgent(int $userId, int $whitelabelId): int {
+        $agentId = User::join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->where('role_user.role_id', Roles::$admin_Beet_sweet)
+            ->where('users.username', '!=', 'admin')
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->where('users.id', $userId)
+            ->value('users.id');
 
-        return (int)isset($response[0]->id_agent);
+        return (int) $agentId;
     }
 
     /**

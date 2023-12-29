@@ -24,7 +24,7 @@ class User extends Authenticatable
      *
      */
 
-     use HasRoles;
+    use HasRoles;
 
     /**
      * Table
@@ -38,7 +38,35 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['username', 'email', 'password', 'uuid', 'status', 'whitelabel_id', 'ip', 'tester', 'web_register', 'referral_code', 'reference', 'last_login', 'last_deposit', 'last_deposit_amount', 'last_debit', 'last_debit_amount', 'last_deposit_currency', 'last_debit_currency', 'main', 'first_deposit', 'first_deposit_amount', 'first_deposit_currency', 'register_currency','type_user','action', 'confirmation_email', 'theme'];
+    protected $fillable = [
+        'username',
+        'email',
+        'password',
+        'uuid',
+        'status',
+        'whitelabel_id',
+        'ip',
+        'tester',
+        'web_register',
+        'referral_code',
+        'reference',
+        'last_login',
+        'last_deposit',
+        'last_deposit_amount',
+        'last_debit',
+        'last_debit_amount',
+        'last_deposit_currency',
+        'last_debit_currency',
+        'main',
+        'first_deposit',
+        'first_deposit_amount',
+        'first_deposit_currency',
+        'register_currency',
+        'type_user',
+        'action',
+        'confirmation_email',
+        'theme'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -72,7 +100,7 @@ class User extends Authenticatable
     /**
      * Scope conditions
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param int $id User ID
      * @param string $username User username
      * @param string $dni User DNI
@@ -86,54 +114,65 @@ class User extends Authenticatable
      * @param int $wallet Wallet ID
      * @return string
      */
-    public function scopeConditions($query, $id, $username, $dni, $email, $firstName, $lastName, $gender, $level, $phone, $referralCode, $wallet)
-    {
-        if (!empty($id)) {
+    public function scopeConditions(
+        $query,
+        $id,
+        $username,
+        $dni,
+        $email,
+        $firstName,
+        $lastName,
+        $gender,
+        $level,
+        $phone,
+        $referralCode,
+        $wallet
+    ) {
+        if (! empty($id)) {
             $query->where('id', $id);
         }
 
-        if (!empty($username)) {
+        if (! empty($username)) {
             $query->where('username', 'like', "$username%");
         }
 
-        if (!empty($dni)) {
+        if (! empty($dni)) {
             $query->where('dni', 'like', "%$dni%");
         }
 
-        if (!empty($email)) {
+        if (! empty($email)) {
             $query->where('email', 'like', "$email%");
         }
 
-        if (!empty($firstName)) {
+        if (! empty($firstName)) {
             $query->where(\DB::raw('lower(first_name)'), 'like', "%$firstName%");
         }
 
-        if (!empty($lastName)) {
+        if (! empty($lastName)) {
             $query->where(\DB::raw('lower(last_name)'), 'like', "%$lastName%");
         }
 
-        if (!empty($gender)) {
+        if (! empty($gender)) {
             if ($gender != '*') {
                 $query->where('gender', $gender)->whereNotNull('gender');
-
             } else {
                 $query->whereNotNull('gender');
             }
         }
 
-        if (!empty($level) && $level != '*') {
+        if (! empty($level) && $level != '*') {
             $query->where('level', $level);
         }
 
-        if (!empty($phone)) {
+        if (! empty($phone)) {
             $query->where('phone', $phone);
         }
 
-        if (!empty($referralCode)) {
+        if (! empty($referralCode)) {
             $query->where('referral_code', $referralCode);
         }
 
-        if (!empty($wallet)) {
+        if (! empty($wallet)) {
             $query->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
                 ->where('user_currencies.wallet_id', $wallet);
         }
@@ -144,12 +183,12 @@ class User extends Authenticatable
     /**
      * Score web register
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param null|bool $webRegister Web register
      */
     public function scopeWebRegister($query, $webRegister)
     {
-        if (!is_null($webRegister)) {
+        if (! is_null($webRegister)) {
             $query->where('users.web_register', $webRegister);
         }
     }
@@ -157,7 +196,7 @@ class User extends Authenticatable
     /**
      * Scope whitelabel
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @return mixed
      */
     public function scopeWhitelabel($query)
@@ -198,10 +237,11 @@ class User extends Authenticatable
     /**
      * @return Attribute
      */
-    protected function typeUser(): Attribute
+    protected function typeUser()
+    : Attribute
     {
         return Attribute::make(
-            get: fn (mixed $value, array $attributes) => match ($attributes['type_user']) {
+            get: fn(mixed $value, array $attributes) => match ($attributes['type_user']) {
                 1, 2 => 'agent',
                 5 => 'user',
                 default => null,
