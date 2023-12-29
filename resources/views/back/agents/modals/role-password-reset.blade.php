@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p><span class="font-weight-bold">{{ _i('Are you sure you want to reset the agent key?') }}</span> <span>(Antonella93)</span></p>
+                <p><span class="font-weight-bold">{{ _i('Are you sure you want to reset the agent key?') }}</span> <span class="username-password-reset">Antonella93</span></p>
                 <p>{{ _i('Check for security that the user is correct, when logging in the agent will be able to enter a new password.') }}</p>
             </div>
             <div class="modal-footer">
