@@ -97,8 +97,8 @@
                     </tr>
                     </tbody>
                 </table>
-                <div class="loading-style"></div>
             </div>
+            <div class="loading-style"></div>
         </div>
 
     </div>
