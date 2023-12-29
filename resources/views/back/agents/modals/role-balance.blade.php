@@ -20,14 +20,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-6 g-pr-3">
                                 <div class="form-group">
                                     <button type="button" class="btn btn-theme btn-block">
                                         {{ _i('Deposit') }}
                                     </button>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 g-pl-3">
                                 <button type="button" class="btn btn-dark btn-block">
                                     {{ _i('Withdraw') }}
                                 </button>
