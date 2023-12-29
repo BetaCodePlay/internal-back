@@ -104,7 +104,7 @@
 
 @section('modals')
     @include('back.agents.modals.role-create')
-    @include('back.agents.modals.role-block')
+    @include('back.agents.modals.role-lock')
     @include('back.agents.modals.role-create-simple')
     @include('back.agents.modals.role-password-reset')
 @endsection
