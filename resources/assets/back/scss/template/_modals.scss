@@ -41,6 +41,12 @@
                             margin-left: 8px;
                         }
                     }
+
+                    .form-group {
+                        @media screen and (min-width: 992px) {
+                            margin-bottom: 2rem;
+                        }
+                    }
                 }
 
                 @media screen and (min-width: 992px) {
