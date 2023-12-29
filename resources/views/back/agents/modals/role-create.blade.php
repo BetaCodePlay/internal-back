@@ -11,11 +11,11 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn u-btn-3d u-btn-primary u-btn-3d">
-                    {{ _i('Move') }}
+                <button type="button" class="btn btn-transparent" data-dismiss="modal">
+                    {{ _i('Cancel creation') }}
                 </button>
-                <button type="button" class="btn u-btn-3d u-btn-bluegray u-btn-3d" data-dismiss="modal">
-                    {{ _i('Close') }}
+                <button type="button" class="btn btn-theme">
+                    {{ _i('Ready! Create role') }}
                 </button>
             </div>
         </div>
