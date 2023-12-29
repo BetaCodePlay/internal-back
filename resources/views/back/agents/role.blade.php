@@ -15,7 +15,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="form-control" placeholder="{{ _i('Search') }}">
             </div>
-            <button type="button" class="btn btn-theme"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
+            <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#role-create"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
         <div class="page-header">
             <div class="page-header-top">
@@ -100,6 +100,10 @@
         </div>
 
     </div>
+@endsection
+
+@section('modals')
+    @include('back.agents.modals.role-create')
 @endsection
 
 @section('scripts')
