@@ -6,6 +6,11 @@ class Roles {
             fixedHeader: true,
             responsive: true
         });
+
+        $(window).on('load', function (){
+            $('.table-load').addClass('table-complete');
+            $('.page-role .loading-style').hide();
+        })
     }
 }
 
