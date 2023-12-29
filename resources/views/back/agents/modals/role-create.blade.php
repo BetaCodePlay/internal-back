@@ -16,11 +16,9 @@
                             <div class="form-group">
                                 <label>{{ _i('Role type') }} <i class="fa-solid fa-circle-info"></i></label>
                                 <select class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                    <option>{{ _i('Master') }}</option>
+                                    <option>{{ _i('Support') }}</option>
+                                    <option>{{ _i('Players') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -36,11 +34,9 @@
                             <div class="form-group">
                                 <label>{{ _i('Dependence on') }} <i class="fa-solid fa-circle-info"></i></label>
                                 <select class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                    <option>agentescasino01</option>
+                                    <option>tester123</option>
+                                    <option>123casino</option>
                                 </select>
                             </div>
                         </div>
