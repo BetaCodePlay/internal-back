@@ -7,10 +7,8 @@ class Roles {
             responsive: true
         });
 
-        setTimeout(function (){
-            $('.table-load').addClass('table-complete');
-            $('.page-role .loading-style').hide();
-        }, 300)
+        $('.table-load').addClass('table-complete');
+        $('.page-role .loading-style').hide();
     }
 }
 
