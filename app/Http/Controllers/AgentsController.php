@@ -2693,6 +2693,7 @@ class AgentsController extends Controller
 //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
 //            }
 
+            dd($store = Configurations::getStore());
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user, $whitelabel);
             $userData = $this->usersRepo->getUsers($user);

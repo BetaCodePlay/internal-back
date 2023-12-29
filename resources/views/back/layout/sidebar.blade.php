@@ -101,6 +101,9 @@
         @can('access', [$permissions::$update_password_wolf])
             @include('back.partials.sidebar.updatePasswordOfWolf')
         @endif
+        @can('access', [$permissions::$betpay_menu])
+            @include('back.partials.sidebar.store', ['permissions' => $permissions])
+        @endif
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
