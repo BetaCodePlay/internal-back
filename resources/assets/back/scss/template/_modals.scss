@@ -33,7 +33,9 @@
             }
 
             .modal-body {
-
+                .form {
+                    margin-top: 40px;
+                }
 
                 @media screen and (min-width: 992px) {
                     padding: 20px 35px;
@@ -46,6 +48,12 @@
                 @media screen and (min-width: 992px) {
                     padding: 15px 35px;
                 }
+            }
+
+            .form-control {
+                background: #474747;
+                color: #fff;
+                border-radius: 8px;
             }
         }
     }
