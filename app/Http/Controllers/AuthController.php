@@ -134,6 +134,8 @@ class AuthController extends Controller
                 $permissions = Security::getUserPermissions($user) ?? [];
                 $roles = Security::getUserRoles($user);
 
+                dd($roles, $permissions);
+
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
                     $permissionsMerge = $permissions;
                     if ($user !== 89985){
