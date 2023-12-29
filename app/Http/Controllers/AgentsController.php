@@ -3304,23 +3304,27 @@ class AgentsController extends Controller
     public function role()
     {
         try {
-            $authUser = Auth::user();
+            $authUser   = Auth::user();
             $authUserId = $authUser->id;
             $whitelabel = Configurations::getWhitelabel();
 
-            $agentUser = $authUser->agent;
-            $userData = $this->usersRepo->getUsers($authUserId);
+            $agentUser    = $authUser->agent;
+            $userData     = $this->usersRepo->getUsers($authUserId);
             $confirmation = $userData->pluck('confirmation_email')->first();
 
-            return view('back.agents.role',  [
-                'agent' => $this->agentsRepo->findUserProfile($authUserId, session('currency') ?? ''),
-                'makers' => [],
-                'agents' => $this->agentsRepo->getAgentsAllByOwner($authUserId, session('currency'), $whitelabel),
-                'action' => $authUser->action,
-                'iagent' => $agentUser,
+            return view('back.agents.role', [
+                'agent'              => $this->agentsRepo->findUserProfile($authUserId, session('currency') ?? ''),
+                'makers'             => [],
+                'agents'             => $this->agentsRepo->getAgentsAllByOwner(
+                    $authUserId,
+                    session('currency'),
+                    $whitelabel
+                ),
+                'action'             => $authUser->action,
+                'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
-                'title' => _i('Agents module'),
-                'authUser' => $authUser,
+                'title'              => _i('Agents module'),
+                'authUser'           => $authUser,
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
