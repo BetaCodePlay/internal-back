@@ -1,8 +1,30 @@
 .modal {
     &.modal-style {
         .modal-content {
+            color: #fff;
+            background: #333;
+            border-radius: 8px;
+
             .modal-header {
                 border-color: #464646;
+
+                .close {
+                    font-weight: 400;
+                    color: #fff;
+                    font-size: 24px;
+                    line-height: 1;
+                    opacity: .75;
+
+
+                    &:hover, &:focus {
+                        opacity: 1;
+                    }
+                }
+
+                .modal-title {
+                    font-weight: 400;
+                    font-size: 16px;
+                }
             }
 
             .modal-footer {
