@@ -7,6 +7,7 @@
 
             .modal-header {
                 border-color: #464646;
+                padding: 15px 35px;
 
                 .close {
                     font-weight: 400;
@@ -25,10 +26,26 @@
                     font-weight: 400;
                     font-size: 16px;
                 }
+
+                @media screen and (min-width: 992px) {
+                    padding: 15px 35px;
+                }
+            }
+
+            .modal-body {
+
+
+                @media screen and (min-width: 992px) {
+                    padding: 20px 35px;
+                }
             }
 
             .modal-footer {
                 border-color: transparent;
+
+                @media screen and (min-width: 992px) {
+                    padding: 15px 35px;
+                }
             }
         }
     }
