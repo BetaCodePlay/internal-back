@@ -8,7 +8,45 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <p class="font-weight-bold">{{ _i('What role do you want to create?') }}</p>
+                <p>{{ _i('You will be able to create master and support agents initially, then you can assign players if necessary.') }}</p>
+                <div class="form">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>{{ _i('Role type') }} <i class="fa-solid fa-circle-info"></i></label>
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label>{{ _i('name') }}</label>
+                                <input type="text" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>{{ _i('Dependence on') }} <i class="fa-solid fa-circle-info"></i></label>
+                                <select class="form-control">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col"></div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
