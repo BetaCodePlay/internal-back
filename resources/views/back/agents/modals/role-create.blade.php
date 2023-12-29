@@ -26,7 +26,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label>{{ _i('name') }}</label>
+                                <label>{{ _i('Name') }}</label>
                                 <input type="text" class="form-control" placeholder="">
                             </div>
                         </div>

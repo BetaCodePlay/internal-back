@@ -55,6 +55,18 @@
                 color: #fff;
                 border-radius: 8px;
             }
+
+            .select2-container--default {
+                .select2-selection--single {
+                    background: #474747;
+                    border-color: #fff;
+                    border-radius: 8px;
+
+                    .select2-selection__rendered {
+                        color: #fff;
+                    }
+                }
+            }
         }
     }
 }
