@@ -8,7 +8,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p><span class="font-weight-bold">{{ _i('¿Qué monto quieres depositar o sacar?') }}</span></p>
+                <div class="form">
+                    <p><span class="font-weight-bold">{{ _i('¿Qué monto quieres depositar o sacar?') }}</span></p>
+                </div>
                 <div class="form">
                     <div class="row">
                         <div class="col-12">
@@ -21,13 +23,13 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <button type="button" class="btn btn-theme">
+                                <button type="button" class="btn btn-theme btn-block">
                                     {{ _i('Deposit') }}
                                 </button>
                             </div>
                         </div>
                         <div class="col-6">
-                            <button type="button" class="btn btn-dark">
+                            <button type="button" class="btn btn-dark btn-block">
                                 {{ _i('Withdraw') }}
                             </button>
                         </div>
