@@ -1,5 +1,13 @@
 .modal {
     &.modal-style {
+        .modal-content {
+            .modal-header {
+                border-color: #464646;
+            }
 
+            .modal-footer {
+                border-color: transparent;
+            }
+        }
     }
 }
