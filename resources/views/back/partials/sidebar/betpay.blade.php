@@ -1,5 +1,7 @@
 @php
     use Dotworkers\Configurations\Enums\PaymentMethods;
+
+    $uniquePaymentMethods = getUniquePaymentMethods();
 @endphp
 
 <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
@@ -29,35 +31,37 @@
                 </a>
             </li>
         @endif
-        @can('access', [$permissions::$binance_menu])
-            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
-                   data-toggle="collapse" data-target="#binanceSidebar" aria-expanded="false">
-                    <span class="media-body align-self-center">{{ _i('Binance') }}</span>
-                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                </a>
-                <ul id="binanceSidebar"
-                    class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse {!! request()->is('betpay/binance*') ? 'show' : '' !!}">
-                    @can('access', [$permissions::$credit_binance_menu])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('betpay.binance.credit', [\Dotworkers\Configurations\Enums\PaymentMethods::$binance]) }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Credit') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                    @can('access', [$permissions::$debit_binance_menu])
-                        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
-                            <a class="media u-side-nav--second-level-menu-link"
-                               href="{{ route('betpay.binance.debit', [PaymentMethods::$binance]) }}" target="_self">
-                                <span class="media-body align-self-center">{{ _i('Debit') }}</span>
-                                <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
-            </li>
+        @if(in_array(PaymentMethods::$binance, $uniquePaymentMethods))
+            @can('access', [$permissions::$binance_menu])
+                <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                    <a class="media u-side-nav--second-level-menu-link" href="javascript:void(0)" target="_self"
+                       data-toggle="collapse" data-target="#binanceSidebar" aria-expanded="false">
+                        <span class="media-body align-self-center">{{ _i('Binance') }}</span>
+                        <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
+                    </a>
+                    <ul id="binanceSidebar"
+                        class="u-sidebar-navigation-v1-menu u-side-nav--second-level-menu mb-0 collapse {!! request()->is('betpay/binance*') ? 'show' : '' !!}">
+                        @can('access', [$permissions::$credit_binance_menu])
+                            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                                <a class="media u-side-nav--second-level-menu-link"
+                                   href="{{ route('betpay.binance.credit', [PaymentMethods::$binance]) }}" target="_self">
+                                    <span class="media-body align-self-center">{{ _i('Credit') }}</span>
+                                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
+                                </a>
+                            </li>
+                        @endif
+                        @can('access', [$permissions::$debit_binance_menu])
+                            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--second-level-menu-item">
+                                <a class="media u-side-nav--second-level-menu-link"
+                                   href="{{ route('betpay.binance.debit', [PaymentMethods::$binance]) }}" target="_self">
+                                    <span class="media-body align-self-center">{{ _i('Debit') }}</span>
+                                    <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
         @endif
     </ul>
 </li>

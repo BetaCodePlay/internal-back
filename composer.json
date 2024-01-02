@@ -83,7 +83,8 @@
         },
         "files": [
             "app/Core/helpers.php",
-            "app/Core/sidebar/sections.php"
+            "app/Core/sidebar/sections.php",
+            "app/Core/sidebar/general.php"
         ]
     },
     "autoload-dev": {

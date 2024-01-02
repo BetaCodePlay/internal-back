@@ -7408,7 +7408,6 @@ if (! function_exists('convertArrayToObject')) {
     }
 }
 
-
 if (! function_exists('authenticatedUserBalance')) {
     function getAuthenticatedUserBalance(): string
     {
