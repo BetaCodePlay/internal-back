@@ -537,14 +537,21 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array {
-        $draw = $request->input('draw');
-        $start = $request->input('start', 0);
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId)
+    : array {
+        $draw   = $request->input('draw');
+        $start  = $request->input('start', 0);
         $length = $request->input('length', 10);
 
         $query = User::join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->select('users.username', 'users.type_user', 'agents.owner_id', 'agent_currencies.currency_iso as currency', 'users.status')
+            ->select(
+                'users.username',
+                'users.type_user',
+                'agents.owner_id',
+                'agent_currencies.currency_iso as currency',
+                'users.status'
+            )
             ->where('agents.owner_id', $userAuthId)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
@@ -552,10 +559,10 @@ class AgentsRepo
             ->orderBy('users.username');
 
         $adjustedStart = max(0, ($start / $length) + 1);
-        $result = $query->paginate($length, ['*'], 'page', $adjustedStart);
+        $result        = $query->paginate($length, ['*'], 'page', $adjustedStart);
 
         return [
-            'draw'            => $draw,
+            'draw'            => (int)$draw,
             'recordsTotal'    => $result->total(),
             'recordsFiltered' => $result->total(),
             'data'            => $result->items(),
