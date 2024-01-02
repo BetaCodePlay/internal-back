@@ -2635,7 +2635,26 @@ class AgentsController extends Controller
                 'makers' => $this->gamesRepo->getMakers()
             ]);
         } catch (Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return array|void
+     */
+    public function getDirectChildren(Request $request)
+    {
+        try {
+            return $this->agentsRepo->getDirectChildren(
+                $request,
+                Auth::id(),
+                session('currency'),
+                Configurations::getWhitelabel()
+            );
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
     }

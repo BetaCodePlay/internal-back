@@ -10,6 +10,7 @@ use Dotworkers\Security\Enums\Roles;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -528,6 +529,39 @@ class AgentsRepo
             ],
         );
     }
+
+    /**
+     * @param Request $request
+     * @param int $userAuthId
+     * @param string $currency
+     * @param int $whitelabelId
+     * @return array
+     */
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array {
+        $draw = $request->input('draw');
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+
+        $query = User::join('agents', 'users.id', '=', 'agents.user_id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->select('users.username', 'users.type_user', 'agents.owner_id', 'agent_currencies.currency_iso as currency', 'users.status')
+            ->where('agents.owner_id', $userAuthId)
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->orderBy('users.type_user')
+            ->orderBy('users.username');
+
+        $adjustedStart = max(0, ($start / $length) + 1);
+        $result = $query->paginate($length, ['*'], 'page', $adjustedStart);
+
+        return [
+            'draw'            => $draw,
+            'recordsTotal'    => $result->total(),
+            'recordsFiltered' => $result->total(),
+            'data'            => $result->items(),
+        ];
+    }
+
 
     /**
      * Get agents dependency

@@ -41,6 +41,12 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@getTreeUsers_format'
     ]);
 
+    Route::get('get/direct-children', [
+        'as' => 'agents.get.direct.children',
+        'uses' => 'AgentsController@getDirectChildren'
+    ]);
+
+
     Route::get('create-user', [
         'as' => 'agents.create.user',
         'uses' => 'AgentsController@viewCreateUser'
