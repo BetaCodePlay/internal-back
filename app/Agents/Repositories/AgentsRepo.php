@@ -543,7 +543,8 @@ class AgentsRepo
         $start  = $request->input('start', 0);
         $length = $request->input('length', 10);
 
-        $query = User::join('agents', 'users.id', '=', 'agents.user_id')
+        $query = User::leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->leftJoin('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->select(
                 'users.username',
@@ -552,7 +553,10 @@ class AgentsRepo
                 'agent_currencies.currency_iso as currency',
                 'users.status'
             )
-            ->where('agents.owner_id', $userAuthId)
+            ->where(function ($query) use ($userAuthId) {
+                $query->where('agent_user.agent_id', $userAuthId)
+                    ->orWhere('agents.owner_id', $userAuthId);
+            })
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
             ->orderBy('users.type_user')
