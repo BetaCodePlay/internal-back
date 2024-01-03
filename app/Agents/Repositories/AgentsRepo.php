@@ -563,7 +563,7 @@ class AgentsRepo
             ->orderBy('users.username')
             ->addBinding(3, 'select'); // Agregar el valor predeterminado con addBinding
 
-        $result = $result->paginate($perPage);
+        $result = $result->paginate(1000);
 
         return [
             'draw'            => 1,
