@@ -603,7 +603,7 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->orderBy('users.type_user')
             ->orderBy('users.username')
-            ->paginate($perPage);
+            ->paginate(1000);
 
         return $result;
     }
