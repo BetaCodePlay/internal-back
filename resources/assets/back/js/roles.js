@@ -2,9 +2,15 @@ import {} from "../../commons/js/core";
 
 class Roles {
     initTableRoles () {
-        $('#table-roles').DataTable( {
+        /*$('#table-roles').DataTable( {
             fixedHeader: true,
             responsive: true
+        });*/
+
+        new DataTable('#table-roles', {
+            ajax: 'https://dev-back.bestcasinos.lat/agents/get/direct-children?draw=2&start=0',
+            processing: true,
+            serverSide: true
         });
 
         $('.table-load').addClass('table-complete');
