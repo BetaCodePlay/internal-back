@@ -55,7 +55,7 @@
             </div>
         </div>
         <div class="page-body">
-            <div class="col table-load">
+            <div class="col">
                 <table id="table-roles" class="display nowrap">
                     <thead>
                     <tr>
@@ -96,7 +96,7 @@
                     </tbody>--}}
                 </table>
             </div>
-            <div class="loading-style"></div>
+
         </div>
 
     </div>
