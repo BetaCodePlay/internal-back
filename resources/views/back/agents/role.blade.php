@@ -63,13 +63,10 @@
                         <th>{{ _i('Rol') }}</th>
                         <th>{{ _i('ID User') }}</th>
                         <th>{{ _i('Status') }}</th>
-                        <th>{{ _i('Label') }}</th>
                         <th data-priority="3">{{ _i('Balance') }}</th>
-                        <th>{{ _i('Dependencies') }}</th>
-                        <th data-priority="2"></th>
                     </tr>
                     </thead>
-                    <tbody>
+                    {{--<tbody>
                     <tr>
                         <td><span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span>  Antonella93</td>
                         <td><span class="deco-rol">Administrador</span></td>
@@ -95,7 +92,7 @@
                             <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
                         </td>
                     </tr>
-                    </tbody>
+                    </tbody>--}}
                 </table>
             </div>
             <div class="loading-style"></div>
