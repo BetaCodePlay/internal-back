@@ -2640,10 +2640,7 @@ class AgentsController extends Controller
         }
     }
 
-    /**
-     * @param Request $request
-     * @return array|void
-     */
+
     public function getDirectChildren(Request $request)
     {
         try {
@@ -2654,7 +2651,7 @@ class AgentsController extends Controller
                 Configurations::getWhitelabel()
             );*/
 
-            return $this->agentsRepo->getSearchAgentsByOwnerPag($request, session('currency'), Auth::id(), Configurations::getWhitelabel());
+            return $this->agentsRepo->getDirectChildrenEloquent(Auth::id(), session('currency'),  Configurations::getWhitelabel());
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);

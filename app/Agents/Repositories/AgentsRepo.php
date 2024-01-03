@@ -573,32 +573,40 @@ class AgentsRepo
         ];
     }
 
-    public function getSearchAgentsByOwnerPag(Request $request, $currency, $owner, $whitelabel)
+
+    public function getDirectChildrenEloquent(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
-        $draw   = $request->input('draw');
-        $start  = $request->input('start', 0);
-        $length = $request->input('length', 10);
+        // Subconsulta para obtener agentes con CTE recursivo
+        $subquery = DB::table('site.agents')
+            ->select('id', 'user_id', 'owner_id', DB::raw('0 as level'))
+            ->where('user_id', $userAuthId)
+            ->orWhereExists(function ($query) use ($userAuthId) {
+                $query->select(DB::raw(1))
+                    ->from('site.agents as a')
+                    ->whereColumn('a.owner_id', 'site.agents.user_id');
+            });
 
-        // Consulta para obtener agentes paginados
-        $query = Agent::on('replica')
-            ->select('agents.*', 'users.username', 'agent_currencies.balance', 'users.referral_code')
-            ->join('users', 'agents.user_id', '=', 'users.id')
-            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where('agents.owner_id', $owner)
-            ->where('users.whitelabel_id', $whitelabel)
+        // Consulta principal para obtener datos paginados
+        $result = DB::table(DB::raw("({$subquery->toSql()}) as all_agents"))
+            ->mergeBindings($subquery)
+            ->select(
+                'users.id',
+                'users.username',
+                'all_agents.owner_id',
+                'users.type_user',
+                'agent_currencies.currency_iso as currency',
+                'users.status',
+                'all_agents.level'
+            )
+            ->join('site.users', 'users.id', '=', 'all_agents.user_id')
+            ->join('site.agent_currencies', 'all_agents.id', '=', 'agent_currencies.agent_id')
+            ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
-            ->where('agents.id', '<>', $owner)
-            ->orderBy('users.username', 'ASC');
+            ->orderBy('users.type_user')
+            ->orderBy('users.username')
+            ->paginate($perPage);
 
-        $adjustedStart = max(0, ($start / $length) + 1);
-        $result        = $query->paginate($length, ['*'], 'page', $adjustedStart);
-
-        return [
-            'draw'            => (int)$draw,
-            'recordsTotal'    => $result->total(),
-            'recordsFiltered' => $result->total(),
-            'data'            => $result->items(),
-        ];
+        return $result;
     }
 
     /**
