@@ -16,7 +16,12 @@ class Roles {
                 "targets": "_all"
             }],
             fixedHeader: true,
-            responsive: true
+            responsive: true,
+            fnCreatedRow : function(nRow,aData,iDataIndex) {
+                console.log(nRow);
+                console.log(aData);
+                console.log(iDataIndex);
+            }
         });
 
         $('.table-load').addClass('table-complete');
