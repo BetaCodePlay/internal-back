@@ -2647,12 +2647,14 @@ class AgentsController extends Controller
     public function getDirectChildren(Request $request)
     {
         try {
-            return $this->agentsRepo->getDirectChildren(
+            /*return $this->agentsRepo->getDirectChildren(
                 $request,
                 Auth::id(),
                 session('currency'),
                 Configurations::getWhitelabel()
-            );
+            );*/
+
+            return $this->agentsRepo->getSearchAgentsByOwner(session('currency'), Auth::id(), Configurations::getWhitelabel());
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
