@@ -539,32 +539,31 @@ class AgentsRepo
      */
     public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
-        // Obtener directamente los hijos (tanto agentes como jugadores) sin sub-hijos
-        $result = DB::table('site.users as u')
-            ->select(
-                'u.id',
-                'u.username',
-                'agents.owner_id',
-                'u.type_user',
-                'ac.currency_iso as currency',
-                'u.status',
-                DB::raw('0 as level') // Nivel 0 para los hijos directos
-            )
-            ->leftJoin('site.agent_user', 'u.id', '=', 'agent_user.user_id')
-            ->leftJoin('site.agents as agents', 'u.id', '=', 'agents.user_id')
-            ->leftJoin('site.agent_currencies as ac', 'agents.id', '=', 'ac.agent_id')
-            ->leftJoin('site.agents as sub_agents', 'u.id', '=', 'sub_agents.owner_id') // Verificar sub-hijos
+        // Obtener directamente los hijos (tanto agentes como jugadores)
+        $result = User::select(
+            'users.id',
+            'users.username',
+            DB::raw('(CASE WHEN agents.owner_id IS NOT NULL THEN agents.owner_id WHEN agent_user.agent_id IS NOT NULL THEN agent_user.agent_id ELSE ? END) as owner_id'),
+            'users.type_user',
+            'agent_currencies.currency_iso as currency',
+            'users.status',
+            DB::raw('0 as level') // Nivel 0 para los hijos directos
+        )
+            ->leftJoin('site.agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->leftJoin('site.agents as agents', 'users.id', '=', 'agents.user_id')
+            ->leftJoin('site.agent_currencies as agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->where(function ($query) use ($userAuthId) {
                 $query->where('agent_user.agent_id', $userAuthId)
                     ->orWhere('agents.owner_id', $userAuthId)
-                    ->orWhere('u.id', $userAuthId); // Incluir al usuario autenticado como hijo directo
+                    ->orWhere('users.id', $userAuthId); // Incluir al usuario autenticado como hijo directo
             })
-            ->where('u.whitelabel_id', $whitelabelId)
-            ->where('ac.currency_iso', $currency)
-            ->whereNull('sub_agents.id') // Excluir aquellos con sub-hijos
-            ->orderBy('u.type_user')
-            ->orderBy('u.username')
-            ->paginate(1000);
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->orderBy('users.type_user')
+            ->orderBy('users.username')
+            ->addBinding(3, 'select'); // Agregar el valor predeterminado con addBinding
+
+        $result = $result->paginate($perPage);
 
         return [
             'draw'            => 1,
