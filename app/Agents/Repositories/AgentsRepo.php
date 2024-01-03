@@ -564,8 +564,8 @@ class AgentsRepo
 
         $result = $result->paginate($perPage);
 
-        $formattedResult = [
-            'draw'            => 1,
+        return  [
+            'draw'            => request()->input('draw'),
             'recordsTotal'    => $result->total(),
             'recordsFiltered' => $result->total(),
             'data'            => $result->map(function ($item) {
@@ -579,8 +579,6 @@ class AgentsRepo
                 ];
             })->toArray(),
         ];
-
-        return $formattedResult;
     }
 
     public function getDirectChildrenEloquentOld(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 100)
