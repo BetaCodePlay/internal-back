@@ -23,11 +23,11 @@ class Roles {
                     '    <i class="fa-solid fa-ellipsis-vertical"></i>\n' +
                     '</button>\n' +
                     '<ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">\n' +
-                    '   <li><a class="dropdown-item" href="#">{{ _i(\'View profile\') }}</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i(\'Add role\') }}</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i(\'Reset password\') }}</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">{{ _i(\'Lock profile\') }}</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i(\'Balance adjustment\') }}</a></li>\n' +
+                    '   <li><a class="dropdown-item" href="#">View profile</a></li>\n' +
+                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">Add role</a></li>\n' +
+                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">Reset password</a></li>\n' +
+                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">Lock profile</a></li>\n' +
+                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">Balance adjustment</a></li>\n' +
                     '</ul>\n' +
                     '</div>\n' +
                     '\n' +
