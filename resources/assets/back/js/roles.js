@@ -7,7 +7,7 @@ class Roles {
             responsive: true
         });*/
 
-        new DataTable('#table-roles', {
+        $('#table-roles').DataTable( {
             ajax: 'https://dev-back.bestcasinos.lat/agents/get/direct-children?draw=2&start=0',
             processing: true,
             serverSide: true
