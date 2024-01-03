@@ -539,6 +539,7 @@ class AgentsRepo
      */
     public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
+        // Obtener directamente los hijos (tanto agentes como jugadores)
         $result = DB::table('site.users as u')
             ->select(
                 'u.id',
@@ -547,20 +548,21 @@ class AgentsRepo
                 'u.type_user',
                 'ac.currency_iso as currency',
                 'u.status',
-                DB::raw('0 as level')
+                DB::raw('0 as level') // Nivel 0 para los hijos directos
             )
-            ->leftJoin('agent_user', 'u.id', '=', 'agent_user.user_id')
+            ->leftJoin('site.agent_user', 'u.id', '=', 'agent_user.user_id')
             ->leftJoin('site.agents as agents', 'u.id', '=', 'agents.user_id')
             ->leftJoin('site.agent_currencies as ac', 'agents.id', '=', 'ac.agent_id')
             ->where(function ($query) use ($userAuthId) {
                 $query->where('agent_user.agent_id', $userAuthId)
-                    ->orWhere('agents.owner_id', $userAuthId);
+                    ->orWhere('agents.owner_id', $userAuthId)
+                    ->orWhere('u.id', $userAuthId); // Incluir al usuario autenticado como hijo directo
             })
             ->where('u.whitelabel_id', $whitelabelId)
             ->where('ac.currency_iso', $currency)
             ->orderBy('u.type_user')
             ->orderBy('u.username')
-            ->paginate(1000);
+            ->paginate($perPage);
 
         return [
             'draw'            => 1,
@@ -571,7 +573,7 @@ class AgentsRepo
     }
 
 
-    public function getDirectChildrenEloquent(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 100)
+    public function getDirectChildrenEloquentOld(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 100)
     {
         // Subconsulta para obtener agentes con CTE recursivo
         $subquery = DB::table('site.agents')
