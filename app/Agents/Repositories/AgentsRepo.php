@@ -562,7 +562,7 @@ class AgentsRepo
             ->where('ac.currency_iso', $currency)
             ->orderBy('u.type_user')
             ->orderBy('u.username')
-            ->paginate($perPage);
+            ->paginate(1000);
 
         return [
             'draw'            => 1,
