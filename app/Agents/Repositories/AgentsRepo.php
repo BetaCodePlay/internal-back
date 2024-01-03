@@ -537,36 +537,34 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId)
-    : array {
-        $draw   = $request->input('draw');
-        $start  = $request->input('start', 0);
-        $length = $request->input('length', 10);
-
-        $query = User::leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->leftJoin('agents', 'users.id', '=', 'agents.user_id')
-            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+    public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
+    {
+        // Obtener directamente los hijos (tanto agentes como jugadores)
+        $result = DB::table('site.users as u')
             ->select(
-                'users.username',
-                'users.type_user',
+                'u.id',
+                'u.username',
                 'agents.owner_id',
-                'agent_currencies.currency_iso as currency',
-                'users.status'
+                'u.type_user',
+                'ac.currency_iso as currency',
+                'u.status',
+                DB::raw('0 as level') // Nivel 0 para los hijos directos
             )
+            ->leftJoin('agent_user', 'u.id', '=', 'agent_user.user_id')
+            ->leftJoin('site.agents as agents', 'u.id', '=', 'agents.user_id')
+            ->leftJoin('site.agent_currencies as ac', 'agents.id', '=', 'ac.agent_id')
             ->where(function ($query) use ($userAuthId) {
                 $query->where('agent_user.agent_id', $userAuthId)
                     ->orWhere('agents.owner_id', $userAuthId);
             })
-            ->where('users.whitelabel_id', $whitelabelId)
-            ->where('agent_currencies.currency_iso', $currency)
-            ->orderBy('users.type_user')
-            ->orderBy('users.username');
-
-        $adjustedStart = max(0, ($start / $length) + 1);
-        $result        = $query->paginate($length, ['*'], 'page', $adjustedStart);
+            ->where('u.whitelabel_id', $whitelabelId)
+            ->where('ac.currency_iso', $currency)
+            ->orderBy('u.type_user')
+            ->orderBy('u.username')
+            ->paginate($perPage);
 
         return [
-            'draw'            => (int)$draw,
+            'draw'            => 1,
             'recordsTotal'    => $result->total(),
             'recordsFiltered' => $result->total(),
             'data'            => $result->items(),
