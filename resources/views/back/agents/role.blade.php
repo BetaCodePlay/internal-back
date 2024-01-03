@@ -64,6 +64,7 @@
                         <th>{{ _i('ID User') }}</th>
                         <th>{{ _i('Status') }}</th>
                         <th data-priority="3">{{ _i('Balance') }}</th>
+                        <th></th>
                     </tr>
                     </thead>
                     {{--<tbody>
