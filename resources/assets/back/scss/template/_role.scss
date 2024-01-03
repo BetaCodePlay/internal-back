@@ -603,5 +603,16 @@
                 }
             }
         }
+
+        .dataTables_processing {
+            &.card {
+                background: #2c2c2c;
+                border-color: #333;
+
+                > div:last-child > div {
+                    background: $theme;
+                }
+            }
+        }
     }
 }
