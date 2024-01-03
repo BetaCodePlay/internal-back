@@ -14,7 +14,9 @@ class Roles {
             columnDefs: [{
                 "defaultContent": "-",
                 "targets": "_all"
-            }]
+            }],
+            fixedHeader: true,
+            responsive: true
         });
 
         $('.table-load').addClass('table-complete');
