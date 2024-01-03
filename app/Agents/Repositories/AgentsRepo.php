@@ -539,12 +539,11 @@ class AgentsRepo
      */
     public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
-        // Obtener directamente los hijos (tanto agentes como jugadores)
+        // Obtener directamente los hijos (tanto agentes como jugadores) del nivel 1
         $result = User::select(
-            'users.id',
             'users.username',
-            DB::raw('(CASE WHEN agents.owner_id IS NOT NULL THEN agents.owner_id WHEN agent_user.agent_id IS NOT NULL THEN agent_user.agent_id ELSE ? END) as owner_id'),
             'users.type_user',
+            DB::raw('(CASE WHEN agents.owner_id IS NOT NULL THEN agents.owner_id WHEN agent_user.agent_id IS NOT NULL THEN agent_user.agent_id ELSE ? END) as owner_id'),
             'agent_currencies.currency_iso as currency',
             'users.status',
             DB::raw('0 as level') // Nivel 0 para los hijos directos
@@ -563,16 +562,26 @@ class AgentsRepo
             ->orderBy('users.username')
             ->addBinding(3, 'select'); // Agregar el valor predeterminado con addBinding
 
-        $result = $result->paginate(1000);
+        $result = $result->paginate($perPage);
 
-        return [
+        $formattedResult = [
             'draw'            => 1,
             'recordsTotal'    => $result->total(),
             'recordsFiltered' => $result->total(),
-            'data'            => $result->items(),
+            'data'            => $result->map(function ($item) {
+                return [
+                    $item->username,
+                    $item->type_user,
+                    $item->owner_id,
+                    $item->currency,
+                    $item->status,
+                    $item->level,
+                ];
+            })->toArray(),
         ];
-    }
 
+        return $formattedResult;
+    }
 
     public function getDirectChildrenEloquentOld(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 100)
     {
