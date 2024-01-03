@@ -573,6 +573,59 @@ class AgentsRepo
         ];
     }
 
+    public function getSearchAgentsByOwnerPag(Request $request, $currency, $owner, $whitelabel)
+    {
+        $draw   = $request->input('draw');
+        $start  = $request->input('start', 0);
+        $length = $request->input('length', 10);
+
+        // Consulta para obtener agentes paginados
+        $query = Agent::on('replica')
+            ->select('agents.*', 'users.username', 'agent_currencies.balance', 'users.referral_code')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.owner_id', $owner)
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('agents.id', '<>', $owner)
+            ->orderBy('users.username', 'ASC');
+
+        $adjustedStart = max(0, ($start / $length) + 1);
+        $result        = $query->paginate($length, ['*'], 'page', $adjustedStart);
+
+        return [
+            'draw'            => (int)$draw,
+            'recordsTotal'    => $result->total(),
+            'recordsFiltered' => $result->total(),
+            'data'            => $result->items(),
+        ];
+    }
+
+    /**
+     * Get searcg agents by owner
+     *
+     * @param var $username Username
+     * @param string $currency Currency ISO
+     * @param int $owner Owner ID
+     * @return mixed
+     */
+    public function getSearchAgentsByOwner($currency, $owner, $whitelabel)
+    {
+        $agents = Agent::on('replica')
+            ->select('agents.*', 'users.username', 'agent_currencies.balance', 'users.referral_code')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.owner_id', $owner)
+            ->where('users.whitelabel_id', $whitelabel)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->orderBy('users.username', 'ASC')
+            ->get()
+        ;
+
+        return $agents;
+    }
+
+
 
     /**
      * Get agents dependency
@@ -653,30 +706,6 @@ class AgentsRepo
                     ->get()
         ;
         return $data;
-    }
-
-    /**
-     * Get searcg agents by owner
-     *
-     * @param var $username Username
-     * @param string $currency Currency ISO
-     * @param int $owner Owner ID
-     * @return mixed
-     */
-    public function getSearchAgentsByOwner($currency, $owner, $whitelabel)
-    {
-        $agents = Agent::on('replica')
-                       ->select('agents.*', 'users.username', 'agent_currencies.balance', 'users.referral_code')
-                       ->join('users', 'agents.user_id', '=', 'users.id')
-                       ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                       ->where('agents.owner_id', $owner)
-                       ->where('users.whitelabel_id', $whitelabel)
-                       ->where('agent_currencies.currency_iso', $currency)
-                       ->orderBy('users.username', 'ASC')
-                       ->get()
-        ;
-
-        return $agents;
     }
 
     /**

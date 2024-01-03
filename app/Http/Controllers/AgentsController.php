@@ -2654,7 +2654,7 @@ class AgentsController extends Controller
                 Configurations::getWhitelabel()
             );*/
 
-            return $this->agentsRepo->getSearchAgentsByOwner(session('currency'), Auth::id(), Configurations::getWhitelabel());
+            return $this->agentsRepo->getSearchAgentsByOwnerPag($request, session('currency'), Auth::id(), Configurations::getWhitelabel());
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
