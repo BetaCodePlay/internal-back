@@ -534,7 +534,6 @@ class AgentsRepo
         );
     }
 
-
     /**
      * @param Request $request
      * @param int $userAuthId
@@ -544,12 +543,11 @@ class AgentsRepo
      */
     public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
-        $draw = $request->input('draw', 1);
-        $start = $request->input('start', 0);
-        $length = $request->input('length', 10);
+        $draw        = $request->input('draw', 1);
+        $start       = $request->input('start', 0);
+        $length      = $request->input('length', 10);
         $searchValue = $request->input('search.value');
 
-        // Consulta para obtener agentes
         $agentQuery = User::select([
             'users.username',
             'users.type_user',
@@ -564,13 +562,12 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where(function ($query) use ($searchValue) {
-                $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
+                $query->where('users.username', 'like', "%$searchValue%");
             })
             ->orderBy('users.username')
             ->get()
             ->toArray();
 
-        // Consulta para obtener jugadores
         $playerQuery = User::select([
             'users.username',
             'users.type_user',
@@ -585,17 +582,15 @@ class AgentsRepo
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
             ->where(function ($query) use ($searchValue) {
-                $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
+                $query->where('users.username', 'like', "%$searchValue%");
             })
             ->orderBy('users.username')
             ->get()
             ->toArray();
 
-        // Combinar resultados de agentes y jugadores en el formato correcto
         $combinedResults = array_merge($agentQuery, $playerQuery);
-
-        $resultCount = count($combinedResults);
-        $slicedResults = array_slice($combinedResults, $start, $length);
+        $resultCount     = count($combinedResults);
+        $slicedResults   = array_slice($combinedResults, $start, $length);
 
         $formattedResults = array_map(function ($item) {
             return [
@@ -608,16 +603,12 @@ class AgentsRepo
         }, $slicedResults);
 
         return [
-            'draw'            => (int) $draw,
+            'draw'            => (int)$draw,
             'recordsTotal'    => $resultCount,
             'recordsFiltered' => $resultCount,
             'data'            => $formattedResults,
         ];
     }
-
-
-
-
 
     /**
      * Get searcg agents by owner

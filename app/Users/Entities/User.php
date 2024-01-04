@@ -237,13 +237,12 @@ class User extends Authenticatable
     /**
      * @return Attribute
      */
-    protected function typeUser()
-    : Attribute
+    protected function typeUser(): Attribute
     {
         return Attribute::make(
             get: fn(mixed $value, array $attributes) => match ($attributes['type_user']) {
-                1, 2 => 'agent',
-                5 => 'user',
+                1, 2 => _i('agent'),
+                5 => _i('player'),
                 default => null,
             },
         );
