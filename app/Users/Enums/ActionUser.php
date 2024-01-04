@@ -25,66 +25,20 @@ class ActionUser
 
     public static $update_email = 10;
 
-    public static function getName($action)
-    {
-        switch ($action) {
-            case self::$active:
-            {
-                return _i('active');
-                break;
-            }
-            case self::$inactive:
-            {
-                return _i('inactive');
-                break;
-            }
-            case self::$delete:
-            {
-                return _i('Removed');
-                break;
-            }
-            case self::$hide:
-            {
-                return _i('Hidden');
-                break;
-            }
-            case self::$locked_login_attempts:
-            {
-                return _i('Blocked for session attempt');
-                break;
-            }
-            case self::$locked_higher:
-            {
-                return _i('Blocked by a superior');
-                break;
-            }
-            case self::$blocked_branch:
-            {
-                return _i('Blocked by branch');
-                break;
-            }
-            case self::$direct_lock:
-            {
-                return _i('Direct lock');
-                break;
-            }
-            case self::$changed_password:
-            {
-                return _i('Password change process');
-                //return _i('Changed password');
-                break;
-            }
-            case self::$update_email:
-            {
-                return _i('Update email');
-                //return _i('Changed password');
-                break;
-            }
-            default:
-            {
-                return _i('Undefined Action...');
-                break;
-            }
-        }
+    public static function getName($action): string {
+        return match ($action) {
+            self::$active => _i('active'),
+            self::$inactive => _i('inactive'),
+            self::$delete => _i('Removed'),
+            self::$hide => _i('Hidden'),
+            self::$locked_login_attempts => _i('Blocked for session attempt'),
+            self::$locked_higher => _i('Blocked by a superior'),
+            self::$blocked_branch => _i('Blocked by branch'),
+            self::$direct_lock => _i('Direct lock'),
+            self::$changed_password => _i('Password change process'),
+            self::$update_email => _i('Update email'),
+            default => _i('Undefined Action...')
+        };
     }
+
 }
