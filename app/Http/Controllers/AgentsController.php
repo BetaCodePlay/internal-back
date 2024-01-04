@@ -2640,22 +2640,18 @@ class AgentsController extends Controller
         }
     }
 
-
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function getDirectChildren(Request $request)
     {
-        try {
-            /*return $this->agentsRepo->getDirectChildren(
-                $request,
-                Auth::id(),
-                session('currency'),
-                Configurations::getWhitelabel()
-            );*/
-
-            return $this->agentsRepo->getDirectChildren(Auth::id(), session('currency'),  Configurations::getWhitelabel());
-        } catch (Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex]);
-            abort(500);
-        }
+        return $this->agentsRepo->getDirectChildren(
+            $request,
+            Auth::id(),
+            session('currency'),
+            Configurations::getWhitelabel()
+        );
     }
 
     /**
