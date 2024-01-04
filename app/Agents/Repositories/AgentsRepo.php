@@ -587,62 +587,41 @@ class AgentsRepo
 
     public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
-        $query = User::select(
-            'users.username',
-            'users.type_user',
-            'users.id as userId',
-            'users.action',
-            'agent_currencies.balance',
-            DB::raw('(CASE WHEN agents.owner_id IS NOT NULL THEN agents.owner_id WHEN agent_user.agent_id IS NOT NULL THEN agent_user.agent_id ELSE ? END) as owner_id'),
-            'agent_currencies.currency_iso as currency',
-            'users.status',
-            DB::raw('0 as level')
-        )
-            ->leftJoin('site.agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->leftJoin('site.agents as agents', 'users.id', '=', 'agents.user_id')
-            ->leftJoin('site.agent_currencies as agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where(function ($query) use ($userAuthId) {
-                $query->where(function ($subQuery) use ($userAuthId) {
-                    $subQuery->where('agent_user.agent_id', $userAuthId)
-                        ->orWhere('agents.owner_id', $userAuthId);
-                })
-                    ->orWhere(function ($subQuery) use ($userAuthId) {
-                        $subQuery->where('users.id', $userAuthId)
-                            ->whereNotExists(function ($subSubQuery) use ($userAuthId) {
-                                $subSubQuery->select(DB::raw(1))
-                                    ->from('site.agent_user as au')
-                                    ->join('site.agents as a', 'au.agent_id', '=', 'a.id')
-                                    ->where('a.user_id', $userAuthId)
-                                    ->whereRaw('au.user_id = users.id');
-                            });
-                    })
-                    ->where('users.id', '<>', $userAuthId); // Excluir al usuario autenticado
-            })
+        $agentQuery  = DB::table('site.agents')
+           ->select([
+               'users.username',
+               'users.type_user',
+               'users.id as userId',
+               'users.action',
+               'agent_currencies.balance',
+           ])
+           ->join('site.users', 'agents.user_id', '=', 'users.id')
+           ->join('site.agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+           ->where('agents.owner_id', $userAuthId)
+           ->where('agent_currencies.currency_iso', $currency)
+           ->where('users.whitelabel_id', $whitelabelId)
+           ->get();
+
+        $playerQuery = DB::table('site.agents')
+            ->select([
+                'users.username',
+                'users.type_user',
+                'users.id as userId',
+                'users.action',
+                'agent_currencies.balance',
+                'site.agent_user.agent_id as owner_id',
+                'agent_currencies.currency_iso as currency',
+                'users.status',
+            ])
+            ->join('site.agent_user', 'site.agents.id', '=', 'site.agent_user.agent_id')
+            ->join('users', 'site.agent_user.user_id', '=', 'users.id')
+            ->leftJoin('site.agent_currencies', 'site.agents.id', '=', 'agent_currencies.agent_id')
+            ->where('site.agents.user_id', $userAuthId)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
-            ->orderBy('users.type_user')
-            ->orderBy('users.username')
-            ->addBinding(3, 'select');
+            ->get();
 
-        $draw   = request('draw', 1);
-        $start  = request('start', 0);
-
-        $result = $query->paginate($perPage, ['*'], 'page', ($start / $perPage) + 1);
-
-        return [
-            'draw'            => $draw,
-            'recordsTotal'    => $result->total(),
-            'recordsFiltered' => $result->total(),
-            'data'            => $result->map(function ($item) {
-                return [
-                    $item->username,
-                    $item->type_user,
-                    $item->userId,
-                    ActionUser::getName($item->action),
-                    number_format($item->balance, 2, '.','.'),
-                ];
-            })->toArray(),
-        ];
+        dd($playerQuery);
     }
 
 
