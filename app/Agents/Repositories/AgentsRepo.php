@@ -549,6 +549,7 @@ class AgentsRepo
         $length = $request->input('length', 10);
         $searchValue = $request->input('search.value');
 
+        // Consulta para obtener agentes
         $agentQuery = User::select([
             'users.username',
             'users.type_user',
@@ -563,11 +564,11 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where(function ($query) use ($searchValue) {
-                $query->where('users.username', 'like', "%$searchValue%");
+                $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
             })
             ->orderBy('users.username');
 
-
+        // Consulta para obtener jugadores
         $playerQuery = User::select([
             'users.username',
             'users.type_user',
@@ -582,11 +583,17 @@ class AgentsRepo
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
             ->where(function ($query) use ($searchValue) {
-                $query->where('users.username', 'like', "%$searchValue%");
+                $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
             })
             ->orderBy('users.username');
 
-        $combinedResults = $agentQuery->union($playerQuery)->get();
+        // Obtener resultados de agentes y jugadores por separado
+        $agentResults = $agentQuery->get();
+        $playerResults = $playerQuery->get();
+
+        // Combinar resultados en el formato correcto
+        $combinedResults = $agentResults->concat($playerResults);
+
         $resultCount = $combinedResults->count();
         $slicedResults = $combinedResults->slice($start)->take($length);
 
@@ -607,6 +614,7 @@ class AgentsRepo
             'data'            => $formattedResults->toArray(),
         ];
     }
+
 
 
 
