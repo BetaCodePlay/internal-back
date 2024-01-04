@@ -566,7 +566,9 @@ class AgentsRepo
             ->where(function ($query) use ($searchValue) {
                 $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
             })
-            ->orderBy('users.username');
+            ->orderBy('users.username')
+            ->get()
+            ->toArray();
 
         // Consulta para obtener jugadores
         $playerQuery = User::select([
@@ -585,35 +587,34 @@ class AgentsRepo
             ->where(function ($query) use ($searchValue) {
                 $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
             })
-            ->orderBy('users.username');
+            ->orderBy('users.username')
+            ->get()
+            ->toArray();
 
-        // Obtener resultados de agentes y jugadores por separado
-        $agentResults = $agentQuery->get();
-        $playerResults = $playerQuery->get();
+        // Combinar resultados de agentes y jugadores en el formato correcto
+        $combinedResults = array_merge($agentQuery, $playerQuery);
 
-        // Combinar resultados en el formato correcto
-        $combinedResults = $agentResults->concat($playerResults);
+        $resultCount = count($combinedResults);
+        $slicedResults = array_slice($combinedResults, $start, $length);
 
-        $resultCount = $combinedResults->count();
-        $slicedResults = $combinedResults->slice($start)->take($length);
-
-        $formattedResults = $slicedResults->map(function ($item) {
+        $formattedResults = array_map(function ($item) {
             return [
-                $item->username,
-                $item->type_user,
-                $item->id,
-                ActionUser::getName($item->action),
-                number_format($item->balance, 2, '.', ''),
+                $item['username'],
+                $item['type_user'],
+                $item['id'],
+                ActionUser::getName($item['action']),
+                number_format($item['balance'], 2, '.', ''),
             ];
-        });
+        }, $slicedResults);
 
         return [
             'draw'            => (int) $draw,
             'recordsTotal'    => $resultCount,
             'recordsFiltered' => $resultCount,
-            'data'            => $formattedResults->toArray(),
+            'data'            => $formattedResults,
         ];
     }
+
 
 
 
