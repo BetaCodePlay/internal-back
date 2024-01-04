@@ -638,7 +638,16 @@ class AgentsRepo
             ->where('agents.owner_id', $userAuthId)
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId)
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                return [
+                    $item->username,
+                    $item->type_user,
+                    $item->userId,
+                    ActionUser::getName($item->action),
+                    number_format($item->balance, 2, '.', '.'),
+                ];
+            });
 
         $playerQuery = DB::table('site.agents')
             ->select([
@@ -657,9 +666,18 @@ class AgentsRepo
             ->where('site.agents.user_id', $userAuthId)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                return [
+                    $item->username,
+                    $item->type_user,
+                    $item->userId,
+                    ActionUser::getName($item->action),
+                    number_format($item->balance, 2, '.', '.'),
+                ];
+            });
 
-
+        // Combina los resultados de agentes y jugadores
         $combinedResults = $agentQuery->concat($playerQuery);
 
         // Paginación
@@ -672,18 +690,9 @@ class AgentsRepo
             'draw' => $draw,
             'recordsTotal' => $combinedResults->count(),
             'recordsFiltered' => $combinedResults->count(),
-            'data' => $slicedResults->map(function ($item) {
-                return [
-                    $item->username,
-                    $item->type_user,
-                    $item->userId,
-                    ActionUser::getName($item->action),
-                    number_format($item->balance, 2, '.', '.'),
-                ];
-            })->toArray(),
+            'data' => $slicedResults->values()->toArray(),
         ];
     }
-
 
     public function getDirectChildrenEloquentOld(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 100)
     {
