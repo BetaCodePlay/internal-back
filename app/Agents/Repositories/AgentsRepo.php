@@ -549,7 +549,7 @@ class AgentsRepo
         $length = $request->input('length', 10);
         $searchValue = $request->input('search.value');
 
-        $query = User::select([
+        $agentQuery = User::select([
             'users.username',
             'users.type_user',
             'users.id',
@@ -563,16 +563,34 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where(function ($query) use ($searchValue) {
-                $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
+                $query->where('users.username', 'like', "%$searchValue%");
             })
             ->orderBy('users.username');
 
-        $resultCount = $query->count();
-        $query->skip($start)->take($length);
 
-        $results = $query->get();
+        $playerQuery = User::select([
+            'users.username',
+            'users.type_user',
+            'users.id',
+            'users.action',
+            'agent_currencies.balance',
+        ])
+            ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
+            ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.user_id', $userAuthId)
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%");
+            })
+            ->orderBy('users.username');
 
-        $formattedResults = $results->map(function ($item) {
+        $combinedResults = $agentQuery->union($playerQuery)->get();
+        $resultCount = $combinedResults->count();
+        $slicedResults = $combinedResults->slice($start)->take($length);
+
+        $formattedResults = $slicedResults->map(function ($item) {
             return [
                 $item->username,
                 $item->type_user,
@@ -589,6 +607,7 @@ class AgentsRepo
             'data'            => $formattedResults->toArray(),
         ];
     }
+
 
 
     /**
