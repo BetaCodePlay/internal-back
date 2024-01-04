@@ -585,7 +585,7 @@ class AgentsRepo
         ];
     }
 
-    public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
+    public function getDirectChildrenGuia(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
         $agentQuery  = DB::table('site.agents')
            ->select([
@@ -621,7 +621,67 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->get();
 
-        dd($playerQuery);
+    }
+
+    public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
+    {
+        $agentQuery = DB::table('site.agents')
+            ->select([
+                'users.username',
+                'users.type_user',
+                'users.id as userId',
+                'users.action',
+                'agent_currencies.balance',
+            ])
+            ->join('site.users', 'agents.user_id', '=', 'users.id')
+            ->join('site.agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.owner_id', $userAuthId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->get();
+
+        $playerQuery = DB::table('site.agents')
+            ->select([
+                'users.username',
+                'users.type_user',
+                'users.id as userId',
+                'users.action',
+                'agent_currencies.balance',
+                'site.agent_user.agent_id as owner_id',
+                'agent_currencies.currency_iso as currency',
+                'users.status',
+            ])
+            ->join('site.agent_user', 'site.agents.id', '=', 'site.agent_user.agent_id')
+            ->join('users', 'site.agent_user.user_id', '=', 'users.id')
+            ->leftJoin('site.agent_currencies', 'site.agents.id', '=', 'agent_currencies.agent_id')
+            ->where('site.agents.user_id', $userAuthId)
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->get();
+
+
+        $combinedResults = $agentQuery->concat($playerQuery);
+
+        // Paginación
+        $draw = request('draw', 1);
+        $start = request('start', 0);
+
+        $slicedResults = $combinedResults->slice($start)->take($perPage);
+
+        return [
+            'draw' => $draw,
+            'recordsTotal' => $combinedResults->count(),
+            'recordsFiltered' => $combinedResults->count(),
+            'data' => $slicedResults->map(function ($item) {
+                return [
+                    $item->username,
+                    $item->type_user,
+                    $item->userId,
+                    ActionUser::getName($item->action),
+                    number_format($item->balance, 2, '.', '.'),
+                ];
+            })->toArray(),
+        ];
     }
 
 
