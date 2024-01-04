@@ -99,6 +99,18 @@
             <div class="loading-style"></div>
         </div>
 
+        <div class="d-none" id="user-buttons">
+            <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">{{ _i('Lock profile') }}</a></li>
+                <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
+            </ul>
+        </div>
     </div>
 @endsection
 

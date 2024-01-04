@@ -18,23 +18,8 @@ class Roles {
             fixedHeader: true,
             responsive: true,
             fnCreatedRow: function (nRow, aData, iDataIndex) {
-                let options = '<div class="d-inline-block dropdown">\n' +
-                    '<button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">\n' +
-                    '    <i class="fa-solid fa-ellipsis-vertical"></i>\n' +
-                    '</button>\n' +
-                    '<ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">\n' +
-                    '   <li><a class="dropdown-item" href="#">View profile</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">Add role</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">Reset password</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">Lock profile</a></li>\n' +
-                    '   <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">Balance adjustment</a></li>\n' +
-                    '</ul>\n' +
-                    '</div>\n' +
-                    '\n' +
-                    '<a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>';
-
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
-                $('td:eq(5)', nRow).addClass('text-right').html(options);
+                $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html($('#user-buttons').html());
             }
         });
 
