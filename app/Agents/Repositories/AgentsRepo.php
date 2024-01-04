@@ -540,75 +540,56 @@ class AgentsRepo
      * @param int $userAuthId
      * @param string $currency
      * @param int $whitelabelId
-     * @param int $perPage
      * @return array
      */
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10): array
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
         $draw = $request->input('draw', 1);
         $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+        $searchValue = $request->input('search.value');
 
-        $agentQuery = User::join('agents', 'users.id', '=', 'agents.user_id')
+        $query = User::select([
+            'users.username',
+            'users.type_user',
+            'users.id',
+            'users.action',
+            'agent_currencies.balance',
+        ])
+            ->join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->where('agents.owner_id', $userAuthId)
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId)
-            ->orderBy('users.username') // Ordenar por username
-            ->get([
-                'users.username',
-                'users.type_user',
-                'users.id',
-                'users.action',
-                'agent_currencies.balance',
-            ])
-            ->map(function ($item) {
-                return [
-                    $item->username,
-                    $item->type_user,
-                    $item->id,
-                    $item->action,
-                    number_format($item->balance, 2, '.', ''),
-                ];
-            });
+            ->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%"); // Filtro por username
+            })
+            ->orderBy('users.username');
 
-        $playerQuery = User::join('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
-            ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where('agents.user_id', $userAuthId)
-            ->where('users.whitelabel_id', $whitelabelId)
-            ->where('agent_currencies.currency_iso', $currency)
-            ->orderBy('users.username') // Ordenar por username
-            ->get([
-                'users.username',
-                'users.type_user',
-                'users.id',
-                'users.action',
-                'agent_currencies.balance',
-            ])
-            ->map(function ($item) {
-                return [
-                    $item->username,
-                    $item->type_user,
-                    $item->id,
-                    $item->action,
-                    number_format($item->balance, 2, '.', ''),
-                ];
-            });
+        $resultCount = $query->count();
+        $query->skip($start)->take($length);
 
-        $combinedResults = array_merge($agentQuery->toArray(), $playerQuery->toArray());
+        $results = $query->get();
 
-        $resultCount = count($combinedResults);
-
-        $slicedResults = array_slice($combinedResults, $start, $perPage);
+        $formattedResults = $results->map(function ($item) {
+            return [
+                $item->username,
+                $item->type_user,
+                $item->id,
+                ActionUser::getName($item->action),
+                number_format($item->balance, 2, '.', ''),
+            ];
+        });
 
         return [
-            'draw'            => $draw,
+            'draw'            => (int) $draw,
             'recordsTotal'    => $resultCount,
             'recordsFiltered' => $resultCount,
-            'data'            => $slicedResults,
+            'data'            => $formattedResults->toArray(),
         ];
     }
+
 
     /**
      * Get searcg agents by owner
