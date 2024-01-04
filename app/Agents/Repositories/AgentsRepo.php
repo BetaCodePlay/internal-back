@@ -578,7 +578,7 @@ class AgentsRepo
                     $item->type_user,
                     $item->userId,
                     $item->status,
-                    $item->balance,
+                    number_format($item->balance, 2),
                 ];
             })->toArray(),
         ];
