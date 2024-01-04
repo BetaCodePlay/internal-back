@@ -539,14 +539,14 @@ class AgentsRepo
      */
     public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
-        // Obtener directamente los hijos (tanto agentes como jugadores) del nivel 1
         $query = User::select(
             'users.username',
             'users.type_user',
+            'users.id as userId',
             DB::raw('(CASE WHEN agents.owner_id IS NOT NULL THEN agents.owner_id WHEN agent_user.agent_id IS NOT NULL THEN agent_user.agent_id ELSE ? END) as owner_id'),
             'agent_currencies.currency_iso as currency',
             'users.status',
-            DB::raw('0 as level') // Nivel 0 para los hijos directos
+            DB::raw('0 as level')
         )
             ->leftJoin('site.agent_user', 'users.id', '=', 'agent_user.user_id')
             ->leftJoin('site.agents as agents', 'users.id', '=', 'agents.user_id')
@@ -554,13 +554,13 @@ class AgentsRepo
             ->where(function ($query) use ($userAuthId) {
                 $query->where('agent_user.agent_id', $userAuthId)
                     ->orWhere('agents.owner_id', $userAuthId)
-                    ->orWhere('users.id', $userAuthId); // Incluir al usuario autenticado como hijo directo
+                    ->orWhere('users.id', $userAuthId);
             })
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
             ->orderBy('users.type_user')
             ->orderBy('users.username')
-            ->addBinding(3, 'select'); // Agregar el valor predeterminado con addBinding
+            ->addBinding(3, 'select');
 
         $draw   = request('draw', 1);
         $start  = request('start', 0);
@@ -575,7 +575,7 @@ class AgentsRepo
                 return [
                     $item->username,
                     $item->type_user,
-                    $item->owner_id,
+                    $item->userId,
                     $item->currency,
                     $item->status,
                     $item->level,
