@@ -537,7 +537,7 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
+    public function getDirectChildrenOld(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
     {
         $query = User::select(
             'users.username',
@@ -584,6 +584,61 @@ class AgentsRepo
             })->toArray(),
         ];
     }
+
+    public function getDirectChildren(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10)
+    {
+        $query = User::select(
+            'users.username',
+            'users.type_user',
+            'users.id as userId',
+            'users.action',
+            'agent_currencies.balance',
+            DB::raw('(CASE WHEN agents.owner_id IS NOT NULL THEN agents.owner_id WHEN agent_user.agent_id IS NOT NULL THEN agent_user.agent_id ELSE ? END) as owner_id'),
+            'agent_currencies.currency_iso as currency',
+            'users.status',
+            DB::raw('0 as level')
+        )
+            ->leftJoin('site.agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->leftJoin('site.agents as agents', 'users.id', '=', 'agents.user_id')
+            ->leftJoin('site.agent_currencies as agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where(function ($query) use ($userAuthId) {
+                $query->where('agent_user.agent_id', $userAuthId)
+                    ->orWhere('agents.owner_id', $userAuthId)
+                    ->orWhere('users.id', $userAuthId);
+            })
+            ->orWhereIn('users.id', function ($subQuery) use ($userAuthId) {
+                $subQuery->select('au.user_id')
+                    ->from('site.agent_user as au')
+                    ->join('site.agents as a', 'au.agent_id', '=', 'a.id')
+                    ->where('a.user_id', $userAuthId);
+            })
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->orderBy('users.type_user')
+            ->orderBy('users.username')
+            ->addBinding(3, 'select');
+
+        $draw   = request('draw', 1);
+        $start  = request('start', 0);
+
+        $result = $query->paginate($perPage, ['*'], 'page', ($start / $perPage) + 1);
+
+        return [
+            'draw'            => $draw,
+            'recordsTotal'    => $result->total(),
+            'recordsFiltered' => $result->total(),
+            'data'            => $result->map(function ($item) {
+                return [
+                    $item->username,
+                    $item->type_user,
+                    $item->userId,
+                    ActionUser::getName($item->action),
+                    number_format($item->balance, 2, '.', ','),
+                ];
+            })->toArray(),
+        ];
+    }
+
 
 
     public function getDirectChildrenEloquentOld(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 100)
