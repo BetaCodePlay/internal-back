@@ -602,18 +602,21 @@ class AgentsRepo
             ->leftJoin('site.agents as agents', 'users.id', '=', 'agents.user_id')
             ->leftJoin('site.agent_currencies as agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->where(function ($query) use ($userAuthId) {
-                $query->where('agent_user.agent_id', $userAuthId)
-                    ->orWhere('agents.owner_id', $userAuthId);
-            })
-            ->orWhere(function ($query) use ($userAuthId) {
-                $query->where('users.id', $userAuthId)
-                    ->whereNotExists(function ($subQuery) use ($userAuthId) {
-                        $subQuery->select(DB::raw(1))
-                            ->from('site.agent_user as au')
-                            ->join('site.agents as a', 'au.agent_id', '=', 'a.id')
-                            ->where('a.user_id', $userAuthId)
-                            ->whereRaw('au.user_id = users.id');
-                    });
+                $query->where(function ($subQuery) use ($userAuthId) {
+                    $subQuery->where('agent_user.agent_id', $userAuthId)
+                        ->orWhere('agents.owner_id', $userAuthId);
+                })
+                    ->orWhere(function ($subQuery) use ($userAuthId) {
+                        $subQuery->where('users.id', $userAuthId)
+                            ->whereNotExists(function ($subSubQuery) use ($userAuthId) {
+                                $subSubQuery->select(DB::raw(1))
+                                    ->from('site.agent_user as au')
+                                    ->join('site.agents as a', 'au.agent_id', '=', 'a.id')
+                                    ->where('a.user_id', $userAuthId)
+                                    ->whereRaw('au.user_id = users.id');
+                            });
+                    })
+                    ->where('users.id', '<>', $userAuthId); // Excluir al usuario autenticado
             })
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
@@ -641,7 +644,6 @@ class AgentsRepo
             })->toArray(),
         ];
     }
-
 
 
     public function getDirectChildrenEloquentOld(int $userAuthId, string $currency, int $whitelabelId, int $perPage = 100)
