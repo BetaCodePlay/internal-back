@@ -543,6 +543,7 @@ class AgentsRepo
             'users.username',
             'users.type_user',
             'users.id as userId',
+            'agent_currencies.balance',
             DB::raw('(CASE WHEN agents.owner_id IS NOT NULL THEN agents.owner_id WHEN agent_user.agent_id IS NOT NULL THEN agent_user.agent_id ELSE ? END) as owner_id'),
             'agent_currencies.currency_iso as currency',
             'users.status',
@@ -576,9 +577,8 @@ class AgentsRepo
                     $item->username,
                     $item->type_user,
                     $item->userId,
-                    $item->currency,
                     $item->status,
-                    $item->level,
+                    $item->balance,
                 ];
             })->toArray(),
         ];
