@@ -1,14 +1,11 @@
 import {} from "../../commons/js/core";
-
 class Roles {
     initTableRoles() {
-        /*$('#table-roles').DataTable( {
-            fixedHeader: true,
-            responsive: true
-        });*/
+        let table = $('#table-roles');
+        let route = table.data('route');
 
-        $('#table-roles').DataTable({
-            ajax: 'https://dev-back.bestcasinos.lat/agents/get/direct-children?draw=2&start=0',
+        table.DataTable({
+            ajax: route,
             processing: true,
             serverSide: true,
             columnDefs: [{
@@ -20,16 +17,10 @@ class Roles {
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">'+ aData[1] +'</span>');
+                $('td:eq(4)', nRow).html('$'+ aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html($('#user-buttons').html());
             }
         });
-
-        /*"fnCreatedRow": function(nRow,aData,iDataIndex) {
-            var new_price = parseFloat(aData.price) + 0.1 * parseFloat(aData.price);
-            $('td:eq(3)',nRow).html(new_price);
-        }
-
-        $(nRow).attr('class', 'newClass');*/
 
         $('.table-load').addClass('table-complete');
         $('.page-role .loading-style').hide();
