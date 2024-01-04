@@ -603,14 +603,17 @@ class AgentsRepo
             ->leftJoin('site.agent_currencies as agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->where(function ($query) use ($userAuthId) {
                 $query->where('agent_user.agent_id', $userAuthId)
-                    ->orWhere('agents.owner_id', $userAuthId)
-                    ->orWhere('users.id', $userAuthId);
+                    ->orWhere('agents.owner_id', $userAuthId);
             })
-            ->orWhereIn('users.id', function ($subQuery) use ($userAuthId) {
-                $subQuery->select('au.user_id')
-                    ->from('site.agent_user as au')
-                    ->join('site.agents as a', 'au.agent_id', '=', 'a.id')
-                    ->where('a.user_id', $userAuthId);
+            ->orWhere(function ($query) use ($userAuthId) {
+                $query->where('users.id', $userAuthId)
+                    ->whereNotExists(function ($subQuery) use ($userAuthId) {
+                        $subQuery->select(DB::raw(1))
+                            ->from('site.agent_user as au')
+                            ->join('site.agents as a', 'au.agent_id', '=', 'a.id')
+                            ->where('a.user_id', $userAuthId)
+                            ->whereRaw('au.user_id = users.id');
+                    });
             })
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
@@ -633,7 +636,7 @@ class AgentsRepo
                     $item->type_user,
                     $item->userId,
                     ActionUser::getName($item->action),
-                    number_format($item->balance, 2, '.', ','),
+                    number_format($item->balance, 2, '.','.'),
                 ];
             })->toArray(),
         ];
