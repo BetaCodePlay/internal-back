@@ -19,6 +19,7 @@ class Roles {
             responsive: true,
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
+                $('td:eq(1)', nRow).html('<span class="deco-rol">'+ aData[1] +'</span>');
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html($('#user-buttons').html());
             }
         });
