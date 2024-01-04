@@ -221,6 +221,10 @@ class AgentsRepo
                     ->first();
     }
 
+    /**
+     * @param int $user
+     * @return mixed
+     */
     public function statusActionByUser(int $user)
     {
         return User::select('username', 'status', 'action', 'type_user')
@@ -530,22 +534,18 @@ class AgentsRepo
         );
     }
 
+
     /**
+     * @param Request $request
      * @param int $userAuthId
      * @param string $currency
      * @param int $whitelabelId
      * @param int $perPage
      * @return array
      */
-    public function getDirectChildren(
-        Request $request,
-        int $userAuthId,
-        string $currency,
-        int $whitelabelId,
-        int $perPage = 10
-    )
-    : array {
-        $draw  = $request->input('draw', 1);
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId, int $perPage = 10): array
+    {
+        $draw = $request->input('draw', 1);
         $start = $request->input('start', 0);
 
         $agentQuery = User::join('agents', 'users.id', '=', 'agents.user_id')
@@ -554,14 +554,23 @@ class AgentsRepo
             ->where('agents.owner_id', $userAuthId)
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId)
-            ->orderBy('users.username')
+            ->orderBy('users.username') // Ordenar por username
             ->get([
                 'users.username',
                 'users.type_user',
-                'users.id as userId',
+                'users.id',
                 'users.action',
                 'agent_currencies.balance',
-            ]);
+            ])
+            ->map(function ($item) {
+                return [
+                    $item->username,
+                    $item->type_user,
+                    $item->id,
+                    $item->action,
+                    number_format($item->balance, 2, '.', ''),
+                ];
+            });
 
         $playerQuery = User::join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
@@ -569,18 +578,29 @@ class AgentsRepo
             ->where('agents.user_id', $userAuthId)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
-            ->orderBy('users.username')
+            ->orderBy('users.username') // Ordenar por username
             ->get([
                 'users.username',
                 'users.type_user',
-                'users.id as userId',
+                'users.id',
                 'users.action',
                 'agent_currencies.balance',
-            ]);
+            ])
+            ->map(function ($item) {
+                return [
+                    $item->username,
+                    $item->type_user,
+                    $item->id,
+                    $item->action,
+                    number_format($item->balance, 2, '.', ''),
+                ];
+            });
 
-        $combinedResults = $agentQuery->concat($playerQuery);
-        $resultCount     = $combinedResults->count();
-        $slicedResults   = $combinedResults->slice($start)->take($perPage);
+        $combinedResults = array_merge($agentQuery->toArray(), $playerQuery->toArray());
+
+        $resultCount = count($combinedResults);
+
+        $slicedResults = array_slice($combinedResults, $start, $perPage);
 
         return [
             'draw'            => $draw,
