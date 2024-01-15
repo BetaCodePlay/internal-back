@@ -81,10 +81,30 @@
                margin-right: 5px;
             }
 
+            .wrap-input-login {
+                position: relative;
+
+                .btn-show-pass {
+                    font-size: 18px;
+                    color: #999;
+                    display: flex;
+                    align-items: center;
+                    position: absolute;
+                    padding: 8px;
+                    cursor: pointer;
+                    border-radius: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: 3px;
+                    transition: 0.15s;
+                }
+            }
+
             .form-control {
                 background: #474747;
                 color: #fff;
                 border-radius: 8px;
+                height: 2.85rem;
             }
 
             .select2-container--default {
@@ -92,6 +112,7 @@
                     background: #474747;
                     border-color: #fff;
                     border-radius: 8px;
+                    height: 2.85rem;
 
                     .select2-selection__rendered {
                         color: #fff;
