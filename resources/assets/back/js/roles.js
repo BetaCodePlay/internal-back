@@ -26,7 +26,7 @@ class Roles {
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
             initComplete: function() {
-
+                $(this.api().table().container()).find('input').val('');
             },
         });
 
@@ -40,12 +40,6 @@ class Roles {
             $('.username-form').html($username);
             Roles.globalusername = $username;
             Roles.globaluserid = $userid;
-        });
-
-        $(window).on('load', function (){
-            setTimeout(function (){
-                $('input').val('');
-            }, 100)
         });
     }
 
