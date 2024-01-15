@@ -13,7 +13,7 @@
         <div class="page-top">
             <div class="search-input">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="form-control" placeholder="{{ _i('Search') }}" name="searchrole" autocomplete="nope">
+                <input type="text" class="form-control" placeholder="{{ _i('Search') }}">
             </div>
             <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#role-create"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
