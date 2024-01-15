@@ -4,11 +4,11 @@ class Roles {
     static globaluserid;
 
     initTableRoles() {
-        let table = $('#table-roles');
-        let route = table.data('route');
+        let $table = $('#table-roles');
+        let $route = $table.data('route');
 
-        table.DataTable({
-            ajax: route,
+        $table.DataTable({
+            ajax: $route,
             processing: true,
             serverSide: true,
             columnDefs: [{
@@ -31,12 +31,12 @@ class Roles {
         $('.page-role .loading-style').hide();
 
         $(document).on('click','.currentDataRole', function (){
-            let username = $(this).data('username');
-            let userid = $(this).data('userid');
+            let $username = $(this).data('username');
+            let $userid = $(this).data('userid');
 
-            $('.username-form').html(username);
-            Roles.globalusername = username;
-            Roles.globaluserid = userid;
+            $('.username-form').html($username);
+            Roles.globalusername = $username;
+            Roles.globaluserid = $userid;
         });
     }
 
@@ -46,24 +46,29 @@ class Roles {
 
         $(document).on('click', button, function () {
             let $this = $(this);
+            let $password = $('#password-role-reset');
             let $data = {
                 userId: Roles.globaluserid,
-                newPassword: $('#password-role-reset').val(),
+                newPassword: $password.val(),
             }
 
-            $this.button('loading');
+            if($password.val().length >= 8) {
+                $this.button('loading');
 
-            $.ajax({
-                url: route,
-                method: 'post',
-                data: $data
-            }).done(function (json) {
-                console.log(json)
-            }).fail(function (json) {
-                console.log(json)
-            }).always(function () {
-                $this.button('reset');
-            });
+                $.ajax({
+                    url: route,
+                    method: 'post',
+                    data: $data
+                }).done(function (json) {
+                    console.log(json)
+                }).fail(function (json) {
+                    console.log(json)
+                }).always(function () {
+                    $this.button('reset');
+                });
+            } else {
+                Toastr.notifyToastr('Error', $password.attr('placeholder'), 'error');
+            }
         });
     }
 }
