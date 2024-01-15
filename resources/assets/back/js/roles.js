@@ -34,19 +34,37 @@ class Roles {
             let username = $(this).data('username');
             let userid = $(this).data('userid');
 
-            $('#globalActionID').data('userid', userid).data('username', username);
             $('.username-form').html(username);
-
             Roles.globalusername = username;
             Roles.globaluserid = userid;
-
-            console.log(Roles.globalusername + '  ' + Roles.globaluserid);
         });
     }
 
     userResetPassword() {
-        let button = $('.resetUserPassword');
+        let button = '.resetUserPassword';
+        let route = $(button).data('route');
 
+        $(document).on('click', button, function () {
+            let $this = $(this);
+            let $data = {
+                userId: Roles.globaluserid = userid,
+                newPassword: $('#password-role-reset').val(),
+            }
+
+            $this.button('loading');
+
+            $.ajax({
+                url: route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                console.log(json)
+            }).fail(function (json) {
+                console.log(json)
+            }).always(function () {
+                $this.button('reset');
+            });
+        });
     }
 }
 
