@@ -325,6 +325,10 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function requestReset(Request $request): Response
     {
         try {
