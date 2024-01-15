@@ -53,5 +53,5 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     ]);
 
     Route::post('request-password', [AuthController::class, 'requestReset'])
-        ->name('password.request');
+        ->name('request.password');
 });
