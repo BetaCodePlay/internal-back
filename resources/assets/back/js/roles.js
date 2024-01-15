@@ -1,5 +1,8 @@
 import {} from "../../commons/js/core";
 class Roles {
+    static globalusername;
+    static globaluserid;
+
     initTableRoles() {
         let table = $('#table-roles');
         let route = table.data('route');
@@ -33,6 +36,11 @@ class Roles {
 
             $('#globalActionID').data('userid', userid).data('username', username);
             $('.username-form').html(username);
+
+            Roles.globalusername = username;
+            Roles.globaluserid = userid;
+
+            console.log(Roles.globalusername + '  ' + Roles.globaluserid);
         });
     }
 
