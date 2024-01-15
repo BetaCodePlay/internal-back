@@ -60,9 +60,9 @@ class Roles {
                     method: 'post',
                     data: $data
                 }).done(function (json) {
-                    console.log(json)
+                    Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 }).fail(function (json) {
-                    console.log(json)
+                    Roles.errorResponse(json);
                 }).always(function () {
                     $this.button('reset');
                 });
@@ -70,6 +70,15 @@ class Roles {
                 Toastr.notifyToastr('Error', $password.attr('placeholder'), 'error');
             }
         });
+    }
+
+    errorResponse(json) {
+        let array = Object.values(json.responseJSON.errors);
+        let title = json.responseJSON.message;
+
+        $.each(array, function (index, value) {
+            Toastr.notifyToastr(title, value, 'error');
+        })
     }
 }
 
