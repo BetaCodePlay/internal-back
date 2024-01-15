@@ -24,7 +24,10 @@ class Roles {
                 $('td:eq(1)', nRow).html('<span class="deco-rol">'+ aData[1] +'</span>');
                 $('td:eq(4)', nRow).html('$'+ aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
-            }
+            },
+            initComplete: function() {
+
+            },
         });
 
         $('.table-load').addClass('table-complete');
@@ -38,6 +41,8 @@ class Roles {
             Roles.globalusername = $username;
             Roles.globaluserid = $userid;
         });
+
+        $('input').val('');
     }
 
     userResetPassword() {
@@ -60,9 +65,9 @@ class Roles {
                     method: 'post',
                     data: $data
                 }).done(function (json) {
-                    console.log(json)
+                    Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 }).fail(function (json) {
-                    console.log(json)
+                    Roles.errorResponse(json);
                 }).always(function () {
                     $this.button('reset');
                 });
@@ -70,6 +75,15 @@ class Roles {
                 Toastr.notifyToastr('Error', $password.attr('placeholder'), 'error');
             }
         });
+    }
+
+    static errorResponse(json) {
+        let array = Object.values(json.responseJSON.errors);
+        let title = json.responseJSON.message;
+
+        $.each(array, function (index, value) {
+            Toastr.notifyToastr(title, value, 'error');
+        })
     }
 }
 
