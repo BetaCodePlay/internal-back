@@ -16,13 +16,12 @@
                             <div class="form-group">
                                 <label>{{ _i('Password') }}</label>
                                 <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
-						        <span class="btn-show-pass">
-							        <i class="fa fa-eye-slash"></i>
-						        </span>
-                                    <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
+						            <span class="btn-show-pass">
+							            <i class="fa fa-eye-slash"></i>
+						            </span>
+                                    <input class="form-control" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
