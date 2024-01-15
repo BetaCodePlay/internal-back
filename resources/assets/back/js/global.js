@@ -43,6 +43,4 @@ $(function () {
             showPass = 0;
         }
     });
-
-    console.log('global.js')
 });

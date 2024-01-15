@@ -30,7 +30,7 @@
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
                     {{ _i('Cancel') }}
                 </button>
-                <button type="button" class="btn btn-theme">
+                <button type="button" class="btn btn-theme resetUserPassword" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Resetting password') }}...">
                     {{ _i('Perfect! reset key') }}
                 </button>
             </div>
