@@ -28,8 +28,8 @@ class Roles {
         $('.table-load').addClass('table-complete');
         $('.page-role .loading-style').hide();
 
-        $(document).on('click','', function (){
-
+        $(document).on('click','[data-target="#role-password-reset"]', function (){
+            $('#globalActionID').data('id', $(this).data('id'))
         });
     }
 
