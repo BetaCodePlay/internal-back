@@ -24,7 +24,10 @@ class Roles {
                 $('td:eq(1)', nRow).html('<span class="deco-rol">'+ aData[1] +'</span>');
                 $('td:eq(4)', nRow).html('$'+ aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
-            }
+            },
+            initComplete: function() {
+                $(this.api().table().container()).find('input').attr('autocomplete', 'off');
+            },
         });
 
         $('.table-load').addClass('table-complete');
