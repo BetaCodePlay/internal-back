@@ -105,6 +105,10 @@
                 color: #fff;
                 border-radius: 8px;
                 height: 2.75rem;
+
+                &[name="password"] {
+                    padding-right: 35px;
+                }
             }
 
             .select2-container--default {
