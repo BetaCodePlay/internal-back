@@ -116,7 +116,7 @@
             <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
         </div>
     </div>
-    <div class="d-none" id="globalActionID" data-id=""></div>
+    <div class="d-none" id="globalActionID" data-userid="" data-username=""></div>
 @endsection
 
 @section('modals')

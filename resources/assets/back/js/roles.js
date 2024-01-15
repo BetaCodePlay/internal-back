@@ -28,7 +28,7 @@ class Roles {
         $('.page-role .loading-style').hide();
 
         $(document).on('click','[data-target="#role-password-reset"]', function (){
-            $('#globalActionID').data('id', $(this).data('id'))
+            $('#globalActionID').data('userid', $(this).data('userid')).data('username', $(this).data('username'));
         });
     }
 
