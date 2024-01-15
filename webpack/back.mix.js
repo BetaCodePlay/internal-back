@@ -8,6 +8,7 @@ mix.setPublicPath('public/back/');
 |--------------------------------------------------------------------------
 */
 mix.sass(
+    'resources/assets/commons/plugins/toastr/css/toastr.min.css',
     'resources/assets/back/scss/template.scss',
     'public/back/css/template.min.css'
 ).version();
@@ -61,6 +62,7 @@ mix.autoload({
         'resources/assets/back/js/main.js',
         'resources/assets/back/js/chat.js',
         'resources/assets/back/js/global.js',
+        'resources/assets/commons/plugins/toastr/js/toastr.min.js',
     ],
     'public/back/js/custom.min.js')
     .extract()
