@@ -26,7 +26,7 @@ class Roles {
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
             initComplete: function() {
-                $(this.api().table().container()).find('input').attr('autocomplete', 'new-text');
+
             },
         });
 
@@ -41,6 +41,8 @@ class Roles {
             Roles.globalusername = $username;
             Roles.globaluserid = $userid;
         });
+
+        $('input').val('');
     }
 
     userResetPassword() {
