@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AgentsController;
+use Illuminate\Support\Facades\Route;
+
+
 /**
  * Agents routes
  */
@@ -41,11 +45,8 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@getTreeUsers_format'
     ]);
 
-    Route::get('get/direct-children', [
-        'as' => 'agents.get.direct.children',
-        'uses' => 'AgentsController@getDirectChildren'
-    ]);
-
+    Route::get('get/direct-children/{username?}', [AgentsController::class, 'getDirectChildren'])
+        ->name('agents.get.direct.children');
 
     Route::get('create-user', [
         'as' => 'agents.create.user',
@@ -209,10 +210,8 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     ]);
 
     // Show role
-    Route::get('role', [
-        'as' => 'agents.role',
-        'uses' => 'AgentsController@role'
-    ]);
+    Route::get('role/{username?}', [AgentsController::class, 'role'])
+        ->name('agents.role');
 
     // Show dashboard
     Route::get('{token?}', [

@@ -541,12 +541,13 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
-    {
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId)
+    : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
         $searchValue = $request->input('search.value');
+        $userId      = $request->input('userId', $userAuthId);
 
         $agentQuery = User::select([
             'users.username',
@@ -558,7 +559,7 @@ class AgentsRepo
             ->join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->where('agents.owner_id', $userAuthId)
+            ->where('agents.owner_id', $userId)
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where(function ($query) use ($searchValue) {
@@ -578,7 +579,7 @@ class AgentsRepo
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where('agents.user_id', $userAuthId)
+            ->where('agents.user_id', $userId)
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency)
             ->where(function ($query) use ($searchValue) {

@@ -3315,7 +3315,7 @@ class AgentsController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function role()
+    public function role(string $username = '')
     {
         try {
             $authUser   = Auth::user();
@@ -3339,6 +3339,7 @@ class AgentsController extends Controller
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
                 'authUser'           => $authUser,
+                'username'           => $username
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
