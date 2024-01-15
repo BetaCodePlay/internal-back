@@ -27,7 +27,7 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
                         <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ _i('Reset password') }}</a></li>
+                        <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset" data-userid="{{ auth()->user()->id }}" data-username="{{ auth()->user()->username }}">{{ _i('Reset password') }}</a></li>
                         <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
                     </ul>
                 </div>
@@ -105,17 +105,18 @@
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">{{ _i('Lock profile') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
+                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></ li>
+                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
+                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
+                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">{{ _i('Lock profile') }}</a></li>
+                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
                 </ul>
             </div>
 
             <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
         </div>
     </div>
+    <div class="d-none" id="globalActionID" data-userid="" data-username=""></div>
 @endsection
 
 @section('modals')
@@ -131,6 +132,7 @@
         $(function () {
             let roles = new Roles();
             roles.initTableRoles();
+            roles.userResetPassword();
         });
     </script>
 @endsection

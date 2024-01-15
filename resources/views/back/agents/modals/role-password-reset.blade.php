@@ -19,7 +19,7 @@
 						            <span class="btn-show-pass">
 							            <i class="fa fa-eye-slash"></i>
 						            </span>
-                                    <input class="form-control" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
+                                    <input class="form-control" type="password" name="password" id="password-role-reset" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
                     {{ _i('Cancel') }}
                 </button>
-                <button type="button" class="btn btn-theme">
+                <button type="button" class="btn btn-theme resetUserPassword" data-route="{{ route('request.password') }}" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Resetting password') }}...">
                     {{ _i('Perfect! reset key') }}
                 </button>
             </div>
