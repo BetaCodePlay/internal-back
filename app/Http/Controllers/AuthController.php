@@ -329,23 +329,21 @@ class AuthController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function requestReset(Request $request): Response
-    {
+    public function requestReset(Request $request): Response {
         try {
-             $this->validate($request, [
-                 'userId'      => ['required'],
-                 'newPassword' => ['required', new Password()],
-             ]);
+            $this->validate($request, [
+                'userId'      => ['required'],
+                'newPassword' => ['required', new Password()],
+            ]);
 
             $userId = $request->input('userId');
-
-            $user = $this->usersRepo->find($userId);
+            $user   = $this->usersRepo->find($userId);
 
             if (! $user) {
                 return Utils::errorResponse(Codes::$not_found, [
-                    'title' => _i('User not found!'),
+                    'title'   => _i('User not found!'),
                     'message' => _i('The User not found'),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ]);
             }
 
