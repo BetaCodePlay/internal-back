@@ -325,7 +325,7 @@ class AuthController extends Controller
         }
     }
 
-    public function requestReset(Request $request)
+    public function requestReset(Request $request): Response
     {
         try {
              $this->validate($request, [
