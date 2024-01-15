@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Route;
+
 /**
  * Auth routes
  */
@@ -48,4 +51,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
         'as' => 'auth.logout',
         'uses' => 'AuthController@logout'
     ]);
+
+    Route::post('request-password', [AuthController::class, 'requestReset'])
+        ->name('password.request');
 });
