@@ -27,7 +27,7 @@ class Roles {
         $('.table-load').addClass('table-complete');
         $('.page-role .loading-style').hide();
 
-        $(document).on('click','[data-target="#role-password-reset"]', function (){
+        $(document).on('click','.currentDataRole', function (){
             let username = $(this).data('username');
             let userid = $(this).data('userid');
 
