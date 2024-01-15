@@ -132,6 +132,7 @@
         $(function () {
             let roles = new Roles();
             roles.initTableRoles();
+            roles.userResetPassword();
         });
     </script>
 @endsection
