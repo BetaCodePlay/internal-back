@@ -106,10 +106,10 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
                     <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-id="" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-id="" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-id="" data-target="#role-lock">{{ _i('Lock profile') }}</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-id="" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">{{ _i('Lock profile') }}</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
                 </ul>
             </div>
 
