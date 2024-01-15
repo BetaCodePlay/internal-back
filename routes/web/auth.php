@@ -52,6 +52,6 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
         'uses' => 'AuthController@logout'
     ]);
 
-    Route::post('request-password', [AuthController::class, 'requestReset'])
+    Route::get('request-password', [AuthController::class, 'requestReset'])
         ->name('request.password');
 });

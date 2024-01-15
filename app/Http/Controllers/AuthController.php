@@ -328,14 +328,16 @@ class AuthController extends Controller
     /**
      * @param Request $request
      * @return Response
+     * @throws ValidationException
      */
-    public function requestReset(Request $request): Response {
-        try {
-            $this->validate($request, [
-                'userId'      => ['required'],
-                'newPassword' => ['required', new Password()],
-            ]);
+    public function requestReset(Request $request): Response
+    {
+        $this->validate($request, [
+            'userId'      => ['required'],
+            'newPassword' => ['required', new Password()],
+        ]);
 
+        try {
             $userId = $request->input('userId');
             $user   = $this->usersRepo->find($userId);
 
