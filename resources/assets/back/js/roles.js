@@ -47,7 +47,7 @@ class Roles {
         $(document).on('click', button, function () {
             let $this = $(this);
             let $data = {
-                userId: Roles.globaluserid = userid,
+                userId: Roles.globaluserid,
                 newPassword: $('#password-role-reset').val(),
             }
 
