@@ -7,11 +7,9 @@ mix.setPublicPath('public/back/');
 | CSS
 |--------------------------------------------------------------------------
 */
-mix.styles([
-        'resources/assets/commons/plugins/toastr/css/toastr.min.css',
-    ],
-    'public/auth/css/custom.min.css')
-    .version();
+mix.styles(
+    'resources/assets/commons/plugins/toastr/css/toastr.min.css'
+).version();
 
 /*
 |--------------------------------------------------------------------------
