@@ -1,6 +1,6 @@
 import {swalError} from "../../commons/js/core";
 
-let jsHeader = $('#js-header');
+/*let jsHeader = $('#js-header');
 let authUserId = jsHeader.data('auth-user');
 let userType = jsHeader.data('user-type');
 
@@ -24,4 +24,25 @@ $.ajax({
     }
 }).fail(function (json) {
     swalError(json);
+});*/
+
+$(function () {
+    /*[ Show pass ]*/
+    let showPass = 0;
+    $(document).on('click', '.btn-show-pass', function(){
+        if(showPass === 0) {
+            $(this).next('input').attr('type','text');
+            $(this).find('i').removeClass('fa-eye-slash');
+            $(this).find('i').addClass('fa-eye');
+            showPass = 1;
+        }
+        else {
+            $(this).next('input').attr('type','password');
+            $(this).find('i').removeClass('fa-eye');
+            $(this).find('i').addClass('fa-eye-slash');
+            showPass = 0;
+        }
+    });
+
+    console.log('global.js')
 });
