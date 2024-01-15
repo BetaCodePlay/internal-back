@@ -31,7 +31,11 @@ class Roles {
             let username = $(this).data('username');
             let userid = $(this).data('userid');
 
-            $('#globalActionID').data('userid', userid).data('username', username);
+            console.log(username);
+            console.log(userid);
+            console.log('fsdfd');
+
+            $('#globalActionID').data('data-userid', userid).data('data-username', username);
             $('.username-form').html(username);
         });
     }
