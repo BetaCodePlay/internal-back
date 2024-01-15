@@ -42,7 +42,11 @@ class Roles {
             Roles.globaluserid = $userid;
         });
 
-        $('input').val('');
+        $(window).on('load', function (){
+            setTimeout(function (){
+                $('input').val('');
+            }, 100)
+        });
     }
 
     userResetPassword() {
