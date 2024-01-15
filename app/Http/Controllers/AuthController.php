@@ -43,6 +43,12 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AuthController extends Controller
 {
+
+    /**
+     * @param UsersRepo $usersRepo
+     */
+    public function __construct(private UsersRepo $usersRepo) { }
+
     /**
      * Authenticate users
      *
@@ -313,6 +319,39 @@ class AuthController extends Controller
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
 
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    public function requestReset(Request $request): Response
+    {
+        try {
+             $this->validate($request, [
+                 'userId'      => ['required'],
+                 'newPassword' => ['required', new Password()],
+             ]);
+
+            $userId = $request->input('userId');
+
+            $user = $this->usersRepo->find($userId);
+
+            if (! $user) {
+                return Utils::errorResponse(Codes::$not_found, [
+                    'title' => _i('User not found!'),
+                    'message' => _i('The User not found'),
+                    'close' => _i('Close')
+                ]);
+            }
+
+            $this->usersRepo->changePassword($userId, $request->input('newPassword'), ActionUser::$update_email);
+
+            return Utils::successResponse([
+                'title'   => _i('Password changed'),
+                'message' => _i('Your password has been changed successfully'),
+                'close'   => _i('Close')
+            ]);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
