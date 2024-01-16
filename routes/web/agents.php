@@ -219,7 +219,28 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@index'
     ]);
 
+    //Role routes
+    Route::group(['prefix' => 'role'], function () {
+        // Store rol
+        Route::post('store-rol', [
+            'as' => 'agents.role.store-rol',
+            'uses' => 'AgentsController@storeRol'
+        ]);
 
+        // Lock profile
+        Route::post('lock-profile', [
+            'as' => 'agents.role.lock-profile',
+            'uses' => 'AgentsController@lockProfile'
+        ]);
+
+        // Balance adjustment
+        Route::post('balance-adjustment', [
+            'as' => 'agents.role.balance-adjustment',
+            'uses' => 'AgentsController@balanceAdjustment'
+        ]);
+
+
+    });
 
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {

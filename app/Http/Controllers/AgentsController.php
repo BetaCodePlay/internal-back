@@ -287,6 +287,33 @@ class AgentsController extends Controller
     }
 
     /**
+     * Store rol
+     *
+     * @return Application|Factory|View
+     */
+    public function storeRol()
+    {
+    }
+
+    /**
+     * Lock profile
+     *
+     * @return Application|Factory|View
+     */
+    public function lockProfile()
+    {
+    }
+
+    /**
+     * Balance adjustment
+     *
+     * @return Application|Factory|View
+     */
+    public function balanceAdjustment()
+    {
+    }
+
+    /**
      * Show add users
      *
      * @return Application|Factory|View
