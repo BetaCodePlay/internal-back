@@ -11,10 +11,10 @@
 
     <div class="page-role">
         <div class="page-top">
-            <div class="search-input">
+            <form class="search-input" autocomplete="destroy">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="form-control" placeholder="{{ _i('Search') }}" autocomplete="new-text">
-            </div>
+                <input type="text" class="form-control" placeholder="{{ _i('Search') }}">
+            </form>
             <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#role-create"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
         <div class="page-header">
@@ -55,8 +55,8 @@
             </div>
         </div>
         <div class="page-body">
-            <div class="col table-load">
-                <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0">
+            <form autocomplete="destroy" class="col table-load">
+                <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
                     <thead>
                     <tr>
                         <th data-priority="1">{{ _i('Name') }}</th>
@@ -95,7 +95,7 @@
                     </tr>
                     </tbody>--}}
                 </table>
-            </div>
+            </form>
             <div class="loading-style"></div>
         </div>
 
@@ -105,7 +105,7 @@
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></ li>
+                    <li><a class="dropdown-item roleSimple" href="#">{{ _i('View profile') }}</a></li>
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">{{ _i('Lock profile') }}</a></li>

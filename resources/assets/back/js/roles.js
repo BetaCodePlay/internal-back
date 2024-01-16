@@ -21,6 +21,7 @@ class Roles {
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 let buttons = $('#user-buttons');
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]);
+                buttons.find('.roleSimple').attr('href', '/agents/role/' + aData[0]);
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">'+ aData[1] +'</span>');
                 $('td:eq(4)', nRow).html('$'+ aData[4]);
