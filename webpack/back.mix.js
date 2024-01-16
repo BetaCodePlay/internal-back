@@ -62,6 +62,7 @@ mix.autoload({
         'resources/assets/back/js/chat.js',
         'resources/assets/back/js/global.js',
         'resources/assets/commons/plugins/toastr/js/toastr.min.js',
+        'https://cdn.jsdelivr.net/npm/disableautofill/src/jquery.disableAutoFill.min.js'
     ],
     'public/back/js/custom.min.js')
     .extract()

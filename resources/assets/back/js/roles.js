@@ -42,6 +42,8 @@ class Roles {
             Roles.globalusername = $username;
             Roles.globaluserid = $userid;
         });
+
+        $('input').disableAutoFill();
     }
 
     userResetPassword() {

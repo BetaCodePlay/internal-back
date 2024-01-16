@@ -128,13 +128,11 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/disableautofill/src/jquery.disableAutoFill.min.js"></script>
     <script>
         $(function () {
             let roles = new Roles();
             roles.initTableRoles();
             roles.userResetPassword();
         });
-        $('input').disableAutoFill();
     </script>
 @endsection
