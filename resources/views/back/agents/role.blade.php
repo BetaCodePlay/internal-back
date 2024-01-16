@@ -56,7 +56,7 @@
         </div>
         <div class="page-body">
             <form autocomplete="destroy" class="col table-load">
-                <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0">
+                <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
                     <thead>
                     <tr>
                         <th data-priority="1">{{ _i('Name') }}</th>
