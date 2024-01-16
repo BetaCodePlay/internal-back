@@ -15,20 +15,20 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>{{ _i('Amount') }}</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" placeholder="" id="userBalanceAmount">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6 g-pr-3">
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-theme btn-block">
+                                    <button type="button" class="btn btn-theme btn-block balanceUser" data-route="{{ route('agents.role.balance-adjustment') }}" data-balance="true">
                                         {{ _i('Deposit') }}
                                     </button>
                                 </div>
                             </div>
                             <div class="col-6 g-pl-3">
-                                <button type="button" class="btn btn-dark btn-block">
+                                <button type="button" class="btn btn-dark btn-block balanceUser" data-route="{{ route('agents.role.balance-adjustment') }}" data-balance="false">
                                     {{ _i('Withdraw') }}
                                 </button>
                             </div>

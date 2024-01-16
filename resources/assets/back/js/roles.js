@@ -23,11 +23,11 @@ class Roles {
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]);
                 buttons.find('.roleSimple').attr('href', '/agents/role/' + aData[0]);
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
-                $('td:eq(1)', nRow).html('<span class="deco-rol">'+ aData[1] +'</span>');
-                $('td:eq(4)', nRow).html('$'+ aData[4]);
+                $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1] + '</span>');
+                $('td:eq(4)', nRow).html('$' + aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
-            initComplete: function() {
+            initComplete: function () {
 
             },
         });
@@ -35,7 +35,7 @@ class Roles {
         $('.table-load').addClass('table-complete');
         $('.page-role .loading-style').hide();
 
-        $(document).on('click','.currentDataRole', function (){
+        $(document).on('click', '.currentDataRole', function () {
             let $username = $(this).data('username');
             let $userid = $(this).data('userid');
 
@@ -57,7 +57,7 @@ class Roles {
                 newPassword: $password.val(),
             }
 
-            if($password.val().length >= 8) {
+            if ($password.val().length >= 8) {
                 $this.button('loading');
 
                 $.ajax({
@@ -74,6 +74,58 @@ class Roles {
             } else {
                 Toastr.notifyToastr('Error', $password.attr('placeholder'), 'error');
             }
+        });
+    }
+
+    userLock() {
+        let button = '.lockUser';
+        let route = $(button).data('route');
+
+        $(document).on('click', button, function () {
+            let $this = $(this);
+            let $data = {
+                userId: Roles.globaluserid,
+                userReason: $('#userReason').val(),
+            }
+
+            $.ajax({
+                url: route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+            }).fail(function (json) {
+                Roles.errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
+        });
+    }
+
+    userBalance() {
+        let button = '.balanceUser';
+        let route = $(button).data('route');
+
+        $(document).on('click', button, function () {
+            let $this = $(this);
+            let $balance = $(button).data('balance');
+            let $data = {
+                userId: Roles.globaluserid,
+                userAmount: $('#userBalanceAmount').val(),
+                userBalance: $balance
+            }
+
+            $.ajax({
+                url: route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+            }).fail(function (json) {
+                Roles.errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
         });
     }
 

@@ -15,10 +15,10 @@
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Reason') }}</label>
-                                <select class="form-control">
-                                    <option>agentescasino01</option>
-                                    <option>tester123</option>
-                                    <option>123casino</option>
+                                <select class="form-control" id="userReason">
+                                    <option value="1">agentescasino01</option>
+                                    <option value="2">tester123</option>
+                                    <option value="3">123casino</option>
                                 </select>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
                     {{ _i('Cancel lock') }}
                 </button>
-                <button type="button" class="btn btn-theme">
+                <button type="button" class="btn btn-theme lockUser" data-route="{{ route('agents.role.lock-profile') }}">
                     {{ _i('Ready! Lock') }}
                 </button>
             </div>

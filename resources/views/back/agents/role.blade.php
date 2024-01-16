@@ -133,6 +133,8 @@
             let roles = new Roles();
             roles.initTableRoles();
             roles.userResetPassword();
+            roles.userBalance();
+            roles.userLock();
         });
     </script>
 @endsection
