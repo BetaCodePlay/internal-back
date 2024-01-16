@@ -3322,9 +3322,10 @@ class AgentsController extends Controller
             $authUserId = $authUser->id;
             $whitelabel = Configurations::getWhitelabel();
 
-            $agentUser    = $authUser->agent;
-            $userData     = $this->usersRepo->getUsers($authUserId);
-            $confirmation = $userData->pluck('confirmation_email')->first();
+            $agentUser      = $authUser->agent;
+            $userData       = $this->usersRepo->getUsers($authUserId);
+            $confirmation   = $userData->pluck('confirmation_email')->first();
+            $customUsername = ! empty($username) ? $username : $authUser->username;
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, session('currency') ?? ''),
@@ -3339,7 +3340,7 @@ class AgentsController extends Controller
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
                 'authUser'           => $authUser,
-                'username'           => $username
+                'username'           => $customUsername
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
