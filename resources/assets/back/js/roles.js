@@ -47,10 +47,10 @@ class Roles {
 
     userResetPassword() {
         let button = '.resetUserPassword';
-        let route = $(button).data('route');
 
         $(document).on('click', button, function () {
             let $this = $(this);
+            let route = $(button).data('route');
             let $password = $('#password-role-reset');
             let $data = {
                 userId: Roles.globaluserid,
@@ -79,10 +79,10 @@ class Roles {
 
     userLock() {
         let button = '.lockUser';
-        let route = $(button).data('route');
 
         $(document).on('click', button, function () {
             let $this = $(this);
+            let route = $(button).data('route');
             let $data = {
                 userId: Roles.globaluserid,
                 userReason: $('#userReason').val(),
@@ -104,7 +104,6 @@ class Roles {
 
     userBalance() {
         let button = '.balanceUser';
-
 
         $(document).on('click', button, function () {
             let $this = $(this);
