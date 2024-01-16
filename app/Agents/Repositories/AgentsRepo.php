@@ -547,7 +547,10 @@ class AgentsRepo
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
         $searchValue = $request->input('search.value');
-        $userId      = $request->input('userId', $userAuthId);
+
+        $userId = $request->has('username')
+            ? User::where('username', $request->input('username'))->value('id')
+            : $userAuthId;
 
         $agentQuery = User::select([
             'users.username',
