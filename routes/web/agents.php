@@ -222,7 +222,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     //Role routes
     Route::group(['prefix' => 'api-role'], function () {
         // Store rol
-        Route::get('store-rol', [AgentsController::class, 'storeRol'])
+        Route::post('store-rol', [AgentsController::class, 'storeRol'])
             ->name('agents.role.store-rol');
 
         // Lock profile
