@@ -1,4 +1,5 @@
 import {} from "../../commons/js/core";
+
 class Roles {
     static globalusername;
     static globaluserid;
@@ -41,8 +42,6 @@ class Roles {
             Roles.globalusername = $username;
             Roles.globaluserid = $userid;
         });
-
-        $('input').val('');
     }
 
     userResetPassword() {
