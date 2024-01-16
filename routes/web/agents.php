@@ -220,11 +220,10 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     ]);
 
     //Role routes
-    Route::group(['prefix' => 'role'], function () {
+    Route::group(['prefix' => 'api-role'], function () {
         // Store rol
-        Route::post('store-rol', [AgentsController::class, 'storeRol'])
+        Route::get('store-rol', [AgentsController::class, 'storeRol'])
             ->name('agents.role.store-rol');
-
 
         // Lock profile
         Route::post('lock-profile', [AgentsController::class, 'lockProfile'])
@@ -233,6 +232,8 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         // Balance adjustment
         Route::post('balance-adjustment', [AgentsController::class, 'balanceAdjustment'])
             ->name('agents.role.balance-adjustment');
+
+
     });
 
     // Reports routes

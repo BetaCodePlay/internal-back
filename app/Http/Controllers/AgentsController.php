@@ -286,14 +286,6 @@ class AgentsController extends Controller
         $this->userTransactionService      = $userTransactionService;
     }
 
-    /**
-     * Store rol
-     *
-     * @return Application|Factory|View
-     */
-    public function storeRol()
-    {
-    }
 
     /**
      * Lock profile
@@ -3023,6 +3015,7 @@ class AgentsController extends Controller
      * @param UserCurrenciesRepo $userCurrenciesRepo
      * @return Response
      * @throws ValidationException
+     * @deprecated
      */
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
@@ -3267,6 +3260,127 @@ class AgentsController extends Controller
             return Utils::successResponse($data);
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+
+    /**
+     * @param Request $request
+     * @param UsersTempRepo $usersTempRepo
+     * @param UserCurrenciesRepo $userCurrenciesRepo
+     * @return Response
+     * @throws ValidationException
+     */
+    public function storeRol(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
+    {
+        $this->validate($request, [
+            'username'   => ['required', new Username()],
+            'password'   => ['required', new Password()],
+            'percentage' => 'required|numeric|between:1,99',
+            'master'     => 'required'
+        ]);
+
+        try {
+            $username           = $request->input('username');
+            $password           = $request->input('password');
+            $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
+            $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
+
+            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
+                return Utils::errorResponse(Codes::$forbidden, [
+                    'title'   => _i('Username in use'),
+                    'message' => _i('The indicated username is already in use'),
+                    'close'   => _i('Close'),
+                ]);
+            }
+
+            $ip     = $request->header('X-Forwarded-For') ?? $request->ip();
+            $domain = Configurations::getDomain();
+            $whitelabel = Configurations::getWhitelabel();
+            $currency   = session('currency');
+            $username   = strtolower($request->username);
+            $owner      = auth()->user()->id;
+            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
+            $master     = $request->input('master');
+            $uuid       = Str::uuid()->toString();
+
+            $userData    = [
+                'username'          => $username,
+                'email'             => "$username@$domain",
+                'password'          => $password,
+                'uuid'              => $uuid,
+                'ip'                => $ip,
+                'status'            => true,
+                'whitelabel_id'     => $whitelabel,
+                'web_register'      => false,
+                'register_currency' => $currency,
+                'type_user'         => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
+                'action'            => Configurations::getResetMainPassword(
+                ) ? ActionUser::$changed_password : ActionUser::$update_email,
+            ];
+            $profileData = [
+                'country_iso' => $ownerAgent->country_iso,
+                'timezone'    => session('timezone'),
+                'level'       => 1
+            ];
+            $user        = $this->usersRepo->store($userData, $profileData);
+            $this->generateReferenceCode->generateReferenceCode($user->id);
+            $currencies  = [$currency];
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+            $agent       = $this->agentsRepo->store([
+                'user_id'    => $user->id,
+                'owner_id'   => $owner,
+                'master'     => $master,
+                'percentage' => $request->input('percentage'),
+            ]);
+
+            foreach ($currencies as $key => $agentCurrency) {
+                $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers(
+                    $user->id,
+                    $userExclude,
+                    $agentCurrency
+                );
+                $this->agentsRepo->blockAgentsMakers($excludedUser);
+                $wallet     = Wallet::store(
+                    $user->id,
+                    $user->username,
+                    $uuid,
+                    $agentCurrency,
+                    $whitelabel,
+                    session('wallet_access_token')
+                );
+                $userData   = [
+                    'user_id'      => $user->id,
+                    'currency_iso' => $agentCurrency
+                ];
+                $walletData = [
+                    'wallet_id' => $wallet->data->wallet->id,
+                    'default'   => $key == 0
+                ];
+                $userCurrenciesRepo->store($userData, $walletData);
+                if (Configurations::getStore()->active) {
+                    Store::storeWallet($user->id, $currency);
+                }
+
+                if ($currency == $agentCurrency) {
+                    $this->createAgentBalance($agent->id, $currency, 0);
+                } else {
+                    $this->createAgentBalance($agent->id, $agentCurrency);
+                }
+            }
+
+            Security::assignRole($user->id, Roles::$admin_Beet_sweet);
+
+            return Utils::successResponse([
+                'title'   => _i('Agent created'),
+                'message' => _i('Agent created successfully'),
+                'close'   => _i('Close'),
+                'balance' => number_format(0, 2),
+                'route'   => route('agents.index'),
+            ]);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }
