@@ -42,6 +42,7 @@ class Roles {
             Roles.globalusername = $username;
             Roles.globaluserid = $userid;
         });
+        initSelect2();
     }
 
     userResetPassword() {
