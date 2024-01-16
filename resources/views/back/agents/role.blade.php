@@ -11,10 +11,10 @@
 
     <div class="page-role">
         <div class="page-top">
-            <div class="search-input">
+            <form class="search-input" autocomplete="destroy">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="form-control" placeholder="{{ _i('Search') }}" autocomplete="new-text">
-            </div>
+            </form>
             <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#role-create"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
         <div class="page-header">
