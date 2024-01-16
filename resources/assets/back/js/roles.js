@@ -104,10 +104,11 @@ class Roles {
 
     userBalance() {
         let button = '.balanceUser';
-        let route = $(button).data('route');
+
 
         $(document).on('click', button, function () {
             let $this = $(this);
+            let route = $(button).data('route');
             let $balance = $(button).data('balance');
             let $data = {
                 userId: Roles.globaluserid,
