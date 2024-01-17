@@ -226,7 +226,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             ->name('agents.role.store-rol');
 
         // Lock profile
-        Route::post('lock-profile', [AgentsController::class, 'lockProfile'])
+        Route::get('lock-profile', [AgentsController::class, 'lockProfile'])
             ->name('agents.role.lock-profile');
 
         // Balance adjustment

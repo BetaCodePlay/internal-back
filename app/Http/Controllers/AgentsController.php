@@ -286,14 +286,6 @@ class AgentsController extends Controller
         $this->userTransactionService      = $userTransactionService;
     }
 
-
-    public function lockProfile()
-    {
-        return response()->json([
-            'test' => 'Hola'
-        ]);
-    }
-
     /**
      * Balance adjustment
      *
@@ -799,6 +791,8 @@ class AgentsController extends Controller
      *
      * @param Request $request
      * @return Response
+     * @throws ValidationException
+     * @deprecated
      */
     public function blockAgentsData(Request $request)
     {
@@ -944,6 +938,157 @@ class AgentsController extends Controller
             return Utils::successResponse($data);
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    public function lockProfile(Request $request)
+    {
+        $this->validate($request, [
+            'maker' => ['required_if:lock_users,false'],
+            'description' => ['required_if:lock_users,true'],
+        ]);
+
+        try {
+            $userId  = $request->input('userId');
+            $currency = session('currency');
+            $maker = $request->input('maker');
+            $category = $request->input('category');
+            $type  = $request->input('type');
+            $lockUsers = $request->input('lock_users');
+
+            //dd($userId, $currency);
+
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
+            dd($agent);
+            $subAgents = $this->agentsRepo->getAgentsByOwner($userId, $currency);
+            if (! is_null($agent)) {
+                $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            } else {
+                $users[] = [
+                    'id' => $user
+                ];
+            }
+            $usersToUpdate    = $this->agentsCollection->formatDataLock(
+                $lockUsers,
+                $subAgents,
+                $users,
+                $agent,
+                $currency,
+                $category,
+                $maker
+            );
+            $newStatus        = (bool)$request->type;
+            $oldStatus        = ! $newStatus;
+            if ($lockUsers == 'false') {
+                if ($type == 'true') {
+                    foreach ($usersToUpdate as $userToUpdate) {
+                        $user = $userToUpdate['user_id'];
+                        $category = $userToUpdate['category'];
+                        $data = [
+                            'currency_iso' => $userToUpdate['currency_iso'],
+                            'category' => $userToUpdate['category'],
+                            'makers'   => $userToUpdate['makers'],
+                            'user_id'  => $user,
+                            'created_at' => $userToUpdate['created_at'],
+                            'updated_at' => $userToUpdate['updated_at']
+                        ];
+                        $this->agentsRepo->updateBlockAgents($currency, $category, $user, $data);
+                    }
+                    $data = [
+                        'title' => _i('Locked provider'),
+                        'message' => _i('The provider was locked to the agent and his entire tree'),
+                        'close' => _i('Close')
+                    ];
+                }
+
+                if ($type == 'false') {
+                    foreach ($usersToUpdate as $userToUpdate) {
+                        $currencyIso = $userToUpdate['currency_iso'];
+                        $category = $userToUpdate['category'];
+                        $userId   = $userToUpdate['user_id'];
+                        $makers   = json_decode($userToUpdate['makers']);
+                        $unBlockMaker = array_values(array_diff($makers, [$maker]));
+                        if (empty($unBlockMaker)) {
+                            $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
+                        } else {
+                            $data['makers'] = json_encode($unBlockMaker);
+                            $this->agentsRepo->unBlockAgentsMaker($currencyIso, $category, $userId, $data);
+                        }
+                    }
+                    $data = [
+                        'title' => _i('Unlocked provider'),
+                        'message' => _i('The provider was unlocked to the agent and his entire tree'),
+                        'close' => _i('Close')
+                    ];
+                }
+            }
+            if ($lockUsers == 'true') {
+                if ($type == 'true') {
+                    foreach ($usersToUpdate as $userToUpdate) {
+                        $user = $userToUpdate['user_id'];
+                        $this->agentsRepo->blockUsers($user);
+                        Sessions::deleteByUser($user);
+                        $auditData = [
+                            'ip'       => Utils::userIp(),
+                            'user_id'  => auth()->user()->id,
+                            'username' => auth()->user()->username,
+                            'old_status' => $oldStatus,
+                            'new_status' => $newStatus,
+                            'description' => $request->description
+                        ];
+                        Audits::store(
+                            $user,
+                            AuditTypes::$agent_user_status,
+                            Configurations::getWhitelabel(),
+                            $auditData
+                        );
+                    }
+                    $data = [
+                        'title' => _i('Locked users'),
+                        'message' => _i('The agent and his entire tree was locked'),
+                        'close' => _i('Close')
+                    ];
+                }
+                if ($type == 'false') {
+                    foreach ($usersToUpdate as $userToUpdate) {
+                        $user = $userToUpdate['user_id'];
+                        $userData = $this->agentsRepo->statusActionByUser($user);
+                        if (isset($userData->action) && $userData->action == ActionUser::$locked_higher) {
+                            $data = [
+                                'title' => ActionUser::getName($userData->action),
+                                'message' => _i('Contact your superior...'),
+                                'close' => _i('Close')
+                            ];
+                            return Utils::errorResponse(Codes::$not_found, $data);
+                        }
+                        $this->agentsRepo->unBlockUsers($user);
+
+                        $auditData = [
+                            'ip'       => Utils::userIp(),
+                            'user_id'  => auth()->user()->id,
+                            'username' => auth()->user()->username,
+                            'old_status' => $oldStatus,
+                            'new_status' => $newStatus,
+                            'description' => $request->description
+                        ];
+                        Audits::store(
+                            $user,
+                            AuditTypes::$agent_user_status,
+                            Configurations::getWhitelabel(),
+                            $auditData
+                        );
+                    }
+                    $data = [
+                        'title' => _i('Unlocked users'),
+                        'message' => _i('The agent and his entire tree was unlocked'),
+                        'close' => _i('Close')
+                    ];
+                }
+            }
+            return Utils::successResponse($data);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }
