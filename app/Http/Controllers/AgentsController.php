@@ -960,9 +960,11 @@ class AgentsController extends Controller
             $type = $data['type'];
 
             $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
+
+            dd($agent);
             $subAgents = $this->agentsRepo->getAgentsByOwner($userId, $currency);
 
-            dd($agent, $subAgents);
+
             $users = !is_null($agent) ? $this->agentsRepo->getUsersByAgent($agent->agent, $currency) : [['id' => $userId]];
 
             $usersToUpdate    = $this->agentsCollection->formatDataLock(
