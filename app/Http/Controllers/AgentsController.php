@@ -950,22 +950,18 @@ class AgentsController extends Controller
         ]);
 
         try {
-            $data = $request->only(['userId', 'maker', 'category']);
+            $userId  = $request->input('userId');
             $currency = session('currency');
+            $maker = $request->input('maker');
+            $category = $request->input('category');
             $lockUsers = $request->boolean('lock_users');
             $type = $request->boolean('type');
 
-            $userId = $data['userId'];
-            dd($data, $data['userId']);
-            $maker = $data['maker'];
-            $category = $data['category'];
-            $type = $data['type'];
 
             $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
-
-            dd($agent);
             $subAgents = $this->agentsRepo->getAgentsByOwner($userId, $currency);
 
+            dd($agent, $subAgents);
 
             $users = !is_null($agent) ? $this->agentsRepo->getUsersByAgent($agent->agent, $currency) : [['id' => $userId]];
 
