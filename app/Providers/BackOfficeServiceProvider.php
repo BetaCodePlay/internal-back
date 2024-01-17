@@ -161,8 +161,10 @@ class BackOfficeServiceProvider extends ServiceProvider
     : void
     {
         if ($this->app->environment() != 'local') {
+            dd('uno');
             URL::forceScheme('https');
         }
+        dd('dos');
     }
 
     /**
