@@ -16,9 +16,9 @@
                             <div class="form-group">
                                 <label>{{ _i('Reason') }}</label>
                                 <select class="form-control" id="userReason">
-                                    <option value="1">agentescasino01</option>
-                                    <option value="2">tester123</option>
-                                    <option value="3">123casino</option>
+                                    <option value="agentescasino01">agentescasino01</option>
+                                    <option value="tester123">tester123</option>
+                                    <option value="123casino">123casino</option>
                                 </select>
                             </div>
                         </div>
