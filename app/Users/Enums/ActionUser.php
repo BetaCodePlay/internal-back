@@ -41,15 +41,13 @@ class ActionUser
         };
     }
 
-    /**
-     * @param $action
-     * @return bool
-     */
     public static function isBlocked($action): bool {
         return match ($action) {
-            self::$active, self::$inactive, self::$locked_higher, self::$blocked_branch, self::$delete => false,
+            self::$active, self::$inactive, self::$delete, self::$locked_higher, self::$blocked_branch => false,
+            self::$hide, self::$locked_login_attempts, self::$direct_lock, self::$changed_password, self::$update_email => true,
             default => true
         };
     }
+
 
 }
