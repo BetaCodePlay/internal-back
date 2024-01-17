@@ -601,7 +601,7 @@ class AgentsRepo
                 $item['username'],
                 $item['type_user'],
                 $item['id'],
-                ActionUser::getName($item['action']),
+                [ActionUser::getName($item['action']), ActionUser::isBlocked($item['action'])],
                 number_format($item['balance'], 2, '.', ''),
             ];
         }, $slicedResults);
