@@ -950,12 +950,13 @@ class AgentsController extends Controller
         ]);
 
         try {
-            $data = $request->only(['userId', 'maker', 'category', 'type']);
+            $data = $request->only(['userId', 'maker', 'category']);
             $currency = session('currency');
             $lockUsers = $request->boolean('lock_users');
+            $type = $request->boolean('type');
 
             $userId = $data['userId'];
-            dd($data);
+            dd($data, $data['userId']);
             $maker = $data['maker'];
             $category = $data['category'];
             $type = $data['type'];
