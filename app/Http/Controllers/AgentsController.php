@@ -950,25 +950,21 @@ class AgentsController extends Controller
         ]);
 
         try {
-            $userId  = $request->input('userId');
+            $data = $request->only(['userId', 'maker', 'category', 'type']);
             $currency = session('currency');
-            $maker = $request->input('maker');
-            $category = $request->input('category');
-            $type  = $request->input('type');
-            $lockUsers = $request->input('lock_users');
+            $lockUsers = $request->boolean('lock_users');
 
-            //dd($userId, $currency);
+            $userId = $data['userId'];
+            $maker = $data['maker'];
+            $category = $data['category'];
+            $type = $data['type'];
 
             $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
-            dd($agent);
             $subAgents = $this->agentsRepo->getAgentsByOwner($userId, $currency);
-            if (! is_null($agent)) {
-                $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            } else {
-                $users[] = [
-                    'id' => $user
-                ];
-            }
+
+            dd($agent, $subAgents);
+            $users = !is_null($agent) ? $this->agentsRepo->getUsersByAgent($agent->agent, $currency) : [['id' => $userId]];
+
             $usersToUpdate    = $this->agentsCollection->formatDataLock(
                 $lockUsers,
                 $subAgents,
