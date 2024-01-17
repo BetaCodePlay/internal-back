@@ -61,7 +61,7 @@ class ActionUser
         return match ($action) {
             self::$active, self::$inactive, self::$delete => true,
             self::$hide, self::$locked_login_attempts, self::$direct_lock, self::$changed_password, self::$update_email => false,
-            self::$locked_higher, self::$blocked_branch  => true,
+            self::$locked_higher, self::$blocked_branch  => false,
             default => true
         };
     }
