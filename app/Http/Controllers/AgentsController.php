@@ -955,6 +955,7 @@ class AgentsController extends Controller
             $lockUsers = $request->boolean('lock_users');
 
             $userId = $data['userId'];
+            dd($data);
             $maker = $data['maker'];
             $category = $data['category'];
             $type = $data['type'];
