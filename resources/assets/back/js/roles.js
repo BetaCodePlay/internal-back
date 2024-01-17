@@ -85,7 +85,9 @@ class Roles {
             let route = $(button).data('route');
             let $data = {
                 userId: Roles.globaluserid,
-                userReason: $('#userReason').val(),
+                description: $('#userReason').val(),
+                lock_users: true,
+                type: true,
             }
 
             $.ajax({
