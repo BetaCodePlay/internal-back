@@ -287,13 +287,11 @@ class AgentsController extends Controller
     }
 
 
-    /**
-     * Lock profile
-     *
-     * @return Application|Factory|View
-     */
     public function lockProfile()
     {
+        return response()->json([
+            'test' => 'Hola'
+        ]);
     }
 
     /**

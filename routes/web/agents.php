@@ -233,7 +233,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         Route::post('balance-adjustment', [AgentsController::class, 'balanceAdjustment'])
             ->name('agents.role.balance-adjustment');
 
-
     });
 
     // Reports routes
