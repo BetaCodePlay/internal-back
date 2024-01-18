@@ -109,7 +109,7 @@ class Roles {
                 }
             }
 
-            console.log('$description', $description);
+            console.log("$globalType", $globalType);
 
             $.ajax({
                 url: $route,
