@@ -23,16 +23,20 @@
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Reason') }}</label>
-                                <select class="form-control" id="userReasonLock" style="display: none">
-                                    <option value="Estafa">Estafa</option>
-                                    <option value="Inactividad">Inactividad</option>
-                                    <option value="Solicitado por el agente">Solicitado por el agente</option>
-                                </select>
-                                <select class="form-control" id="userReasonUnlock" style="display: none">
-                                    <option value="Hubo un error y no debio ser bloqueado">Hubo un error y no debio ser bloqueado</option>
-                                    <option value="El usuario lo solicito">El usuario lo solicito</option>
-                                    <option value="Sin comentarios">Sin comentarios</option>
-                                </select>
+                                <div id="userReasonLock" style="display: none">
+                                    <select class="form-control" >
+                                        <option value="Estafa">Estafa</option>
+                                        <option value="Inactividad">Inactividad</option>
+                                        <option value="Solicitado por el agente">Solicitado por el agente</option>
+                                    </select>
+                                </div>
+                                <div id="userReasonUnlock" style="display: none">
+                                    <select class="form-control">
+                                        <option value="Hubo un error y no debio ser bloqueado">Hubo un error y no debio ser bloqueado</option>
+                                        <option value="El usuario lo solicito">El usuario lo solicito</option>
+                                        <option value="Sin comentarios">Sin comentarios</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
