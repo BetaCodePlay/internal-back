@@ -90,7 +90,7 @@ class Roles {
 
         $(document).on('click', $button, function () {
             let $this = $(this);
-            let route = $('#userLockType').data('route');
+            let $route = $('#userLockType').data('route');
             let $data = {
                 userId: Roles.globaluserid,
                 description: $('#userReason').val(),
@@ -99,7 +99,7 @@ class Roles {
             }
 
             $.ajax({
-                url: route,
+                url: $route,
                 method: 'post',
                 data: $data
             }).done(function (json) {
@@ -114,6 +114,7 @@ class Roles {
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
             let $val = $this.data('value');
+            let $type = $modal.data('type');
             let $buttonCancel = $modal.find('.modal-footer [data-dismiss="modal"]');
             let $buttonSuccess = $modal.find('.lockUser');
             let $cancel;
@@ -132,6 +133,8 @@ class Roles {
                 $('#userReasonLock').hide();
                 $('#userReasonUnlock').show();
             }
+
+            console.log($type);
 
             $modal.find('.modal-title').html($title);
             $buttonCancel.html($cancel);
