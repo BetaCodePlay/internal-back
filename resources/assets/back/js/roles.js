@@ -86,12 +86,11 @@ class Roles {
         let $button = '.lockUser';
         let $targetModal = '[data-target="#role-lock"]';
         let $modal = $('#role-lock');
-        let $route;
         let $title;
 
         $(document).on('click', $button, function () {
             let $this = $(this);
-            let route = $($button).data('route');
+            let route = $('#userLockType').data('route');
             let $data = {
                 userId: Roles.globaluserid,
                 description: $('#userReason').val(),
@@ -124,12 +123,14 @@ class Roles {
                 $title = $this.data('lock');
                 $cancel = $buttonCancel.data('lock');
                 $success = $buttonSuccess.data('lock');
-                console.log('sirvio true')
+                $('#userReasonUnlock').hide();
+                $('#userReasonLock').show();
             } else {
                 $title = $this.data('unlock');
                 $cancel = $buttonCancel.data('unlock');
                 $success = $buttonSuccess.data('unlock');
-                console.log('sirvio false')
+                $('#userReasonLock').hide();
+                $('#userReasonUnlock').show();
             }
 
             $modal.find('.modal-title').html($title);

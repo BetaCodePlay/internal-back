@@ -14,19 +14,24 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <label>{{ _i('Type') }}</label>
-                            <select class="form-control" id="userReason">
-                                <option value="0">{{ _i('Only this user') }}</option>
-                                <option value="1">{{ _i('This user and all its dependent users') }}</option>
+                            <select class="form-control" id="userLockType">
+                                <option value="{{ route('agents.role.lock-profile') }}">{{ _i('Only this user') }}</option>
+                                <option value="{{ route('agents.role.lock-profile') }}">{{ _i('This user and all its dependent users') }}</option>
                             </select>
                         </div>
 
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Reason') }}</label>
-                                <select class="form-control" id="userReason">
-                                    <option value="agentescasino01">agentescasino01</option>
-                                    <option value="tester123">tester123</option>
-                                    <option value="123casino">123casino</option>
+                                <select class="form-control" id="userReasonLock" style="display: none">
+                                    <option value="Estafa">Estafa</option>
+                                    <option value="Inactividad">Inactividad</option>
+                                    <option value="Solicitado por el agente">Solicitado por el agente</option>
+                                </select>
+                                <select class="form-control" id="userReasonUnlock" style="display: none">
+                                    <option value="Hubo un error y no debio ser bloqueado">Hubo un error y no debio ser bloqueado</option>
+                                    <option value="El usuario lo solicito">El usuario lo solicito</option>
+                                    <option value="Sin comentarios">Sin comentarios</option>
                                 </select>
                             </div>
                         </div>
@@ -41,8 +46,7 @@
                 </button>
                 <button type="button" class="btn btn-theme lockUser"
                         data-lock="{{ _i('Ready! Lock') }}"
-                        data-unlock="{{ _i('Ready! Unlock') }}"
-                        data-route="{{ route('agents.role.lock-profile') }}">
+                        data-unlock="{{ _i('Ready! Unlock') }}">
                 </button>
             </div>
         </div>
