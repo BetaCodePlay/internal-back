@@ -28,7 +28,7 @@ class Roles {
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1] + '</span>');
-                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle '+ aData[3][1] === true ? 'green' : 'red' + '"></i> ' + aData[3][0]);
+                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle '+ (aData[3][1] === true ? 'green' : 'red') + '"></i> ' + aData[3][0]);
                 $('td:eq(4)', nRow).html('$' + aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
