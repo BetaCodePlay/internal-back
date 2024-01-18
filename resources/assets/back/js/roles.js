@@ -92,29 +92,39 @@ class Roles {
         $(document).on('click', $button, function () {
             let $this = $(this);
             let $route = $('#userLockType').data('route');
+            let $description = $('#userReasonLock').val();
             let $data = {
                 userId: Roles.globaluserid,
-                description: $('#userReason').val(),
+                description: $description,
                 lock_users: true,
                 type: true,
             }
 
             if ($globalType !== 8) {
                 $route = $('#lockTypeThis').val();
+                $data = {
+                    userId: Roles.globaluserid,
+                    lockType: 6,
+                    description: $description,
+                }
             }
 
             $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
-            }).done(function (json) {
-                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
-            }).fail(function (json) {
-                Roles.errorResponse(json);
-            }).always(function () {
-                $this.button('reset');
-            });
+            })
+                .done(function (json) {
+                    Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                })
+                .fail(function (json) {
+                    Roles.errorResponse(json);
+                })
+                .always(function () {
+                    $this.button('reset');
+                });
         });
+
 
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
