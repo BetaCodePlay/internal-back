@@ -232,7 +232,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             Route::post('/balance-adjustment', 'balanceAdjustment')->name('agents.role.balance-adjustment');
 
             // Block user status
-            Route::get('/block-agent', 'blockAgent')
+            Route::post('/block-agent', 'blockAgent')
                 ->name('agents.block');
         });
 
