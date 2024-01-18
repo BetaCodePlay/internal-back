@@ -41,27 +41,11 @@ class ActionUser
         };
     }
 
-    public static function isBlockedOld($action): bool {
-        return match ($action) {
-            self::$active => false,
-            self::$inactive => false,
-            self::$delete => false,
-            self::$hide => true,
-            self::$locked_login_attempts => true,
-            self::$locked_higher => false,
-            self::$blocked_branch => false,
-            self::$direct_lock => true,
-            self::$changed_password => true,
-            self::$update_email => true,
-            default => true
-        };
-    }
-
     public static function isBlocked($action): bool {
         return match ($action) {
-            self::$active, self::$inactive, self::$delete => true,
-            self::$hide, self::$locked_login_attempts, self::$direct_lock, self::$changed_password, self::$update_email => false,
-            self::$locked_higher, self::$blocked_branch  => false,
+            self::$active, self::$changed_password, self::$hide, self::$update_email => true,
+            self::$locked_login_attempts, self::$locked_higher, self::$blocked_branch, self::$direct_lock => false,
+            self::$inactive, self::$delete => null,
             default => true
         };
     }
