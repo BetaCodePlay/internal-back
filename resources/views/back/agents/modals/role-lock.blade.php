@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ _i('Lock profile') }}</h5>
+                <h5 class="modal-title"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,6 +13,14 @@
                 <div class="form">
                     <div class="row">
                         <div class="col-12 col-lg-6">
+                            <label>{{ _i('Type') }}</label>
+                            <select class="form-control" id="userReason">
+                                <option value="0">{{ _i('Only this user') }}</option>
+                                <option value="1">{{ _i('This user and all its dependent users') }}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Reason') }}</label>
                                 <select class="form-control" id="userReason">
@@ -22,7 +30,6 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6"></div>
                     </div>
                 </div>
             </div>

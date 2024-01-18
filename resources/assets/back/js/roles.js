@@ -20,14 +20,15 @@ class Roles {
             responsive: true,
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 let buttons = $('#user-buttons');
+                let modalLockTarget = '[data-target="#role-lock"]';
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]);
                 buttons.find('.roleSimple').attr('href', '/agents/role/' + aData[0]);
+                buttons.find(modalLockTarget).data('value', aData[3][1]).html(aData[3][1] === true ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock'));
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1] + '</span>');
                 $('td:eq(3)', nRow).html(aData[3][0]);
                 $('td:eq(4)', nRow).html('$' + aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
-                console.log( aData[3][1]);
             },
             initComplete: function () {
 
@@ -80,11 +81,15 @@ class Roles {
     }
 
     userLock() {
-        let button = '.lockUser';
+        let $button = '.lockUser';
+        let $targetModal = '[data-target="#role-lock"]';
+        let $modal = $('#role-lock');
+        let $route;
+        let $title;
 
-        $(document).on('click', button, function () {
+        $(document).on('click', $button, function () {
             let $this = $(this);
-            let route = $(button).data('route');
+            let route = $($button).data('route');
             let $data = {
                 userId: Roles.globaluserid,
                 description: $('#userReason').val(),
@@ -103,6 +108,13 @@ class Roles {
             }).always(function () {
                 $this.button('reset');
             });
+        });
+
+        $(document).on('click', $targetModal, function () {
+            let $this = $(this);
+            $title = $this.html();
+
+            $modal.find('.modal-title').html($title);
         });
     }
 
