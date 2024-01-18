@@ -114,10 +114,16 @@ class Roles {
 
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
-            $title = $this.html();
+            let $val = $this.data('value');
 
-            console.log($this.data('value') + ' ' + 'data');
-            console.log($this.attr('data-value') + ' ' + 'attr');
+            if ($val === true) {
+                $title = $this.data('lock');
+                console.log('sirvio true')
+            } else {
+                $title = $this.data('unlock');
+                console.log('sirvio false')
+            }
+
 
             $modal.find('.modal-title').html($title);
         });
