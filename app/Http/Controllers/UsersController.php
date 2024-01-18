@@ -3,38 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Audits\Enums\AuditTypes;
+use App\Audits\Repositories\AuditsRepo;
 use App\BetPay\Collections\AccountsCollection;
 use App\BonusSystem\Repositories\CampaignsRepo;
 use App\Core\Core;
-use App\Users\Mailers\Users;
-use App\Core\Notifications\TransactionNotAllowed;
-use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\CountriesRepo;
+use App\Core\Repositories\CurrenciesRepo;
 use App\Core\Repositories\GamesRepo;
-use App\Users\Enums\ActionUser;
-use App\Users\Enums\TypeUser;
-use App\Users\Rules\Email;
-use App\Users\Rules\Password;
-use App\Whitelabels\Repositories\OperationalBalancesRepo;
-use App\Whitelabels\Repositories\OperationalBalancesTransactionsRepo;
+use App\Core\Repositories\ProvidersRepo;
+use App\Core\Repositories\ProvidersTypesRepo;
 use App\Core\Repositories\TransactionsRepo;
+use App\CRM\Collections\SegmentsCollection;
+use App\CRM\Repositories\SegmentsRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Collections\UsersCollection;
+use App\Users\Enums\ActionUser;
 use App\Users\Enums\DocumentStatus;
+use App\Users\Enums\TypeUser;
+use App\Users\Import\TransactionsByLotImport;
 use App\Users\Mailers\Activate;
+use App\Users\Mailers\Users;
 use App\Users\Mailers\Validate;
+use App\Users\Repositories\AutoLockUsersRepo;
 use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UserDocumentsRepo;
 use App\Users\Repositories\UsersRepo;
-use App\Core\Repositories\ProvidersRepo;
-use App\Core\Repositories\ProvidersTypesRepo;
 use App\Users\Repositories\UsersTempRepo;
 use App\Users\Rules\Age;
 use App\Users\Rules\DNI;
+use App\Users\Rules\Email;
+use App\Users\Rules\Password;
 use App\Users\Rules\Username;
 use App\Wallets\Collections\WalletsCollection;
+use App\Whitelabels\Repositories\OperationalBalancesRepo;
+use App\Whitelabels\Repositories\OperationalBalancesTransactionsRepo;
+use App\Whitelabels\Repositories\WhitelabelsRepo;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Audits\Audits;
@@ -48,33 +54,25 @@ use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
-use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Security\Security;
 use Dotworkers\Sessions\Sessions;
 use Dotworkers\Store\Store;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
-use App\Whitelabels\Repositories\WhitelabelsRepo;
-use App\Core\Repositories\CurrenciesRepo;
-use App\Audits\Enums\AuditTypes;
-use App\Users\Import\TransactionsByLotImport;
-use App\CRM\Repositories\SegmentsRepo;
-use App\CRM\Collections\SegmentsCollection;
-use App\Users\Repositories\AutoLockUsersRepo;
 use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Contracts\Foundation\Application;
+use Exception;
 
 /**
  * Class UsersController
@@ -597,53 +595,56 @@ class UsersController extends Controller
     }
 
     /**
-     * Block Agent
-     * @param Request $request
+     * @param $userId
+     * @param $lockType
+     * @param $fake
+     * @param $description
      * @return Response
      */
-    public function blockAgent($user, $lock_type, $fake, $description = null)
+    public function blockAgent($userId, $lockType, $fake, $description = null)
     {
         try {
-
             $rules = [
-                'user_id' => ['required', 'exists:users,id'],
-                'lock_type' => ['required', 'integer'],
+                'user_id'     => ['required', 'exists:users,id'],
+                'lock_type'   => ['required', 'integer'],
                 'description' => ['required'],
             ];
 
             $validator = Validator::make([
-                'user_id' => $user,
-                'lock_type' => $lock_type,
+                'user_id'     => $userId,
+                'lock_type'   => $lockType,
                 'description' => $description
             ], $rules, $this->custom_message());
 
             if ($validator->fails()) {
-
                 $response = [
-                    'title' => __('Wrong Parameters'),
+                    'title'   => __('Wrong Parameters'),
                     'message' => __('You need to fill in all the required fields'),
-                    'data' => $validator->errors()->getMessages(),
-                    'close' => _i('Close'),
-                    'type' => 'info'
+                    'data'    => $validator->errors()->getMessages(),
+                    'close'   => _i('Close'),
+                    'type'    => 'info'
                 ];
 
                 return Utils::errorResponse(Codes::$forbidden, $response);
             }
 
             $statusUpdate = false;
-            $data = [];
-            $type = $lock_type;
+            $data         = [];
+            $type         = $lockType;
             if ($type == ActionUser::$locked_higher) {
-                $data = [
+                $data         = [
                     'action' => ActionUser::$locked_higher,
                     'status' => false,
                 ];
                 $statusUpdate = true;
             } else {
-
-                $typeAudit = $this->auditsRepo->lastByType($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel());
-                $father = false;
-                if (!is_null($typeAudit) && isset($typeAudit->data->user_id)) {
+                $typeAudit = $this->auditsRepo->lastByType(
+                    $userId,
+                    AuditTypes::$agent_user_status,
+                    Configurations::getWhitelabel()
+                );
+                $father    = false;
+                if (! is_null($typeAudit) && isset($typeAudit->data->user_id)) {
                     $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id, Auth::id());
                     if ($typeAudit->data->user_id == Auth::id()) {
                         $father = true;
@@ -651,7 +652,7 @@ class UsersController extends Controller
                 }
 
                 if ($type == ActionUser::$active && $father) {
-                    $data = [
+                    $data         = [
                         'action' => ActionUser::$active,
                         'status' => true,
                     ];
@@ -660,40 +661,32 @@ class UsersController extends Controller
             }
 
             if ($statusUpdate) {
-                $this->usersRepo->update($user, $data);
+                $this->usersRepo->update($userId, $data);
 
-                $auditData = [
-                    'ip' => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
-                    'new_action' => $type,
+                Audits::store($userId, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), [
+                    'ip'          => Utils::userIp(),
+                    'user_id'     => auth()->user()->id,
+                    'username'    => auth()->user()->username,
+                    'new_action'  => $type,
                     'description' => $description
-                ];
+                ]);
 
-                Audits::store($user, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), $auditData);
-
-                $data = [
-                    'title' => _i('Status updated'),
+                return Utils::successResponse([
+                    'title'   => _i('Status updated'),
                     'message' => _i('User status was updated successfully'),
-                    'close' => _i('Close'),
-                    'type' => $fake
-                ];
-
-                return Utils::successResponse($data);
+                    'close'   => _i('Close'),
+                    'type'    => $fake
+                ]);
             }
 
-            $response = [
-                'title' => ActionUser::getName(ActionUser::$locked_higher),
+            return Utils::errorResponse(Codes::$forbidden, [
+                'title'   => ActionUser::getName(ActionUser::$locked_higher),
                 'message' => __('This process requires superior access'),
-                'close' => _i('Close'),
-                'type' => 'info'
-            ];
-
-            return Utils::errorResponse(Codes::$forbidden, $response);
-
-
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
+                'close'   => _i('Close'),
+                'type'    => 'info'
+            ]);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }
