@@ -115,17 +115,26 @@ class Roles {
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
             let $val = $this.data('value');
+            let $buttonCancel = $modal.find('[data-dismiss="modal"]');
+            let $buttonSuccess = $modal.find('.lockUser');
+            let $cancel;
+            let $success;
 
             if ($val === true) {
                 $title = $this.data('lock');
+                $cancel = $buttonCancel.data('lock');
+                $success = $buttonSuccess.data('lock');
                 console.log('sirvio true')
             } else {
                 $title = $this.data('unlock');
+                $cancel = $buttonCancel.data('unlock');
+                $success = $buttonSuccess.data('unlock');
                 console.log('sirvio false')
             }
 
-
             $modal.find('.modal-title').html($title);
+            $buttonCancel.html($cancel);
+            $buttonSuccess.html($success);
         });
     }
 

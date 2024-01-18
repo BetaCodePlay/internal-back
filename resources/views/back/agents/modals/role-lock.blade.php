@@ -34,11 +34,15 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-transparent" data-dismiss="modal">
-                    {{ _i('Cancel lock') }}
+                <button type="button" class="btn btn-transparent" data-dismiss="modal"
+                        data-lock="{{ _i('Cancel lock') }}"
+                        data-unlock="{{ _i('Cancel unlock') }}">
+
                 </button>
-                <button type="button" class="btn btn-theme lockUser" data-route="{{ route('agents.role.lock-profile') }}">
-                    {{ _i('Ready! Lock') }}
+                <button type="button" class="btn btn-theme lockUser"
+                        data-lock="{{ _i('Ready! Lock') }}"
+                        data-unlock="{{ _i('Ready! Unlock') }}"
+                        data-route="{{ route('agents.role.lock-profile') }}">
                 </button>
             </div>
         </div>
