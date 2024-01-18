@@ -1099,7 +1099,7 @@ class AgentsController extends Controller
         try {
             $rules = [
                 'userId'      => ['required', 'exists:users,id'],
-                'lockType'   => ['required', 'integer'],
+                'lockType'    => ['required', 'integer'],
                 'description' => ['required'],
             ];
 
@@ -1108,8 +1108,8 @@ class AgentsController extends Controller
             $description = $request->input('description');
 
             $validator = Validator::make([
-                'userId'     => $userId,
-                'lockType'   => $lockType,
+                'userId'      => $userId,
+                'lockType'    => $lockType,
                 'description' => $description
             ], $rules, $this->custom_message());
 
