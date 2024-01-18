@@ -86,6 +86,7 @@ class Roles {
         let $button = '.lockUser';
         let $targetModal = '[data-target="#role-lock"]';
         let $modal = $('#role-lock');
+        let $globalType;
         let $title;
 
         $(document).on('click', $button, function () {
@@ -119,8 +120,9 @@ class Roles {
             let $buttonSuccess = $modal.find('.lockUser');
             let $cancel;
             let $success;
-            let $typeThis = $('#lockTypeThis');
             let $typeAll = $('#lockTypeAll');
+
+            $globalType = $type;
 
             if ($type === 8) {
                 $typeAll.show();
@@ -141,8 +143,6 @@ class Roles {
                 $('#userReasonLock').hide();
                 $('#userReasonUnlock').show();
             }
-
-            console.log($type);
 
             $modal.find('.modal-title').html($title);
             $buttonCancel.html($cancel);
