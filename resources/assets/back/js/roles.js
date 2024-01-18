@@ -99,6 +99,10 @@ class Roles {
                 type: true,
             }
 
+            if ($globalType !== 8) {
+                $route = $('#lockTypeThis').val();
+            }
+
             $.ajax({
                 url: $route,
                 method: 'post',
