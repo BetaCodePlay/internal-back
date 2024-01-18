@@ -1091,6 +1091,10 @@ class AgentsController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function blockAgent(Request $request): Response {
         try {
             $rules = [

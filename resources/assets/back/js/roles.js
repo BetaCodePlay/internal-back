@@ -93,6 +93,9 @@ class Roles {
             let $this = $(this);
             let $route = $('#userLockType').data('route');
             let $description = $('#userReasonLock select').val();
+
+            console.log("route orla", $route);
+            return;
             let $data = {
                 userId: Roles.globaluserid,
                 description: $description,
@@ -101,15 +104,12 @@ class Roles {
             }
 
             if ($globalType !== 8) {
-                $route = $('#lockTypeThis').val();
                 $data = {
                     userId: Roles.globaluserid,
                     lockType: 6,
                     description: $description,
                 }
             }
-
-            console.log("$globalType", $globalType);
 
             $.ajax({
                 url: $route,
