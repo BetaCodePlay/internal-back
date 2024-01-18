@@ -116,8 +116,8 @@ class Roles {
             let $this = $(this);
             $title = $this.html();
 
-            console.log($this.data('value'));
-            console.log($this.attr('data-value'));
+            console.log($this.data('value') + ' ' + 'data');
+            console.log($this.attr('data-value') + ' ' + 'attr');
 
             $modal.find('.modal-title').html($title);
         });
