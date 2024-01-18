@@ -91,7 +91,8 @@ class Roles {
 
         $(document).on('click', $button, function () {
             let $this = $(this);
-            let $route = $('#userLockType').data('route');
+            //let $route = $('#userLockType').data('route');
+            let $route = $('#userLockType').val();
             let $description = $('#userReasonLock select').val();
 
             console.log("route orla", $route);
