@@ -21,9 +21,11 @@ class Roles {
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 let buttons = $('#user-buttons');
                 let modalLockTarget = '[data-target="#role-lock"]';
+
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]);
                 buttons.find('.roleSimple').attr('href', '/agents/role/' + aData[0]);
-                buttons.find(modalLockTarget).data('value', aData[3][1]).html(aData[3][1] === true ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock'));
+                buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] === true ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock'));
+
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1] + '</span>');
                 $('td:eq(3)', nRow).html(aData[3][0]);
