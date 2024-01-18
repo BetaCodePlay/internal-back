@@ -43,8 +43,8 @@ class ActionUser
 
     public static function isBlocked($action): bool {
         return match ($action) {
-            self::$active, self::$changed_password, self::$update_email => true,
-            self::$hide, self::$locked_login_attempts, self::$locked_higher, self::$blocked_branch, self::$direct_lock => false,
+            self::$active, self::$changed_password, self::$hide, self::$update_email => true,
+            self::$locked_login_attempts, self::$locked_higher, self::$blocked_branch, self::$direct_lock => false,
             self::$inactive, self::$delete => null,
             default => true
         };
