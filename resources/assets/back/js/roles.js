@@ -119,6 +119,14 @@ class Roles {
             let $buttonSuccess = $modal.find('.lockUser');
             let $cancel;
             let $success;
+            let $typeThis = $('#lockTypeThis');
+            let $typeAll = $('#lockTypeAll');
+
+            if ($type === 8) {
+                $typeAll.show();
+            } else {
+                $typeAll.hide();
+            }
 
             if ($val === true) {
                 $title = $this.data('lock');
