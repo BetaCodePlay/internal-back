@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <div class="modal-body-mini">
-                    <p><span class="font-weight-bold text-form">{{ _i('¿Qué monto quieres depositar o sacar?') }}</span> <span class="username-form">Antonella93</span></p>
+                    <p><span class="font-weight-bold text-form">{{ _i('¿Qué monto quieres depositar o sacar?') }}</span> <span class="username-form"></span></p>
                     <div class="form">
                         <div class="row">
                             <div class="col-12">

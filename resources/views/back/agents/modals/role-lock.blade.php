@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p><span class="font-weight-bold text-form">{{ _i('Are you sure you want to block the agent?') }}</span> <span class="username-form">Antonella93</span></p>
+                <p><span class="font-weight-bold text-form">{{ _i('Are you sure you want to block the agent?') }}</span> <span class="username-form"></span></p>
                 <p>{{ _i('Select the reason to prevent this account from taking any further action.') }}</p>
                 <div class="form">
                     <div class="row">
