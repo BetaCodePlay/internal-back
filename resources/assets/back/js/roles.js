@@ -114,7 +114,7 @@ class Roles {
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
             let $val = $this.data('value');
-            let $type = $modal.data('type');
+            let $type = $this.data('type');
             let $buttonCancel = $modal.find('.modal-footer [data-dismiss="modal"]');
             let $buttonSuccess = $modal.find('.lockUser');
             let $cancel;
