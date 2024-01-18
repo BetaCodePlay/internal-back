@@ -92,7 +92,7 @@ class Roles {
         $(document).on('click', $button, function () {
             let $this = $(this);
             let $route = $('#userLockType').data('route');
-            let $description = $('#userReasonLock').val();
+            let $description = $('#userReasonLock select').val();
             let $data = {
                 userId: Roles.globaluserid,
                 description: $description,
@@ -108,6 +108,8 @@ class Roles {
                     description: $description,
                 }
             }
+
+            console.log('$description', $description);
 
             $.ajax({
                 url: $route,
