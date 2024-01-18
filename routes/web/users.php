@@ -3,6 +3,9 @@
 /**
  * Users routes
  */
+
+use App\Http\Controllers\UsersController;
+
 Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
 
     // Activate-temp
@@ -61,10 +64,8 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     // Block user status
-    Route::get('block-user-status/{user}/{status}/{type}/{description?}', [
-        'as' => 'users.block.status',
-        'uses' => 'UsersController@blockAgent'
-    ]);
+    Route::get('block-user-status/{userId}/{status}/{type}/{description?}', [UsersController::class, 'blockAgent'])
+        ->name('users.block.status');
 
     // Get completed profiles
     Route::get('completed-profiles', [
