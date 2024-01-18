@@ -95,7 +95,7 @@ class Roles {
             let $route = $('#userLockType').val();
             let $description = $('#userReasonLock select').val();
 
-            let match = url.match(/\?=(.*)/);
+            let match = $route.match(/\?=(.*)/);
 
             if (match && match[1]) {
                 let value = match[1];
