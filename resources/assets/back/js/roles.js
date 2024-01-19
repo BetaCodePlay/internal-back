@@ -184,6 +184,35 @@ class Roles {
         });
     }
 
+    userCreate() {
+        let $button = '.createUser';
+        let $dependence;
+
+        $(document).on('click', $button, function () {
+            let $this = $(this);
+            let route = $this.data('route');
+            let $data = {
+                username: $('#createRolUsername').val(),
+                type: $('#createRolType').val(),
+                percentage: $('#createRolPercentage').val(),
+                password:  $('#createRolPassword').val(),
+                dependence:  $dependence
+            }
+
+            $.ajax({
+                url: route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+            }).fail(function (json) {
+                Roles.errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
+        });
+    }
+
     static errorResponse(json) {
         let array = Object.values(json.responseJSON.errors);
         let title = json.responseJSON.message;
