@@ -95,13 +95,15 @@ class Roles {
             let $route = $('#userLockType').val();
             let $descriptionLock = $('#userReasonLock select').val();
             let $descriptionUnlock = $('#userReasonUnlock select').val();
-            let $data = {};
-
-            $data = {
+            let $data = {
                 userId: Roles.globaluserid,
                 descriptionLock: $descriptionLock,      // Descripcion para Bloquear.
                 descriptionUnlock: $descriptionUnlock,  // Descripcion para Desbloquear.
                 lockType: $globalLock                        // TRUE si es bloqueo y FALSE si es desbloqueo.
+            }
+
+            if ($globalType !== 8) {
+                $route = $('#lockTypeThis').val();
             }
 
             console.log($data);
