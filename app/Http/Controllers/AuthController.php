@@ -43,11 +43,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AuthController extends Controller
 {
-
     /**
      * @param UsersRepo $usersRepo
+     * @param AgentsRepo $agentsRepo
      */
-    public function __construct(private UsersRepo $usersRepo) { }
+    public function __construct(
+        private UsersRepo $usersRepo,
+        private AgentsRepo $agentsRepo,
+    ) { }
 
     /**
      * Authenticate users
@@ -325,6 +328,75 @@ class AuthController extends Controller
         }
     }
 
+    /*public function resetPassword(Request $request)
+    {
+        $this->validate($request, [
+            'password' => ['required', 'confirmed', new Password()],
+            'password_confirmation' => 'required'
+        ]);
+
+        try {
+            $user = $request->user;
+            $userData = $this->agentsRepo->statusActionByUser($user);
+            $roles = Security::getUserRoles($user);
+            if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
+                $data = [
+                    'title' => ActionUser::getName($userData->action),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$not_found, $data);
+
+            }
+
+            $password = $request->password;
+            if($userData->type_user == TypeUser::$player ) {
+                $userData = [
+                    'password' => $password,
+                    'action' =>  ActionUser::$active
+                ];
+            } else {
+                $userData = [
+                    'password' => $password,
+                    'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
+                ];
+            }
+
+            $this->usersRepo->update($user, $userData);
+
+            $auditData = [
+                'ip' => Utils::userIp($request),
+                'user_id' => auth()->user()->id,
+                'username' => auth()->user()->username,
+                'password' => $password
+            ];
+            Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
+            $userTemp = $this->usersRepo->getUsers($user);
+            $ip = Utils::userIp($request);
+            foreach ($userTemp as $users) {
+                $name = $users->username;
+                $action = $users->action;
+                $confirmation = $users->confirmation_email;
+            }
+            $url = route('core.dashboard');
+            $whitelabelId = Configurations::getWhitelabel();
+            if($action === ActionUser::$active && $confirmation == true){
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
+            }
+            $data = [
+                'title' => _i('Password reset'),
+                'message' => _i('Password was successfully reset'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
+            return Utils::failedResponse();
+        }
+    }*/
+
     /**
      * @param Request $request
      * @return Response
@@ -338,26 +410,61 @@ class AuthController extends Controller
         ]);
 
         try {
-            $userId = $request->input('userId');
-            $user   = $this->usersRepo->find($userId);
-
-            if (! $user) {
+            $user = $request->input('userId');
+            $userData = $this->agentsRepo->statusActionByUser($user);
+            Security::getUserRoles($user);
+            if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 return Utils::errorResponse(Codes::$not_found, [
-                    'title'   => _i('User not found!'),
-                    'message' => _i('The User not found'),
-                    'close'   => _i('Close')
+                    'title' => ActionUser::getName($userData->action),
+                    'message' => _i('Contact your superior...'),
+                    'close' => _i('Close')
                 ]);
             }
 
-            $this->usersRepo->changePassword($userId, $request->input('newPassword'), ActionUser::$update_email);
+            $password = $request->input('newPassword');
+            if($userData->type_user == TypeUser::$player ) {
+                $userData = [
+                    'password' => $password,
+                    'action' =>  ActionUser::$active
+                ];
+            } else {
+                $userData = [
+                    'password' => $password,
+                    'action' => Configurations::getResetMainPassword() ? ActionUser::$changed_password:ActionUser::$active,
+                ];
+            }
 
+            $this->usersRepo->update($user, $userData);
+            $ip =  Utils::userIp();
+
+            $auditData = [
+                'ip' => $ip,
+                'user_id' => auth()->user()->id,
+                'username' => auth()->user()->username,
+                'password' => $password
+            ];
+            Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
+            $userTemp = $this->usersRepo->getUsers($user);
+
+            foreach ($userTemp as $users) {
+                $name = $users->username;
+                $action = $users->action;
+                $confirmation = $users->confirmation_email;
+            }
+            $url = route('core.dashboard');
+            $whitelabelId = Configurations::getWhitelabel();
+            if($action === ActionUser::$active && $confirmation == true){
+                $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$password_change_notification);
+                Mail::to($userTemp)->send(new Users($whitelabelId, $url, $name, $emailConfiguration, EmailTypes::$password_change_notification, $ip));
+            }
             return Utils::successResponse([
-                'title'   => _i('Password changed'),
-                'message' => _i('Your password has been changed successfully'),
-                'close'   => _i('Close')
+                'title' => _i('Password reset'),
+                'message' => _i('Password was successfully reset'),
+                'close' => _i('Close')
             ]);
+
         } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex]);
+            Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
     }
