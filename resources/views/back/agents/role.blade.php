@@ -127,7 +127,6 @@
 
 @section('modals')
     @include('back.agents.modals.role-password-reset')
-    @include('back.agents.modals.role-create-simple')
     @include('back.agents.modals.role-balance')
     @include('back.agents.modals.role-create')
     @include('back.agents.modals.role-lock')
