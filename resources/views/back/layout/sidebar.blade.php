@@ -26,6 +26,8 @@
 
         @include('back.partials.sidebar.role')
 
+        @include('back.partials.sidebar.report')
+
         @can('access', [$permissions::$users_menu])
             @include('back.partials.sidebar.users', ['permissions' => $permissions])
         @endif
