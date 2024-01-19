@@ -191,13 +191,11 @@ class Roles {
 
         $(document).on('change', '#createRolType', function () {
             $globalType = $(this).val();
-
-            console.log($globalType);
         });
 
         $(document).on('click', $button, function () {
             let $this = $(this);
-            let route;
+            let $route;
             let $data = {
                 username: $('#createRolUsername').val(),
                 type: $('#createRolType').val(),
@@ -206,10 +204,21 @@ class Roles {
                 dependence:  $dependence
             };
 
-            route = $('#createRolType').val();
+            if($('#createRolType').length > 0) {
+                if($globalType || !$globalType) {
+                    $route = $this.data('route-agent');
+                } else {
+                    $route = $this.data('route-player');
+                }
+            } else {
+                $route = $this.data('route-player');
+            }
 
-            $.ajax({
-                url: route,
+
+            console.log($route);
+
+           /* $.ajax({
+                url: $route,
                 method: 'post',
                 data: $data
             }).done(function (json) {
@@ -218,7 +227,7 @@ class Roles {
                 Roles.errorResponse(json);
             }).always(function () {
                 $this.button('reset');
-            });
+            });*/
         });
     }
 
