@@ -106,7 +106,7 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
                     <li><a class="dropdown-item roleSimple" href="#" target="_blank">{{ _i('View profile') }}</a></li>
-                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
+                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-create">{{ _i('Add role') }}</a></li>
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock"
                            data-lock="{{ _i('Lock profile') }}"
@@ -127,7 +127,6 @@
 
 @section('modals')
     @include('back.agents.modals.role-password-reset')
-    @include('back.agents.modals.role-create-simple')
     @include('back.agents.modals.role-balance')
     @include('back.agents.modals.role-create')
     @include('back.agents.modals.role-lock')
@@ -140,6 +139,7 @@
             roles.initTableRoles();
             roles.userResetPassword();
             roles.userBalance();
+            roles.userCreate();
             roles.userLock();
         });
     </script>

@@ -300,6 +300,21 @@ class AgentsController extends Controller
     }
 
     /**
+     * Show report management
+     *
+     * @return Application|Factory|View
+     */
+    public function reportManagement()
+    {
+        try {
+            return view('back.agents.reports.management');
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+    /**
      * Show add users
      *
      * @return Application|Factory|View

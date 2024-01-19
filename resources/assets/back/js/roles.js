@@ -28,7 +28,7 @@ class Roles {
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1] + '</span>');
-                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle '+ (aData[3][1] === true ? 'green' : 'red') + '"></i> ' + aData[3][0]);
+                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] === true ? 'green' : 'red') + '"></i> ' + aData[3][0]);
                 $('td:eq(4)', nRow).html('$' + aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
@@ -86,71 +86,54 @@ class Roles {
         let $button = '.lockUser';
         let $targetModal = '[data-target="#role-lock"]';
         let $modal = $('#role-lock');
+        let $globalLock;
         let $globalType;
         let $title;
 
         $(document).on('click', $button, function () {
             let $this = $(this);
-            //let $route = $('#userLockType').data('route');
             let $route = $('#userLockType').val();
-            let $description = $('#userReasonLock select').val();
-
-            const getQueryParamValue  = url => {
-                const match = url.match(/\?=(.*)/);
-                return match ? match[1] : null;
-            };
-
-            let thisOrAll = getQueryParamValue ($route);
-
-            console.log('data', thisOrAll)
-            let $data = {};
-
-            if (thisOrAll === 'this') {
-                $data = {
-                    userId: Roles.globaluserid,
-                    lockType: 6, // puede ser 6 para bloquear y 1 para desbloquear
-                    description: $description,
-                }
+            let $descriptionLock = $('#userReasonLock select').val();
+            let $descriptionUnlock = $('#userReasonUnlock select').val();
+            let $data = {
+                userId: Roles.globaluserid,
+                descriptionLock: $descriptionLock,
+                descriptionUnlock: $descriptionUnlock,
+                lockType: $globalLock
             }
 
-            if (thisOrAll === 'all') {
-                $data = {
-                    userId: Roles.globaluserid,
-                    description: $description,
-                    lock_users: true, // true si es bloqueo y false si es desbloqueo.
-                    type: true,
-                }
+            if ($globalType !== 8 && !$globalLock) {
+                $route = $('#lockTypeThis').val();
             }
+
             $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
-            })
-                .done(function (json) {
-                    Toastr.notifyToastr(json.data.title, json.data.message, 'success');
-                })
-                .fail(function (json) {
-                    Roles.errorResponse(json);
-                })
-                .always(function () {
-                    $this.button('reset');
-                });
+            }).done(function (json) {
+                $modal.modal('hide');
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+            }).fail(function (json) {
+                Roles.errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
         });
 
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
-            let $val = $this.data('value');
             let $type = $this.data('type');
             let $buttonCancel = $modal.find('.modal-footer [data-dismiss="modal"]');
             let $buttonSuccess = $modal.find('.lockUser');
             let $cancel;
             let $success;
             let $typeAll = $('#lockTypeAll');
+            $globalLock = $this.data('value');
 
             $globalType = $type;
             $typeAll.show();
 
-            if ($val === true) {
+            if ($globalLock) {
                 $title = $this.data('lock');
                 $cancel = $buttonCancel.data('lock');
                 $success = $buttonSuccess.data('lock');
@@ -185,6 +168,35 @@ class Roles {
                 userId: Roles.globaluserid,
                 userAmount: $('#userBalanceAmount').val(),
                 userBalance: $balance
+            }
+
+            $.ajax({
+                url: route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+            }).fail(function (json) {
+                Roles.errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
+        });
+    }
+
+    userCreate() {
+        let $button = '.createUser';
+        let $dependence;
+
+        $(document).on('click', $button, function () {
+            let $this = $(this);
+            let route = $this.data('route');
+            let $data = {
+                username: $('#createRolUsername').val(),
+                type: $('#createRolType').val(),
+                percentage: $('#createRolPercentage').val(),
+                password:  $('#createRolPassword').val(),
+                dependence:  $dependence
             }
 
             $.ajax({

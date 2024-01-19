@@ -245,6 +245,10 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'uses' => 'AgentsController@agentsBalances'
         ]);
 
+        //Show report management
+        Route::get('management', [AgentsController::class, 'reportManagement'])
+            ->name('agents.reports.management');
+
         // Get agents transactions data
         Route::get('agents-balances-data', [
             'as' => 'agents.reports.agents-balances-data',
