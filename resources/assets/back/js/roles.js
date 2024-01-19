@@ -191,6 +191,12 @@ class Roles {
 
         $(document).on('change', '#createRolType', function () {
             $globalType = $(this).val();
+
+            if ($globalType === '') {
+                $('.d-agent').addClass('d-none')
+            } else {
+                $('.d-agent').removeClass('d-none')
+            }
         });
 
         $(document).on('click', $button, function () {
@@ -205,10 +211,10 @@ class Roles {
             };
 
             if($('#createRolType').length > 0) {
-                if($globalType === 'true' || $globalType === 'false') {
-                    $route = $this.data('route-agent');
-                } else {
+                if($globalType === '') {
                     $route = $this.data('route-player');
+                } else {
+                    $route = $this.data('route-agent');
                 }
             } else {
                 $route = $this.data('route-player');
