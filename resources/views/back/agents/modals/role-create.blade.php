@@ -35,21 +35,18 @@
                                     <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label>{{ _i('Dependence on') }}</label>
-                                        <select class="form-control"  id="createRolDependence">
-                                            <option value="">{{ _i('Select...') }}</option>
-                                            @foreach ($dependencies as $dependece)
-                                                <option value="{{ $dependece['id'] }}">
-                                                    {{ $dependece['username'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>{{ _i('Dependence on') }}</label>
+                                    <select class="form-control"  id="createRolDependence">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($dependencies as $dependece)
+                                            <option value="{{ $dependece['id'] }}">
+                                                {{ $dependece['username'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-12 col-lg-6"></div>
                             </div>
                         @endiF
                         <div class="col-12 col-lg-6">
@@ -66,7 +63,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="modal-footer">
