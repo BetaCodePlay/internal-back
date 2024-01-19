@@ -18,24 +18,42 @@
                                 <input type="text" class="form-control" placeholder=""  id="createRolUsername">
                             </div>
                         </div>
-
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label>{{ _i('Role type') }}</label>
-                                <select class="form-control"  id="createRolType">
-                                    <option>{{ _i('Master') }}</option>
-                                    <option>{{ _i('Support') }}</option>
-                                    <option>{{ _i('Players') }}</option>
-                                </select>
+                        @if ($agent->master)
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>{{ _i('Role type') }}</label>
+                                    <select class="form-control"  id="createRolType">
+                                        <option>{{ _i('Master') }}</option>
+                                        <option>{{ _i('Support') }}</option>
+                                        <option>{{ _i('Players') }}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label>{{ _i('Percentage') }}</label>
-                                <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage">
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>{{ _i('Percentage') }}</label>
+                                    <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage">
+                                </div>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>{{ _i('Dependence on') }}</label>
+                                        <select class="form-control"  id="createRolDependence">
+                                            <option value="">{{ _i('Select...') }}</option>
+                                            @foreach ($dependencies as $dependece)
+                                                <option value="{{ $dependece['id'] }}">
+                                                    {{ $dependece['username'] }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-6"></div>
+                            </div>
+                        @else
+                            <input  id="createRolType" value="Players" type="hidden">
+                        @endiF
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Password') }}</label>
@@ -50,19 +68,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label>{{ _i('Dependence on') }}</label>
-                                <select class="form-control"  id="createRolDependence">
-                                    <option value="agentescasino01">agentescasino01</option>
-                                    <option value="tester123">tester123</option>
-                                    <option value="123casino">123casino</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6"></div>
-                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">

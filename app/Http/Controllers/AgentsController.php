@@ -3727,13 +3727,16 @@ class AgentsController extends Controller
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();
             $customUsername = ! empty($username) ? $username : $authUser->username;
+            $currency       = session('currency');
+            $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
+            $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
 
             return view('back.agents.role', [
-                'agent'              => $this->agentsRepo->findUserProfile($authUserId, session('currency') ?? ''),
+                'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
                 'agents'             => $this->agentsRepo->getAgentsAllByOwner(
                     $authUserId,
-                    session('currency'),
+                    $currency,
                     $whitelabel
                 ),
                 'action'             => $authUser->action,
@@ -3741,7 +3744,8 @@ class AgentsController extends Controller
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
                 'authUser'           => $authUser,
-                'username'           => $customUsername
+                'username'           => $customUsername,
+                'dependencies'         => $dependence
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
