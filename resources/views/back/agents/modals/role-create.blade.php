@@ -23,9 +23,9 @@
                                 <div class="form-group">
                                     <label>{{ _i('Role type') }}</label>
                                     <select class="form-control"  id="createRolType">
-                                        <option>{{ _i('Master') }}</option>
-                                        <option>{{ _i('Support') }}</option>
-                                        <option>{{ _i('Players') }}</option>
+                                        <option value="true">{{ _i('Master') }}</option>
+                                        <option value="false">{{ _i('Support') }}</option>
+                                        <option value="">{{ _i('Players') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -51,8 +51,6 @@
                                 </div>
                                 <div class="col-12 col-lg-6"></div>
                             </div>
-                        @else
-                            <input  id="createRolType" value="Players" type="hidden">
                         @endiF
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
@@ -75,7 +73,7 @@
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
                     {{ _i('Cancel creation') }}
                 </button>
-                <button type="button" class="btn btn-theme createUser" data-route="{{ route('agents.role.store-rol') }}">
+                <button type="button" class="btn btn-theme createUser" data-route-agent="{{ route('agents.role.store-rol') }}" data-route-player="{{ route('agents.role.store-user') }}">
                     {{ _i('Ready! Create role') }}
                 </button>
             </div>

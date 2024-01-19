@@ -186,18 +186,27 @@ class Roles {
 
     userCreate() {
         let $button = '.createUser';
+        let $globalType;
         let $dependence;
+
+        $(document).on('change', '#createRolType', function () {
+            $globalType = $(this).val();
+
+            console.log($globalType);
+        });
 
         $(document).on('click', $button, function () {
             let $this = $(this);
-            let route = $this.data('route');
+            let route;
             let $data = {
                 username: $('#createRolUsername').val(),
                 type: $('#createRolType').val(),
                 percentage: $('#createRolPercentage').val(),
                 password:  $('#createRolPassword').val(),
                 dependence:  $dependence
-            }
+            };
+
+            route = $('#createRolType').val();
 
             $.ajax({
                 url: route,
