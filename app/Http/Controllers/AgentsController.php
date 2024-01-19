@@ -959,7 +959,7 @@ class AgentsController extends Controller
             $maker     = $request->input('maker');
             $category  = $request->input('category');
             $lockUsers = $request->boolean('lock_users');
-            $type      = $request->boolean('type');
+            $type      = true; // TODO: siempre se manda true.
             $agent     = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
             $subAgents = $this->agentsRepo->getAgentsByOwner($userId, $currency);
             $users     = ! is_null($agent) ? $this->agentsRepo->getUsersByAgent(
@@ -1092,7 +1092,7 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param Request $requestf
      * @return Response
      */
     public function blockAgent(Request $request): Response {
