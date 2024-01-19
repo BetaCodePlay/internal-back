@@ -102,7 +102,7 @@ class Roles {
                 lockType: $globalLock                        // TRUE si es bloqueo y FALSE si es desbloqueo.
             }
 
-            if ($globalType !== 8) {
+            if ($globalType !== 8 && !$globalLock) {
                 $route = $('#lockTypeThis').val();
             }
 
