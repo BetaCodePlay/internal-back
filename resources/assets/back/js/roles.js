@@ -93,7 +93,11 @@ class Roles {
             const $this = $(this);
             const $route = $('#userLockType').val();
             const $description = $('#userReasonLock select').val();
-            const getQueryParamValue = url => (new URLSearchParams(new URL(url).search)).get('=');
+            const getQueryParamValue  = url => {
+                const match = url.match(/\?=(.*)/);
+                return match ? match[1] : null;
+            };
+
             const thisOrAll = getQueryParamValue($route);
 
             console.log("thisOrAll", thisOrAll, thisOrAll === 'this');
