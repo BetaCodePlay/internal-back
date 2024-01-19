@@ -109,6 +109,8 @@ class Roles {
                 lockType: $globalLock
             }
 
+            console.log('data', $data);
+
             if ($globalType !== 8 && !$globalLock) {
                 $route = $('#lockTypeThis').val();
             }
