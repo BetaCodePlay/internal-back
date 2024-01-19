@@ -198,8 +198,7 @@ class Roles {
                 password:  $('#createRolPassword').val(),
                 dependence:  $dependence
             }
-            console.log('data', $data);
-            return 0;
+
             $.ajax({
                 url: route,
                 method: 'post',
