@@ -96,6 +96,8 @@ class Roles {
             const getQueryParamValue = url => (new URLSearchParams(new URL(url).search)).get('=');
             const thisOrAll = getQueryParamValue($route);
 
+            console.log("thisOrAll", thisOrAll, thisOrAll === 'this');
+
             const $data = {
                 userId: Roles.globaluserid,
                 description: $description,
