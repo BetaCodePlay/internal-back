@@ -90,40 +90,52 @@ class Roles {
         let $title;
 
         $(document).on('click', $button, function () {
-            const $this = $(this);
-            const $route = $('#userLockType').val();
-            const $description = $('#userReasonLock select').val();
+            let $this = $(this);
+            //let $route = $('#userLockType').data('route');
+            let $route = $('#userLockType').val();
+            let $description = $('#userReasonLock select').val();
+
             const getQueryParamValue  = url => {
                 const match = url.match(/\?=(.*)/);
                 return match ? match[1] : null;
             };
 
-            const thisOrAll = getQueryParamValue($route);
+            let thisOrAll = getQueryParamValue ($route);
 
-            console.log("thisOrAll", thisOrAll, thisOrAll === 'this');
-
-            const $data = {
-                userId: Roles.globaluserid,
-                description: $description,
-            };
+            console.log('data', thisOrAll)
+            let $data = {};
 
             if (thisOrAll === 'this') {
-                $data.lockType = 6;
-            } else if (thisOrAll === 'all') {
-                $data.lock_users = true;
-                $data.type = true;
+                $data = {
+                    userId: Roles.globaluserid,
+                    lockType: 6,
+                    description: $description,
+                }
             }
 
+            if (thisOrAll === 'all') {
+                $data = {
+                    userId: Roles.globaluserid,
+                    description: $description,
+                    lock_users: true,
+                    type: true,
+                }
+            }
             $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
             })
-                .done(json => Toastr.notifyToastr(json.data.title, json.data.message, 'success'))
-                .fail(json => Roles.errorResponse(json))
-                .always(() => $this.button('reset'));
+                .done(function (json) {
+                    Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                })
+                .fail(function (json) {
+                    Roles.errorResponse(json);
+                })
+                .always(function () {
+                    $this.button('reset');
+                });
         });
-
 
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
