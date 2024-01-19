@@ -225,6 +225,9 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             // Store rol
             Route::post('/store-rol', 'storeRol')->name('agents.role.store-rol');
 
+            // Store user
+            Route::post('/store-user', 'storeRolUser')->name('agents.role.store-user');
+
             // Lock profile
             Route::post('/lock-profile', 'lockProfile')->name('agents.role.lock-profile');
 

@@ -3646,6 +3646,253 @@ class AgentsController extends Controller
     }
 
     /**
+     * Store rol user
+     *
+     * @param Request $request
+     * @param UsersTempRepo $usersTempRepo
+     * @param UserCurrenciesRepo $userCurrenciesRepo
+     * @return Response
+     * @throws ValidationException
+     */
+    public function storeRolUser(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
+    {
+        $rules = [
+            'username' => ['required', new Username()],
+            'password' => ['required', new Password()],
+            'balance' => 'required',
+            'country' => 'required',
+            'timezone' => 'required'
+        ];
+        if (! is_null($request->email)) {
+            $rules['email'] = ['required', new Email()];
+        }
+
+        $this->validate($request, $rules);
+
+        $email = strtolower($request->get('email'));
+        $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+        if (! is_null($uniqueEmail)) {
+            $data = [
+                'title' => _i('Email in use'),
+                'message' => _i('The indicated email is already in use'),
+                'close' => _i('Close'),
+            ];
+            return Utils::errorResponse(Codes::$forbidden, $data);
+        }
+
+        try {
+            //Moneda
+            $currency = session('currency');
+            //Whitelabel id
+            $whitelabel = Configurations::getWhitelabel();
+            $bonus = Configurations::getBonus($whitelabel);
+            $uuid  = Str::uuid()->toString();
+            $owner = auth()->user()->id;
+            $username = strtolower($request->username);
+            $password = $request->password;
+            //$email = $request->email;
+            $balance     = $request->balance;
+            $country     = $request->country;
+            $timezone    = $request->timezone;
+            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+            $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
+            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+
+            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
+                $data = [
+                    'title' => _i('Username in use'),
+                    'message' => _i('The indicated username is already in use'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+            if (is_null($request->email)) {
+                $domain = strtolower($_SERVER['HTTP_HOST']);
+                $domain = str_replace('www.', '', $domain);
+                $email   = "$username@$domain";
+            }
+
+            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
+
+            if ($balance > $ownerAgent->balance) {
+                $data = [
+                    'title' => _i('Insufficient balance'),
+                    'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
+                    'close' => _i('Close')
+                ];
+                return Utils::errorResponse(Codes::$forbidden, $data);
+            }
+
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ipForwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                $ip = explode(',', $ipForwarded)[0];
+            } else {
+                $ip = $request->getClientIp();
+            }
+
+
+            $userData    = [
+                'username'     => $username,
+                'email'        => $email,
+                'password'     => $password,
+                'uuid'         => $uuid,
+                'ip'           => $ip,
+                'status'       => true,
+                'whitelabel_id' => $whitelabel,
+                'web_register' => false,
+                'register_currency' => $currency,
+                'type_user'    => TypeUser::$player,
+                'action'       => ActionUser::$active
+            ];
+            $profileData = [
+                'country_iso' => $country,
+                'timezone' => $timezone,
+                'level' => 1
+            ];
+            $user        = $this->usersRepo->store($userData, $profileData);
+            $auditData   = [
+                'ip'       => Utils::userIp(),
+                'user_id'  => auth()->user()->id,
+                'username' => auth()->user()->username,
+                'player_data' => $userData,
+                'profile_data' => $profileData
+            ];
+            Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
+
+            $excludedUser = $this->agentsCollection->formatExcluderProvidersUsers($user->id, $userExclude, $currency);
+            $this->agentsRepo->blockAgentsMakers($excludedUser);
+            $wallet = Wallet::store(
+                $user->id,
+                $user->username,
+                $uuid,
+                $currency,
+                $whitelabel,
+                session('wallet_access_token')
+            );
+            $this->generateReferenceCode->generateReferenceCode($user->id);
+            $userData           = [
+                'user_id' => $user->id,
+                'currency_iso' => $currency
+            ];
+            $walletData = [
+                'wallet_id' => $wallet->data->wallet->id,
+                'default' => true
+            ];
+            $userCurrenciesRepo->store($userData, $walletData);
+            $this->agentsRepo->addUser($ownerAgent->agent, $user->id);
+            $store = Configurations::getStore()->active;
+            if ($store) {
+                Store::storeWallet($user->id, $currency);
+            }
+
+            // Bonus registration
+            if ($bonus) {
+                // Fetch campaigns
+                $campaigns = $this->campaignsRepo->findCampaign(
+                    $whitelabel,
+                    $currency,
+                    AllocationCriteria::$welcome_bonus_without_deposit
+                );
+
+
+                // Check if $campaigns is not empty before proceeding
+                if (! empty($campaigns)) {
+                    // Create a wallet for bonuses
+                    $walletBonus = Wallet::store(
+                        $user->id,
+                        $user->username,
+                        $uuid,
+                        $currency,
+                        $whitelabel,
+                        session('wallet_access_token'),
+                        $bonus,
+                        null,
+                        $campaigns->id
+                    );
+
+                    // Participate in the welcome bonus program
+                    $participation = Bonus::welcomeRegister(
+                        $whitelabel,
+                        $currency,
+                        $user->id,
+                        $walletBonus->data->bonus[0]->id,
+                        session('wallet_access_token'),
+                        1,
+                        $balance
+                    );
+                } else {
+                    // Create a wallet without a campaign
+                    $walletBonus = Wallet::store(
+                        $user->id,
+                        $user->username,
+                        $uuid,
+                        $currency,
+                        $whitelabel,
+                        session('wallet_access_token'),
+                        $bonus,
+                        null,
+                        null
+                    );
+                }
+            }
+
+
+            if ($balance > 0) {
+                $providerTransaction = Str::uuid()->toString();
+                $additionalData = [
+                    'provider_transaction' => $providerTransaction,
+                    'from' => $ownerAgent->username,
+                    'to' => $user->username
+                ];
+                Wallet::creditManualTransactions(
+                    $balance,
+                    Providers::$agents,
+                    $additionalData,
+                    $wallet->data->wallet->id
+                );
+
+                $ownerBalance = $ownerAgent->balance - $balance;
+                $agentData       = [
+                    'agent_id' => $ownerAgent->agent,
+                    'currency_iso' => $currency
+                ];
+                $balanceData = [
+                    'balance' => $ownerBalance
+                ];
+                $this->agentCurrenciesRepo->store($agentData, $balanceData);
+
+                $additionalData['balance'] = $ownerBalance;
+                $transactionData = [
+                    'user_id'       => $ownerAgent->id,
+                    'amount'        => $balance,
+                    'currency_iso'  => $currency,
+                    'transaction_type_id' => TransactionTypes::$debit,
+                    'transaction_status_id' => TransactionStatus::$approved,
+                    'provider_id'   => Providers::$agents,
+                    'data'          => $additionalData,
+                    'whitelabel_id' => Configurations::getWhitelabel()
+                ];
+                $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+            } else {
+                $ownerBalance = $ownerAgent->balance;
+            }
+
+            $data = [
+                'title' => _i('Player created'),
+                'message' => _i('Player created successfully'),
+                'close' => _i('Close'),
+                'balance' => number_format($ownerBalance, 2),
+                'route' => route('agents.index')
+            ];
+            return Utils::successResponse($data);
+        } catch (Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Provider currency agent
      *
      *
@@ -3727,13 +3974,16 @@ class AgentsController extends Controller
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();
             $customUsername = ! empty($username) ? $username : $authUser->username;
+            $currency       = session('currency');
+            $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
+            $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
 
             return view('back.agents.role', [
-                'agent'              => $this->agentsRepo->findUserProfile($authUserId, session('currency') ?? ''),
+                'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
                 'agents'             => $this->agentsRepo->getAgentsAllByOwner(
                     $authUserId,
-                    session('currency'),
+                    $currency,
                     $whitelabel
                 ),
                 'action'             => $authUser->action,
@@ -3741,7 +3991,8 @@ class AgentsController extends Controller
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
                 'authUser'           => $authUser,
-                'username'           => $customUsername
+                'username'           => $customUsername,
+                'dependencies'         => $dependence
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
