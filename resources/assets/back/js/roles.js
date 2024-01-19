@@ -95,16 +95,14 @@ class Roles {
             let $route = $('#userLockType').val();
             let $description = $('#userReasonLock select').val();
 
-            let match = $route.match(/\?=(.*)/);
+            const obtenerValorQueryParam = url => {
+                const match = url.match(/\?=(.*)/);
+                return match ? match[1] : null;
+            };
 
-            if (match && match[1]) {
-                let value = match[1];
-            } else {
-                console.log("No se encontró ningún valor después de '?=' en la URL.");
-            }
-
-            console.log("route orla", value);
+            console.log("route orla", obtenerValorQueryParam($route));
             return;
+
             let $data = {
                 userId: Roles.globaluserid,
                 description: $description,
