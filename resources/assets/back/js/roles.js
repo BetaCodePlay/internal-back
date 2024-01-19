@@ -21,14 +21,21 @@ class Roles {
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 let buttons = $('#user-buttons');
                 let modalLockTarget = '[data-target="#role-lock"]';
+                let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
 
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]);
                 buttons.find('.roleSimple').attr('href', '/agents/role/' + aData[0]);
-                buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] === true ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock')).attr('data-type', aData[3][2]);
+                buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock')).attr('data-type', aData[3][2]);
+
+                if (aData[3][1]) {
+                    buttons.find(modalResetPasswordTarget).removeClass('d-none');
+                } else {
+                    buttons.find(modalResetPasswordTarget).addClass('d-none');
+                }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1] + '</span>');
-                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] === true ? 'green' : 'red') + '"></i> ' + aData[3][0]);
+                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
                 $('td:eq(4)', nRow).html('$' + aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
