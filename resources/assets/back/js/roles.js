@@ -205,7 +205,7 @@ class Roles {
             };
 
             if($('#createRolType').length > 0) {
-                if($globalType || !$globalType) {
+                if($globalType === 'true' || $globalType === 'false') {
                     $route = $this.data('route-agent');
                 } else {
                     $route = $this.data('route-player');
