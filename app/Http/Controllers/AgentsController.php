@@ -1107,20 +1107,21 @@ class AgentsController extends Controller
     }
 
     /**
-     * @param Request $requestf
+     * @param Request $request
      * @return Response
      */
     public function blockAgent(Request $request): Response {
         try {
             $rules = [
                 'userId'      => ['required', 'exists:users,id'],
-                'lockType'    => ['required', 'integer'],
-                'description' => ['required'],
+                'lockType'    => ['required'],
             ];
 
             $userId      = $request->input('userId');
-            $lockType    = $request->input('lockType');
-            $description = $request->input('description');
+            $lockType = $request->boolean('lockType');
+            $description = $lockType
+                ? $request->input('descriptionLock')
+                : $request->input('descriptionUnlock');
 
             $validator = Validator::make([
                 'userId'      => $userId,
@@ -1140,8 +1141,8 @@ class AgentsController extends Controller
 
             $statusUpdate = false;
             $data         = [];
-            $type         = $lockType;
-            if ($type == ActionUser::$locked_higher) {
+            $authUser = auth()->user();
+            if ($lockType) {
                 $data         = [
                     'action' => ActionUser::$locked_higher,
                     'status' => false,
@@ -1155,13 +1156,13 @@ class AgentsController extends Controller
                 );
                 $father    = false;
                 if (! is_null($typeAudit) && isset($typeAudit->data->user_id)) {
-                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id, Auth::id());
+                    $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id, $authUser->id);
                     if ($typeAudit->data->user_id == Auth::id()) {
                         $father = true;
                     }
                 }
 
-                if ($type == ActionUser::$active && $father) {
+                if ($father) {
                     $data         = [
                         'action' => ActionUser::$active,
                         'status' => true,
@@ -1175,9 +1176,9 @@ class AgentsController extends Controller
 
                 Audits::store($userId, AuditTypes::$agent_user_status, Configurations::getWhitelabel(), [
                     'ip'          => Utils::userIp(),
-                    'user_id'     => auth()->user()->id,
-                    'username'    => auth()->user()->username,
-                    'new_action'  => $type,
+                    'user_id'     => $authUser->id,
+                    'username'    => $authUser->username,
+                    'new_action'  => $lockType,
                     'description' => $description
                 ]);
 
