@@ -28,6 +28,25 @@
                                 <input type="text" class="form-control" placeholder="">
                             </div>
                         </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label>{{ _i('Percentage') }}</label>
+                                <input type="number" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label>{{ _i('Password') }}</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="password">
+                                    <div class="input-group-append">
+                                        <button class="btn u-input-btn--v1 g-width-40 u-btn-primary g-rounded-right-4 u-btn-3d refresh-password" type="button">
+                                            <i class="hs-admin-reload g-absolute-centered g-font-size-16 g-color-white"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-lg-6">

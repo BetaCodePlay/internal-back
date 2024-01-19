@@ -97,19 +97,16 @@ class Roles {
             let $descriptionUnlock = $('#userReasonUnlock select').val();
             let $data = {
                 userId: Roles.globaluserid,
-                descriptionLock: $descriptionLock,      // Descripcion para Bloquear.
-                descriptionUnlock: $descriptionUnlock,  // Descripcion para Desbloquear.
-                lockType: $globalLock                        // TRUE si es bloqueo y FALSE si es desbloqueo.
+                descriptionLock: $descriptionLock,
+                descriptionUnlock: $descriptionUnlock,
+                lockType: $globalLock
             }
 
             if ($globalType !== 8 && !$globalLock) {
                 $route = $('#lockTypeThis').val();
             }
 
-            console.log($data);
-            console.log($route);
-
-            /*$.ajax({
+            $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
@@ -120,7 +117,7 @@ class Roles {
                 Roles.errorResponse(json);
             }).always(function () {
                 $this.button('reset');
-            });*/
+            });
         });
 
         $(document).on('click', $targetModal, function () {
