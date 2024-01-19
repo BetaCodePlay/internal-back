@@ -139,6 +139,7 @@
             roles.initTableRoles();
             roles.userResetPassword();
             roles.userBalance();
+            roles.userCreate();
             roles.userLock();
         });
     </script>

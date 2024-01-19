@@ -14,31 +14,33 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>{{ _i('Role type') }} <i class="fa-solid fa-circle-info"></i></label>
-                                <select class="form-control">
+                                <label>{{ _i('Name') }}</label>
+                                <input type="text" class="form-control" placeholder=""  id="createRolUsername">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label>{{ _i('Role type') }}</label>
+                                <select class="form-control"  id="createRolType">
                                     <option>{{ _i('Master') }}</option>
                                     <option>{{ _i('Support') }}</option>
                                     <option>{{ _i('Players') }}</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label>{{ _i('Name') }}</label>
-                                <input type="text" class="form-control" placeholder="">
-                            </div>
-                        </div>
+
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Percentage') }}</label>
-                                <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99" autocomplete="off">
+                                <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Password') }}</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="password">
+                                    <input type="text" class="form-control" name="password" id="createRolPassword">
                                     <div class="input-group-append">
                                         <button class="btn u-input-btn--v1 g-width-40 u-btn-primary g-rounded-right-4 u-btn-3d refresh-password" type="button">
                                             <i class="hs-admin-reload g-absolute-centered g-font-size-16 g-color-white"></i>
@@ -51,11 +53,11 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>{{ _i('Dependence on') }} <i class="fa-solid fa-circle-info"></i></label>
-                                <select class="form-control">
-                                    <option>agentescasino01</option>
-                                    <option>tester123</option>
-                                    <option>123casino</option>
+                                <label>{{ _i('Dependence on') }}</label>
+                                <select class="form-control"  id="createRolDependence">
+                                    <option value="agentescasino01">agentescasino01</option>
+                                    <option value="tester123">tester123</option>
+                                    <option value="123casino">123casino</option>
                                 </select>
                             </div>
                         </div>
@@ -67,7 +69,7 @@
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
                     {{ _i('Cancel creation') }}
                 </button>
-                <button type="button" class="btn btn-theme">
+                <button type="button" class="btn btn-theme createUser" data-route="{{ route('agents.role.store-rol') }}">
                     {{ _i('Ready! Create role') }}
                 </button>
             </div>
