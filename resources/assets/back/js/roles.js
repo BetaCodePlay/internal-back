@@ -108,7 +108,7 @@ class Roles {
             if (thisOrAll === 'this') {
                 $data = {
                     userId: Roles.globaluserid,
-                    lockType: 6,
+                    lockType: 6, // puede ser 6 para bloquear y 1 para desbloquear
                     description: $description,
                 }
             }
@@ -117,7 +117,7 @@ class Roles {
                 $data = {
                     userId: Roles.globaluserid,
                     description: $description,
-                    lock_users: true,
+                    lock_users: true, // true si es bloqueo y false si es desbloqueo.
                     type: true,
                 }
             }

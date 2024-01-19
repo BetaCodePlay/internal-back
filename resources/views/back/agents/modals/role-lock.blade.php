@@ -15,8 +15,8 @@
                         <div class="col-12 col-lg-6" id="lockTypeAll">
                             <label>{{ _i('Type') }}</label>
                             <select class="form-control" id="userLockType">
-                                <option value="{{ route('agents.block') }}?=this" id="lockTypeThis">{{ _i('Only this user') }}</option>
-                                <option value="{{ route('agents.role.lock-profile') }}?=all">{{ _i('This user and all its dependent users') }}</option>
+                                <option value="{{ route('agents.block') }}" id="lockTypeThis">{{ _i('Only this user') }}</option>
+                                <option value="{{ route('agents.role.lock-profile') }}">{{ _i('This user and all its dependent users') }}</option>
                             </select>
                         </div>
 
