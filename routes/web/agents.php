@@ -111,11 +111,11 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@moveAgentUser'
     ]);
 
+
     // Transactions
-    Route::post('perform-transactions', [
-        'as' => 'agents.perform-transactions',
-        'uses' => 'AgentsController@performTransactions'
-    ]);
+    Route::post('perform-transactions', [AgentsController::class, 'performTransactions'])
+        ->name('agents.perform-transactions');
+
 
     // Relocation agents
     Route::get('relocation-agents/{agent?}', [
