@@ -172,7 +172,10 @@ class Roles {
             let route = $(button).data('route');
             let $balance = $(button).data('balance');
 
+            let dataBalance = $(this).data('balance');
+
             console.log('$balance', $balance);
+            console.log('dataBalance', dataBalance);
 
 
             let $data = {
