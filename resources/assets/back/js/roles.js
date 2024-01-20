@@ -172,12 +172,13 @@ class Roles {
             let route = $(button).data('route');
             let $balance = $(button).data('balance');
 
-            alert('here');
-            return;
+            console.log('$balance', $balance);
+
+
             let $data = {
-                userId: Roles.globaluserid,
-                userAmount: $('#userBalanceAmount').val(),
-                userBalance: $balance
+                user: Roles.globaluserid,
+                amount: $('#userBalanceAmount').val(),
+                transaction_type: $balance == true ? 1 : 2
             }
 
             $.ajax({
