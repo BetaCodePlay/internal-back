@@ -177,9 +177,18 @@ class Roles {
             const deposit = 1;
             const withdrawal = 2;
 
+
+            const getTypeUser = (typeUser) => (
+                typeUser === 1 || typeUser === 2 ? 'agent' :
+                    typeUser === 5 ? 'player' :
+                        null
+            );
+            console.log('getTypeUser', getTypeUser(Roles.globalrolid));
+            console.log('Roles.globalrolid', Roles.globalrolid);
+
             let $data = {
                 user: Roles.globaluserid,
-                type: Roles.globalrolid,
+                type: getTypeUser(Roles.globalrolid),
                 amount: $('#userBalanceAmount').val(),
                 transaction_type: ($balance) ? deposit : withdrawal
             }
