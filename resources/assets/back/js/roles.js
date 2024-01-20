@@ -171,12 +171,14 @@ class Roles {
             let $this = $(this);
             let route = $this.data('route');
             let $balance = $this.data('balance');
+            const deposit = 1;
+            const withdrawal = 2;
 
             let $data = {
                 user: Roles.globaluserid,
                 type: 'agent',
                 amount: $('#userBalanceAmount').val(),
-                transaction_type: $balance ? 1 : 2
+                transaction_type: ($balance) ? deposit : withdrawal
             }
 
             $.ajax({
