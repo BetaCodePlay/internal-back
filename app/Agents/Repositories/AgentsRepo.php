@@ -555,6 +555,7 @@ class AgentsRepo
         $agentQuery = User::select([
             'users.username',
             'users.type_user',
+            'users.type_user as typeId',
             'users.id',
             'users.action',
             'agent_currencies.balance',
@@ -575,6 +576,7 @@ class AgentsRepo
         $playerQuery = User::select([
             'users.username',
             'users.type_user',
+            'users.type_user as typeId',
             'users.id',
             'users.action',
             'agent_currencies.balance',
@@ -599,7 +601,7 @@ class AgentsRepo
         $formattedResults = array_map(function ($item) {
             return [
                 $item['username'],
-                $item['type_user'],
+                [$item['type_user'], $item['typeId']],
                 $item['id'],
                 [ActionUser::getName($item['action']), ActionUser::isBlocked($item['action']), $item['action']],
                 number_format($item['balance'], 2, '.', ''),
