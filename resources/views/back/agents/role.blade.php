@@ -111,6 +111,7 @@
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock"
                            data-lock="{{ _i('Lock profile') }}"
                            data-unlock="{{ _i('Unlock profile') }}"
+                           data-rol=""
                            data-value=""
                            data-type="">
                         </a>

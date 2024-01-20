@@ -2,7 +2,8 @@ import {} from "../../commons/js/core";
 
 class Roles {
     static globalusername;
-    static globaluserid;
+    static globaltypeid;
+    static globalrolid;
 
     initTableRoles() {
         let $table = $('#table-roles');
@@ -23,7 +24,7 @@ class Roles {
                 let modalLockTarget = '[data-target="#role-lock"]';
                 let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
 
-                buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]);
+                buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]).attr('data-rol', aData[1][1]);
                 buttons.find('.roleSimple').attr('href', '/agents/role/' + aData[0]);
                 buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock')).attr('data-type', aData[3][2]);
 
@@ -34,7 +35,7 @@ class Roles {
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
-                $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1] + '</span>');
+                $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1][0] + '</span>');
                 $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
                 $('td:eq(4)', nRow).html('$' + aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
@@ -50,10 +51,12 @@ class Roles {
         $(document).on('click', '.currentDataRole', function () {
             let $username = $(this).data('username');
             let $userid = $(this).data('userid');
+            let $rol = $(this).data('rol');
 
             $('.username-form').html($username);
             Roles.globalusername = $username;
             Roles.globaluserid = $userid;
+            Roles.globalrolid = $rol;
         });
     }
 
@@ -176,7 +179,7 @@ class Roles {
 
             let $data = {
                 user: Roles.globaluserid,
-                type: 'agent',
+                type: Roles.globalrolid,
                 amount: $('#userBalanceAmount').val(),
                 transaction_type: ($balance) ? deposit : withdrawal
             }
