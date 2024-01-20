@@ -109,8 +109,6 @@ class Roles {
                 lockType: $globalLock
             }
 
-            console.log('data', $data);
-
             if ($globalType !== 8 && !$globalLock) {
                 $route = $('#lockTypeThis').val();
             }
@@ -173,6 +171,9 @@ class Roles {
             let $this = $(this);
             let route = $(button).data('route');
             let $balance = $(button).data('balance');
+
+            alert('here');
+            return;
             let $data = {
                 userId: Roles.globaluserid,
                 userAmount: $('#userBalanceAmount').val(),
