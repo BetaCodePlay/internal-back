@@ -599,12 +599,18 @@ class AgentsRepo
         $slicedResults   = array_slice($combinedResults, $start, $length);
 
         $formattedResults = array_map(function ($item) {
+            $balance = $item['balance'];
+
+            if ($item['typeId'] == TypeUser::$player) {
+                $balance = 0;
+            }
+
             return [
                 $item['username'],
                 [$item['type_user'], $item['typeId']],
                 $item['id'],
                 [ActionUser::getName($item['action']), ActionUser::isBlocked($item['action']), $item['action']],
-                number_format($item['balance'], 2, '.', ''),
+                number_format($balance, 2, '.', ''),
             ];
         }, $slicedResults);
 
