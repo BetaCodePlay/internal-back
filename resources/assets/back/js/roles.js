@@ -187,13 +187,13 @@ class Roles {
 
                     walletId = wallet;
                     console.log({walletId});
+                    return walletId;
                 },
                 error: function (error) {
                     console.error("Error obtaining user information:", error);
+                    return '';
                 }
             });
-
-            return walletId;
         }
 
         $(document).on('click', button, function () {
