@@ -4014,7 +4014,8 @@ class AgentsController extends Controller
             'percentage' => 'required|numeric|between:1,99',
             'master'     => 'required'
         ]);
-
+        Log::notice(__METHOD__, ['storeRol' => $request]);
+        return 0;
         try {
             $username           = $request->input('username');
             $password           = $request->input('password');
@@ -4137,6 +4138,8 @@ class AgentsController extends Controller
             'country' => 'required',
             'timezone' => 'required'
         ];
+        Log::notice(__METHOD__, ['storeRolUser' => $request]);
+        return 0;
         if (! is_null($request->email)) {
             $rules['email'] = ['required', new Email()];
         }
