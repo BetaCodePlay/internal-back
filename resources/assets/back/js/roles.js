@@ -176,19 +176,24 @@ class Roles {
             let $balance = $this.data('balance');
             const deposit = 1;
             const withdrawal = 2;
-
+            let userId = Roles.globaluserid;
+            let wallet = "";
 
             const getTypeUser = (typeUser) => (
                 typeUser === 1 || typeUser === 2 ? 'agent' :
                     typeUser === 5 ? 'user' :
                         null
             );
-            console.log('getTypeUser', getTypeUser(Roles.globalrolid));
-            console.log('Roles.globalrolid', Roles.globalrolid);
+
+            let type = getTypeUser(Roles.globalrolid);
+
+            if (type == 'user') {
+                wallet = getUserInformation(userId);
+            }
 
             let $data = {
-                user: Roles.globaluserid,
-                type: getTypeUser(Roles.globalrolid),
+                user: userId,
+                type: type,
                 amount: $('#userBalanceAmount').val(),
                 transaction_type: ($balance) ? deposit : withdrawal
             }
@@ -206,6 +211,24 @@ class Roles {
             });
         });
     }
+
+    getUserInformation(userId) {
+        let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
+
+        $.ajax({
+            url: apiUrl,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log("User information obtained:", data);
+            },
+            error: function (error) {
+                console.error("Error obtaining user information:", error);
+            }
+        });
+    }
+
+
 
     userCreate() {
         let $button = '.createUser';
