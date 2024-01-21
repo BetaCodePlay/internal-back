@@ -173,26 +173,24 @@ class Roles {
         let button = '.balanceUser';
 
         function getUserInformation() {
-            let userId = Roles.globaluserid;
-            let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
-            let walletId = '';
+            return new Promise((resolve, reject) => {
+                let userId = Roles.globaluserid;
+                let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
 
-            $.ajax({
-                url: apiUrl,
-                method: "GET",
-                dataType: "json",
-                success: function (res) {
-                    let { data } = res;
-                    let { wallet } = data;
-
-                    walletId = wallet;
-                    console.log({walletId});
-                    return walletId;
-                },
-                error: function (error) {
-                    console.error("Error obtaining user information:", error);
-                    return '';
-                }
+                $.ajax({
+                    url: apiUrl,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        let { data } = res;
+                        let { wallet } = data;
+                        resolve(wallet);
+                    },
+                    error: function (error) {
+                        console.error("Error obtaining user information:", error);
+                        reject(error);
+                    }
+                });
             });
         }
 
@@ -214,7 +212,14 @@ class Roles {
             let type = getTypeUser(Roles.globalrolid);
 
             if (type === 'user') {
-                wallet = getUserInformation();
+                getUserInformation()
+                    .then(walletId => {
+                        wallet = walletId;
+                        console.log({ wallet });
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
             }
 
             let $data = {
