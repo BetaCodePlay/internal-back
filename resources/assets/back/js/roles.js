@@ -186,8 +186,6 @@ class Roles {
                     let { wallet } = data;
 
                     walletId = wallet;
-
-                    console.log({walletId});
                 },
                 error: function (error) {
                     console.error("Error obtaining user information:", error);
@@ -204,7 +202,7 @@ class Roles {
             const deposit = 1;
             const withdrawal = 2;
             let userId = Roles.globaluserid;
-            let wallet = "";
+            let wallet = '';
 
             const getTypeUser = (typeUser) => (
                 typeUser === 1 || typeUser === 2 ? 'agent' :
@@ -219,6 +217,7 @@ class Roles {
             }
 
             let $data = {
+                wallet,
                 user: userId,
                 type: type,
                 amount: $('#userBalanceAmount').val(),
