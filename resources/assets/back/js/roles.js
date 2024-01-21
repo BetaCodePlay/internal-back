@@ -167,6 +167,22 @@ class Roles {
         });
     }
 
+    getUserInformation(userId) {
+        let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
+
+        $.ajax({
+            url: apiUrl,
+            method: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log("User information obtained:", data);
+            },
+            error: function (error) {
+                console.error("Error obtaining user information:", error);
+            }
+        });
+    }
+
     userBalance() {
         let button = '.balanceUser';
 
@@ -188,7 +204,7 @@ class Roles {
             let type = getTypeUser(Roles.globalrolid);
 
             if (type == 'user') {
-                wallet = getUserInformation(userId);
+                wallet = Roles.getUserInformation(userId);
             }
 
             let $data = {
@@ -211,23 +227,6 @@ class Roles {
             });
         });
     }
-
-    getUserInformation(userId) {
-        let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
-
-        $.ajax({
-            url: apiUrl,
-            method: "GET",
-            dataType: "json",
-            success: function (data) {
-                console.log("User information obtained:", data);
-            },
-            error: function (error) {
-                console.error("Error obtaining user information:", error);
-            }
-        });
-    }
-
 
 
     userCreate() {
