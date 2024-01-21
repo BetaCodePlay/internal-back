@@ -201,8 +201,6 @@ class Roles {
             const deposit = 1;
             const withdrawal = 2;
             let userId = Roles.globaluserid;
-            let wallet = '';
-
             const getTypeUser = (typeUser) => (
                 typeUser === 1 || typeUser === 2 ? 'agent' :
                     typeUser === 5 ? 'user' :
@@ -212,7 +210,7 @@ class Roles {
             let type = getTypeUser(Roles.globalrolid);
 
             let $data = {
-                wallet: '', // O cualquier valor predeterminado
+                wallet: '',
                 user: userId,
                 type: type,
                 amount: $('#userBalanceAmount').val(),
@@ -223,26 +221,28 @@ class Roles {
                 getUserInformation()
                     .then(walletId => {
                         $data.wallet = walletId;
+                        sendAjax(route, $data);
                     })
                     .catch(error => {
                         console.error("Error:", error);
                     });
+            } else {
+                sendAjax(route, $data);
             }
+        });
 
-            console.log({ $data });
-
+        function sendAjax(route, data) {
             $.ajax({
                 url: route,
                 method: 'post',
-                data: $data
+                data: data
             }).done(function (json) {
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
-                $this.button('reset');
             });
-        });
+        }
     }
 
     userCreate() {
