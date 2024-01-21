@@ -211,24 +211,25 @@ class Roles {
 
             let type = getTypeUser(Roles.globalrolid);
 
+            let $data = {
+                wallet: '', // O cualquier valor predeterminado
+                user: userId,
+                type: type,
+                amount: $('#userBalanceAmount').val(),
+                transaction_type: ($balance) ? deposit : withdrawal
+            };
+
             if (type === 'user') {
                 getUserInformation()
                     .then(walletId => {
-                        wallet = walletId;
-                        console.log({ wallet });
+                        $data.wallet = walletId;
                     })
                     .catch(error => {
                         console.error("Error:", error);
                     });
             }
 
-            let $data = {
-                wallet,
-                user: userId,
-                type: type,
-                amount: $('#userBalanceAmount').val(),
-                transaction_type: ($balance) ? deposit : withdrawal
-            }
+            console.log({ $data });
 
             $.ajax({
                 url: route,
