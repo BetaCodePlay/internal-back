@@ -264,7 +264,7 @@ class AgentsController extends Controller
         AgentService $agentService,
         CampaignsRepo $campaignsRepo,
         CampaignParticipationRepo $campaignParticipationRepo,
-        UserTransactionServiceBackup $userTransactionService,
+        UserTransactionService $userTransactionService,
         AuditsRepo $auditsRepo
     ) {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
