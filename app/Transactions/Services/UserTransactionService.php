@@ -118,8 +118,15 @@ class UserTransactionService extends BaseService
      *
      * @return bool|Response False if the user is not blocked, otherwise a response indicating a block.
      */
-    public function isUserBlocked(object $user): bool|Response
+    public function isUserBlocked(?object $user): bool|Response
     {
+        if ($user === null) {
+            return $this->generateErrorResponse(
+                _i('User is null!'),
+                _i('Please provide a valid user object.'),
+            );
+        }
+
         if (isset($user->action) && $user->action == ActionUser::$locked_higher) {
             return $this->generateErrorResponse(
                 _i('Blocked by a superior!'),
