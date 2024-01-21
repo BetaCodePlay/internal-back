@@ -6,13 +6,16 @@ namespace App\Transactions\Services;
 
 use App\Agents\Enums\AgentType;
 use App\Agents\Enums\UserType;
+
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Core\Services\BaseService;
 use App\Http\Requests\TransactionRequest;
 use App\Users\Enums\ActionUser;
+use Dotworkers\Bonus\Bonus;
 use Dotworkers\Configurations\Configurations;
+use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionStatus;
@@ -27,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  *
  */
-class UserTransactionService extends BaseService
+class TransactionService extends BaseService
 {
     /**
      * Create a new instance of the TransactionService class.
@@ -118,16 +121,9 @@ class UserTransactionService extends BaseService
      *
      * @return bool|Response False if the user is not blocked, otherwise a response indicating a block.
      */
-    public function isUserBlocked(?object $user): bool|Response
+    public function isUserBlocked(object $user): bool|Response
     {
-        if ($user === null) {
-            return $this->generateErrorResponse(
-                _i('User is null!'),
-                _i('Please provide a valid user object.'),
-            );
-        }
-
-        if (isset($user->action) && $user->action == ActionUser::$locked_higher) {
+        if ($user->action == ActionUser::$locked_higher) {
             return $this->generateErrorResponse(
                 _i('Blocked by a superior!'),
                 _i('Contact your superior...'),
@@ -153,10 +149,6 @@ class UserTransactionService extends BaseService
         $currency = session('currency');
         $agentDetails = $this->agentsRepo->findByUserIdAndCurrency($userToAddBalance, $currency);
         $userIsBlocked = $this->isUserBlocked($agentDetails);
-
-        $log = $this->agentsRepo->findByUserIdAndCurrency2($userToAddBalance, $currency);
-
-        \Log::notice('log', ['log' => $log]);
 
         if ($userIsBlocked instanceof Response) {
             return $userIsBlocked;
@@ -277,8 +269,9 @@ class UserTransactionService extends BaseService
         }
 
         $currency = session('currency');
-        $walletDetail = Wallet::getByClient($playerDetails->id, $currency);
-        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail);
+        $bonus = Configurations::getBonus(Configurations::getWhitelabel());
+        $walletDetail = Wallet::getByClient($playerDetails->id, $currency, $bonus);
+        $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail, true);
 
         if ($walletHandlingResult instanceof Response) {
             return $walletHandlingResult;
@@ -346,17 +339,67 @@ class UserTransactionService extends BaseService
             'ticketRoute'     => route('agents.ticket', [$ticketId]),
             'printTicketText' => __('Print ticket'),
         ])->render();
-
         return (object)[
             'additionalData'       => $transactionResult->additionalData,
             'agentBalanceFinal'    => $transactionResult->agentBalanceFinal ?? 0,
             'balance'              => $transactionResult->balance,
+            'balanceBonus'         => $transactionResult?->balanceBonus ?? 0,
             'button'               => $buttonHTML,
             'ownerBalance'         => $transactionResult->ownerBalance ?? 0,
             'status'               => $transactionResult->status,
             'transactionIdCreated' => $ticketId,
         ];
     }
+
+    /**
+     * Process a bonus transaction for a player.
+     *
+     * This method handles a bonus transaction for a given player and updates their balance.
+     *
+     * @param string $typeTransaction The type of transaction (e.g., 'credit' or 'debit').
+     * @param object $playerDetails An object containing player details.
+     * @param float $transactionAmount The transaction amount.
+     * @param object $walletDetail An object containing wallet details.
+     *
+     * @return float The updated bonus balance of the player.
+     */
+    public function processBonusForPlayer(
+        string $typeTransaction,
+        object $playerDetails,
+        float $transactionAmount,
+        object $walletDetail
+    ) {
+        if (Configurations::getBonus(Configurations::getWhitelabel())) {
+            if ($typeTransaction == TransactionTypes::$credit) {
+                // Deposit Bonus Agents
+                Bonus::depositBonusAgents(
+                    Configurations::getWhitelabel(),
+                    session('currency'),
+                    $playerDetails->id,
+                    $walletDetail->data->bonus[0]->id,
+                    session('wallet_access_token'),
+                    $transactionAmount
+                );
+
+                // Unlimited Deposit Bonus
+                Bonus::unlimitedDepositBonus(
+                    Configurations::getWhitelabel(),
+                    session('currency'),
+                    $playerDetails->id,
+                    $walletDetail->data->bonus[0]->id,
+                    session('wallet_access_token'),
+                    $transactionAmount
+                );
+            } else {
+                Bonus::removeBalanceBonus($walletDetail->data->bonus[0]->id, $playerDetails->id);
+            }
+
+            // Update Balance Wallet
+            $updateBalanceBonus = Wallet::getByClient($playerDetails->id, session('currency'), true);
+            return $updateBalanceBonus->data->bonus[0]->balance;
+        }
+    }
+
 
     /**
      * Process a credit transaction for an agent.
@@ -425,6 +468,8 @@ class UserTransactionService extends BaseService
         object $walletDetail
     ): mixed {
         $currency = session('currency');
+        $whitelabel = Configurations::getWhitelabel();
+        $bonus = Configurations::getBonus($whitelabel);
         $transactionAmount = $request->get('amount');
         $userAuthId = $request->user()->id;
         $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
@@ -435,6 +480,16 @@ class UserTransactionService extends BaseService
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
+        if(($walletDetail && isset($walletDetail->data->bonus))) {
+            $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
+        } else {
+            $walletBonus = Wallet::store($playerDetails->id, $playerDetails->username, $playerDetails->uuid, $currency, $whitelabel, session('wallet_access_token'), $bonus, null, null);
+            if($walletBonus->code == Codes::$ok) {
+                $walletDetail = Wallet::getByClient($playerDetails->id, $currency, $bonus);
+                $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$credit, $playerDetails, $transactionAmount, $walletDetail);
+            }
+
+        }
 
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
@@ -451,6 +506,7 @@ class UserTransactionService extends BaseService
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
             'balance'           => $transaction?->wallet?->balance ?? 0,
+            'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance - $transactionAmount,
             'status'            => $transactionResult->status,
         ];
@@ -531,6 +587,9 @@ class UserTransactionService extends BaseService
             $request->get('wallet'),
         );
 
+        if($walletDetail && isset($walletDetail->data->bonus)) {
+            $balanceBonus = $this->processBonusForPlayer(TransactionTypes::$debit, $playerDetails, $transactionAmount, $walletDetail);
+        }
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $transactionResult);
 
         if ($walletHandlingResult instanceof Response) {
@@ -546,6 +605,7 @@ class UserTransactionService extends BaseService
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
             'balance'           => $transaction?->wallet?->balance ?? 0,
+            'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance + $transactionAmount,
             'status'            => $transactionResult->status,
         ];
@@ -621,12 +681,12 @@ class UserTransactionService extends BaseService
                 _i('please contact support"'),
             );
         }
-
         return Utils::successResponse([
             'title'   => _i('Transaction performed'),
             'message' => _i('The transaction was successfully made to the user'),
             'close'   => _i('Close'),
             'balance' => number_format($userManagementResult->balance, 2),
+            'balanceBonus' => number_format($userManagementResult->balanceBonus, 2),
             'button'  => $userManagementResult->button,
         ]);
     }
