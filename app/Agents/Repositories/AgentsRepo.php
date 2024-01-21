@@ -199,13 +199,7 @@ class AgentsRepo
         return Agent::find($agent);
     }
 
-    /**
-     * Find by user ID and currency
-     *
-     * @param int $user User ID
-     * @param string $currency Currency ISO
-     * @return Builder|Model|object|null
-     */
+
     public function findByUserIdAndCurrency(int $user, string $currency)
     {
         return Agent::on('replica')
@@ -218,7 +212,7 @@ class AgentsRepo
                     ->join('profiles', 'users.id', '=', 'profiles.user_id')
                     ->where('agent_currencies.currency_iso', $currency)
                     ->where('users.id', $user)
-                    ->first();
+                    ->toSql();
     }
 
     /**

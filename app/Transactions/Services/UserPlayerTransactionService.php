@@ -11,6 +11,7 @@ use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -148,6 +149,8 @@ class UserPlayerTransactionService extends BaseTransactionService
         $transactionAmount = $request->get('amount');
         $userAuthId        = $request->user()->id;
         $ownerAgent        = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
+
+        \Log::notice('SQL', ['agent' => $ownerAgent]);
 
         $transactionResult = Wallet::creditManualTransactions(
             $transactionAmount,
