@@ -154,6 +154,10 @@ class UserTransactionService extends BaseService
         $agentDetails = $this->agentsRepo->findByUserIdAndCurrency($userToAddBalance, $currency);
         $userIsBlocked = $this->isUserBlocked($agentDetails);
 
+        $log = $this->agentsRepo->findByUserIdAndCurrency2($userToAddBalance, $currency);
+
+        \Log::notice('log', ['log' => $log]);
+
         if ($userIsBlocked instanceof Response) {
             return $userIsBlocked;
         }
