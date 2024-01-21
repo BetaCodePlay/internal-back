@@ -11,6 +11,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -45,6 +46,7 @@ class UserAgentTransactionService extends BaseTransactionService
         $userToAddBalance = $request->get('user');
         $currency         = session('currency');
         $agentDetails     = $this->agentsRepo->findByUserIdAndCurrency($userToAddBalance, $currency);
+        Log::info(__METHOD__, ['userToAddBalance' => $userToAddBalance, 'agentDetails' => $agentDetails ]);
         $userIsBlocked    = $this->isUserBlocked($agentDetails);
 
         if ($userIsBlocked instanceof Response) {
