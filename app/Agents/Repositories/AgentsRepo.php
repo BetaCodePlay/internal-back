@@ -233,7 +233,7 @@ class AgentsRepo
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.id', $user)
-            ->first();
+            ->toSql();
     }
 
     /**
