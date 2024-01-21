@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  *
  */
-class TransactionService extends BaseService
+class UserTransactionService extends BaseService
 {
     /**
      * Create a new instance of the TransactionService class.

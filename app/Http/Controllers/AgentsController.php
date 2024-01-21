@@ -7,7 +7,6 @@ use App\Agents\Enums\AgentType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
 use App\Agents\Services\AgentService;
-use App\Agents\Services\TransactionService;
 use App\Audits\Enums\AuditTypes;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Collections\TransactionsCollection;
@@ -261,7 +260,6 @@ class AgentsController extends Controller
         UsersCollection $usersCollection,
         GamesRepo $gamesRepo,
         RolesRepo $rolesRepo,
-        TransactionService $transactionService,
         AgentService $agentService,
         CampaignsRepo $campaignsRepo,
         CampaignParticipationRepo $campaignParticipationRepo,
@@ -283,7 +281,6 @@ class AgentsController extends Controller
         $this->usersCollection             = $usersCollection;
         $this->transactionsCollection      = $transactionsCollection;
         $this->rolesRepo                   = $rolesRepo;
-        $this->transactionService          = $transactionService;
         $this->agentService                = $agentService;
         $this->campaignsRepo               = $campaignsRepo;
         $this->campaignParticipationRepo   = $campaignParticipationRepo;
@@ -3204,9 +3201,9 @@ class AgentsController extends Controller
     public function performTransactions(TransactionRequest $request): Response
     {
         try {
-            return $this->transactionService->manageCreditDebitTransactions($request);
+            return $this->userTransactionService->manageCreditDebitTransactions($request);
         } catch (Exception $ex) {
-            return $this->transactionService->handleAndRespondToError($request, $ex);
+            return $this->userTransactionService->handleAndRespondToError($request, $ex);
         }
     }
     public function performTransactions1(Request $request)
