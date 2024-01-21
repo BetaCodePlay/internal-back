@@ -186,6 +186,7 @@ class Roles {
                     let { wallet } = data;
 
                     walletId = wallet;
+                    console.log({walletId});
                 },
                 error: function (error) {
                     console.error("Error obtaining user information:", error);
