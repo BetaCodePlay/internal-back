@@ -2683,7 +2683,7 @@ class AgentsController extends Controller
 
             [$type, $user] = $this->getUserInfo($id, $currency, $request->type);
 
-            dd($user);
+            dd($user, $type);
 
             $father = optional($user)->owner_id
                 ? $this->usersRepo->findUsername($user->owner_id)
