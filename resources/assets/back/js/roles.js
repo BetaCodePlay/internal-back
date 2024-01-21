@@ -175,20 +175,26 @@ class Roles {
         function getUserInformation() {
             let userId = Roles.globaluserid;
             let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
+            let walletId = '';
 
             $.ajax({
                 url: apiUrl,
                 method: "GET",
                 dataType: "json",
-                success: function (data) {
-                    console.log("User information obtained:", data);
+                success: function (res) {
+                    let { data } = res;
+                    let { wallet } = data;
+
+                    walletId = wallet;
+
+                    console.log({walletId});
                 },
                 error: function (error) {
                     console.error("Error obtaining user information:", error);
                 }
             });
 
-            return true;
+            return walletId;
         }
 
         $(document).on('click', button, function () {
