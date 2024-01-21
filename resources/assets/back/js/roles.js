@@ -173,7 +173,7 @@ class Roles {
         let button = '.balanceUser';
 
         function getUserInformation() {
-            let userId = Roles.globalrolid;
+            let userId = Roles.globaluserid;
             let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
 
             $.ajax({
