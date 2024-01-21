@@ -120,7 +120,7 @@ class UserTransactionService extends BaseService
      */
     public function isUserBlocked(object $user): bool|Response
     {
-        if ($user->action == ActionUser::$locked_higher) {
+        if (isset($user->action) &&$user->action == ActionUser::$locked_higher) {
             return $this->generateErrorResponse(
                 _i('Blocked by a superior!'),
                 _i('Contact your superior...'),
