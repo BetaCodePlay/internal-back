@@ -167,24 +167,29 @@ class Roles {
         });
     }
 
-    getUserInformation(userId) {
-        let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
 
-        $.ajax({
-            url: apiUrl,
-            method: "GET",
-            dataType: "json",
-            success: function (data) {
-                console.log("User information obtained:", data);
-            },
-            error: function (error) {
-                console.error("Error obtaining user information:", error);
-            }
-        });
-    }
 
     userBalance() {
         let button = '.balanceUser';
+
+        function getUserInformation() {
+            let userId = Roles.globalrolid;
+            let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
+
+            $.ajax({
+                url: apiUrl,
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    console.log("User information obtained:", data);
+                },
+                error: function (error) {
+                    console.error("Error obtaining user information:", error);
+                }
+            });
+
+            return true;
+        }
 
         $(document).on('click', button, function () {
             let $this = $(this);
@@ -203,8 +208,8 @@ class Roles {
 
             let type = getTypeUser(Roles.globalrolid);
 
-            if (type == 'user') {
-                wallet = Roles.getUserInformation(userId);
+            if (type === 'user') {
+                wallet = getUserInformation();
             }
 
             let $data = {
@@ -227,7 +232,6 @@ class Roles {
             });
         });
     }
-
 
     userCreate() {
         let $button = '.createUser';
