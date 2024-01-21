@@ -180,7 +180,7 @@ class Roles {
 
             const getTypeUser = (typeUser) => (
                 typeUser === 1 || typeUser === 2 ? 'agent' :
-                    typeUser === 5 ? 'player' :
+                    typeUser === 5 ? 'user' :
                         null
             );
             console.log('getTypeUser', getTypeUser(Roles.globalrolid));
