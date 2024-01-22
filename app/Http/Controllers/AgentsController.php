@@ -2669,29 +2669,29 @@ class AgentsController extends Controller
         ]);
 
         try {
-            $userId              = session('admin_id') ?? auth()->id();
+            $authUserId          = session('admin_id') ?? auth()->id();
             $agent_player        = ! session('admin_id');
             $currency            = session('currency');
             $whitelabel          = Configurations::getWhitelabel();
             $bonus               = Configurations::getBonus();
             $lang                = LaravelGettext::getLocale();
-            $id                  = $request->input('id');
+            $userId              = $request->input('id');
             $balanceBonus        = 0.00;
             $campaignDescription = _i('Without description...');
             $type                = $request->input('type');
             $walletId            = null;
             if ($type == 'agent') {
-                $user    = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+                $user    = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
                 $father  = $this->usersRepo->findUsername($user->owner);
                 $balance = $user->balance;
                 $master  = $user->master;
                 $agent   = true;
-                $myself  = $userId == $user->id;
+                $myself  = $authUserId == $user->id;
             } else {
-                $user     = $this->agentsRepo->findUser($id);
+                $user     = $this->agentsRepo->findUser($userId);
                 $father   = (! is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master   = false;
-                $wallet   = Wallet::getByClient($id, $currency, $bonus);
+                $wallet   = Wallet::getByClient($userId, $currency, $bonus);
                 $balance  = $wallet->data->wallet->balance;
                 $agent    = false;
                 $walletId = $wallet->data->wallet->id;
