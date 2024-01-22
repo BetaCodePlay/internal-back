@@ -268,7 +268,9 @@ class Roles {
 
         $(document).on('input', '#userBalanceAmount', function (){
             this.value = this.value.replace(/[^0-9]/g,'');
-        })
+        });
+
+        Roles.inputMoney('#userBalanceAmountGet', '#userBalanceAmount');
     }
 
     userCreate() {
@@ -330,6 +332,30 @@ class Roles {
         $.each(array, function (index, value) {
             Toastr.notifyToastr(title, value, 'error');
         })
+    }
+
+    static inputMoney($input, $post) {
+        function formatMoney(number, places, symbol, thousand, decimal) {
+            places = !isNaN(places = Math.abs(places)) ? places : 2;
+            symbol = symbol !== undefined ? symbol : "";
+            thousand = thousand || ",";
+            decimal = decimal || ".";
+            var negative = number < 0 ? "-" : "",
+                i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+            return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand);
+        }
+
+        $(document).on('input', $input, function () {
+            let $val = $($input).val();
+            if ($val === '') {
+                $($input).val(0)
+            }
+            let $amount = parseInt($val.replace(/[^0-9]/g, ''));
+
+            $($input).val(formatMoney($amount));
+            $($post).val($amount);
+        });
     }
 }
 
