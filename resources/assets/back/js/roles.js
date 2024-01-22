@@ -215,6 +215,7 @@ class Roles {
                 Roles.globaltable.ajax.reload();
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-balance').modal('hide');
+                $('#userBalanceAmountGet').val('');
                 $('#userBalanceAmount').val('');
             }).fail(function (json) {
                 let data = json.responseJSON;
