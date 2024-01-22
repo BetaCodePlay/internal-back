@@ -628,15 +628,14 @@ class AgentsRepo
             }
 
             $actionItem = $item['action'];
-            $status     = $item['status'];
-            $action     = ! $status ? _i('Removed') : ActionUser::getName($actionItem);
+            $action     = ActionUser::getName($actionItem);
             $isBlocked  = ActionUser::isBlocked($actionItem);
 
             return [
                 $item['username'],
                 [$item['type_user'], $item['typeId']],
                 $userId,
-                [$action, $isBlocked, $actionItem, $status],
+                [$action, $isBlocked, $actionItem],
                 number_format($balance, 2, '.', ''),
             ];
         }, $slicedResults);
