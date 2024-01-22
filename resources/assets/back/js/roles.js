@@ -244,9 +244,10 @@ class Roles {
                 method: 'post',
                 data: data
             }).done(function (json) {
-                $('#role-balance').modal('hide');
-                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 Roles.globaltable.ajax.reload();
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                $('#role-balance').modal('hide');
+                $('#userBalanceAmount').val('');
             }).fail(function (json) {
                 if (json.code === 403) {
                     Toastr.notifyToastr(json.data.title, json.data.message, 'error');
