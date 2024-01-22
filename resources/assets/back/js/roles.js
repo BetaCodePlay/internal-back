@@ -24,6 +24,8 @@ class Roles {
                 let buttons = $('#user-buttons');
                 let modalLockTarget = '[data-target="#role-lock"]';
                 let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
+                let modalBalanceTarget = '[data-target="#role-balance"]';
+                let modalCreateTarget = '[data-target="#role-create"]';
 
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]).attr('data-rol', aData[1][1]);
                 buttons.find('.btn-href').attr('href', '/agents/role/' + aData[0]);
@@ -31,8 +33,12 @@ class Roles {
 
                 if (aData[3][1]) {
                     buttons.find(modalResetPasswordTarget).removeClass('d-none');
+                    buttons.find(modalBalanceTarget).removeClass('d-none');
+                    buttons.find(modalCreateTarget).removeClass('d-none');
                 } else {
                     buttons.find(modalResetPasswordTarget).addClass('d-none');
+                    buttons.find(modalBalanceTarget).addClass('d-none');
+                    buttons.find(modalCreateTarget).addClass('d-none');
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
