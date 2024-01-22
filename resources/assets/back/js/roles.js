@@ -282,9 +282,8 @@ class Roles {
         let $globalType;
         randomPassword(10);
 
-
         $(document).on('click', '[data-target="#role-create"]', function (){
-            $("#search_code").select2("data", Roles.globaluserid);
+            $('#createRolDependence').val(Roles.globaluserid).trigger('change');
         });
 
         $(document).on('input', '#createRolPercentage', function () {
