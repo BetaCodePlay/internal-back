@@ -116,6 +116,22 @@
                         color: #fff;
                         opacity: .5;
                     }
+
+                    .btn {
+                        min-width: auto;
+                        padding: 0;
+                        width: 40px;
+                        height: 40px;
+                        margin-right: -8px;
+                        line-height: 40px;
+                        border-radius: 60px;
+                        font-size: 16px;
+
+                        i {
+                            display: block;
+                            margin: auto;
+                        }
+                    }
                 }
             }
 
