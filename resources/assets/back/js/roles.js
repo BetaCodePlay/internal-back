@@ -275,12 +275,7 @@ class Roles {
 
         $(document).on('change', '#createRolType', function () {
             $globalType = $(this).val();
-
-            if ($globalType === '') {
-                $('.d-agent').addClass('d-none')
-            } else {
-                $('.d-agent').removeClass('d-none')
-            }
+            $('.d-agent').removeClass('d-none')
         });
 
         $(document).on('click', $button, function () {

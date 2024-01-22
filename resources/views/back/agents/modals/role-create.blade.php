@@ -41,7 +41,7 @@
                                     <select class="form-control"  id="createRolDependence">
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($dependencies as $dependece)
-                                            <option value="{{ $dependece['id'] }}">
+                                            <option value="{{ $dependece['user_id'] }}">
                                                 {{ $dependece['username'] }}
                                             </option>
                                         @endforeach
