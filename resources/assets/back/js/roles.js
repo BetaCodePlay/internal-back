@@ -204,6 +204,31 @@ class Roles {
             });
         }
 
+        function sendAjax(route, data) {
+            $(button).button('loading');
+
+            $.ajax({
+                url: route,
+                method: 'post',
+                data: data
+            }).done(function (json) {
+                Roles.globaltable.ajax.reload();
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                $('#role-balance').modal('hide');
+                $('#userBalanceAmount').val('');
+            }).fail(function (json) {
+                let data = json.responseJSON;
+
+                if (data.code === 403) {
+                    Toastr.notifyToastr(data.data.title, data.data.message, 'error');
+                } else {
+                    Roles.errorResponse(json);
+                }
+            }).always(function () {
+                $(button).button('reset');
+            });
+        }
+
         $(document).on('click', button, function () {
             let $this = $(this);
             let route = $this.data('route');
@@ -239,35 +264,6 @@ class Roles {
             } else {
                 sendAjax(route, $data,button);
             }
-        });
-
-        function sendAjax(route, data) {
-            $(button).button('loading');
-
-            $.ajax({
-                url: route,
-                method: 'post',
-                data: data
-            }).done(function (json) {
-                Roles.globaltable.ajax.reload();
-                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
-                $('#role-balance').modal('hide');
-                $('#userBalanceAmount').val('');
-            }).fail(function (json) {
-                let data = json.responseJSON;
-
-                if (data.code === 403) {
-                    Toastr.notifyToastr(data.data.title, data.data.message, 'error');
-                } else {
-                    Roles.errorResponse(json);
-                }
-            }).always(function () {
-                $(button).button('reset');
-            });
-        }
-
-        $(document).on('input', '#userBalanceAmount', function (){
-            this.value = this.value.replace(/[^0-9]/g,'');
         });
 
         Roles.inputMoney('#userBalanceAmountGet', '#userBalanceAmount');
