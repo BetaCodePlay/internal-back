@@ -35,10 +35,12 @@ class Roles {
                     buttons.find(modalResetPasswordTarget).parent().removeClass('d-none');
                     buttons.find(modalBalanceTarget).parent().removeClass('d-none');
                     buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                    buttons.find(modalLockTarget).parent().removeClass('united');
                 } else {
                     buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
                     buttons.find(modalBalanceTarget).parent().addClass('d-none');
                     buttons.find(modalCreateTarget).parent().addClass('d-none');
+                    buttons.find(modalLockTarget).parent().addClass('united');
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
@@ -269,7 +271,6 @@ class Roles {
     userCreate() {
         let $button = '.createUser';
         let $globalType;
-        let $dependence;
 
         $(document).on('change', '#createRolType', function () {
             $globalType = $(this).val();
@@ -289,7 +290,7 @@ class Roles {
                 master: $('#createRolType').val(),
                 percentage: $('#createRolPercentage').val(),
                 password:  $('#createRolPassword').val(),
-                dependence:  $dependence
+                dependence:  $('#createRolDependence').val()
             };
 
             if($('#createRolType').length > 0) {

@@ -449,7 +449,7 @@
                             }
                         }
 
-                        &:last-child {
+                        &:last-child, &.united {
                             a {
                                 border-bottom: 0;
                                 border-radius: 0 0 6px 6px;
