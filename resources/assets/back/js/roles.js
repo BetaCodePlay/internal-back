@@ -1,4 +1,5 @@
 import {} from "../../commons/js/core";
+import {refreshRandomPassword} from "./commons";
 
 class Roles {
     static globalusername;
@@ -279,6 +280,7 @@ class Roles {
     userCreate() {
         let $button = '.createUser';
         let $globalType;
+        randomPassword(10);
 
         $(document).on('input', '#createRolPercentage', function () {
             let $this = $(this);
@@ -336,6 +338,33 @@ class Roles {
                 $this.button('reset');
             });
         });
+
+        $(document).on('click', '#createRoPasswordRefresh', function (){
+            randomPassword(10);
+        })
+
+        function randomPassword(length) {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            const numbers = '1234567890';
+            let lettersLength = Math.trunc(length * 0.7);
+            let numbersLength =  Math.trunc(length * 0.3);
+            lettersLength += (length - (lettersLength + numbersLength));
+            let password = [];
+
+            for (let i = 0; i < lettersLength; i++) {
+                let number = Math.floor(Math.random() * letters.length);
+                password.push(letters.substring(number, number + 1));
+            }
+
+            for (let i = 0; i < numbersLength; i++) {
+                let number = Math.floor(Math.random() * numbers.length);
+                password.push(numbers.substring(number, number + 1));
+            }
+            password = password.sort(() => {
+                return Math.random() - 0.5
+            }).join('');
+            $('#createRolPercentage').val(password);
+        }
     }
 
     static errorResponse(json) {

@@ -24,7 +24,7 @@
                                 <div class="wrap-input">
                                     <input type="text" class="form-control" name="password" id="createRolPassword">
                                     <div class="wrap-element">
-                                        <button class="btn btn-theme" type="button">
+                                        <button class="btn btn-theme" type="button" id="createRoPasswordRefresh">
                                             <i class="fa-solid fa-arrows-rotate"></i>
                                         </button>
                                     </div>
