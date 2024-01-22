@@ -284,7 +284,7 @@ class Roles {
 
             console.log($route);
 
-           /* $.ajax({
+           $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
@@ -294,7 +294,7 @@ class Roles {
                 Roles.errorResponse(json);
             }).always(function () {
                 $this.button('reset');
-            });*/
+            });
         });
     }
 
