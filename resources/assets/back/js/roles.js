@@ -258,7 +258,7 @@ class Roles {
 
                 console.log(data);
 
-                if (json.code === 403) {
+                if (data.code === 403) {
                     Toastr.notifyToastr(data.data.title, data.data.message, 'error');
                 } else {
                     Roles.errorResponse(json);
