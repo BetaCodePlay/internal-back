@@ -263,7 +263,7 @@ class Roles {
     userCreate() {
         let $button = '.createUser';
         let $globalType;
-        var $dependence;
+        let $dependence;
 
         $(document).on('change', '#createRolType', function () {
             $globalType = $(this).val();
