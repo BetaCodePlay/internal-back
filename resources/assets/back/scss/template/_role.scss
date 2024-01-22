@@ -442,17 +442,23 @@
                             margin-top: 0;
 
                             a {
-
                                 &:first-child {
                                     border-radius: 6px 6px 0 0;
                                 }
                             }
                         }
 
-                        &:last-child, &.united {
+                        &:last-child {
                             a {
                                 border-bottom: 0;
                                 border-radius: 0 0 6px 6px;
+                            }
+                        }
+
+                        &.united {
+                            a {
+                                border-bottom: 0;
+                                border-radius: 6px !important;
                             }
                         }
 
