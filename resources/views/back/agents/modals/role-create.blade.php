@@ -42,7 +42,7 @@
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($dependencies as $dependece)
                                             <option value="{{ $dependece['user_id'] }}">
-                                                {{ $dependece['username'] }}
+                                                {{ $dependece['username'].$dependece['user_id']  }}
                                             </option>
                                         @endforeach
                                     </select>
