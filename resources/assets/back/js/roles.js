@@ -35,9 +35,9 @@ class Roles {
                 }
 
                 if(aData[3][3]) {
-                    buttons.removeClass('d-none');
+                    buttons.find('#dropdownRoleProfile').removeClass('d-none');
                 } else {
-                    buttons.addClass('d-none');
+                    buttons.find('#dropdownRoleProfile').addClass('d-none');
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
