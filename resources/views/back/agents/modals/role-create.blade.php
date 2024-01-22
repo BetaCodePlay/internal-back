@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <p><span class="font-weight-bold">{{ _i('What role do you want to create?') }}</span></p>
                 <p>{{ _i('You will be able to create master and support agents initially, then you can assign players if necessary.') }}</p>
-                <div class="form">
+                <form autocomplete="destroy" class="form">
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
@@ -35,7 +35,7 @@
                                     <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage">
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6 d-agent">
+                            <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label>{{ _i('Dependence on') }}</label>
                                     <select class="form-control"  id="createRolDependence">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">

@@ -67,33 +67,6 @@
                         <th data-priority="2"></th>
                     </tr>
                     </thead>
-                    {{--<tbody>
-                    <tr>
-                        <td><span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span>  Antonella93</td>
-                        <td><span class="deco-rol">Administrador</span></td>
-                        <td>BE8523</td>
-                        <td><i class="fa-solid i-status fa-circle green"></i> Activo</td>
-                        <td>Normal</td>
-                        <td>$12.000,00</td>
-                        <td><span class="deco-number">00</span></td>
-                        <td class="text-right">
-                            <div class="d-inline-block dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
-                                    <li><a class="dropdown-item" href="#">{{ _i('View profile') }}</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-create-simple">{{ _i('Add role') }}</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset">{{ _i('Reset password') }}</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-lock">{{ _i('Lock profile') }}</a></li>
-                                    <li><a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
-                                </ul>
-                            </div>
-
-                            <a href="#" class="btn btn-href"><i class="fa-solid fa-chevron-right"></i></a>
-                        </td>
-                    </tr>
-                    </tbody>--}}
                 </table>
             </form>
             <div class="loading-style"></div>

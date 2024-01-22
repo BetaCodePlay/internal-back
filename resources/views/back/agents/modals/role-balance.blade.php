@@ -16,7 +16,10 @@
                                 <div class="form-group">
                                     <label>{{ _i('Amount') }}</label>
                                     <input type="text" class="d-none" placeholder="" id="userBalanceAmount">
-                                    <input type="text" class="form-control" placeholder="" id="userBalanceAmountGet">
+                                    <div class="form-relative">
+                                        <input type="text" class="form-control" placeholder="" id="userBalanceAmountGet">
+                                        <div class="form-element">{{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso  }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
