@@ -3921,8 +3921,6 @@ class AgentsController extends Controller
             'percentage' => 'required|numeric|between:1,99',
             'master'     => 'required'
         ]);
-        Log::notice(__METHOD__, ['storeRol' => $request]);
-        return 0;
         try {
             $username           = $request->input('username');
             $password           = $request->input('password');
@@ -3942,7 +3940,11 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency   = session('currency');
             $username   = strtolower($request->username);
-            $owner      = auth()->user()->id;
+            if (! is_null($request->dependence)) {
+                $owner  = $request->dependence;
+            } else {
+                $owner  = auth()->user()->id;
+            }
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
             $master     = $request->input('master');
             $uuid       = Str::uuid()->toString();
@@ -4017,9 +4019,7 @@ class AgentsController extends Controller
             return Utils::successResponse([
                 'title'   => _i('Agent created'),
                 'message' => _i('Agent created successfully'),
-                'close'   => _i('Close'),
-                'balance' => number_format(0, 2),
-                'route'   => route('agents.index'),
+                'close'   => _i('Close')
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
@@ -4041,15 +4041,7 @@ class AgentsController extends Controller
         $rules = [
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
-            'balance' => 'required',
-            'country' => 'required',
-            'timezone' => 'required'
         ];
-        Log::notice(__METHOD__, ['storeRolUser' => $request]);
-        return 0;
-        if (! is_null($request->email)) {
-            $rules['email'] = ['required', new Email()];
-        }
 
         $this->validate($request, $rules);
 
@@ -4071,13 +4063,15 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $bonus = Configurations::getBonus($whitelabel);
             $uuid  = Str::uuid()->toString();
-            $owner = auth()->user()->id;
+            if (! is_null($request->dependence)) {
+                $owner  = $request->dependence;
+            } else {
+                $owner  = auth()->user()->id;
+            }
             $username = strtolower($request->username);
             $password = $request->password;
             //$email = $request->email;
-            $balance     = $request->balance;
-            $country     = $request->country;
-            $timezone    = $request->timezone;
+            $balance     = 0;
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
@@ -4130,8 +4124,8 @@ class AgentsController extends Controller
                 'action'       => ActionUser::$active
             ];
             $profileData = [
-                'country_iso' => $country,
-                'timezone' => $timezone,
+                'country_iso' => $ownerAgent->country_iso,
+                'timezone'    => session('timezone'),
                 'level' => 1
             ];
             $user        = $this->usersRepo->store($userData, $profileData);
@@ -4265,9 +4259,7 @@ class AgentsController extends Controller
             $data = [
                 'title' => _i('Player created'),
                 'message' => _i('Player created successfully'),
-                'close' => _i('Close'),
-                'balance' => number_format($ownerBalance, 2),
-                'route' => route('agents.index')
+                'close' => _i('Close')
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
