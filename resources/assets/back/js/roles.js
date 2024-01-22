@@ -226,18 +226,18 @@ class Roles {
                 getUserInformation()
                     .then(walletId => {
                         $data.wallet = walletId;
-                        sendAjax(route, $data,$this);
+                        sendAjax(route, $data,button);
                     })
                     .catch(error => {
                         console.error("Error:", error);
                     });
             } else {
-                sendAjax(route, $data,$this);
+                sendAjax(route, $data,button);
             }
         });
 
-        function sendAjax(route, data, $this) {
-            $this.button('loading');
+        function sendAjax(route, data) {
+            $(button).button('loading');
 
             $.ajax({
                 url: route,
@@ -254,7 +254,7 @@ class Roles {
                     Roles.errorResponse(json);
                 }
             }).always(function () {
-                $this.button('reset');
+                $(button).button('reset');
             });
         }
 
