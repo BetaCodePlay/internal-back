@@ -18,7 +18,9 @@
                                     <input type="text" class="d-none" placeholder="" id="userBalanceAmount">
                                     <div class="wrap-input">
                                         <input type="text" class="form-control" placeholder="" id="userBalanceAmountGet">
-                                        <div class="wrap-element">{{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}</div>
+                                        <div class="wrap-element">
+                                            <div class="wrap-element-text">{{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
