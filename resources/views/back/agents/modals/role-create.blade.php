@@ -77,7 +77,7 @@
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
                     {{ _i('Cancel creation') }}
                 </button>
-                <button type="button" class="btn btn-theme createUser" data-route-agent="{{ route('agents.role.store-rol') }}" data-route-player="{{ route('agents.role.store-user') }}">
+                <button type="button" class="btn btn-theme createUser" data-route-agent="{{ route('agents.role.store-rol') }}" data-route-player="{{ route('agents.role.store-user') }}" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('creating role') }}...">
                     {{ _i('Ready! Create role') }}
                 </button>
             </div>

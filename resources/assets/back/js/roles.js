@@ -294,7 +294,6 @@ class Roles {
         $(document).on('input', '#createRolPercentage', function () {
             let $this = $(this);
             let $max = $this.data('max');
-            let $min = $this.data('min');
             $this.val($this.val().replace(/[^0-9]/g, ''));
 
             if ($this.val() > $max) {
@@ -332,6 +331,8 @@ class Roles {
             } else {
                 $route = $this.data('route-player');
             }
+
+            $this.button('loading');
 
             $.ajax({
                 url: $route,
