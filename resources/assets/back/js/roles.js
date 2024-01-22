@@ -265,7 +265,7 @@ class Roles {
             let $route;
             let $data = {
                 username: $('#createRolUsername').val(),
-                type: $('#createRolType').val(),
+                master: $('#createRolType').val(),
                 percentage: $('#createRolPercentage').val(),
                 password:  $('#createRolPassword').val(),
                 dependence:  $dependence
