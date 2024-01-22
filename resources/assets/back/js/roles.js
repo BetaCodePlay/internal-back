@@ -282,6 +282,11 @@ class Roles {
         let $globalType;
         randomPassword(10);
 
+
+        $(document).on('click', '[data-target="#role-create"]', function (){
+            $("#search_code").select2("data", Roles.globaluserid);
+        });
+
         $(document).on('input', '#createRolPercentage', function () {
             let $this = $(this);
             let $max = $this.data('max');
