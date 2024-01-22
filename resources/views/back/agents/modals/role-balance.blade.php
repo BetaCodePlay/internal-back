@@ -30,6 +30,7 @@
                                 <div class="form-group">
                                     <button type="button" class="btn btn-theme btn-block balanceUser"
                                             data-route="{{ route('agents.perform-transactions') }}"
+                                            data-route-find="{{ route('agents.find') }}"
                                             data-balance="true"
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait') }}...">
                                         {{ _i('Deposit') }}
@@ -39,6 +40,7 @@
                             <div class="col-6 g-pl-3">
                                 <button type="button" class="btn btn-dark btn-block balanceUser"
                                         data-route="{{ route('agents.perform-transactions') }}"
+                                        data-route-find="{{ route('agents.find') }}"
                                         data-balance="false"
                                         data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait') }}...">
                                     {{ _i('Withdraw') }}

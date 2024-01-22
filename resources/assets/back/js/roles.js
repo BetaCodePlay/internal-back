@@ -185,13 +185,18 @@ class Roles {
 
         function getUserInformation() {
             return new Promise((resolve, reject) => {
-                let userId = Roles.globaluserid;
-                let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
+                let apiUrl = $(button).data('route-find');
+                let data = {
+                    id: Roles.globaluserid,
+                    type: 'user',
+                };
+                /*let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;*/
 
                 $.ajax({
                     url: apiUrl,
-                    method: "GET",
+                    method: "get",
                     dataType: "json",
+                    data: data,
                     success: function (res) {
                         let { data } = res;
                         let { wallet } = data;
