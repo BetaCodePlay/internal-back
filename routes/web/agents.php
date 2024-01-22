@@ -76,8 +76,14 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
     ]);
 
     // Find agent
-    Route::post('find', [AgentsController::class, 'find'])
-        ->name('agents.find');
+/*    Route::post('find', [AgentsController::class, 'find'])
+        ->name('agents.find');*/
+
+
+    Route::get('find', [
+        'as' => 'agents.find',
+        'uses' => 'AgentsController@find'
+    ]);
 
     // Get father and cant
     Route::get('get/father/cant', [
