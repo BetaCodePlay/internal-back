@@ -345,7 +345,13 @@ class Roles {
                 $('#createRolUsername').val('');
                 $('#createRolPercentage').val('');
             }).fail(function (json) {
-                Roles.errorResponse(json);
+                let data = json.responseJSON;
+
+                if (data.code === 403) {
+                    Toastr.notifyToastr(data.data.title, data.data.message, 'error');
+                } else {
+                    Roles.errorResponse(json);
+                }
             }).always(function () {
                 $this.button('reset');
             });
