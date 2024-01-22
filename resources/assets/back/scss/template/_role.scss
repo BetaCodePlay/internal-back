@@ -27,18 +27,6 @@
                 padding-left: 34px;
                 width: 220px;
             }
-
-            .form-relative {
-                position: relative;
-
-                .form-element {
-                    position: absolute;
-                    right: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    z-index: 1;
-                }
-            }
         }
 
         @media screen and (max-width: 767px) {

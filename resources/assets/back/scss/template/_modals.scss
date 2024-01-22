@@ -81,7 +81,7 @@
                margin-right: 5px;
             }
 
-            .wrap-input-login {
+            .wrap-input {
                 position: relative;
 
                 .btn-show-pass {
@@ -97,6 +97,14 @@
                     transform: translateY(-50%);
                     right: 3px;
                     transition: 0.15s;
+                }
+
+                .wrap-element {
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    z-index: 1;
                 }
             }
 

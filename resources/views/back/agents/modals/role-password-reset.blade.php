@@ -15,7 +15,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label>{{ _i('Password') }}</label>
-                                <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
+                                <div class="wrap-input validate-input" data-validate="{{ _i('Enter password')}}">
 						            <span class="btn-show-pass">
 							            <i class="fa fa-eye-slash"></i>
 						            </span>
