@@ -24,26 +24,28 @@ class Roles {
                 let buttons = $('#user-buttons');
                 let modalLockTarget = '[data-target="#role-lock"]';
                 let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
+                let modalBalanceTarget = '[data-target="#role-balance"]';
+                let modalCreateTarget = '[data-target="#role-create"]';
 
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]).attr('data-rol', aData[1][1]);
                 buttons.find('.btn-href').attr('href', '/agents/role/' + aData[0]);
                 buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock')).attr('data-type', aData[3][2]);
 
                 if (aData[3][1]) {
-                    buttons.find(modalResetPasswordTarget).removeClass('d-none');
+                    buttons.find(modalResetPasswordTarget).parent().removeClass('d-none');
+                    buttons.find(modalBalanceTarget).parent().removeClass('d-none');
+                    buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                    buttons.find(modalLockTarget).parent().removeClass('united');
                 } else {
-                    buttons.find(modalResetPasswordTarget).addClass('d-none');
-                }
-
-                if(aData[3][3]) {
-                    buttons.find('#dropdownRoleProfile').removeClass('d-none');
-                } else {
-                    buttons.find('#dropdownRoleProfile').addClass('d-none');
+                    buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
+                    buttons.find(modalBalanceTarget).parent().addClass('d-none');
+                    buttons.find(modalCreateTarget).parent().addClass('d-none');
+                    buttons.find(modalLockTarget).parent().addClass('united');
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1][0] + '</span>');
-                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][3] ? (aData[3][1] ? 'green' : 'red') : 'gray') + '"></i> ' + aData[3][0]);
+                $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
                 $('td:eq(4)', nRow).html('$' + aData[4]);
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
@@ -88,6 +90,8 @@ class Roles {
                     data: $data
                 }).done(function (json) {
                     Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                    $('#role-password-reset').modal('hide');
+                    $password.val('');
                 }).fail(function (json) {
                     Roles.errorResponse(json);
                 }).always(function () {
@@ -128,8 +132,9 @@ class Roles {
                 method: 'post',
                 data: $data
             }).done(function (json) {
-                $modal.modal('hide');
+                Roles.globaltable.ajax.reload();
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                $modal.modal('hide');
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
@@ -267,7 +272,6 @@ class Roles {
     userCreate() {
         let $button = '.createUser';
         let $globalType;
-        let $dependence;
 
         $(document).on('change', '#createRolType', function () {
             $globalType = $(this).val();
@@ -287,7 +291,7 @@ class Roles {
                 master: $('#createRolType').val(),
                 percentage: $('#createRolPercentage').val(),
                 password:  $('#createRolPassword').val(),
-                dependence:  $dependence
+                dependence:  $('#createRolDependence').val()
             };
 
             if($('#createRolType').length > 0) {
