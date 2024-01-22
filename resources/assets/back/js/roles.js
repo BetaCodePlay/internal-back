@@ -363,7 +363,7 @@ class Roles {
             password = password.sort(() => {
                 return Math.random() - 0.5
             }).join('');
-            $('#createRolPercentage').val(password);
+            $('#createRolPassword').val(password);
         }
     }
 
