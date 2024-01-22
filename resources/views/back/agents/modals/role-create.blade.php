@@ -18,37 +18,6 @@
                                 <input type="text" class="form-control" placeholder=""  id="createRolUsername">
                             </div>
                         </div>
-                        @if ($agent->master)
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>{{ _i('Role type') }}</label>
-                                    <select class="form-control"  id="createRolType">
-                                        <option value="true">{{ _i('Master') }}</option>
-                                        <option value="false">{{ _i('Support') }}</option>
-                                        <option value="">{{ _i('Players') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6 d-agent">
-                                <div class="form-group">
-                                    <label>{{ _i('Percentage') }}</label>
-                                    <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage">
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="form-group">
-                                    <label>{{ _i('Dependence on') }}</label>
-                                    <select class="form-control"  id="createRolDependence">
-                                        <option value="">{{ _i('Select...') }}</option>
-                                        @foreach ($dependencies as $dependece)
-                                            <option value="{{ $dependece['user_id'] }}">
-                                                {{ $dependece['username'] }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        @endiF
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Password') }}</label>
@@ -62,6 +31,40 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if ($agent->master)
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>{{ _i('Role type') }}</label>
+                                    <select class="form-control"  id="createRolType">
+                                        <option value="true">{{ _i('Master') }}</option>
+                                        <option value="false">{{ _i('Support') }}</option>
+                                        <option value="">{{ _i('Players') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6">
+                                <div class="form-group">
+                                    <label>{{ _i('Dependence on') }}</label>
+                                    <select class="form-control"  id="createRolDependence">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($dependencies as $dependece)
+                                            <option value="{{ $dependece['user_id'] }}">
+                                                {{ $dependece['username'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-lg-6 d-agent">
+                                <div class="form-group">
+                                    <label>{{ _i('Percentage') }}</label>
+                                    <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage">
+                                </div>
+                            </div>
+                        @endiF
                     </div>
                 </form>
             </div>
