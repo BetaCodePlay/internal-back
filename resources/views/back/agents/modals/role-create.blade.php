@@ -21,11 +21,11 @@
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Password') }}</label>
-                                <div class="input-group">
+                                <div class="wrap-input">
                                     <input type="text" class="form-control" name="password" id="createRolPassword">
-                                    <div class="input-group-append">
-                                        <button class="btn u-input-btn--v1 g-width-40 u-btn-primary g-rounded-right-4 u-btn-3d refresh-password" type="button">
-                                            <i class="hs-admin-reload g-absolute-centered g-font-size-16 g-color-white"></i>
+                                    <div class="wrap-element">
+                                        <button class="btn" type="button">
+                                            <i class="fa-solid fa-arrows-rotate"></i>
                                         </button>
                                     </div>
                                 </div>
