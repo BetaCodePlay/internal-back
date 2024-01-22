@@ -575,6 +575,7 @@ class AgentsRepo
             'users.type_user as typeId',
             'users.id',
             'users.action',
+            'users.status',
             'agent_currencies.balance',
         ])
             ->join('agents', 'users.id', '=', 'agents.user_id')
@@ -596,6 +597,7 @@ class AgentsRepo
             'users.type_user as typeId',
             'users.id',
             'users.action',
+            'users.status',
             'agent_currencies.balance',
         ])
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
@@ -614,22 +616,26 @@ class AgentsRepo
         $combinedResults = array_merge($agentQuery, $playerQuery);
         $resultCount     = count($combinedResults);
         $slicedResults   = array_slice($combinedResults, $start, $length);
-        $bonus           = Configurations::getBonus();
+        $bonus = Configurations::getBonus();
 
         $formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
-            $userId = $item['id'];
+            $userId  = $item['id'];
 
             if ($item['typeId'] == TypeUser::$player) {
-                $wallet   = Wallet::getByClient($userId, $currency, $bonus);
-                $balance  = $wallet?->data?->wallet?->balance;
+                $wallet  = Wallet::getByClient($userId, $currency, $bonus);
+                $balance = $wallet?->data?->wallet?->balance;
             }
+
+            $actionItem = $item['action'];
+            $action     = ! $item['status'] ? _i('Removed') : ActionUser::getName($actionItem);
+            $isBlocked  = ActionUser::isBlocked($actionItem);
 
             return [
                 $item['username'],
                 [$item['type_user'], $item['typeId']],
                 $userId,
-                [ActionUser::getName($item['action']), ActionUser::isBlocked($item['action']), $item['action']],
+                [$action, $isBlocked, $actionItem],
                 number_format($balance, 2, '.', ''),
             ];
         }, $slicedResults);
