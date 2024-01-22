@@ -105,6 +105,17 @@
                     top: 50%;
                     transform: translateY(-50%);
                     z-index: 1;
+
+                    .form-control {
+                        padding-right: 45px;
+                    }
+
+                    .wrap-element-text {
+                        font-weight: 500;
+                        padding: 3px 10px;
+                        color: #fff;
+                        opacity: .5;
+                    }
                 }
             }
 
