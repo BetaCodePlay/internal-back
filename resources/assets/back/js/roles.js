@@ -300,10 +300,6 @@ class Roles {
             if ($this.val() > $max) {
                 $this.val($max)
             }
-
-            if ($this.val() < $min) {
-                $this.val($min)
-            }
         });
 
         $(document).on('change', '#createRolType', function () {
@@ -346,7 +342,7 @@ class Roles {
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-create').modal('hide');
                 $('#createRolUsername').val('');
-                $('#createRolPercentage').val(1);
+                $('#createRolPercentage').val('');
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {

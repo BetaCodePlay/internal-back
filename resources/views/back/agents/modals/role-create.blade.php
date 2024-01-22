@@ -15,7 +15,7 @@
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>{{ _i('Name') }}</label>
-                                <input type="text" class="form-control" placeholder=""  id="createRolUsername">
+                                <input type="text" class="form-control" placeholder="" id="createRolUsername">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -36,7 +36,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label>{{ _i('Role type') }}</label>
-                                    <select class="form-control"  id="createRolType">
+                                    <select class="form-control" id="createRolType">
                                         <option value="true">{{ _i('Master') }}</option>
                                         <option value="false">{{ _i('Support') }}</option>
                                         <option value="">{{ _i('Players') }}</option>
@@ -47,7 +47,7 @@
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label>{{ _i('Dependence on') }}</label>
-                                    <select class="form-control"  id="createRolDependence">
+                                    <select class="form-control" id="createRolDependence">
                                         <option value="">{{ _i('Select...') }}</option>
                                         @foreach ($dependencies as $dependece)
                                             <option value="{{ $dependece['user_id'] }}">
@@ -61,7 +61,12 @@
                             <div class="col-12 col-lg-6 d-agent">
                                 <div class="form-group">
                                     <label>{{ _i('Percentage') }}</label>
-                                    <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage" data-max="99" data-min="1" value="1">
+                                    <div class="wrap-input">
+                                        <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99" id="createRolPercentage" data-max="99" value="1">
+                                        <div class="wrap-element">
+                                            <div class="wrap-element-text">%</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endiF
