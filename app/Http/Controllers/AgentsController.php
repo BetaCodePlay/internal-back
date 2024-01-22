@@ -2662,164 +2662,71 @@ class AgentsController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function findNew(Request $request)
-    {
+    public function find(Request $request): Response {
         $this->validate($request, [
-            'id' => 'required|exists:users,id',
+            'id'   => 'required|exists:users,id',
             'type' => 'required',
         ]);
 
         try {
-            $userId       = session('admin_id') ?? auth()->id();
-            $agent_player = ! session('admin_id');
-
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $bonus    = Configurations::getBonus();
-            $lang     = LaravelGettext::getLocale();
-            $id       = $request->id;
-            $balanceBonus = 0.00;
+            $userId              = session('admin_id') ?? auth()->id();
+            $agent_player        = ! session('admin_id');
+            $currency            = session('currency');
+            $whitelabel          = Configurations::getWhitelabel();
+            $bonus               = Configurations::getBonus();
+            $lang                = LaravelGettext::getLocale();
+            $id                  = $request->input('id');
+            $balanceBonus        = 0.00;
             $campaignDescription = _i('Without description...');
-
-            [$type, $user] = $this->getUserInfo($id, $currency, $request->type);
-
-            $father = optional($user)->owner_id
-                ? $this->usersRepo->findUsername($user->owner_id)
-                : null;
-
-            $master   = $user->master ?? false;
-            $balance  = $type == 'agent' ? $user->balance : $user->wallet->balance;
-            $walletId = $type == 'user' ? $user->wallet->id : null;
-
-            if ($bonus && $type == 'user') {
-                $balanceBonus = optional($user->wallet->data->bonus[0])->balance ?? 0.00;
-                $campaign     = $this->campaignsRepo->findCampaignActive($whitelabel, $currency);
-                if ($campaign) {
-                    $campaignDescription = $campaign->translations->$lang->description;
+            $type                = $request->input('type');
+            $walletId            = null;
+            if ($type == 'agent') {
+                $user    = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+                $father  = $this->usersRepo->findUsername($user->owner);
+                $balance = $user->balance;
+                $master  = $user->master;
+                $agent   = true;
+                $myself  = $userId == $user->id;
+            } else {
+                $user     = $this->agentsRepo->findUser($id);
+                $father   = (! is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
+                $master   = false;
+                $wallet   = Wallet::getByClient($id, $currency, $bonus);
+                $balance  = $wallet->data->wallet->balance;
+                $agent    = false;
+                $walletId = $wallet->data->wallet->id;
+                $myself   = false;
+                if ($bonus) {
+                    $balanceBonus = (property_exists($wallet->data, 'bonus')) ? $wallet->data->bonus[0]->balance : 0.00;
+                    $campaign     = $this->campaignsRepo->findCampaignActive($whitelabel, $currency);
+                    if ($campaign) {
+                        $campaignDescription = $campaign->translations->$lang->description;
+                    }
                 }
             }
-
             $this->agentsCollection->formatAgent($user);
             $user->created = date('Y-m-d', strtotime($user->created));
-
             return Utils::successResponse([
                 'cant_agents'         => 0,
                 'cant_players'        => 0,
-                'father'              => optional($father)->username ?? '---',
+                'father'              => $father->username ?? '---',
                 'fathers'             => [],
                 'user'                => $user,
                 'balance'             => number_format($balance, 2),
                 'balance_bonus'       => number_format($balanceBonus, 2),
                 'master'              => $master,
-                'agent'               => $type == 'agent',
+                'agent'               => $agent,
                 'wallet'              => $walletId,
                 'type'                => $type,
-                'myself'              => $userId == optional($user)->id,
+                'myself'              => $myself,
                 'agent_player'        => $agent_player,
-                'campaignDescription' => $campaignDescription,
+                'campaignDescription' => $campaignDescription
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
     }
-
-    public function find(Request $request)
-    {
-        $this->validate($request, [
-            'id' => 'required|exists:users,id',
-            'type' => 'required',
-        ]);
-
-        try {
-            if (session('admin_id')) {
-                $userId = session('admin_id');
-                $agent_player = false;
-            } else {
-                $userId = auth()->user()->id ? Auth::id() : null;
-                $agent_player = true;
-            }
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $bonus = Configurations::getBonus();
-            $lang = LaravelGettext::getLocale();
-            $id = $request->id;
-            $balanceBonus = 0.00;
-            $campaignDescription = _i('Without description...');
-//            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
-//                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-//                $id = isset($userTmp[0]->id) ? $userTmp[0]->id : $request->get('id');
-//            }
-
-            $type = $request->type;
-            $walletId = null;
-            if ($type == 'agent') {
-                $user = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-                $father = $this->usersRepo->findUsername($user->owner);
-                $balance = $user->balance;
-                $master = $user->master;
-                $agent = true;
-                $myself = $userId == $user->id;
-            } else {
-                $user = $this->agentsRepo->findUser($id);
-                $father = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
-                $master = false;
-                $wallet = Wallet::getByClient($id, $currency, $bonus);
-                $balance = $wallet->data->wallet->balance;
-                $agent = false;
-                $walletId = $wallet->data->wallet->id;
-                $myself = false;
-                if($bonus) {
-                    $balanceBonus = (property_exists($wallet->data, 'bonus')) ? $wallet->data->bonus[0]->balance : 0.00;
-                    $campaign = $this->campaignsRepo->findCampaignActive($whitelabel, $currency);
-                    if($campaign) {
-                        $campaignDescription = $campaign->translations->$lang->description;
-                    }
-                }
-
-            }
-            $this->agentsCollection->formatAgent($user);
-            $user->created = date('Y-m-d', strtotime($user->created));
-            $data = [
-                'cant_agents' => 0,
-                'cant_players' => 0,
-                'father' => $father->username ?? '---',
-                'fathers' => [],
-                'user' => $user,
-                'balance' => number_format($balance, 2),
-                'balance_bonus' => number_format($balanceBonus, 2),
-                'master' => $master,
-                'agent' => $agent,
-                'wallet' => $walletId,
-                'type' => $type,
-                'myself' => $myself,
-                'agent_player' => $agent_player,
-                'campaignDescription' => $campaignDescription
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
-            return Utils::failedResponse();
-        }
-    }
-
-
-    /**
-     * @param $id
-     * @param $currency
-     * @param $type
-     * @return array
-     */
-    private function getUserInfo($id, $currency, $type)
-    : array {
-        return [
-            $type,
-            $type == 'agent'
-                ? $this->agentsRepo->findByUserIdAndCurrency($id, $currency)
-                : $this->agentsRepo->findUser($id)
-        ];
-    }
-
 
     /**
      * Find tree agents father
