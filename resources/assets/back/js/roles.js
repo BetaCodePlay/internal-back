@@ -167,8 +167,32 @@ class Roles {
         });
     }
 
+
+
     userBalance() {
         let button = '.balanceUser';
+
+        function getUserInformation() {
+            return new Promise((resolve, reject) => {
+                let userId = Roles.globaluserid;
+                let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
+
+                $.ajax({
+                    url: apiUrl,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (res) {
+                        let { data } = res;
+                        let { wallet } = data;
+                        resolve(wallet);
+                    },
+                    error: function (error) {
+                        console.error("Error obtaining user information:", error);
+                        reject(error);
+                    }
+                });
+            });
+        }
 
         $(document).on('click', button, function () {
             let $this = $(this);
@@ -177,8 +201,6 @@ class Roles {
             const deposit = 1;
             const withdrawal = 2;
             let userId = Roles.globaluserid;
-            let wallet = "";
-
             const getTypeUser = (typeUser) => (
                 typeUser === 1 || typeUser === 2 ? 'agent' :
                     typeUser === 5 ? 'user' :
@@ -187,48 +209,41 @@ class Roles {
 
             let type = getTypeUser(Roles.globalrolid);
 
-            if (type == 'user') {
-                wallet = getUserInformation(userId);
-            }
-
             let $data = {
+                wallet: '',
                 user: userId,
                 type: type,
                 amount: $('#userBalanceAmount').val(),
                 transaction_type: ($balance) ? deposit : withdrawal
-            }
+            };
 
+            if (type === 'user') {
+                getUserInformation()
+                    .then(walletId => {
+                        $data.wallet = walletId;
+                        sendAjax(route, $data);
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                    });
+            } else {
+                sendAjax(route, $data);
+            }
+        });
+
+        function sendAjax(route, data) {
             $.ajax({
                 url: route,
                 method: 'post',
-                data: $data
+                data: data
             }).done(function (json) {
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
-                $this.button('reset');
             });
-        });
+        }
     }
-
-    getUserInformation(userId) {
-        let apiUrl = `https://dev-back.bestcasinos.lat/agents/find?id=${userId}&type=user`;
-
-        $.ajax({
-            url: apiUrl,
-            method: "GET",
-            dataType: "json",
-            success: function (data) {
-                console.log("User information obtained:", data);
-            },
-            error: function (error) {
-                console.error("Error obtaining user information:", error);
-            }
-        });
-    }
-
-
 
     userCreate() {
         let $button = '.createUser';
