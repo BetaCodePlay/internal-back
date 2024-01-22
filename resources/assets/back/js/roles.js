@@ -132,8 +132,9 @@ class Roles {
                 method: 'post',
                 data: $data
             }).done(function (json) {
-                $modal.modal('hide');
+                Roles.globaltable.ajax.reload();
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                $modal.modal('hide');
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
