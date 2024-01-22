@@ -18,7 +18,7 @@
                                     <input type="text" class="d-none" placeholder="" id="userBalanceAmount">
                                     <div class="form-relative">
                                         <input type="text" class="form-control" placeholder="" id="userBalanceAmountGet">
-                                        <div class="form-element">{{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso  }}</div>
+                                        <div class="form-element">{{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}</div>
                                     </div>
                                 </div>
                             </div>
