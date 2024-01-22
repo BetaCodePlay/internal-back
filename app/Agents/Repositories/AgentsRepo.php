@@ -6,7 +6,9 @@ use App\Agents\Entities\Agent;
 use App\Users\Entities\User;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
+use Dotworkers\Configurations\Configurations;
 use Dotworkers\Security\Enums\Roles;
+use Dotworkers\Wallet\Wallet;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -612,18 +614,21 @@ class AgentsRepo
         $combinedResults = array_merge($agentQuery, $playerQuery);
         $resultCount     = count($combinedResults);
         $slicedResults   = array_slice($combinedResults, $start, $length);
+        $bonus           = Configurations::getBonus();
 
-        $formattedResults = array_map(function ($item) {
+        $formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
+            $userId = $item['id'];
 
             if ($item['typeId'] == TypeUser::$player) {
-                $balance = 0;
+                $wallet   = Wallet::getByClient($userId, $currency, $bonus);
+                $balance  = $wallet?->data?->wallet?->balance;
             }
 
             return [
                 $item['username'],
                 [$item['type_user'], $item['typeId']],
-                $item['id'],
+                $userId,
                 [ActionUser::getName($item['action']), ActionUser::isBlocked($item['action']), $item['action']],
                 number_format($balance, 2, '.', ''),
             ];
