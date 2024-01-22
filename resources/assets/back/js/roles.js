@@ -255,7 +255,7 @@ class Roles {
                 $('#userBalanceAmount').val('');
             }).fail(function (json) {
                 if (json.code === 403) {
-                    Toastr.notifyToastr(json.data.title, json.data.message, 'error');
+                    Toastr.notifyToastr(json.responseJSON.data.title, json.responseJSON.data.message, 'error');
                 } else {
                     Roles.errorResponse(json);
                 }
