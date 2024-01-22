@@ -15,8 +15,8 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>{{ _i('Amount') }}</label>
-                                    <input type="text" class="d-none" placeholder="" id="userBalanceAmountGet">
-                                    <input type="text" class="form-control" placeholder="" id="userBalanceAmount">
+                                    <input type="text" class="d-none" placeholder="" id="userBalanceAmount">
+                                    <input type="text" class="form-control" placeholder="" id="userBalanceAmountGet">
                                 </div>
                             </div>
                         </div>
