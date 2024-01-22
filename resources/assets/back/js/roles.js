@@ -4,12 +4,13 @@ class Roles {
     static globalusername;
     static globaltypeid;
     static globalrolid;
+    static globaltable;
 
     initTableRoles() {
         let $table = $('#table-roles');
         let $route = $table.data('route');
 
-        $table.DataTable({
+        Roles.globaltable = $table.DataTable({
             ajax: $route,
             processing: true,
             serverSide: true,
@@ -243,7 +244,9 @@ class Roles {
                 method: 'post',
                 data: data
             }).done(function (json) {
+                $('#role-balance').modal('hide');
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                Roles.globaltable.ajax.reload();
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
