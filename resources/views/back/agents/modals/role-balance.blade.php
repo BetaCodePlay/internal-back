@@ -22,13 +22,19 @@
                         <div class="row">
                             <div class="col-6 g-pr-3">
                                 <div class="form-group">
-                                    <button type="button" class="btn btn-theme btn-block balanceUser" data-route="{{ route('agents.perform-transactions') }}" data-balance="true">
+                                    <button type="button" class="btn btn-theme btn-block balanceUser"
+                                            data-route="{{ route('agents.perform-transactions') }}"
+                                            data-balance="true"
+                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait') }}...">
                                         {{ _i('Deposit') }}
                                     </button>
                                 </div>
                             </div>
                             <div class="col-6 g-pl-3">
-                                <button type="button" class="btn btn-dark btn-block balanceUser" data-route="{{ route('agents.perform-transactions') }}" data-balance="false">
+                                <button type="button" class="btn btn-dark btn-block balanceUser"
+                                        data-route="{{ route('agents.perform-transactions') }}"
+                                        data-balance="false"
+                                        data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait') }}...">
                                     {{ _i('Withdraw') }}
                                 </button>
                             </div>

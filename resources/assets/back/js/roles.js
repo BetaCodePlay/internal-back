@@ -4,7 +4,6 @@ class Roles {
     static globalusername;
     static globaltypeid;
     static globalrolid;
-    static globalroute;
 
     initTableRoles() {
         let $table = $('#table-roles');
@@ -24,7 +23,6 @@ class Roles {
                 let buttons = $('#user-buttons');
                 let modalLockTarget = '[data-target="#role-lock"]';
                 let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
-                Roles.globalroute = $route;
 
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]).attr('data-rol', aData[1][1]);
                 buttons.find('.btn-href').attr('href', '/agents/role/' + aData[0]);
@@ -123,8 +121,6 @@ class Roles {
             if ($globalType !== 8 && !$globalLock) {
                 $route = $('#lockTypeThis').val();
             }
-
-            console.log(Roles.globalroute);
 
             $.ajax({
                 url: $route,
@@ -229,17 +225,19 @@ class Roles {
                 getUserInformation()
                     .then(walletId => {
                         $data.wallet = walletId;
-                        sendAjax(route, $data);
+                        sendAjax(route, $data,$this);
                     })
                     .catch(error => {
                         console.error("Error:", error);
                     });
             } else {
-                sendAjax(route, $data);
+                sendAjax(route, $data,$this);
             }
         });
 
-        function sendAjax(route, data) {
+        function sendAjax(route, data, $this) {
+            $this.button('loading');
+
             $.ajax({
                 url: route,
                 method: 'post',
@@ -249,8 +247,13 @@ class Roles {
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
+                $this.button('reset');
             });
         }
+
+        $(document).on('input', '#userBalanceAmount', function (){
+            this.value = this.value.replace(/[^0-9]/g,'');
+        })
     }
 
     userCreate() {
