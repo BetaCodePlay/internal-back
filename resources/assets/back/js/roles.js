@@ -254,8 +254,10 @@ class Roles {
                 $('#role-balance').modal('hide');
                 $('#userBalanceAmount').val('');
             }).fail(function (json) {
-                if (json.code === 403) {
-                    Toastr.notifyToastr(json.data.title, json.data.message, 'error');
+                let data = json.responseJSON;
+
+                if (data.code === 403) {
+                    Toastr.notifyToastr(data.data.title, data.data.message, 'error');
                 } else {
                     Roles.errorResponse(json);
                 }
