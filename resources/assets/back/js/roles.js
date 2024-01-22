@@ -283,7 +283,11 @@ class Roles {
         randomPassword(10);
 
         $(document).on('click', '[data-target="#role-create"]', function (){
-            $('#createRolDependence').val(Roles.globaluserid).trigger('change');
+            if($('[data-target="#role-create"]').val() === 'true') {
+                $('#createRolDependence').val('').trigger('change');
+            } else {
+                $('#createRolDependence').val(Roles.globaluserid).trigger('change');
+            }
         });
 
         $(document).on('input', '#createRolPercentage', function () {
