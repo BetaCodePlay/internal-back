@@ -8,6 +8,7 @@ use Dotworkers\Configurations\Enums\Status;
 use Dotworkers\Configurations\Repositories\CredentialsRepo;
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Token\Parser;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Configurations
@@ -36,7 +37,7 @@ class Utils
      * @param string $status Response status
      * @param string $code Status code
      * @param array $data Response data
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     private static function createResponse($status, $code, $data)
     {
@@ -53,7 +54,7 @@ class Utils
      *
      * @param int $code Error code
      * @param array $data Error data
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public static function errorResponse($code, $data)
     {
@@ -77,19 +78,17 @@ class Utils
         return $date;
     }
 
+
     /**
-     * Create failed response
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public static function failedResponse()
+    public static function failedResponse(): Response
     {
-        $data = [
+        return self::createResponse(Status::$failed, Codes::$failed, [
             'title' => _i('Error!'),
             'message' => _i('Could not load/save data'),
             'close' => _i('Close')
-        ];
-        return self::createResponse(Status::$failed, Codes::$failed, $data);
+        ]);
     }
 
     /**
@@ -191,7 +190,7 @@ class Utils
      * Create success response
      *
      * @param array $data Success data
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public static function successResponse($data)
     {
