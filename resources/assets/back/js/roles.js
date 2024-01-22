@@ -199,8 +199,8 @@ class Roles {
                     dataType: "json",
                     data: data,
                     success: function (res) {
-                        let { data } = res;
-                        let { wallet } = data;
+                        let {data} = res;
+                        let {wallet} = data;
                         resolve(wallet);
                     },
                     error: function (error) {
@@ -264,13 +264,13 @@ class Roles {
                 getUserInformation()
                     .then(walletId => {
                         $data.wallet = walletId;
-                        sendAjax(route, $data,button);
+                        sendAjax(route, $data, button);
                     })
                     .catch(error => {
                         console.error("Error:", error);
                     });
             } else {
-                sendAjax(route, $data,button);
+                sendAjax(route, $data, button);
             }
         });
 
@@ -282,8 +282,9 @@ class Roles {
         let $globalType;
         randomPassword(10);
 
-        $(document).on('click', '[data-target="#role-create"]', function (){
-            if($('[data-target="#role-create"]').val() === 'true') {
+        $(document).on('click', '[data-target="#role-create"]', function () {
+            randomPassword(10);
+            if ($('[data-target="#role-create"]').val() === 'true') {
                 $('#createRolDependence').val('').trigger('change');
             } else {
                 $('#createRolDependence').val(Roles.globaluserid).trigger('change');
@@ -293,10 +294,15 @@ class Roles {
         $(document).on('input', '#createRolPercentage', function () {
             let $this = $(this);
             let $max = $this.data('max');
-            $this.val($this.val().replace(/[^0-9]/g,''));
+            let $min = $this.data('min');
+            $this.val($this.val().replace(/[^0-9]/g, ''));
 
-            if($this.val() > $max) {
+            if ($this.val() > $max) {
                 $this.val($max)
+            }
+
+            if ($this.val() < $min) {
+                $this.val($min)
             }
         });
 
@@ -317,12 +323,12 @@ class Roles {
                 username: $('#createRolUsername').val(),
                 master: $('#createRolType').val(),
                 percentage: $('#createRolPercentage').val(),
-                password:  $('#createRolPassword').val(),
-                dependence:  $('#createRolDependence').val()
+                password: $('#createRolPassword').val(),
+                dependence: $('#createRolDependence').val()
             };
 
-            if($('#createRolType').length > 0) {
-                if($globalType === '') {
+            if ($('#createRolType').length > 0) {
+                if ($globalType === '') {
                     $route = $this.data('route-player');
                 } else {
                     $route = $this.data('route-agent');
@@ -331,15 +337,16 @@ class Roles {
                 $route = $this.data('route-player');
             }
 
-
-            console.log($route);
-
-           $.ajax({
+            $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
             }).done(function (json) {
+                Roles.globaltable.ajax.reload();
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                $('#role-create').modal('hide');
+                $('#createRolUsername').val('');
+                $('#createRolPercentage').val(1);
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
@@ -347,7 +354,7 @@ class Roles {
             });
         });
 
-        $(document).on('click', '#createRoPasswordRefresh', function (){
+        $(document).on('click', '#createRoPasswordRefresh', function () {
             randomPassword(10);
         })
 
@@ -355,7 +362,7 @@ class Roles {
             const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
             const numbers = '1234567890';
             let lettersLength = Math.trunc(length * 0.7);
-            let numbersLength =  Math.trunc(length * 0.3);
+            let numbersLength = Math.trunc(length * 0.3);
             lettersLength += (length - (lettersLength + numbersLength));
             let password = [];
 

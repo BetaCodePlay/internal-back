@@ -61,7 +61,7 @@
                             <div class="col-12 col-lg-6 d-agent">
                                 <div class="form-group">
                                     <label>{{ _i('Percentage') }}</label>
-                                    <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage" data-max="99">
+                                    <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99"  id="createRolPercentage" data-max="99" data-min="1" value="1">
                                 </div>
                             </div>
                         @endiF
