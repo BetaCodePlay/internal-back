@@ -280,6 +280,16 @@ class Roles {
         let $button = '.createUser';
         let $globalType;
 
+        $(document).on('input', '#createRolPercentage', function () {
+            let $this = $(this);
+            let $max = $this.data('max');
+            $this.val($this.val().replace(/[^0-9]/g,''));
+
+            if($this.val() > $max) {
+                $this.val($max)
+            }
+        });
+
         $(document).on('change', '#createRolType', function () {
             $globalType = $(this).val();
 
