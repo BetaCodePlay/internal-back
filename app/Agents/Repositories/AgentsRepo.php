@@ -616,7 +616,7 @@ class AgentsRepo
         $combinedResults = array_merge($agentQuery, $playerQuery);
         $resultCount     = count($combinedResults);
         $slicedResults   = array_slice($combinedResults, $start, $length);
-        $bonus = Configurations::getBonus();
+        $bonus           = Configurations::getBonus();
 
         $formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
@@ -628,14 +628,15 @@ class AgentsRepo
             }
 
             $actionItem = $item['action'];
-            $action     = ! $item['status'] ? _i('Removed') : ActionUser::getName($actionItem);
+            $status     = $item['status'];
+            $action     = ! $status ? _i('Removed') : ActionUser::getName($actionItem);
             $isBlocked  = ActionUser::isBlocked($actionItem);
 
             return [
                 $item['username'],
                 [$item['type_user'], $item['typeId']],
                 $userId,
-                [$action, $isBlocked, $actionItem],
+                [$action, $isBlocked, $actionItem, $status],
                 number_format($balance, 2, '.', ''),
             ];
         }, $slicedResults);
