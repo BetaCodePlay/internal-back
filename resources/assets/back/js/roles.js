@@ -347,7 +347,7 @@ class Roles {
         $(document).on('input', $input, function () {
             let $val = $($input).val();
             if ($val === '') {
-                $($input).val(0)
+                $($input).val('')
             }
             let $amount = parseInt($val.replace(/[^0-9]/g, ''));
 
