@@ -32,13 +32,13 @@ class Roles {
                 buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock')).attr('data-type', aData[3][2]);
 
                 if (aData[3][1]) {
-                    buttons.find(modalResetPasswordTarget).removeClass('d-none');
-                    buttons.find(modalBalanceTarget).removeClass('d-none');
-                    buttons.find(modalCreateTarget).removeClass('d-none');
+                    buttons.find(modalResetPasswordTarget).parent().removeClass('d-none');
+                    buttons.find(modalBalanceTarget).parent().removeClass('d-none');
+                    buttons.find(modalCreateTarget).parent().removeClass('d-none');
                 } else {
-                    buttons.find(modalResetPasswordTarget).addClass('d-none');
-                    buttons.find(modalBalanceTarget).addClass('d-none');
-                    buttons.find(modalCreateTarget).addClass('d-none');
+                    buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
+                    buttons.find(modalBalanceTarget).parent().addClass('d-none');
+                    buttons.find(modalCreateTarget).parent().addClass('d-none');
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
