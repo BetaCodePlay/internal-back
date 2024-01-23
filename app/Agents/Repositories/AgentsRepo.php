@@ -774,11 +774,6 @@ class AgentsRepo
         ];
     }
 
-    use App\Models\Wallet;
-    use App\Models\Configurations;
-    use App\Models\ActionUser;
-    use App\Models\TypeUser;
-
     public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
         $draw        = $request->input('draw', 1);
