@@ -740,6 +740,16 @@ class AgentsRepo
         $playerResults = $playerQuery->get()->toArray();
 
         $combinedResults = array_merge($agentResults, $playerResults);
+
+        $combinedResults = array_map(function ($item) {
+            if (isset($item['action']) && $item['action'] !== null) {
+                $item['actionString'] = ActionUser::getName($item['action']);
+            } else {
+                $item['actionString'] = null;
+            }
+            return $item;
+        }, $combinedResults);
+
         $resultCount     = count($combinedResults);
         $slicedResults   = array_slice($combinedResults, $start, $length);
         $bonus           = Configurations::getBonus();
