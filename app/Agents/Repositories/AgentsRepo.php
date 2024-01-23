@@ -823,7 +823,6 @@ class AgentsRepo
             2 => 'users.id',
             3 => 'users.action',
             4 => 'agent_currencies.balance',
-            5 => 'users.status', // Agregado para ordenar por status
         ];
 
         if (array_key_exists($orderColumn, $orderableColumns)) {
@@ -855,7 +854,9 @@ class AgentsRepo
         });
 
         if (array_key_exists($orderColumn, $orderableColumns)) {
-            $playerQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
+            if ($orderColumn !== 3) {
+                $playerQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
+            }
         } else {
             $playerQuery->orderBy('users.username', 'asc');
         }
@@ -896,7 +897,7 @@ class AgentsRepo
                 $userId,
                 [$action, $isBlocked, $actionItem],
                 number_format($balance, 2),
-                $item['status'], // Agregado para mostrar el status
+                $item['status'],
             ];
         }, $slicedResults);
 
