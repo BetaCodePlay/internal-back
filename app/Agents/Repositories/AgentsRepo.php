@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\DB;
  */
 class AgentsRepo
 {
+    const ORDER_COLUMN_ACTION = 3;
     /**
      * Add user to agent
      *
@@ -826,7 +827,9 @@ class AgentsRepo
         ];
 
         if (array_key_exists($orderColumn, $orderableColumns)) {
-            $agentQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
+            if ($orderColumn !== self::ORDER_COLUMN_ACTION) {
+                $agentQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
+            }
         } else {
             $agentQuery->orderBy('users.username', 'asc');
         }
@@ -854,7 +857,7 @@ class AgentsRepo
         });
 
         if (array_key_exists($orderColumn, $orderableColumns)) {
-            if ($orderColumn !== 3) {
+            if ($orderColumn !== self::ORDER_COLUMN_ACTION) {
                 $playerQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
             }
         } else {
@@ -876,23 +879,20 @@ class AgentsRepo
 
         $resultCount     = count($combinedResults);
 
-        if ($orderColumn == 3) {
+        if ($orderColumn == self::ORDER_COLUMN_ACTION) {
             usort($combinedResults, function ($a, $b) use ($orderDir) {
                 $aActionString = $a['actionString'] ?? null;
                 $bActionString = $b['actionString'] ?? null;
 
-                // Manejar valores nulos o vacíos
                 if ($aActionString === null && $bActionString === null) {
-                    return 0; // Ambos son nulos, no hay diferencia.
+                    return 0;
                 } elseif ($aActionString === null) {
                     return ($orderDir === 'asc') ? 1 : -1;
                 } elseif ($bActionString === null) {
                     return ($orderDir === 'asc') ? -1 : 1;
                 }
 
-                // Comparar cadenas de forma sensible a mayúsculas y minúsculas
                 $result = strcasecmp($aActionString, $bActionString);
-
                 return $result * ($orderDir === 'asc' ? 1 : -1);
             });
         }
