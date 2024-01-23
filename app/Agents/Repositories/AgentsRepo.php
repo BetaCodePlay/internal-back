@@ -853,26 +853,18 @@ class AgentsRepo
         // Ordenar por el valor del string solo si la columna es 'users.action'
         if ($orderColumn === 3) {
             usort($combinedResults, function ($a, $b) use ($orderDir) {
-                $aValue = $a['actionString'] ?? null;
-                $bValue = $b['actionString'] ?? null;
+                $aValue = $a['actionString'] ?? '';
+                $bValue = $b['actionString'] ?? '';
 
-                if ($aValue === null && $bValue === null) {
-                    return 0; // Ambos son nulos, no hay diferencia.
-                } elseif ($aValue === null) {
-                    return ($orderDir === 'asc') ? 1 : -1;
-                } elseif ($bValue === null) {
-                    return ($orderDir === 'asc') ? -1 : 1;
-                }
-
-                return strcmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
+                return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
             });
         } else {
             // Ordenar de forma predeterminada si la columna no es 'users.action'
             usort($combinedResults, function ($a, $b) use ($orderColumn, $orderDir) {
-                $aValue = $a[$orderColumn] ?? null;
-                $bValue = $b[$orderColumn] ?? null;
+                $aValue = $a[$orderColumn] ?? '';
+                $bValue = $b[$orderColumn] ?? '';
 
-                return strcmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
+                return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
             });
         }
 
@@ -909,6 +901,7 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
+
 
 
     /**
