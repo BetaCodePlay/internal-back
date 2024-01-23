@@ -73,8 +73,6 @@ class UserTransactionService extends BaseTransactionService
             ? $this->playerTransactionService->processTransaction($request)
             : $this->agentTransactionService->processTransaction($request);
 
-        dd('test|', $userAuthId);
-
         if ($userManagementResult instanceof Response) {
             return $userManagementResult;
         }
