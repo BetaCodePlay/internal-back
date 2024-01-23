@@ -783,7 +783,7 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
+    public function getDirectChildren1(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
@@ -812,16 +812,28 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId);
 
-        // Aplicar filtros de búsqueda
         $agentQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%")
                 ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
         });
 
-        // Obtener resultados de la consulta para agentes
+        $orderableColumns = [
+            0 => 'users.username',
+            1 => 'users.type_user',
+            2 => 'users.id',
+            3 => 'users.action',
+            4 => 'agent_currencies.balance',
+            5 => 'users.status', // Agregado para ordenar por status
+        ];
+
+        if (array_key_exists($orderColumn, $orderableColumns)) {
+            $agentQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
+        } else {
+            $agentQuery->orderBy('users.username', 'asc');
+        }
+
         $agentResults = $agentQuery->get()->toArray();
 
-        // Segunda consulta (playerQuery)
         $playerQuery = User::select([
             'users.username',
             'users.type_user',
@@ -838,18 +850,20 @@ class AgentsRepo
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency);
 
-        // Aplicar filtros de búsqueda
         $playerQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%");
         });
 
-        // Obtener resultados de la consulta para jugadores
+        if (array_key_exists($orderColumn, $orderableColumns)) {
+            $playerQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
+        } else {
+            $playerQuery->orderBy('users.username', 'asc');
+        }
+
         $playerResults = $playerQuery->get()->toArray();
 
-        // Combinar y ordenar resultados
         $combinedResults = array_merge($agentResults, $playerResults);
 
-        // Obtener el valor del string para la ordenación solo si la columna es 'users.action'
         $combinedResults = array_map(function ($item) {
             if (isset($item['action']) && $item['action'] !== null) {
                 $item['actionString'] = ActionUser::getName($item['action']);
@@ -859,29 +873,9 @@ class AgentsRepo
             return $item;
         }, $combinedResults);
 
-        // Imprimir valores para depuración
-        error_log('Order Column: ' . $orderColumn);
-        error_log('Order Direction: ' . $orderDir);
-
-        // Ordenar resultados
-        usort($combinedResults, function ($a, $b) use ($orderColumn, $orderDir) {
-            $aValue = $a[$orderColumn] ?? '';
-            $bValue = $b[$orderColumn] ?? '';
-
-            if ($orderColumn === 3) {
-                // Si la columna es 'users.action', usar el valor del string
-                $aValue = $a['actionString'] ?? '';
-                $bValue = $b['actionString'] ?? '';
-            }
-
-            return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
-        });
-
-        // Obtener el recorte de resultados después de la ordenación
-        $slicedResults = array_slice($combinedResults, $start, $length);
-
-        $resultCount = count($combinedResults);
-        $bonus = Configurations::getBonus();
+        $resultCount     = count($combinedResults);
+        $slicedResults   = array_slice($combinedResults, $start, $length);
+        $bonus           = Configurations::getBonus();
 
         $formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
@@ -902,6 +896,7 @@ class AgentsRepo
                 $userId,
                 [$action, $isBlocked, $actionItem],
                 number_format($balance, 2),
+                $item['status'], // Agregado para mostrar el status
             ];
         }, $slicedResults);
 
@@ -912,6 +907,7 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
+
 
 
 
