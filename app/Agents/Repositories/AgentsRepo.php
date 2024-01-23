@@ -783,7 +783,6 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
-
     public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
         $draw        = $request->input('draw', 1);
@@ -869,6 +868,12 @@ class AgentsRepo
             $aValue = $a[$orderColumn] ?? '';
             $bValue = $b[$orderColumn] ?? '';
 
+            if ($orderColumn === 3) {
+                // Si la columna es 'users.action', usar el valor del string
+                $aValue = $a['actionString'] ?? '';
+                $bValue = $b['actionString'] ?? '';
+            }
+
             return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
         });
 
@@ -907,7 +912,6 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
-
 
 
     /**
