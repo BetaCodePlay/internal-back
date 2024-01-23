@@ -662,7 +662,7 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getDirectChildren1(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
@@ -773,136 +773,6 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
-
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
-    {
-        $draw        = $request->input('draw', 1);
-        $start       = $request->input('start', 0);
-        $length      = $request->input('length', 10);
-        $searchValue = $request->input('search.value');
-        $orderColumn = $request->input('order.0.column');
-        $orderDir    = $request->input('order.0.dir');
-
-        $userId = $request->has('username')
-            ? User::where('username', $request->input('username'))->value('id')
-            : $userAuthId;
-
-        $agentQuery = User::select([
-            'users.username',
-            'users.type_user',
-            'users.type_user as typeId',
-            'users.id',
-            'users.action',
-            'users.status',
-            'agent_currencies.balance',
-        ])
-            ->join('agents', 'users.id', '=', 'agents.user_id')
-            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->where('agents.owner_id', $userId)
-            ->where('agent_currencies.currency_iso', $currency)
-            ->where('users.whitelabel_id', $whitelabelId);
-
-        // Aplicar filtros de búsqueda
-        $agentQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%")
-                ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
-        });
-
-        // Obtener resultados de la consulta para agentes
-        $agentResults = $agentQuery->get()->toArray();
-
-        // Segunda consulta (playerQuery)
-        $playerQuery = User::select([
-            'users.username',
-            'users.type_user',
-            'users.type_user as typeId',
-            'users.id',
-            'users.action',
-            'users.status',
-            'agent_currencies.balance',
-        ])
-            ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
-            ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where('agents.user_id', $userId)
-            ->where('users.whitelabel_id', $whitelabelId)
-            ->where('agent_currencies.currency_iso', $currency);
-
-        // Aplicar filtros de búsqueda
-        $playerQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%");
-        });
-
-        // Obtener resultados de la consulta para jugadores
-        $playerResults = $playerQuery->get()->toArray();
-
-        // Combinar resultados de ambas consultas
-        $combinedResults = array_merge($agentResults, $playerResults);
-
-        // Obtener el valor del string para la ordenación solo si la columna es 'users.action'
-        $combinedResults = array_map(function ($item) {
-            if (isset($item['action']) && $item['action'] !== null) {
-                $item['actionString'] = ActionUser::getName($item['action']);
-            } else {
-                $item['actionString'] = null;
-            }
-            return $item;
-        }, $combinedResults);
-
-        // Ordenar por el valor del string solo si la columna es 'users.action'
-        if ($orderColumn === 3) {
-            usort($combinedResults, function ($a, $b) use ($orderDir) {
-                $aValue = $a['actionString'] ?? '';
-                $bValue = $b['actionString'] ?? '';
-
-                return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
-            });
-        } else {
-            // Ordenar de forma predeterminada si la columna no es 'users.action'
-            usort($combinedResults, function ($a, $b) use ($orderColumn, $orderDir) {
-                $aValue = $a[$orderColumn] ?? '';
-                $bValue = $b[$orderColumn] ?? '';
-
-                return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
-            });
-        }
-
-        $resultCount = count($combinedResults);
-        $slicedResults = array_slice($combinedResults, $start, $length);
-        $bonus = Configurations::getBonus();
-
-        $formattedResults = array_map(function ($item) use ($currency, $bonus) {
-            $balance = $item['balance'];
-            $userId  = $item['id'];
-
-            if ($item['typeId'] == TypeUser::$player) {
-                $wallet  = Wallet::getByClient($userId, $currency, $bonus);
-                $balance = $wallet?->data?->wallet?->balance;
-            }
-
-            $actionItem = $item['action'];
-            $action     = ActionUser::getName($actionItem);
-            $isBlocked  = ActionUser::isBlocked($actionItem);
-
-            return [
-                $item['username'],
-                [$item['type_user'], $item['typeId']],
-                $userId,
-                [$action, $isBlocked, $actionItem],
-                number_format($balance, 2),
-            ];
-        }, $slicedResults);
-
-        return [
-            'draw'            => (int)$draw,
-            'recordsTotal'    => $resultCount,
-            'recordsFiltered' => $resultCount,
-            'data'            => $formattedResults,
-        ];
-    }
-
-
 
     /**
      * Get searcg agents by owner
