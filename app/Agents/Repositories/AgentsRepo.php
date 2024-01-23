@@ -783,7 +783,7 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
-    public function getDirectChildren1(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
