@@ -24,6 +24,7 @@ use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Reports\Repositories\ReportAgentRepo;
 use App\Security\Repositories\RolesRepo;
 use App\Transactions\Services\UserTransactionService;
+use App\Transactions\Services\UserTransactionServiceOld;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
@@ -197,7 +198,7 @@ class AgentsController extends Controller
 
 
     /**
-     * @var UserTransactionService
+     * @var userTransactionService
      */
     private UserTransactionService $userTransactionService;
 
@@ -263,7 +264,7 @@ class AgentsController extends Controller
         AgentService $agentService,
         CampaignsRepo $campaignsRepo,
         CampaignParticipationRepo $campaignParticipationRepo,
-        UserTransactionService $userTransactionService,
+        UserTransactionServiceOld $userTransactionService,
         AuditsRepo $auditsRepo
     ) {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;

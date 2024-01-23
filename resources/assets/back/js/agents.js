@@ -1621,7 +1621,6 @@ class Agents {
             $credit.button('loading');
             $debit.button('loading');
             let transactionType = 1;
-            alert('here')
 
             $.ajax({
                 url: $form.attr('action'),
