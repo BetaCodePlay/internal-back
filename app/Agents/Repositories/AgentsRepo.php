@@ -901,6 +901,23 @@ class AgentsRepo
             ];
         }, $slicedResults);
 
+        if ($orderColumn == 3) {
+            usort($combinedResults, function ($a, $b) use ($orderDir) {
+                $aActionString = $a['actionString'] ?? null;
+                $bActionString = $b['actionString'] ?? null;
+
+                if ($aActionString === null && $bActionString === null) {
+                    return 0; // Ambos son nulos, no hay diferencia.
+                } elseif ($aActionString === null) {
+                    return ($orderDir === 'asc') ? 1 : -1;
+                } elseif ($bActionString === null) {
+                    return ($orderDir === 'asc') ? -1 : 1;
+                }
+
+                return strcmp($aActionString, $bActionString) * ($orderDir === 'asc' ? 1 : -1);
+            });
+        }
+
         return [
             'draw'            => (int)$draw,
             'recordsTotal'    => $resultCount,
