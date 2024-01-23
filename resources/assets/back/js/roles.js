@@ -221,16 +221,15 @@ class Roles {
             }).done(function (json) {
                 let { authBalance, authUserId, balance, balanceBonus } = json.data;
 
-                console.log(authBalance, authUserId, balance, balanceBonus );
-
-            /*    $('.balance').text(balance);
+                $('.balance').text(balance);
                 $('.balance_bonus').text(balanceBonus);
 
                 let amountRefreshTxt = `amount-refresh-${authUserId}`;
-                let amountRefreshClass = `.amount-refresh-${authUserId}`;*/
+                let amountRefreshClass = `.amount-refresh-${authUserId}`;
 
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
+
                 Roles.globaltable.ajax.reload();
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-balance').modal('hide');
@@ -263,11 +262,6 @@ class Roles {
             );
 
             let type = getTypeUser(Roles.globalrolid);
-
-            let authUserId = $("#js-header").data("auth-user");
-
-
-            console.log('tamincin', authUserId);
 
             let $data = {
                 wallet: '',
