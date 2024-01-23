@@ -847,7 +847,7 @@ class AgentsRepo
         // Obtener resultados de la consulta para jugadores
         $playerResults = $playerQuery->get()->toArray();
 
-        // Combinar resultados de ambas consultas
+        // Combinar y ordenar resultados
         $combinedResults = array_merge($agentResults, $playerResults);
 
         // Obtener el valor del string para la ordenación solo si la columna es 'users.action'
@@ -860,23 +860,13 @@ class AgentsRepo
             return $item;
         }, $combinedResults);
 
-        // Ordenar por el valor del string solo si la columna es 'users.action'
-        if ($orderColumn === 3) {
-            usort($combinedResults, function ($a, $b) use ($orderDir) {
-                $aValue = $a['actionString'] ?? '';
-                $bValue = $b['actionString'] ?? '';
+        // Ordenar resultados
+        usort($combinedResults, function ($a, $b) use ($orderColumn, $orderDir) {
+            $aValue = $a[$orderColumn] ?? '';
+            $bValue = $b[$orderColumn] ?? '';
 
-                return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
-            });
-        } else {
-            // Ordenar de forma predeterminada si la columna no es 'users.action'
-            usort($combinedResults, function ($a, $b) use ($orderColumn, $orderDir) {
-                $aValue = $a[$orderColumn] ?? '';
-                $bValue = $b[$orderColumn] ?? '';
-
-                return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
-            });
-        }
+            return strcasecmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
+        });
 
         // Obtener el recorte de resultados después de la ordenación
         $slicedResults = array_slice($combinedResults, $start, $length);
@@ -913,6 +903,7 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
+
 
     /**
      * Get searcg agents by owner
