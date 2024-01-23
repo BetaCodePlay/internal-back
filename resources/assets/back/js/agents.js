@@ -1637,8 +1637,6 @@ class Agents {
                 let amountRefreshTxt = `amount-refresh-${authUserId}`;
                 let amountRefreshClass = `.amount-refresh-${authUserId}`;
 
-                console.log("1", amountRefreshTxt);
-
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
 
@@ -1673,8 +1671,6 @@ class Agents {
 
                 let amountRefreshTxt = `amount-refresh-${authUserId}`;
                 let amountRefreshClass = `.amount-refresh-${authUserId}`;
-
-                console.log("2", amountRefreshTxt);
 
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);

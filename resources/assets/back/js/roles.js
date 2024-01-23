@@ -252,6 +252,11 @@ class Roles {
 
             let type = getTypeUser(Roles.globalrolid);
 
+            let authUserId = $("#js-header").data("auth-user");
+
+
+            console.log('tamincin', authUserId);
+
             let $data = {
                 wallet: '',
                 user: userId,
