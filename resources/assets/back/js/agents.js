@@ -794,8 +794,6 @@ class Agents {
             $('a.jstree-anchor').removeClass('jstree-clicked');
             $this.addClass('jstree-clicked');
 
-            console.log('this is a route', $container.data('route'));
-
             $.ajax({
                 url: $container.data('route'),
                 type: 'get',
@@ -1623,6 +1621,7 @@ class Agents {
             $credit.button('loading');
             $debit.button('loading');
             let transactionType = 1;
+            alert('here')
 
             $.ajax({
                 url: $form.attr('action'),
