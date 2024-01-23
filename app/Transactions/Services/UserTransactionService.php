@@ -68,11 +68,12 @@ class UserTransactionService extends BaseTransactionService
             return $isBalanceInsufficient;
         }
 
-        dd('test', $userAuthId);
 
         $userManagementResult = ($request->get('type') == UserType::USER_TYPE_PLAYER)
             ? $this->playerTransactionService->processTransaction($request)
             : $this->agentTransactionService->processTransaction($request);
+
+        dd('test|', $userAuthId);
 
         if ($userManagementResult instanceof Response) {
             return $userManagementResult;
