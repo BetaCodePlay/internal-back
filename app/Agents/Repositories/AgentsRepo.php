@@ -860,6 +860,10 @@ class AgentsRepo
             return $item;
         }, $combinedResults);
 
+        // Imprimir valores para depuración
+        error_log('Order Column: ' . $orderColumn);
+        error_log('Order Direction: ' . $orderDir);
+
         // Ordenar resultados
         usort($combinedResults, function ($a, $b) use ($orderColumn, $orderDir) {
             $aValue = $a[$orderColumn] ?? '';
@@ -903,6 +907,7 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
+
 
 
     /**
