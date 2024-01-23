@@ -853,20 +853,26 @@ class AgentsRepo
         // Ordenar por el valor del string solo si la columna es 'users.action'
         if ($orderColumn === 3) {
             usort($combinedResults, function ($a, $b) use ($orderDir) {
-                if ($a['actionString'] === null && $b['actionString'] === null) {
+                $aValue = $a['actionString'] ?? null;
+                $bValue = $b['actionString'] ?? null;
+
+                if ($aValue === null && $bValue === null) {
                     return 0; // Ambos son nulos, no hay diferencia.
-                } elseif ($a['actionString'] === null) {
+                } elseif ($aValue === null) {
                     return ($orderDir === 'asc') ? 1 : -1;
-                } elseif ($b['actionString'] === null) {
+                } elseif ($bValue === null) {
                     return ($orderDir === 'asc') ? -1 : 1;
                 }
 
-                return strcmp($a['actionString'], $b['actionString']) * ($orderDir === 'asc' ? 1 : -1);
+                return strcmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
             });
         } else {
             // Ordenar de forma predeterminada si la columna no es 'users.action'
             usort($combinedResults, function ($a, $b) use ($orderColumn, $orderDir) {
-                return strcmp($a[$orderColumn], $b[$orderColumn]) * ($orderDir === 'asc' ? 1 : -1);
+                $aValue = $a[$orderColumn] ?? null;
+                $bValue = $b[$orderColumn] ?? null;
+
+                return strcmp($aValue, $bValue) * ($orderDir === 'asc' ? 1 : -1);
             });
         }
 
@@ -903,7 +909,6 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
-
 
 
     /**
