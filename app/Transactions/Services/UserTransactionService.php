@@ -52,6 +52,8 @@ class UserTransactionService extends BaseTransactionService
         //$user = auth()->user();
         //broadcast(new MessageSent($user))->toOthers();
 
+        dd('dd', $userAuthId);
+
         if ($userAuthId == $userToAddBalance) {
             return $this->generateErrorResponse(
                 _i('Error'),
