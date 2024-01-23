@@ -223,6 +223,11 @@ class AgentsRepo
                     ->first();
     }
 
+    /**
+     * @param int $user
+     * @param string $currency
+     * @return string
+     */
     public function findByUserIdAndCurrency2(int $user, string $currency)
     {
         return Agent::on('replica')
@@ -557,6 +562,7 @@ class AgentsRepo
      * @param string $currency
      * @param int $whitelabelId
      * @return array
+     * @deprecated Use getDirectChildrenV2() instead.
      */
     public function getDirectChildrenOld(Request $request, int $userAuthId, string $currency, int $whitelabelId)
     : array {
@@ -648,6 +654,14 @@ class AgentsRepo
         ];
     }
 
+
+    /**
+     * @param Request $request
+     * @param int $userAuthId
+     * @param string $currency
+     * @param int $whitelabelId
+     * @return array
+     */
     public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
     {
         $draw        = $request->input('draw', 1);
@@ -677,13 +691,11 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId);
 
-        // Aplicar filtros de búsqueda
         $agentQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%")
                 ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
         });
 
-        // Aplicar orden
         $orderableColumns = [
             0 => 'users.username',
             1 => 'users.type_user',
@@ -695,13 +707,10 @@ class AgentsRepo
         if (array_key_exists($orderColumn, $orderableColumns)) {
             $agentQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
         } else {
-            // Orden predeterminado si la columna no es ordenable
             $agentQuery->orderBy('users.username', 'asc');
         }
 
         $agentResults = $agentQuery->get()->toArray();
-
-        // Segunda consulta (playerQuery)
         $playerQuery = User::select([
             'users.username',
             'users.type_user',
@@ -718,17 +727,18 @@ class AgentsRepo
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency);
 
-        // Aplicar filtros de búsqueda
         $playerQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%");
         });
 
-        // Aplicar orden
-        $playerQuery->orderBy('users.username', 'asc');
+        if (array_key_exists($orderColumn, $orderableColumns)) {
+            $playerQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
+        } else {
+            $playerQuery->orderBy('users.username', 'asc');
+        }
 
         $playerResults = $playerQuery->get()->toArray();
 
-        // Combinar resultados de ambas consultas
         $combinedResults = array_merge($agentResults, $playerResults);
         $resultCount     = count($combinedResults);
         $slicedResults   = array_slice($combinedResults, $start, $length);
@@ -763,6 +773,7 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
+
 
     /**
      * Get searcg agents by owner
