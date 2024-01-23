@@ -52,8 +52,6 @@ class UserTransactionService extends BaseTransactionService
         //$user = auth()->user();
         //broadcast(new MessageSent($user))->toOthers();
 
-        dd('dd', $userAuthId);
-
         if ($userAuthId == $userToAddBalance) {
             return $this->generateErrorResponse(
                 _i('Error'),
@@ -69,6 +67,8 @@ class UserTransactionService extends BaseTransactionService
         if ($isBalanceInsufficient = $this->isInsufficientBalance($transactionType, $transactionAmount, $ownerAgent)) {
             return $isBalanceInsufficient;
         }
+
+        dd('test', $userAuthId);
 
         $userManagementResult = ($request->get('type') == UserType::USER_TYPE_PLAYER)
             ? $this->playerTransactionService->processTransaction($request)
