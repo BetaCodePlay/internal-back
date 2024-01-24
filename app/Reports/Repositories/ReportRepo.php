@@ -5,13 +5,20 @@ namespace App\Reports\Repositories;
 use Dotworkers\Configurations\Configurations;
 use Illuminate\Support\Facades\DB;
 
+/**
+ *
+ */
 class ReportRepo
 {
+    /**
+     * @return array
+     */
     public function dashboard()
     : array
     {
         $currency     = session('currency');
         $whitelabelId = Configurations::getWhitelabel();
+        $timezone     = session('timezone');
 
         $transactions = DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
@@ -21,7 +28,7 @@ class ReportRepo
                 'users.username',
                 'transactions.transaction_type_id as transactionType',
                 DB::raw("TO_CHAR(transactions.amount, 'FM999999999.00') as amount"),
-                DB::raw("to_char(transactions.created_at, 'DD Mon HH:MIAM') as date")
+                DB::raw("to_char(transactions.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as date")
             ])
             ->where([
                 'transactions.currency_iso'  => $currency,
@@ -35,13 +42,13 @@ class ReportRepo
             ->take(10)
             ->select([
                 'audit_types.name',
-                DB::raw("to_char(audits.created_at, 'DD Mon HH:MIAM') as formatted_date")
+                DB::raw("to_char(audits.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as formatted_date")
             ])
             ->get();
 
         return [
             'audits'       => $audits,
-            'balance' => [
+            'balance'      => [
                 'totalBalance' => getAuthenticatedUserBalance(),
             ],
             'transactions' => $transactions,
