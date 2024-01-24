@@ -2,6 +2,7 @@
 
 namespace App\Reports\Repositories;
 
+use Dotworkers\Configurations\Configurations;
 use Illuminate\Support\Facades\DB;
 
 class ReportRepo
@@ -10,7 +11,7 @@ class ReportRepo
     : array
     {
         $currency     = session('currency');
-        $whitelabelId = session('whitelabel');
+        $whitelabelId = Configurations::getWhitelabel();
 
         $transactions = DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
