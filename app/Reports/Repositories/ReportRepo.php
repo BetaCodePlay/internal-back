@@ -40,7 +40,11 @@ class ReportRepo
 
         return [
             'audits'       => $audits,
-            'transactions' => $transactions
+            'balance' => [
+                'totalBalance' => getAuthenticatedUserBalance(),
+            ],
+            'transactions' => $transactions,
+
         ];
     }
 }
