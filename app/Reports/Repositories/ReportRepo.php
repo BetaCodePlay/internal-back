@@ -28,7 +28,18 @@ class ReportRepo
             ])
             ->get();
 
+        $audits = DB::table('audits')
+            ->join('audit_types', 'audits.audit_type_id', '=', 'audit_types.id')
+            ->latest('audits.created_at')
+            ->take(10)
+            ->select([
+                'audit_types.name',
+                DB::raw("to_char(audits.created_at, 'DD Mon HH:MIAM') as formatted_date")
+            ])
+            ->get();
+
         return [
+            'audits'       => $audits,
             'transactions' => $transactions
         ];
     }
