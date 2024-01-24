@@ -7425,6 +7425,8 @@ if (! function_exists('authenticatedUserBalance')) {
             ? $agentsRepo->findByUserIdAndCurrency($authenticatedUserId, session('currency'))
             : $agentsRepo->findUser($authenticatedUserId);
 
+        dd($user);
+
         $balance = ($authenticatedUserType == 'agent') ? $user->balance : $user->wallet->balance;
 
         return number_format($balance, 2);
