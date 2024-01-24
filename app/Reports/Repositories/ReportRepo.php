@@ -9,6 +9,9 @@ class ReportRepo
     public function dashboard()
     : array
     {
+        $currency     = session('currency');
+        $whitelabelId = session('whitelabel');
+
         $transactions = DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->latest('transactions.created_at')
@@ -17,6 +20,10 @@ class ReportRepo
                 'users.username',
                 DB::raw("TO_CHAR(transactions.amount, 'FM999999999.00') as amount"),
                 DB::raw("to_char(transactions.created_at, 'DD Mon HH:MIAM') as date")
+            ])
+            ->where([
+                'transactions.currency_iso'  => $currency,
+                'transactions.whitelabel_id' => $whitelabelId,
             ])
             ->get();
 
