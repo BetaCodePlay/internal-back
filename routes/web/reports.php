@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\ReportsController;
+use Illuminate\Support\Facades\Route;
 /**
  * Reports routes
  */
 Route::group(['prefix' => 'reports', 'middleware' => ['auth']], function () {
+
+    Route::get('dashboard', [ReportsController::class, 'dashboard'])
+        ->name('reports.dashboard');
 
     // View games report
     Route::get('games-totals/{provider}', [

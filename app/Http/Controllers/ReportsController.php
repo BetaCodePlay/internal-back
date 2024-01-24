@@ -18,6 +18,7 @@ use App\IQSoft\Repositories\IQSoftTicketsRepo;
 use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresGamesTotalsRepo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use App\Reports\Repositories\ReportRepo;
 use App\Users\Repositories\UsersRepo;
 use App\Wallets\Collections\WalletsCollection;
 use App\Whitelabels\Repositories\WhitelabelsRepo;
@@ -163,6 +164,8 @@ class ReportsController extends Controller
      */
     private $providerTypesCollection;
 
+    private ReportRepo $reportRepo;
+
 
     /**
      * ReportsController constructor.
@@ -184,39 +187,40 @@ class ReportsController extends Controller
      * @param ProviderTypesCollection $providerTypesCollection
      */
     public function __construct(
-        ClosuresUsersTotalsRepo      $closuresUsersTotalsRepo,
-        ClosuresGamesTotalsRepo      $closuresGamesTotalsRepo,
-        ReportsCollection            $reportsCollection,
-        CountriesRepo                $countriesRepo,
-        UsersRepo                    $usersRepo,
-        TransactionsRepo             $transactionsRepo,
-        TransactionsCollection       $transactionsCollection,
-        ProvidersRepo                $providersRepo,
-        WhitelabelsRepo              $whitelabelsRepo,
-        CurrenciesRepo               $currenciesRepo,
-        CoreRepo                     $coreRepo,
+        ClosuresUsersTotalsRepo $closuresUsersTotalsRepo,
+        ClosuresGamesTotalsRepo $closuresGamesTotalsRepo,
+        ReportsCollection $reportsCollection,
+        CountriesRepo $countriesRepo,
+        UsersRepo $usersRepo,
+        TransactionsRepo $transactionsRepo,
+        TransactionsCollection $transactionsCollection,
+        ProvidersRepo $providersRepo,
+        WhitelabelsRepo $whitelabelsRepo,
+        CurrenciesRepo $currenciesRepo,
+        CoreRepo $coreRepo,
         BetPayTransactionsCollection $betPayTransactionsCollection,
-        WalletsCollection            $walletsCollection,
-        ProvidersTypesRepo           $providersTypesRepo,
-        ProviderTypesCollection      $providerTypesCollection
-    )
-    {
-        $this->closuresUsersTotalsRepo = $closuresUsersTotalsRepo;
-        $this->reportsCollection = $reportsCollection;
-        $this->closuresGamesTotalsRepo = $closuresGamesTotalsRepo;
-        $this->countriesRepo = $countriesRepo;
-        $this->usersRepo = $usersRepo;
-        $this->transactionsRepo = $transactionsRepo;
-        $this->transactionsCollection = $transactionsCollection;
-        $this->coreRepo = $coreRepo;
-        $this->providersRepo = $providersRepo;
-        $this->whitelabelsRepo = $whitelabelsRepo;
-        $this->currenciesRepo = $currenciesRepo;
+        WalletsCollection $walletsCollection,
+        ProvidersTypesRepo $providersTypesRepo,
+        ProviderTypesCollection $providerTypesCollection,
+        ReportRepo $reportRepo,
+    ) {
+        $this->closuresUsersTotalsRepo      = $closuresUsersTotalsRepo;
+        $this->reportsCollection            = $reportsCollection;
+        $this->closuresGamesTotalsRepo      = $closuresGamesTotalsRepo;
+        $this->countriesRepo                = $countriesRepo;
+        $this->usersRepo                    = $usersRepo;
+        $this->transactionsRepo             = $transactionsRepo;
+        $this->transactionsCollection       = $transactionsCollection;
+        $this->coreRepo                     = $coreRepo;
+        $this->providersRepo                = $providersRepo;
+        $this->whitelabelsRepo              = $whitelabelsRepo;
+        $this->currenciesRepo               = $currenciesRepo;
         $this->betPayTransactionsCollection = $betPayTransactionsCollection;
-        $this->walletsCollection = $walletsCollection;
-        $this->providersTypesRepo = $providersTypesRepo;
-        $this->providerTypesCollection = $providerTypesCollection;
-        $this->betPayURL = env('BETPAY_SERVER') . '/api';
+        $this->walletsCollection            = $walletsCollection;
+        $this->providersTypesRepo           = $providersTypesRepo;
+        $this->providerTypesCollection      = $providerTypesCollection;
+        $this->betPayURL                    = env('BETPAY_SERVER') . '/api';
+        $this->reportRepo                   = $reportRepo;
     }
 
     /**
@@ -323,6 +327,12 @@ class ReportsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all(), 'year' => $year, 'month' => $month]);
             return Utils::failedResponse();
         }
+    }
+
+    public function dashboard()
+    : Response
+    {
+        return Utils::successResponse($this->reportRepo->dashboard());
     }
 
     /**
