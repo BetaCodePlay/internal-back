@@ -7421,6 +7421,8 @@ if (! function_exists('authenticatedUserBalance')) {
         $authenticatedUserType = $authenticatedUser->typeUser;
         $agentsRepo = new AgentsRepo();
 
+        dd($authenticatedUserType);
+
         $user = ($authenticatedUserType == 'agent')
             ? $agentsRepo->findByUserIdAndCurrency($authenticatedUserId, session('currency'))
             : $agentsRepo->findUser($authenticatedUserId);
