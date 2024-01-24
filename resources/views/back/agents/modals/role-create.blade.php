@@ -32,7 +32,7 @@
                             </div>
                         </div>
 
-                        @if ($agent->master)
+                        @if ($agent?->master)
                             <div class="col-12 col-lg-6">
                                 <div class="form-group">
                                     <label>{{ _i('Role type') }}</label>
