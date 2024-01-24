@@ -19,6 +19,7 @@ class ReportRepo
             ->take(10)
             ->select([
                 'users.username',
+                'transactions.transaction_type_id as transactionType',
                 DB::raw("TO_CHAR(transactions.amount, 'FM999999999.00') as amount"),
                 DB::raw("to_char(transactions.created_at, 'DD Mon HH:MIAM') as date")
             ])
