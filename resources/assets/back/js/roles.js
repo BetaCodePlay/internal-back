@@ -57,12 +57,10 @@ class Roles {
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
             initComplete: function () {
-
+                $('.table-load').addClass('table-complete');
+                $('.page-role .loading-style').hide();
             },
         });
-
-        $('.table-load').addClass('table-complete');
-        $('.page-role .loading-style').hide();
 
         $(document).on('click', '.currentDataRole', function () {
             let $username = $(this).data('username');
