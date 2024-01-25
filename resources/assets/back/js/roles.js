@@ -122,11 +122,8 @@ class Roles {
             }
         });
 
-        $input.on('change', function () {
-            $input.val('').trigger('change');
-        })
-
         $(document).on('click', '.select2-results__option', function (){
+            $input.val('').trigger('change');
             let $url = '/agents/role/' + $(this).html()
             window.open($url, '_blank');
             return false;
