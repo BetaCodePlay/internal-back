@@ -81,11 +81,13 @@ class Roles {
         });
     };
 
-    userSearch() {
+    userSearch(placeholder) {
         let $input = $('.roleUsernameSearch');
         let $route = $input.data('route');
 
         $input.select2({
+            placeholder,
+            allowClear: true,
             tags: true,
             multiple: true,
             minimumInputLength: 3,
