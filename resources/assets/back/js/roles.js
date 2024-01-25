@@ -82,9 +82,36 @@ class Roles {
     };
 
     userSearch() {
-        let input = $('.roleUsernameSearch');
+        let $input = $('.roleUsernameSearch');
+        let $route = $input.data('route');
 
+        $input.select2({
+            tags: true,
+            multiple: true,
+            minimumInputLength: 3,
+            ajax: {
+                url: $route,
+                dataType: "json",
+                type: "post",
+                data: function (params) {
 
+                    var queryParameters = {
+                        term: params.term
+                    }
+                    return queryParameters;
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.tag_value,
+                                id: item.tag_id
+                            }
+                        })
+                    };
+                }
+            }
+        });
     };
 
     userResetPassword() {
