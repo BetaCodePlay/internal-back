@@ -44,6 +44,12 @@ class Roles {
                     buttons.find(modalLockTarget).parent().addClass('united');
                 }
 
+                if (aData[1][1] === 5) {
+                    buttons.find(modalCreateTarget).parent().addClass('d-none');
+                } else {
+                    buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                }
+
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                 $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1][0] + '</span>');
                 $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
