@@ -9,6 +9,7 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Store\Enums\TransactionTypes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  *
@@ -26,6 +27,8 @@ class ReportRepo
         $currency     = session('currency');
         $whitelabelId = Configurations::getWhitelabel();
         $timezone     = session('timezone');
+
+        Log::info("timezone ${$timezone}");
 
         // TODO: solo deben mostrarse las trasnsacciones propias del usuairo autenticado y la de sus hijos.
         $transactions = DB::table('transactions')
@@ -54,9 +57,9 @@ class ReportRepo
             ])
             ->get();
 
-        $today     = Carbon::now($timezone);
-        $startDate = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
-        $endDate   = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
+        $today         = Carbon::now($timezone);
+        $startDate     = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
+        $endDate       = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
 
         $totalDeposited       = $this->transactionsRepo->totalByProviderTypesWithUser(
