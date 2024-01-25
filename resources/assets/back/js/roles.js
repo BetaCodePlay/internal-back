@@ -97,14 +97,12 @@ class Roles {
                 type: "post",
                 data: function (params) {
                     return {
-                        user: params.term,
-                        page: params.page
+                        user: params.term
                     };
                 },
                 processResults: function (data) {
                     return {
                         results: $.map(data, function (item) {
-                            console.log(item);
                             return {
                                 text: item.tag_value,
                                 id: item.tag_id
