@@ -51,11 +51,11 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text text-id">{{ $authUser->id}} <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
+                                <div class="data-text">{{ $authUser->id}} <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Password') }}</div>
-                                <div class="data-text">
+                                <div class="data-text text-finish">
                                     <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
                                 </div>
                             </div>
