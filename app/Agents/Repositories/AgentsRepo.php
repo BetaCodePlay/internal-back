@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\Log;
  */
 class AgentsRepo
 {
+    /**
+     *
+     */
     const ORDER_COLUMN_ACTION = 3;
     /**
      * Add user to agent
@@ -785,8 +788,16 @@ class AgentsRepo
             'data'            => $formattedResults,
         ];
     }
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
-    {
+
+    /**
+     * @param Request $request
+     * @param int $userAuthId
+     * @param string $currency
+     * @param int $whitelabelId
+     * @return array
+     */
+    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId)
+    : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
@@ -878,7 +889,7 @@ class AgentsRepo
             return $item;
         }, $combinedResults);
 
-        $resultCount     = count($combinedResults);
+        $resultCount = count($combinedResults);
 
         if ($orderColumn == self::ORDER_COLUMN_ACTION) {
             usort($combinedResults, function ($a, $b) use ($orderDir) {
@@ -898,17 +909,23 @@ class AgentsRepo
             });
         }
 
-        $slicedResults   = array_slice($combinedResults, $start, $length);
-        $bonus           = Configurations::getBonus();
+        $slicedResults = array_slice($combinedResults, $start, $length);
+        $bonus         = Configurations::getBonus();
 
         $formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
             $userId  = $item['id'];
 
             if ($item['typeId'] == TypeUser::$player) {
-                $wallet  = Wallet::getByClient($userId, $currency, $bonus);
-                Log::info("wallet {$userId}", [$wallet, ]);
-                $balance = $wallet?->data?->wallet?->balance;
+                $wallet = Wallet::getByClient($userId, $currency, $bonus);
+
+                if (is_array($wallet->data)) {
+                    Log::info("Error in user wallet array {$userId}", [$wallet]);
+                }
+
+                $balance = ! is_array($wallet->data)
+                    ? $wallet?->data?->wallet?->balance
+                    : 0;
             }
 
             $actionItem = $item['action'];
