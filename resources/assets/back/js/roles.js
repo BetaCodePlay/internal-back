@@ -87,7 +87,6 @@ class Roles {
 
         $input.select2({
             placeholder,
-            allowClear: true,
             tags: true,
             multiple: true,
             minimumInputLength: 3,
