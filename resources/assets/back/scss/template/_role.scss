@@ -273,6 +273,7 @@
                         position: relative;
 
                         &::before {
+                            content: "";
                             background: $theme;
                             position: absolute;
                             left: 0;
