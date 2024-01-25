@@ -51,7 +51,7 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text">{{ $authUser->id}} <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
+                                <div class="data-text text-id">{{ $authUser->id}} <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Password') }}</div>

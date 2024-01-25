@@ -140,6 +140,11 @@
 
                     &.text-id {
                         color: #fff;
+                        font-weight: 500;
+
+                        .btn {
+                            margin-left: 15px;
+                        }
                     }
 
                     .deco-role {
