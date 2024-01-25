@@ -17,6 +17,43 @@
             </form>
             <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#role-create" data-value="true"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
+        {{--<div class="page-header">
+            <div class="page-header-top">
+                {{ _i('My profile') }}
+
+                <div class="d-inline-block dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownRoleProfile" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownRoleProfile">
+                        <li><a class="dropdown-item" href="#">{{ _i('Add role') }}</a></li>
+                        <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-password-reset" data-userid="{{ auth()->user()->id }}" data-username="{{ auth()->user()->username }}">{{ _i('Reset password') }}</a></li>
+                        <li><a class="dropdown-item" href="#">{{ _i('Block') }}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="page-header-body">
+
+                <div class="page-data-top">
+                    <div class="page-data">
+                        <div class="data-title">{{ _i('Name') }}</div>
+                        <div class="data-text">{{ $authUser->username }} <span class="deco-role">{{ $authUser->typeUser }}</span></div>
+                    </div>
+                    <div class="page-data">
+                        <div class="data-title">{{ _i('ID User') }}</div>
+                        <div class="data-text text-id">{{ $authUser->id}}</div>
+                    </div>
+                </div>
+
+
+                <div class="page-data">
+                    <div class="data-title">{{ _i('Number of dependent agents') }}</div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                    <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
+                </div>
+            </div>
+        </div>--}}
         <div class="nav-roles">
             <ul class="nav nav-tabs" id="roleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
