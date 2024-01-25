@@ -75,7 +75,20 @@ class Roles {
             let $status = $this.find('td').eq(3).html();
             let $balance = $this.find('td').eq(4).html();
 
+            $this.next().find('[data-dt-column="1"] .dtr-data').html($rol);
             $this.next().find('[data-dt-column="3"] .dtr-data').html($status);
+            $this.next().find('[data-dt-column="4"] .dtr-data').html($balance);
+        });
+
+        $(document).on('resize', '.dtr-control', function (){
+            let $this = $(this).parent();
+            let $rol = $this.find('td').eq(1).html();
+            let $status = $this.find('td').eq(3).html();
+            let $balance = $this.find('td').eq(4).html();
+
+            $this.next().find('[data-dt-column="1"] .dtr-data').html($rol);
+            $this.next().find('[data-dt-column="3"] .dtr-data').html($status);
+            $this.next().find('[data-dt-column="4"] .dtr-data').html($balance);
         });
     }
 
