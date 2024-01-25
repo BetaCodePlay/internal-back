@@ -907,7 +907,7 @@ class AgentsRepo
 
             if ($item['typeId'] == TypeUser::$player) {
                 $wallet  = Wallet::getByClient($userId, $currency, $bonus);
-                Log::info('wallet', [$wallet]);
+                Log::info("wallet {$userId}", [$wallet, ]);
                 $balance = $wallet?->data?->wallet?->balance;
             }
 
