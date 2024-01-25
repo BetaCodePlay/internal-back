@@ -1295,7 +1295,8 @@ class TransactionsRepo
         $startDate,
         $endDate,
         $userId
-    ) {
+    )
+    : mixed {
         return Transaction::on('replica')
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->join('providers', 'transactions.provider_id', '=', 'providers.id')
