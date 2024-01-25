@@ -21,6 +21,9 @@ class ProviderTypes
      */
     public static $dotworkers = 1;
 
+
+    public static $assiria = 1;
+
     /**
      * Payment
      *

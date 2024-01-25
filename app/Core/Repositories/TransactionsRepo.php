@@ -1278,6 +1278,40 @@ class TransactionsRepo
     }
 
     /**
+     * @param $whitelabel
+     * @param $transactionType
+     * @param $currency
+     * @param $providerTypes
+     * @param $startDate
+     * @param $endDate
+     * @param $userId
+     * @return int|mixed
+     */
+    public function totalByProviderTypesWithUser(
+        $whitelabel,
+        $transactionType,
+        $currency,
+        $providerTypes,
+        $startDate,
+        $endDate,
+        $userId
+    ) {
+        return Transaction::on('replica')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->join('providers', 'transactions.provider_id', '=', 'providers.id')
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->whereIn('providers.provider_type_id', $providerTypes)
+            ->where([
+                'transactions.whitelabel_id' => $whitelabel,
+                'transactions.currency_iso'  => $currency,
+                'transaction_type_id'        => $transactionType,
+                'transaction_status_id'      => TransactionStatus::$approved,
+                'transactions.user_id'       => $userId,
+            ])
+            ->sum('amount');
+    }
+
+    /**
      * Update data transaction
      *
      * @param int $id Transaction id to modify
