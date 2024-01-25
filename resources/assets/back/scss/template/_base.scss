@@ -11,6 +11,15 @@ body {
 $theme: #7d2df5;
 $theme-hover: lighten($theme, 10%);
 
+.select2-container--default {
+    .select2-dropdown {
+        background: #333;
+        border: 1px solid #444;
+        border-radius: 5px;
+        margin-top: 2px;
+    }
+}
+
 #header-search-form {
     .form-control {
         width: 100%;

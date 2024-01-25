@@ -81,10 +81,51 @@ class Roles {
         });
     };
 
-    userSearch() {
-        let input = $('.roleUsernameSearch');
+    userSearch(placeholder, moreCharacters, min) {
+        let $input = $('.roleUsernameSearch');
+        let $route = $input.data('route');
 
+        $input.select2({
+            placeholder,
+            tags: true,
+            multiple: true,
+            minimumInputLength: min,
+            language: {
+                inputTooShort: function() {
+                    return moreCharacters;
+                }
+            },
+            ajax: {
+                url: $route,
+                dataType: "json",
+                type: "post",
+                data: function (params) {
+                    return {
+                        user: params.term
+                    };
+                },
+                processResults: function (data) {
+                    let results = [];
 
+                    $.map(data.data.agents, function (item) {
+                        results.push({
+                            id: item.id,
+                            text: item.username,
+                            type: item.type
+                        });
+                    })
+
+                    console.log(results);
+
+                    return {
+                        results: results,
+                        paginate: {
+                            more: false
+                        }
+                    };
+                }
+            }
+        });
     };
 
     userResetPassword() {
