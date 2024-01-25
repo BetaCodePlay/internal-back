@@ -21,6 +21,11 @@ class Roles {
             }],
             fixedHeader: true,
             responsive: true,
+            drawCallback: function (settings) {
+                // Here the response
+                var response = settings.json;
+                console.log(response);
+            },
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 let buttons = $('#user-buttons');
                 let modalLockTarget = '[data-target="#role-lock"]';
