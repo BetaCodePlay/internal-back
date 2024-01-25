@@ -96,15 +96,15 @@ class Roles {
                 dataType: "json",
                 type: "post",
                 data: function (params) {
-
-                    var queryParameters = {
-                        term: params.term
-                    }
-                    return queryParameters;
+                    return {
+                        user: params.term,
+                        page: params.page
+                    };
                 },
                 processResults: function (data) {
                     return {
                         results: $.map(data, function (item) {
+                            console.log(item);
                             return {
                                 text: item.tag_value,
                                 id: item.tag_id
