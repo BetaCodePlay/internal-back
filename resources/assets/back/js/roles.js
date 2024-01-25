@@ -42,12 +42,12 @@ class Roles {
                     buttons.find(modalBalanceTarget).parent().addClass('d-none');
                     buttons.find(modalCreateTarget).parent().addClass('d-none');
                     buttons.find(modalLockTarget).parent().addClass('united');
-                }
 
-                if (aData[1][1] === 5) {
-                    buttons.find(modalCreateTarget).parent().addClass('d-none');
-                } else {
-                    buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                    if (aData[1][1] === 5) {
+                        buttons.find(modalCreateTarget).parent().addClass('d-none');
+                    } else {
+                        buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                    }
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
