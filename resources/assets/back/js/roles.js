@@ -24,6 +24,10 @@ class Roles {
             drawCallback: function (settings) {
                 // Here the response
                 var response = settings.json;
+                var api = this.api();
+
+                // Output the data for the visible rows to the browser's console
+                console.log( api.rows( {page:'current'} ).data() );
                 console.log(response);
             },
             fnCreatedRow: function (nRow, aData, iDataIndex) {
