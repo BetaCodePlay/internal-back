@@ -121,6 +121,10 @@ class Roles {
                 }
             }
         });
+
+        $input.on('change', function () {
+            $input.val('').trigger('change');
+        })
     };
 
     userResetPassword() {

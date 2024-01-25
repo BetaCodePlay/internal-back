@@ -40,6 +40,11 @@
                     .select2-search__field {
                         color: #fff;
                     }
+
+                    .select2-selection__rendered {
+                        color: #fff;
+                        padding: .5rem .75rem .5rem 2.5rem;
+                    }
                 }
             }
         }
