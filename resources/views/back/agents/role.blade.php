@@ -13,7 +13,7 @@
         <div class="page-top">
             <form class="search-input" autocomplete="destroy">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" class="form-control" placeholder="{{ _i('Search') }}">
+                <input type="text" class="form-control roleUsernameSearch" placeholder="{{ _i('Search') }}" data-route="{{ route('agents.search-username')}}" data-redirect="{{ route('agents.find-user') }}">
             </form>
             <button type="button" class="btn btn-theme" data-toggle="modal" data-target="#role-create" data-value="true"><i class="fa-solid fa-plus"></i> {{ _i('Create role') }}</button>
         </div>
@@ -133,6 +133,7 @@
         $(function () {
             let roles = new Roles();
             roles.initTableRoles();
+            roles.userSearch();
             roles.userResetPassword();
             roles.userBalance();
             roles.userCreate();

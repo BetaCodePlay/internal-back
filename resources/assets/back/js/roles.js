@@ -79,7 +79,13 @@ class Roles {
             $this.next().find('[data-dt-column="3"] .dtr-data').html($status);
             $this.next().find('[data-dt-column="4"] .dtr-data').html($balance);
         });
-    }
+    };
+
+    userSearch() {
+        let input = $('.roleUsernameSearch');
+
+
+    };
 
     userResetPassword() {
         let button = '.resetUserPassword';
@@ -118,7 +124,7 @@ class Roles {
         $(document).on('click', '.btn-reset-password-head', function () {
             Roles.globaluserid = $(this).data('id');
         })
-    }
+    };
 
     userLock() {
         let $button = '.lockUser';
@@ -194,7 +200,7 @@ class Roles {
             $buttonCancel.html($cancel);
             $buttonSuccess.html($success);
         });
-    }
+    };
 
     userBalance() {
         let button = '.balanceUser';
@@ -301,7 +307,7 @@ class Roles {
         });
 
         Roles.inputMoney('#userBalanceAmountGet', '#userBalanceAmount');
-    }
+    };
 
     userCreate() {
         let $button = '.createUser';
@@ -409,7 +415,7 @@ class Roles {
             }).join('');
             $('#createRolPassword').val(password);
         }
-    }
+    };
 
     static errorResponse(json) {
         let array = Object.values(json.responseJSON.errors);
@@ -418,7 +424,7 @@ class Roles {
         $.each(array, function (index, value) {
             Toastr.notifyToastr(title, value, 'error');
         })
-    }
+    };
 
     static inputMoney($input, $post) {
         function formatMoney(number, places, symbol, thousand, decimal) {
@@ -442,7 +448,7 @@ class Roles {
             $($input).val(formatMoney($amount));
             $($post).val($amount);
         });
-    }
+    };
 }
 
 window.Roles = Roles;
