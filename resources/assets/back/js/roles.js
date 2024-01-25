@@ -73,14 +73,14 @@ class Roles {
             Roles.globalrolid = $rol;
         });
 
-        $(document).on('click', '.dtr-control', function (){
+        /*$(document).on('click', '.dtr-control', function (){
             let $this = $(this).parent();
             let $rol = $this.find('td').eq(1).html();
             let $status = $this.find('td').eq(3).html();
             let $balance = $this.find('td').eq(4).html();
 
             $this.next().find('[data-dt-column="3"]').html($status);
-        });
+        });*/
 
     }
 
