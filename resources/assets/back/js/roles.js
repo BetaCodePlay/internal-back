@@ -105,13 +105,21 @@ class Roles {
                     };
                 },
                 processResults: function (data) {
+                    let results = [];
+
+                    $.map(data, function (item) {
+                        results.push({
+                            id: value.id,
+                            text: value.username,
+                            type: value.type
+                        });
+                    })
+
                     return {
-                        results: $.map(data, function (item) {
-                            return {
-                                text: item.tag_value,
-                                id: item.tag_id
-                            }
-                        })
+                        results: results,
+                        paginate: {
+                            more: false
+                        }
                     };
                 }
             }
