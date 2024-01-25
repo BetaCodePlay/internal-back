@@ -78,7 +78,29 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">1</div>
+                <div class="tab-pane fade show active" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-manager">
+
+                        <div class="tab-manager-top">
+                            <div class="page-data">
+                                <div class="data-title">{{ _i('Name') }}</div>
+                                <div class="data-text">{{ $authUser->username }} <span class="deco-role">{{ $authUser->typeUser }}</span></div>
+                            </div>
+                            <div class="page-data">
+                                <div class="data-title">{{ _i('ID User') }}</div>
+                                <div class="data-text text-id">{{ $authUser->id}}</div>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-manager-data">
+                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">2</div>
                 <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">3</div>
                 <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">4</div>
