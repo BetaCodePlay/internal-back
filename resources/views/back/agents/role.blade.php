@@ -82,11 +82,11 @@
                     <div class="tab-manager">
 
                         <div class="tab-manager-top">
-                            <div class="page-data">
+                            <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Name') }}</div>
                                 <div class="data-text">{{ $authUser->username }} <span class="deco-role">{{ $authUser->typeUser }}</span></div>
                             </div>
-                            <div class="page-data">
+                            <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
                                 <div class="data-text text-id">{{ $authUser->id}}</div>
                             </div>
