@@ -115,6 +115,8 @@ class Roles {
                         });
                     })
 
+                    console.log(results);
+
                     return {
                         results: results,
                         paginate: {
