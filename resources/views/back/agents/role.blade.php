@@ -135,7 +135,7 @@
         $(function () {
             let roles = new Roles();
             roles.initTableRoles();
-            roles.userSearch("{{ _i('Search user') }}...", "text", 3);
+            roles.userSearch("{{ _i('Search user') }}...", "{{ _i('Write more than 3 characters') }}...", 3);
             roles.userResetPassword();
             roles.userBalance();
             roles.userCreate();

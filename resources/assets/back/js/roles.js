@@ -92,7 +92,7 @@ class Roles {
             minimumInputLength: min,
             language: {
                 inputTooShort: function() {
-                    return 'Please Add More Text';
+                    return moreCharacters;
                 }
             },
             ajax: {
