@@ -75,7 +75,7 @@ class Roles {
             let $status = $this.find('td').eq(3).html();
             let $balance = $this.find('td').eq(4).html();
 
-            $this.next().find('[data-dt-column="3"]').html($status);
+            $this.next().find('[data-dt-column="3"] .dtr-data').html($status);
         });
     }
 
