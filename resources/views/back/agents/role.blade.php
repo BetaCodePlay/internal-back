@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div class="nav-roles">
             <ul class="nav nav-tabs" id="roleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="true">

@@ -257,6 +257,36 @@
         }
     }
 
+    .nav-roles {
+        .nav-tabs {
+            border-bottom: 1px solid #383838;
+
+            .nav-item {
+                .nav-link {
+                    color: #fff;
+                    font-size: 15px;
+
+                    &.active {
+                        border-color: transparent;
+                        background: transparent;
+                        color: #fff;
+                        position: relative;
+
+                        &::before {
+                            background: $theme;
+                            position: absolute;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            height: 2px;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     .page-body {
         margin-top: 15px;
         min-height: 240px;
