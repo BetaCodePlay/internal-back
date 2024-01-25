@@ -109,9 +109,9 @@ class Roles {
 
                     $.map(data, function (item) {
                         results.push({
-                            id: value.id,
-                            text: value.username,
-                            type: value.type
+                            id: item.id,
+                            text: item.username,
+                            type: item.type
                         });
                     })
 
