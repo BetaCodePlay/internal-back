@@ -28,8 +28,6 @@ class ReportRepo
         $whitelabelId = Configurations::getWhitelabel();
         $timezone     = session('timezone');
 
-        Log::info("timezone ${$timezone}");
-
         // TODO: solo deben mostrarse las trasnsacciones propias del usuairo autenticado y la de sus hijos.
         $transactions = DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
@@ -39,7 +37,7 @@ class ReportRepo
                 'users.username',
                 'transactions.transaction_type_id as transactionType',
                 DB::raw("TO_CHAR(transactions.amount, 'FM999999999.00') as amount"),
-                DB::raw("TO_CHAR(transactions.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as date")
+                DB::raw("TO_CHAR(created_at AT TIME ZONE 'UTC' AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as date"),
             ])
             ->where([
                 'transactions.currency_iso'  => $currency,
