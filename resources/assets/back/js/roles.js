@@ -15,21 +15,16 @@ class Roles {
             ajax: $route,
             processing: true,
             serverSide: true,
-            columnDefs: [{
+            /*columnDefs: [{
                 "defaultContent": "-",
                 "targets": "_all"
-            }],
+            }],*/
             fixedHeader: true,
             responsive: true,
-            drawCallback: function (settings) {
-                // Here the response
-                var response = settings.json;
-                var api = this.api();
-
-                // Output the data for the visible rows to the browser's console
-                console.log( api.rows( {page:'current'} ).data() );
-                console.log(response);
-            },
+            columnDefs: [
+                { targets: [0, 1], visible: true},
+                { targets: '_all', visible: false }
+            ],
             fnCreatedRow: function (nRow, aData, iDataIndex) {
                 let buttons = $('#user-buttons');
                 let modalLockTarget = '[data-target="#role-lock"]';
@@ -77,6 +72,16 @@ class Roles {
             Roles.globaluserid = $userid;
             Roles.globalrolid = $rol;
         });
+
+        $(document).on('click', '.dtr-control', function (){
+            let $this = $(this).parent();
+            let $rol = $this.find('td').eq(1).html();
+            let $status = $this.find('td').eq(3).html();
+            let $balance = $this.find('td').eq(4).html();
+
+            $this.next().find('[data-dt-column="3"]').html($status);
+        });
+
     }
 
     userResetPassword() {
