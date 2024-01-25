@@ -87,8 +87,6 @@ class Roles {
 
         $input.select2({
             placeholder,
-            tags: true,
-            multiple: true,
             minimumInputLength: min,
             language: {
                 inputTooShort: function() {
@@ -111,11 +109,8 @@ class Roles {
                         results.push({
                             id: item.id,
                             text: item.username,
-                            type: item.type
                         });
                     })
-
-                    console.log(results);
 
                     return {
                         results: results,
