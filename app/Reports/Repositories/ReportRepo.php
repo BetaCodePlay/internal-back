@@ -37,7 +37,7 @@ class ReportRepo
                 'users.username',
                 'transactions.transaction_type_id as transactionType',
                 DB::raw("TO_CHAR(transactions.amount, 'FM999999999.00') as amount"),
-                DB::raw("TO_CHAR(created_at AT TIME ZONE 'UTC' AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as date"),
+                DB::raw("TO_CHAR(transactions.created_at AT TIME ZONE 'UTC' AT TIME ZONE '$timezone', 'YYYY-MM-DD hh:MI:SS AM') AS date"),
             ])
             ->where([
                 'transactions.currency_iso'  => $currency,
