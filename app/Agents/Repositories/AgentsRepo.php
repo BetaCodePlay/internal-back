@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsRepo
@@ -906,6 +907,7 @@ class AgentsRepo
 
             if ($item['typeId'] == TypeUser::$player) {
                 $wallet  = Wallet::getByClient($userId, $currency, $bonus);
+                Log::info('wallet', [$wallet]);
                 $balance = $wallet?->data?->wallet?->balance;
             }
 
