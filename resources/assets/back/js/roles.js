@@ -81,7 +81,7 @@ class Roles {
         });
     };
 
-    userSearch(placeholder) {
+    userSearch(placeholder, moreCharacters, min) {
         let $input = $('.roleUsernameSearch');
         let $route = $input.data('route');
 
@@ -89,7 +89,12 @@ class Roles {
             placeholder,
             tags: true,
             multiple: true,
-            minimumInputLength: 3,
+            minimumInputLength: min,
+            language: {
+                inputTooShort: function() {
+                    return 'Please Add More Text';
+                }
+            },
             ajax: {
                 url: $route,
                 dataType: "json",
