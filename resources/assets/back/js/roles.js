@@ -107,7 +107,7 @@ class Roles {
                 processResults: function (data) {
                     let results = [];
 
-                    $.map(data, function (item) {
+                    $.map(data.data.agents, function (item) {
                         results.push({
                             id: item.id,
                             text: item.username,
