@@ -37,17 +37,17 @@ class Roles {
                     buttons.find(modalBalanceTarget).parent().removeClass('d-none');
                     buttons.find(modalCreateTarget).parent().removeClass('d-none');
                     buttons.find(modalLockTarget).parent().removeClass('united');
-                } else {
-                    buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
-                    buttons.find(modalBalanceTarget).parent().addClass('d-none');
-                    buttons.find(modalCreateTarget).parent().addClass('d-none');
-                    buttons.find(modalLockTarget).parent().addClass('united');
 
                     if (aData[1][1] === 5) {
                         buttons.find(modalCreateTarget).parent().addClass('d-none');
                     } else {
                         buttons.find(modalCreateTarget).parent().removeClass('d-none');
                     }
+                } else {
+                    buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
+                    buttons.find(modalBalanceTarget).parent().addClass('d-none');
+                    buttons.find(modalCreateTarget).parent().addClass('d-none');
+                    buttons.find(modalLockTarget).parent().addClass('united');
                 }
 
                 $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
