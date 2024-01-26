@@ -845,8 +845,6 @@ class AgentsRepo
             $orderColumn !== self::ORDER_COLUMN_ACTION ? $orderDir : 'asc'
         );
 
-        $agentResults = $agentQuery->get()->toArray();
-
         $playerQuery = User::select([
             'users.username',
             'users.type_user',
@@ -875,16 +873,23 @@ class AgentsRepo
             $playerQuery->orderBy('users.username', 'asc');
         }
 
-        $playerResults = $playerQuery->get()->toArray();
 
-        $combinedResults = array_merge($agentResults, $playerResults);
+        $combinedResults = array_merge($agentQuery->get()->toArray(), $playerQuery->get()->toArray());
 
-        $combinedResults = array_map(function ($item) {
+       /* $combinedResults = array_map(function ($item) {
             if (isset($item['action']) && $item['action'] !== null) {
                 $item['actionString'] = ActionUser::getName($item['action']);
             } else {
                 $item['actionString'] = null;
             }
+            return $item;
+        }, $combinedResults);*/
+
+        $combinedResults = array_map(function ($item) {
+            $item['actionString'] = isset($item['action']) && $item['action'] !== null
+                ? ActionUser::getName($item['action'])
+                : null;
+
             return $item;
         }, $combinedResults);
 
