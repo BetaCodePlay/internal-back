@@ -4346,7 +4346,6 @@ class AgentsController extends Controller
             $authUser   = Auth::user();
             $authUserId = $authUser->id;
             $whitelabel = Configurations::getWhitelabel();
-            Log::info(__METHOD__, ['authUser' => $authUser]);
             $agentUser      = $authUser->agent;
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();
@@ -4356,6 +4355,7 @@ class AgentsController extends Controller
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             if (! is_null($authUser)) {
                 $user = $this->usersRepo->getByUsername($username, $whitelabel);
+                Log::info(__METHOD__, ['authUser' => $authUser, ' $user' =>  $user]);
             } else {
                 $user = Auth::user();
             }
