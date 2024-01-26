@@ -4346,6 +4346,7 @@ class AgentsController extends Controller
             $authUser   = Auth::user();
             $authUserId = $authUser->id;
             $whitelabel = Configurations::getWhitelabel();
+            $bonus         = Configurations::getBonus();
             $agentUser      = $authUser->agent;
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();
@@ -4355,11 +4356,16 @@ class AgentsController extends Controller
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             if (! empty($username)) {
                 $user = $this->usersRepo->getByUsername($username, $whitelabel);
-                log::info(__METHOD__, ['$user' => $user]);
             } else {
                 $user = Auth::user();
             }
-
+            $agentsRepo = new AgentsRepo();
+            $userType = ($user->type_user == 'agent')
+                ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
+                : $agentsRepo->findUser($user->id);
+            $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
+            $balanceUser = number_format($balance, 2);
+            \Log::info(__METHOD__, ['balanceUser' => $balanceUser]);
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
@@ -4374,7 +4380,8 @@ class AgentsController extends Controller
                 'title'              => _i('Agents module'),
                 'authUser'           => $user,
                 'username'           => $customUsername,
-                'dependencies'         => $dependence
+                'dependencies'       => $dependence,
+                'balanceUser'        => $balanceUser
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
