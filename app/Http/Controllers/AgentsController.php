@@ -4377,7 +4377,6 @@ class AgentsController extends Controller
 
 
                 $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
-
             }
 
             $balanceUser = number_format($balance, 2);

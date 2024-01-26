@@ -370,7 +370,6 @@ class AgentsRepo
                 'users.type_user',
                 'profiles.timezone',
                 'agents.user_id as owner_id',
-                'agents.name as owner_name', //
                 'agent_user.agent_id as owner',
                 'users.referral_code',
             ])
