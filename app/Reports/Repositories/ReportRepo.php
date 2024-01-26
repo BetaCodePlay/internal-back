@@ -2,14 +2,13 @@
 
 namespace App\Reports\Repositories;
 
+use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Store\Enums\TransactionTypes;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 /**
  *
@@ -18,8 +17,13 @@ class ReportRepo
 {
     /**
      * @param TransactionsRepo $transactionsRepo
+     * @param AuditsRepo $auditsRepo
      */
-    public function __construct(private TransactionsRepo $transactionsRepo) { }
+    public function __construct(
+        private TransactionsRepo $transactionsRepo,
+        private AuditsRepo $auditsRepo
+    ) {
+    }
 
     /**
      * @return array
@@ -31,7 +35,7 @@ class ReportRepo
         $whitelabelId  = Configurations::getWhitelabel();
         $timezone      = session('timezone');
         $transactions  = $this->transactionsRepo->getRecentTransactions($currency, $whitelabelId, $timezone);
-        $audits        = $this->getAudits($timezone);
+        $audits = $this->auditsRepo->getRecentAudits($timezone);
         $today         = Carbon::now($timezone);
         $startDate     = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $endDate       = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
@@ -56,23 +60,6 @@ class ReportRepo
             'transactions' => $transactions,
 
         ];
-    }
-
-    /**
-     * @param string $timezone
-     * @return Collection
-     */
-    public function getAudits(string $timezone)
-    : Collection {
-        return DB::table('audits')
-            ->join('audit_types', 'audits.audit_type_id', '=', 'audit_types.id')
-            ->latest('audits.created_at')
-            ->take(10)
-            ->select([
-                'audit_types.name',
-                DB::raw("to_char(audits.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as formatted_date")
-            ])
-            ->get();
     }
 
 }
