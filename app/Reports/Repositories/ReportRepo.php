@@ -100,7 +100,7 @@ class ReportRepo
             ->take(10)
             ->select([
                 'audit_types.name',
-                DB::raw("to_char(audits.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as formattedDate")
+                DB::raw("to_char(audits.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as formatted_date")
             ])
             ->get();
     }
