@@ -4354,17 +4354,32 @@ class AgentsController extends Controller
             $currency       = session('currency');
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
+            $balanceUser = 0.00;
             if (! empty($username)) {
                 $user = $this->usersRepo->getByUsername($username, $whitelabel);
             } else {
                 $user = Auth::user();
             }
             $agentsRepo = new AgentsRepo();
-            $userType = ($user->type_user == 'agent')
-                ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
-                : $agentsRepo->findUser($user->id);
-            $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
-            $balanceUser = number_format($balance, 2);
+            if ($user->type_user == 'player') {
+                $wallet = Wallet::getByClient($user->id, $currency, $bonus);
+
+                if (is_array($wallet->data)) {
+                    Log::info("Error in user wallet array {$user->id}", [$wallet]);
+                }
+
+                $balance = ! is_array($wallet->data)
+                    ? $wallet?->data?->wallet?->balance
+                    : 0;
+                $balanceUser = number_format($balance, 2);
+            }else {
+                $userType = ($user->type_user == 'agent')
+                    ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
+                    : $agentsRepo->findUser($user->id);
+                $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
+                $balanceUser = number_format($balance, 2);
+            }
+
             \Log::info(__METHOD__, ['balanceUser' => $balanceUser]);
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
