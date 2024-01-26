@@ -5,6 +5,7 @@ namespace App\Agents\Entities;
 use App\Users\Entities\User;
 use Dotworkers\Configurations\Configurations;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Agent
@@ -59,5 +60,11 @@ class Agent extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function user()
+    : BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 }

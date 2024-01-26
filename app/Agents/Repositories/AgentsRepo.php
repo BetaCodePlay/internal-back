@@ -359,7 +359,7 @@ class AgentsRepo
     public function findUser(string| int $userId)
     : mixed {
         return Agent::on('replica')
-            ->select(
+            ->select([
                 'users.id',
                 'users.created_at as created',
                 'users.email',
@@ -370,9 +370,10 @@ class AgentsRepo
                 'users.type_user',
                 'profiles.timezone',
                 'agents.user_id as owner_id',
+                'agents.name as owner_name', //
                 'agent_user.agent_id as owner',
-                'users.referral_code'
-            )
+                'users.referral_code',
+            ])
             ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
             ->join('users', 'agent_user.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')

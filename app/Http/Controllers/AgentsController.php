@@ -4368,7 +4368,8 @@ class AgentsController extends Controller
                     : 0;
 
                 $userOwner = $agentsRepo->findUser($user->id);
-                Log::info("UserId: {$user->id}", [$userOwner]);
+
+                Log::info("UserId: {$user->id}", [$userOwner->user]);
             } else {
                 $userType = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
