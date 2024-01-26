@@ -62,7 +62,10 @@ class Agent extends Model
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function owner()
     : BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
