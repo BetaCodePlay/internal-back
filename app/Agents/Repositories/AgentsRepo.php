@@ -355,7 +355,7 @@ class AgentsRepo
      * @param string|int $userId
      * @return mixed
      */
-    public function findUser(string| int $userId)
+    public function findUser(string|int $userId)
     : mixed {
         return Agent::on('replica')
             ->select([
@@ -921,39 +921,8 @@ class AgentsRepo
             $this->sortByActionString($combinedResults, $orderDir);
         }
 
-        $slicedResults = array_slice($combinedResults, $start, $length);
-        $bonus         = Configurations::getBonus();
-
-        /*$formattedResults = array_map(function ($item) use ($currency, $bonus) {
-            $balance = $item['balance'];
-            $userId  = $item['id'];
-
-            if ($item['typeId'] == TypeUser::$player) {
-                $wallet = Wallet::getByClient($userId, $currency, $bonus);
-
-                if (is_array($wallet->data)) {
-                    Log::info("Error in user wallet array {$userId}", [$wallet]);
-                }
-
-                $balance = ! is_array($wallet->data)
-                    ? $wallet?->data?->wallet?->balance
-                    : 0;
-            }
-
-            $actionItem = $item['action'];
-            $action     = ActionUser::getName($actionItem);
-            $isBlocked  = ActionUser::isBlocked($actionItem);
-
-            return [
-                $item['username'],
-                [$item['type_user'], $item['typeId']],
-                $userId,
-                [$action, $isBlocked, $actionItem],
-                number_format($balance, 2),
-                $item['status'],
-            ];
-        }, $slicedResults);*/
-
+        $slicedResults    = array_slice($combinedResults, $start, $length);
+        $bonus            = Configurations::getBonus();
         $formattedResults = $this->formatUserResults($slicedResults, $currency, $bonus);
 
         return [
@@ -1048,11 +1017,11 @@ class AgentsRepo
      * @param $bonus
      * @return array
      */
-    private function formatUserResults(array $results, string $currency, $bonus): array
-    {
+    private function formatUserResults(array $results, string $currency, $bonus)
+    : array {
         return array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
-            $userId = $item['id'];
+            $userId  = $item['id'];
 
             if ($item['typeId'] == TypeUser::$player) {
                 $wallet = Wallet::getByClient($userId, $currency, $bonus);
@@ -1061,14 +1030,14 @@ class AgentsRepo
                     Log::info("Error in user wallet array {$userId}", [$wallet]);
                 }
 
-                $balance = !is_array($wallet->data)
+                $balance = ! is_array($wallet->data)
                     ? $wallet?->data?->wallet?->balance
                     : 0;
             }
 
             $actionItem = $item['action'];
-            $action = ActionUser::getName($actionItem);
-            $isBlocked = ActionUser::isBlocked($actionItem);
+            $action     = ActionUser::getName($actionItem);
+            $isBlocked  = ActionUser::isBlocked($actionItem);
 
             return [
                 $item['username'],
