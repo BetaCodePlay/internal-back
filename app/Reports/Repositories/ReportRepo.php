@@ -32,7 +32,7 @@ class ReportRepo
         $timezone     = session('timezone');
 
         // TODO: solo deben mostrarse las trasnsacciones propias del usuairo autenticado y la de sus hijos.
-        $transactions = $this->getTransactions($currency, $whitelabelId);
+        $transactions = $this->getTransactions($currency, $whitelabelId, $timezone);
         $audits       = $this->getAudits($timezone);
 
         $today         = Carbon::now($timezone);
@@ -64,10 +64,10 @@ class ReportRepo
     /**
      * @param string $currency
      * @param int $whitelabelId
-     * @param $timezone
+     * @param string $timezone
      * @return Collection
      */
-    public function getTransactions(string $currency, int $whitelabelId, $timezone)
+    public function getTransactions(string $currency, int $whitelabelId, string $timezone)
     : Collection {
         return DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
