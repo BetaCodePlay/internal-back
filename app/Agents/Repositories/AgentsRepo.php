@@ -956,6 +956,13 @@ class AgentsRepo
 
 
         //return $this->formatUserResults($slicedResults, $currency, $bonus);;
+
+        return [
+            'draw'            => (int)$draw,
+            'recordsTotal'    => $resultCount,
+            'recordsFiltered' => $resultCount,
+            'data'            => $formattedResults,
+        ];
     }
 
 
