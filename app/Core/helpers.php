@@ -1,10 +1,12 @@
 <?php
 
 use App\Agents\Repositories\AgentsRepo;
+use Dotworkers\Configurations\Configurations;
 use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Configurations\Enums\PaymentMethods;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TemplateElementTypes;
+use Dotworkers\Wallet\Wallet;
 
 if (! function_exists('menu')) {
     function menu()
@@ -7409,7 +7411,8 @@ if (! function_exists('convertArrayToObject')) {
 }
 
 if (! function_exists('authenticatedUserBalance')) {
-    function getAuthenticatedUserBalance(): string
+    function getAuthenticatedUserBalance()
+    : string
     {
         $authenticatedUser = auth()->user();
 
@@ -7419,11 +7422,13 @@ if (! function_exists('authenticatedUserBalance')) {
 
         $authenticatedUserId   = $authenticatedUser->id;
         $authenticatedUserType = $authenticatedUser->typeUser;
-        $agentsRepo = new AgentsRepo();
+        $agentsRepo            = new AgentsRepo();
+        $currency              = session('currency');
+        $bonus                 = Configurations::getBonus();
 
         $user = ($authenticatedUserType == 'agent')
-            ? $agentsRepo->findByUserIdAndCurrency($authenticatedUserId, session('currency'))
-            : $agentsRepo->findUser($authenticatedUserId);
+            ? $agentsRepo->findByUserIdAndCurrency($authenticatedUserId, $currency)
+            : Wallet::getByClient($authenticatedUserId, $currency, $bonus);;
 
         $balance = ($authenticatedUserType == 'agent') ? $user?->balance : $user?->wallet?->balance;
 
