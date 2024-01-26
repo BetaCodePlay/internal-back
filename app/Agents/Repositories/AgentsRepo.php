@@ -924,7 +924,7 @@ class AgentsRepo
         $slicedResults = array_slice($combinedResults, $start, $length);
         $bonus         = Configurations::getBonus();
 
-        $formattedResults = array_map(function ($item) use ($currency, $bonus) {
+        /*$formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
             $userId  = $item['id'];
 
@@ -952,10 +952,9 @@ class AgentsRepo
                 number_format($balance, 2),
                 $item['status'],
             ];
-        }, $slicedResults);
+        }, $slicedResults);*/
 
-
-        //return $this->formatUserResults($slicedResults, $currency, $bonus);;
+        $formattedResults = $this->formatUserResults($slicedResults, $currency, $bonus);
 
         return [
             'draw'            => (int)$draw,
