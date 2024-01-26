@@ -4363,23 +4363,21 @@ class AgentsController extends Controller
             $agentsRepo = new AgentsRepo();
             if ($user->type_user == 'player') {
                 $wallet = Wallet::getByClient($user->id, $currency, $bonus);
-
                 if (is_array($wallet->data)) {
                     Log::info("Error in user wallet array {$user->id}", [$wallet]);
                 }
-
                 $balance = ! is_array($wallet->data)
                     ? $wallet?->data?->wallet?->balance
                     : 0;
-                $balanceUser = number_format($balance, 2);
-            }else {
+
+            } else {
                 $userType = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
                 $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
-                $balanceUser = number_format($balance, 2);
-            }
 
+            }
+            $balanceUser = number_format($balance, 2);
             \Log::info(__METHOD__, ['balanceUser' => $balanceUser]);
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
