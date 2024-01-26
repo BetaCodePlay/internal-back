@@ -915,6 +915,8 @@ class AgentsRepo
             return $item;
         }, $combinedResults);
 
+        $resultCount = count($combinedResults);
+
         if ($orderColumn == self::ORDER_COLUMN_ACTION) {
             $this->sortByActionString($combinedResults, $orderDir);
         }
@@ -922,7 +924,38 @@ class AgentsRepo
         $slicedResults = array_slice($combinedResults, $start, $length);
         $bonus         = Configurations::getBonus();
 
-        return $this->formatUserResults($slicedResults, $currency, $bonus);
+        $formattedResults = array_map(function ($item) use ($currency, $bonus) {
+            $balance = $item['balance'];
+            $userId  = $item['id'];
+
+            if ($item['typeId'] == TypeUser::$player) {
+                $wallet = Wallet::getByClient($userId, $currency, $bonus);
+
+                if (is_array($wallet->data)) {
+                    Log::info("Error in user wallet array {$userId}", [$wallet]);
+                }
+
+                $balance = ! is_array($wallet->data)
+                    ? $wallet?->data?->wallet?->balance
+                    : 0;
+            }
+
+            $actionItem = $item['action'];
+            $action     = ActionUser::getName($actionItem);
+            $isBlocked  = ActionUser::isBlocked($actionItem);
+
+            return [
+                $item['username'],
+                [$item['type_user'], $item['typeId']],
+                $userId,
+                [$action, $isBlocked, $actionItem],
+                number_format($balance, 2),
+                $item['status'],
+            ];
+        }, $slicedResults);
+
+
+        //return $this->formatUserResults($slicedResults, $currency, $bonus);;
     }
 
 
