@@ -4346,7 +4346,7 @@ class AgentsController extends Controller
             $authUser   = Auth::user();
             $authUserId = $authUser->id;
             $whitelabel = Configurations::getWhitelabel();
-
+            Log::info(__METHOD__, ['authUser' => $authUser]);
             $agentUser      = $authUser->agent;
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();

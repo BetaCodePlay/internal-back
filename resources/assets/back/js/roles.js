@@ -37,6 +37,12 @@ class Roles {
                     buttons.find(modalBalanceTarget).parent().removeClass('d-none');
                     buttons.find(modalCreateTarget).parent().removeClass('d-none');
                     buttons.find(modalLockTarget).parent().removeClass('united');
+
+                    if (aData[1][1] === 5) {
+                        buttons.find(modalCreateTarget).parent().addClass('d-none');
+                    } else {
+                        buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                    }
                 } else {
                     buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
                     buttons.find(modalBalanceTarget).parent().addClass('d-none');
@@ -51,12 +57,10 @@ class Roles {
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
             initComplete: function () {
-
+                $('.table-load').addClass('table-complete');
+                $('.page-role .loading-style').hide();
             },
         });
-
-        $('.table-load').addClass('table-complete');
-        $('.page-role .loading-style').hide();
 
         $(document).on('click', '.currentDataRole', function () {
             let $username = $(this).data('username');
