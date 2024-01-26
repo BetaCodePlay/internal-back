@@ -4346,7 +4346,6 @@ class AgentsController extends Controller
             $authUser   = Auth::user();
             $authUserId = $authUser->id;
             $whitelabel = Configurations::getWhitelabel();
-            Log::info(__METHOD__, ['authUser' => $authUser]);
             $agentUser      = $authUser->agent;
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();
@@ -4354,6 +4353,11 @@ class AgentsController extends Controller
             $currency       = session('currency');
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
+            if (! empty($username)) {
+                $user = $this->usersRepo->getByUsername($username, $whitelabel);
+            } else {
+                $user = Auth::user();
+            }
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
@@ -4367,7 +4371,7 @@ class AgentsController extends Controller
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
-                'authUser'           => $authUser,
+                'authUser'           => $user,
                 'username'           => $customUsername,
                 'dependencies'         => $dependence
             ]);

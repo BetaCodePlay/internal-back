@@ -69,6 +69,8 @@ class ReportRepo
      */
     public function getTransactions(string $currency, int $whitelabelId, string $timezone)
     : Collection {
+        // transacciones del logueado y de sus hijos.
+        // whereIn [padre, hijo1, hijo2]
         return DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->latest('transactions.created_at')
