@@ -4355,6 +4355,7 @@ class AgentsController extends Controller
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             if (! empty($username)) {
                 $user = $this->usersRepo->getByUsername($username, $whitelabel);
+                log::info(__METHOD__, ['$user' => $user]);
             } else {
                 $user = Auth::user();
             }
