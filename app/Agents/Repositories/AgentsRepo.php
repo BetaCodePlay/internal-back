@@ -894,7 +894,7 @@ class AgentsRepo
             $orderColumn !== self::ORDER_COLUMN_ACTION ? $orderDir : 'asc'
         );
 
-        $playerQuery = $this->getPlayerQuery($userId, $whitelabelId, $currency);
+        $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId);
         $playerQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%");
         });
