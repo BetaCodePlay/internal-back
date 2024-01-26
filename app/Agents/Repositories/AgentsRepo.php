@@ -838,13 +838,12 @@ class AgentsRepo
             4 => 'agent_currencies.balance',
         ];
 
-        if (array_key_exists($orderColumn, $orderableColumns)) {
-            if ($orderColumn !== self::ORDER_COLUMN_ACTION) {
-                $agentQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
-            }
-        } else {
-            $agentQuery->orderBy('users.username', 'asc');
-        }
+        $agentQuery->orderBy(
+            array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
+                ? $orderableColumns[$orderColumn]
+                : 'users.username',
+            $orderColumn !== self::ORDER_COLUMN_ACTION ? $orderDir : 'asc'
+        );
 
         $agentResults = $agentQuery->get()->toArray();
 
@@ -896,16 +895,13 @@ class AgentsRepo
                 $aActionString = $a['actionString'] ?? null;
                 $bActionString = $b['actionString'] ?? null;
 
-                if ($aActionString === null && $bActionString === null) {
-                    return 0;
-                } elseif ($aActionString === null) {
-                    return ($orderDir === 'asc') ? 1 : -1;
-                } elseif ($bActionString === null) {
-                    return ($orderDir === 'asc') ? -1 : 1;
-                }
+                $compareActions = function ($aAction, $bAction) use ($orderDir) {
+                    return $orderDir === 'asc' ? strcasecmp($aAction, $bAction) : strcasecmp($bAction, $aAction);
+                };
 
-                $result = strcasecmp($aActionString, $bActionString);
-                return $result * ($orderDir === 'asc' ? 1 : -1);
+                return $aActionString === null
+                    ? ($bActionString === null ? 0 : ($orderDir === 'asc' ? 1 : -1))
+                    : ($bActionString === null ? ($orderDir === 'asc' ? -1 : 1) : $compareActions($aActionString, $bActionString));
             });
         }
 
