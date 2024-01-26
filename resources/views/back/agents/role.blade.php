@@ -57,7 +57,7 @@
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Password') }}</div>
                                 <div class="data-text text-finish">
-                                    <span class="separator"></span>
+                                    <span class="separator">&nbsp;</span>
                                     <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('E-mail') }}</div>
-                                <div class="data-text">{{ $authUser->email }}</div>
+                                <div class="data-text text-finish">{{ $authUser->email }}</div>
                             </div>
                         </div>
 
