@@ -164,6 +164,9 @@ class ReportsController extends Controller
      */
     private $providerTypesCollection;
 
+    /**
+     * @var ReportRepo
+     */
     private ReportRepo $reportRepo;
 
 
@@ -329,6 +332,9 @@ class ReportsController extends Controller
         }
     }
 
+    /**
+     * @return Response
+     */
     public function dashboard()
     : Response
     {

@@ -838,15 +838,12 @@ class AgentsRepo
             4 => 'agent_currencies.balance',
         ];
 
-        if (array_key_exists($orderColumn, $orderableColumns)) {
-            if ($orderColumn !== self::ORDER_COLUMN_ACTION) {
-                $agentQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
-            }
-        } else {
-            $agentQuery->orderBy('users.username', 'asc');
-        }
-
-        $agentResults = $agentQuery->get()->toArray();
+        $agentQuery->orderBy(
+            array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
+                ? $orderableColumns[$orderColumn]
+                : 'users.username',
+            $orderColumn !== self::ORDER_COLUMN_ACTION ? $orderDir : 'asc'
+        );
 
         $playerQuery = User::select([
             'users.username',
@@ -876,16 +873,23 @@ class AgentsRepo
             $playerQuery->orderBy('users.username', 'asc');
         }
 
-        $playerResults = $playerQuery->get()->toArray();
 
-        $combinedResults = array_merge($agentResults, $playerResults);
+        $combinedResults = array_merge($agentQuery->get()->toArray(), $playerQuery->get()->toArray());
 
-        $combinedResults = array_map(function ($item) {
+       /* $combinedResults = array_map(function ($item) {
             if (isset($item['action']) && $item['action'] !== null) {
                 $item['actionString'] = ActionUser::getName($item['action']);
             } else {
                 $item['actionString'] = null;
             }
+            return $item;
+        }, $combinedResults);*/
+
+        $combinedResults = array_map(function ($item) {
+            $item['actionString'] = isset($item['action']) && $item['action'] !== null
+                ? ActionUser::getName($item['action'])
+                : null;
+
             return $item;
         }, $combinedResults);
 
@@ -896,16 +900,13 @@ class AgentsRepo
                 $aActionString = $a['actionString'] ?? null;
                 $bActionString = $b['actionString'] ?? null;
 
-                if ($aActionString === null && $bActionString === null) {
-                    return 0;
-                } elseif ($aActionString === null) {
-                    return ($orderDir === 'asc') ? 1 : -1;
-                } elseif ($bActionString === null) {
-                    return ($orderDir === 'asc') ? -1 : 1;
-                }
+                $compareActions = function ($aAction, $bAction) use ($orderDir) {
+                    return $orderDir === 'asc' ? strcasecmp($aAction, $bAction) : strcasecmp($bAction, $aAction);
+                };
 
-                $result = strcasecmp($aActionString, $bActionString);
-                return $result * ($orderDir === 'asc' ? 1 : -1);
+                return $aActionString === null
+                    ? ($bActionString === null ? 0 : ($orderDir === 'asc' ? 1 : -1))
+                    : ($bActionString === null ? ($orderDir === 'asc' ? -1 : 1) : $compareActions($aActionString, $bActionString));
             });
         }
 
