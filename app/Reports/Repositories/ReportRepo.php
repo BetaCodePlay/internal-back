@@ -63,10 +63,11 @@ class ReportRepo
 
     /**
      * @param string $currency
-     * @param $whitelabelId
+     * @param int $whitelabelId
+     * @param $timezone
      * @return Collection
      */
-    public function getTransactions(string $currency, $whitelabelId)
+    public function getTransactions(string $currency, int $whitelabelId, $timezone)
     : Collection {
         return DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
