@@ -915,8 +915,6 @@ class AgentsRepo
             return $item;
         }, $combinedResults);
 
-        $resultCount = count($combinedResults);
-
         if ($orderColumn == self::ORDER_COLUMN_ACTION) {
             $this->sortByActionString($combinedResults, $orderDir);
         }
@@ -924,7 +922,7 @@ class AgentsRepo
         $slicedResults = array_slice($combinedResults, $start, $length);
         $bonus         = Configurations::getBonus();
 
-        $formattedResults = array_map(function ($item) use ($currency, $bonus) {
+        /*$formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
             $userId  = $item['id'];
 
@@ -952,15 +950,9 @@ class AgentsRepo
                 number_format($balance, 2),
                 $item['status'],
             ];
-        }, $slicedResults);
+        }, $slicedResults);*/
 
-
-        return [
-            'draw'            => (int)$draw,
-            'recordsTotal'    => $resultCount,
-            'recordsFiltered' => $resultCount,
-            'data'            => $formattedResults,
-        ];
+        return $this->formatUserResults($slicedResults, $currency, $bonus);;
     }
 
 
@@ -1040,6 +1032,45 @@ class AgentsRepo
         });
     }
 
+
+    /**
+     * @param array $results
+     * @param string $currency
+     * @param $bonus
+     * @return array
+     */
+    private function formatUserResults(array $results, string $currency, $bonus): array
+    {
+        return array_map(function ($item) use ($currency, $bonus) {
+            $balance = $item['balance'];
+            $userId = $item['id'];
+
+            if ($item['typeId'] == TypeUser::$player) {
+                $wallet = Wallet::getByClient($userId, $currency, $bonus);
+
+                if (is_array($wallet->data)) {
+                    Log::info("Error in user wallet array {$userId}", [$wallet]);
+                }
+
+                $balance = !is_array($wallet->data)
+                    ? $wallet?->data?->wallet?->balance
+                    : 0;
+            }
+
+            $actionItem = $item['action'];
+            $action = ActionUser::getName($actionItem);
+            $isBlocked = ActionUser::isBlocked($actionItem);
+
+            return [
+                $item['username'],
+                [$item['type_user'], $item['typeId']],
+                $userId,
+                [$action, $isBlocked, $actionItem],
+                number_format($balance, 2),
+                $item['status'],
+            ];
+        }, $results);
+    }
 
 
     /**
