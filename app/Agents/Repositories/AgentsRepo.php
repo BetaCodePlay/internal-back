@@ -891,7 +891,7 @@ class AgentsRepo
 
         $resultCount = count($combinedResults);
 
-        if ($orderColumn == self::ORDER_COLUMN_ACTION) {
+        /*if ($orderColumn == self::ORDER_COLUMN_ACTION) {
             usort($combinedResults, function ($a, $b) use ($orderDir) {
                 $aActionString = $a['actionString'] ?? null;
                 $bActionString = $b['actionString'] ?? null;
@@ -906,6 +906,21 @@ class AgentsRepo
 
                 $result = strcasecmp($aActionString, $bActionString);
                 return $result * ($orderDir === 'asc' ? 1 : -1);
+            });
+        }*/
+
+        if ($orderColumn == self::ORDER_COLUMN_ACTION) {
+            usort($combinedResults, function ($a, $b) use ($orderDir) {
+                $aActionString = $a['actionString'] ?? null;
+                $bActionString = $b['actionString'] ?? null;
+
+                $compareActions = function ($aAction, $bAction) use ($orderDir) {
+                    return $orderDir === 'asc' ? strcasecmp($aAction, $bAction) : strcasecmp($bAction, $aAction);
+                };
+
+                return $aActionString === null
+                    ? ($bActionString === null ? 0 : ($orderDir === 'asc' ? 1 : -1))
+                    : ($bActionString === null ? ($orderDir === 'asc' ? -1 : 1) : $compareActions($aActionString, $bActionString));
             });
         }
 
