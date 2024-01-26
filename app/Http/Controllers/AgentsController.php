@@ -4355,7 +4355,9 @@ class AgentsController extends Controller
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             if (! is_null($authUser)) {
-                $authUser = $this->usersRepo->getByUsername($username, $whitelabel);
+                $user = $this->usersRepo->getByUsername($username, $whitelabel);
+            } else {
+                $user = Auth::user();
             }
 
             return view('back.agents.role', [
@@ -4370,7 +4372,7 @@ class AgentsController extends Controller
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
-                'authUser'           => $authUser,
+                'authUser'           => $user,
                 'username'           => $customUsername,
                 'dependencies'         => $dependence
             ]);
