@@ -76,19 +76,16 @@
                     <div class="tab-manager">
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Name') }}</div>
-                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->typeUser }}</span></div>
+                                <div class="data-title">{{ _i('Created the') }}</div>
+                                <div class="data-text">{{ $authUser->created_at }}</div>
                             </div>
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text text-id">{{ $authUser->id}} <span class="separator"></span><button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
+                                <div class="data-title">{{ _i('Father') }}</div>
+                                <div class="data-text">{{ $authUser->username}}</div>
                             </div>
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Password') }}</div>
-                                <div class="data-text text-finish">
-                                    <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
-                                </div>
+                                <div class="data-title">{{ _i('E-mail') }}</div>
+                                <div class="data-text">{{ $authUser->email }}</div>
                             </div>
                         </div>
 
