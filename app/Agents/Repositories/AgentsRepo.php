@@ -351,7 +351,6 @@ class AgentsRepo
             ]);
     }
 
-
     /**
      * @param string|int $userId
      * @return mixed
@@ -874,21 +873,7 @@ class AgentsRepo
             ? User::where('username', $request->input('username'))->value('id')
             : $userAuthId;
 
-        $agentQuery = User::select([
-            'users.username',
-            'users.type_user',
-            'users.type_user as typeId',
-            'users.id',
-            'users.action',
-            'users.status',
-            'agent_currencies.balance',
-        ])
-            ->join('agents', 'users.id', '=', 'agents.user_id')
-            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->where('agents.owner_id', $userId)
-            ->where('agent_currencies.currency_iso', $currency)
-            ->where('users.whitelabel_id', $whitelabelId);
+        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
 
         $agentQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%")
@@ -1008,6 +993,32 @@ class AgentsRepo
             'recordsFiltered' => $resultCount,
             'data'            => $formattedResults,
         ];
+    }
+
+
+    /**
+     * @param $userId
+     * @param $currency
+     * @param $whitelabelId
+     * @return mixed
+     */
+    function getUserAgentQuery($userId, $currency, $whitelabelId)
+    {
+        return User::select([
+            'users.username',
+            'users.type_user',
+            'users.type_user as typeId',
+            'users.id',
+            'users.action',
+            'users.status',
+            'agent_currencies.balance',
+        ])
+            ->join('agents', 'users.id', '=', 'agents.user_id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->where('agents.owner_id', $userId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabelId);
     }
 
 
