@@ -7430,7 +7430,9 @@ if (! function_exists('authenticatedUserBalance')) {
             ? $agentsRepo->findByUserIdAndCurrency($authenticatedUserId, $currency)
             : Wallet::getByClient($authenticatedUserId, $currency, $bonus);
 
-        $balance = ($authenticatedUserType == 'agent') ? $user?->balance : $user?->wallet?->balance;
+        $balance = ($authenticatedUserType == 'agent')
+            ? $user?->balance
+            : $user?->data?->wallet?->balance;
 
         return number_format($balance, 2);
     }
