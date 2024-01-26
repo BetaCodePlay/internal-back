@@ -4354,6 +4354,9 @@ class AgentsController extends Controller
             $currency       = session('currency');
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
+            if (! is_null($authUser)) {
+                $authUser = $this->usersRepo->getByUsername($username, $whitelabel);
+            }
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
