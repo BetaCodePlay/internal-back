@@ -30,6 +30,7 @@ class AgentsRepo
      *
      */
     const ORDER_COLUMN_ACTION = 3;
+
     /**
      * Add user to agent
      *
@@ -54,11 +55,10 @@ class AgentsRepo
     public function balanceCurrentAgent(int $user, string $currency)
     {
         return Agent::select('agent_currencies.balance')
-                    ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                    ->where('agent_currencies.currency_iso', $currency)
-                    ->where('agents.user_id', $user)
-                    ->first()
-        ;
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('agents.user_id', $user)
+            ->first();
     }
 
     /**
@@ -94,9 +94,11 @@ class AgentsRepo
     public function updateBlockAgents($currency, $category, $user, $agents)
     {
         $agents = \DB::table('exclude_makers_users')->updateOrInsert(
-            ['category'     => $category,
-             'user_id'      => $user,
-             'currency_iso' => $currency],
+            [
+                'category'     => $category,
+                'user_id'      => $user,
+                'currency_iso' => $currency
+            ],
             $agents
         );
         return $agents;
@@ -110,8 +112,10 @@ class AgentsRepo
      */
     public function unBlockAgentsMaker($currency, $category, $user, $data)
     {
-        $agents = \DB::table('exclude_makers_users')->where('currency_iso', $currency)->where('category',
-            $category)->where('user_id', $user)->update($data);
+        $agents = \DB::table('exclude_makers_users')->where('currency_iso', $currency)->where(
+            'category',
+            $category
+        )->where('user_id', $user)->update($data);
         return $agents;
     }
 
@@ -138,9 +142,8 @@ class AgentsRepo
     public function existAgent(int $user)
     {
         return Agent::on('replica')
-                    ->where('user_id', $user)
-                    ->first()
-        ;
+            ->where('user_id', $user)
+            ->first();
     }
 
     /**
@@ -152,20 +155,18 @@ class AgentsRepo
     public function existsUser(int $user)
     {
         $agentUser = Agent::on('replica')
-                          ->select('agents.user_id', 'users.username')
-                          ->join('agent_user', 'agent_user.agent_id', '=', 'agents.id')
-                          ->join('users', 'agents.user_id', '=', 'users.id')
-                          ->where('agent_user.user_id', $user)
-                          ->first()
-        ;
+            ->select('agents.user_id', 'users.username')
+            ->join('agent_user', 'agent_user.agent_id', '=', 'agents.id')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->where('agent_user.user_id', $user)
+            ->first();
 
         if (is_null($agentUser)) {
             $agentUser = Agent::on('replica')
-                              ->select('agents.owner_id as user_id', 'users.username')
-                              ->join('users', 'agents.owner_id', '=', 'users.id')
-                              ->where('agents.user_id', $user)
-                              ->first()
-            ;
+                ->select('agents.owner_id as user_id', 'users.username')
+                ->join('users', 'agents.owner_id', '=', 'users.id')
+                ->where('agents.user_id', $user)
+                ->first();
         }
         return $agentUser;
     }
@@ -180,18 +181,26 @@ class AgentsRepo
     public function findAdminAgent($whitelabel, $currency)
     {
         $agent = Agent::on('replica')
-                      ->select('users.id', 'users.username', 'users.status', 'profiles.timezone', 'agents.id AS agent',
-                          'users.referral_code',
-                          'agents.master', 'agents.owner_id as owner', 'profiles.country_iso',
-                          'agent_currencies.balance', 'agent_currencies.currency_iso')
-                      ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                      ->join('users', 'agents.user_id', '=', 'users.id')
-                      ->join('profiles', 'users.id', '=', 'profiles.user_id')
-                      ->where('agent_currencies.currency_iso', $currency)
-                      ->where('users.username', 'admin')
-                      ->where('users.whitelabel_id', $whitelabel)
-                      ->first()
-        ;
+            ->select(
+                'users.id',
+                'users.username',
+                'users.status',
+                'profiles.timezone',
+                'agents.id AS agent',
+                'users.referral_code',
+                'agents.master',
+                'agents.owner_id as owner',
+                'profiles.country_iso',
+                'agent_currencies.balance',
+                'agent_currencies.currency_iso'
+            )
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('users.username', 'admin')
+            ->where('users.whitelabel_id', $whitelabel)
+            ->first();
         return $agent;
     }
 
@@ -216,16 +225,29 @@ class AgentsRepo
     public function findByUserIdAndCurrency(int $user, string $currency)
     {
         return Agent::on('replica')
-                    ->select('users.id', 'users.created_at as created', 'users.email', 'users.username', 'users.status',
-                        'users.action', 'users.type_user' ,'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
-                        'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance',
-                        'agent_currencies.currency_iso')
-                    ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                    ->join('users', 'agents.user_id', '=', 'users.id')
-                    ->join('profiles', 'users.id', '=', 'profiles.user_id')
-                    ->where('agent_currencies.currency_iso', $currency)
-                    ->where('users.id', $user)
-                    ->first();
+            ->select(
+                'users.id',
+                'users.created_at as created',
+                'users.email',
+                'users.username',
+                'users.status',
+                'users.action',
+                'users.type_user',
+                'profiles.timezone',
+                'agents.id AS agent',
+                'users.referral_code',
+                'agents.master',
+                'agents.owner_id as owner',
+                'profiles.country_iso',
+                'agent_currencies.balance',
+                'agent_currencies.currency_iso'
+            )
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('agent_currencies.currency_iso', $currency)
+            ->where('users.id', $user)
+            ->first();
     }
 
     /**
@@ -236,10 +258,23 @@ class AgentsRepo
     public function findByUserIdAndCurrency2(int $user, string $currency)
     {
         return Agent::on('replica')
-            ->select('users.id', 'users.created_at as created', 'users.email', 'users.username', 'users.status',
-                'users.action', 'users.type_user' ,'profiles.timezone', 'agents.id AS agent', 'users.referral_code',
-                'agents.master', 'agents.owner_id as owner', 'profiles.country_iso', 'agent_currencies.balance',
-                'agent_currencies.currency_iso')
+            ->select(
+                'users.id',
+                'users.created_at as created',
+                'users.email',
+                'users.username',
+                'users.status',
+                'users.action',
+                'users.type_user',
+                'profiles.timezone',
+                'agents.id AS agent',
+                'users.referral_code',
+                'agents.master',
+                'agents.owner_id as owner',
+                'profiles.country_iso',
+                'agent_currencies.balance',
+                'agent_currencies.currency_iso'
+            )
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('users', 'agents.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
@@ -255,9 +290,8 @@ class AgentsRepo
     public function statusActionByUser(int $user)
     {
         return User::select('username', 'status', 'action', 'type_user')
-                   ->where('id', $user)
-                   ->first()
-        ;
+            ->where('id', $user)
+            ->first();
     }
 
     /** get and update balance by agent
@@ -270,11 +304,13 @@ class AgentsRepo
      */
     public function getAndUpdateBalance($currency, $userDebit, $userCredit, $amount, $idWolf)
     {
-        $result = DB::select('SELECT * FROM site.get_and_update_balance_for_agent(?,?,?,?,?)', [$currency,
-                                                                                                $userDebit,
-                                                                                                $userCredit,
-                                                                                                $amount,
-                                                                                                $idWolf]);
+        $result = DB::select('SELECT * FROM site.get_and_update_balance_for_agent(?,?,?,?,?)', [
+            $currency,
+            $userDebit,
+            $userCredit,
+            $amount,
+            $idWolf
+        ]);
         return $result;
     }
 
@@ -284,8 +320,8 @@ class AgentsRepo
      * @param string|null $currency Currency ISO
      * @return mixed
      */
-    public function findUserProfile(int|null $user, string|null $currency): mixed
-    {
+    public function findUserProfile(int|null $user, string|null $currency)
+    : mixed {
         return User::join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
@@ -324,15 +360,25 @@ class AgentsRepo
     public function findUser($user)
     {
         $user = Agent::on('replica')
-                     ->select('users.id', 'users.created_at as created', 'users.email', 'users.username',
-                         'users.status', 'users.action', 'users.uuid', 'users.type_user','profiles.timezone', 'agents.user_id as owner_id',
-                         'agent_user.agent_id as owner', 'users.referral_code')
-                     ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
-                     ->join('users', 'agent_user.user_id', '=', 'users.id')
-                     ->join('profiles', 'users.id', '=', 'profiles.user_id')
-                     ->where('agent_user.user_id', $user)
-                     ->first()
-        ;
+            ->select(
+                'users.id',
+                'users.created_at as created',
+                'users.email',
+                'users.username',
+                'users.status',
+                'users.action',
+                'users.uuid',
+                'users.type_user',
+                'profiles.timezone',
+                'agents.user_id as owner_id',
+                'agent_user.agent_id as owner',
+                'users.referral_code'
+            )
+            ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
+            ->join('users', 'agent_user.user_id', '=', 'users.id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('agent_user.user_id', $user)
+            ->first();
         return $user;
     }
 
@@ -348,14 +394,19 @@ class AgentsRepo
      */
     public function getAgentLockByProvider($currency, $provider, $whitelabel)
     {
-        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_providers_users.provider_id',
-            'exclude_providers_users.makers', 'exclude_providers_users.created_at', 'providers.name')
-                       ->join('users', 'agents.user_id', '=', 'users.id')
-                       ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
-                       ->join('providers', 'exclude_providers_users.provider_id', '=', 'providers.id')
-                       ->where('exclude_providers_users.currency_iso', $currency)
-                       ->where('users.whitelabel_id', $whitelabel)
-        ;
+        $agents = Agent::select(
+            'agents.user_id',
+            'users.username',
+            'exclude_providers_users.provider_id',
+            'exclude_providers_users.makers',
+            'exclude_providers_users.created_at',
+            'providers.name'
+        )
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
+            ->join('providers', 'exclude_providers_users.provider_id', '=', 'providers.id')
+            ->where('exclude_providers_users.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabel);
 
         if (! empty($provider)) {
             $agents->where('exclude_providers_users.provider_id', $provider);
@@ -375,16 +426,19 @@ class AgentsRepo
      */
     public function getAgentLockByUserAndCategory($user, $currency, $category, $whitelabel)
     {
-        $agents = Agent::select('agents.user_id', 'users.username', 'exclude_makers_users.makers',
-            'exclude_makers_users.category')
-                       ->join('users', 'agents.user_id', '=', 'users.id')
-                       ->join('exclude_makers_users', 'users.id', '=', 'exclude_makers_users.user_id')
-                       ->where('exclude_makers_users.user_id', $user)
-                       ->where('exclude_makers_users.category', $category)
-                       ->where('exclude_makers_users.currency_iso', $currency)
-                       ->where('users.whitelabel_id', $whitelabel)
-                       ->first()
-        ;
+        $agents = Agent::select(
+            'agents.user_id',
+            'users.username',
+            'exclude_makers_users.makers',
+            'exclude_makers_users.category'
+        )
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('exclude_makers_users', 'users.id', '=', 'exclude_makers_users.user_id')
+            ->where('exclude_makers_users.user_id', $user)
+            ->where('exclude_makers_users.category', $category)
+            ->where('exclude_makers_users.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabel)
+            ->first();
         return $agents;
     }
 
@@ -398,16 +452,20 @@ class AgentsRepo
     public function getAgentsByOwner($owner, $currency)
     {
         return Agent::on('replica')
-                    ->select('agents.*', 'users.username', 'agent_currencies.balance', 'users.referral_code',
-                        'users.status')
-                    ->join('users', 'agents.user_id', '=', 'users.id')
-                    ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                    ->where('agents.owner_id', $owner)
-                    ->where('agent_currencies.currency_iso', $currency)
-                    ->whitelabel()
-                    ->orderBy('users.username', 'ASC')
-                    ->get()
-        ;
+            ->select(
+                'agents.*',
+                'users.username',
+                'agent_currencies.balance',
+                'users.referral_code',
+                'users.status'
+            )
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.owner_id', $owner)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->whitelabel()
+            ->orderBy('users.username', 'ASC')
+            ->get();
     }
 
     /**
@@ -420,7 +478,8 @@ class AgentsRepo
      */
     public function getAgentsAllByOwner(int $owner, string $currency, int $whitelabel)
     {
-        return DB::select('SELECT u.id,u.id AS user_id,u.username FROM site.users AS u
+        return DB::select(
+            'SELECT u.id,u.id AS user_id,u.username FROM site.users AS u
                    WHERE u.whitelabel_id= ? AND
                     u.id IN (WITH RECURSIVE all_agents AS (
                         SELECT agents.user_id
@@ -434,10 +493,14 @@ class AgentsRepo
                         JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
                         JOIN all_agents ON agents.owner_id = all_agents.user_id
                         WHERE agent_currencies.currency_iso  = ?
-                    ) SELECT user_id FROM all_agents) ORDER BY username ASC', [$whitelabel,
-                                                                               $owner,
-                                                                               $currency,
-                                                                               $currency]);
+                    ) SELECT user_id FROM all_agents) ORDER BY username ASC',
+            [
+                $whitelabel,
+                $owner,
+                $currency,
+                $currency
+            ]
+        );
     }
 
     /**
@@ -450,14 +513,13 @@ class AgentsRepo
     public function getAgentsChildrenByOwner($owner, $currency)
     {
         return Agent::select('agents.user_id', 'users.username')
-                    ->join('users', 'agents.user_id', '=', 'users.id')
-                    ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                    ->where('agents.owner_id', $owner)
-                    ->where('agent_currencies.currency_iso', $currency)
-                    ->whitelabel()
-                    ->orderBy('users.username', 'ASC')
-                    ->get()
-        ;
+            ->join('users', 'agents.user_id', '=', 'users.id')
+            ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.owner_id', $owner)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->whitelabel()
+            ->orderBy('users.username', 'ASC')
+            ->get();
     }
 
     /**
@@ -470,9 +532,11 @@ class AgentsRepo
      */
     public function getChildrenByOwner(int $owner, string $currency, int $whitelabel)
     {
-        $response = DB::select('SELECT * FROM site.get_users_agents_son(?,?,?)', [$owner,
-                                                                                  $currency,
-                                                                                  $whitelabel]);
+        $response = DB::select('SELECT * FROM site.get_users_agents_son(?,?,?)', [
+            $owner,
+            $currency,
+            $whitelabel
+        ]);
         $treeItem = [];
         foreach ($response as $item => $value) {
             $icon   = $value->type_user == 1 ? 'star' : ($value->type_user == 2 ? 'users' : 'user');
@@ -489,8 +553,10 @@ class AgentsRepo
                 //'children'=>[]
             ];
             if (
-                in_array($value->type_user, [TypeUser::$agentMater,
-                                             TypeUser::$agentCajero])
+                in_array($value->type_user, [
+                    TypeUser::$agentMater,
+                    TypeUser::$agentCajero
+                ])
             ) {
                 $datTmp['children'] = $this->getChildrenByOwner($value->user_id, $currency, $whitelabel);
             }
@@ -506,7 +572,8 @@ class AgentsRepo
      * @param int $whitelabelId Whitelabel ID
      * @return int
      */
-    public function findAgent(int $userId, int $whitelabelId): int {
+    public function findAgent(int $userId, int $whitelabelId)
+    : int {
         $agentId = User::join('role_user', 'users.id', '=', 'role_user.user_id')
             ->where('role_user.role_id', Roles::$admin_Beet_sweet)
             ->where('users.username', '!=', 'admin')
@@ -514,7 +581,7 @@ class AgentsRepo
             ->where('users.id', $userId)
             ->value('users.id');
 
-        return (int) $agentId;
+        return (int)$agentId;
     }
 
     /**
@@ -524,8 +591,8 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getTreeSqlLevels(int $userAuthId, string $currency, int $whitelabelId): array
-    {
+    public function getTreeSqlLevels(int $userAuthId, string $currency, int $whitelabelId)
+    : array {
         return DB::select(
             'WITH RECURSIVE all_agents AS (SELECT agents.id, agents.user_id, agents.owner_id, 0 AS level
                               FROM site.agents AS agents
@@ -667,8 +734,8 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getDirectChildren1(Request $request, int $userAuthId, string $currency, int $whitelabelId): array
-    {
+    public function getDirectChildren1(Request $request, int $userAuthId, string $currency, int $whitelabelId)
+    : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
@@ -716,7 +783,7 @@ class AgentsRepo
         }
 
         $agentResults = $agentQuery->get()->toArray();
-        $playerQuery = User::select([
+        $playerQuery  = User::select([
             'users.username',
             'users.type_user',
             'users.type_user as typeId',
@@ -755,9 +822,9 @@ class AgentsRepo
             return $item;
         }, $combinedResults);
 
-        $resultCount     = count($combinedResults);
-        $slicedResults   = array_slice($combinedResults, $start, $length);
-        $bonus           = Configurations::getBonus();
+        $resultCount   = count($combinedResults);
+        $slicedResults = array_slice($combinedResults, $start, $length);
+        $bonus         = Configurations::getBonus();
 
         $formattedResults = array_map(function ($item) use ($currency, $bonus) {
             $balance = $item['balance'];
@@ -865,28 +932,16 @@ class AgentsRepo
             $query->where('users.username', 'like', "%$searchValue%");
         });
 
-        if (array_key_exists($orderColumn, $orderableColumns)) {
-            if ($orderColumn !== self::ORDER_COLUMN_ACTION) {
-                $playerQuery->orderBy($orderableColumns[$orderColumn], $orderDir);
-            }
-        } else {
-            $playerQuery->orderBy('users.username', 'asc');
-        }
+        $orderKey = array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
+            ? $orderableColumns[$orderColumn]
+            : 'users.username';
 
+        $orderDir = $orderColumn !== self::ORDER_COLUMN_ACTION ? $orderDir : 'asc';
+        $playerQuery->orderBy($orderKey, $orderDir);
 
         $combinedResults = array_merge($agentQuery->get()->toArray(), $playerQuery->get()->toArray());
-
-       /* $combinedResults = array_map(function ($item) {
-            if (isset($item['action']) && $item['action'] !== null) {
-                $item['actionString'] = ActionUser::getName($item['action']);
-            } else {
-                $item['actionString'] = null;
-            }
-            return $item;
-        }, $combinedResults);*/
-
         $combinedResults = array_map(function ($item) {
-            $item['actionString'] = isset($item['action']) && $item['action'] !== null
+            $item['actionString'] = isset($item['action'])
                 ? ActionUser::getName($item['action'])
                 : null;
 
@@ -906,7 +961,12 @@ class AgentsRepo
 
                 return $aActionString === null
                     ? ($bActionString === null ? 0 : ($orderDir === 'asc' ? 1 : -1))
-                    : ($bActionString === null ? ($orderDir === 'asc' ? -1 : 1) : $compareActions($aActionString, $bActionString));
+                    : ($bActionString === null
+                        ? ($orderDir === 'asc' ? -1 : 1)
+                        : $compareActions(
+                            $aActionString,
+                            $bActionString
+                        ));
             });
         }
 
@@ -971,12 +1031,10 @@ class AgentsRepo
             ->where('users.whitelabel_id', $whitelabel)
             ->where('agent_currencies.currency_iso', $currency)
             ->orderBy('users.username', 'ASC')
-            ->get()
-        ;
+            ->get();
 
         return $agents;
     }
-
 
 
     /**
@@ -989,7 +1047,8 @@ class AgentsRepo
     public function getAgentsDependency($user, $currency)
     {
         return \DB::connection('replica')
-                  ->select("WITH RECURSIVE all_agents AS (
+            ->select(
+                "WITH RECURSIVE all_agents AS (
             SELECT agents.id, agents.user_id, users.username, owner_id
             FROM agents
                      join users on agents.user_id = users.id
@@ -1008,10 +1067,13 @@ class AgentsRepo
         )
 
         SELECT *
-        FROM all_agents", [$user,
-                           $currency,
-                           $currency])
-        ;
+        FROM all_agents",
+                [
+                    $user,
+                    $currency,
+                    $currency
+                ]
+            );
     }
 
     /**
@@ -1022,12 +1084,14 @@ class AgentsRepo
      */
     public function getExcludeUserProvider($user)
     {
-        $data = User::select('exclude_providers_users.provider_id', 'exclude_providers_users.makers',
-            'exclude_providers_users.currency_iso')
-                    ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
-                    ->where('exclude_providers_users.user_id', $user)
-                    ->get()
-        ;
+        $data = User::select(
+            'exclude_providers_users.provider_id',
+            'exclude_providers_users.makers',
+            'exclude_providers_users.currency_iso'
+        )
+            ->join('exclude_providers_users', 'users.id', '=', 'exclude_providers_users.user_id')
+            ->where('exclude_providers_users.user_id', $user)
+            ->get();
         return $data;
     }
 
@@ -1051,12 +1115,14 @@ class AgentsRepo
      */
     public function getExcludeUserMaker($user)
     {
-        $data = User::select('exclude_makers_users.category', 'exclude_makers_users.makers',
-            'exclude_makers_users.currency_iso')
-                    ->join('exclude_makers_users', 'users.id', '=', 'exclude_makers_users.user_id')
-                    ->where('exclude_makers_users.user_id', $user)
-                    ->get()
-        ;
+        $data = User::select(
+            'exclude_makers_users.category',
+            'exclude_makers_users.makers',
+            'exclude_makers_users.currency_iso'
+        )
+            ->join('exclude_makers_users', 'users.id', '=', 'exclude_makers_users.user_id')
+            ->where('exclude_makers_users.user_id', $user)
+            ->get();
         return $data;
     }
 
@@ -1070,18 +1136,23 @@ class AgentsRepo
     public function getSearchUsersByAgent($currency, $agent, $whitelabel)
     {
         $users = Agent::on('replica')
-                      ->select('users.id', 'users.username', 'users.status', 'profiles.timezone',
-                          'agent_user.agent_id as owner', 'users.referral_code')
-                      ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
-                      ->join('users', 'agent_user.user_id', '=', 'users.id')
-                      ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
-                      ->join('profiles', 'users.id', '=', 'profiles.user_id')
-                      ->where('agents.id', $agent)
-                      ->where('user_currencies.currency_iso', $currency)
-                      ->where('users.whitelabel_id', $whitelabel)
-                      ->orderBy('users.username', 'ASC')
-                      ->get()
-        ;
+            ->select(
+                'users.id',
+                'users.username',
+                'users.status',
+                'profiles.timezone',
+                'agent_user.agent_id as owner',
+                'users.referral_code'
+            )
+            ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
+            ->join('users', 'agent_user.user_id', '=', 'users.id')
+            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('agents.id', $agent)
+            ->where('user_currencies.currency_iso', $currency)
+            ->where('users.whitelabel_id', $whitelabel)
+            ->orderBy('users.username', 'ASC')
+            ->get();
         return $users;
     }
 
@@ -1095,18 +1166,23 @@ class AgentsRepo
     public function getUsersByAgent($agent, $currency)
     {
         return Agent::on('replica')
-                    ->select('users.id', 'users.username', 'users.status', 'profiles.timezone',
-                        'agent_user.agent_id as owner', 'users.referral_code')
-                    ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
-                    ->join('users', 'agent_user.user_id', '=', 'users.id')
-                    ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
-                    ->join('profiles', 'users.id', '=', 'profiles.user_id')
-                    ->where('user_currencies.currency_iso', $currency)
-                    ->where('agents.id', $agent)
-                    ->whitelabel()
-                    ->orderBy('users.username', 'ASC')
-                    ->get()
-        ;
+            ->select(
+                'users.id',
+                'users.username',
+                'users.status',
+                'profiles.timezone',
+                'agent_user.agent_id as owner',
+                'users.referral_code'
+            )
+            ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
+            ->join('users', 'agent_user.user_id', '=', 'users.id')
+            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('user_currencies.currency_iso', $currency)
+            ->where('agents.id', $agent)
+            ->whitelabel()
+            ->orderBy('users.username', 'ASC')
+            ->get();
     }
 
     /**
@@ -1119,17 +1195,22 @@ class AgentsRepo
     public function getUsersByAgents($agents, $currency)
     {
         return Agent::on('replica')
-                    ->select('users.id', 'users.username', 'users.status', 'profiles.timezone',
-                        'agent_user.agent_id as owner', 'users.referral_code')
-                    ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
-                    ->join('users', 'agent_user.user_id', '=', 'users.id')
-                    ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
-                    ->join('profiles', 'users.id', '=', 'profiles.user_id')
-                    ->where('user_currencies.currency_iso', $currency)
-                    ->whereIn('agents.id', $agents)
-                    ->whitelabel()
-                    ->get()
-        ;
+            ->select(
+                'users.id',
+                'users.username',
+                'users.status',
+                'profiles.timezone',
+                'agent_user.agent_id as owner',
+                'users.referral_code'
+            )
+            ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
+            ->join('users', 'agent_user.user_id', '=', 'users.id')
+            ->join('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->join('profiles', 'users.id', '=', 'profiles.user_id')
+            ->where('user_currencies.currency_iso', $currency)
+            ->whereIn('agents.id', $agents)
+            ->whitelabel()
+            ->get();
     }
 
     /**
@@ -1139,9 +1220,12 @@ class AgentsRepo
      */
     public function iAgent($user)
     {
-        $iAgent = DB::select('SELECT a.percentage
+        $iAgent = DB::select(
+            'SELECT a.percentage
                  FROM site.agents a
-                 WHERE user_id = ?', [$user]);
+                 WHERE user_id = ?',
+            [$user]
+        );
         return $iAgent[0];
     }
 
@@ -1155,9 +1239,8 @@ class AgentsRepo
     public function moveAgentFromUser($agent, $userAgent)
     {
         $data = \DB::table('agent_user')
-                   ->where('user_id', $userAgent)
-                   ->update(['agent_id' => $agent->id])
-        ;
+            ->where('user_id', $userAgent)
+            ->update(['agent_id' => $agent->id]);
 
         return $data;
     }
@@ -1183,11 +1266,13 @@ class AgentsRepo
     public function updateActionTemp()
     {
         return 'stop temp';
-        return DB::select('UPDATE site.users
+        return DB::select(
+            'UPDATE site.users
                                     SET action = 10
                                     FROM site.role_user ru
                                     WHERE site.users.id = ru.user_id
-                                      AND ru.role_id = 19');
+                                      AND ru.role_id = 19'
+        );
     }
 
     /**
@@ -1208,10 +1293,10 @@ class AgentsRepo
      * the provided pattern in a hierarchical tree structure. It returns a list of matching users
      * and agents along with additional information such as user type, currency, and status.
      *
-     * @param int    $userAuthId   The authenticated user's ID.
-     * @param string $currency     The desired currency.
-     * @param int    $whitelabelId The whitelabel ID.
-     * @param string $username     The username pattern to search for.
+     * @param int $userAuthId The authenticated user's ID.
+     * @param string $currency The desired currency.
+     * @param int $whitelabelId The whitelabel ID.
+     * @param string $username The username pattern to search for.
      *
      * @return array An array containing the matching users and agents.
      *
@@ -1222,7 +1307,8 @@ class AgentsRepo
         string $currency,
         int $whitelabelId,
         string $username
-    ): array {
+    )
+    : array {
         $usernameLike = '%' . $username . '%';
 
         return DB::select(
@@ -1284,8 +1370,10 @@ class AgentsRepo
      */
     public function unBlockAgents($currencyIso, $category, $userId)
     {
-        \DB::table('exclude_makers_users')->where('currency_iso', $currencyIso)->where('category',
-            $category)->where('user_id', $userId)->delete();
+        \DB::table('exclude_makers_users')->where('currency_iso', $currencyIso)->where(
+            'category',
+            $category
+        )->where('user_id', $userId)->delete();
     }
 
     /**
