@@ -351,15 +351,14 @@ class AgentsRepo
             ]);
     }
 
+
     /**
-     * Find user
-     *
-     * @param int $user User ID
+     * @param string|int $userId
      * @return mixed
      */
-    public function findUser($user)
-    {
-        $user = Agent::on('replica')
+    public function findUser(string| int $userId)
+    : mixed {
+        return Agent::on('replica')
             ->select(
                 'users.id',
                 'users.created_at as created',
@@ -377,9 +376,8 @@ class AgentsRepo
             ->join('agent_user', 'agents.id', '=', 'agent_user.agent_id')
             ->join('users', 'agent_user.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->where('agent_user.user_id', $user)
+            ->where('agent_user.user_id', $userId)
             ->first();
-        return $user;
     }
 
     /**

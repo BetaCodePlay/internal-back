@@ -4355,11 +4355,8 @@ class AgentsController extends Controller
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             $balanceUser = 0.00;
-            if (! empty($username)) {
-                $user = $this->usersRepo->getByUsername($username, $whitelabel);
-            } else {
-                $user = Auth::user();
-            }
+            $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
+
             $agentsRepo = new AgentsRepo();
             if ($user->type_user == 'player') {
                 $wallet = Wallet::getByClient($user->id, $currency, $bonus);
@@ -4370,13 +4367,18 @@ class AgentsController extends Controller
                     ? $wallet?->data?->wallet?->balance
                     : 0;
 
+                $userOwner = $agentsRepo->findUser($user->id);
+                Log::info("UserId: {$user->id}", [$userOwner]);
             } else {
                 $userType = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
+
+
                 $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
 
             }
+
             $balanceUser = number_format($balance, 2);
             \Log::info(__METHOD__, ['balanceUser' => $balanceUser]);
             return view('back.agents.role', [
