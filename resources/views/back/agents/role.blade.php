@@ -23,29 +23,28 @@
             <ul class="nav nav-tabs" id="roleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="true">
-                        Profile management
+                        {{ _i('Profile management') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" data-toggle="tab" data-target="#roleTabTransactions" type="button" role="tab" aria-controls="roleTabTransactions" aria-selected="false">
-                        Transactions
+                        {{ _i('Transactions') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
-                        More information
+                        {{ _i('More information') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" data-toggle="tab" data-target="#roleTabLocks" type="button" role="tab" aria-controls="roleTabLocks" aria-selected="false">
-                        Locks
+                        {{ _i('Locks') }}
                     </button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="tab-manager">
-
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Name') }}</div>
@@ -64,7 +63,6 @@
                             </div>
                         </div>
 
-
                         <div class="tab-manager-data">
                             <div class="data-title">{{ _i('Number of dependent agents') }}</div>
                             <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
@@ -74,7 +72,34 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">2</div>
-                <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">3</div>
+                <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
+                    <div class="tab-manager">
+                        <div class="tab-manager-top">
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Name') }}</div>
+                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->typeUser }}</span></div>
+                            </div>
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('ID User') }}</div>
+                                <div class="data-text text-id">{{ $authUser->id}} <span class="separator"></span><button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
+                            </div>
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Password') }}</div>
+                                <div class="data-text text-finish">
+                                    <span class="separator"></span>
+                                    <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-manager-data">
+                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">4</div>
             </div>
 
@@ -140,6 +165,7 @@
             roles.userBalance();
             roles.userCreate();
             roles.userLock();
+            roles.userTabTransaction();
         });
     </script>
 @endsection

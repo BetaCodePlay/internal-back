@@ -467,6 +467,10 @@ class Roles {
         }
     };
 
+    userTabTransaction(route) {
+
+    }
+
     static errorResponse(json) {
         let array = Object.values(json.responseJSON.errors);
         let title = json.responseJSON.message;
