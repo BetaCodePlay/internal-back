@@ -27,20 +27,17 @@ class ReportRepo
     public function dashboard()
     : array
     {
-        $currency     = session('currency');
-        $whitelabelId = Configurations::getWhitelabel();
-        $timezone     = session('timezone');
-
-        // TODO: solo deben mostrarse las trasnsacciones propias del usuairo autenticado y la de sus hijos.
-        $transactions = $this->getTransactions($currency, $whitelabelId, $timezone);
-        $audits       = $this->getAudits($timezone);
-
+        $currency      = session('currency');
+        $whitelabelId  = Configurations::getWhitelabel();
+        $timezone      = session('timezone');
+        $transactions  = $this->transactionsRepo->getRecentTransactions($currency, $whitelabelId, $timezone);
+        $audits        = $this->getAudits($timezone);
         $today         = Carbon::now($timezone);
         $startDate     = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $endDate       = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
 
-        $totalDeposited       = $this->transactionsRepo->totalByProviderTypesWithUser(
+        $totalDeposited = $this->transactionsRepo->totalByProviderTypesWithUser(
             $whitelabelId,
             TransactionTypes::$credit,
             $currency,
@@ -53,41 +50,12 @@ class ReportRepo
         return [
             'audits'       => $audits,
             'balance'      => [
-                'totalBalance' => getAuthenticatedUserBalance(),
+                'totalBalance'   => getAuthenticatedUserBalance(),
                 'totalDeposited' => number_format($totalDeposited, 2),
             ],
             'transactions' => $transactions,
 
         ];
-    }
-
-    /**
-     * @param string $currency
-     * @param int $whitelabelId
-     * @param string $timezone
-     * @return Collection
-     */
-    public function getTransactions(string $currency, int $whitelabelId, string $timezone)
-    : Collection {
-        // transacciones del logueado y de sus hijos.
-        // whereIn [padre, hijo1, hijo2]
-        return DB::table('transactions')
-            ->join('users', 'transactions.user_id', '=', 'users.id')
-            ->latest('transactions.created_at')
-            ->take(10)
-            ->select([
-                'users.username',
-                'transactions.transaction_type_id as transactionType',
-                DB::raw("TO_CHAR(transactions.amount, 'FM999999999.00') as amount"),
-                DB::raw(
-                    "TO_CHAR(transactions.created_at AT TIME ZONE 'UTC' AT TIME ZONE '$timezone', 'YYYY-MM-DD hh:MI:SS AM') AS date"
-                ),
-            ])
-            ->where([
-                'transactions.currency_iso'  => $currency,
-                'transactions.whitelabel_id' => $whitelabelId,
-            ])
-            ->get();
     }
 
     /**

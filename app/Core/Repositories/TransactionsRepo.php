@@ -8,6 +8,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Utilities\Helper;
@@ -1005,6 +1006,35 @@ class TransactionsRepo
     {
         $nextValue = DB::select("select nextval('transactions_id_seq')");
         return $nextValue[0]->nextval;
+    }
+
+    /**
+     * @param string $currency
+     * @param int $whitelabelId
+     * @param string $timezone
+     * @return Collection
+     */
+    public function getRecentTransactions(string $currency, int $whitelabelId, string $timezone)
+    : Collection {
+        // transacciones del logueado y de sus hijos.
+        // whereIn [padre, hijo1, hijo2]
+        return DB::table('transactions')
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->latest('transactions.created_at')
+            ->take(10)
+            ->select([
+                'users.username',
+                'transactions.transaction_type_id as transactionType',
+                DB::raw("TO_CHAR(transactions.amount, 'FM999999999.00') as amount"),
+                DB::raw(
+                    "TO_CHAR(transactions.created_at AT TIME ZONE 'UTC' AT TIME ZONE '$timezone', 'YYYY-MM-DD hh:MI:SS AM') AS date"
+                ),
+            ])
+            ->where([
+                'transactions.currency_iso'  => $currency,
+                'transactions.whitelabel_id' => $whitelabelId,
+            ])
+            ->get();
     }
 
     /**
