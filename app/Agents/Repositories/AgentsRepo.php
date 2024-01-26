@@ -874,7 +874,6 @@ class AgentsRepo
             : $userAuthId;
 
         $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
-
         $agentQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%")
                 ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
@@ -895,22 +894,7 @@ class AgentsRepo
             $orderColumn !== self::ORDER_COLUMN_ACTION ? $orderDir : 'asc'
         );
 
-        $playerQuery = User::select([
-            'users.username',
-            'users.type_user',
-            'users.type_user as typeId',
-            'users.id',
-            'users.action',
-            'users.status',
-            'agent_currencies.balance',
-        ])
-            ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
-            ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where('agents.user_id', $userId)
-            ->where('users.whitelabel_id', $whitelabelId)
-            ->where('agent_currencies.currency_iso', $currency);
-
+        $playerQuery = $this->getPlayerQuery($userId, $whitelabelId, $currency);
         $playerQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%");
         });
@@ -934,23 +918,7 @@ class AgentsRepo
         $resultCount = count($combinedResults);
 
         if ($orderColumn == self::ORDER_COLUMN_ACTION) {
-            usort($combinedResults, function ($a, $b) use ($orderDir) {
-                $aActionString = $a['actionString'] ?? null;
-                $bActionString = $b['actionString'] ?? null;
-
-                $compareActions = function ($aAction, $bAction) use ($orderDir) {
-                    return $orderDir === 'asc' ? strcasecmp($aAction, $bAction) : strcasecmp($bAction, $aAction);
-                };
-
-                return $aActionString === null
-                    ? ($bActionString === null ? 0 : ($orderDir === 'asc' ? 1 : -1))
-                    : ($bActionString === null
-                        ? ($orderDir === 'asc' ? -1 : 1)
-                        : $compareActions(
-                            $aActionString,
-                            $bActionString
-                        ));
-            });
+            $this->sortByActionString($combinedResults, $orderDir);
         }
 
         $slicedResults = array_slice($combinedResults, $start, $length);
@@ -1003,7 +971,7 @@ class AgentsRepo
      * @return mixed
      */
     function getUserAgentQuery($userId, $currency, $whitelabelId)
-    {
+    : mixed {
         return User::select([
             'users.username',
             'users.type_user',
@@ -1020,6 +988,58 @@ class AgentsRepo
             ->where('agent_currencies.currency_iso', $currency)
             ->where('users.whitelabel_id', $whitelabelId);
     }
+
+    /**
+     * @param $userId
+     * @param $currency
+     * @param $whitelabelId
+     * @return mixed
+     */
+    function getPlayerQuery($userId, $currency, $whitelabelId)
+    : mixed {
+        return User::select([
+            'users.username',
+            'users.type_user',
+            'users.type_user as typeId',
+            'users.id',
+            'users.action',
+            'users.status',
+            'agent_currencies.balance',
+        ])
+            ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
+            ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.user_id', $userId)
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->where('agent_currencies.currency_iso', $currency);
+    }
+
+    /**
+     * @param array $combinedResults
+     * @param string $orderDir
+     * @return void
+     */
+    function sortByActionString(array &$combinedResults, string $orderDir)
+    : void {
+        usort($combinedResults, function ($a, $b) use ($orderDir) {
+            $aActionString = $a['actionString'] ?? null;
+            $bActionString = $b['actionString'] ?? null;
+
+            $compareActions = function ($aAction, $bAction) use ($orderDir) {
+                return $orderDir === 'asc' ? strcasecmp($aAction, $bAction) : strcasecmp($bAction, $aAction);
+            };
+
+            return $aActionString === null
+                ? ($bActionString === null ? 0 : ($orderDir === 'asc' ? 1 : -1))
+                : ($bActionString === null
+                    ? ($orderDir === 'asc' ? -1 : 1)
+                    : $compareActions(
+                        $aActionString,
+                        $bActionString
+                    ));
+        });
+    }
+
 
 
     /**
