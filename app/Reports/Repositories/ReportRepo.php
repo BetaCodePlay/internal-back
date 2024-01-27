@@ -47,7 +47,7 @@ class ReportRepo
 
         $ids = $this->agentsRepo->getChildrenIdsWithParentAuth($authUserId, $currency, $whitelabelId);
 
-        dd($ids;
+        dd($ids);
 
         $totalDeposited = $this->transactionsRepo->totalByProviderTypesWithUser(
             $whitelabelId,
