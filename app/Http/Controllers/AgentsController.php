@@ -4369,7 +4369,7 @@ class AgentsController extends Controller
 
                 $userOwner = $agentsRepo->findUser($user->id);
 
-                Log::info("UserId: {$user->id}", [$userOwner->user]);
+                Log::info("UserId: {$user->id}", [$userOwner->user, $userOwner->owner]);
 
                 // Owner del usuario player
                 $userOwner = $userOwner->owner;
