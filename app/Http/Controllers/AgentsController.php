@@ -2877,7 +2877,7 @@ class AgentsController extends Controller
      * @return array
      */
     public function getDirectChildren(Request $request)
-    {
+    : array {
         return $this->agentsRepo->getDirectChildren(
             $request,
             Auth::id(),
