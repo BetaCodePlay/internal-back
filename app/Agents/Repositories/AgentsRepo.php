@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -786,14 +787,21 @@ class AgentsRepo
         });
     }
 
+    /**
+     * @param $userId
+     * @param $currency
+     * @param $whitelabelId
+     * @return array
+     */
     public function getChildrenIdsWithParentAuth($userId, $currency, $whitelabelId)
-    {
-        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
-        $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId);
+    : array {
+        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId, ['users.id']);
+        $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId, ['users.id']);
+        $combinedIds = Arr::collapse([$agentQuery->pluck('id')->toArray(), $playerQuery->pluck('id')->toArray()]);
+        $combinedIds[] = $userId;
 
-
+        return $combinedIds;
     }
-
 
     /**
      * @param array $results

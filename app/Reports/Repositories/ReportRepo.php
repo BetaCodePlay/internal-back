@@ -2,6 +2,7 @@
 
 namespace App\Reports\Repositories;
 
+use App\Agents\Repositories\AgentsRepo;
 use App\Audits\Repositories\AuditsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use Carbon\Carbon;
@@ -18,10 +19,12 @@ class ReportRepo
     /**
      * @param TransactionsRepo $transactionsRepo
      * @param AuditsRepo $auditsRepo
+     * @param AgentsRepo $agentsRepo
      */
     public function __construct(
         private TransactionsRepo $transactionsRepo,
-        private AuditsRepo $auditsRepo
+        private AuditsRepo $auditsRepo,
+        private AgentsRepo $agentsRepo,
     ) {
     }
 
@@ -35,11 +38,16 @@ class ReportRepo
         $whitelabelId  = Configurations::getWhitelabel();
         $timezone      = session('timezone');
         $transactions  = $this->transactionsRepo->getRecentTransactions($currency, $whitelabelId, $timezone);
-        $audits = $this->auditsRepo->getRecentAudits($timezone);
+        $audits        = $this->auditsRepo->getRecentAudits($timezone);
         $today         = Carbon::now($timezone);
         $startDate     = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $endDate       = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
+        $authUserId    = auth()->id();
+
+        $ids = $this->agentsRepo->getChildrenIdsWithParentAuth($authUserId, $currency, $whitelabelId);
+
+        dd($ids;
 
         $totalDeposited = $this->transactionsRepo->totalByProviderTypesWithUser(
             $whitelabelId,
