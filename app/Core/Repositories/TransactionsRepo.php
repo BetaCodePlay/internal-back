@@ -1012,12 +1012,16 @@ class TransactionsRepo
      * @param string $currency
      * @param int $whitelabelId
      * @param string $timezone
+     * @param array $authUserAndChildrenIds
      * @return Collection
      */
-    public function getRecentTransactions(string $currency, int $whitelabelId, string $timezone)
+    public function getRecentTransactions(
+        string $currency,
+        int $whitelabelId,
+        string $timezone,
+        array $authUserAndChildrenIds
+    )
     : Collection {
-        // transacciones del logueado y de sus hijos.
-        // whereIn [padre, hijo1, hijo2]
         return DB::table('transactions')
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->latest('transactions.created_at')
@@ -1030,8 +1034,9 @@ class TransactionsRepo
                     "TO_CHAR(transactions.created_at AT TIME ZONE 'UTC' AT TIME ZONE '$timezone', 'YYYY-MM-DD hh:MI:SS AM') AS date"
                 ),
             ])
+            ->whereIn('transactions.user_id', $authUserAndChildrenIds)
             ->where([
-                'transactions.currency_iso'  => $currency,
+                'transactions.currency_iso' => $currency,
                 'transactions.whitelabel_id' => $whitelabelId,
             ])
             ->get();
