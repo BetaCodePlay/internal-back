@@ -705,11 +705,11 @@ class AgentsRepo
      * @param $userId
      * @param $currency
      * @param $whitelabelId
+     * @param array|null $select
      * @return mixed
      */
-    function getUserAgentQuery($userId, $currency, $whitelabelId)
-    : mixed {
-        return User::select([
+    function getUserAgentQuery($userId, $currency, $whitelabelId, ?array $select = null): mixed {
+        $defaultSelect = [
             'users.username',
             'users.type_user',
             'users.type_user as typeId',
@@ -717,7 +717,11 @@ class AgentsRepo
             'users.action',
             'users.status',
             'agent_currencies.balance',
-        ])
+        ];
+
+        $select = $select ?? $defaultSelect;
+
+        return User::select($select)
             ->join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
@@ -730,11 +734,11 @@ class AgentsRepo
      * @param $userId
      * @param $currency
      * @param $whitelabelId
+     * @param array|null $select
      * @return mixed
      */
-    function getPlayerQuery($userId, $currency, $whitelabelId)
-    : mixed {
-        return User::select([
+    function getPlayerQuery($userId, $currency, $whitelabelId, ?array $select = null): mixed {
+        $defaultSelect = [
             'users.username',
             'users.type_user',
             'users.type_user as typeId',
@@ -742,7 +746,11 @@ class AgentsRepo
             'users.action',
             'users.status',
             'agent_currencies.balance',
-        ])
+        ];
+
+        $select = $select ?? $defaultSelect;
+
+        return User::select($select)
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
@@ -750,6 +758,7 @@ class AgentsRepo
             ->where('users.whitelabel_id', $whitelabelId)
             ->where('agent_currencies.currency_iso', $currency);
     }
+
 
     /**
      * @param array $combinedResults
@@ -775,6 +784,14 @@ class AgentsRepo
                         $bActionString
                     ));
         });
+    }
+
+    public function getChildrenIdsWithParentAuth($userId, $currency, $whitelabelId)
+    {
+        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
+        $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId);
+
+
     }
 
 
