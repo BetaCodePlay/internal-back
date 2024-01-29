@@ -4381,7 +4381,7 @@ class AgentsController extends Controller
 
                 $ownerAgent = $agent->ownerAgent;
                 Log::info('UserOwner player', [$ownerAgent]);
-                //Log::info('My Owner player', [$ownerAgent->username]);
+                Log::info('My Owner player', [$ownerAgent->username]);
 
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
