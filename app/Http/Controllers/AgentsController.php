@@ -4379,6 +4379,8 @@ class AgentsController extends Controller
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
 
+                dd($userType);
+
                 $ownerAgent = $userType->ownerAgent;
                 Log::info('UserOwner player', [$ownerAgent]);
                 Log::info('My Owner player', [$ownerAgent->username]);
