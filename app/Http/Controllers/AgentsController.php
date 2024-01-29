@@ -4375,17 +4375,15 @@ class AgentsController extends Controller
                 Log::info('UserOwner', [$ownerAgent]);
                 Log::info('My Owner', [$ownerAgent->username]);
             } else {
-                $userType = ($user->type_user == 'agent')
+                $agent = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
 
-                dd($userType);
-
-                $ownerAgent = $userType->ownerAgent;
+                $ownerAgent = $agent->ownerAgent;
                 Log::info('UserOwner player', [$ownerAgent]);
-                Log::info('My Owner player', [$ownerAgent->username]);
+                //Log::info('My Owner player', [$ownerAgent->username]);
 
-                $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
+                $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
 
             $balanceUser = number_format($balance, 2);
