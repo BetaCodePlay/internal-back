@@ -29,6 +29,8 @@
             }
 
             .select2-container--default {
+                width: auto !important;
+
                 .select2-selection--single {
                     background: #333;
                     border-color: #333;
