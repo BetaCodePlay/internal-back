@@ -4371,8 +4371,8 @@ class AgentsController extends Controller
 
                 Log::info("UserId: {$user->id}", [$userOwner->user, $userOwner->owner, $userOwner]);
 
-                // Owner del usuario player
                 $userOwner = $userOwner->owner;
+                Log::info("$userOwner", [$userOwner]);
             } else {
                 $userType = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
