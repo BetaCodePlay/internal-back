@@ -4379,6 +4379,9 @@ class AgentsController extends Controller
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
 
+                $ownerAgent = $userType->ownerAgent;
+                Log::info('UserOwner player', [$ownerAgent]);
+                Log::info('My Owner player', [$ownerAgent->username]);
 
                 $balance = ($user->type_user == 'agent') ?  $userType?->balance :  $userType?->wallet?->balance;
             }
