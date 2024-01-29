@@ -240,15 +240,18 @@ class AgentsRepo
                 'users.referral_code',
                 'agents.master',
                 'agents.owner_id as owner',
+                'agents.user_id as owner_id',
                 'profiles.country_iso',
                 'agent_currencies.balance',
-                'agent_currencies.currency_iso'
+                'agent_currencies.currency_iso',
             )
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->join('users', 'agents.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
-            ->where('agent_currencies.currency_iso', $currency)
-            ->where('users.id', $user)
+            ->where([
+                'agent_currencies.currency_iso' => $currency,
+                'users.id'                      => $user
+            ])
             ->first();
     }
 
