@@ -65,7 +65,7 @@ class Agent extends Model
     /**
      * @return BelongsTo
      */
-    public function owner()
+    public function ownerAgent()
     : BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
