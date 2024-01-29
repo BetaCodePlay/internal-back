@@ -360,7 +360,6 @@ class AgentsRepo
     public function findUser(string|int $userId)
     : mixed {
         return Agent::on('replica')
-            ->owner()
             ->select([
                 'users.id',
                 'users.created_at as created',
@@ -379,6 +378,7 @@ class AgentsRepo
             ->join('users', 'agent_user.user_id', '=', 'users.id')
             ->join('profiles', 'users.id', '=', 'profiles.user_id')
             ->where('agent_user.user_id', $userId)
+            ->owner()
             ->first();
     }
 
