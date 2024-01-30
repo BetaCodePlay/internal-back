@@ -72,22 +72,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-manager-bottom">
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Balance') }}</div>
-                                <div class="data-text text-id">{{ $balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs">{{ _i('Adjustment') }}</button>
+                        @if($authUser->action === 1)
+                            <div class="tab-manager-bottom">
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Balance') }}</div>
+                                    <div class="data-text text-id">{{ $balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
+                                        <button class="btn btn-theme btn-xs">{{ _i('Adjustment') }}</button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Password') }}</div>
-                                <div class="data-text text-finish">
-                                    <span class="separator">&nbsp;</span>
-                                    <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Password') }}</div>
+                                    <div class="data-text text-finish">
+                                        <span class="separator">&nbsp;</span>
+                                        <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">2</div>
