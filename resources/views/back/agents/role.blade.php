@@ -111,7 +111,67 @@
                         @endif
                     </div>
                 </div>
-                <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">2</div>
+                <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
+                    <div class="tab-body">
+                        <form autocomplete="destroy" class="col table-load">
+                            <table id="table-transactions" class="display nowrap" data-route="">
+                                <thead>
+                                <tr>
+                                    <th data-priority="1">{{ _i('IP') }}</th>
+                                    <th data-priority="2">{{ _i('Quantity') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <div class="loading-style"></div>
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
                     <div class="tab-manager">
                         <div class="tab-manager-top">

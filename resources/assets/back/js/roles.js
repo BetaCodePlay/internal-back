@@ -478,28 +478,54 @@ class Roles {
 
     tabsTablesSection() {
         let $button = $('.tab-role');
-        let $target = $button.data('target');
         let tabManager = '#roleTabProfileManager';
         let tabTransaction = '#roleTabTransactions';
         let tabInformation =  '#roleTabMoreInformation';
         let tabLock = '#roleTabLocks';
         let tableInformationID = $('#table-information');
         let tableInformation;
+        let tableTransactionID = $('#table-transactions');
+        let tableTransaction;
 
 
         $(document).on('click', $button, function (){
-            let tablePoint = tableInformationID.parent().parent();
-            setTimeout(function (){
-                tableInformation = tableInformationID.DataTable({
-                    fixedHeader: true,
-                    responsive: true,
-                    searching: false,
-                    lengthChange: false
-                });
+            let $target = $button.data('target');
 
-                tablePoint.find('.table-load').addClass('table-complete');
-                tablePoint.find('.loading-style').hide();
-            }, 1000)
+            if($target === tabInformation) {
+                tableInformation.destroy();
+                $($target).find('.table-load').removeClass('table-complete');
+                $($target).find('.loading-style').show();
+
+                setTimeout(function (){
+                    tableInformation = tableInformationID.DataTable({
+                        fixedHeader: true,
+                        responsive: true,
+                        searching: false,
+                        lengthChange: false
+                    });
+
+                    $($target).find('.table-load').addClass('table-complete');
+                    $($target).find('.loading-style').hide();
+                }, 1000)
+            }
+
+            if($target === tabTransaction) {
+                tableTransaction.destroy();
+                $($target).find('.table-load').removeClass('table-complete');
+                $($target).find('.loading-style').show();
+
+                setTimeout(function (){
+                    tableTransaction = tableTransactionID.DataTable({
+                        fixedHeader: true,
+                        responsive: true,
+                        searching: false,
+                        lengthChange: false
+                    });
+
+                    $($target).find('.table-load').addClass('table-complete');
+                    $($target).find('.loading-style').hide();
+                }, 1000)
+            }
         });
     }
 
