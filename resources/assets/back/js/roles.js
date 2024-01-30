@@ -491,12 +491,10 @@ class Roles {
         $(document).on('click', $button, function (){
             let $this = $(this);
             let $target = $this.data('target');
-            console.log($target);
-            console.log(tabInformation);
+
 
             if($target === tabInformation) {
-                console.log('123');
-
+                tableInformation.destroy();
                 $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').show();
 
@@ -514,7 +512,7 @@ class Roles {
             }
 
             if($target === tabTransaction) {
-
+                tableTransaction.destroy();
                 $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').show();
 
