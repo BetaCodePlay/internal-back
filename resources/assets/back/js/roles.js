@@ -497,7 +497,7 @@ class Roles {
                     lengthChange: false
                 });
 
-                tablePoint.addClass('table-complete');
+                tablePoint.find('.table-load').addClass('table-complete');
                 tablePoint.find('.loading-style').hide();
             }, 1000)
         });
