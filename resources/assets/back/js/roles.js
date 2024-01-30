@@ -492,9 +492,11 @@ class Roles {
             let $this = $(this);
             let $target = $this.data('target');
 
-
             if($target === tabInformation) {
-                tableInformation.destroy();
+                if (tableInformation !== "undefined") {
+                    tableInformation.destroy();
+                }
+
                 $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').show();
 
@@ -512,7 +514,10 @@ class Roles {
             }
 
             if($target === tabTransaction) {
-                tableTransaction.destroy();
+                if (tableTransaction !== "undefined") {
+                    tableTransaction.destroy();
+                }
+
                 $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').show();
 
