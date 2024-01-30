@@ -88,8 +88,6 @@
                                                     data-username="{{ $authUser->username }}"
                                                     data-rol="{{ $agentType }}">{{ _i('Adjustment') }}
                                             </button>
-                                        @else
-                                            &nbsp;
                                         @endif
                                     </div>
                                 </div>
@@ -97,7 +95,11 @@
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Password') }}</div>
                                     <div class="data-text text-finish">
-                                        <span class="separator">&nbsp;</span>
+                                        <span class="separator">
+                                            @if(auth()->user()->id !== $authUser->id)
+                                                &nbsp;
+                                            @endif
+                                        </span>
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset"
                                                 data-userid="{{ $authUser->id}}"
                                                 data-username="{{ $authUser->username }}"
