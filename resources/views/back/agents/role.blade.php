@@ -78,7 +78,11 @@
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Balance') }}</div>
                                     <div class="data-text text-id">{{ $balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs">{{ _i('Adjustment') }}</button>
+                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
+                                                data-userid="{{ $authUser->id}}"
+                                                data-username="{{ $authUser->username }}"
+                                                data-rol="{{ $agentType }}">{{ _i('Adjustment') }}
+                                        </button>
                                     </div>
                                 </div>
 
@@ -86,7 +90,11 @@
                                     <div class="data-title">{{ _i('Password') }}</div>
                                     <div class="data-text text-finish">
                                         <span class="separator">&nbsp;</span>
-                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset" data-userid="{{ $authUser->id}}" data-username="{{ $authUser->username }}" data-rol="{{ $agentType }}">{{ _i('Reset') }}</button>
+                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset"
+                                                data-userid="{{ $authUser->id}}"
+                                                data-username="{{ $authUser->username }}"
+                                                data-rol="{{ $agentType }}">{{ _i('Reset') }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
