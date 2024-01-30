@@ -62,6 +62,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-manager-data">
+                            <div class="data-title">{{ _i('Balance') }}</div>
+                            <div class="data-text text-id">{{ $authUser->balanceUser}} <span class="separator"></span><button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
+                        </div>
 
                         <div class="tab-manager-data">
                             <div class="data-title">{{ _i('Number of dependent agents') }}</div>
