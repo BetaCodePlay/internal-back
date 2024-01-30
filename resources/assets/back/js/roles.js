@@ -1,7 +1,7 @@
 import {
     clipboard
 } from "../../commons/js/core";
-import {initLitepickerEndTodayNew, initSelect2} from "./commons";
+import {initLitepickerEndTodayNew} from "./commons";
 
 class Roles {
     static globalusername;
@@ -87,7 +87,6 @@ class Roles {
         });
 
         clipboard();
-        initSelect2();
     };
 
     userSearch(placeholder, moreCharacters, min) {
