@@ -114,7 +114,7 @@
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <form autocomplete="destroy" class="tab-form">
                         <div class="row">
-                            <div class="col-12 col-lg-4 col-form">
+                            <div class="col-12 col-lg-3 col-form">
                                 <label>{{ _i('Action') }}</label>
                                 <select class="form-control">
                                     <option value="">{{ _i('All') }}</option>
@@ -122,7 +122,7 @@
                                     <option value="">{{ _i('Discredited') }}</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-4 col-form">
+                            <div class="col-12 col-lg-3 col-form">
                                 <label>{{ _i('User type') }}</label>
                                 <select class="form-control">
                                     <option value="">{{ _i('All') }}</option>
@@ -130,10 +130,18 @@
                                     <option value="">{{ _i('Players') }}</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-4 col-form">
+                            <div class="col-12 col-lg-3 col-form">
                                 <div class="form-group">
                                     <label>{{ _i('Date') }}</label>
                                     <input type="text" class="form-control" id="date_range_new" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-3 col-form">
+                                <div class="form-group">
+                                    <label class="d-none d-lg-block">&nbsp;</label>
+                                    <button type="button" class="btn btn-theme btn-block" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching...">
+                                        {{ _i('Search') }}
+                                    </button>
                                 </div>
                             </div>
                         </div>
