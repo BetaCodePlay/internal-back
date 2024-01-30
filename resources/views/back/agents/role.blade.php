@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-manager-top">
+                        <div class="tab-manager-bottom">
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Balance') }}</div>
                                 <div class="data-text text-id">{{ $balanceUser }} <span class="separator"></span>
