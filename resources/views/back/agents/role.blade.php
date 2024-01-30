@@ -58,30 +58,18 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
-                                <div class="data-text text-finish text-status {{ $authUser->status ? 'force-text-finish' : '' }}">
-                                    @if($authUser->status)
-                                        <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
-                                        <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs lockUser currentDataRole" data-toggle="modal" data-target="#role-lock"
-                                                data-lock="{{ _i('Lock profile') }}"
-                                                data-unlock="{{ _i('Unlock profile') }}"
-                                                data-value="{{ $authUser->status }}"
-                                                data-type="{{ $authUser->action }}"
-                                                data-userid="{{ $authUser->id }}"
-                                                data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $agentType }}">{{ _i('Lock') }}</button>
-                                    @else
-                                        <i class="fa-solid i-status fa-circle red"></i> {{ _i('Locked') }}
-                                        <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs lockUser currentDataRole" data-toggle="modal" data-target="#role-lock"
-                                                data-lock="{{ _i('Lock profile') }}"
-                                                data-unlock="{{ _i('Unlock profile') }}"
-                                                data-value="{{ $authUser->status }}"
-                                                data-type="{{ $authUser->action }}"
-                                                data-userid="{{ $authUser->id }}"
-                                                data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $agentType }}">{{ _i('Unlock') }}</button>
-                                    @endif
+                                <div class="data-text text-finish text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
+                                    <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->status ? _i('Active') : _i('Locked') }}
+                                    <span class="separator"></span>
+                                    <button class="btn btn-theme btn-xs lockUser currentDataRole" data-toggle="modal" data-target="#role-lock"
+                                            data-lock="{{ _i('Lock profile') }}"
+                                            data-unlock="{{ _i('Unlock profile') }}"
+                                            data-value="{{ $authUser->status }}"
+                                            data-type="{{ $authUser->action }}"
+                                            data-userid="{{ $authUser->id }}"
+                                            data-username="{{ $authUser->username }}"
+                                            data-rol="{{ $agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
+                                    </button>
                                 </div>
                             </div>
                         </div>
