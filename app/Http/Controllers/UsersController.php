@@ -2659,11 +2659,8 @@ class UsersController extends Controller
      */
     public function userIpData(Request $request)
     : array {
-        return $this->agentsRepo->getDirectChildren(
-            $request,
-            Auth::id(),
-            session('currency'),
-            Configurations::getWhitelabel()
+        return $this->auditsRepo->getUserIp(
+            $request
         );
     }
 
