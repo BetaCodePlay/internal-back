@@ -116,14 +116,14 @@ class AuditsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-        $userId = $request->has('user');
+        $userId = $request->input('user');
         $auditQuery = $this->getIpQuery($userId);
         $auditQuery->where(function ($query) use ($searchValue) {
             $query->where('data->ip', 'like', "%$searchValue%");
         });
 
         $orderableColumns = OrderTableIPColumns::getOrderTableIPColumns();
-        $audit =$auditQuery->orderBy(
+        $audit = $auditQuery->orderBy(
             array_key_exists($orderColumn, $orderableColumns)
                 ? $orderableColumns[$orderColumn]
                 : 'data->ip',
@@ -144,18 +144,12 @@ class AuditsRepo
      * @param array|null $select
      * @return mixed
      */
-    function getIpQuery($userId, ?array $select = null): mixed {
-        $defaultSelect = [
+    function getIpQuery($userId): mixed {
+        return Audit::select(DB::raw('count(id) as quantity'),  [
             'data->ip'
-        ];
-
-        $select = $select ?? $defaultSelect;
-
-        return Audit::select(DB::raw('count(id) as quantity'),  $select)
+        ])
             ->where('user_id', $userId)
-            ->groupBy('data->ip')
-            ->limit(100)
-            ->get();
+            ->groupBy('data->ip');
     }
 
 
