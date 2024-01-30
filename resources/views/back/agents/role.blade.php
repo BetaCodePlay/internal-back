@@ -58,7 +58,7 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
-                                <div class="data-text text-finish text-status {{ $authUser->action !== 1 ? 'force-text-finish' : '' }}">
+                                <div class="data-text text-finish text-status {{ $authUser->status ? 'force-text-finish' : '' }}">
                                     @if($authUser->status)
                                         <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
                                         <span class="separator"></span>
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if($authUser->action === 1)
+                        @if($authUser->status)
                             <div class="tab-manager-bottom">
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Balance') }}</div>
