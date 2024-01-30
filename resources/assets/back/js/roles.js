@@ -477,7 +477,7 @@ class Roles {
     };
 
     tabsTablesSection() {
-        let $button = $('.tab-role');
+        let $button = '.tab-role';
         let tabManager = '#roleTabProfileManager';
         let tabTransaction = '#roleTabTransactions';
         let tabInformation =  '#roleTabMoreInformation';
