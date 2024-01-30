@@ -52,26 +52,58 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text text-id">{{ $authUser->id}} <span class="separator"></span>
+                                <div class="data-text text-id">{{ $authUser->id }} <span class="separator"></span>
                                     <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button>
                                 </div>
                             </div>
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Password') }}</div>
-                                <div class="data-text text-finish">
-                                    <span class="separator">&nbsp;</span>
-                                    <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
+                                <div class="data-title">{{ _i('Status') }}</div>
+
+                                <div class="data-text text-finish text-status {{ $authUser->action !== 1 ? 'force-text-finish' : '' }}">
+                                    @if($authUser->action === 1)
+                                        <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
+                                        <span class="separator"></span>
+                                        <button class="btn btn-theme btn-xs lockUser" data-toggle="modal" data-target="#role-lock"
+                                                data-lock="{{ _i('Lock profile') }}"
+                                                data-unlock="{{ _i('Unlock profile') }}"
+                                                data-rol=""
+                                                data-value="true"
+                                                data-type=""
+                                                data-userid="{{ $authUser->id }}"
+                                                data-username="{{ $authUser->username }}">{{ _i('Lock') }}</button>
+                                    @else
+                                        <i class="fa-solid i-status fa-circle red"></i> {{ _i('Locked') }}
+                                        <span class="separator"></span>
+                                        <button class="btn btn-theme btn-xs lockUser" data-toggle="modal" data-target="#role-lock"
+                                                data-lock="{{ _i('Lock profile') }}"
+                                                data-unlock="{{ _i('Unlock profile') }}"
+                                                data-rol=""
+                                                data-value="false"
+                                                data-type=""
+                                                data-userid="{{ $authUser->id }}"
+                                                data-username="{{ $authUser->username }}">{{ _i('Unlock') }}</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-manager-top">
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Balance') }}</div>
-                                <div class="data-text text-id">{{ $balanceUser }} <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs">{{ _i('Adjustment') }}</button>
+                        @if($authUser->action === 1)
+                            <div class="tab-manager-bottom">
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Balance') }}</div>
+                                    <div class="data-text text-id">{{ $balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
+                                        <button class="btn btn-theme btn-xs">{{ _i('Adjustment') }}</button>
+                                    </div>
+                                </div>
+
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Password') }}</div>
+                                    <div class="data-text text-finish">
+                                        <span class="separator">&nbsp;</span>
+                                        <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">2</div>
@@ -87,8 +119,8 @@
                                 <div class="data-text">{{ $owner }}</div>
                             </div>
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('E-mail') }}</div>
-                                <div class="data-text text-finish">{{ $authUser->email }}</div>
+                                <div class="data-title">{{ _i('Currency') }}</div>
+                                <div class="data-text text-finish">{{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}</div>
                             </div>
                         </div>
 
