@@ -105,6 +105,62 @@ class AuditsRepo
     }
 
     /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function getUserIp(Request $request)
+    : mixed {
+        $draw        = $request->input('draw', 1);
+        $start       = $request->input('start', 0);
+        $length      = $request->input('length', 10);
+        $searchValue = $request->input('search.value');
+        $orderColumn = $request->input('order.0.column');
+        $orderDir    = $request->input('order.0.dir');
+        $userId = $request->has('user');
+        $auditQuery = $this->getIpQuery($userId);
+        $auditQuery->where(function ($query) use ($searchValue) {
+            $query->where('data->ip', 'like', "%$searchValue%");
+        });
+
+        $orderableColumns = OrderTableIPColumns::getOrderTableIPColumns();
+        $audit =$auditQuery->orderBy(
+            array_key_exists($orderColumn, $orderableColumns)
+                ? $orderableColumns[$orderColumn]
+                : 'data->ip',
+            $orderColumn  ? $orderDir : 'asc'
+        );
+        $resultCount = count($audit);
+        $slicedResults    = array_slice($audit, $start, $length);
+        return [
+            'draw'            => (int)$draw,
+            'recordsTotal'    => $resultCount,
+            'recordsFiltered' => $resultCount,
+            'data'            => $slicedResults,
+        ];
+    }
+
+    /**
+     * @param $userId
+     * @param array|null $select
+     * @return mixed
+     */
+    function getIpQuery($userId, ?array $select = null): mixed {
+        $defaultSelect = [
+            'data->ip'
+        ];
+
+        $select = $select ?? $defaultSelect;
+
+        return Audit::select(DB::raw('count(id) as quantity'),  $select)
+            ->where('user_id', $userId)
+            ->groupBy('data->ip')
+            ->limit(100)
+            ->get();
+    }
+
+
+
+    /**
      * @param string $timezone
      * @return Collection
      */
