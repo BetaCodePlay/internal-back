@@ -114,7 +114,7 @@
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <form autocomplete="destroy" class="tab-form">
                         <div class="row">
-                            <div class="col-12 col-lg-3">
+                            <div class="col-12 col-lg-4">
                                 <label>{{ _i('Action') }}</label>
                                 <select class="form-control" id="userLockType">
                                     <option value="">{{ _i('All') }}</option>
@@ -122,7 +122,7 @@
                                     <option value="">{{ _i('Discredited') }}</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-3">
+                            <div class="col-12 col-lg-4">
                                 <label>{{ _i('User type') }}</label>
                                 <select class="form-control" id="userLockType">
                                     <option value="">{{ _i('All') }}</option>
@@ -130,7 +130,7 @@
                                     <option value="">{{ _i('Players') }}</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-3">
+                            <div class="col-12 col-lg-4">
                                 <div class="form-group">
                                     <label>{{ _i('Date') }}</label>
                                     <input type="text" class="form-control" id="date_range_new" placeholder="">
