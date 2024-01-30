@@ -117,54 +117,27 @@
                             <table id="table-transactions" class="display nowrap" data-route="">
                                 <thead>
                                 <tr>
-                                    <th data-priority="1">{{ _i('IP') }}</th>
-                                    <th data-priority="2">{{ _i('Quantity') }}</th>
+                                    <th>{{ _i('Date') }}</th>
+                                    <th data-priority="1">{{ _i('Origin') }}</th>
+                                    <th data-priority="2">{{ _i('Destination') }}</th>
+                                    <th data-priority="3">{{ _i('Amount') }}</th>
+                                    <th>{{ _i('Balance') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
+                                    <td>04-01-2024 17:21:32</td>
+                                    <td>admin</td>
+                                    <td>antonio69</td>
+                                    <td>+100</td>
+                                    <td>100.00</td>
                                 </tr>
                                 <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
+                                    <td>04-01-2024 17:21:32</td>
+                                    <td>admin</td>
+                                    <td>admin</td>
+                                    <td>-100</td>
+                                    <td>1.200.00</td>
                                 </tr>
                                 </tbody>
                             </table>
