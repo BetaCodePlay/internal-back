@@ -151,6 +151,17 @@
                 }
             }
 
+            .tab-manager-bottom {
+                display: inline-block;
+                position: relative;
+
+                @media screen and (max-width: 767px) {
+                    display: block;
+                    margin-top: 5px;
+                    padding-top: 5px;
+                }
+            }
+
             .tab-manager-data {
                 display: inline-block;
                 padding: 12px 0;
