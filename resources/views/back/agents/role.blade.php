@@ -118,9 +118,9 @@
                                 <thead>
                                 <tr>
                                     <th>{{ _i('Date') }}</th>
-                                    <th data-priority="1">{{ _i('Origin') }}</th>
-                                    <th data-priority="2">{{ _i('Destination') }}</th>
-                                    <th data-priority="3">{{ _i('Amount') }}</th>
+                                    <th data-priority="3">{{ _i('Origin') }}</th>
+                                    <th data-priority="1">{{ _i('Destination') }}</th>
+                                    <th data-priority="2">{{ _i('Amount') }}</th>
                                     <th>{{ _i('Balance') }}</th>
                                 </tr>
                                 </thead>
