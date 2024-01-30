@@ -198,7 +198,9 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">
-                    <h5>{{ _i('coming soon') }}...</h5>
+                    <br>
+                    <div class="text-center"><b>{{ _i('Coming soon') }}...</b></div>
+                    <br>
                 </div>
             </div>
 
