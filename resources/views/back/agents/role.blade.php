@@ -58,12 +58,11 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
-
                                 <div class="data-text text-finish text-status {{ $authUser->action !== 1 ? 'force-text-finish' : '' }}">
                                     @if($authUser->action === 1)
                                         <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
                                         <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs lockUser" data-toggle="modal" data-target="#role-lock"
+                                        <button class="btn btn-theme btn-xs lockUser btn-locked-head" data-toggle="modal" data-target="#role-lock"
                                                 data-lock="{{ _i('Lock profile') }}"
                                                 data-unlock="{{ _i('Unlock profile') }}"
                                                 data-rol=""
@@ -74,7 +73,7 @@
                                     @else
                                         <i class="fa-solid i-status fa-circle red"></i> {{ _i('Locked') }}
                                         <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs lockUser" data-toggle="modal" data-target="#role-lock"
+                                        <button class="btn btn-theme btn-xs lockUser btn-locked-head" data-toggle="modal" data-target="#role-lock"
                                                 data-lock="{{ _i('Lock profile') }}"
                                                 data-unlock="{{ _i('Unlock profile') }}"
                                                 data-rol=""
@@ -99,7 +98,7 @@
                                     <div class="data-title">{{ _i('Password') }}</div>
                                     <div class="data-text text-finish">
                                         <span class="separator">&nbsp;</span>
-                                        <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
+                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset" data-userid="{{ $authUser->id}}" data-username="{{ $authUser->username }}" data-rol="{{ $agentType }}">{{ _i('Reset') }}</button>
                                     </div>
                                 </div>
                             </div>
