@@ -22,22 +22,22 @@
         <div class="nav-roles">
             <ul class="nav nav-tabs" id="roleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="true">
+                    <button class="nav-link active tab-role" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="true">
                         {{ _i('Profile management') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" data-toggle="tab" data-target="#roleTabTransactions" type="button" role="tab" aria-controls="roleTabTransactions" aria-selected="false">
+                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabTransactions" type="button" role="tab" aria-controls="roleTabTransactions" aria-selected="false">
                         {{ _i('Transactions') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
+                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
                         {{ _i('More information') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" data-toggle="tab" data-target="#roleTabLocks" type="button" role="tab" aria-controls="roleTabLocks" aria-selected="false">
+                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabLocks" type="button" role="tab" aria-controls="roleTabLocks" aria-selected="false">
                         {{ _i('Locks') }}
                     </button>
                 </li>
@@ -136,6 +136,66 @@
                             <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
                         </div>
                     </div>
+
+                    <div class="tab-body">
+                        <form autocomplete="destroy" class="col table-load">
+                            <table id="table-information" class="display nowrap" data-route="">
+                                <thead>
+                                <tr>
+                                    <th data-priority="1">{{ _i('IP') }}</th>
+                                    <th data-priority="2">{{ _i('Quantity') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                <tr>
+                                    <td>190.120.255.4</td>
+                                    <td>32</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <div class="loading-style"></div>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">4</div>
             </div>
@@ -202,7 +262,7 @@
             roles.userBalance();
             roles.userCreate();
             roles.userLock();
-            roles.userTabTransaction();
+            roles.tabsTablesSection();
         });
     </script>
 @endsection

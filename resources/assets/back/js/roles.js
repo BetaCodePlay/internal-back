@@ -476,6 +476,25 @@ class Roles {
         }
     };
 
+    tabsTablesSection() {
+        let $button = $('.tab-role');
+        let $target = $button.data('target');
+        let tabManager = '#roleTabProfileManager';
+        let tabTransaction = '#roleTabTransactions';
+        let tabInformation =  '#roleTabMoreInformation';
+        let tabLock = '#roleTabLocks';
+        let tableInformationID = $('#table-information');
+        let tableInformation;
+
+
+        $(document).on('click', $button, function (){
+            tableInformation = tableInformationID.DataTable({
+                fixedHeader: true,
+                responsive: true
+            });
+        });
+    }
+
     static errorResponse(json) {
         let array = Object.values(json.responseJSON.errors);
         let title = json.responseJSON.message;
