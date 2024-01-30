@@ -48,7 +48,7 @@
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Name') }}</div>
-                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->typeUser }}</span></div>
+                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->type_user }}</span></div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
@@ -61,6 +61,10 @@
                                     <button class="btn btn-theme btn-xs btn-reset-password-head" data-toggle="modal" data-target="#role-password-reset" data-id="{{ $authUser->id}}">{{ _i('Reset') }}</button>
                                 </div>
                             </div>
+                        </div>
+                        <div class="tab-manager-data">
+                            <div class="data-title">{{ _i('Balance') }}</div>
+                            <div class="data-text text-id">{{ $authUser->balanceUser}} <span class="separator"></span><button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
                         </div>
 
                         <div class="tab-manager-data">
