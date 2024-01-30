@@ -488,10 +488,16 @@ class Roles {
 
 
         $(document).on('click', $button, function (){
-            tableInformation = tableInformationID.DataTable({
-                fixedHeader: true,
-                responsive: true
-            });
+
+            setTimeout(function (){
+                tableInformation = tableInformationID.DataTable({
+                    fixedHeader: true,
+                    responsive: true,
+                    searching: false,
+                    lengthChange: false
+                });
+            }, 1000)
+
         });
     }
 

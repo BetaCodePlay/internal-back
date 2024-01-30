@@ -299,7 +299,10 @@
             }
 
             .tab-body {
-                &.table-load {
+                min-height: 240px;
+                position: relative;
+
+                .table-load {
                     opacity: 0;
                     transition: .3s;
 
