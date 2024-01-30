@@ -116,7 +116,7 @@
                         <div class="row">
                             <div class="col-12 col-lg-4 col-form">
                                 <label>{{ _i('Action') }}</label>
-                                <select class="form-control" id="userLockType">
+                                <select class="form-control">
                                     <option value="">{{ _i('All') }}</option>
                                     <option value="">{{ _i('Accredited') }}</option>
                                     <option value="">{{ _i('Discredited') }}</option>
@@ -124,7 +124,7 @@
                             </div>
                             <div class="col-12 col-lg-4 col-form">
                                 <label>{{ _i('User type') }}</label>
-                                <select class="form-control" id="userLockType">
+                                <select class="form-control">
                                     <option value="">{{ _i('All') }}</option>
                                     <option value="">{{ _i('Agents') }}</option>
                                     <option value="">{{ _i('Players') }}</option>
