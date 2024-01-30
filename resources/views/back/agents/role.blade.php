@@ -71,6 +71,8 @@
                                                 data-username="{{ $authUser->username }}"
                                                 data-rol="{{ $agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
                                         </button>
+                                    @else
+                                        &nbsp;
                                     @endif
                                 </div>
                             </div>
@@ -86,6 +88,8 @@
                                                     data-username="{{ $authUser->username }}"
                                                     data-rol="{{ $agentType }}">{{ _i('Adjustment') }}
                                             </button>
+                                        @else
+                                            &nbsp;
                                         @endif
                                     </div>
                                 </div>
