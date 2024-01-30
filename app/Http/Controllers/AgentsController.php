@@ -4369,8 +4369,6 @@ class AgentsController extends Controller
 
                 $userOwner = $agentsRepo->findUser($user->id);
                 $ownerAgent = $userOwner->ownerAgent;
-                $type = 5;
-
             } else {
                 $agent = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
@@ -4378,12 +4376,10 @@ class AgentsController extends Controller
 
                 $ownerAgent = $agent->ownerAgent;
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
-                $type = 1;
             }
 
             $balanceUser = number_format($balance, 2);
             $owner = $ownerAgent;
-            $agentType = $type;
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
                 'agents'             => $this->agentsRepo->getAgentsAllByOwner(
@@ -4418,7 +4414,7 @@ class AgentsController extends Controller
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
                 'balanceUser'        => $balanceUser,
-                'agentType'          =>  $agentType
+                'agentType'          =>  $user->type
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
