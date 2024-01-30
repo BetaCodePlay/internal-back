@@ -524,9 +524,7 @@ class Roles {
                 setTimeout(function (){
                     tableTransaction = tableTransactionID.DataTable({
                         fixedHeader: true,
-                        responsive: true,
-                        searching: false,
-                        lengthChange: false
+                        responsive: true
                     });
 
                     $($target).find('.table-load').addClass('table-complete');
