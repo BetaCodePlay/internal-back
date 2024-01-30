@@ -4388,7 +4388,7 @@ class AgentsController extends Controller
                 $currency,
                 $whitelabel
             ),
-                'owner'              => $owner,
+                'owner'              => $owner->username,
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
