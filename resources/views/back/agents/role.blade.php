@@ -61,7 +61,7 @@
                                 <div class="data-text text-finish text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
                                     <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->status ? _i('Active') : _i('Locked') }}
                                     <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs lockUser currentDataRole" data-toggle="modal" data-target="#role-lock"
+                                    <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
                                             data-lock="{{ _i('Lock profile') }}"
                                             data-unlock="{{ _i('Unlock profile') }}"
                                             data-value="{{ $authUser->status }}"
