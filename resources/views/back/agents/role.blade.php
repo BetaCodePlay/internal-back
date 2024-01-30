@@ -59,8 +59,16 @@
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
 
-                                <div class="data-text text-finish text-status"><i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }} <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs">{{ _i('Lock') }}</button>
+                                <div class="data-text text-finish text-status">
+                                    @if($authUser->action)
+                                        <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
+                                        <span class="separator"></span>
+                                        <button class="btn btn-theme btn-xs">{{ _i('Lock') }}</button>
+                                    @else
+                                        <i class="fa-solid i-status fa-circle red"></i> {{ _i('Locked') }}
+                                        <span class="separator"></span>
+                                        <button class="btn btn-theme btn-xs">{{ _i('Unlock') }}</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
