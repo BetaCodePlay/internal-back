@@ -2654,6 +2654,20 @@ class UsersController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return array
+     */
+    public function userIpData(Request $request)
+    : array {
+        return $this->agentsRepo->getDirectChildren(
+            $request,
+            Auth::id(),
+            session('currency'),
+            Configurations::getWhitelabel()
+        );
+    }
+
+    /**
      * Show users status
      *
      * @return \Illuminate\Contracts\Foundation\Application|Factory|View
