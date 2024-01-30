@@ -142,6 +142,12 @@
                 display: inline-block;
                 position: relative;
 
+                .tab-manager-data {
+                    .text-finish {
+                        border-right: 0;
+                    }
+                }
+
                 @media screen and (max-width: 767px) {
                     display: block;
                     margin-top: 5px;
@@ -160,10 +166,6 @@
 
                     .tab-manager-data {
                         display: inline-block;
-
-                        .text-finish {
-                            border-right: 0;
-                        }
                     }
                 }
             }
