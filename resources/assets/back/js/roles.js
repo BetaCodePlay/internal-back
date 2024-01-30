@@ -218,6 +218,7 @@ class Roles {
         $(document).on('click', $targetModal, function () {
             let $this = $(this);
             let $type = $this.data('type');
+            let $rol = $this.data('rol');
             let $buttonCancel = $modal.find('.modal-footer [data-dismiss="modal"]');
             let $buttonSuccess = $modal.find('.lockUser');
             let $cancel;
@@ -228,7 +229,7 @@ class Roles {
             $globalType = $type;
             $typeAll.show();
 
-            if ($type !== 8) {
+            if($rol === 5) {
                 $typeAll.hide();
             }
 
@@ -239,6 +240,10 @@ class Roles {
                 $('#userReasonUnlock').hide();
                 $('#userReasonLock').show();
             } else {
+                if ($type !== 8) {
+                    $typeAll.hide();
+                }
+
                 $title = $this.data('unlock');
                 $cancel = $buttonCancel.data('unlock');
                 $success = $buttonSuccess.data('unlock');
