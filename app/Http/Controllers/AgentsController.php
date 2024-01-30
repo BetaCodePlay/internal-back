@@ -4368,26 +4368,36 @@ class AgentsController extends Controller
                     : 0;
 
                 $userOwner = $agentsRepo->findUser($user->id);
-
-                Log::info("UserId: {$user->id}", [$userOwner->user, $userOwner->owner, $userOwner]);
-
                 $ownerAgent = $userOwner->ownerAgent;
-                Log::info('UserOwner', [$ownerAgent]);
-                Log::info('My Owner', [$ownerAgent->username]);
+
             } else {
                 $agent = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
 
                 $ownerAgent = $agent->ownerAgent;
-                Log::info('UserOwner player', [$ownerAgent]);
-                Log::info('My Owner player', [$ownerAgent->username]);
-
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
 
             $balanceUser = number_format($balance, 2);
-            \Log::info(__METHOD__, ['balanceUser' => $balanceUser]);
+            $owner = $ownerAgent;
+            Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
+                'makers'             => [],
+                'agents'             => $this->agentsRepo->getAgentsAllByOwner(
+                $authUserId,
+                $currency,
+                $whitelabel
+            ),
+                'owner'              => $owner,
+                'action'             => $authUser->action,
+                'iagent'             => $agentUser,
+                'confirmation_email' => $confirmation,
+                'title'              => _i('Agents module'),
+                'authUser'           => $user,
+                'username'           => $customUsername,
+                'dependencies'       => $dependence,
+                'balanceUser'        => $balanceUser]);
+
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
@@ -4396,6 +4406,7 @@ class AgentsController extends Controller
                     $currency,
                     $whitelabel
                 ),
+                'owner'              => $owner,
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
