@@ -159,6 +159,16 @@
                     display: block;
                     margin-top: 5px;
                     padding-top: 5px;
+
+                    .tab-manager-data {
+                        .text-finish {
+                            border-right: 0;
+                        }
+
+                        @media screen and (max-width: 767px) {
+                            display: inline-block;
+                        }
+                    }
                 }
             }
 
