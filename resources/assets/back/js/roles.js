@@ -493,7 +493,7 @@ class Roles {
             let $target = $this.data('target');
 
             if($target === tabInformation) {
-                if (tableInformation !== "undefined") {
+                if (tableInformation !== undefined) {
                     tableInformation.destroy();
                 }
 
@@ -514,7 +514,7 @@ class Roles {
             }
 
             if($target === tabTransaction) {
-                if (tableTransaction !== "undefined") {
+                if (tableTransaction !== undefined) {
                     tableTransaction.destroy();
                 }
 
