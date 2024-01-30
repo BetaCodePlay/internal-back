@@ -123,6 +123,12 @@
                 display: inline-block;
                 position: relative;
 
+                .tab-manager-data {
+                    .force-text-finish {
+                        border-right: 0;
+                    }
+                }
+
                 @media screen and (max-width: 767px) {
                     display: block;
                     margin-bottom: 5px;

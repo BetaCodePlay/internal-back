@@ -59,7 +59,7 @@
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
 
-                                <div class="data-text text-finish text-status">
+                                <div class="data-text text-finish text-status {{ $authUser->action !== 1 ? 'force-text-finish' : '' }}">
                                     @if($authUser->action === 1)
                                         <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
                                         <span class="separator"></span>
