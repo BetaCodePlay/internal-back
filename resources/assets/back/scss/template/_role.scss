@@ -262,21 +262,31 @@
                 }
             }
 
-            .text-status {
-                color: #fff;
+            .data-text {
+                &.text-status {
+                    color: #fff;
 
-                i {
-                    font-size: 10px;
-                    vertical-align: middle;
-                    display: inline-block;
-                    margin-right: 5px;
+                    i {
+                        font-size: 10px;
+                        vertical-align: middle;
+                        display: inline-block;
+                        margin-right: 5px;
 
-                    &.green {
-                        color: #d7fe62;
+                        &.green {
+                            color: #d7fe62;
+                        }
+
+                        &.red {
+                            color: #e84444;
+                        }
                     }
 
-                    &.red {
-                        color: #e84444;
+                    .btn {
+                        margin-left: 15px;
+
+                        @media screen and (max-width: 767px) {
+                            margin-left: 0;
+                        }
                     }
                 }
             }
