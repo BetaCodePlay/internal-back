@@ -197,7 +197,9 @@
                         <div class="loading-style"></div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">4</div>
+                <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">
+                    <h5>{{ _i('coming soon') }}...</h5>
+                </div>
             </div>
 
         </div>
