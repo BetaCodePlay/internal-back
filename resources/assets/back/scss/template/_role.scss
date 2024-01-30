@@ -402,6 +402,12 @@
                         }
                     }
                 }
+
+                &:last-of-type {
+                    td {
+                        border-bottom: 0 solid transparent !important;
+                    }
+                }
             }
         }
 
