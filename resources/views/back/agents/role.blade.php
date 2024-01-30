@@ -107,7 +107,7 @@
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Created the') }}</div>
-                                <div class="data-text">{{ $authUser->created_at }}</div>
+                                <div class="data-text">{{ setTimezone($authUser->created_at)->format('d-m-Y ') }}</div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Father') }}</div>
