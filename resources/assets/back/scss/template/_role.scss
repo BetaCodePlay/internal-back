@@ -142,21 +142,21 @@
                 display: inline-block;
                 position: relative;
 
-                &::before {
-                    content: "";
-                    width: calc(100% + 40px);
-                    display: block;
-                    position: absolute;
-                    bottom: calc(100% + 5px);
-                    height: 2px;
-                    background: #3c3c3c;
-                    left: -20px;
-                }
-
                 @media screen and (max-width: 767px) {
                     display: block;
                     margin-top: 5px;
                     padding-top: 5px;
+
+                    &::before {
+                        content: "";
+                        width: calc(100% + 40px);
+                        display: block;
+                        position: absolute;
+                        bottom: calc(100% + 5px);
+                        height: 2px;
+                        background: #3c3c3c;
+                        left: -20px;
+                    }
 
                     .tab-manager-data {
                         display: inline-block;
