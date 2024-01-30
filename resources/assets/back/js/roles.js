@@ -488,6 +488,7 @@ class Roles {
 
 
         $(document).on('click', $button, function (){
+            let tablePoint = tableInformationID.parent().parent();
             setTimeout(function (){
                 tableInformation = tableInformationID.DataTable({
                     fixedHeader: true,
@@ -496,7 +497,8 @@ class Roles {
                     lengthChange: false
                 });
 
-                tableInformationID.parent().parent().find('.loading-style').hide();
+                tablePoint.addClass('table-complete');
+                tablePoint.find('.loading-style').hide();
             }, 1000)
         });
     }

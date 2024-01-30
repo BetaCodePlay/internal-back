@@ -298,23 +298,23 @@
                 }
             }
 
-            .tab-body {
-                min-height: 240px;
-                position: relative;
-
-                .table-load {
-                    opacity: 0;
-                    transition: .3s;
-
-                    &.table-complete {
-                        opacity: 1;
-                    }
-                }
-            }
-
             @media screen and (max-width: 767px) {
                 background: #1e1e1e;
                 border-radius: 12px;
+            }
+        }
+
+        .tab-body {
+            min-height: 240px;
+            position: relative;
+
+            .table-load {
+                opacity: 0;
+                transition: .3s;
+
+                &.table-complete {
+                    opacity: 1;
+                }
             }
         }
     }
