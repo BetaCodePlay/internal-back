@@ -53,7 +53,7 @@
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
                                 <div class="data-text text-id">{{ $authUser->id }} <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button>
+                                    <button class="btn btn-theme btn-xs" data-copy="{{ $authUser->id }}">{{ _i('Copy') }}</button>
                                 </div>
                             </div>
                             <div class="tab-manager-data">

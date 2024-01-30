@@ -83,6 +83,17 @@ class Roles {
             $this.next().find('[data-dt-column="3"] .dtr-data').html($status);
             $this.next().find('[data-dt-column="4"] .dtr-data').html($balance);
         });
+
+        // Select on pressing COPY
+        let els_copy = document.querySelectorAll("[data-copy]");
+        for (let i = 0; i < els_copy.length; i++) {
+            let el = els_copy[i];
+            el.addEventListener("submit", function (e) {
+                e.preventDefault();
+                let text = e.target.querySelector('input[type="text"]').select();
+                document.execCommand("copy");
+            });
+        }
     };
 
     userSearch(placeholder, moreCharacters, min) {
@@ -93,7 +104,7 @@ class Roles {
             placeholder,
             minimumInputLength: min,
             language: {
-                inputTooShort: function() {
+                inputTooShort: function () {
                     return moreCharacters;
                 }
             },
@@ -130,7 +141,7 @@ class Roles {
             $input.val('').trigger('change');
         })
 
-        $(document).on('click', '.select2-results__option', function (){
+        $(document).on('click', '.select2-results__option', function () {
             let $url = '/agents/role/' + $(this).html()
             window.open($url, '_blank');
             return false;
@@ -225,7 +236,7 @@ class Roles {
             $globalType = $type;
             $typeAll.show();
 
-            if($rol === 5) {
+            if ($rol === 5) {
                 $typeAll.hide();
             }
 
