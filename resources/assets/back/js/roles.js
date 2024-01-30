@@ -170,10 +170,6 @@ class Roles {
                 Toastr.notifyToastr('Error', $password.attr('placeholder'), 'error');
             }
         });
-
-        $(document).on('click', '.btn-reset-password-head', function () {
-            Roles.globaluserid = $(this).data('id');
-        })
     };
 
     userLock() {
@@ -254,6 +250,10 @@ class Roles {
             $modal.find('.modal-title').html($title);
             $buttonCancel.html($cancel);
             $buttonSuccess.html($success);
+        });
+
+        $(document).on('click', '.btn-locked-head', function () {
+            Roles.globaluserid = $(this).data('userid');
         });
     };
 
