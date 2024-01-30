@@ -133,7 +133,7 @@
                             <div class="col-12 col-lg-3">
                                 <div class="form-group">
                                     <label>{{ _i('Date') }}</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control" id="date_range_new" placeholder="">
                                 </div>
                             </div>
                         </div>
