@@ -315,6 +315,30 @@
                 padding-top: 5px;
                 padding-bottom: 5px;
             }
+
+            .form-control {
+                background: #474747;
+                color: #fff;
+                border-radius: 8px;
+                height: 2.75rem;
+
+                &[name="password"] {
+                    padding-right: 35px;
+                }
+            }
+
+            .select2-container--default {
+                .select2-selection--single {
+                    background: #474747;
+                    border-color: #fff;
+                    border-radius: 8px;
+                    height: 2.75rem;
+
+                    .select2-selection__rendered {
+                        color: #fff;
+                    }
+                }
+            }
         }
 
         .tab-body {
