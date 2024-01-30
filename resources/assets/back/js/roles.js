@@ -1,7 +1,7 @@
 import {
     clipboard
 } from "../../commons/js/core";
-
+import {initLitepickerEndTodayNew} from "./commons";
 
 class Roles {
     static globalusername;
@@ -514,6 +514,8 @@ class Roles {
             }
 
             if($target === tabTransaction) {
+                let picker = initLitepickerEndTodayNew();
+
                 if (tableTransaction !== undefined) {
                     tableTransaction.destroy();
                 }
