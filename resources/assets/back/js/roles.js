@@ -488,7 +488,6 @@ class Roles {
 
 
         $(document).on('click', $button, function (){
-
             setTimeout(function (){
                 tableInformation = tableInformationID.DataTable({
                     fixedHeader: true,
@@ -496,8 +495,9 @@ class Roles {
                     searching: false,
                     lengthChange: false
                 });
-            }, 1000)
 
+                tableInformationID.parent().parent().find('.loading-style').hide();
+            }, 1000)
         });
     }
 
