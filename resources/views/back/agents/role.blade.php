@@ -52,7 +52,7 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text text-id">{{ $authUser->id}} <span class="separator"></span>
+                                <div class="data-text text-id">{{ $authUser->id }} <span class="separator"></span>
                                     <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button>
                                 </div>
                             </div>
@@ -63,11 +63,25 @@
                                     @if($authUser->action === 1)
                                         <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
                                         <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs">{{ _i('Lock') }}</button>
+                                        <button class="btn btn-theme btn-xs lockUser" data-toggle="modal" data-target="#role-lock"
+                                                data-lock="{{ _i('Lock profile') }}"
+                                                data-unlock="{{ _i('Unlock profile') }}"
+                                                data-rol=""
+                                                data-value="true"
+                                                data-type=""
+                                                data-userid="{{ $authUser->id }}"
+                                                data-username="{{ $authUser->username }}">{{ _i('Lock') }}</button>
                                     @else
                                         <i class="fa-solid i-status fa-circle red"></i> {{ _i('Locked') }}
                                         <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs">{{ _i('Unlock') }}</button>
+                                        <button class="btn btn-theme btn-xs lockUser" data-toggle="modal" data-target="#role-lock"
+                                                data-lock="{{ _i('Lock profile') }}"
+                                                data-unlock="{{ _i('Unlock profile') }}"
+                                                data-rol=""
+                                                data-value="false"
+                                                data-type=""
+                                                data-userid="{{ $authUser->id }}"
+                                                data-username="{{ $authUser->username }}">{{ _i('Unlock') }}</button>
                                     @endif
                                 </div>
                             </div>

@@ -228,6 +228,10 @@ class Roles {
             $globalType = $type;
             $typeAll.show();
 
+            if ($type !== 8) {
+                $typeAll.hide();
+            }
+
             if ($globalLock) {
                 $title = $this.data('lock');
                 $cancel = $buttonCancel.data('lock');
@@ -235,10 +239,6 @@ class Roles {
                 $('#userReasonUnlock').hide();
                 $('#userReasonLock').show();
             } else {
-                if ($type !== 8) {
-                    $typeAll.hide();
-                }
-
                 $title = $this.data('unlock');
                 $cancel = $buttonCancel.data('unlock');
                 $success = $buttonSuccess.data('unlock');
