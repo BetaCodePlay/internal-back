@@ -489,7 +489,8 @@ class Roles {
 
 
         $(document).on('click', $button, function (){
-            let $target = $button.data('target');
+            let $this = $(this);
+            let $target = $this.data('target');
 
             if($target === tabInformation) {
                 tableInformation.destroy();
