@@ -262,6 +262,25 @@
                 }
             }
 
+            .text-status {
+                color: #fff;
+
+                i {
+                    font-size: 10px;
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-right: 5px;
+
+                    &.green {
+                        color: #d7fe62;
+                    }
+
+                    &.red {
+                        color: #e84444;
+                    }
+                }
+            }
+
             @media screen and (max-width: 767px) {
                 background: #1e1e1e;
                 border-radius: 12px;
