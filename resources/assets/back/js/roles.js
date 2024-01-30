@@ -59,8 +59,8 @@ class Roles {
                 $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
             },
             initComplete: function () {
-                $('.table-load').addClass('table-complete');
-                $('.page-role .loading-style').hide();
+                $('.page-role .page-body .table-load').addClass('table-complete');
+                $('.page-role .page-body .loading-style').hide();
             },
         });
 
