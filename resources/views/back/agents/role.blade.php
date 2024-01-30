@@ -52,7 +52,9 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text text-id">{{ $authUser->id}} <span class="separator"></span><button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
+                                <div class="data-text text-id">{{ $authUser->id}} <span class="separator"></span>
+                                    <button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button>
+                                </div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Password') }}</div>
@@ -62,16 +64,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-manager-data">
-                            <div class="data-title">{{ _i('Balance') }}</div>
-                            <div class="data-text text-id">{{ $balanceUser }} <span class="separator"></span><button class="btn btn-theme btn-xs">{{ _i('Copy') }}</button></div>
-                        </div>
-
-                        <div class="tab-manager-data">
-                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
+                        <div class="tab-manager-top">
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Balance') }}</div>
+                                <div class="data-text text-id">{{ $balanceUser }} <span class="separator"></span>
+                                    <button class="btn btn-theme btn-xs">{{ _i('Adjustment') }}</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,7 +84,7 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Father') }}</div>
-                                <div class="data-text">{{ $authUser->username}}</div>
+                                <div class="data-text">{{ $owner }}</div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('E-mail') }}</div>
