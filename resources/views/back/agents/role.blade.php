@@ -58,47 +58,53 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
-                                <div class="data-text text-finish text-status {{ $authUser->action !== 1 ? 'force-text-finish' : '' }}">
-                                    @if($authUser->action === 1)
-                                        <i class="fa-solid i-status fa-circle green"></i> {{ _i('Active') }}
-                                        <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs lockUser btn-locked-head" data-toggle="modal" data-target="#role-lock"
+                                <div class="data-text text-finish text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
+                                    <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->status ? _i('Active') : _i('Locked') }}
+                                    <span class="separator"></span>
+                                    @if(auth()->user()->id !== $authUser->id)
+                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
                                                 data-lock="{{ _i('Lock profile') }}"
                                                 data-unlock="{{ _i('Unlock profile') }}"
-                                                data-rol=""
-                                                data-value="true"
-                                                data-type=""
+                                                data-value="{{ $authUser->status }}"
+                                                data-type="{{ $authUser->action }}"
                                                 data-userid="{{ $authUser->id }}"
-                                                data-username="{{ $authUser->username }}">{{ _i('Lock') }}</button>
+                                                data-username="{{ $authUser->username }}"
+                                                data-rol="{{ $agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
+                                        </button>
                                     @else
-                                        <i class="fa-solid i-status fa-circle red"></i> {{ _i('Locked') }}
-                                        <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs lockUser btn-locked-head" data-toggle="modal" data-target="#role-lock"
-                                                data-lock="{{ _i('Lock profile') }}"
-                                                data-unlock="{{ _i('Unlock profile') }}"
-                                                data-rol=""
-                                                data-value="false"
-                                                data-type=""
-                                                data-userid="{{ $authUser->id }}"
-                                                data-username="{{ $authUser->username }}">{{ _i('Unlock') }}</button>
+                                        &nbsp;
                                     @endif
                                 </div>
                             </div>
                         </div>
-                        @if($authUser->action === 1)
+                        @if($authUser->status)
                             <div class="tab-manager-bottom">
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Balance') }}</div>
                                     <div class="data-text text-id">{{ $balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs">{{ _i('Adjustment') }}</button>
+                                        @if(auth()->user()->id !== $authUser->id)
+                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
+                                                    data-userid="{{ $authUser->id}}"
+                                                    data-username="{{ $authUser->username }}"
+                                                    data-rol="{{ $agentType }}">{{ _i('Adjustment') }}
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
 
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Password') }}</div>
                                     <div class="data-text text-finish">
-                                        <span class="separator">&nbsp;</span>
-                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset" data-userid="{{ $authUser->id}}" data-username="{{ $authUser->username }}" data-rol="{{ $agentType }}">{{ _i('Reset') }}</button>
+                                        <span class="separator">
+                                            @if(auth()->user()->id !== $authUser->id)
+                                                &nbsp;
+                                            @endif
+                                        </span>
+                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset"
+                                                data-userid="{{ $authUser->id}}"
+                                                data-username="{{ $authUser->username }}"
+                                                data-rol="{{ $agentType }}">{{ _i('Reset') }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +117,7 @@
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Created the') }}</div>
-                                <div class="data-text">{{ $authUser->created_at }}</div>
+                                <div class="data-text">{{ ($authUser->created_at)->format('d-m-Y ') }}</div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Father') }}</div>
