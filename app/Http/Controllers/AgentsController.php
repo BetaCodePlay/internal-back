@@ -4402,7 +4402,7 @@ class AgentsController extends Controller
             }
 
             $balanceUser = number_format($balance, 2);
-            $action     = ActionUser::getName($authUser->action);
+            $action     = ActionUser::getName($user->action);
 
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
@@ -4413,7 +4413,7 @@ class AgentsController extends Controller
             ),
                 'owner'              => $ownerAgent->ownerAgent->username,
                 'owner_pertenge'     => $ownerAgent,
-                'action'             => [$action, $isBlocked, $authUser->action],
+                'action'             => $action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
