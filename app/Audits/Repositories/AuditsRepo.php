@@ -140,13 +140,10 @@ class AuditsRepo
         ];
     }
 
-    /**
-     * @param $userId
-     * @param array|null $select
-     * @return mixed
-     */
-    function getIpQuery($userId): mixed {
-        return Audit::select(DB::raw('count(id) as quantity'),  [
+    function getIpQuery($userId)
+    : mixed {
+        return Audit::select([
+            DB::raw('count(id) as quantity'),
             'data->ip'
         ])
             ->where('user_id', $userId)
