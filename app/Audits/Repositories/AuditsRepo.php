@@ -117,20 +117,18 @@ class AuditsRepo
         $userId      = $request->input('userId');
         $auditQuery  = $this->getIpQuery($userId);
 
-        dd($auditQuery->get());
-
         $auditQuery->where(function ($query) use ($searchValue) {
             $query->where('data->ip', 'like', "%$searchValue%");
         });
 
         $orderableColumns = OrderTableIPColumns::getOrderTableIPColumns();
-        $audit = $auditQuery->orderBy(
+        $audit            = $auditQuery->orderBy(
             array_key_exists($orderColumn, $orderableColumns)
                 ? $orderableColumns[$orderColumn]
                 : 'data->ip',
-            $orderColumn  ? $orderDir : 'asc'
+            $orderColumn ? $orderDir : 'asc'
         );
-        $resultCount = count($audit);
+        $resultCount      = count($audit);
         $slicedResults    = array_slice($audit, $start, $length);
         return [
             'draw'            => (int)$draw,
