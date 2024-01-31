@@ -142,6 +142,7 @@ class AuditsRepo
 
     function getIpQuery($userId)
     : mixed {
+        dd($userId);
         return Audit::select([
             DB::raw('count(id) as quantity'),
             'data->ip'
