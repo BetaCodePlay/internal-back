@@ -235,6 +235,9 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             // Block user status
             Route::post('/block-agent', 'blockAgent')
                 ->name('agents.block');
+            //
+            Route::get('/user-find/{user?}', 'userFind')
+                ->name('agents.role.user-find');
         });
 
     // Reports routes

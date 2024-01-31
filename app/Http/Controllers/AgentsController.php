@@ -2730,6 +2730,23 @@ class AgentsController extends Controller
     }
 
     /**
+     * User find
+     *
+     * @param int $user User ID
+     * @return Response
+     */
+    public function userFind($user){
+        try {
+            $userData       = $this->usersRepo->find($user);
+            return $userData;
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'user' => $user]);
+            return Utils::failedResponse();
+        }
+    }
+
+
+    /**
      * Find tree agents father
      *
      * @param Request $request
