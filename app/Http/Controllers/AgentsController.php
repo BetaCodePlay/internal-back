@@ -4403,7 +4403,6 @@ class AgentsController extends Controller
 
             $balanceUser = number_format($balance, 2);
             $action     = ActionUser::getName($authUser->action);
-            $isBlocked  = ActionUser::isBlocked($authUser->action);
 
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
@@ -4441,7 +4440,8 @@ class AgentsController extends Controller
                 'dependencies'       => $dependence,
                 'balanceUser'        => $balanceUser,
                 'agentType'          => $user->type,
-                'percentage'         => $percentage
+                'percentage'         => $percentage,
+                'statusText'          => $action
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
