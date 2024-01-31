@@ -117,7 +117,7 @@
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-change"
                                                 data-userid="{{ $authUser->id}}"
                                                 data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $agentType }}">{{ _i('Change') }}
+                                                data-rol="{{ $agentType }}">{{ _i('Modify') }}
                                         </button>
                                     </div>
                                 </div>
