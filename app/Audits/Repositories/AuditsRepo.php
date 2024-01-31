@@ -144,7 +144,7 @@ class AuditsRepo
     : mixed {
         return Audit::select([
             DB::raw('count(id) as quantity'),
-            'data->ip'
+            'data->ip as ip'
         ])
             ->where('user_id', $userId)
             ->groupBy('data->ip');
