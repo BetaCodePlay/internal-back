@@ -4441,7 +4441,7 @@ class AgentsController extends Controller
                 'balanceUser'        => $balanceUser,
                 'agentType'          => $user->type,
                 'percentage'         => $percentage,
-                'statusTex'          => $action
+                'statusText'          => $action
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
