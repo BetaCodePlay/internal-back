@@ -4378,7 +4378,6 @@ class AgentsController extends Controller
             $currency       = session('currency');
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
-            $balanceUser = 0.00;
             $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
 
             $agentsRepo = new AgentsRepo();
@@ -4392,18 +4391,18 @@ class AgentsController extends Controller
                     : 0;
 
                 $userOwner = $agentsRepo->findUser($user->id);
-                $ownerAgent = $userOwner->ownerAgent;
+                $ownerAgent = $userOwner;
             } else {
                 $agent = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
 
-                $ownerAgent = $agent->ownerAgent;
+                $ownerAgent = $agent;
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
 
             $balanceUser = number_format($balance, 2);
-            $owner = $ownerAgent;
+
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
                 'agents'             => $this->agentsRepo->getAgentsAllByOwner(
@@ -4411,7 +4410,8 @@ class AgentsController extends Controller
                 $currency,
                 $whitelabel
             ),
-                'owner'              => $owner->username,
+                'owner'              => $ownerAgent->ownerAgent->username,
+                'owner_pertenge'     => $ownerAgent->ownerAgent->username,
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
@@ -4429,7 +4429,7 @@ class AgentsController extends Controller
                     $currency,
                     $whitelabel
                 ),
-                'owner'              => $owner->username,
+                'owner'              => $ownerAgent->ownerAgent->username,
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
