@@ -5,6 +5,8 @@ namespace App\Audits\Repositories;
 use App\Audits\Entities\Audit;
 use App\Audits\Entities\AuditType;
 use App\Audits\Enums\AuditTypes;
+use App\Role\Enums\OrderTableIPColumns;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -104,12 +106,8 @@ class AuditsRepo
             ->get();
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
     public function getUserIp(Request $request)
-    : mixed {
+    : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
