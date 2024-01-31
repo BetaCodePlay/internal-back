@@ -94,7 +94,7 @@
 
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Password') }}</div>
-                                    <div class="data-text text-finish">
+                                    <div class="data-text">
                                         <span class="separator">
                                             @if(auth()->user()->id !== $authUser->id)
                                                 &nbsp;
@@ -104,6 +104,20 @@
                                                 data-userid="{{ $authUser->id}}"
                                                 data-username="{{ $authUser->username }}"
                                                 data-rol="{{ $agentType }}">{{ _i('Reset') }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Account') }}</div>
+                                    <div class="data-text text-finish">
+                                        <span class="separator">
+                                              &nbsp;
+                                        </span>
+                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-change"
+                                                data-userid="{{ $authUser->id}}"
+                                                data-username="{{ $authUser->username }}"
+                                                data-rol="{{ $agentType }}">{{ _i('Change') }}
                                         </button>
                                     </div>
                                 </div>
