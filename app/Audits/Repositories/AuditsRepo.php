@@ -108,15 +108,17 @@ class AuditsRepo
 
     public function getUserIp(Request $request)
     : array {
-        dd($request->all());
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-        $userId = $request->input('user');
-        $auditQuery = $this->getIpQuery($userId);
+        $userId      = $request->input('user');
+        $auditQuery  = $this->getIpQuery($userId);
+
+        dd($auditQuery->get());
+
         $auditQuery->where(function ($query) use ($searchValue) {
             $query->where('data->ip', 'like', "%$searchValue%");
         });

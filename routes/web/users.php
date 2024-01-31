@@ -111,7 +111,7 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth']], function () {
     ]);
 
     //Get users ips data
-    Route::get('user-ip-data/{user?}', [UsersController::class, 'userIpData'])
+    Route::get('user-ip-data', [UsersController::class, 'userIpData'])
         ->name('users.user-ip-data');
 
     // Delete user temp
