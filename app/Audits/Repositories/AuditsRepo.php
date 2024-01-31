@@ -106,8 +106,7 @@ class AuditsRepo
             ->get();
     }
 
-    public function getUserIp(Request $request)
-    : array {
+    public function getUserIp(Request $request): array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
@@ -121,17 +120,17 @@ class AuditsRepo
             $query->where('data->ip', 'like', "%$searchValue%");
         });
 
-        dd($auditQuery->get());
-
         $orderableColumns = OrderTableIPColumns::getOrderTableIPColumns();
-        $audit            = $auditQuery->orderBy(
-            array_key_exists($orderColumn, $orderableColumns)
-                ? $orderableColumns[$orderColumn]
-                : 'data->ip',
-            $orderColumn ? $orderDir : 'asc'
-        );
-        $resultCount      = count($audit);
-        $slicedResults    = array_slice($audit, $start, $length);
+        $orderBy = array_key_exists($orderColumn, $orderableColumns)
+            ? $orderableColumns[$orderColumn]
+            : 'data->ip';
+
+        $audit = $auditQuery->orderBy($orderBy, $orderDir ?: 'asc')
+            ->get();
+
+        $resultCount   = $audit->count();
+        $slicedResults = $audit->slice($start, $length)->all();
+
         return [
             'draw'            => (int)$draw,
             'recordsTotal'    => $resultCount,
@@ -139,6 +138,7 @@ class AuditsRepo
             'data'            => $slicedResults,
         ];
     }
+
 
     function getIpQuery($userId)
     : mixed {
