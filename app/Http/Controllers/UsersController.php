@@ -2659,9 +2659,7 @@ class UsersController extends Controller
      */
     public function userIpData(Request $request)
     : array {
-        return $this->auditsRepo->getUserIp(
-            $request
-        );
+        return $this->auditsRepo->getUserIp($request);
     }
 
     /**
