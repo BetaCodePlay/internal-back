@@ -112,7 +112,9 @@
                                     <div class="data-title">{{ _i('Account') }}</div>
                                     <div class="data-text text-finish">
                                         <span class="separator">
-                                              &nbsp;
+                                             @if(auth()->user()->id !== $authUser->id)
+                                                &nbsp;
+                                            @endif
                                         </span>
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-change"
                                                 data-userid="{{ $authUser->id}}"
