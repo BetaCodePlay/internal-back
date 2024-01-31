@@ -121,6 +121,8 @@ class AuditsRepo
             $query->where('data->ip', 'like', "%$searchValue%");
         });
 
+        dd($auditQuery->get());
+
         $orderableColumns = OrderTableIPColumns::getOrderTableIPColumns();
         $audit            = $auditQuery->orderBy(
             array_key_exists($orderColumn, $orderableColumns)
