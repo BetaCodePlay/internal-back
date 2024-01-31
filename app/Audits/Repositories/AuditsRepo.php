@@ -108,6 +108,7 @@ class AuditsRepo
 
     public function getUserIp(Request $request)
     : array {
+        dd($request->all());
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
