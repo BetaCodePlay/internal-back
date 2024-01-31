@@ -114,7 +114,7 @@ class AuditsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-        $userId      = $request->input('user');
+        $userId      = $request->input('userId');
         $auditQuery  = $this->getIpQuery($userId);
 
         dd($auditQuery->get());
