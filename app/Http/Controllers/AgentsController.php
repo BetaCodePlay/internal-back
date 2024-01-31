@@ -4411,7 +4411,7 @@ class AgentsController extends Controller
                 $whitelabel
             ),
                 'owner'              => $ownerAgent->ownerAgent->username,
-                'owner_pertenge'     => $ownerAgent->ownerAgent,
+                'owner_pertenge'     => $ownerAgent,
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
