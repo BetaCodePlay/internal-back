@@ -58,7 +58,7 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
-                                <div class="data-text text-finish text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
+                                <div class="data-text text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
                                     <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->status ? _i('Active') : _i('Locked') }}
                                     <span class="separator"></span>
                                     @if(auth()->user()->id !== $authUser->id)
@@ -110,7 +110,7 @@
 
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Account') }}</div>
-                                    <div class="data-text text-finish">
+                                    <div class="data-text">
                                         <span class="separator">
                                              @if(auth()->user()->id !== $authUser->id)
                                                 &nbsp;
