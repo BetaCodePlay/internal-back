@@ -4379,7 +4379,7 @@ class AgentsController extends Controller
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
-
+            $percentage = null;
             $agentsRepo = new AgentsRepo();
             if ($user->type_user == 'player') {
                 $wallet = Wallet::getByClient($user->id, $currency, $bonus);
@@ -4396,12 +4396,14 @@ class AgentsController extends Controller
                 $agent = ($user->type_user == 'agent')
                     ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                     : $agentsRepo->findUser($user->id);
-
                 $ownerAgent = $agent;
+                $percentage = $ownerAgent->percentage;
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
 
             $balanceUser = number_format($balance, 2);
+            $action     = ActionUser::getName($authUser->action);
+            $isBlocked  = ActionUser::isBlocked($authUser->action);
 
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
@@ -4412,7 +4414,7 @@ class AgentsController extends Controller
             ),
                 'owner'              => $ownerAgent->ownerAgent->username,
                 'owner_pertenge'     => $ownerAgent,
-                'action'             => $authUser->action,
+                'action'             => [$action, $isBlocked, $authUser->action],
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
@@ -4438,7 +4440,8 @@ class AgentsController extends Controller
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
                 'balanceUser'        => $balanceUser,
-                'agentType'          =>  $user->type
+                'agentType'          => $user->type,
+                'percentage'         => $percentage
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
