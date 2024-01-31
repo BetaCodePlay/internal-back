@@ -59,7 +59,7 @@
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
                                 <div class="data-text text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
-                                    <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->status ? _i('Active') : _i('Locked') }}
+                                    <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $statusText }}
                                     <span class="separator"></span>
                                     @if(auth()->user()->id !== $authUser->id)
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
