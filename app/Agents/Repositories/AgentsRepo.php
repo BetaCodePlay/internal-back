@@ -241,6 +241,7 @@ class AgentsRepo
                 'agents.master',
                 'agents.owner_id as owner',
                 'agents.user_id as owner_id',
+                'agents.percentage',
                 'profiles.country_iso',
                 'agent_currencies.balance',
                 'agent_currencies.currency_iso',

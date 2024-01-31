@@ -2738,7 +2738,14 @@ class AgentsController extends Controller
     public function userFind($user){
         try {
             $userData       = $this->usersRepo->find($user);
-            return $userData;
+            $agentsRepo = new AgentsRepo();
+            $agent = ($userData->type_user == 'agent')
+                ? $agentsRepo->findByUserIdAndCurrency($userData->id, session('currency'))
+                : $agentsRepo->findUser($userData->id);
+            $usersData = [
+                'userData'        => $agent,
+            ];
+            return Utils::successResponse($usersData);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'user' => $user]);
             return Utils::failedResponse();
