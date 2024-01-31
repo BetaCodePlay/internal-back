@@ -114,7 +114,7 @@ class AuditsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-        $userId      = $request->input('user');
+        $userId      = $request->input('userId');
         $auditQuery  = $this->getIpQuery($userId);
 
         dd($auditQuery->get());
@@ -142,6 +142,7 @@ class AuditsRepo
 
     function getIpQuery($userId)
     : mixed {
+        dd($userId);
         return Audit::select([
             DB::raw('count(id) as quantity'),
             'data->ip'
