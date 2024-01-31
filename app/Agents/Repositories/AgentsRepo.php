@@ -348,6 +348,7 @@ class AgentsRepo
                 'users.referral_code',
                 'agents.master',
                 'agents.owner_id as owner',
+                'agents.percentage',
                 'profiles.country_iso',
                 'agent_currencies.balance',
                 'agent_currencies.currency_iso',
