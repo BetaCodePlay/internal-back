@@ -134,6 +134,7 @@ class AuditsRepo
 
         $resultCount   = $audit->count();
         $slicedResults = $audit->slice($start, $length)->map(function ($item) {
+            dd($item);
             return [
                 $item['data']['ip'],
                 $item['quantity'] ?? null,
