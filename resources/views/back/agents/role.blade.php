@@ -75,6 +75,7 @@
                                         <span class="separator"> &nbsp;</span>
                                         <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
                                     @endif
+                                    {{ dd($authUser) }}
                                 </div>
                             </div>
                         </div>
