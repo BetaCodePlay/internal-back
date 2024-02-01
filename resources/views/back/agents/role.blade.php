@@ -9,7 +9,7 @@
         {{ _i('Role and permission management') }}
     </div>
 
-    <div class="page-role">
+    <div class="page-role" data-id="{{ $authUser->id }}">
         <div class="page-top">
             <form class="search-input" autocomplete="destroy">
                 <i class="fa-solid fa-magnifying-glass"></i>
