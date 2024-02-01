@@ -65,7 +65,7 @@
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
                                                 data-lock="{{ _i('Lock profile') }}"
                                                 data-unlock="{{ _i('Unlock profile') }}"
-                                                data-value="{{ $authUser->status }}"
+                                                data-value="{{ $authUser->status ? 'true' : 'false' }}"
                                                 data-type="{{ $authUser->action }}"
                                                 data-userid="{{ $authUser->id }}"
                                                 data-username="{{ $authUser->username }}"
