@@ -596,8 +596,6 @@ class AgentsController extends Controller
         }
     }
 
-    public function
-
     /**
      * Show agents transactions by dates
      *
