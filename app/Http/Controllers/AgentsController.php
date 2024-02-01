@@ -4405,7 +4405,7 @@ class AgentsController extends Controller
 
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
-                'users'             =>  $userData ]);
+                'authUser'             =>  $userData ]);
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
@@ -4419,7 +4419,7 @@ class AgentsController extends Controller
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
-                'authUser'           =>  $userData ,
+                'authUser'           => $userData,
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
             ]);
