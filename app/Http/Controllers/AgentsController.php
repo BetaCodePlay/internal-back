@@ -4400,27 +4400,12 @@ class AgentsController extends Controller
                 $percentage = $ownerAgent->percentage;
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
-
-            $balanceUser = number_format($balance, 2);
-            $action     = ActionUser::getName($user->action);
+            $agentsCollection = new AgentsCollection();
+            $userData = $this->$agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage);
 
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
-                'agents'             => $this->agentsRepo->getAgentsAllByOwner(
-                $authUserId,
-                $currency,
-                $whitelabel
-            ),
-                'owner'              => $ownerAgent->ownerAgent->username,
-                'owner_pertenge'     => $ownerAgent,
-                'action'             => $action,
-                'iagent'             => $agentUser,
-                'confirmation_email' => $confirmation,
-                'title'              => _i('Agents module'),
-                'authUser'           => $user,
-                'username'           => $customUsername,
-                'dependencies'       => $dependence,
-                'balanceUser'        => $balanceUser]);
+                'users'             =>  $userData ]);
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
@@ -4430,18 +4415,13 @@ class AgentsController extends Controller
                     $currency,
                     $whitelabel
                 ),
-                'owner'              => $ownerAgent->ownerAgent->username,
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
-                'authUser'           => $user,
+                'authUser'           =>  $userData ,
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
-                'balanceUser'        => $balanceUser,
-                'agentType'          => $user->type,
-                'percentage'         => $percentage,
-                'statusText'          => $action
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
