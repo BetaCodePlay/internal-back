@@ -4401,11 +4401,6 @@ class AgentsController extends Controller
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
             $agentsCollection = new AgentsCollection();
-            $userData = $agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage);
-
-            Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
-                'makers'             => [],
-                'authUser'             =>  $userData ]);
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
@@ -4419,7 +4414,7 @@ class AgentsController extends Controller
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
-                'authUser'           => $userData,
+                'authUser'           => $agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage),
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
             ]);

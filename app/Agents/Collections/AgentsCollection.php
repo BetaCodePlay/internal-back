@@ -1222,7 +1222,7 @@ class AgentsCollection
             'owner'       => $ownerAgent->ownerAgent->username,
             'percentage'         => $percentage,
         ];
-        return $data;
+        return json_decode($data);
     }
     /**
      * Format select agents
