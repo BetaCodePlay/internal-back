@@ -45,12 +45,13 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal"
                         data-lock="{{ _i('Cancel lock') }}"
-                        data-unlock="{{ _i('Cancel unlock') }}">
-
+                        data-unlock="{{ _i('Cancel unlock') }}"
+                        data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                 </button>
                 <button type="button" class="btn btn-theme lockUser"
                         data-lock="{{ _i('Ready! Lock') }}"
-                        data-unlock="{{ _i('Ready! Unlock') }}">
+                        data-unlock="{{ _i('Ready! Unlock') }}"
+                        data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                 </button>
             </div>
         </div>

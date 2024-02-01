@@ -8,6 +8,8 @@ class Roles {
     static globaltypeid;
     static globalrolid;
     static globaltable;
+    static globaluserid;
+    static globaluseridcurrent = $('.page-role').data('id');
 
     initTableRoles() {
         let $table = $('#table-roles');
@@ -200,14 +202,20 @@ class Roles {
                 $route = $('#lockTypeThis').val();
             }
 
+            $this.button('loading');
+
             $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
             }).done(function (json) {
-                Roles.globaltable.ajax.reload();
-                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $modal.modal('hide');
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                if (Roles.globaluserid === Roles.globaluseridcurrent) {
+                    window.location.reload()
+                } else {
+                    Roles.globaltable.ajax.reload();
+                }
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
