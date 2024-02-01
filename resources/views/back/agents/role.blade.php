@@ -60,7 +60,7 @@
                                 <div class="data-title">{{ _i('Status') }}</div>
                                 <div class="data-text text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
                                     @if(auth()->user()->id !== $authUser->id)
-                                        <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $statusText }}
+                                        <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
                                         <span class="separator"></span>
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
                                                 data-lock="{{ _i('Lock profile') }}"
@@ -69,7 +69,7 @@
                                                 data-type="{{ $authUser->action }}"
                                                 data-userid="{{ $authUser->id }}"
                                                 data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
+                                                data-rol="{{ $authUser->agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
                                         </button>
                                     @else
                                         <span class="separator"> &nbsp;</span>
@@ -82,12 +82,12 @@
                             <div class="tab-manager-bottom">
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Balance') }}</div>
-                                    <div class="data-text text-id">{{ $balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
+                                    <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
                                         @if(auth()->user()->id !== $authUser->id)
                                             <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
                                                     data-userid="{{ $authUser->id}}"
                                                     data-username="{{ $authUser->username }}"
-                                                    data-rol="{{ $agentType }}">{{ _i('Adjustment') }}
+                                                    data-rol="{{ $authUser->agentType }}">{{ _i('Adjustment') }}
                                             </button>
                                         @endif
                                     </div>
@@ -104,7 +104,7 @@
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset"
                                                 data-userid="{{ $authUser->id}}"
                                                 data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $agentType }}">{{ _i('Reset') }}
+                                                data-rol="{{ $authUser->agentType }}">{{ _i('Reset') }}
                                         </button>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-modify"
                                                 data-userid="{{ $authUser->id}}"
                                                 data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $agentType }}">{{ _i('Modify') }}
+                                                data-rol="{{ $authUser->agentType }}">{{ _i('Modify') }}
                                         </button>
                                     </div>
                                 </div>
@@ -205,7 +205,7 @@
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Father') }}</div>
-                                <div class="data-text">{{ $owner }}</div>
+                                <div class="data-text">{{ $authUser->owner }}</div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Currency') }}</div>
