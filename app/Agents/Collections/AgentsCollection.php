@@ -1181,7 +1181,6 @@ class AgentsCollection
         $user->statusText  = ActionUser::getName($user->action);
         $user->balanceUser = number_format($balance, 2);
         $user->agentType = $user->type;
-        $user->status = (string) $user->status;
         $user->owner = $ownerAgent->ownerAgent->username;
         $user->percentage = $percentage;
         return $user;
