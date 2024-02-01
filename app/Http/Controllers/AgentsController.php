@@ -4401,7 +4401,7 @@ class AgentsController extends Controller
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
             $agentsCollection = new AgentsCollection();
-            $userData = $this->$agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage);
+            $userData = $agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage);
 
             Log::info(__METHOD__, ['agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
