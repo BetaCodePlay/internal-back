@@ -228,7 +228,7 @@
 
                     <div class="tab-body">
                         <form autocomplete="destroy" class="col table-load">
-                            <table id="table-information" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?draw=2&start=0&username={{ $username }}">
+                            <table id="table-information" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
                                 <thead>
                                 <tr>
                                     <th data-priority="1">{{ _i('IP') }}</th>
