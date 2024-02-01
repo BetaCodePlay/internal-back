@@ -1223,7 +1223,7 @@ class AgentsCollection
             'percentage'         => $percentage,
         ];*/
         foreach ($users as $user) {
-            $user->statusText  = ActionUser::getName($user->action);
+           // $user->statusText  = ActionUser::getName($user->action);
             $user->balanceUser = number_format($balance, 2);
             $user->agentType = $user->type;
             $user->owner = $ownerAgent->ownerAgent->username;
