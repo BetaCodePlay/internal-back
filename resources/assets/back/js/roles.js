@@ -318,7 +318,12 @@ class Roles {
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
 
-                Roles.globaltable.ajax.reload();
+                if (Roles.globaluserid === Roles.globaluseridcurrent) {
+                    window.location.reload()
+                } else {
+                    Roles.globaltable.ajax.reload();
+                }
+
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-balance').modal('hide');
                 $('#userBalanceAmountGet').val('');
