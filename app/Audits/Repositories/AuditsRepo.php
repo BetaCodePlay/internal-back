@@ -106,6 +106,10 @@ class AuditsRepo
             ->get();
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function getUserIp(Request $request): array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
@@ -139,13 +143,13 @@ class AuditsRepo
         ];
     }
 
-
+    /**
+     * @param $userId
+     * @return mixed
+     */
     function getIpQuery($userId)
     : mixed {
-        return Audit::select([
-            DB::raw('count(id) as quantity'),
-            'data->ip as ip'
-        ])
+        return Audit::select(['data->ip as ip', DB::raw('count(id) as quantity')])
             ->where('user_id', $userId)
             ->groupBy('data->ip');
     }
