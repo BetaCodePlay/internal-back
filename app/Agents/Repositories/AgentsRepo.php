@@ -647,10 +647,7 @@ class AgentsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-
-        $userId = $request->has('username')
-            ? User::where('username', $request->input('username'))->value('id')
-            : $userAuthId;
+        $userId      = getUserIdByUsernameOrCurrent($request);
 
         $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
         $agentQuery->where(function ($query) use ($searchValue) {

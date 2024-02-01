@@ -1,12 +1,15 @@
 <?php
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Users\Entities\User;
 use Dotworkers\Configurations\Configurations;
-use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Configurations\Enums\PaymentMethods;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TemplateElementTypes;
+use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 if (! function_exists('menu')) {
     function menu()
@@ -2264,7 +2267,7 @@ if (! function_exists('menu')) {
                     //                    ],
                 ]
             ],
-            'Pages' => [
+            'Pages'  => [
                 'text'        => _i('Pages'),
                 'level_class' => 'top',
                 'route'       => 'pages.index',
@@ -7404,8 +7407,8 @@ if (! function_exists('convertArrayToObject')) {
      * @param $array
      * @return mixed
      */
-    function convertArrayToObject($array): mixed
-    {
+    function convertArrayToObject($array)
+    : mixed {
         return json_decode(json_encode($array));
     }
 }
@@ -7435,5 +7438,16 @@ if (! function_exists('authenticatedUserBalance')) {
             : $user?->data?->wallet?->balance;
 
         return number_format($balance, 2);
+    }
+}
+
+if (! function_exists('getUserIdByUsernameOrCurrent')) {
+    function getUserIdByUsernameOrCurrent(Request $request)
+    {
+        if ($request->has('username')) {
+            $username = $request->input('username');
+            return User::where('username', $username)->value('id');
+        }
+        return Auth::id();
     }
 }
