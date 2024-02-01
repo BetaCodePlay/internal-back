@@ -78,11 +78,13 @@
                                 </div>
                             </div>
                         </div>
-                        @if($authUser->status)
-                            <div class="tab-manager-bottom">
-                                <div class="tab-manager-data">
-                                    <div class="data-title">{{ _i('Balance') }}</div>
-                                    <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <span class="separator"></span>
+
+                        <div class="tab-manager-bottom">
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Balance') }}</div>
+                                <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                                    @if($authUser->status)
+                                        <span class="separator"></span>
                                         @if(auth()->user()->id !== $authUser->id)
                                             <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
                                                     data-userid="{{ $authUser->id}}"
@@ -90,9 +92,11 @@
                                                     data-rol="{{ $authUser->agentType }}">{{ _i('Adjustment') }}
                                             </button>
                                         @endif
-                                    </div>
+                                    @endif
                                 </div>
+                            </div>
 
+                            @if($authUser->status)
                                 <div class="tab-manager-data text-center">
                                     <div class="data-title">{{ _i('Password') }}</div>
                                     <div class="data-text">
@@ -124,8 +128,9 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
+                        </div>
+
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
