@@ -1178,50 +1178,6 @@ class AgentsCollection
      */
     public function formatRole($ownerAgent, $user, $balance, $percentage)
     {
-     /*   $data = collect();
-        $data = [
-            'id'  => $user->id,
-            'username' => $user->username,
-            'email' => $user->email,
-            'uuid' => $user->uuid,
-            'status' => $user->status,
-            'ip' => $user->ip,
-            'whitelabel_id' => $user->whitelabel_id,
-            'wallet_access_token' => $user->wallet_access_token,
-            'created_at' => $user->created_at,
-            'updated_at' => $user->updated_at,
-            'tester' => $user->tester,
-            'web_register' => $user->web_register,
-            'referral_code' => $user->referral_code,
-            'promo_code' => $user->promo_code,
-            'last_deposit_amount' => $user->last_deposit_amount,
-            'last_debit_amount' => $user->last_debit_amount,
-            'last_deposit_currency' => $user->last_deposit_currency,
-            'last_debit_currency' => $user->last_debit_currency,
-            'last_login' => $user->last_login,
-            'last_deposit' => $user->last_deposit,
-            'last_debit' => $user->last_debit,
-            'main' => $user->main,
-            'btag' => $user->btag,
-            'first_deposit' => $user->first_deposit,
-            'first_deposit_amount' => $user->first_deposit_amount,
-            'first_deposit_currency' => $user->first_deposit_currency,
-            'first_debit_amount' => $user->first_debit_amount,
-            'first_debit_currency' => $user->first_debit_currency,
-            'first_debit' => $user->first_debit,
-            'register_currency' => $user->register_currency,
-            'login_attempts' => $user->login_attempts,
-            'type_user' => $user->type_user,
-            'action' => $user->action,
-            'confirmation_email' => $user->confirmation_email,
-            'theme' => $user->theme,
-            'type' => $user->type,
-            'statusText'  => ActionUser::getName($user->action),
-            'balanceUser' => number_format($balance, 2),
-            'agentType'   => $user->type,
-            'owner'       => $ownerAgent->ownerAgent->username,
-            'percentage'         => $percentage,
-        ];*/
         $user->statusText  = ActionUser::getName($user->action);
         $user->balanceUser = number_format($balance, 2);
         $user->agentType = $user->type;

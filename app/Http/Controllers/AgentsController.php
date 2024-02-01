@@ -4401,7 +4401,8 @@ class AgentsController extends Controller
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
             $agentsCollection = new AgentsCollection();
-
+            $userAgent = $agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage);
+            Log::notice(__METHOD__, ['user Agent' =>  $userAgent ]);
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
@@ -4414,7 +4415,7 @@ class AgentsController extends Controller
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
                 'title'              => _i('Agents module'),
-                'authUser'           => $agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage),
+                'authUser'           => $userAgent,
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
             ]);
