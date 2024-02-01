@@ -202,19 +202,20 @@ class Roles {
                 $route = $('#lockTypeThis').val();
             }
 
+            $this.button('loading');
+
             $.ajax({
                 url: $route,
                 method: 'post',
                 data: $data
             }).done(function (json) {
+                $modal.modal('hide');
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
                     Roles.globaltable.ajax.reload();
                 }
-
-                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
-                $modal.modal('hide');
             }).fail(function (json) {
                 Roles.errorResponse(json);
             }).always(function () {
