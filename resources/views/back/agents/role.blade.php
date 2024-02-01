@@ -213,8 +213,8 @@
                                 <div class="data-text">{{ $authUser->owner }}</div>
                             </div>
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Currency') }}</div>
-                                <div class="data-text text-finish">{{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}</div>
+                                <div class="data-title">{{ _i('Percentage') }}</div>
+                                <div class="data-text text-finish">{{ $authUser->percentage }}%</div>
                             </div>
                         </div>
 
