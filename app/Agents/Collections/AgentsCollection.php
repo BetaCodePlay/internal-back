@@ -1176,7 +1176,7 @@ class AgentsCollection
      * @param var $percentage Percentage User
      * @return array
      */
-    public function formatRole($ownerAgent, $users, $balance, $percentage)
+    public function formatRole($ownerAgent, $user, $balance, $percentage)
     {
      /*   $data = collect();
         $data = [
@@ -1222,14 +1222,12 @@ class AgentsCollection
             'owner'       => $ownerAgent->ownerAgent->username,
             'percentage'         => $percentage,
         ];*/
-        foreach ($users as $user) {
-           // $user->statusText  = ActionUser::getName($user->action);
-            $user->balanceUser = number_format($balance, 2);
-            $user->agentType = $user->type;
-            $user->owner = $ownerAgent->ownerAgent->username;
-            $user->percentage = $percentage;
-        }
-        return $users;
+        $user->statusText  = ActionUser::getName($user->action);
+        $user->balanceUser = number_format($balance, 2);
+        $user->agentType = $user->type;
+        $user->owner = $ownerAgent->ownerAgent->username;
+        $user->percentage = $percentage;
+        return $user;
     }
     /**
      * Format select agents
