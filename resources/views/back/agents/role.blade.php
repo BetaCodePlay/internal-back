@@ -48,7 +48,7 @@
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Name') }}</div>
-                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->type_user }}</span></div>
+                                <div class="data-text">{{ $authUser['username'] }} <span class="separator"></span><span class="deco-role">{{ $authUser->type_user }}</span></div>
                             </div>
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('ID User') }}</div>
