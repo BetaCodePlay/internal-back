@@ -243,11 +243,7 @@
                     font-size: 14px;
                     padding: 5px 10px;
                     color: #aaa;
-                    border-right: 2px solid #3c3c3c;
-
-                    &:last-child {
-                        border-right: 0;
-                    }
+                    border-left: 2px solid #3c3c3c;
 
                     .number {
                         background: #7d2df5;
@@ -267,6 +263,10 @@
 
                         .number {
                             margin-left: 0;
+                        }
+
+                        &:first-child {
+                            border-left: 0;
                         }
                     }
                 }
