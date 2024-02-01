@@ -228,59 +228,13 @@
 
                     <div class="tab-body">
                         <form autocomplete="destroy" class="col table-load">
-                            <table id="table-information" class="display nowrap" data-route="">
+                            <table id="table-information" class="display nowrap" data-route="{{ route('agents.role.user-find') }}">
                                 <thead>
                                 <tr>
                                     <th data-priority="1">{{ _i('IP') }}</th>
                                     <th data-priority="2">{{ _i('Quantity') }}</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                <tr>
-                                    <td>190.120.255.4</td>
-                                    <td>32</td>
-                                </tr>
-                                </tbody>
                             </table>
                         </form>
                         <div class="loading-style"></div>

@@ -504,8 +504,11 @@ class Roles {
         $(document).on('click', $button, function (){
             let $this = $(this);
             let $target = $this.data('target');
+            let $route;
 
             if($target === tabInformation) {
+                $route = tableInformationID.data('route');
+
                 if (tableInformation !== undefined) {
                     tableInformation.destroy();
                 }
@@ -513,17 +516,25 @@ class Roles {
                 $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').show();
 
-                setTimeout(function (){
-                    tableInformation = tableInformationID.DataTable({
-                        fixedHeader: true,
-                        responsive: true,
-                        searching: false,
-                        lengthChange: false
-                    });
 
-                    $($target).find('.table-load').addClass('table-complete');
-                    $($target).find('.loading-style').hide();
-                }, 1000)
+                tableInformation = tableInformationID.DataTable({
+                    ajax: $route,
+                    processing: true,
+                    serverSide: true,
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    fixedHeader: true,
+                    responsive: true,
+                    fnCreatedRow: function (nRow, aData, iDataIndex) {
+
+                    },
+                    initComplete: function () {
+                        $($target).find('.table-load').addClass('table-complete');
+                        $($target).find('.loading-style').hide();
+                    },
+                });
             }
 
             if($target === tabTransaction) {
