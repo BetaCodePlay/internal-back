@@ -1178,7 +1178,7 @@ class AgentsCollection
      */
     public function formatRole($ownerAgent, $user, $balance, $percentage)
     {
-
+        $data = [];
         $data = [
             'id'  => $user->id,
             'username' => $user->username,
