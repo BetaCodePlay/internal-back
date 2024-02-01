@@ -59,9 +59,9 @@
                             <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
                                 <div class="data-text text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
-                                    <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $statusText }}
-                                    <span class="separator"></span>
                                     @if(auth()->user()->id !== $authUser->id)
+                                        <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $statusText }}
+                                        <span class="separator"></span>
                                         <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
                                                 data-lock="{{ _i('Lock profile') }}"
                                                 data-unlock="{{ _i('Unlock profile') }}"
@@ -72,7 +72,8 @@
                                                 data-rol="{{ $agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
                                         </button>
                                     @else
-                                        &nbsp;
+                                        <span class="separator"> &nbsp;</span>
+                                        <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $statusText }}
                                     @endif
                                 </div>
                             </div>
@@ -92,7 +93,7 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-manager-data">
+                                <div class="tab-manager-data text-center">
                                     <div class="data-title">{{ _i('Password') }}</div>
                                     <div class="data-text">
                                         <span class="separator">
@@ -108,7 +109,7 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-manager-data">
+                                <div class="tab-manager-data text-center">
                                     <div class="data-title">{{ _i('Account') }}</div>
                                     <div class="data-text">
                                         <span class="separator">
@@ -116,7 +117,7 @@
                                                 &nbsp;
                                             @endif
                                         </span>
-                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-change"
+                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-modify"
                                                 data-userid="{{ $authUser->id}}"
                                                 data-username="{{ $authUser->username }}"
                                                 data-rol="{{ $agentType }}">{{ _i('Modify') }}
@@ -336,6 +337,7 @@
     @include('back.agents.modals.role-password-reset')
     @include('back.agents.modals.role-balance')
     @include('back.agents.modals.role-create')
+    @include('back.agents.modals.role-modify')
     @include('back.agents.modals.role-lock')
 @endsection
 
