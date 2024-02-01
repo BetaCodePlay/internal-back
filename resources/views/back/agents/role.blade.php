@@ -228,7 +228,7 @@
 
                     <div class="tab-body">
                         <form autocomplete="destroy" class="col table-load">
-                            <table id="table-information" class="display nowrap" data-route="{{ route('agents.role.user-find') }}">
+                            <table id="table-information" class="display nowrap" data-route="{{ route('agents.role.user-find') }}/{{ $authUser->id }}">
                                 <thead>
                                 <tr>
                                     <th data-priority="1">{{ _i('IP') }}</th>
