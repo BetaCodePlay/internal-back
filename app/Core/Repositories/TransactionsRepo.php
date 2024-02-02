@@ -422,15 +422,16 @@ class TransactionsRepo
                 session('timezone')
             )->toDateTimeString();
 
-            $data    = json_decode($transaction->data);
-            $balance = $data->balance ?? null;
+            $from    = $transaction->data->from ?? null;
+            $to      = $transaction->data->to ?? null;
+            $balance = $transaction->data->balance ?? null;
 
             return [
                 $formattedDateTimeWithTimezone,
-                $data->from ?? null,
-                $data->to ?? null,
+                $from,
+                $to,
                 [number_format($transaction->amount, 2), $transaction->transaction_type_id],
-                number_format($balance, 2)
+                number_format((float)$balance, 2)
             ];
         })->toArray();
 
