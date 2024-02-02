@@ -604,7 +604,7 @@ class Roles {
             console.log(endDate);
 
             tableTransaction = tableTransactionID.DataTable({
-                ajax: routeTransaction + '?startDate=' + startDate + '&endDate=' + endDate + '&typeUser=all&typeTransaction=all',
+                ajax: routeTransaction + '/' + Roles.globalusername + '?startDate=' + startDate + '&endDate=' + endDate + '&typeUser=all&typeTransaction=all',
                 processing: true,
                 serverSide: true,
                 columnDefs: [{
