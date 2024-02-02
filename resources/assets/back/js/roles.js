@@ -494,10 +494,7 @@ class Roles {
 
         $(document).on('click', '[data-target="#role-modify"]', function () {
             let $this = $(this);
-            let $route = $this.data('route');
-            let $data = {
-                id: Roles.globaluserid
-            };
+            let $route = $this.data('route') + '/' + Roles.globaluserid;
 
             $modal.find('#readyRoleModify').addClass('d-none');
             $modal.find('.modal-footer').addClass('d-none');
@@ -505,8 +502,7 @@ class Roles {
 
             $.ajax({
                 url: $route,
-                method: 'get',
-                data: $data
+                method: 'get'
             }).done(function (json) {
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $modal.modal('hide');
