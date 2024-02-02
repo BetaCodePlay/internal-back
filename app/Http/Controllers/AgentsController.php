@@ -4397,7 +4397,7 @@ class AgentsController extends Controller
             }
             $agentsCollection = new AgentsCollection();
             $userAgent = $agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage);
-            Log::notice(__METHOD__, ['user Agent' =>  $userAgent ]);
+            Log::notice(__METHOD__, ['user Agent' =>  $userAgent, $ownerAgent]);
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
