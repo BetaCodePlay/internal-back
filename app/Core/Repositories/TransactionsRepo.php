@@ -418,12 +418,12 @@ class TransactionsRepo
 
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
-            $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(session('timezone'))->toDateTimeString();
-
-            dd($formattedDateTimeWithTimezone);
+            $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
+                session('timezone')
+            )->toDateTimeString();
 
             return [
-                $transaction->created_at,
+                $formattedDateTimeWithTimezone,
                 $transaction->id,
                 [$transaction->amount,  $transaction->transaction_type_id],
                 $transaction->provider_id,
