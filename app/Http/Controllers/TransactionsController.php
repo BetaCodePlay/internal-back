@@ -207,6 +207,6 @@ class TransactionsController extends Controller
         $userId    = getUserIdByUsernameOrCurrent($request);
         $currency  = session('currency');
         $providers = [Providers::$agents, Providers::$agents_users];
-        return $this->transactionsRepo->getByUserAndProviders($userId, $providers, $currency);
+        return $this->transactionsRepo->getTransactionsForDataTable($userId, $providers, $currency);
     }
 }
