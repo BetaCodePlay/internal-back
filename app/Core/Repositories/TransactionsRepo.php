@@ -366,11 +366,7 @@ class TransactionsRepo
             ->get();
     }
 
-    /**
-     * @param Request $request
-     * @param string $currency
-     * @return array
-     */
+ 
     public function getTransactionsForDataTable(Request $request, string $currency)
     : array {
         $draw        = $request->input('draw', 1);
@@ -413,6 +409,9 @@ class TransactionsRepo
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
+
+
+        return $transactionsQuery->get();
 
         if (! is_null($typeUser) || $typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
@@ -579,6 +578,7 @@ class TransactionsRepo
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
+
         //->orderBy('transactions.id', 'DESC');
 
         if (is_null($typeUser) || $typeUser === 'all') {
