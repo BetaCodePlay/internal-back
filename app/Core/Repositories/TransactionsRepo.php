@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
 use App\Transactions\Enums\OrderableColumns;
+use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
@@ -410,12 +411,21 @@ class TransactionsRepo
         $resultCount   = $transactionsQuery->count();
         $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
 
+
+        // TODO: Fecha y hora militar
+        // TODO: Origen "from" pasarlo en el array
+        // El monto y el transaction_type_id, los 2 en un array
+
+        dd(session('timezone'));
+
         $formattedResults = $slicedResults->map(function ($transaction) {
+            $formattedDateTime = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
+            $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone('Nombre_Zona_Horaria')->toDateTimeString();
+
             return [
-                $transaction->id,
-                $transaction->amount,
-                $transaction->transaction_type_id,
                 $transaction->created_at,
+                $transaction->id,
+                [$transaction->amount,  $transaction->transaction_type_id],
                 $transaction->provider_id,
                 $transaction->data,
                 $transaction->transaction_status_id,
