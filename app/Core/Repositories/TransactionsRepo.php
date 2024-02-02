@@ -3,12 +3,15 @@
 namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
+use App\Reports\Repositories\ReportAgentRepo;
 use App\Transactions\Enums\OrderableColumns;
+use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Configurations\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +24,8 @@ use Yajra\DataTables\Utilities\Helper;
  */
 class TransactionsRepo
 {
+
+    public function __construct(private ReportAgentRepo $reportAgentRepo) { }
 
     /**
      * @param $user
@@ -375,6 +380,18 @@ class TransactionsRepo
         $userId      = getUserIdByUsernameOrCurrent($request);
         $providers   = [Providers::$agents, Providers::$agents_users];
 
+        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
+        $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+
+
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+            $userId,
+            $currency,
+            Configurations::getWhitelabel()
+        );
+
+        dd($childrenIds);
+
         $transactionsQuery = Transaction::select(
             'transactions.id',
             'transactions.amount',
@@ -410,15 +427,27 @@ class TransactionsRepo
         $resultCount   = $transactionsQuery->count();
         $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
 
+
+        // TODO: Fecha y hora militar
+        // TODO: Origen "from" pasarlo en el array
+        // El monto y el transaction_type_id, los 2 en un array
+
         $formattedResults = $slicedResults->map(function ($transaction) {
+            $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
+            $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
+                session('timezone')
+            )->toDateTimeString();
+
+            $from    = $transaction->data->from ?? null;
+            $to      = $transaction->data->to ?? null;
+            $balance = $transaction->data->balance ?? null;
+
             return [
-                $transaction->id,
-                $transaction->amount,
-                $transaction->transaction_type_id,
-                $transaction->created_at,
-                $transaction->provider_id,
-                $transaction->data,
-                $transaction->transaction_status_id,
+                $formattedDateTimeWithTimezone,
+                $from,
+                $to,
+                [number_format($transaction->amount, 2), $transaction->transaction_type_id],
+                number_format((float)$balance, 2)
             ];
         })->toArray();
 
