@@ -4375,7 +4375,11 @@ class AgentsController extends Controller
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
             $percentage = null;
+            $usernameOwner = null;
             $agentsRepo = new AgentsRepo();
+            $agent = ($user->type_user == 'agent')
+                ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
+                : $agentsRepo->findUser($user->id);
             if ($user->type_user == 'player') {
                 $wallet = Wallet::getByClient($user->id, $currency, $bonus);
                 if (is_array($wallet->data)) {
@@ -4384,20 +4388,16 @@ class AgentsController extends Controller
                 $balance = ! is_array($wallet->data)
                     ? $wallet?->data?->wallet?->balance
                     : 0;
-
-                $userOwner = $agentsRepo->findUser($user->id);
-                $ownerAgent = $userOwner;
+                $usernameOwner = $agent->ownerAgent->username;
             } else {
-                $agent = ($user->type_user == 'agent')
-                    ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
-                    : $agentsRepo->findUser($user->id);
-                $ownerAgent = $agent;
-                $percentage = $ownerAgent->percentage;
+                $userOwner = $this->usersRepo->getTokenByUser($agent->owner);
+                $percentage = $agent->percentage;
+                $usernameOwner = $userOwner->username;
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
             }
             $agentsCollection = new AgentsCollection();
-            $userAgent = $agentsCollection->formatRole($ownerAgent, $user, $balance, $percentage);
-            Log::notice(__METHOD__, ['user Agent' =>  $userAgent, $ownerAgent]);
+            $userAgent = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
+            Log::notice(__METHOD__, ['user Agent' =>  $userAgent]);
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
