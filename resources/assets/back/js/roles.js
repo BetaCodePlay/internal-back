@@ -586,7 +586,8 @@ class Roles {
                     tableTransaction.destroy();
                 }
 
-                $($target).find('.table-load').addClass('d-none');
+                $($target).find('.tab-body').addClass('d-none');
+                $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').hide();
             }
         });
@@ -603,7 +604,7 @@ class Roles {
             console.log(endDate);
 
             tableTransaction = tableTransactionID.DataTable({
-                ajax: routeTransaction,
+                ajax: routeTransaction + '?startDate=' + startDate + '&endDate=' + endDate + '&typeUser=all&typeTransaction=all',
                 processing: true,
                 serverSide: true,
                 columnDefs: [{
@@ -616,7 +617,8 @@ class Roles {
 
                 },
                 initComplete: function () {
-                    $($target).find('.table-load').addClass('table-complete').removeClass('d-none');
+                    $($target).find('.tab-body').removeClass('d-none');
+                    $($target).find('.table-load').addClass('table-complete');
                     $($target).find('.loading-style').hide();
                 },
             });
