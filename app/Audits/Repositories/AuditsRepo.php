@@ -133,7 +133,13 @@ class AuditsRepo
             ->get();
 
         $resultCount   = $audit->count();
-        $slicedResults = $audit->slice($start, $length)->all();
+        $slicedResults = $audit->slice($start, $length)->map(function ($item) {
+            return [
+                $item['ip'] ?? null,
+                $item['quantity'] ?? null,
+            ];
+        })->all();
+
 
         return [
             'draw'            => (int)$draw,
