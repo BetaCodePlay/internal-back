@@ -505,7 +505,7 @@ class Roles {
                 method: 'get'
             }).done(function (json) {
                 if (json.status === "OK") {
-                    $('#modifyRolDependence').val(json.data.userData.owner_id).trigger('change');
+                    $('#modifyRolDependence').val(json.data.userData.owner).trigger('change');
                     $('#modifyRolPercentage').val(json.data.userData.percentage);
                     $modal.find('#readyRoleModify').removeClass('d-none');
                     $modal.find('.modal-footer').removeClass('d-none');
