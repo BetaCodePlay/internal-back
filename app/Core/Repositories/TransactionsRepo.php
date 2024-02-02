@@ -388,7 +388,7 @@ class TransactionsRepo
         $endDate         = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
         $typeUser        = $request->has('typeUser') ? $request->get('typeUser') : 'all';
         $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
-        $username = $request->get('search')['value'] ?? null;
+        $username        = $request->get('search')['value'] ?? null;
 
         $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
             $userId,
@@ -396,7 +396,7 @@ class TransactionsRepo
             Configurations::getWhitelabel()
         );
 
-        $transactionsQuery = Transaction::select(
+        $transactionsQuery = Transaction::select([
             'users.username',
             'transactions.user_id',
             'transactions.id',
@@ -406,34 +406,30 @@ class TransactionsRepo
             'transactions.provider_id',
             'transactions.data',
             'transactions.transaction_status_id',
-            'transactions.data->balance AS balance_final'
-        )
+            'transactions.data->balance as balance_final'
+        ])
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $childrenIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
 
-        $transactionsQuery->where(function ($query) use ($typeUser) {
-            if ($typeUser === 'agent') {
-                $query->whereNull('data->provider_transaction');
-            } else {
-                $query->whereNotNull('data->provider_transaction');
-            }
-        });
+        if (! is_null($typeUser) || $typeUser !== 'all') {
+            $transactionsQuery->where(function ($query) use ($typeUser) {
+                if ($typeUser === 'agent') {
+                    $query->whereNull('data->provider_transaction');
+                } else {
+                    $query->whereNotNull('data->provider_transaction');
+                }
+            });
+        }
 
-        $transactionsQuery->where(function ($query) use ($typeUser) {
-            if ($typeUser === 'agent') {
-                $query->whereNull('data->provider_transaction');
+        if (! is_null($typeTransaction) || $typeTransaction !== 'all') {
+            if ($typeTransaction === 'credit') {
+                $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$credit);
             } else {
-                $query->whereNotNull('data->provider_transaction');
+                $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
             }
-        });
-
-        if ($typeTransaction === 'credit') {
-            $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$credit);
-        } else {
-            $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
         }
 
         if (! is_null($username)) {
