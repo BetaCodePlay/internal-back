@@ -369,8 +369,7 @@ class TransactionsRepo
      * @param string $currency
      * @return array
      */
-    public function getTransactionsForDataTable(Request $request, string $currency)
-    : array {
+    public function getTransactionsForDataTable(Request $request, string $currency): array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
@@ -383,54 +382,71 @@ class TransactionsRepo
         $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
         $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
 
-
         $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
             $userId,
             $currency,
             Configurations::getWhitelabel()
         );
 
-        dd($childrenIds);
-
         $transactionsQuery = Transaction::select(
+            'users.username',
+            'transactions.user_id',
             'transactions.id',
             'transactions.amount',
             'transactions.transaction_type_id',
             'transactions.created_at',
             'transactions.provider_id',
             'transactions.data',
-            'transactions.transaction_status_id'
+            'transactions.transaction_status_id',
+            'transactions.data->balance AS balance_final'
         )
-            ->where('transactions.user_id', $userId)
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->whereIn('transactions.user_id', $childrenIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
 
-        $transactionsQuery->where(function ($query) use ($searchValue) {
-            $query->where('transactions.id', 'like', "%$searchValue%")
-                ->orWhere('transactions.amount', 'like', "%$searchValue%")
-                ->orWhere('transactions.transaction_type_id', 'like', "%$searchValue%")
-                ->orWhere('transactions.created_at', 'like', "%$searchValue%")
-                ->orWhere('transactions.provider_id', 'like', "%$searchValue%")
-                ->orWhere('transactions.data', 'like', "%$searchValue%")
-                ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
-        });
+        if (!is_null($searchValue)) {
+            $transactionsQuery->where(function ($query) use ($searchValue) {
+                $query->where('transactions.id', 'like', "%$searchValue%")
+                    ->orWhere('transactions.amount', 'like', "%$searchValue%")
+                    ->orWhere('transactions.transaction_type_id', 'like', "%$searchValue%")
+                    ->orWhere('transactions.created_at', 'like', "%$searchValue%")
+                    ->orWhere('transactions.provider_id', 'like', "%$searchValue%")
+                    ->orWhere('transactions.data', 'like', "%$searchValue%")
+                    ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
+            });
+        }
 
-        $orderableColumns = OrderableColumns::getOrderableColumns();
-
-        $transactionsQuery->orderBy(
-            array_key_exists($orderColumn, $orderableColumns)
-                ? $orderableColumns[$orderColumn]
-                : 'transactions.id',
-            $orderDir ?: 'asc'
-        );
+        if (!empty($orderColumn) && !empty($orderDir)) {
+            if ($orderColumn == 'date') {
+                $transactionsQuery->orderBy('transactions.created_at', $orderDir);
+            } elseif ($orderColumn == 'data.from') {
+                $transactionsQuery->orderBy('transactions.data->from', $orderDir);
+            } elseif ($orderColumn == 'data.to') {
+                $transactionsQuery->orderBy('transactions.data->to', $orderDir);
+            } elseif ($orderColumn == 'debit' || $orderColumn == 'credit') {
+                $transactionsQuery->orderBy('transactions.transaction_type_id', $orderDir)
+                    ->orderBy('transactions.amount', $orderDir);
+            } elseif ($orderColumn == 'balance') {
+                if ($orderDir == 'asc') {
+                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric ASC");
+                } else {
+                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric DESC");
+                }
+            } elseif ($orderColumn == 'new_amount') {
+                if ($orderDir == 'asc') {
+                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric ASC");
+                } else {
+                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric DESC");
+                }
+            } else {
+                $transactionsQuery->orderBy('transactions.id', $orderDir);
+            }
+        }
 
         $resultCount   = $transactionsQuery->count();
         $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
-
-
-        // TODO: Fecha y hora militar
-        // TODO: Origen "from" pasarlo en el array
-        // El monto y el transaction_type_id, los 2 en un array
 
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
