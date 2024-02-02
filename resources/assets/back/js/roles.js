@@ -3,6 +3,8 @@ import {
 } from "../../commons/js/core";
 import {initLitepickerEndTodayNew} from "./commons";
 
+import moment from 'moment';
+
 class Roles {
     static globalusername;
     static globaltypeid;
@@ -577,23 +579,39 @@ class Roles {
 
             if($target === tabTransaction) {
                 let picker = initLitepickerEndTodayNew();
+                $route = tableTransactionID.data('route');
+                let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+                let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
 
                 if (tableTransaction !== undefined) {
                     tableTransaction.destroy();
                 }
 
+                console.log(startDate);
+                console.log(endDate)
+
                 $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').show();
 
-                setTimeout(function (){
-                    tableTransaction = tableTransactionID.DataTable({
-                        fixedHeader: true,
-                        responsive: true
-                    });
 
-                    $($target).find('.table-load').addClass('table-complete');
-                    $($target).find('.loading-style').hide();
-                }, 1000)
+                tableTransaction = tableTransactionID.DataTable({
+                    ajax: $route,
+                    processing: true,
+                    serverSide: true,
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    fixedHeader: true,
+                    responsive: true,
+                    fnCreatedRow: function (nRow, aData, iDataIndex) {
+
+                    },
+                    initComplete: function () {
+                        $($target).find('.table-load').addClass('table-complete');
+                        $($target).find('.loading-style').hide();
+                    },
+                });
             }
         });
     }
