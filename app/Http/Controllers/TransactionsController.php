@@ -206,10 +206,11 @@ class TransactionsController extends Controller
     {
         try {
             $userId = getUserIdByUsernameOrCurrent($request);
-            dd($userId);
             $currency     = session('currency');
             $providers    = [Providers::$agents, Providers::$agents_users];
             $transactions = $this->transactionsRepo->getByUserAndProviders($userId, $providers, $currency);
+
+            dd($transactions);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
