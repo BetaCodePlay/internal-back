@@ -4,7 +4,6 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
 use App\Reports\Repositories\ReportAgentRepo;
-use App\Transactions\Enums\OrderableColumns;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
@@ -25,6 +24,9 @@ use Yajra\DataTables\Utilities\Helper;
 class TransactionsRepo
 {
 
+    /**
+     * @param ReportAgentRepo|null $reportAgentRepo
+     */
     public function __construct(private ?ReportAgentRepo $reportAgentRepo = null) { }
 
     /**
@@ -369,18 +371,22 @@ class TransactionsRepo
      * @param string $currency
      * @return array
      */
-    public function getTransactionsForDataTable(Request $request, string $currency): array {
+    public function getTransactionsForDataTable(Request $request, string $currency)
+    : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
         $searchValue = $request->input('search.value');
-        $orderColumn = $request->input('order.0.column');
-        $orderDir    = $request->input('order.0.dir');
         $userId      = getUserIdByUsernameOrCurrent($request);
         $providers   = [Providers::$agents, Providers::$agents_users];
 
-        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
-        $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $startDate       = Utils::startOfDayUtc(
+            $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
+        );
+        $endDate         = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $typeUser        = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+        $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+        $username        = $request->get('search')['value'] ?? null;
 
         $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
             $userId,
@@ -388,7 +394,19 @@ class TransactionsRepo
             Configurations::getWhitelabel()
         );
 
-        $transactionsQuery = Transaction::select(
+        $orderCol = [
+            'column' => 'date',
+            'order' => 'asc',
+        ];
+
+        if ($request->has('order') && ! empty($request->get('order'))) {
+            $orderCol = [
+                'column' => $request->get('columns')[$request->get('order')[0]['column']]['data'],
+                'order' => $request->get('order')[0]['dir']
+            ];
+        }
+
+        $transactionsQuery = Transaction::select([
             'users.username',
             'transactions.user_id',
             'transactions.id',
@@ -398,15 +416,41 @@ class TransactionsRepo
             'transactions.provider_id',
             'transactions.data',
             'transactions.transaction_status_id',
-            'transactions.data->balance AS balance_final'
-        )
+            'transactions.data->balance as balance_final'
+        ])
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $childrenIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
 
-        if (!is_null($searchValue)) {
+        if ($typeUser !== 'all') {
+            $transactionsQuery->where(function ($query) use ($typeUser) {
+                if ($typeUser === 'agent') {
+                    $query->whereNull('data->provider_transaction');
+                } else {
+                    $query->whereNotNull('data->provider_transaction');
+                }
+            });
+        }
+
+        if ($typeTransaction !== 'all') {
+            if ($typeTransaction === 'credit') {
+                $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$credit);
+            } else {
+                $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
+            }
+        }
+
+        if (! is_null($username)) {
+            $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
+                'transactions.data->to',
+                'like',
+                "%$username%"
+            );
+        }
+
+        if (! is_null($searchValue)) {
             $transactionsQuery->where(function ($query) use ($searchValue) {
                 $query->where('transactions.id', 'like', "%$searchValue%")
                     ->orWhere('transactions.amount', 'like', "%$searchValue%")
@@ -418,30 +462,36 @@ class TransactionsRepo
             });
         }
 
-        if (!empty($orderColumn) && !empty($orderDir)) {
-            if ($orderColumn == 'date') {
-                $transactionsQuery->orderBy('transactions.created_at', $orderDir);
-            } elseif ($orderColumn == 'data.from') {
-                $transactionsQuery->orderBy('transactions.data->from', $orderDir);
-            } elseif ($orderColumn == 'data.to') {
-                $transactionsQuery->orderBy('transactions.data->to', $orderDir);
-            } elseif ($orderColumn == 'debit' || $orderColumn == 'credit') {
-                $transactionsQuery->orderBy('transactions.transaction_type_id', $orderDir)
-                    ->orderBy('transactions.amount', $orderDir);
-            } elseif ($orderColumn == 'balance') {
-                if ($orderDir == 'asc') {
-                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric ASC");
+        if (! empty($orderCol)) {
+            if ($orderCol['column'] == 'date') {
+                $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
+            } elseif ($orderCol['column'] == 'data.from') {
+                $transactionsQuery->orderBy('transactions.data->from', $orderCol['order']);
+            } elseif ($orderCol['column'] == 'data.to') {
+                $transactionsQuery->orderBy('transactions.data->to', $orderCol['order']);
+            } elseif ($orderCol['column'] == 'debit' || $orderCol['column'] == 'credit') {
+                $transactionsQuery->orderBy('transactions.transaction_type_id', $orderCol['order'])->orderBy(
+                    'transactions.amount',
+                    $orderCol['order']
+                );
+            } elseif ($orderCol['column'] == 'balance') {
+                if ($orderCol['order'] == 'asc') {
+                    $transactionsQuery->orderByRaw(
+                        "(site.transactions.data::json->>'balance')::numeric ASC"
+                    );
                 } else {
-                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric DESC");
+                    $transactionsQuery->orderByRaw(
+                        "(site.transactions.data::json->>'balance')::numeric DESC"
+                    );
                 }
-            } elseif ($orderColumn == 'new_amount') {
-                if ($orderDir == 'asc') {
-                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric ASC");
+            } elseif ($orderCol['column'] == 'new_amount') {
+                if ($orderCol['order'] == 'asc') {
+                    $transactionsQuery->orderByRaw("(site.transactions.amount)::numeric ASC");
                 } else {
-                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric DESC");
+                    $transactionsQuery->orderByRaw("(site.transactions.amount)::numeric DESC");
                 }
             } else {
-                $transactionsQuery->orderBy('transactions.id', $orderDir);
+                $transactionsQuery->orderBy('transactions.id', $orderCol['order']);
             }
         }
 
@@ -454,14 +504,15 @@ class TransactionsRepo
                 session('timezone')
             )->toDateTimeString();
 
-            $from    = $transaction->data->from ?? null;
-            $to      = $transaction->data->to ?? null;
-            $balance = $transaction->data->balance ?? null;
+            $from     = $transaction->data->from ?? null;
+            $to       = $transaction->data->to ?? null;
+            $balance  = $transaction->data->balance ?? null;
+            $receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
 
             return [
                 $formattedDateTimeWithTimezone,
                 $from,
-                $to,
+                $receiver,
                 [number_format($transaction->amount, 2), $transaction->transaction_type_id],
                 number_format((float)$balance, 2)
             ];
@@ -545,6 +596,7 @@ class TransactionsRepo
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
+
         //->orderBy('transactions.id', 'DESC');
 
         if (is_null($typeUser) || $typeUser === 'all') {

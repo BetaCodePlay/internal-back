@@ -35,11 +35,6 @@ Route::group(['prefix' => 'transactions', 'middleware' => ['auth']], function ()
 //Role routes
 Route::prefix('api-transactions')
     ->controller(TransactionsController::class)->group(function () {
-      /*  Route::get('/transactions/', [
-            'as' => 'agents.transactions',
-            'uses' => 'AgentsController@agentsTransactions'
-        ]);*/
-
         Route::get('/agents', 'agentsTransactions')
             ->name('transactions.agents');
     });
