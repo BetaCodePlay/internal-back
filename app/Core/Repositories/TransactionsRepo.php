@@ -12,10 +12,12 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Utilities\Helper;
 
 
@@ -369,7 +371,8 @@ class TransactionsRepo
      * @param string $currency
      * @return array
      */
-    public function getTransactionsForDataTable(Request $request, string $currency): array {
+    public function getTransactionsForDataTable(Request $request, string $currency)
+    : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
@@ -379,8 +382,13 @@ class TransactionsRepo
         $userId      = getUserIdByUsernameOrCurrent($request);
         $providers   = [Providers::$agents, Providers::$agents_users];
 
-        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
-        $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $startDate       = Utils::startOfDayUtc(
+            $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
+        );
+        $endDate         = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $typeUser        = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+        $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+        $username = $request->get('search')['value'] ?? null;
 
         $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
             $userId,
@@ -406,7 +414,37 @@ class TransactionsRepo
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
 
-        if (!is_null($searchValue)) {
+        $transactionsQuery->where(function ($query) use ($typeUser) {
+            if ($typeUser === 'agent') {
+                $query->whereNull('data->provider_transaction');
+            } else {
+                $query->whereNotNull('data->provider_transaction');
+            }
+        });
+
+        $transactionsQuery->where(function ($query) use ($typeUser) {
+            if ($typeUser === 'agent') {
+                $query->whereNull('data->provider_transaction');
+            } else {
+                $query->whereNotNull('data->provider_transaction');
+            }
+        });
+
+        if ($typeTransaction === 'credit') {
+            $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$credit);
+        } else {
+            $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
+        }
+
+        if (! is_null($username)) {
+            $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
+                'transactions.data->to',
+                'like',
+                "%$username%"
+            );
+        }
+
+        if (! is_null($searchValue)) {
             $transactionsQuery->where(function ($query) use ($searchValue) {
                 $query->where('transactions.id', 'like', "%$searchValue%")
                     ->orWhere('transactions.amount', 'like', "%$searchValue%")
@@ -418,7 +456,7 @@ class TransactionsRepo
             });
         }
 
-        if (!empty($orderColumn) && !empty($orderDir)) {
+        if (! empty($orderColumn) && ! empty($orderDir)) {
             if ($orderColumn == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderDir);
             } elseif ($orderColumn == 'data.from') {
