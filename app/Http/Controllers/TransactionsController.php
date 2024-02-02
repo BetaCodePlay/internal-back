@@ -214,12 +214,9 @@ class TransactionsController extends Controller
         }
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
+
     public function agentsTransactions(Request $request)
-    : array {
+    {
         return $this->transactionsRepo->getTransactionsForDataTable($request, session('currency'));
     }
 }

@@ -366,7 +366,7 @@ class TransactionsRepo
             ->get();
     }
 
- 
+
     public function getTransactionsForDataTable(Request $request, string $currency)
     : array {
         $draw        = $request->input('draw', 1);
