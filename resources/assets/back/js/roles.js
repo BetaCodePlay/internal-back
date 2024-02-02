@@ -504,8 +504,9 @@ class Roles {
                 url: $route,
                 method: 'get'
             }).done(function (json) {
-                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
-                $modal.modal('hide');
+                $modal.find('#readyRoleModify').removeClass('d-none');
+                $modal.find('.modal-footer').removeClass('d-none');
+                $modal.find('.loading-style').hide();
             }).fail(function (json) {
                 let data = json.responseJSON;
 
