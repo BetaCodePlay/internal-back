@@ -7,11 +7,14 @@ use App\Core\Repositories\TransactionsRepo;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Configurations\Configurations;
+use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
 use Illuminate\Http\Request;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+use Exception;
 
 /**
  * Class TransactionsController
@@ -50,7 +53,11 @@ class TransactionsController extends Controller
      * @param TransactionsRepo $transactionsRepo
      * @param TransactionsCollection $transactionsCollection
      */
-    public function __construct(TransactionsRepo $transactionsRepo, TransactionsCollection $transactionsCollection, ClosuresUsersTotalsRepo $closuresUserTotalsRepo)
+    public function __construct(
+        TransactionsRepo $transactionsRepo,
+        TransactionsCollection $transactionsCollection,
+        ClosuresUsersTotalsRepo $closuresUserTotalsRepo,
+    )
     {
         $this->transactionsRepo = $transactionsRepo;
         $this->transactionsCollection = $transactionsCollection;
@@ -83,7 +90,7 @@ class TransactionsController extends Controller
             ];
 
             return response()->json($data);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -111,7 +118,7 @@ class TransactionsController extends Controller
             ];
             return Utils::successResponse($data);
 
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -162,7 +169,7 @@ class TransactionsController extends Controller
             return Utils::successResponse($data);
 
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
+            Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }
@@ -189,8 +196,22 @@ class TransactionsController extends Controller
                 ];
                 return Utils::successResponse($data);
             }
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    public function agentsTransactions(Request $request)
+    {
+        try {
+            $userId = getUserIdByUsernameOrCurrent($request);
+            dd($userId);
+            $currency     = session('currency');
+            $providers    = [Providers::$agents, Providers::$agents_users];
+            $transactions = $this->transactionsRepo->getByUserAndProviders($userId, $providers, $currency);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }

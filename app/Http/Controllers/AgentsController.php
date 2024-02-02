@@ -2902,12 +2902,7 @@ class AgentsController extends Controller
      */
     public function getDirectChildren(Request $request)
     : array {
-        return $this->agentsRepo->getDirectChildren(
-            $request,
-            Auth::id(),
-            session('currency'),
-            Configurations::getWhitelabel()
-        );
+        return $this->agentsRepo->getDirectChildren($request, session('currency'), Configurations::getWhitelabel());
     }
 
     /**

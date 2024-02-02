@@ -639,7 +639,7 @@ class AgentsRepo
      * @param int $whitelabelId
      * @return array
      */
-    public function getDirectChildren(Request $request, int $userAuthId, string $currency, int $whitelabelId)
+    public function getDirectChildren(Request $request, string $currency, int $whitelabelId)
     : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
