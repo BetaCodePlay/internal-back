@@ -416,12 +416,12 @@ class TransactionsRepo
         // TODO: Origen "from" pasarlo en el array
         // El monto y el transaction_type_id, los 2 en un array
 
-        dd(session('timezone'));
-
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
-            $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone('Nombre_Zona_Horaria')->toDateTimeString();
+            $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(session('timezone'))->toDateTimeString();
 
+            dd($formattedDateTimeWithTimezone);
+            
             return [
                 $transaction->created_at,
                 $transaction->id,
