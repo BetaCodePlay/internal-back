@@ -421,7 +421,7 @@ class TransactionsRepo
             $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(session('timezone'))->toDateTimeString();
 
             dd($formattedDateTimeWithTimezone);
-            
+
             return [
                 $transaction->created_at,
                 $transaction->id,
