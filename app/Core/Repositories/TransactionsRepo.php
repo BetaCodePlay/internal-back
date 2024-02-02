@@ -417,7 +417,7 @@ class TransactionsRepo
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
 
-        if (! is_null($typeUser) || $typeUser !== 'all') {
+        if (! is_null($typeUser) && $typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
                 if ($typeUser === 'agent') {
                     $query->whereNull('data->provider_transaction');
@@ -427,7 +427,7 @@ class TransactionsRepo
             });
         }
 
-        if (! is_null($typeTransaction) || $typeTransaction !== 'all') {
+        if (! is_null($typeTransaction) && $typeTransaction !== 'all') {
             if ($typeTransaction === 'credit') {
                 $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$credit);
             } else {
