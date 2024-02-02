@@ -539,7 +539,7 @@ class Roles {
         let tableInformation;
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
-        let picker;
+        let picker = initLitepickerEndTodayNew();;
         let routeTransaction;
 
 
@@ -580,15 +580,13 @@ class Roles {
             }
 
             if($target === tabTransaction) {
-                let picker = initLitepickerEndTodayNew();
                 routeTransaction = tableTransactionID.data('route');
-
 
                 if (tableTransaction !== undefined) {
                     tableTransaction.destroy();
                 }
 
-                $($target).find('.table-load').removeClass('table-complete');
+                $($target).find('.table-load').addClass('d-none');
                 $($target).find('.loading-style').hide();
             }
         });
@@ -618,7 +616,7 @@ class Roles {
 
                 },
                 initComplete: function () {
-                    $($target).find('.table-load').addClass('table-complete');
+                    $($target).find('.table-load').addClass('table-complete').removeClass('d-none');
                     $($target).find('.loading-style').hide();
                 },
             });
