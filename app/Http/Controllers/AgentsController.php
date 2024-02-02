@@ -720,7 +720,7 @@ class AgentsController extends Controller
                 $request
             );
 
-            return response()->json($data);
+            return response()->json($transactions);
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
