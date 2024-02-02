@@ -445,30 +445,36 @@ class TransactionsRepo
             });
         }
 
-        if (! empty($orderColumn) && ! empty($orderDir)) {
-            if ($orderColumn == 'date') {
-                $transactionsQuery->orderBy('transactions.created_at', $orderDir);
-            } elseif ($orderColumn == 'data.from') {
-                $transactionsQuery->orderBy('transactions.data->from', $orderDir);
-            } elseif ($orderColumn == 'data.to') {
-                $transactionsQuery->orderBy('transactions.data->to', $orderDir);
-            } elseif ($orderColumn == 'debit' || $orderColumn == 'credit') {
-                $transactionsQuery->orderBy('transactions.transaction_type_id', $orderDir)
-                    ->orderBy('transactions.amount', $orderDir);
-            } elseif ($orderColumn == 'balance') {
-                if ($orderDir == 'asc') {
-                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric ASC");
+        if (! empty($orderCol)) {
+            if ($orderCol['column'] == 'date') {
+                $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
+            } elseif ($orderCol['column'] == 'data.from') {
+                $transactionsQuery->orderBy('transactions.data->from', $orderCol['order']);
+            } elseif ($orderCol['column'] == 'data.to') {
+                $transactionsQuery->orderBy('transactions.data->to', $orderCol['order']);
+            } elseif ($orderCol['column'] == 'debit' || $orderCol['column'] == 'credit') {
+                $transactionsQuery->orderBy('transactions.transaction_type_id', $orderCol['order'])->orderBy(
+                    'transactions.amount',
+                    $orderCol['order']
+                );
+            } elseif ($orderCol['column'] == 'balance') {
+                if ($orderCol['order'] == 'asc') {
+                    $transactionsQuery->orderByRaw(
+                        "(site.transactions.data::json->>'balance')::numeric ASC"
+                    );
                 } else {
-                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric DESC");
+                    $transactionsQuery->orderByRaw(
+                        "(site.transactions.data::json->>'balance')::numeric DESC"
+                    );
                 }
-            } elseif ($orderColumn == 'new_amount') {
-                if ($orderDir == 'asc') {
-                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric ASC");
+            } elseif ($orderCol['column'] == 'new_amount') {
+                if ($orderCol['order'] == 'asc') {
+                    $transactionsQuery->orderByRaw("(site.transactions.amount)::numeric ASC");
                 } else {
-                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric DESC");
+                    $transactionsQuery->orderByRaw("(site.transactions.amount)::numeric DESC");
                 }
             } else {
-                $transactionsQuery->orderBy('transactions.id', $orderDir);
+                $transactionsQuery->orderBy('transactions.id', $orderCol['order']);
             }
         }
 

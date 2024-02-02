@@ -713,8 +713,6 @@ class AgentsController extends Controller
                 $typeTransaction
             );
 
-            dd($transactions[0],  $transactions[1], $transactions);
-
             //TODO draw table in collection
             $data = $this->agentsCollection->formatAgentTransactionsPaginate(
                 $transactions[0],
