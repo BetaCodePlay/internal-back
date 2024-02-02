@@ -4,7 +4,6 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
 use App\Reports\Repositories\ReportAgentRepo;
-use App\Transactions\Enums\OrderableColumns;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
@@ -12,12 +11,10 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
-use Dotworkers\Security\Enums\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use Yajra\DataTables\Utilities\Helper;
 
 
@@ -410,9 +407,6 @@ class TransactionsRepo
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
 
-
-        return $transactionsQuery->get();
-
         if (! is_null($typeUser) || $typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
                 if ($typeUser === 'agent') {
@@ -487,14 +481,15 @@ class TransactionsRepo
                 session('timezone')
             )->toDateTimeString();
 
-            $from    = $transaction->data->from ?? null;
-            $to      = $transaction->data->to ?? null;
-            $balance = $transaction->data->balance ?? null;
+            $from     = $transaction->data->from ?? null;
+            $to       = $transaction->data->to ?? null;
+            $balance  = $transaction->data->balance ?? null;
+            $receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
 
             return [
                 $formattedDateTimeWithTimezone,
                 $from,
-                $to,
+                $receiver,
                 [number_format($transaction->amount, 2), $transaction->transaction_type_id],
                 number_format((float)$balance, 2)
             ];
@@ -504,7 +499,7 @@ class TransactionsRepo
             'draw'            => (int)$draw,
             'recordsTotal'    => $resultCount,
             'recordsFiltered' => $resultCount,
-            'data'            => $slicedResults,
+            'data'            => $formattedResults,
         ];
     }
 
