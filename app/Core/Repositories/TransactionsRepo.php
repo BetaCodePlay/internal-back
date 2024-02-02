@@ -457,7 +457,6 @@ class TransactionsRepo
 
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
-                dd('titi');
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
             } elseif ($orderCol['column'] == 'data.from') {
                 $transactionsQuery->orderBy('transactions.data->from', $orderCol['order']);
