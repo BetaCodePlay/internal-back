@@ -162,7 +162,7 @@
                             <div class="col-12 col-lg-3 col-form">
                                 <div class="form-group">
                                     <label class="d-none d-lg-block">&nbsp;</label>
-                                    <button type="button" class="btn btn-theme btn-block" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching...">
+                                    <button type="button" class="btn btn-theme btn-block searchTransactionsRole" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching...">
                                         {{ _i('Search') }}
                                     </button>
                                 </div>
