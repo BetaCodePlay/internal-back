@@ -3,6 +3,7 @@
 namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
+use App\Reports\Repositories\ReportAgentRepo;
 use App\Transactions\Enums\OrderableColumns;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
@@ -10,6 +11,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Configurations\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +24,8 @@ use Yajra\DataTables\Utilities\Helper;
  */
 class TransactionsRepo
 {
+
+    public function __construct(private ReportAgentRepo $reportAgentRepo) { }
 
     /**
      * @param $user
@@ -375,6 +379,18 @@ class TransactionsRepo
         $orderDir    = $request->input('order.0.dir');
         $userId      = getUserIdByUsernameOrCurrent($request);
         $providers   = [Providers::$agents, Providers::$agents_users];
+
+        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
+        $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+
+
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+            $userId,
+            $currency,
+            Configurations::getWhitelabel()
+        );
+
+        dd($childrenIds);
 
         $transactionsQuery = Transaction::select(
             'transactions.id',
