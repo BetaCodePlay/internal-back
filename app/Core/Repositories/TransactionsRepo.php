@@ -8,6 +8,7 @@ use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -356,6 +357,79 @@ class TransactionsRepo
             ->offset($offset)
             ->get();
     }
+
+    public function getTransactionsForDataTable(Request $request, string $currency, int $whitelabelId): array {
+        $draw        = $request->input('draw', 1);
+        $start       = $request->input('start', 0);
+        $length      = $request->input('length', 10);
+        $searchValue = $request->input('search.value');
+        $orderColumn = $request->input('order.0.column');
+        $orderDir    = $request->input('order.0.dir');
+        $userId      = getUserIdByUsernameOrCurrent($request);
+
+        $transactionsQuery = Transaction::select(
+            'transactions.id',
+            'transactions.amount',
+            'transactions.transaction_type_id',
+            'transactions.created_at',
+            'transactions.provider_id',
+            'transactions.data',
+            'transactions.transaction_status_id'
+        )
+            ->where('transactions.user_id', $userId)
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $whitelabelId);
+
+        $transactionsQuery->where(function ($query) use ($searchValue) {
+            $query->where('transactions.id', 'like', "%$searchValue%")
+                ->orWhere('transactions.amount', 'like', "%$searchValue%")
+                ->orWhere('transactions.transaction_type_id', 'like', "%$searchValue%")
+                ->orWhere('transactions.created_at', 'like', "%$searchValue%")
+                ->orWhere('transactions.provider_id', 'like', "%$searchValue%")
+                ->orWhere('transactions.data', 'like', "%$searchValue%")
+                ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
+        });
+
+        $orderableColumns = [
+            0 => 'transactions.id',
+            1 => 'transactions.amount',
+            2 => 'transactions.transaction_type_id',
+            3 => 'transactions.created_at',
+            4 => 'transactions.provider_id',
+            5 => 'transactions.data',
+            6 => 'transactions.transaction_status_id',
+        ];
+
+        $transactionsQuery->orderBy(
+            array_key_exists($orderColumn, $orderableColumns)
+                ? $orderableColumns[$orderColumn]
+                : 'transactions.id',
+            $orderDir ?: 'asc'
+        );
+
+        $resultCount    = $transactionsQuery->count();
+        $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
+
+        $formattedResults = $slicedResults->map(function ($transaction) {
+            return [
+                $transaction->id,
+                $transaction->amount,
+                $transaction->transaction_type_id,
+                $transaction->created_at,
+                $transaction->provider_id,
+                $transaction->data,
+                $transaction->transaction_status_id,
+            ];
+        })->toArray();
+
+        return [
+            'draw'            => (int)$draw,
+            'recordsTotal'    => $resultCount,
+            'recordsFiltered' => $resultCount,
+            'data'            => $formattedResults,
+        ];
+    }
+
 
     /**
      * @param string $startDate

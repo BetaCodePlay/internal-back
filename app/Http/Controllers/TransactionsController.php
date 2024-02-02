@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Core\Collections\TransactionsCollection;
 use App\Core\Repositories\TransactionsRepo;
+use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
+use Exception;
 use Illuminate\Http\Request;
-use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
-use Exception;
 
 /**
  * Class TransactionsController
@@ -204,16 +204,9 @@ class TransactionsController extends Controller
 
     public function agentsTransactions(Request $request)
     {
-        try {
-            $userId = getUserIdByUsernameOrCurrent($request);
-            $currency     = session('currency');
-            $providers    = [Providers::$agents, Providers::$agents_users];
-            $transactions = $this->transactionsRepo->getByUserAndProviders($userId, $providers, $currency);
-
-            dd($transactions);
-        } catch (Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
+        $userId    = getUserIdByUsernameOrCurrent($request);
+        $currency  = session('currency');
+        $providers = [Providers::$agents, Providers::$agents_users];
+        return $this->transactionsRepo->getByUserAndProviders($userId, $providers, $currency);
     }
 }
