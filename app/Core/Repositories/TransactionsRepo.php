@@ -3,6 +3,7 @@
 namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
+use App\Transactions\Enums\OrderableColumns;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
@@ -358,6 +359,11 @@ class TransactionsRepo
             ->get();
     }
 
+    /**
+     * @param Request $request
+     * @param string $currency
+     * @return array
+     */
     public function getTransactionsForDataTable(Request $request, string $currency)
     : array {
         $draw        = $request->input('draw', 1);
@@ -392,15 +398,7 @@ class TransactionsRepo
                 ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
         });
 
-        $orderableColumns = [
-            0 => 'transactions.id',
-            1 => 'transactions.amount',
-            2 => 'transactions.transaction_type_id',
-            3 => 'transactions.created_at',
-            4 => 'transactions.provider_id',
-            5 => 'transactions.data',
-            6 => 'transactions.transaction_status_id',
-        ];
+        $orderableColumns = OrderableColumns::getOrderableColumns();
 
         $transactionsQuery->orderBy(
             array_key_exists($orderColumn, $orderableColumns)

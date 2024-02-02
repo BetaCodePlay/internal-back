@@ -8,7 +8,6 @@ use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Configurations\Configurations;
-use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
 use Exception;
@@ -57,9 +56,8 @@ class TransactionsController extends Controller
         TransactionsRepo $transactionsRepo,
         TransactionsCollection $transactionsCollection,
         ClosuresUsersTotalsRepo $closuresUserTotalsRepo,
-    )
-    {
-        $this->transactionsRepo = $transactionsRepo;
+    ) {
+        $this->transactionsRepo       = $transactionsRepo;
         $this->transactionsCollection = $transactionsCollection;
         $this->closuresUserTotalsRepo = $closuresUserTotalsRepo;
     }
@@ -75,13 +73,12 @@ class TransactionsController extends Controller
     public function closure(Request $request)
     {
         try {
-            $startDate = str_replace('+', ' ', $request->start_date);
-            $endDate = str_replace('+', ' ', $request->end_date);
+            $startDate  = str_replace('+', ' ', $request->start_date);
+            $endDate    = str_replace('+', ' ', $request->end_date);
             $whitelabel = $request->whitelabel_id;
 
-            if (!is_null($startDate) && !is_null($endDate) && !is_null($whitelabel)) {
+            if (! is_null($startDate) && ! is_null($endDate) && ! is_null($whitelabel)) {
                 $closure = $this->closuresUserTotalsRepo->getClosureUserTotals($startDate, $endDate, $whitelabel);
-
             } else {
                 $closure = [];
             }
@@ -107,17 +104,24 @@ class TransactionsController extends Controller
     public function countByType($transactionType, $status, $startDate, $endDate)
     {
         try {
-            $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
+            $whitelabel    = Configurations::getWhitelabel();
+            $currency      = session('currency');
+            $startDate     = Utils::startOfDayUtc($startDate);
+            $endDate       = Utils::endOfDayUtc($endDate);
             $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment];
-            $count = $this->transactionsRepo->countByProviderTypes($whitelabel, $transactionType, $currency, $providerTypes, $startDate, $endDate, $status);
-            $data = [
+            $count         = $this->transactionsRepo->countByProviderTypes(
+                $whitelabel,
+                $transactionType,
+                $currency,
+                $providerTypes,
+                $startDate,
+                $endDate,
+                $status
+            );
+            $data          = [
                 'count' => number_format($count)
             ];
             return Utils::successResponse($data);
-
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -131,18 +135,24 @@ class TransactionsController extends Controller
      */
     public function dashboardGraphicData()
     {
-        $months = 6;
-        $timezone = session('timezone');
-        $endDate = Carbon::now()->setTimezone($timezone)->format('Y-m-d');
-        $startDate = Carbon::now()->setTimezone($timezone)->subMonth($months)->format('Y-m-d');
-        $newStartDate = date("Y-m", strtotime($startDate));
-        $newEndDate = date("Y-m", strtotime($endDate));
-        $period = CarbonPeriod::create($newStartDate, $newEndDate);
-        $whitelabel = Configurations::getWhitelabel();
-        $currency = session('currency');
+        $months        = 6;
+        $timezone      = session('timezone');
+        $endDate       = Carbon::now()->setTimezone($timezone)->format('Y-m-d');
+        $startDate     = Carbon::now()->setTimezone($timezone)->subMonth($months)->format('Y-m-d');
+        $newStartDate  = date("Y-m", strtotime($startDate));
+        $newEndDate    = date("Y-m", strtotime($endDate));
+        $period        = CarbonPeriod::create($newStartDate, $newEndDate);
+        $whitelabel    = Configurations::getWhitelabel();
+        $currency      = session('currency');
         $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment];
-        $financialData = $this->transactionsRepo->getFinancialData($whitelabel, $currency, $providerTypes, $startDate, $endDate);
-        $financial = $this->transactionsCollection->formatDashboardGraphic($period, $financialData);
+        $financialData = $this->transactionsRepo->getFinancialData(
+            $whitelabel,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate
+        );
+        $financial     = $this->transactionsCollection->formatDashboardGraphic($period, $financialData);
         return response()->json($financial);
     }
 
@@ -154,20 +164,26 @@ class TransactionsController extends Controller
      * @param string $endDate End date to filter
      * @return Response
      */
-    public function totalsByType($transactionType, $startDate, $endDate): Response
-    {
+    public function totalsByType($transactionType, $startDate, $endDate)
+    : Response {
         try {
-            $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
+            $whitelabel    = Configurations::getWhitelabel();
+            $currency      = session('currency');
+            $startDate     = Utils::startOfDayUtc($startDate);
+            $endDate       = Utils::endOfDayUtc($endDate);
             $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment];
-            $total = $this->transactionsRepo->totalByProviderTypes($whitelabel, $transactionType, $currency, $providerTypes, $startDate, $endDate);
-            $data = [
+            $total         = $this->transactionsRepo->totalByProviderTypes(
+                $whitelabel,
+                $transactionType,
+                $currency,
+                $providerTypes,
+                $startDate,
+                $endDate
+            );
+            $data          = [
                 'total' => number_format($total, 2)
             ];
             return Utils::successResponse($data);
-
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -177,31 +193,31 @@ class TransactionsController extends Controller
     /**
      * Get user transactions
      *
+     * @param null $user
+     * @param null $currency
      * @return Response
      */
     public function userTransactions($user = null, $currency = null)
-    {
+    : Response {
         try {
-            if (!is_null($user) && !is_null($currency)) {
+            if (! is_null($user) && ! is_null($currency)) {
                 $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment];
-                $transactions = $this->transactionsRepo->getByUserAndProviderTypes($user, $currency, $providerTypes);
+                $transactions  = $this->transactionsRepo->getByUserAndProviderTypes($user, $currency, $providerTypes);
                 $this->transactionsCollection->formatTransactions($transactions);
-                $data = [
-                    'transactions' => $transactions
-                ];
-                return Utils::successResponse($data);
-            } else {
-                $data = [
-                    'transactions' => []
-                ];
-                return Utils::successResponse($data);
+                return Utils::successResponse(['transactions' => $transactions]);
             }
+
+            return Utils::successResponse(['transactions' => []]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function agentsTransactions(Request $request)
     : array {
         return $this->transactionsRepo->getTransactionsForDataTable($request, session('currency'));
