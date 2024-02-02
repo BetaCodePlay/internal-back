@@ -203,10 +203,7 @@ class TransactionsController extends Controller
     }
 
     public function agentsTransactions(Request $request)
-    {
-        $userId    = getUserIdByUsernameOrCurrent($request);
-        $currency  = session('currency');
-        $providers = [Providers::$agents, Providers::$agents_users];
-        return $this->transactionsRepo->getTransactionsForDataTable($userId, $providers, $currency);
+    : array {
+        return $this->transactionsRepo->getTransactionsForDataTable($request, session('currency'));
     }
 }

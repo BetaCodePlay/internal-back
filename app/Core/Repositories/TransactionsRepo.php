@@ -358,7 +358,8 @@ class TransactionsRepo
             ->get();
     }
 
-    public function getTransactionsForDataTable(Request $request, string $currency, int $whitelabelId): array {
+    public function getTransactionsForDataTable(Request $request, string $currency)
+    : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
@@ -366,6 +367,7 @@ class TransactionsRepo
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
         $userId      = getUserIdByUsernameOrCurrent($request);
+        $providers   = [Providers::$agents, Providers::$agents_users];
 
         $transactionsQuery = Transaction::select(
             'transactions.id',
@@ -378,7 +380,7 @@ class TransactionsRepo
         )
             ->where('transactions.user_id', $userId)
             ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $whitelabelId);
+            ->whereIn('transactions.provider_id', $providers);
 
         $transactionsQuery->where(function ($query) use ($searchValue) {
             $query->where('transactions.id', 'like', "%$searchValue%")
@@ -407,7 +409,7 @@ class TransactionsRepo
             $orderDir ?: 'asc'
         );
 
-        $resultCount    = $transactionsQuery->count();
+        $resultCount   = $transactionsQuery->count();
         $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
 
         $formattedResults = $slicedResults->map(function ($transaction) {
@@ -1110,7 +1112,7 @@ class TransactionsRepo
             ])
             ->whereIn('transactions.user_id', $authUserAndChildrenIds)
             ->where([
-                'transactions.currency_iso' => $currency,
+                'transactions.currency_iso'  => $currency,
                 'transactions.whitelabel_id' => $whitelabelId,
             ])
             ->get();
