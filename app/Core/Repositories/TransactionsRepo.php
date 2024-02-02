@@ -370,8 +370,6 @@ class TransactionsRepo
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
         $searchValue = $request->input('search.value');
-        $orderColumn = $request->input('order.0.column');
-        $orderDir    = $request->input('order.0.dir');
         $userId      = getUserIdByUsernameOrCurrent($request);
         $providers   = [Providers::$agents, Providers::$agents_users];
 
@@ -388,6 +386,18 @@ class TransactionsRepo
             $currency,
             Configurations::getWhitelabel()
         );
+
+        $orderCol = [
+            'column' => 'date',
+            'order' => 'asc',
+        ];
+
+        if ($request->has('order') && ! empty($request->get('order'))) {
+            $orderCol = [
+                'column' => $request->get('columns')[$request->get('order')[0]['column']]['data'],
+                'order' => $request->get('order')[0]['dir']
+            ];
+        }
 
         $transactionsQuery = Transaction::select([
             'users.username',
