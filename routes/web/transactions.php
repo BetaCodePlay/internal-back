@@ -40,6 +40,6 @@ Route::prefix('api-transactions')
             'uses' => 'AgentsController@agentsTransactions'
         ]);*/
 
-        Route::get('/transactions', 'agentsTransactions')
+        Route::get('/agents', 'agentsTransactions')
             ->name('transactions.agents');
     });
