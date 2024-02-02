@@ -493,11 +493,34 @@ class Roles {
         let $modal = $('#role-modify');
 
         $(document).on('click', '[data-target="#role-modify"]', function () {
+            let $this = $(this);
+            let $route = $this.data('route');
+            let $data = {
+                id: Roles.globaluserid
+            };
+
             $modal.find('#readyRoleModify').addClass('d-none');
             $modal.find('.modal-footer').addClass('d-none');
             $modal.find('.loading-style').show();
 
+            $.ajax({
+                url: $route,
+                method: 'get',
+                data: $data
+            }).done(function (json) {
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                $modal.modal('hide');
+            }).fail(function (json) {
+                let data = json.responseJSON;
 
+                if (data.code === 403) {
+                    Toastr.notifyToastr(data.data.title, data.data.message, 'error');
+                } else {
+                    Roles.errorResponse(json);
+                }
+            }).always(function () {
+                $this.button('reset');
+            });
         });
     }
 
