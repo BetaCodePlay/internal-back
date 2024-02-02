@@ -1170,18 +1170,18 @@ class AgentsCollection
     /**
      * FormatRole
      *
-     * @param array $ownerAgent Owner Agent data
+     * @param String $usernameOwner Owner Agent data
      * @param array $users User data
      * @param var $balance Balance User
      * @param var $percentage Percentage User
      * @return array
      */
-    public function formatRole($ownerAgent, $user, $balance, $percentage)
+    public function formatRole($usernameOwner, $user, $balance, $percentage)
     {
         $user->statusText  = ActionUser::getName($user->action);
         $user->balanceUser = number_format($balance, 2);
         $user->agentType = $user->type;
-        $user->owner = $ownerAgent->ownerAgent->username;
+        $user->owner = $usernameOwner;
         $user->percentage = $percentage;
         return $user;
     }

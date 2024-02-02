@@ -3,11 +3,16 @@
 namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
+use App\Reports\Repositories\ReportAgentRepo;
+use App\Transactions\Enums\OrderableColumns;
+use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
+use Dotworkers\Configurations\Utils;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +24,8 @@ use Yajra\DataTables\Utilities\Helper;
  */
 class TransactionsRepo
 {
+
+    public function __construct(private ?ReportAgentRepo $reportAgentRepo = null) { }
 
     /**
      * @param $user
@@ -356,6 +363,118 @@ class TransactionsRepo
             ->offset($offset)
             ->get();
     }
+
+    /**
+     * @param Request $request
+     * @param string $currency
+     * @return array
+     */
+    public function getTransactionsForDataTable(Request $request, string $currency): array {
+        $draw        = $request->input('draw', 1);
+        $start       = $request->input('start', 0);
+        $length      = $request->input('length', 10);
+        $searchValue = $request->input('search.value');
+        $orderColumn = $request->input('order.0.column');
+        $orderDir    = $request->input('order.0.dir');
+        $userId      = getUserIdByUsernameOrCurrent($request);
+        $providers   = [Providers::$agents, Providers::$agents_users];
+
+        $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
+        $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+            $userId,
+            $currency,
+            Configurations::getWhitelabel()
+        );
+
+        $transactionsQuery = Transaction::select(
+            'users.username',
+            'transactions.user_id',
+            'transactions.id',
+            'transactions.amount',
+            'transactions.transaction_type_id',
+            'transactions.created_at',
+            'transactions.provider_id',
+            'transactions.data',
+            'transactions.transaction_status_id',
+            'transactions.data->balance AS balance_final'
+        )
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->whereIn('transactions.user_id', $childrenIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers);
+
+        if (!is_null($searchValue)) {
+            $transactionsQuery->where(function ($query) use ($searchValue) {
+                $query->where('transactions.id', 'like', "%$searchValue%")
+                    ->orWhere('transactions.amount', 'like', "%$searchValue%")
+                    ->orWhere('transactions.transaction_type_id', 'like', "%$searchValue%")
+                    ->orWhere('transactions.created_at', 'like', "%$searchValue%")
+                    ->orWhere('transactions.provider_id', 'like', "%$searchValue%")
+                    ->orWhere('transactions.data', 'like', "%$searchValue%")
+                    ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
+            });
+        }
+
+        if (!empty($orderColumn) && !empty($orderDir)) {
+            if ($orderColumn == 'date') {
+                $transactionsQuery->orderBy('transactions.created_at', $orderDir);
+            } elseif ($orderColumn == 'data.from') {
+                $transactionsQuery->orderBy('transactions.data->from', $orderDir);
+            } elseif ($orderColumn == 'data.to') {
+                $transactionsQuery->orderBy('transactions.data->to', $orderDir);
+            } elseif ($orderColumn == 'debit' || $orderColumn == 'credit') {
+                $transactionsQuery->orderBy('transactions.transaction_type_id', $orderDir)
+                    ->orderBy('transactions.amount', $orderDir);
+            } elseif ($orderColumn == 'balance') {
+                if ($orderDir == 'asc') {
+                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric ASC");
+                } else {
+                    $transactionsQuery->orderByRaw("(transactions.data::json->>'balance')::numeric DESC");
+                }
+            } elseif ($orderColumn == 'new_amount') {
+                if ($orderDir == 'asc') {
+                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric ASC");
+                } else {
+                    $transactionsQuery->orderByRaw("(transactions.amount)::numeric DESC");
+                }
+            } else {
+                $transactionsQuery->orderBy('transactions.id', $orderDir);
+            }
+        }
+
+        $resultCount   = $transactionsQuery->count();
+        $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
+
+        $formattedResults = $slicedResults->map(function ($transaction) {
+            $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
+            $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
+                session('timezone')
+            )->toDateTimeString();
+
+            $from    = $transaction->data->from ?? null;
+            $to      = $transaction->data->to ?? null;
+            $balance = $transaction->data->balance ?? null;
+
+            return [
+                $formattedDateTimeWithTimezone,
+                $from,
+                $to,
+                [number_format($transaction->amount, 2), $transaction->transaction_type_id],
+                number_format((float)$balance, 2)
+            ];
+        })->toArray();
+
+        return [
+            'draw'            => (int)$draw,
+            'recordsTotal'    => $resultCount,
+            'recordsFiltered' => $resultCount,
+            'data'            => $formattedResults,
+        ];
+    }
+
 
     /**
      * @param string $startDate
@@ -1036,7 +1155,7 @@ class TransactionsRepo
             ])
             ->whereIn('transactions.user_id', $authUserAndChildrenIds)
             ->where([
-                'transactions.currency_iso' => $currency,
+                'transactions.currency_iso'  => $currency,
                 'transactions.whitelabel_id' => $whitelabelId,
             ])
             ->get();

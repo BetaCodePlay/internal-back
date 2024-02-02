@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TransactionsController;
+use Illuminate\Support\Facades\Route;
 /**
  * Transactions routes
  */
@@ -28,5 +30,16 @@ Route::group(['prefix' => 'transactions', 'middleware' => ['auth']], function ()
         'as' => 'transactions.user',
         'uses' => 'TransactionsController@userTransactions'
     ]);
-
 });
+
+//Role routes
+Route::prefix('api-transactions')
+    ->controller(TransactionsController::class)->group(function () {
+      /*  Route::get('/transactions/', [
+            'as' => 'agents.transactions',
+            'uses' => 'AgentsController@agentsTransactions'
+        ]);*/
+
+        Route::get('/agents', 'agentsTransactions')
+            ->name('transactions.agents');
+    });

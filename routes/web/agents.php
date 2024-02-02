@@ -238,14 +238,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             //
             Route::get('/user-find/{user?}', 'userFind')
                 ->name('agents.role.user-find');
-
-            Route::get('/transactions/', [
-                'as' => 'agents.transactions',
-                'uses' => 'AgentsController@agentsTransactions'
-            ]);
-
-            Route::get('/transactions', 'userFind')
-                ->name('agents.role.transactions');
         });
 
     // Reports routes
