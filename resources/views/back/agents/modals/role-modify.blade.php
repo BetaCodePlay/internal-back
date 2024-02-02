@@ -18,7 +18,7 @@
                                 <div class="col-12 col-lg-6">
                                     <div class="form-group">
                                         <label>{{ _i('Dependence on') }}</label>
-                                        <select class="form-control" id="createRolDependence">
+                                        <select class="form-control" id="modifyRolDependence">
                                             <option value="">{{ _i('Select...') }}</option>
                                             @foreach ($dependencies as $dependece)
                                                 <option value="{{ $dependece['user_id'] }}">

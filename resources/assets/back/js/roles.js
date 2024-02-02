@@ -504,9 +504,14 @@ class Roles {
                 url: $route,
                 method: 'get'
             }).done(function (json) {
-                $modal.find('#readyRoleModify').removeClass('d-none');
-                $modal.find('.modal-footer').removeClass('d-none');
-                $modal.find('.loading-style').hide();
+                if (json.status === "OK") {
+                    $('#modifyRolDependence').val(json.data.userData.owner_id).trigger('change');
+                    $modal.find('#readyRoleModify').removeClass('d-none');
+                    $modal.find('.modal-footer').removeClass('d-none');
+                    $modal.find('.loading-style').hide();
+                } else {
+                    Toastr.notifyToastr(data.data.title, data.data.message, 'error');
+                }
             }).fail(function (json) {
                 let data = json.responseJSON;
 
