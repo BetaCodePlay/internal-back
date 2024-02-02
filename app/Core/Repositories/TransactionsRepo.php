@@ -25,7 +25,7 @@ use Yajra\DataTables\Utilities\Helper;
 class TransactionsRepo
 {
 
-    public function __construct(private ReportAgentRepo $reportAgentRepo) { }
+    public function __construct(private ?ReportAgentRepo $reportAgentRepo = null) { }
 
     /**
      * @param $user
