@@ -33,7 +33,7 @@
                                     <div class="form-group">
                                         <label>{{ _i('Percentage') }}</label>
                                         <div class="wrap-input">
-                                            <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99" id="createRolPercentage" data-max="99">
+                                            <input type="text" name="percentage" class="form-control" placeholder="Rango disponible de 1 - 99" id="modifyRolPercentage" data-max="99">
                                             <div class="wrap-element">
                                                 <div class="wrap-element-text">%</div>
                                             </div>
