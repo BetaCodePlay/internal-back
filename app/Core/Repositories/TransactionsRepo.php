@@ -417,18 +417,20 @@ class TransactionsRepo
         // El monto y el transaction_type_id, los 2 en un array
 
         $formattedResults = $slicedResults->map(function ($transaction) {
-            $formattedDateTime = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
+            $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
             $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
                 session('timezone')
             )->toDateTimeString();
 
+            $data    = json_decode($transaction->data);
+            $balance = $data->balance ?? null;
+
             return [
                 $formattedDateTimeWithTimezone,
-                $transaction->id,
-                [$transaction->amount,  $transaction->transaction_type_id],
-                $transaction->provider_id,
-                $transaction->data,
-                $transaction->transaction_status_id,
+                $data->from ?? null,
+                $data->to ?? null,
+                [number_format($transaction->amount, 2), $transaction->transaction_type_id],
+                number_format($balance, 2)
             ];
         })->toArray();
 
