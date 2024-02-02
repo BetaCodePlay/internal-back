@@ -509,7 +509,7 @@ class TransactionsRepo
             'draw'            => (int)$draw,
             'recordsTotal'    => $resultCount,
             'recordsFiltered' => $resultCount,
-            'data'            => $formattedResults,
+            'data'            => $slicedResults,
         ];
     }
 
