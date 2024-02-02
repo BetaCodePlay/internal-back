@@ -309,6 +309,7 @@
             roles.userResetPassword();
             roles.userBalance();
             roles.userCreate();
+            roles.userModify();
             roles.userLock();
             roles.tabsTablesSection();
         });

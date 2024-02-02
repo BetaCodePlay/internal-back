@@ -489,6 +489,18 @@ class Roles {
         }
     };
 
+    userModify() {
+        let $modal = $('#role-modify');
+
+        $(document).on('click', '[data-target="#role-modify"]', function () {
+            $modal.find('#readyRoleModify').addClass('d-none');
+            $modal.find('.modal-footer').addClass('d-none');
+            $modal.find('.loading-style').show();
+
+
+        });
+    }
+
     tabsTablesSection() {
         let $button = '.tab-role';
         let tabManager = '#roleTabProfileManager';
