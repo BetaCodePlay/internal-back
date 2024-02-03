@@ -371,7 +371,7 @@ class TransactionsRepo
      * @param string $currency
      * @return array
      */
-    public function getTransactionsForDataTable(Request $request, string $currency)
+    public function getAgentTransactionsForDataTable(Request $request, string $currency)
     : array {
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
@@ -526,6 +526,10 @@ class TransactionsRepo
         ];
     }
 
+    public function getPlayerTransactionsForDataTable(Request $request, string $currency)
+    {
+
+    }
 
     /**
      * @param string $startDate

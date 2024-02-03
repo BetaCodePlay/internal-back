@@ -220,6 +220,11 @@ class TransactionsController extends Controller
      */
     public function agentsTransactions(Request $request)
     : array {
-        return $this->transactionsRepo->getTransactionsForDataTable($request, session('currency'));
+        return $this->transactionsRepo->getAgentTransactionsForDataTable($request, session('currency'));
+    }
+
+    public function playersTransactions(Request $request)
+    {
+        dd(session('wallet_access_token'));
     }
 }
