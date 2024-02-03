@@ -10,6 +10,7 @@ use Carbon\CarbonPeriod;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Wallet\Wallet;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -226,11 +227,17 @@ class TransactionsController extends Controller
 
     public function playersTransactions(Request $request)
     {
-        $token = session('wallet_access_token');
-        $url = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
+        $username = $request->input('username');
+        $userId   = getUserIdByUsernameOrCurrent($request);
+        $bonus    = Configurations::getBonus();
+        $wallet   = Wallet::getByClient($userId, session('currency'), $bonus);
+
+        dd($wallet);
+        $token    = session('wallet_access_token');
+        $url      = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
 
         $response = Http::withHeaders([
-            'Accept' => 'application/json',
+            'Accept'        => 'application/json',
             'Authorization' => 'Bearer ' . $token,
         ])->post($url, $request->all());
 

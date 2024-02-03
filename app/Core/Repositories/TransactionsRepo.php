@@ -526,10 +526,6 @@ class TransactionsRepo
         ];
     }
 
-    public function getPlayerTransactionsForDataTable(Request $request, string $currency)
-    {
-
-    }
 
     /**
      * @param string $startDate
