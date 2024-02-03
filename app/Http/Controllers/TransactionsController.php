@@ -12,6 +12,7 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -225,6 +226,16 @@ class TransactionsController extends Controller
 
     public function playersTransactions(Request $request)
     {
-        dd(session('wallet_access_token'));
+        $token = session('wallet_access_token');
+        $url = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
+        ])->post($url, $request->all());
+
+        $data = $response->json();
+
+        dd($data);
     }
 }

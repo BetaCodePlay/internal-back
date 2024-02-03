@@ -40,9 +40,4 @@ Route::prefix('api-transactions')
 
         Route::get('/players', 'playersTransactions')
             ->name('transactions.players');
-
-       /* Route::get('transactions/{wallet?}', [
-            'as' => 'wallets.transactions',
-            'uses' => 'WalletsController@transactions'
-        ]);*/
     });
