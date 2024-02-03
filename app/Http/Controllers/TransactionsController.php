@@ -234,8 +234,6 @@ class TransactionsController extends Controller
             'Authorization' => 'Bearer ' . $token,
         ])->post($url, $request->all());
 
-        $data = $response->json();
-
-        dd($data);
+        return $response->json();
     }
 }
