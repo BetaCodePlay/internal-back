@@ -22,10 +22,9 @@ class UserCurrenciesRepo
      */
     public function findDefault($user)
     {
-        $currency = UserCurrency::where('user_id', $user)
+        return UserCurrency::where('user_id', $user)
             ->where('default', true)
             ->first();
-        return $currency;
     }
 
     /**
