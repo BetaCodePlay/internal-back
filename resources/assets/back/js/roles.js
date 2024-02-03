@@ -3,6 +3,8 @@ import {
 } from "../../commons/js/core";
 import {initLitepickerEndTodayNew} from "./commons";
 
+import moment from 'moment';
+
 class Roles {
     static globalusername;
     static globaltypeid;
@@ -505,7 +507,7 @@ class Roles {
                 method: 'get'
             }).done(function (json) {
                 if (json.status === "OK") {
-                    $('#modifyRolDependence').val(json.data.userData.owner_id).trigger('change');
+                    $('#modifyRolDependence').val(json.data.userData.owner).trigger('change');
                     $('#modifyRolPercentage').val(json.data.userData.percentage);
                     $modal.find('#readyRoleModify').removeClass('d-none');
                     $modal.find('.modal-footer').removeClass('d-none');
@@ -537,6 +539,8 @@ class Roles {
         let tableInformation;
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
+        let picker = initLitepickerEndTodayNew();;
+        let routeTransaction;
 
 
         $(document).on('click', $button, function (){
@@ -576,25 +580,48 @@ class Roles {
             }
 
             if($target === tabTransaction) {
-                let picker = initLitepickerEndTodayNew();
+                routeTransaction = tableTransactionID.data('route');
 
                 if (tableTransaction !== undefined) {
                     tableTransaction.destroy();
                 }
 
+                $($target).find('.tab-body').addClass('d-none');
                 $($target).find('.table-load').removeClass('table-complete');
-                $($target).find('.loading-style').show();
+                $($target).find('.loading-style').hide();
+            }
+        });
 
-                setTimeout(function (){
-                    tableTransaction = tableTransactionID.DataTable({
-                        fixedHeader: true,
-                        responsive: true
-                    });
+        $(document).on('click', '.searchTransactionsRole', function (){
+            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
+            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let $target = '#roleTabTransactions';
 
+            $($target).find('.table-load').removeClass('table-complete');
+            $($target).find('.loading-style').show();
+
+            console.log(startDate);
+            console.log(endDate);
+
+            tableTransaction = tableTransactionID.DataTable({
+                ajax: routeTransaction + '/' + Roles.globalusername + '?startDate=' + startDate + '&endDate=' + endDate + '&typeUser=all&typeTransaction=all',
+                processing: true,
+                serverSide: true,
+                columnDefs: [{
+                    "defaultContent": "-",
+                    "targets": "_all"
+                }],
+                fixedHeader: true,
+                responsive: true,
+                fnCreatedRow: function (nRow, aData, iDataIndex) {
+
+                },
+                initComplete: function () {
+                    $($target).find('.tab-body').removeClass('d-none');
                     $($target).find('.table-load').addClass('table-complete');
                     $($target).find('.loading-style').hide();
-                }, 1000)
-            }
+                },
+            });
         });
     }
 

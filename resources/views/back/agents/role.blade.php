@@ -162,7 +162,7 @@
                             <div class="col-12 col-lg-3 col-form">
                                 <div class="form-group">
                                     <label class="d-none d-lg-block">&nbsp;</label>
-                                    <button type="button" class="btn btn-theme btn-block" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching...">
+                                    <button type="button" class="btn btn-theme btn-block searchTransactionsRole" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching...">
                                         {{ _i('Search') }}
                                     </button>
                                 </div>
@@ -171,7 +171,7 @@
                     </form>
                     <div class="tab-body">
                         <form autocomplete="destroy" class="col table-load">
-                            <table id="table-transactions" class="display nowrap" data-route="">
+                            <table id="table-transactions" class="display nowrap" data-route="{{ route('transactions.agents') }}">
                                 <thead>
                                 <tr>
                                     <th>{{ _i('Date') }}</th>
@@ -181,22 +181,6 @@
                                     <th>{{ _i('Balance') }}</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>04-01-2024 17:21:32</td>
-                                    <td>admin</td>
-                                    <td>antonio69</td>
-                                    <td>+100</td>
-                                    <td>100.00</td>
-                                </tr>
-                                <tr>
-                                    <td>04-01-2024 17:21:32</td>
-                                    <td>admin</td>
-                                    <td>admin</td>
-                                    <td>-100</td>
-                                    <td>1.200.00</td>
-                                </tr>
-                                </tbody>
                             </table>
                         </form>
                         <div class="loading-style"></div>
@@ -249,7 +233,6 @@
                     <br>
                 </div>
             </div>
-
         </div>
         <div class="page-body">
             <form autocomplete="destroy" class="col table-load">
