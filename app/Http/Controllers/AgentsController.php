@@ -4923,6 +4923,66 @@ class AgentsController extends Controller
     }
 
     /**
+     * Update Rol
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function updateRol(Request $request)
+    {
+        $this->validate($request, [
+            'dependence' => ['required'],
+            'type' => ['required'],
+            'user_id' => ['required'],
+        ]);
+        try {
+            \Log::info(__METHOD__, ['type' => $request]);
+            $type = $request->input('type');
+            $userId = $request->input('user_id' );
+            $ownerId = $request->input('dependence');
+            if(auth()->user()->id != $userId){
+                $currency = session('currency');
+                if ( $type != 5){
+
+                    $agentData = [
+                        'percentage' =>  $request->input('percentage'),
+                        'owner_id' =>  $ownerId,
+                    ];
+                    $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
+                    $this->agentsRepo->update($agent->id, $agentData);
+                    $data = [
+                        'title' => _i('Agent updated'),
+                        'message' => _i('agent successfully updated'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::successResponse($data);
+                } else {
+                    $agent = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
+                    $this->agentsRepo->moveAgentFromUser($agent, $userId);
+                    $data = [
+                        'title' => _i('Player updated'),
+                        'message' => _i('Player successfully updated'),
+                        'close' => _i('Close'),
+                    ];
+                    return Utils::successResponse($data);
+                }
+            }
+
+            $data = [
+                'title' => _i('The user %s cannot change himself', [$userId]),
+                'message' => _i('try again'),
+                'close' => _i('Close')
+            ];
+            return Utils::errorResponse(Codes::$forbidden, $data);
+
+
+        } catch (Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Agents users
      *
      * @param int $user User ID
