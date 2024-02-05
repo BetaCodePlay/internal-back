@@ -4375,7 +4375,6 @@ class AgentsController extends Controller
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
             $percentage = null;
-            $usernameOwner = null;
             $agentsRepo = new AgentsRepo();
             $agent = ($user->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
@@ -4397,7 +4396,7 @@ class AgentsController extends Controller
             }
             $agentsCollection = new AgentsCollection();
             $userAgent = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
-            Log::notice(__METHOD__, ['user Agent' =>  $userAgent]);
+            Log::notice(__METHOD__, ['user Agent' =>  $userAgent ]);
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
