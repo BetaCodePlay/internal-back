@@ -229,30 +229,31 @@ class TransactionsController extends Controller
      * @param Request $request
      * @return array|mixed
      */
-    public function playersTransactions(Request $request)
-    : mixed {
-        $userId   = getUserIdByUsernameOrCurrent($request);
-        $bonus    = Configurations::getBonus();
-        $wallet   = Wallet::getByClient($userId, session('currency'), $bonus);
+    public function playersTransactions(Request $request): mixed {
+        try {
+            $userId   = getUserIdByUsernameOrCurrent($request);
+            $bonus    = Configurations::getBonus();
+            $wallet   = Wallet::getByClient($userId, session('currency'), $bonus);
 
-        if (is_array($wallet->data)) {
-            Log::info(__METHOD__ . " Error in user wallet array {$userId}", [$wallet]);
+            if (is_array($wallet->data)) {
+                Log::info(__METHOD__ . " Error in user wallet array {$userId}", [$wallet]);
+            }
+
+            $token    = session('wallet_access_token');
+            $url      = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
+
+            $data = $request->all();
+            $data['wallet'] = !is_array($wallet->data) ? $wallet?->data?->wallet?->id : 0;
+
+            $response = Http::withHeaders([
+                'Accept'        => 'application/json',
+                'Authorization' => 'Bearer ' . $token,
+            ])->post($url, $data);
+
+            return $response->json();
+        } catch (Exception $e) {
+            Log::error('Error al realizar la solicitud HTTP: ' . $e->getMessage());
+            return null;
         }
-
-        $token    = session('wallet_access_token');
-        $url      = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
-
-        $data = $request->all();
-        $data['wallet'] = !is_array($wallet->data) ? $wallet?->data?->wallet?->id : 0;
-
-
-        dd($data, $url);
-
-        $response = Http::withHeaders([
-            'Accept'        => 'application/json',
-            'Authorization' => 'Bearer ' . $token,
-        ])->post($url, $data);
-
-        return $response->json();
     }
 }
