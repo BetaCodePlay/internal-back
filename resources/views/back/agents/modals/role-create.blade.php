@@ -49,6 +49,7 @@
                                     <label>{{ _i('Dependence on') }}</label>
                                     <select class="form-control" id="createRolDependence">
                                         <option value="">{{ _i('Select...') }}</option>
+                                        <option value="{{ auth()->user()->id }}">{{ auth()->user()->username }}</option>
                                         @foreach ($dependencies as $dependece)
                                             <option value="{{ $dependece['user_id'] }}">
                                                 {{ $dependece['username'] }}
