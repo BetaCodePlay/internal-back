@@ -596,6 +596,8 @@ class Roles {
             let $this = $(this);
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let $action = $('#roleTabTransactionsAction').val();
+            let $type = $('#roleTabTransactionsType').val();
             let $target = '#roleTabTransactions';
 
             $this.button('loading');
@@ -608,7 +610,7 @@ class Roles {
             }
 
             tableTransaction = tableTransactionID.DataTable({
-                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=all&typeTransaction=all',
+                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser='+ $type +'&typeTransaction=' + $action,
                 processing: true,
                 serverSide: true,
                 columnDefs: [{

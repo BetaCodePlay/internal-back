@@ -138,18 +138,18 @@
                         <div class="row">
                             <div class="col-12 col-lg-3 col-form">
                                 <label>{{ _i('Action') }}</label>
-                                <select class="form-control">
-                                    <option value="">{{ _i('All') }}</option>
-                                    <option value="">{{ _i('Accredited') }}</option>
-                                    <option value="">{{ _i('Discredited') }}</option>
+                                <select class="form-control" id="roleTabTransactionsAction">
+                                    <option value="all">{{ _i('All') }}</option>
+                                    <option value="credit">{{ _i('Credit') }}</option>
+                                    <option value="debit">{{ _i('Debit') }}</option>
                                 </select>
                             </div>
                             <div class="col-12 col-lg-3 col-form">
                                 <label>{{ _i('User type') }}</label>
-                                <select class="form-control">
-                                    <option value="">{{ _i('All') }}</option>
-                                    <option value="">{{ _i('Agents') }}</option>
-                                    <option value="">{{ _i('Players') }}</option>
+                                <select class="form-control" id="roleTabTransactionsType">
+                                    <option value="all">{{ _i('All') }}</option>
+                                    <option value="agent">{{ _i('Agents') }}</option>
+                                    <option value="user">{{ _i('Players') }}</option>
                                 </select>
                             </div>
                             <div class="col-12 col-lg-3 col-form">
