@@ -225,8 +225,12 @@ class TransactionsController extends Controller
         return $this->transactionsRepo->getAgentTransactionsForDataTable($request, session('currency'));
     }
 
+    /**
+     * @param Request $request
+     * @return array|mixed
+     */
     public function playersTransactions(Request $request)
-    {
+    : mixed {
         $userId   = getUserIdByUsernameOrCurrent($request);
         $bonus    = Configurations::getBonus();
         $wallet   = Wallet::getByClient($userId, session('currency'), $bonus);
