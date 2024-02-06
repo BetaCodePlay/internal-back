@@ -615,7 +615,7 @@ class Roles {
                 fixedHeader: true,
                 responsive: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
-                    $('td:eq(3)', nRow).html((aData[3][1] === 1 ? '+' : '-') + aData[3][0]);
+                    $('td:eq(3)', nRow).html((aData[3][1] === 1 ? '+ ' : '- ') + aData[3][0]);
                 },
                 initComplete: function () {
                     $($target).find('.tab-body').removeClass('d-none');
