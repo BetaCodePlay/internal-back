@@ -600,8 +600,9 @@ class Roles {
             $($target).find('.table-load').removeClass('table-complete');
             $($target).find('.loading-style').show();
 
-            console.log(startDate);
-            console.log(endDate);
+            if (tableTransaction !== undefined) {
+                tableTransaction.destroy();
+            }
 
             tableTransaction = tableTransactionID.DataTable({
                 ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=all&typeTransaction=all',
