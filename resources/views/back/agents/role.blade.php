@@ -161,7 +161,10 @@
                             <div class="col-12 col-lg-3 col-form">
                                 <div class="form-group">
                                     <label class="d-none d-lg-block">&nbsp;</label>
-                                    <button type="button" class="btn btn-theme btn-block searchTransactionsRole" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching...">
+                                    <button type="button" class="btn btn-theme btn-block currentDataRole searchTransactionsRole" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching..."
+                                            data-userid="{{ $authUser->id}}"
+                                            data-username="{{ $authUser->username }}"
+                                            data-rol="{{ $authUser->agentType }}">
                                         {{ _i('Search') }}
                                     </button>
                                 </div>
