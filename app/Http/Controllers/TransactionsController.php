@@ -246,7 +246,7 @@ class TransactionsController extends Controller
         $data['wallet'] = !is_array($wallet->data) ? $wallet?->data?->wallet?->id : 0;
 
 
-        dd($data);
+        dd($data, $url);
 
         $response = Http::withHeaders([
             'Accept'        => 'application/json',
