@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
 
@@ -441,7 +442,7 @@ class TransactionsRepo
                 $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
             }
         }
-
+        Log::info(__METHOD__ . " Transaction repo ", [$transactionsQuery, $username]);
         if (! is_null($username)) {
             $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
                 'transactions.data->to',
