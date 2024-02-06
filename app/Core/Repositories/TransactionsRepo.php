@@ -406,7 +406,7 @@ class TransactionsRepo
                 'order' => $request->get('order')[0]['dir']
             ];
         }
-
+        DB::connection()->enableQueryLog();
         $transactionsQuery = Transaction::select([
             'users.username',
             'transactions.user_id',
@@ -442,7 +442,7 @@ class TransactionsRepo
                 $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
             }
         }
-        Log::info(__METHOD__ . " Transaction repo ", [$transactionsQuery, $username]);
+        Log::info(__METHOD__ . " Transaction repo ", [$request]);
         if (! is_null($username)) {
             $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
                 'transactions.data->to',
@@ -462,7 +462,8 @@ class TransactionsRepo
                     ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
             });
         }
-
+        $queries = \DB::getQueryLog();
+        Log::info(__METHOD__ . " Transaction repo queries ", [ $queries]);
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
