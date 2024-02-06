@@ -593,18 +593,24 @@ class Roles {
         });
 
         $(document).on('click', '.searchTransactionsRole', function (){
+            let $this = $(this);
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let $action = $('#roleTabTransactionsAction').val();
+            let $type = $('#roleTabTransactionsType').val();
             let $target = '#roleTabTransactions';
+
+            $this.button('loading');
 
             $($target).find('.table-load').removeClass('table-complete');
             $($target).find('.loading-style').show();
 
-            console.log(startDate);
-            console.log(endDate);
+            if (tableTransaction !== undefined) {
+                tableTransaction.destroy();
+            }
 
             tableTransaction = tableTransactionID.DataTable({
-                ajax: routeTransaction + '/' + Roles.globalusername + '?startDate=' + startDate + '&endDate=' + endDate + '&typeUser=all&typeTransaction=all',
+                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser='+ $type +'&typeTransaction=' + $action,
                 processing: true,
                 serverSide: true,
                 columnDefs: [{
@@ -614,12 +620,13 @@ class Roles {
                 fixedHeader: true,
                 responsive: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
-
+                    $('td:eq(3)', nRow).html((aData[3][1] === 1 ? '+ ' : '- ') + aData[3][0]);
                 },
                 initComplete: function () {
                     $($target).find('.tab-body').removeClass('d-none');
                     $($target).find('.table-load').addClass('table-complete');
                     $($target).find('.loading-style').hide();
+                    $this.button('reset');
                 },
             });
         });

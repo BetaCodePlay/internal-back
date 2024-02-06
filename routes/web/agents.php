@@ -232,6 +232,9 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             // Balance adjustment
             Route::post('/balance-adjustment', 'balanceAdjustment')->name('agents.role.balance-adjustment');
 
+            // Update Rol
+            Route::post('/update-rol', 'updateRol')->name('agents.role.update-rol');
+
             // Block user status
             Route::post('/block-agent', 'blockAgent')
                 ->name('agents.block');

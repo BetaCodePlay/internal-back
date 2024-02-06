@@ -112,23 +112,22 @@
                                         </button>
                                     </div>
                                 </div>
-
-                                <div class="tab-manager-data text-center">
-                                    <div class="data-title">{{ _i('Account') }}</div>
-                                    <div class="data-text">
+                                @if(auth()->user()->id !== $authUser->id)
+                                    <div class="tab-manager-data text-center">
+                                        <div class="data-title">{{ _i('Account') }}</div>
+                                        <div class="data-text">
                                         <span class="separator">
-                                             @if(auth()->user()->id !== $authUser->id)
-                                                &nbsp;
-                                            @endif
+                                              &nbsp;
                                         </span>
-                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-modify"
-                                                data-userid="{{ $authUser->id}}"
-                                                data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $authUser->agentType }}"
-                                                data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
-                                        </button>
+                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-modify"
+                                                    data-userid="{{ $authUser->id}}"
+                                                    data-username="{{ $authUser->username }}"
+                                                    data-rol="{{ $authUser->agentType }}"
+                                                    data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             @endif
                         </div>
 
@@ -139,18 +138,18 @@
                         <div class="row">
                             <div class="col-12 col-lg-3 col-form">
                                 <label>{{ _i('Action') }}</label>
-                                <select class="form-control">
-                                    <option value="">{{ _i('All') }}</option>
-                                    <option value="">{{ _i('Accredited') }}</option>
-                                    <option value="">{{ _i('Discredited') }}</option>
+                                <select class="form-control" id="roleTabTransactionsAction">
+                                    <option value="all">{{ _i('All') }}</option>
+                                    <option value="credit">{{ _i('Credit') }}</option>
+                                    <option value="debit">{{ _i('Debit') }}</option>
                                 </select>
                             </div>
                             <div class="col-12 col-lg-3 col-form">
                                 <label>{{ _i('User type') }}</label>
-                                <select class="form-control">
-                                    <option value="">{{ _i('All') }}</option>
-                                    <option value="">{{ _i('Agents') }}</option>
-                                    <option value="">{{ _i('Players') }}</option>
+                                <select class="form-control" id="roleTabTransactionsType">
+                                    <option value="all">{{ _i('All') }}</option>
+                                    <option value="agent">{{ _i('Agents') }}</option>
+                                    <option value="user">{{ _i('Players') }}</option>
                                 </select>
                             </div>
                             <div class="col-12 col-lg-3 col-form">
@@ -162,7 +161,10 @@
                             <div class="col-12 col-lg-3 col-form">
                                 <div class="form-group">
                                     <label class="d-none d-lg-block">&nbsp;</label>
-                                    <button type="button" class="btn btn-theme btn-block searchTransactionsRole" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching...">
+                                    <button type="button" class="btn btn-theme btn-block currentDataRole searchTransactionsRole" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching..."
+                                            data-userid="{{ $authUser->id}}"
+                                            data-username="{{ $authUser->username }}"
+                                            data-rol="{{ $authUser->agentType }}">
                                         {{ _i('Search') }}
                                     </button>
                                 </div>
