@@ -593,9 +593,12 @@ class Roles {
         });
 
         $(document).on('click', '.searchTransactionsRole', function (){
+            let $this = $(this);
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
             let $target = '#roleTabTransactions';
+
+            $this.button('loading');
 
             $($target).find('.table-load').removeClass('table-complete');
             $($target).find('.loading-style').show();
@@ -621,6 +624,7 @@ class Roles {
                     $($target).find('.tab-body').removeClass('d-none');
                     $($target).find('.table-load').addClass('table-complete');
                     $($target).find('.loading-style').hide();
+                    $this.button('reset');
                 },
             });
         });
