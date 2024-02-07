@@ -4388,15 +4388,18 @@ class AgentsController extends Controller
                     ? $wallet?->data?->wallet?->balance
                     : 0;
                 $usernameOwner = $agent->ownerAgent->username;
+
+                Log::notice(__METHOD__, ['jugador ' =>  $agent ]);
             } else {
                 $userOwner = $this->usersRepo->getTokenByUser($agent->owner);
                 $percentage = $agent->percentage;
                 $usernameOwner = $userOwner->username;
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
+                Log::notice(__METHOD__, ['agente ' =>  $agent ]);
             }
             $agentsCollection = new AgentsCollection();
             $userAgent = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
-            Log::notice(__METHOD__, ['user Agent' =>  $userAgent ]);
+
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
