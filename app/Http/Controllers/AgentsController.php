@@ -4949,7 +4949,7 @@ class AgentsController extends Controller
             $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
 
             \Log::info(__METHOD__, ['agent' =>  $agent]);
-            $this->agentsRepo->update($agent->id, $agentData);
+            $this->agentsRepo->update($agent->agent, $agentData);
             $data = [
                 'title' => _i('Agent updated'),
                 'message' => _i('agent successfully updated'),
