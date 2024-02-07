@@ -2742,6 +2742,7 @@ class AgentsController extends Controller
             $agent = ($userData->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($userData->id, session('currency'))
                 : $agentsRepo->findUser($userData->id);
+            $this->agentsCollection->formatUserFind($agent);
             $usersData = [
                 'userData'        => $agent,
             ];
@@ -4388,14 +4389,11 @@ class AgentsController extends Controller
                     ? $wallet?->data?->wallet?->balance
                     : 0;
                 $usernameOwner = $agent->ownerAgent->username;
-
-                Log::notice(__METHOD__, ['jugador ' =>  $agent ]);
             } else {
                 $userOwner = $this->usersRepo->getTokenByUser($agent->owner);
                 $percentage = $agent->percentage;
                 $usernameOwner = $userOwner->username;
                 $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
-                Log::notice(__METHOD__, ['agente ' =>  $agent ]);
             }
             $agentsCollection = new AgentsCollection();
             $userAgent = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
@@ -4950,8 +4948,6 @@ class AgentsController extends Controller
                 'owner_id' =>  $ownerId,
             ];
             $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
-
-            \Log::info(__METHOD__, ['agent' =>  $agent]);
             $this->agentsRepo->update($agent->agent, $agentData);
             $data = [
                 'title' => _i('Agent updated'),
@@ -4961,7 +4957,8 @@ class AgentsController extends Controller
             return Utils::successResponse($data);
         } else {
             $agent = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
-            $this->agentsRepo->moveAgentFromUser($agent, $userId);
+            $agentData = $this->agentsRepo->findAgentCashier($agent->agent);
+            $this->agentsRepo->moveAgentFromUser($agentData, $userId);
             $data = [
                 'title' => _i('Player updated'),
                 'message' => _i('Player successfully updated'),
