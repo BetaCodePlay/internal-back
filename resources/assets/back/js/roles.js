@@ -497,6 +497,16 @@ class Roles {
     userModify() {
         let $modal = $('#role-modify');
 
+        $(document).on('input', '#modifyRolPercentage', function () {
+            let $this = $(this);
+            let $max = $this.data('max');
+            $this.val($this.val().replace(/[^0-9]/g, ''));
+
+            if ($this.val() > $max) {
+                $this.val($max)
+            }
+        });
+
         $(document).on('click', '[data-target="#role-modify"]', function () {
             let $this = $(this);
             let $route = $this.data('route') + '/' + Roles.globaluserid;
