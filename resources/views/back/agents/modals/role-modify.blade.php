@@ -50,7 +50,7 @@
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">
                     {{ _i('Cancel creation') }}
                 </button>
-                <button type="button" class="btn btn-theme createUser" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Modifying role') }}...">
+                <button type="button" class="btn btn-theme modifyUser" data-route="{{ route('agents.role.update-rol') }}" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Modifying role') }}...">
                     {{ _i('Ready! Modify role') }}
                 </button>
             </div>
