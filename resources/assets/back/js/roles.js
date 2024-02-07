@@ -515,6 +515,11 @@ class Roles {
             $modal.find('#readyRoleModify').addClass('d-none');
             $modal.find('.modal-footer').addClass('d-none');
             $modal.find('.loading-style').show();
+            $modal.find('.d-agent').removeClass('d-none');
+
+            if(Roles.globalrolid === 5) {
+                $modal.find('.d-agent').addClass('d-none');
+            }
 
             $.ajax({
                 url: $route,
