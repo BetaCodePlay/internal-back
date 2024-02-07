@@ -4009,7 +4009,7 @@ class AgentsCollection
      *
      * @param object $agent User data
      */
-    public function formatUserFin($agent)
+    public function formatUserFind($agent)
     {
         if ($agent->type_user != 'agent'){
             $ownerId = $agent->owner;
