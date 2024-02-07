@@ -104,7 +104,7 @@ class Roles {
             placeholder,
             minimumInputLength: min,
             language: {
-                inputTooShort: function() {
+                inputTooShort: function () {
                     return moreCharacters;
                 }
             },
@@ -141,7 +141,7 @@ class Roles {
             $input.val('').trigger('change');
         })
 
-        $(document).on('click', '.select2-results__option', function (){
+        $(document).on('click', '.select2-results__option', function () {
             let $url = '/agents/role/' + $(this).html()
             window.open($url, '_blank');
             return false;
@@ -242,7 +242,7 @@ class Roles {
             $globalType = $type;
             $typeAll.show();
 
-            if($rol === 5) {
+            if ($rol === 5) {
                 $typeAll.hide();
             }
 
@@ -496,6 +496,7 @@ class Roles {
 
     userModify() {
         let $modal = $('#role-modify');
+        let $buttonSend = '.modifyUser';
 
         $(document).on('input', '#modifyRolPercentage', function () {
             let $this = $(this);
@@ -540,28 +541,59 @@ class Roles {
                 $this.button('reset');
             });
         });
+
+        $(document).on('click', $buttonSend, function () {
+            let $this = $(this);
+            let $route = $this.data('route');
+            let $data = {
+                dependence: $('#modifyRolDependence').val(),
+                type: Roles.globalrolid,
+                user_id: Roles.globaluserid
+            };
+
+            $this.button('loading');
+
+            $.ajax({
+                url: $route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                $modal.modal('hide');
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                if (Roles.globaluserid === Roles.globaluseridcurrent) {
+                    window.location.reload()
+                } else {
+                    Roles.globaltable.ajax.reload();
+                }
+            }).fail(function (json) {
+                Roles.errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
+        })
     }
 
     tabsTablesSection() {
         let $button = '.tab-role';
         let tabManager = '#roleTabProfileManager';
         let tabTransaction = '#roleTabTransactions';
-        let tabInformation =  '#roleTabMoreInformation';
+        let tabInformation = '#roleTabMoreInformation';
         let tabLock = '#roleTabLocks';
         let tableInformationID = $('#table-information');
         let tableInformation;
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
-        let picker = initLitepickerEndTodayNew();;
+        let picker = initLitepickerEndTodayNew();
+        ;
         let routeTransaction;
 
 
-        $(document).on('click', $button, function (){
+        $(document).on('click', $button, function () {
             let $this = $(this);
             let $target = $this.data('target');
             let $route;
 
-            if($target === tabInformation) {
+            if ($target === tabInformation) {
                 $route = tableInformationID.data('route');
 
                 if (tableInformation !== undefined) {
@@ -592,7 +624,7 @@ class Roles {
                 });
             }
 
-            if($target === tabTransaction) {
+            if ($target === tabTransaction) {
                 routeTransaction = tableTransactionID.data('route');
 
                 if (tableTransaction !== undefined) {
@@ -605,7 +637,7 @@ class Roles {
             }
         });
 
-        $(document).on('click', '.searchTransactionsRole', function (){
+        $(document).on('click', '.searchTransactionsRole', function () {
             let $this = $(this);
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
@@ -623,7 +655,7 @@ class Roles {
             }
 
             tableTransaction = tableTransactionID.DataTable({
-                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser='+ $type +'&typeTransaction=' + $action,
+                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=' + $type + '&typeTransaction=' + $action,
                 processing: true,
                 serverSide: true,
                 columnDefs: [{
