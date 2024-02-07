@@ -4011,7 +4011,8 @@ class AgentsCollection
      */
     public function formatUserFind($agent)
     {
-        if ($agent->type_user != 'agent'){
+        \Log::notice(__METHOD__, ['agent' => $agent]);
+        if ($agent->type_user == 'agent'){
             $ownerId = $agent->owner;
             $owner = $agent->owner_id;
             $agent->owner_id = $ownerId;
