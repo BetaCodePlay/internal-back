@@ -546,6 +546,7 @@ class Roles {
             let $this = $(this);
             let $route = $this.data('route');
             let $data = {
+                percentage: $('#modifyRolPercentage').val(),
                 dependence: $('#modifyRolDependence').val(),
                 type: Roles.globalrolid,
                 user_id: Roles.globaluserid
