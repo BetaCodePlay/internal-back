@@ -271,6 +271,7 @@
                         </a>
                     </li>
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
+                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-modify">{{ _i('Modify') }}</a></li>
                 </ul>
             </div>
 
