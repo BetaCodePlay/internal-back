@@ -9,6 +9,9 @@ use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Http\Requests\TransactionRequest;
 use Dotworkers\Configurations\Enums\Status;
+use Dotworkers\Configurations\Enums\TransactionStatus;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -67,6 +70,11 @@ class UserTransactionService extends BaseTransactionService
         if ($isBalanceInsufficient = $this->isInsufficientBalance($transactionType, $transactionAmount, $ownerAgent)) {
             return $isBalanceInsufficient;
         }
+
+        Log::alert('type', [
+            'type' => $request->get('type'),
+            'all'  => $request->all(),
+        ]);
 
 
         $userManagementResult = ($request->get('type') == UserType::USER_TYPE_PLAYER)
