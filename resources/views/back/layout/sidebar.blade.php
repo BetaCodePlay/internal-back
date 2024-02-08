@@ -24,6 +24,8 @@
             @include('back.partials.sidebar.dashboard')
         @endif
 
+        @include('back.partials.sidebar.roleDashboard')
+
         @include('back.partials.sidebar.role')
 
         @include('back.partials.sidebar.report')

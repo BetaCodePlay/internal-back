@@ -4422,6 +4422,23 @@ class AgentsController extends Controller
 
 
     /**
+     * Show role dashboard
+     *
+     * @return Application|Factory|View
+     */
+    public function dashboard()
+    {
+        try {
+
+            return view('back.agents.role-dashboard');
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+
+    /**
      * Search username
      *
      * @param Request $request

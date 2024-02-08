@@ -217,6 +217,10 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@index'
     ]);
 
+    // Show role dashboard
+    Route::get('role/dashboard', [AgentsController::class, 'dashboard'])
+        ->name('agents.role.dashboard');
+
     //Role routes
     Route::prefix('api-role')
         ->controller(AgentsController::class)->group(function () {
