@@ -424,17 +424,18 @@ class TransactionsRepo
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
             ->where('transactions.currency_iso', $currency);
 
-
         if ($typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
                 if ($typeUser === 'agent') {
-                    $query->whereNull('data->provider_transaction')
-                    ->where('transactions.provider_id', Providers::$agents);
+                    $query->where('transactions.provider_id', Providers::$agents)
+                        ->whereNull('data->provider_transaction');
                 } else {
-                    $query->whereNotNull('data->provider_transaction')
-                        ->where('transactions.provider_id', Providers::$agents_user);
+                    $query->where('transactions.provider_id', Providers::$agents_users)
+                        ->whereNotNull('data->provider_transaction');
                 }
             });
+        } else {
+            $transactionsQuery->whereIn('transactions.provider_id', $providers);
         }
 
         if ($typeTransaction !== 'all') {
