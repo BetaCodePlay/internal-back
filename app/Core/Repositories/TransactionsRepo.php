@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
 
@@ -405,7 +406,7 @@ class TransactionsRepo
                 'order' => $request->get('order')[0]['dir']
             ];
         }
-
+        DB::connection()->enableQueryLog();
         $transactionsQuery = Transaction::select([
             'users.username',
             'transactions.user_id',
@@ -421,17 +422,18 @@ class TransactionsRepo
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $childrenIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers);
+            ->where('transactions.currency_iso', $currency);
 
         if ($typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
                 if ($typeUser === 'agent') {
-                    $query->whereNull('data->provider_transaction');
+                    $query->where('transactions.provider_id', Providers::$agents);
                 } else {
-                    $query->whereNotNull('data->provider_transaction');
+                    $query->where('transactions.provider_id', Providers::$agents_users);
                 }
             });
+        } else {
+            $transactionsQuery->whereIn('transactions.provider_id', $providers);
         }
 
         if ($typeTransaction !== 'all') {
@@ -441,7 +443,7 @@ class TransactionsRepo
                 $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
             }
         }
-
+        Log::info(__METHOD__ . " Transaction repo ", [$request]);
         if (! is_null($username)) {
             $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
                 'transactions.data->to',
@@ -461,7 +463,8 @@ class TransactionsRepo
                     ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
             });
         }
-
+        $queries = \DB::getQueryLog();
+        Log::info(__METHOD__ . " Transaction repo queries ", [ $queries]);
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
@@ -507,8 +510,8 @@ class TransactionsRepo
             $from     = $transaction->data->from ?? null;
             $to       = $transaction->data->to ?? null;
             $balance  = $transaction->data->balance ?? null;
-            $receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
-
+            //$receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
+            $receiver = $to;
             return [
                 $formattedDateTimeWithTimezone,
                 $from,

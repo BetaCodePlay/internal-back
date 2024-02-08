@@ -136,7 +136,7 @@
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <form autocomplete="destroy" class="tab-form">
                         <div class="row">
-                            <div class="col-12 col-lg-3 col-form">
+                            <div class="col-12 col-form {{ $authUser->agentType === 5 ? 'col-lg-4' : 'col-lg-3' }}">
                                 <label>{{ _i('Action') }}</label>
                                 <select class="form-control" id="roleTabTransactionsAction">
                                     <option value="all">{{ _i('All') }}</option>
@@ -144,7 +144,7 @@
                                     <option value="debit">{{ _i('Debit') }}</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-3 col-form">
+                            <div class="col-12 col-lg-3 col-form {{ $authUser->agentType === 5 ? 'd-none' : '' }}">
                                 <label>{{ _i('User type') }}</label>
                                 <select class="form-control" id="roleTabTransactionsType">
                                     <option value="all">{{ _i('All') }}</option>
@@ -152,13 +152,13 @@
                                     <option value="user">{{ _i('Players') }}</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-lg-3 col-form">
+                            <div class="col-12 col-form {{ $authUser->agentType === 5 ? 'col-lg-4' : 'col-lg-3' }}">
                                 <div class="form-group">
                                     <label>{{ _i('Date') }}</label>
                                     <input type="text" class="form-control" id="date_range_new" placeholder="">
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-3 col-form">
+                            <div class="col-12 col-form {{ $authUser->agentType === 5 ? 'col-lg-4' : 'col-lg-3' }}">
                                 <div class="form-group">
                                     <label class="d-none d-lg-block">&nbsp;</label>
                                     <button type="button" class="btn btn-theme btn-block currentDataRole searchTransactionsRole" data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching..."
@@ -173,7 +173,7 @@
                     </form>
                     <div class="tab-body">
                         <form autocomplete="destroy" class="col table-load">
-                            <table id="table-transactions" class="display nowrap" data-route="{{ route('transactions.agents') }}">
+                            <table id="table-transactions" class="display nowrap" data-route="{{ $authUser->agentType === 5 ? route('transactions.players') : route('transactions.agents') }}">
                                 <thead>
                                 <tr>
                                     <th>{{ _i('Date') }}</th>
@@ -271,6 +271,7 @@
                         </a>
                     </li>
                     <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-balance">{{ _i('Balance adjustment') }}</a></li>
+                    <li><a class="dropdown-item currentDataRole" href="javascript:void(0)" data-toggle="modal" data-target="#role-modify" data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}</a></li>
                 </ul>
             </div>
 

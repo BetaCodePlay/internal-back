@@ -4005,6 +4005,23 @@ class AgentsCollection
     }
 
     /**
+     * Format user find data
+     *
+     * @param object $agent User data
+     */
+    public function formatUserFind($agent)
+    {
+        \Log::notice(__METHOD__, ['agent' => $agent]);
+        if ($agent->type_user == 5){
+            $ownerId = $agent->owner;
+            $owner = $agent->owner_id;
+            $agent->owner_id = $ownerId;
+            $agent->owner = $owner;
+        }
+        return $agent;
+    }
+
+    /**
      * Format financial data grouped by users
      *
      * @param array $financial Financial data

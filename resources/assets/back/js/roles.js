@@ -33,6 +33,7 @@ class Roles {
                 let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
                 let modalBalanceTarget = '[data-target="#role-balance"]';
                 let modalCreateTarget = '[data-target="#role-create"]';
+                let modalModifyTarget = '[data-target="#role-modify"]';
 
                 buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]).attr('data-rol', aData[1][1]);
                 buttons.find('.btn-href').attr('href', '/agents/role/' + aData[0]);
@@ -42,6 +43,7 @@ class Roles {
                     buttons.find(modalResetPasswordTarget).parent().removeClass('d-none');
                     buttons.find(modalBalanceTarget).parent().removeClass('d-none');
                     buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                    buttons.find(modalModifyTarget).parent().removeClass('d-none');
                     buttons.find(modalLockTarget).parent().removeClass('united');
 
                     if (aData[1][1] === 5) {
@@ -53,6 +55,7 @@ class Roles {
                     buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
                     buttons.find(modalBalanceTarget).parent().addClass('d-none');
                     buttons.find(modalCreateTarget).parent().addClass('d-none');
+                    buttons.find(modalModifyTarget).parent().addClass('d-none');
                     buttons.find(modalLockTarget).parent().addClass('united');
                 }
 
@@ -101,7 +104,7 @@ class Roles {
             placeholder,
             minimumInputLength: min,
             language: {
-                inputTooShort: function() {
+                inputTooShort: function () {
                     return moreCharacters;
                 }
             },
@@ -138,7 +141,7 @@ class Roles {
             $input.val('').trigger('change');
         })
 
-        $(document).on('click', '.select2-results__option', function (){
+        $(document).on('click', '.select2-results__option', function () {
             let $url = '/agents/role/' + $(this).html()
             window.open($url, '_blank');
             return false;
@@ -239,7 +242,7 @@ class Roles {
             $globalType = $type;
             $typeAll.show();
 
-            if($rol === 5) {
+            if ($rol === 5) {
                 $typeAll.hide();
             }
 
@@ -493,6 +496,17 @@ class Roles {
 
     userModify() {
         let $modal = $('#role-modify');
+        let $buttonSend = '.modifyUser';
+
+        $(document).on('input', '#modifyRolPercentage', function () {
+            let $this = $(this);
+            let $max = $this.data('max');
+            $this.val($this.val().replace(/[^0-9]/g, ''));
+
+            if ($this.val() > $max) {
+                $this.val($max)
+            }
+        });
 
         $(document).on('click', '[data-target="#role-modify"]', function () {
             let $this = $(this);
@@ -501,6 +515,11 @@ class Roles {
             $modal.find('#readyRoleModify').addClass('d-none');
             $modal.find('.modal-footer').addClass('d-none');
             $modal.find('.loading-style').show();
+            $modal.find('.d-agent').removeClass('d-none');
+
+            if(Roles.globalrolid === 5) {
+                $modal.find('.d-agent').addClass('d-none');
+            }
 
             $.ajax({
                 url: $route,
@@ -527,28 +546,60 @@ class Roles {
                 $this.button('reset');
             });
         });
+
+        $(document).on('click', $buttonSend, function () {
+            let $this = $(this);
+            let $route = $this.data('route');
+            let $data = {
+                percentage: $('#modifyRolPercentage').val(),
+                dependence: $('#modifyRolDependence').val(),
+                type: Roles.globalrolid,
+                user_id: Roles.globaluserid
+            };
+
+            $this.button('loading');
+
+            $.ajax({
+                url: $route,
+                method: 'post',
+                data: $data
+            }).done(function (json) {
+                $modal.modal('hide');
+                Toastr.notifyToastr(json.data.title, json.data.message, 'success');
+                if (Roles.globaluserid === Roles.globaluseridcurrent) {
+                    window.location.reload()
+                } else {
+                    Roles.globaltable.ajax.reload();
+                }
+            }).fail(function (json) {
+                Roles.errorResponse(json);
+            }).always(function () {
+                $this.button('reset');
+            });
+        })
     }
 
     tabsTablesSection() {
         let $button = '.tab-role';
         let tabManager = '#roleTabProfileManager';
         let tabTransaction = '#roleTabTransactions';
-        let tabInformation =  '#roleTabMoreInformation';
+        let tabInformation = '#roleTabMoreInformation';
         let tabLock = '#roleTabLocks';
         let tableInformationID = $('#table-information');
         let tableInformation;
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
-        let picker = initLitepickerEndTodayNew();;
+        let picker = initLitepickerEndTodayNew();
+        ;
         let routeTransaction;
 
 
-        $(document).on('click', $button, function (){
+        $(document).on('click', $button, function () {
             let $this = $(this);
             let $target = $this.data('target');
             let $route;
 
-            if($target === tabInformation) {
+            if ($target === tabInformation) {
                 $route = tableInformationID.data('route');
 
                 if (tableInformation !== undefined) {
@@ -579,7 +630,7 @@ class Roles {
                 });
             }
 
-            if($target === tabTransaction) {
+            if ($target === tabTransaction) {
                 routeTransaction = tableTransactionID.data('route');
 
                 if (tableTransaction !== undefined) {
@@ -592,7 +643,7 @@ class Roles {
             }
         });
 
-        $(document).on('click', '.searchTransactionsRole', function (){
+        $(document).on('click', '.searchTransactionsRole', function () {
             let $this = $(this);
             let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
             let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
@@ -610,7 +661,7 @@ class Roles {
             }
 
             tableTransaction = tableTransactionID.DataTable({
-                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser='+ $type +'&typeTransaction=' + $action,
+                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=' + $type + '&typeTransaction=' + $action,
                 processing: true,
                 serverSide: true,
                 columnDefs: [{

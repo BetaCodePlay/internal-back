@@ -2742,6 +2742,7 @@ class AgentsController extends Controller
             $agent = ($userData->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($userData->id, session('currency'))
                 : $agentsRepo->findUser($userData->id);
+            $this->agentsCollection->formatUserFind($agent);
             $usersData = [
                 'userData'        => $agent,
             ];
@@ -4396,7 +4397,7 @@ class AgentsController extends Controller
             }
             $agentsCollection = new AgentsCollection();
             $userAgent = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
-            Log::notice(__METHOD__, ['user Agent' =>  $userAgent ]);
+
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
                 'makers'             => [],
@@ -4413,6 +4414,23 @@ class AgentsController extends Controller
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
             ]);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            abort(500);
+        }
+    }
+
+
+    /**
+     * Show role dashboard
+     *
+     * @return Application|Factory|View
+     */
+    public function dashboard()
+    {
+        try {
+
+            return view('back.agents.role-dashboard');
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
@@ -4940,42 +4958,31 @@ class AgentsController extends Controller
             $type = $request->input('type');
             $userId = $request->input('user_id' );
             $ownerId = $request->input('dependence');
-            if(auth()->user()->id != $userId){
-                $currency = session('currency');
-                if ( $type != 5){
-
-                    $agentData = [
-                        'percentage' =>  $request->input('percentage'),
-                        'owner_id' =>  $ownerId,
-                    ];
-                    $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
-                    $this->agentsRepo->update($agent->id, $agentData);
-                    $data = [
-                        'title' => _i('Agent updated'),
-                        'message' => _i('agent successfully updated'),
-                        'close' => _i('Close'),
-                    ];
-                    return Utils::successResponse($data);
-                } else {
-                    $agent = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
-                    $this->agentsRepo->moveAgentFromUser($agent, $userId);
-                    $data = [
-                        'title' => _i('Player updated'),
-                        'message' => _i('Player successfully updated'),
-                        'close' => _i('Close'),
-                    ];
-                    return Utils::successResponse($data);
-                }
-            }
-
-            $data = [
-                'title' => _i('The user %s cannot change himself', [$userId]),
-                'message' => _i('try again'),
-                'close' => _i('Close')
+        $currency = session('currency');
+        if ( $type != 5){
+            $agentData = [
+                'percentage' =>  $request->input('percentage'),
+                'owner_id' =>  $ownerId,
             ];
-            return Utils::errorResponse(Codes::$forbidden, $data);
-
-
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
+            $this->agentsRepo->update($agent->agent, $agentData);
+            $data = [
+                'title' => _i('Agent updated'),
+                'message' => _i('agent successfully updated'),
+                'close' => _i('Close'),
+            ];
+            return Utils::successResponse($data);
+        } else {
+            $agent = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
+            $agentData = $this->agentsRepo->findAgentCashier($agent->agent);
+            $this->agentsRepo->moveAgentFromUser($agentData, $userId);
+            $data = [
+                'title' => _i('Player updated'),
+                'message' => _i('Player successfully updated'),
+                'close' => _i('Close'),
+            ];
+            return Utils::successResponse($data);
+        }
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
