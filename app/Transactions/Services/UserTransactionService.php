@@ -71,12 +71,6 @@ class UserTransactionService extends BaseTransactionService
             return $isBalanceInsufficient;
         }
 
-        Log::alert('type', [
-            'type' => $request->get('type'),
-            'all'  => $request->all(),
-        ]);
-
-
         $userManagementResult = ($request->get('type') == UserType::USER_TYPE_PLAYER)
             ? $this->playerTransactionService->processTransaction($request)
             : $this->agentTransactionService->processTransaction($request);
