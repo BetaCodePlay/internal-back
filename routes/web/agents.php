@@ -207,6 +207,10 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@updateOwnerUser'
     ]);
 
+    // Show role dashboard
+    Route::get('role/dashboard', [AgentsController::class, 'dashboard'])
+        ->name('agents.role.dashboard');
+
     // Show role
     Route::get('role/{username?}', [AgentsController::class, 'role'])
         ->name('agents.role');
@@ -216,10 +220,6 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'as' => 'agents.index',
         'uses' => 'AgentsController@index'
     ]);
-
-    // Show role dashboard
-    Route::get('role/dashboard', [AgentsController::class, 'dashboard'])
-        ->name('agents.role.dashboard');
 
     //Role routes
     Route::prefix('api-role')
