@@ -511,8 +511,8 @@ class TransactionsRepo
             $from     = $transaction->data->from ?? null;
             $to       = $transaction->data->to ?? null;
             $balance  = $transaction->data->balance ?? null;
-            $receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
-
+            //$receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
+            $receiver = $to;
             return [
                 $formattedDateTimeWithTimezone,
                 $from,
