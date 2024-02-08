@@ -3205,7 +3205,7 @@ class AgentsController extends Controller
      * @param TransactionRequest $request
      * @return Response
      */
-    public function performTransactions(TransactionRequest $request): Response
+    public function performTransactionsNew(TransactionRequest $request): Response
     {
         try {
             return $this->userTransactionService->manageCreditDebitTransactions($request);
@@ -3213,7 +3213,7 @@ class AgentsController extends Controller
             return $this->userTransactionService->handleAndRespondToError($request, $ex);
         }
     }
-    public function performTransactions1(Request $request)
+    public function performTransactions(Request $request)
     {
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0',
