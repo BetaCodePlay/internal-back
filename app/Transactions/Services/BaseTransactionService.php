@@ -162,7 +162,9 @@ class BaseTransactionService extends BaseService
             'currency_iso'          => session('currency'),
             'transaction_type_id'   => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
             'transaction_status_id' => TransactionStatus::$approved,
-            'provider_id'           => Providers::$agents,
+            'provider_id'           => ($request->get(
+                    'type'
+                ) == UserType::USER_TYPE_PLAYER) ? Providers::$agents_users : Providers::$agents,
             'data'                  => $additionalData,
             'whitelabel_id'         => Configurations::getWhitelabel(),
         ];
