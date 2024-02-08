@@ -422,15 +422,17 @@ class TransactionsRepo
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $childrenIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.currency_iso', $currency)
-            ->whereIn('transactions.provider_id', $providers);
+            ->where('transactions.currency_iso', $currency);
+
 
         if ($typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
                 if ($typeUser === 'agent') {
-                    $query->whereNull('data->provider_transaction');
+                    $query->whereNull('data->provider_transaction')
+                    ->where('transactions.provider_id', Providers::$agents);
                 } else {
-                    $query->whereNotNull('data->provider_transaction');
+                    $query->whereNotNull('data->provider_transaction')
+                        ->where('transactions.provider_id', Providers::$agents_user);
                 }
             });
         }
