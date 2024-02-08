@@ -427,8 +427,7 @@ class TransactionsRepo
         if ($typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
                 if ($typeUser === 'agent') {
-                    $query->where('transactions.provider_id', Providers::$agents)
-                        ->whereNull('data->provider_transaction');
+                    $query->where('transactions.provider_id', Providers::$agents);
                 } else {
                     $query->where('transactions.provider_id', Providers::$agents_users)
                         ->whereNotNull('data->provider_transaction');
