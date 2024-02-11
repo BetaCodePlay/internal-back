@@ -214,6 +214,9 @@
                     display: flex;
 
                     .top-ten-games-head-tr {
+                        text-align: center;
+                        display: flex;
+
                         &:nth-child(1) {
                             width: 35%;
                         }
