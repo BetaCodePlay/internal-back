@@ -448,7 +448,7 @@
                                 <div class="top-ten-games-body-ex">
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure></figure>
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
                                             <div class="text-inline">
                                                 Black jack
                                             </div>

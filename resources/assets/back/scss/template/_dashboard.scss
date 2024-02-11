@@ -224,6 +224,7 @@
 
                     &:nth-child(1) {
                         width: 35%;
+                        text-align: left;
                     }
 
                     &:nth-child(2) {
@@ -277,6 +278,10 @@
                                 display: inline-block;
                                 vertical-align: middle;
                                 background-color: #323232;
+                                width: 35px;
+                                height: 35px;
+                                border-radius: 8px;
+                                margin-right: 10px;
                             }
 
                             .text-inline {
