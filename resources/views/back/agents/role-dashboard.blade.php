@@ -86,6 +86,16 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-12 col-lg-6 col-xl-4">
+                <div class="dashboard-content">
+                    <div class="dashboard-content-title">{{ _i('Transactions') }}</div>
+                    <div class="dash-transactions">
+
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection
