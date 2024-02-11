@@ -433,13 +433,13 @@
                     <div class="top-ten-games">
                         <div class="top-ten-games-ex">
                             <div class="top-ten-games-head">
-                                <div class="top-ten-games-tr">
+                                <div class="top-ten-games-head-tr">
                                     {{ _i('Game') }}
                                 </div>
-                                <div class="top-ten-games-tr">
+                                <div class="top-ten-games-head-tr">
                                     {{ _i('Provider') }}
                                 </div>
-                                <div class="top-ten-games-tr">
+                                <div class="top-ten-games-head-tr">
                                     {{ _i('Players') }}
                                 </div>
                             </div>

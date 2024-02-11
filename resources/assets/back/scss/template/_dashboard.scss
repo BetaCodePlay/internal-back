@@ -211,6 +211,8 @@
         .top-ten-games {
             .top-ten-games-ex {
                 .top-ten-games-head {
+                    display: flex;
+
                     .top-ten-games-head-tr {
                         &:nth-child(1) {
                             width: 35%;
