@@ -14,6 +14,11 @@
             <div class="col-12 col-lg-4">
                 <div class="dashboard-content">
                     <div class="dashboard-content-title">{{ _i('Total balance') }}</div>
+                    <div class="dash-balance">
+                        <div class="dash-balance-total">
+                            <span class="minus">S</span>80,000.<span class="minus">00</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

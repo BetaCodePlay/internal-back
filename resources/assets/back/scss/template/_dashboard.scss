@@ -7,7 +7,23 @@
             color: #fff;
             padding: 15px;
             font-weight: 500;
-            font-size: 18px;
+            font-size: 15px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .dash-balance {
+            .dash-balance-total {
+                font-size: 22px;
+                font-weight: 500;
+                text-align: center;
+
+                .minus {
+                    font-size: 18px;
+                    vertical-align: bottom;
+                }
+            }
         }
     }
 }
