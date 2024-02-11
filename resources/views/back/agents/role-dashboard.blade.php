@@ -16,7 +16,20 @@
                     <div class="dashboard-content-title">{{ _i('Total balance') }}</div>
                     <div class="dash-balance">
                         <div class="dash-balance-total">
-                            <span class="minus">S</span>80,000.<span class="minus">00</span>
+                            <span class="minus">$</span>80,000.<span class="minus">00</span>
+                        </div>
+                        <div class="dash-balance-amount">
+                            <div class="dash-balance-amount-item">
+                                <div class="dash-balance-amount-name">
+                                    <div class="dash-balance-amount-icon">
+                                        <i class="fa-solid fa-arrow-trend-up"></i>
+                                    </div>
+                                    <div class="dash-balance-amount-name">
+                                        <div class="span">{{ _i('amount deposited') }}</div>
+                                        <div class="span">{{ _i('on day') }}</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
