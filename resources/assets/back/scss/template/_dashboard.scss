@@ -256,11 +256,12 @@
                             padding: 15px 5px;
                             text-align: center;
                             position: relative;
+                            font-size: 13px;
 
                             &:nth-child(1) {
                                 width: 40%;
                                 text-align: left;
-                                padding-left: 48px;
+                                padding-left: 46px;
                             }
 
                             &:nth-child(2) {
@@ -282,8 +283,8 @@
 
                             figure {
                                 background-color: #323232;
-                                width: 35px;
-                                height: 35px;
+                                width: 38px;
+                                height: 38px;
                                 border-radius: 8px;
                                 background-size: 95%;
                                 background-position: center !important;
@@ -291,12 +292,16 @@
                                 position: absolute;
                                 top: 50%;
                                 transform: translateY(-50%);
-                                left: 5px;
+                                left: 0;
                             }
 
                             .text-inline {
                                 display: inline-block;
                                 vertical-align: middle;
+                            }
+
+                            @media screen and (max-width: 767px) {
+                                font-size: 12px;
                             }
                         }
                     }
