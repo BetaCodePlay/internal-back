@@ -123,6 +123,22 @@
                                     <span class="minus">$</span>542.<span class="minus">57</span>
                                 </div>
                             </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        gustavoperez
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 01:01
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>1,000.<span class="minus">00</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
