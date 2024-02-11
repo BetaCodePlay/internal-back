@@ -91,7 +91,18 @@
                 <div class="dashboard-content">
                     <div class="dashboard-content-title">{{ _i('Transactions') }}</div>
                     <div class="dash-transactions">
-
+                        <div class="dash-transactions-ex">
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <i class="fa-solid fa-circle"></i> orlando_99
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

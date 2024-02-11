@@ -75,5 +75,36 @@
                 }
             }
         }
+
+        .dash-transactions {
+            padding: 15px;
+
+            .dash-transactions-ex {
+                .dash-transactions-item {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 20px;
+
+                    &:first-child {
+                        margin-top: 0;
+                    }
+
+                    .dash-transactions-item-text {
+                        align-self: center;
+                        display: block;
+                        line-height: 1.2;
+                        padding-right: 15px;
+
+                        .dash-transactions-item-text-top {
+
+                        }
+
+                        .dash-transactions-item-text-bottom {
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }
