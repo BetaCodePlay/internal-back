@@ -603,7 +603,7 @@
                                 <div class="top-ten-games-body-ex">
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -616,7 +616,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -629,7 +629,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -642,7 +642,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -655,7 +655,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -668,7 +668,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -681,7 +681,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -694,7 +694,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -707,7 +707,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -720,7 +720,7 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
