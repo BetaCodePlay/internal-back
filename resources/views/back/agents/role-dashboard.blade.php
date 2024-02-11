@@ -11,7 +11,7 @@
 
     <div class="page-dashboard">
         <div class="row">
-            <div class="col-12 col-lg-4">
+            <div class="col-12 col-xl-4">
                 <div class="dashboard-content">
                     <div class="dashboard-content-title">{{ _i('Total balance') }}</div>
                     <div class="dash-balance">
