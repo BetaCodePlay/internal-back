@@ -430,6 +430,21 @@
             <div class="col-12 col-lg-6 col-xl-6 mb-4">
                 <div class="dashboard-content">
                     <div class="dashboard-content-title">{{ _i('Top 10 games') }}</div>
+                    <div class="top-ten-games">
+                        <div class="top-ten-games-ex">
+                            <div class="top-ten-games-head">
+                                <div class="top-ten-games-tr">
+                                    {{ _i('Game') }}
+                                </div>
+                                <div class="top-ten-games-tr">
+                                    {{ _i('Provider') }}
+                                </div>
+                                <div class="top-ten-games-tr">
+                                    {{ _i('Players') }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

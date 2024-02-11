@@ -207,5 +207,25 @@
                 }
             }
         }
+
+        .top-ten-games {
+            .top-ten-games-ex {
+                .top-ten-games-head {
+                    .top-ten-games-head-tr {
+                        &:nth-child(1) {
+                            width: 35%;
+                        }
+
+                        &:nth-child(2) {
+                            width: 35%;
+                        }
+
+                        &:nth-child(3) {
+                            width: 30%;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
