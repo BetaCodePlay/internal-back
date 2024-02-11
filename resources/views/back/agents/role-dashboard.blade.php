@@ -443,6 +443,22 @@
                                     {{ _i('Players') }}
                                 </div>
                             </div>
+
+                            <div class="top-ten-games-body">
+                                <div class="top-ten-games-body-ex">
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            Black jack
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Vivogames
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">500</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

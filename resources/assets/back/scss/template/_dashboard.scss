@@ -209,29 +209,69 @@
         }
 
         .top-ten-games {
-            .top-ten-games-ex {
-                .top-ten-games-head {
+            .top-ten-games-head {
+                overflow: hidden;
+                border-bottom: 1px solid #525252;
+
+                .top-ten-games-head-tr {
+                    display: block;
+                    float: left;
+                    padding: 10px;
                     overflow: hidden;
-                    border-bottom: 1px solid #525252;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    text-align: center;
 
-                    .top-ten-games-head-tr {
-                        display: block;
-                        float: left;
-                        padding: 10px;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
+                    &:nth-child(1) {
+                        width: 35%;
+                    }
 
-                        &:nth-child(1) {
-                            width: 35%;
-                        }
+                    &:nth-child(2) {
+                        width: 35%;
+                    }
 
-                        &:nth-child(2) {
-                            width: 35%;
-                        }
+                    &:nth-child(3) {
+                        width: 30%;
+                    }
+                }
+            }
 
-                        &:nth-child(3) {
-                            width: 30%;
+            .top-ten-games-body {
+                overflow: hidden;
+                border-bottom: 1px solid #525252;
+
+                .top-ten-games-body-ex {
+                    .top-ten-games-body-tr {
+                        .top-ten-games-body-th {
+                            display: block;
+                            float: left;
+                            padding: 10px;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            text-align: center;
+
+                            &:nth-child(1) {
+                                width: 35%;
+                            }
+
+                            &:nth-child(2) {
+                                width: 35%;
+                            }
+
+                            &:nth-child(3) {
+                                width: 30%;
+                            }
+
+                            .deco-text {
+                                background: #7d2df5;
+                                font-weight: 500;
+                                color: #fff;
+                                padding: 2px 6px;
+                                border-radius: 5px;
+                                font-size: 14px;
+                                margin-left: 5px;
+                            }
                         }
                     }
                 }
