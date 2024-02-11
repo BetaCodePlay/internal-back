@@ -25,9 +25,13 @@
                                         <i class="fa-solid fa-arrow-trend-up"></i>
                                     </div>
                                     <div class="dash-balance-amount-name">
-                                        <div class="span">{{ _i('amount deposited') }}</div>
+                                        <div class="span">{{ _i('Amount deposited') }}</div>
                                         <div class="span">{{ _i('on day') }}</div>
                                     </div>
+                                </div>
+
+                                <div class="dash-balance-amount-balance">
+                                    <span class="minus">$</span>80,000.<span class="minus">00</span>
                                 </div>
                             </div>
                         </div>

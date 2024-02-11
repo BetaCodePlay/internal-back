@@ -26,12 +26,16 @@
             }
 
             .dash-balance-amount {
+                padding: 15px;
+
                 .dash-balance-amount-item {
                     display: flex;
                     justify-content: space-between;
 
                     .dash-balance-amount-name {
-                        display: flex;
+                        align-self: center;
+                        display: block;
+                        line-height: 1.2;
 
                         .dash-balance-amount-icon {
                             margin-right: 12px;
@@ -51,6 +55,15 @@
                             span {
                                 display: block;
                             }
+                        }
+                    }
+
+                    .dash-balance-amount-balance {
+                        font-size: 15px;
+                        align-self: center;
+
+                        .minus {
+                            font-size: 13px;
                         }
                     }
                 }
