@@ -77,9 +77,16 @@
         }
 
         .dash-transactions {
-            padding: 15px;
+            padding: 15px 5px;
 
             .dash-transactions-ex {
+                height: 330px;
+                overflow-x: hidden;
+                overflow-y: auto;
+                scrollbar-color: #323232 transparent;
+                scrollbar-width: thin;
+                padding: 0 10px;
+
                 .dash-transactions-item {
                     display: flex;
                     justify-content: space-between;
