@@ -471,6 +471,110 @@
                                             <span class="deco-text">1,547</span>
                                         </div>
                                     </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
+                                            Black jack
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Vivogames
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
+                                            Ruleta
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,547</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
+                                            Black jack
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Vivogames
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
+                                            Ruleta
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,547</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
+                                            Black jack
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Vivogames
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
+                                            Ruleta
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,547</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
+                                            Black jack
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Vivogames
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
+                                            Ruleta
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,547</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
