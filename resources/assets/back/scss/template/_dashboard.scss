@@ -239,6 +239,7 @@
 
             .top-ten-games-body {
                 overflow: hidden;
+                padding: 15px 0;
 
                 .top-ten-games-body-ex {
                     height: 530px;
@@ -310,7 +311,7 @@
                     @media screen and (min-width: 620px) {
                         scrollbar-color: #323232 transparent;
                         scrollbar-width: thin;
-                        padding: 0 5px;
+                        padding: 0 15px;
                     }
                 }
             }
