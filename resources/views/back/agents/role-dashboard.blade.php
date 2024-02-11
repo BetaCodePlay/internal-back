@@ -24,7 +24,7 @@
                                     <div class="dash-balance-amount-icon">
                                         <i class="fa-solid fa-arrow-trend-up"></i>
                                     </div>
-                                    <div class="dash-balance-amount-name">
+                                    <div class="dash-balance-amount-name-text">
                                         <div class="span">{{ _i('Amount deposited') }}</div>
                                         <div class="span">{{ _i('on day') }}</div>
                                     </div>

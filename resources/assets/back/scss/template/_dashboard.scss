@@ -34,8 +34,6 @@
 
                     .dash-balance-amount-name {
                         align-self: center;
-                        display: block;
-                        line-height: 1.2;
 
                         .dash-balance-amount-icon {
                             margin-right: 12px;
@@ -49,8 +47,10 @@
                             width: 42px;
                         }
 
-                        .dash-balance-amount-name {
+                        .dash-balance-amount-name-text {
                             align-self: center;
+                            display: block;
+                            line-height: 1.2;
 
                             span {
                                 display: block;
