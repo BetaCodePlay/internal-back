@@ -236,23 +236,25 @@
                 </div>
             </div>
         </div>
-        <div class="page-body">
-            <form autocomplete="destroy" class="col table-load">
-                <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
-                    <thead>
-                    <tr>
-                        <th data-priority="1">{{ _i('Name') }}</th>
-                        <th>{{ _i('Rol') }}</th>
-                        <th>{{ _i('ID User') }}</th>
-                        <th>{{ _i('Status') }}</th>
-                        <th data-priority="3">{{ _i('Balance') }}</th>
-                        <th data-priority="2"></th>
-                    </tr>
-                    </thead>
-                </table>
-            </form>
-            <div class="loading-style"></div>
-        </div>
+        @if($authUser->agentType === 5)
+            <div class="page-body">
+                <form autocomplete="destroy" class="col table-load">
+                    <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
+                        <thead>
+                        <tr>
+                            <th data-priority="1">{{ _i('Name') }}</th>
+                            <th>{{ _i('Rol') }}</th>
+                            <th>{{ _i('ID User') }}</th>
+                            <th>{{ _i('Status') }}</th>
+                            <th data-priority="3">{{ _i('Balance') }}</th>
+                            <th data-priority="2"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </form>
+                <div class="loading-style"></div>
+            </div>
+        @endif
 
         <div class="d-none" id="user-buttons">
             <div class="d-inline-block dropdown">
