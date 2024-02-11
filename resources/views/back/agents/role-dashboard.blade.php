@@ -290,6 +290,138 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Send Mail to HR and Admin
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Update Server log
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Send Mail to HR and Admin
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Update Server log
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Send Mail to HR and Admin
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Update Server log
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Send Mail to HR and Admin
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Update Server log
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Send Mail to HR and Admin
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Update Server log
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Send Mail to HR and Admin
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
