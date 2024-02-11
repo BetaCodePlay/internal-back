@@ -92,13 +92,14 @@
                     .dash-transactions-item-text {
                         align-self: center;
                         display: block;
-                        line-height: 1.2;
+                        line-height: 1.5;
                         padding-right: 15px;
                         color: #fff;
+                        font-size: 14px;
 
                         .dash-transactions-item-text-top {
                             .icon {
-                                font-size: 10px;
+                                font-size: 8px;
                                 margin-right: 3px;
                                 vertical-align: middle;
                                 display: inline-block;
@@ -111,17 +112,19 @@
                         }
 
                         .dash-transactions-item-text-bottom {
-                            color: #aaa;
+                            color: #666;
                             font-size: 12px;
+                            padding-left: 15px;
+                            font-weight: 500;
                         }
                     }
 
                     .dash-transactions-amount {
-                        font-size: 12px;
+                        font-size: 14px;
                         align-self: center;
 
                         .minus {
-                            font-size: 10px;
+                            font-size: 12px;
                         }
                     }
                 }
