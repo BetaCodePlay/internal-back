@@ -7,7 +7,7 @@
             color: #fff;
             padding: 15px;
             font-weight: 500;
-            font-size: 15px;
+            font-size: 16px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -26,51 +26,64 @@
             }
 
             .dash-balance-amount {
-                padding: 15px;
+                padding: 15px 5px;
 
-                .dash-balance-amount-item {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 20px;
+                .dash-balance-amount-ex {
+                    height: 330px;
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    padding: 0 15px;
 
-                    &:first-child {
-                        margin-top: 0;
-                    }
-
-                    .dash-balance-amount-name {
+                    .dash-balance-amount-item {
                         display: flex;
-                        padding-right: 15px;
+                        justify-content: space-between;
+                        margin-top: 20px;
 
-                        .dash-balance-amount-icon {
-                            margin-right: 12px;
-                            position: relative;
-                            background-color: #323232;
-                            border-radius: 12px;
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: center;
-                            height: 42px;
-                            width: 42px;
+                        &:first-child {
+                            margin-top: 0;
                         }
 
-                        .dash-balance-amount-name-text {
-                            align-self: center;
-                            display: block;
-                            line-height: 1.2;
+                        .dash-balance-amount-name {
+                            display: flex;
+                            padding-right: 15px;
 
-                            span {
+                            .dash-balance-amount-icon {
+                                margin-right: 12px;
+                                position: relative;
+                                background-color: #323232;
+                                border-radius: 12px;
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 42px;
+                                width: 42px;
+                            }
+
+                            .dash-balance-amount-name-text {
+                                align-self: center;
                                 display: block;
+                                line-height: 1.2;
+
+                                span {
+                                    display: block;
+                                }
+                            }
+                        }
+
+                        .dash-balance-amount-balance {
+                            font-size: 15px;
+                            align-self: center;
+
+                            .minus {
+                                font-size: 12px;
                             }
                         }
                     }
 
-                    .dash-balance-amount-balance {
-                        font-size: 15px;
-                        align-self: center;
-
-                        .minus {
-                            font-size: 12px;
-                        }
+                    @media screen and (min-width: 620px) {
+                        scrollbar-color: #323232 transparent;
+                        scrollbar-width: thin;
+                        padding: 0 10px;
                     }
                 }
             }
