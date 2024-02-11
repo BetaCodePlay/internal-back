@@ -426,6 +426,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-12 col-lg-6 col-xl-6 mb-4">
+                <div class="dashboard-content">
+                    <div class="dashboard-content-title">{{ _i('Top 10 games') }}</div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6 col-xl-6 mb-4">
+                <div class="dashboard-content">
+                    <div class="dashboard-content-title">{{ _i('Top 10 providers') }}</div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
