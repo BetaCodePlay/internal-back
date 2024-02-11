@@ -95,11 +95,16 @@
                             <div class="dash-transactions-item">
                                 <div class="dash-transactions-item-text">
                                     <div class="dash-transactions-item-text-top">
-                                        <i class="fa-solid fa-circle"></i> orlando_99
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        orlando_99
                                     </div>
                                     <div class="dash-transactions-item-text-bottom">
                                         01-01-2024 10:32
                                     </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>2,034.<span class="minus">00</span>
                                 </div>
                             </div>
                         </div>

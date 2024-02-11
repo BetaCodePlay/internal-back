@@ -94,13 +94,34 @@
                         display: block;
                         line-height: 1.2;
                         padding-right: 15px;
+                        color: #fff;
 
                         .dash-transactions-item-text-top {
+                            .icon {
+                                font-size: 10px;
+                                margin-right: 3px;
+                                vertical-align: middle;
+                                display: inline-block;
+                                color: #ff8c4b;
 
+                                &.green {
+                                    color: #d7fe62;
+                                }
+                            }
                         }
 
                         .dash-transactions-item-text-bottom {
+                            color: #aaa;
+                            font-size: 12px;
+                        }
+                    }
 
+                    .dash-transactions-amount {
+                        font-size: 15px;
+                        align-self: center;
+
+                        .minus {
+                            font-size: 12px;
                         }
                     }
                 }
