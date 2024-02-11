@@ -211,12 +211,16 @@
         .top-ten-games {
             .top-ten-games-ex {
                 .top-ten-games-head {
-                    display: flex;
+                    overflow: hidden;
+                    border-bottom: 1px solid #525252;
 
                     .top-ten-games-head-tr {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
+                        display: block;
+                        float: left;
+                        padding: 10px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
 
                         &:nth-child(1) {
                             width: 35%;
