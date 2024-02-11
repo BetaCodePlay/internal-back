@@ -223,7 +223,7 @@
                     text-align: center;
 
                     &:nth-child(1) {
-                        width: 35%;
+                        width: 40%;
                         text-align: left;
                     }
 
@@ -232,7 +232,7 @@
                     }
 
                     &:nth-child(3) {
-                        width: 30%;
+                        width: 25%;
                     }
                 }
             }
@@ -250,13 +250,11 @@
                             display: block;
                             float: left;
                             padding: 10px 15px;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
                             text-align: center;
+                            position: relative;
 
                             &:nth-child(1) {
-                                width: 35%;
+                                width: 40%;
                                 text-align: left;
                             }
 
@@ -265,7 +263,7 @@
                             }
 
                             &:nth-child(3) {
-                                width: 30%;
+                                width: 25%;
                             }
 
                             .deco-text {
