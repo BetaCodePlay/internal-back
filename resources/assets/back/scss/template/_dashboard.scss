@@ -242,6 +242,10 @@
 
                 .top-ten-games-body-ex {
                     .top-ten-games-body-tr {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
                         .top-ten-games-body-th {
                             display: block;
                             float: left;
@@ -282,6 +286,9 @@
                                 height: 35px;
                                 border-radius: 8px;
                                 margin-right: 10px;
+                                background-size: cover !important;
+                                background-position: center !important;
+                                background-repeat: no-repeat !important;
                             }
 
                             .text-inline {
