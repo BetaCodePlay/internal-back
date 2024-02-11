@@ -29,7 +29,7 @@
                 padding: 15px 5px;
 
                 .dash-balance-amount-ex {
-                    height: 330px;
+                    height: 234px;
                     overflow-x: hidden;
                     overflow-y: auto;
                     padding: 0 15px;
@@ -93,7 +93,7 @@
             padding: 15px 5px;
 
             .dash-transactions-ex {
-                height: 330px;
+                height: 335px;
                 overflow-x: hidden;
                 overflow-y: auto;
                 padding: 0 15px;
@@ -143,6 +143,59 @@
 
                         .minus {
                             font-size: 12px;
+                        }
+                    }
+                }
+
+                @media screen and (min-width: 620px) {
+                    scrollbar-color: #323232 transparent;
+                    scrollbar-width: thin;
+                    padding: 0 10px;
+                }
+            }
+        }
+
+        .dash-recent-activity {
+            padding: 15px 5px;
+
+            .dash-recent-activity-ex {
+                height: 335px;
+                overflow-x: hidden;
+                overflow-y: auto;
+                padding: 0 15px;
+
+                .dash-recent-activity-item {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 12px;
+
+                    &:first-child {
+                        margin-top: 0;
+                    }
+
+                    .dash-recent-activity-item-text {
+                        align-self: center;
+                        display: block;
+                        line-height: 1.5;
+                        padding-right: 15px;
+                        color: #fff;
+                        font-size: 14px;
+
+                        .dash-recent-activity-item-text-top {
+                            .icon {
+                                font-size: 8px;
+                                margin-right: 3px;
+                                vertical-align: middle;
+                                display: inline-block;
+                                color: $theme;
+                            }
+                        }
+
+                        .dash-recent-activity-item-text-bottom {
+                            color: #666;
+                            font-size: 12px;
+                            padding-left: 15px;
+                            font-weight: 500;
                         }
                     }
                 }

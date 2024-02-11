@@ -274,6 +274,26 @@
                 </div>
             </div>
 
+            <div class="col-12 col-lg-6 col-xl-4 mb-4">
+                <div class="dashboard-content">
+                    <div class="dashboard-content-title">{{ _i('Recent activity') }}</div>
+                    <div class="dash-recent-activity">
+                        <div class="dash-recent-activity-ex">
+                            <div class="dash-recent-activity-item">
+                                <div class="dash-recent-activity-item-text">
+                                    <div class="dash-recent-activity-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        Update Server log
+                                    </div>
+                                    <div class="dash-recent-activity-item-text-bottom">
+                                        01-01-2024 10:32
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
