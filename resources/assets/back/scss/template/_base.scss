@@ -1,6 +1,8 @@
 html {
-    scrollbar-color: #323232 transparent;
-    scrollbar-width: thin;
+    @media screen and (min-width: 620px) {
+        scrollbar-color: #323232 transparent;
+        scrollbar-width: thin;
+    }
 }
 
 body {
