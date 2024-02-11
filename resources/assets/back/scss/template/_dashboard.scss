@@ -308,6 +308,10 @@
                         }
                     }
 
+                    @media screen and (min-width: 767px) {
+                        height: 500px;
+                    }
+
                     @media screen and (min-width: 620px) {
                         scrollbar-color: #323232 transparent;
                         scrollbar-width: thin;
