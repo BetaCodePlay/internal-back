@@ -33,7 +33,7 @@
                     justify-content: space-between;
 
                     .dash-balance-amount-name {
-                        align-self: center;
+                        display: flex;
 
                         .dash-balance-amount-icon {
                             margin-right: 12px;
