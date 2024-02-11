@@ -585,6 +585,155 @@
             <div class="col-12 col-lg-6 col-xl-6 mb-4">
                 <div class="dashboard-content">
                     <div class="dashboard-content-title">{{ _i('Top 10 providers') }}</div>
+                    <div class="top-ten-games">
+                        <div class="top-ten-games-ex">
+                            <div class="top-ten-games-head">
+                                <div class="top-ten-games-head-tr">
+                                    {{ _i('Provider') }}
+                                </div>
+                                <div class="top-ten-games-head-tr">
+                                    {{ _i('Games') }}
+                                </div>
+                                <div class="top-ten-games-head-tr">
+                                    {{ _i('Players') }}
+                                </div>
+                            </div>
+
+                            <div class="top-ten-games-body">
+                                <div class="top-ten-games-body-ex">
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">259</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            Netent
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,152</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">3,251</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">259</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            Netent
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,152</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">3,251</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">259</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            Netent
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,152</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">3,251</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">259</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            Netent
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,152</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">3,251</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/pragmaticplay-1.png')"></figure>
+                                            Pragmatic
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">259</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,500</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="top-ten-games-body-tr">
+                                        <div class="top-ten-games-body-th">
+                                            <figure style="background-image: url('https://www.softswiss.com/wp-content/uploads/2022/03/netent.png')"></figure>
+                                            Netent
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">1,152</span>
+                                        </div>
+                                        <div class="top-ten-games-body-th">
+                                            <span class="deco-text">3,251</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
