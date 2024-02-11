@@ -241,6 +241,10 @@
                 overflow: hidden;
 
                 .top-ten-games-body-ex {
+                    overflow-x: hidden;
+                    overflow-y: auto;
+                    padding: 0 10px;
+
                     .top-ten-games-body-tr {
                         display: flex;
                         align-items: center;
@@ -249,13 +253,14 @@
                         .top-ten-games-body-th {
                             display: block;
                             float: left;
-                            padding: 10px 15px;
+                            padding: 12px 5px;
                             text-align: center;
                             position: relative;
 
                             &:nth-child(1) {
                                 width: 40%;
                                 text-align: left;
+                                padding-left: 45px;
                             }
 
                             &:nth-child(2) {
@@ -277,16 +282,17 @@
                             }
 
                             figure {
-                                display: inline-block;
-                                vertical-align: middle;
                                 background-color: #323232;
-                                width: 35px;
-                                height: 35px;
+                                width: 32px;
+                                height: 32px;
                                 border-radius: 8px;
-                                margin-right: 10px;
                                 background-size: cover !important;
                                 background-position: center !important;
                                 background-repeat: no-repeat !important;
+                                position: absolute;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                left: 5px;
                             }
 
                             .text-inline {
