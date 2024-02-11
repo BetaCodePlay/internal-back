@@ -127,7 +127,7 @@
                             <div class="dash-transactions-item">
                                 <div class="dash-transactions-item-text">
                                     <div class="dash-transactions-item-text-top">
-                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        <span class="icon"><i class="fa-solid fa-circle"></i></span>
                                         gustavoperez
                                     </div>
                                     <div class="dash-transactions-item-text-bottom">
@@ -137,6 +137,134 @@
 
                                 <div class="dash-transactions-amount">
                                     <span class="minus">$</span>1,000.<span class="minus">00</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
+                                </div>
+                            </div>
+
+                            <div class="dash-transactions-item">
+                                <div class="dash-transactions-item-text">
+                                    <div class="dash-transactions-item-text-top">
+                                        <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                        username123
+                                    </div>
+                                    <div class="dash-transactions-item-text-bottom">
+                                        01-01-2024 14:11
+                                    </div>
+                                </div>
+
+                                <div class="dash-transactions-amount">
+                                    <span class="minus">$</span>542.<span class="minus">57</span>
                                 </div>
                             </div>
                         </div>
