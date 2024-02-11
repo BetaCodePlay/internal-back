@@ -216,7 +216,7 @@
                 .top-ten-games-head-tr {
                     display: block;
                     float: left;
-                    padding: 10px;
+                    padding: 10px 15px;
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
@@ -238,14 +238,13 @@
 
             .top-ten-games-body {
                 overflow: hidden;
-                border-bottom: 1px solid #525252;
 
                 .top-ten-games-body-ex {
                     .top-ten-games-body-tr {
                         .top-ten-games-body-th {
                             display: block;
                             float: left;
-                            padding: 10px;
+                            padding: 10px 15px;
                             overflow: hidden;
                             white-space: nowrap;
                             text-overflow: ellipsis;
@@ -253,6 +252,7 @@
 
                             &:nth-child(1) {
                                 width: 35%;
+                                text-align: left;
                             }
 
                             &:nth-child(2) {
@@ -271,6 +271,17 @@
                                 border-radius: 5px;
                                 font-size: 14px;
                                 margin-left: 5px;
+                            }
+
+                            figure {
+                                display: inline-block;
+                                vertical-align: middle;
+                                background-color: #323232;
+                            }
+
+                            .text-inline {
+                                display: inline-block;
+                                vertical-align: middle;
                             }
                         }
                     }

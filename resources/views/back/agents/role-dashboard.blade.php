@@ -448,7 +448,10 @@
                                 <div class="top-ten-games-body-ex">
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            Black jack
+                                            <figure></figure>
+                                            <div class="text-inline">
+                                                Black jack
+                                            </div>
                                         </div>
                                         <div class="top-ten-games-body-th">
                                             Vivogames
