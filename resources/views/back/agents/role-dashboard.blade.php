@@ -34,6 +34,22 @@
                                     <span class="minus">-$</span>80,000.<span class="minus">00</span>
                                 </div>
                             </div>
+
+                            <div class="dash-balance-amount-item">
+                                <div class="dash-balance-amount-name">
+                                    <div class="dash-balance-amount-icon">
+                                        <i class="fa-solid fa-arrow-trend-up"></i>
+                                    </div>
+                                    <div class="dash-balance-amount-name-text">
+                                        <div class="span">{{ _i('Total amount') }}</div>
+                                        <div class="span">{{ _i('prizewinning') }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="dash-balance-amount-balance">
+                                    <span class="minus">-$</span>2,000.<span class="minus">00</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
