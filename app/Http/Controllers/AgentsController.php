@@ -4430,7 +4430,7 @@ class AgentsController extends Controller
     public function dashboard()
     {
         try {
-            $reportRepo = new ReportRepo();
+            $reportRepo = new ReportRepo;
             return view('back.agents.role-dashboard', [
                 'dashboard'              => $reportRepo->dashboard()
             ]);
