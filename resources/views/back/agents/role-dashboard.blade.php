@@ -16,7 +16,8 @@
                     <div class="dashboard-content-title">{{ _i('Total balance') }}</div>
                     <div class="dash-balance">
                         <div class="dash-balance-total">
-                            <span class="minus">$</span>80,000.<span class="minus">00</span>
+                            <!-- <span class="minus">$</span> 80,000.<span class="minus">00</span> -->
+                            <span class="minus">$</span>{{ $dashboard->balance->totalBalance }}</span>
                         </div>
                         <div class="dash-balance-amount">
                             <div class="dash-balance-amount-ex">
@@ -32,7 +33,8 @@
                                     </div>
 
                                     <div class="dash-balance-amount-balance">
-                                        <span class="minus">$</span>80,000.<span class="minus">00</span>
+                                    <!--  <span class="minus">$</span>80,000.<span class="minus">00</span> -->
+                                        <span class="minus">$</span>{{ $dashboard->balance->totalDeposited }}</span>
                                     </div>
                                 </div>
 

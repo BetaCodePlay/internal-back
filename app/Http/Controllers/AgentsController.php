@@ -22,6 +22,7 @@ use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Reports\Repositories\ReportAgentRepo;
+use App\Reports\Repositories\ReportRepo;
 use App\Security\Repositories\RolesRepo;
 use App\Transactions\Services\UserTransactionService;
 use App\Transactions\Services\UserTransactionServiceOld;
@@ -4429,8 +4430,10 @@ class AgentsController extends Controller
     public function dashboard()
     {
         try {
-
-            return view('back.agents.role-dashboard');
+            $reportRepo = new ReportRepo();
+            return view('back.agents.role-dashboard', [
+                'dashboard'              => $reportRepo->dashboard()
+            ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
