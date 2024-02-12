@@ -214,12 +214,18 @@ class AgentsController extends Controller
      * @var CampaignsRepo
      */
     private $campaignsRepo;
+
     /**
      * $CampaignParticipationRepo
      *
      * @var CampaignParticipationRepo
      */
     private $campaignParticipationRepo;
+
+    /**
+     * @var ReportRepo
+     */
+    private ReportRepo $reportRepo;
 
 
     /***
@@ -266,7 +272,8 @@ class AgentsController extends Controller
         CampaignsRepo $campaignsRepo,
         CampaignParticipationRepo $campaignParticipationRepo,
         UserTransactionService $userTransactionService,
-        AuditsRepo $auditsRepo
+        AuditsRepo $auditsRepo,
+        ReportRepo $reportRepo
     ) {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo                  = $agentsRepo;
@@ -288,6 +295,7 @@ class AgentsController extends Controller
         $this->campaignParticipationRepo   = $campaignParticipationRepo;
         $this->userTransactionService      = $userTransactionService;
         $this->auditsRepo                  = $auditsRepo;
+        $this->reportRepo                  = $reportRepo;
     }
 
     /**
@@ -4430,9 +4438,8 @@ class AgentsController extends Controller
     public function dashboard()
     {
         try {
-            $reportRepo = new ReportRepo;
             return view('back.agents.role-dashboard', [
-                'dashboard'              => $reportRepo->dashboard()
+                'dashboard'              =>  $this->reportRepo->dashboard()
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
