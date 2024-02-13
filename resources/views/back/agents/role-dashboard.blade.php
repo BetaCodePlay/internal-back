@@ -97,7 +97,7 @@
                     <div class="dash-transactions">
                         <div class="dash-transactions-ex">
 
-                            @foreach ($dashboard['balance']['transactions'] as $transactions)
+                            @foreach ($dashboard['transactions'] as $transactions)
                                 <div class="dash-transactions-item">
                                     <div class="dash-transactions-item-text">
                                         @if( $transactions->transactionType == 1)
