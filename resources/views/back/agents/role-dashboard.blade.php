@@ -96,6 +96,32 @@
                     <div class="dashboard-content-title">{{ _i('Transactions') }}</div>
                     <div class="dash-transactions">
                         <div class="dash-transactions-ex">
+
+                            @foreach ($dashboard['balance']['transactions'] as $transactions)
+                                <div class="dash-transactions-item">
+                                    <div class="dash-transactions-item-text">
+                                        @if( $transactions->transactionType == 1)
+                                            <div class="dash-transactions-item-text-top">
+                                                <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                                {{ $transactions->username }}
+                                            </div>
+                                        @else
+                                            <div class="dash-transactions-item-text-top">
+                                                <span class="icon"><i class="fa-solid fa-circle"></i></span>
+                                                {{ $transactions->username }}
+                                            </div>
+                                        @endif
+                                        <div class="dash-transactions-item-text-bottom">
+                                            {{ $transactions->date }}
+                                        </div>
+                                    </div>
+
+                                    <div class="dash-transactions-amount">
+                                        <span class="minus">$</span>  {{ $transactions->amount }}
+                                    </div>
+                                </div>
+                           @endforeach
+                            <!--
                             <div class="dash-transactions-item">
                                 <div class="dash-transactions-item-text">
                                     <div class="dash-transactions-item-text-top">
@@ -271,6 +297,7 @@
                                     <span class="minus">$</span>542.<span class="minus">57</span>
                                 </div>
                             </div>
+                             -->
                         </div>
                     </div>
                 </div>
