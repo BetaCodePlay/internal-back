@@ -165,18 +165,19 @@ class AuditsRepo
      * @param string $timezone
      * @return Collection
      */
-    public function getRecentAudits(string $timezone)
-    : Collection {
+    public function getRecentAudits(string $timezone): Collection
+    {
         return DB::table('audits')
             ->join('audit_types', 'audits.audit_type_id', '=', 'audit_types.id')
             ->latest('audits.created_at')
             ->take(10)
             ->select([
                 'audit_types.name',
-                DB::raw("to_char(audits.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as formatted_date")
+                DB::raw("CONVERT_TZ(audits.created_at, 'UTC', '$timezone') as formatted_date")
             ])
             ->get();
     }
+
 
 
     /**
