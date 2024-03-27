@@ -6,6 +6,7 @@ use App\Audits\Entities\Audit;
 use App\Audits\Entities\AuditType;
 use App\Audits\Enums\AuditTypes;
 use App\Role\Enums\OrderTableIPColumns;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -165,18 +166,26 @@ class AuditsRepo
      * @param string $timezone
      * @return Collection
      */
-    public function getRecentAudits(string $timezone)
-    : Collection {
-        return DB::table('audits')
+    public function getRecentAudits(string $timezone): Collection
+    {
+        $audits = DB::table('audits')
             ->join('audit_types', 'audits.audit_type_id', '=', 'audit_types.id')
             ->latest('audits.created_at')
             ->take(10)
             ->select([
                 'audit_types.name',
-                DB::raw("to_char(audits.created_at AT TIME ZONE '$timezone', 'DD Mon HH:MIAM') as formatted_date")
+                'audits.created_at'
             ])
             ->get();
+
+        $audits->transform(function ($audit) use ($timezone) {
+            $audit->formatted_date = Carbon::parse($audit->created_at)->setTimezone($timezone)->format('d M h:ia');
+            return $audit;
+        });
+
+        return $audits;
     }
+
 
 
     /**

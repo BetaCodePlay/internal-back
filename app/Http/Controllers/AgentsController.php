@@ -22,6 +22,7 @@ use App\Reports\Collections\ReportsCollection;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Reports\Repositories\ReportAgentRepo;
+use App\Reports\Repositories\ReportRepo;
 use App\Security\Repositories\RolesRepo;
 use App\Transactions\Services\UserTransactionService;
 use App\Transactions\Services\UserTransactionServiceOld;
@@ -213,12 +214,18 @@ class AgentsController extends Controller
      * @var CampaignsRepo
      */
     private $campaignsRepo;
+
     /**
      * $CampaignParticipationRepo
      *
      * @var CampaignParticipationRepo
      */
     private $campaignParticipationRepo;
+
+    /**
+     * @var ReportRepo
+     */
+    private ReportRepo $reportRepo;
 
 
     /***
@@ -265,7 +272,8 @@ class AgentsController extends Controller
         CampaignsRepo $campaignsRepo,
         CampaignParticipationRepo $campaignParticipationRepo,
         UserTransactionService $userTransactionService,
-        AuditsRepo $auditsRepo
+        AuditsRepo $auditsRepo,
+        ReportRepo $reportRepo
     ) {
         $this->closuresUsersTotals2023Repo = $closuresUsersTotals2023Repo;
         $this->agentsRepo                  = $agentsRepo;
@@ -287,6 +295,7 @@ class AgentsController extends Controller
         $this->campaignParticipationRepo   = $campaignParticipationRepo;
         $this->userTransactionService      = $userTransactionService;
         $this->auditsRepo                  = $auditsRepo;
+        $this->reportRepo                  = $reportRepo;
     }
 
     /**
@@ -4429,8 +4438,9 @@ class AgentsController extends Controller
     public function dashboard()
     {
         try {
-
-            return view('back.agents.role-dashboard');
+            return view('back.agents.role-dashboard', [
+                'dashboard'              =>  $this->reportRepo->dashboard()
+            ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
