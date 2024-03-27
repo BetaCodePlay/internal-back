@@ -28,6 +28,11 @@ class Roles {
                 }],
                 fixedHeader: true,
                 responsive: true,
+                layout: {
+                    topStart: {
+                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                    }
+                },
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
                     let modalLockTarget = '[data-target="#role-lock"]';
