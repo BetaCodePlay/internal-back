@@ -2,7 +2,7 @@
     <div class="u-header__section u-header__section--admin-dark g-min-height-65">
         <nav class="navbar no-gutters g-pa-0">
             <div class="col-auto d-flex flex-nowrap u-header-logo-toggler g-py-12">
-                <a href="{{ route('core.dashboard') }}" class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-0">
+                <a href="{{ route('agents.role.dashboard') }}" class="navbar-brand d-flex align-self-center g-hidden-xs-down g-line-height-1 py-0 g-mt-0">
                     @if(!empty($logo))
                         @if(!is_null($logo->img_dark))
                             <img src="{{$logo->img_dark }}" alt="Logo" width="180" height="37" class="img-logo">
