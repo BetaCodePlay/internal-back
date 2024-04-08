@@ -9,7 +9,7 @@
                         @endif
                     @endif
                 </a>
-                <a href="{{ route('core.dashboard') }}" class="navbar-brand-mini">
+                <a href="{{ route('agents.role.dashboard') }}" class="navbar-brand-mini">
                     <img src="{{ $favicon }}" alt="Logo" width="180" height="37" class="img-logo-mini">
                 </a>
                 <a class="js-side-nav u-header__nav-toggler align-self-center ml-auto collapse-menu-action" href="#!"
