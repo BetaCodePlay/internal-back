@@ -10,11 +10,7 @@
                     @endif
                 </a>
                 <a href="{{ route('core.dashboard') }}" class="navbar-brand-mini">
-                    @if(!empty($logo))
-                        @if(!is_null($logo->img_dark))
-                            <img src="{{$logo->img_dark }}" alt="Logo" width="180" height="37" class="img-logo-mini">
-                        @endif
-                    @endif
+                    <img src="{{ $favicon }}" alt="Logo" width="180" height="37" class="img-logo-mini">
                 </a>
                 <a class="js-side-nav u-header__nav-toggler align-self-center ml-auto collapse-menu-action" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"

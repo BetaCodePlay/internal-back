@@ -45,9 +45,10 @@ $theme-hover: lighten($theme, 10%);
 
 .img-logo {
     width: auto;
-    transform: scale(1.45);
     margin-left: 25px;
     max-width: 150px;
+    height: auto;
+    max-height: 100%;
 }
 
 .collapse {
