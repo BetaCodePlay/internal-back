@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
 "POT-Creation-Date: 2024-04-07 22:12-0400\n"
-"PO-Revision-Date: 2024-04-07 22:42-0400\n"
+"PO-Revision-Date: 2024-04-07 23:21-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_ES\n"
@@ -14550,23 +14550,17 @@ msgid "Endpoint"
 msgstr "Punto final"
 
 #: ../storage/framework/messages/5b301c894585412835fb44d02a9c78615f823ca7.php.php:9
-#, fuzzy
-#| msgid "Roles and Permissions"
 msgid "Role and permission management"
-msgstr "Roles y permisos"
+msgstr "Gestión de roles y permisos"
 
 #: ../storage/framework/messages/5b301c894585412835fb44d02a9c78615f823ca7.php.php:21
 #: ../storage/framework/messages/8ebfb3e705de8fdfcd74bae0452c5ca99ef0a5e5.php.php:5
-#, fuzzy
-#| msgid "Create player"
 msgid "Create role"
-msgstr "Crear jugador"
+msgstr "Crear rol"
 
 #: ../storage/framework/messages/5b301c894585412835fb44d02a9c78615f823ca7.php.php:27
-#, fuzzy
-#| msgid "Profile Data"
 msgid "Profile management"
-msgstr "Datos de perfil"
+msgstr "Gestión de perfiles"
 
 #: ../storage/framework/messages/5b301c894585412835fb44d02a9c78615f823ca7.php.php:39
 #: ../storage/framework/messages/ef58407a90088ca98d9d457b46512004a9c6fc72.php.php:571
