@@ -37,7 +37,7 @@
         "dotworkers/alerts": "1.*",
         "dotworkers/audits": "1.*",
         "dotworkers/bonus": "5.*",
-        "dotworkers/configurations": "6.*",
+        "dotworkers/configurations": "7.*",
         "dotworkers/laravel-gettext": "7.x",
         "dotworkers/notifications": "1.*",
         "dotworkers/security": "1.*",
