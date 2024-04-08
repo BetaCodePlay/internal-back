@@ -4385,7 +4385,7 @@ class AgentsController extends Controller
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
             $percentage = null;
-           dd($agentsData, $dependence, $user);
+           dd($user->type_user);
             $agentsRepo = new AgentsRepo();
             $agent = ($user->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
