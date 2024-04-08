@@ -65,6 +65,7 @@ class BackOfficeServiceProvider extends ServiceProvider
             'global_timezones'            => $coreCollection->formatTimezones(),
             'free_currency'               => Configurations::getFreeCurrency(),
             'logo'                        => Configurations::getLogo(true),
+            //'logo'                        => 'https://bestcasinos-llc.s3.us-east-2.amazonaws.com/logos/default/logo.png',
             'iphone'                      => ($agent->browser() == 'Safari')
                                              && ($agent->isMobile()
                                                  || $agent->isPhone()
@@ -236,6 +237,7 @@ class BackOfficeServiceProvider extends ServiceProvider
     ) {
         $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
         $configurations = Configurations::getConfigurationsByURL($domain);
+       // $configurations = Configurations::getConfigurationsByURL('backoffice.test');
 
         if ($configurations->isEmpty()) {
             throw new InvalidArgumentException(
