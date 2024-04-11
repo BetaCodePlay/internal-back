@@ -20,17 +20,17 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
-        <!--
+
         @can('access', [$permissions::$dashboard])
             @include('back.partials.sidebar.dashboard')
         @endif
-        -->
+
         @include('back.partials.sidebar.roleDashboard')
 
         @include('back.partials.sidebar.role')
 
         @include('back.partials.sidebar.report')
-    <!--
+
         @can('access', [$permissions::$users_menu])
             @include('back.partials.sidebar.users', ['permissions' => $permissions])
         @endif
@@ -109,7 +109,7 @@
         @can('access', [$permissions::$betpay_menu])
             @include('back.partials.sidebar.store', ['permissions' => $permissions])
         @endif
-        -->
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
