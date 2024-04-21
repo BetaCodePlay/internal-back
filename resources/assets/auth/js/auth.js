@@ -116,13 +116,6 @@ class Auth {
         $(document).on('click', '.btn-tab-login', function () {
             let $this = $(this);
             let $class = $this.data('tag');
-            let $multi = $('.container-login').data('multi') === true;
-
-            if(!$multi) {
-                $class = 'show-input-user';
-            }
-
-            console.log($class);
 
             $('.btn-tab-login').removeClass('active');
             $this.addClass('active');
@@ -148,6 +141,8 @@ class Auth {
                 } else {
                     $('[data-tag="' + $select + '"]').click();
                 }
+            } else {
+                $('.login-tag').addClass('show-tag');
             }
         }
 
