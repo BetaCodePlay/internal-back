@@ -403,14 +403,16 @@ iframe {
     position: relative;
     z-index: 5;
     transition: 0.3s;
-    border-radius: 50px;
     border: 2px solid transparent;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    border-radius: 0;
 }
 
 .wrap-login .login-form .login-form-ex .login-nav .btn.active {
-    background: #6f6f6f;
-    border: 2px solid #fff;
-    box-shadow: 0 0 8px #fff;
+    border-bottom: 2px solid #7D2DF5;
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line {
