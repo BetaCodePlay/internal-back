@@ -667,14 +667,15 @@ iframe {
 .btn-login-google {
     font-size: 15px;
     font-weight: 500;
-    color: #555;
     line-height: 1.2;
     display: block;
     padding: 12px 20px;
     width: 100%;
-    background: #fff;
+    background: transparent;
     border-radius: 10px;
     transition: .15s;
+    border: 1px solid #fff;
+    color: #fff;
 }
 
 .btn-login-google:hover {

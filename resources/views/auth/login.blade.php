@@ -12,7 +12,7 @@
                 <div class="loader-login"></div>
                 <div class="login-form-ex">
                     <div class="login-nav">
-                        <button type="button" class="btn btn-tab-login" data-tag="show-input-email">{{ _i('By email')}}</button>
+                        <button type="button" class="btn btn-tab-login" data-tag="show-input-email">{{ _i('By E-mail')}}</button>
                         <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('By user')}}</button>
                     </div>
                     <div class="wrap-input-title">{{ _i('Welcome')}}</div>
