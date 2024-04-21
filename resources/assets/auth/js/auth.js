@@ -116,11 +116,6 @@ class Auth {
         $(document).on('click', '.btn-tab-login', function () {
             let $this = $(this);
             let $class = $this.data('tag');
-            let $multi = $('.container-login').data('multi') === true;
-
-            if(!$multi) {
-                $class = 'show-input-user';
-            }
 
             $('.btn-tab-login').removeClass('active');
             $this.addClass('active');
@@ -140,14 +135,14 @@ class Auth {
             let $select = localStorage.getItem('login');
             let $count = $button.length;
 
-
-
             if ($count > 0) {
                 if ($select === null) {
                     $button.eq(0).click();
                 } else {
                     $('[data-tag="' + $select + '"]').click();
                 }
+            } else {
+                $('.login-tag').addClass('show-tag');
             }
         }
 
@@ -157,11 +152,13 @@ class Auth {
             let $username = $('#username').val().length >= 4;
             let $password = $('#password').val().length  >= 8;
             let $regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
-            let $email = $regex.test($('#email').val().trim());
             let $button = $('#login');
+            let $email;
 
             if(!$multi) {
                 $select = 'show-input-user';
+            } else {
+                $email = $regex.test($('#email').val().trim());
             }
 
             if ($select === 'show-input-user') {
