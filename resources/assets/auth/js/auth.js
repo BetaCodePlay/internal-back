@@ -38,7 +38,7 @@ class Auth {
         function changePassword() {
             $('.modal-reset-password').fadeIn();
 
-            setTimeout(function (){
+            setTimeout(function () {
                 $('#reset-password').focus();
             }, 300);
         }
@@ -75,10 +75,10 @@ class Auth {
                 $passwordForm.val($passwordVal);
                 $user.addClass('disabled');
                 $passwordForm.addClass('disabled');
-                $passwordForm.attr('type','password');
+                $passwordForm.attr('type', 'password');
                 $('.btn-show-pass').remove();
 
-                setTimeout(function (){
+                setTimeout(function () {
                     $button.click();
                 }, 3000)
             }).fail(function (json) {
@@ -144,18 +144,35 @@ class Auth {
         }
 
         function checkInputs() {
-            let $button = $('.btn-tab-login');
-            let $select = localStorage.getItem('login');
-            let $count = $button.length;
+            let select = $('.btn-tab-login.active').data('tag');
+            let username = $('#username').val().length >= 4;
+            let password = $('#password').val().length  >= 8;
+            let regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+            let email = regex.test($('#email').val().trim());
+            let button = $('#login');
 
-            if ($count > 0) {
-                if ($select === null) {
-                    $button.eq(0).click();
+            if (select === 'show-input-user') {
+                if (username && password) {
+                    button.removeClass('disabled')
                 } else {
-                    $('[data-tag="' + $select + '"]').click();
+                    button.addClass('disabled')
                 }
             }
+
+            if (select === 'show-input-email') {
+                if (username && password) {
+                    button.removeClass('disabled')
+                } else {
+                    button.addClass('disabled')
+                }
+            }
+
+            console.log('input')
         }
+
+        $(document).on('input', '#username, #password, #email', function (){
+            checkInputs();
+        });
 
         getLoginOption();
         checkInputs();
