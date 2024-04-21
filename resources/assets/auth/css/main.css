@@ -389,9 +389,7 @@ iframe {
 
 .wrap-login .login-form .login-form-ex .login-nav {
     display: flex;
-    background: #4b4b4b;
-    border-radius: 50px;
-    width: 300px;
+    width: 100%;
     margin: auto;
     margin-bottom: 50px;
     position: relative;
