@@ -38,7 +38,7 @@ class Auth {
         function changePassword() {
             $('.modal-reset-password').fadeIn();
 
-            setTimeout(function (){
+            setTimeout(function () {
                 $('#reset-password').focus();
             }, 300);
         }
@@ -75,10 +75,10 @@ class Auth {
                 $passwordForm.val($passwordVal);
                 $user.addClass('disabled');
                 $passwordForm.addClass('disabled');
-                $passwordForm.attr('type','password');
+                $passwordForm.attr('type', 'password');
                 $('.btn-show-pass').remove();
 
-                setTimeout(function (){
+                setTimeout(function () {
                     $button.click();
                 }, 3000)
             }).fail(function (json) {
@@ -116,6 +116,11 @@ class Auth {
         $(document).on('click', '.btn-tab-login', function () {
             let $this = $(this);
             let $class = $this.data('tag');
+            let $multi = $('.container-login').data('multi') === true;
+
+            if(!$multi) {
+                $class = 'show-input-user';
+            }
 
             $('.btn-tab-login').removeClass('active');
             $this.addClass('active');
@@ -123,6 +128,7 @@ class Auth {
             $('.login-tag').removeClass('show-tag');
             $('.' + $class).addClass('show-tag');
             localStorage.setItem('login', $class);
+            checkInputs();
         });
 
         $(document).on('click', '.modal-reset-password .reset-password-close,.modal-reset-password .reset-password-bg', function () {
@@ -134,6 +140,8 @@ class Auth {
             let $select = localStorage.getItem('login');
             let $count = $button.length;
 
+
+
             if ($count > 0) {
                 if ($select === null) {
                     $button.eq(0).click();
@@ -143,7 +151,42 @@ class Auth {
             }
         }
 
+        function checkInputs() {
+            let $multi = $('.container-login').data('multi') === true;
+            let $select = $('.btn-tab-login.active').data('tag');
+            let $username = $('#username').val().length >= 4;
+            let $password = $('#password').val().length  >= 8;
+            let $regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+            let $email = $regex.test($('#email').val().trim());
+            let $button = $('#login');
+
+            if(!$multi) {
+                $select = 'show-input-user';
+            }
+
+            if ($select === 'show-input-user') {
+                if ($username && $password) {
+                    $button.removeClass('disabled')
+                } else {
+                    $button.addClass('disabled')
+                }
+            }
+
+            if ($select === 'show-input-email') {
+                if ($email && $password) {
+                    $button.removeClass('disabled')
+                } else {
+                    $button.addClass('disabled')
+                }
+            }
+        }
+
+        $(document).on('input', '#username, #password, #email', function (){
+            checkInputs();
+        });
+
         getLoginOption();
+        checkInputs();
     }
 }
 
