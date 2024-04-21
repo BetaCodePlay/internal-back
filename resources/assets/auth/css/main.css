@@ -488,7 +488,7 @@ iframe {
 .wrap-login .login-preview-bg .login-logo {
     display: block;
     position: absolute;
-    max-width: calc(100% - 200px);
+    max-width: 320px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
