@@ -157,11 +157,13 @@ class Auth {
             let $username = $('#username').val().length >= 4;
             let $password = $('#password').val().length  >= 8;
             let $regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
-            let $email = $regex.test($('#email').val().trim());
             let $button = $('#login');
+            let $email;
 
             if(!$multi) {
                 $select = 'show-input-user';
+            } else {
+                $email = $regex.test($('#email').val().trim());
             }
 
             if ($select === 'show-input-user') {
