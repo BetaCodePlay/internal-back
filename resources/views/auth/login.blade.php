@@ -1,7 +1,7 @@
 @extends('auth.template')
 
 @section('content')
-    <div class="container-login" data-dev="{{ $envType ? 'true' : 'false' }}">
+    <div class="container-login" data-multi="{{ $envType ? 'true' : 'false' }}">
         <div class="wrap-login">
             <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v2.jpg')">
                 <div class="bg-opacity"></div>
