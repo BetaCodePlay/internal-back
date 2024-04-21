@@ -613,12 +613,13 @@ iframe {
 
 .a-login {
     font-weight: 600;
-    color: #7D2DF5;
+    color: #fff;
     transition: 0.15s;
 }
 
 .a-login:hover {
-    color: #964FFF;
+    color: #fff;
+    text-shadow: 0 0 3px #fff;
 }
 
 /*---------------------------------------------*/
