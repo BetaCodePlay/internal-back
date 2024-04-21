@@ -624,8 +624,9 @@ iframe {
 
 .disabled {
     pointer-events: none;
-    background: #323232;
-    color: #7d7d7d;
+    background: #323232 !important;
+    color: #7d7d7d !important;
+    cursor: default !important;
 }
 
 /*---------------------------------------------*/
