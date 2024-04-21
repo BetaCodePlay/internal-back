@@ -11,15 +11,16 @@
             <form class="login-form validate-form" action="{{ route('auth.authenticate') }}" id="login-form">
                 <div class="loader-login"></div>
                 <div class="login-form-ex">
+                    <div class="wrap-input-title">{{ _i('Welcome')}}</div>
+                    <div class="wrap-input-subtitle">
+                        {{ _i("Choose which method you prefer to log in.")}}
+                    </div>
+
                     <div class="login-nav">
                         <button type="button" class="btn btn-tab-login" data-tag="show-input-email">{{ _i('By email')}}</button>
                         <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('By user')}}</button>
                     </div>
-                    <div class="wrap-input-title">{{ _i('Welcome')}}</div>
-                    <div class="wrap-input-subtitle">
-                        {{ _i("Today is a new day. It's your day. You shape it.")}}<br>
-                        {{ _i('Sign in to start managing your project.')}}
-                    </div>
+
                     <div class="login-form-line">
                         <div class="login-tag show-tag show-input-email">
                             <label>{{ _i('E-mail')}}</label>
