@@ -398,21 +398,22 @@ iframe {
 .wrap-login .login-form .login-form-ex .login-nav .btn {
     width: 50%;
     color: #fff;
-    padding: 8px;
+    padding: 8px 6px;
     font-size: 16px;
     position: relative;
     z-index: 5;
     transition: 0.3s;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block;
     border-radius: 0;
+    border-bottom-color: #363636;
 }
 
 .wrap-login .login-form .login-form-ex .login-nav .btn.active {
-    border-bottom: 2px solid #7D2DF5;
+    border-bottom-color: #7D2DF5;
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line {
