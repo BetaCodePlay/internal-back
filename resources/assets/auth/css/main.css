@@ -403,13 +403,13 @@ iframe {
     position: relative;
     z-index: 5;
     transition: 0.3s;
-    border: 3px solid transparent;
+    border: 0;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     display: block;
     border-radius: 0;
-    border-bottom-color: #363636;
+    border-bottom: 3px solid #363636;
 }
 
 .wrap-login .login-form .login-form-ex .login-nav .btn.active {
