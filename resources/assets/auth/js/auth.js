@@ -123,6 +123,7 @@ class Auth {
             $('.login-tag').removeClass('show-tag');
             $('.' + $class).addClass('show-tag');
             localStorage.setItem('login', $class);
+            checkInputs();
         });
 
         $(document).on('click', '.modal-reset-password .reset-password-close,.modal-reset-password .reset-password-bg', function () {
