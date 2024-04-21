@@ -143,7 +143,22 @@ class Auth {
             }
         }
 
+        function checkInputs() {
+            let $button = $('.btn-tab-login');
+            let $select = localStorage.getItem('login');
+            let $count = $button.length;
+
+            if ($count > 0) {
+                if ($select === null) {
+                    $button.eq(0).click();
+                } else {
+                    $('[data-tag="' + $select + '"]').click();
+                }
+            }
+        }
+
         getLoginOption();
+        checkInputs();
     }
 }
 
