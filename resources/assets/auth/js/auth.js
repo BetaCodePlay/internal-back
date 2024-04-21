@@ -160,7 +160,7 @@ class Auth {
             }
 
             if (select === 'show-input-email') {
-                if (username && password) {
+                if (email && password) {
                     button.removeClass('disabled')
                 } else {
                     button.addClass('disabled')
