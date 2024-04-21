@@ -1,7 +1,7 @@
 @extends('auth.template')
 
 @section('content')
-    <div class="container-login" data-multi="false{{--{{ $envType ? 'true' : 'false' }}--}}">
+    <div class="container-login" data-multi="{{ $envType ? 'true' : 'false' }}">
         <div class="wrap-login">
             <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v2.jpg')">
                 <div class="bg-opacity"></div>
@@ -16,10 +16,12 @@
                         {{ _i("Choose which method you prefer to log in.")}}
                     </div>
 
-                    <div class="login-nav">
-                        <button type="button" class="btn btn-tab-login" data-tag="show-input-email">{{ _i('By email')}}</button>
-                        <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('By user')}}</button>
-                    </div>
+                    @if($envType)
+                        <div class="login-nav">
+                            <button type="button" class="btn btn-tab-login" data-tag="show-input-email">{{ _i('By email')}}</button>
+                            <button type="button" class="btn btn-tab-login" data-tag="show-input-user">{{ _i('By user')}}</button>
+                        </div>
+                    @endif
 
                     <div class="login-form-line">
                         <div class="login-tag show-tag show-input-email">
