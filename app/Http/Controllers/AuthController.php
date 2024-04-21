@@ -412,7 +412,8 @@ class AuthController extends Controller
                 session()->put('intended_url', url()->previous());
             }
             return view('auth.login', [
-                'envType' => env('APP_ENV'),
+                //'envType' => env('APP_ENV'),
+                'envType' => false,
                 'title' => Configurations::getWhitelabelDescription(),
                 'logo'  => Configurations::getLogo(true),
             ]);
