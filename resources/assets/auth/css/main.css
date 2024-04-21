@@ -390,8 +390,7 @@ iframe {
 .wrap-login .login-form .login-form-ex .login-nav {
     display: flex;
     width: 100%;
-    margin: auto;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     position: relative;
 }
 
@@ -458,7 +457,7 @@ iframe {
     line-height: 1.2;
     font-size: 15px;
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .wrap-login .login-preview-bg {
