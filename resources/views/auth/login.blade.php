@@ -24,20 +24,20 @@
                     @endif
 
                     <div class="login-form-line">
-                        <div class="login-tag show-tag show-input-email">
-                            <label>{{ _i('E-mail')}}</label>
-                            <div class="wrap-input-login validate-input">
-                                <input class="input-login" type="text" name="email" id="email" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
+                        @if($envType)
+                            <div class="login-tag show-tag show-input-email">
+                                <label>{{ _i('E-mail')}}</label>
+                                <div class="wrap-input-login validate-input">
+                                    <input class="input-login" type="text" name="email" id="email" autocomplete="off" placeholder="{{ _i('example@email.com')}}" required>
+                                </div>
                             </div>
-                        </div>
-
+                        @endif
                         <div class="login-tag show-input-user">
                             <label>{{ _i('Username')}}</label>
                             <div class="wrap-input-login validate-input">
                                 <input class="input-login" type="text" name="username" id="username" autocomplete="off" placeholder="{{ _i('Enter name')}}" required>
                             </div>
                         </div>
-
                         <label>{{ _i('Password')}}</label>
                         <div class="wrap-input-login validate-input" data-validate="{{ _i('Enter password')}}">
 						<span class="btn-show-pass">
