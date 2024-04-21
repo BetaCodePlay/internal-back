@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="container-login-form-btn">
-                            <button class="btn-login" id="login" type="button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
+                            <button class="btn-login disabled" id="login" type="button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                                 {{ _i('Login') }}
                             </button>
                         </div>

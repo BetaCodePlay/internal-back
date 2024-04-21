@@ -622,6 +622,12 @@ iframe {
     text-shadow: 0 0 3px #fff;
 }
 
+.disabled {
+    pointer-events: none;
+    background: #323232;
+    color: #7d7d7d;
+}
+
 /*---------------------------------------------*/
 .btn-show-pass {
     font-size: 18px;
