@@ -145,7 +145,7 @@ class Auth {
         }
 
         function checkInputs() {
-            let multi = $('.container-login').data('multi') === 'true';
+            let multi = $('.container-login').data('multi') === true;
             let select = $('.btn-tab-login.active').data('tag');
             let username = $('#username').val().length >= 4;
             let password = $('#password').val().length  >= 8;
