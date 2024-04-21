@@ -157,6 +157,8 @@ class Auth {
                 select = 'show-input-user';
             }
 
+            console.log(select);
+
             if (select === 'show-input-user') {
                 if (username && password) {
                     button.removeClass('disabled')
@@ -172,8 +174,6 @@ class Auth {
                     button.addClass('disabled')
                 }
             }
-
-            console.log('input')
         }
 
         $(document).on('input', '#username, #password, #email', function (){

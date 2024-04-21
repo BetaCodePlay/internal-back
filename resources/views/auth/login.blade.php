@@ -53,18 +53,19 @@
                                 {{ _i('Login') }}
                             </button>
                         </div>
+                        @if($envType)
+                            <div class="login-tag login-tag-invisible show-tag show-input-email">
+                                <div class="wrap-input-divider">
+                                    O
+                                </div>
 
-                        <div class="login-tag login-tag-invisible show-tag show-input-email">
-                            <div class="wrap-input-divider">
-                                O
+                                <div class="container-login-form-btn">
+                                    <button class="btn-login-google" type="button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait') }}...">
+                                        <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
+                                    </button>
+                                </div>
                             </div>
-
-                            <div class="container-login-form-btn">
-                                <button class="btn-login-google" type="button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait') }}...">
-                                    <img src="https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/google.png"> {{ _i('Sign in with Google') }}
-                                </button>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </form>
