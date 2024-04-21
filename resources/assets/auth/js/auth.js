@@ -122,6 +122,8 @@ class Auth {
                 $class = 'show-input-user';
             }
 
+            console.log($class);
+
             $('.btn-tab-login').removeClass('active');
             $this.addClass('active');
 
@@ -136,14 +138,9 @@ class Auth {
         });
 
         function getLoginOption() {
-            let $multi = $('.container-login').data('multi') === true;
             let $button = $('.btn-tab-login');
             let $select = localStorage.getItem('login');
             let $count = $button.length;
-
-            if(!$multi) {
-                $select = 'show-input-user';
-            }
 
             if ($count > 0) {
                 if ($select === null) {
