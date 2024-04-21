@@ -153,6 +153,8 @@ class Auth {
             let email = regex.test($('#email').val().trim());
             let button = $('#login');
 
+            console.log(multi);
+
             if(!multi) {
                 select = 'show-input-user';
             }
