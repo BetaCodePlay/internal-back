@@ -116,6 +116,11 @@ class Auth {
         $(document).on('click', '.btn-tab-login', function () {
             let $this = $(this);
             let $class = $this.data('tag');
+            let $multi = $('.container-login').data('multi') === true;
+
+            if(!$multi) {
+                $class = 'show-input-user';
+            }
 
             $('.btn-tab-login').removeClass('active');
             $this.addClass('active');
@@ -135,6 +140,8 @@ class Auth {
             let $select = localStorage.getItem('login');
             let $count = $button.length;
 
+
+
             if ($count > 0) {
                 if ($select === null) {
                     $button.eq(0).click();
@@ -145,31 +152,31 @@ class Auth {
         }
 
         function checkInputs() {
-            let multi = $('.container-login').data('multi') === true;
-            let select = $('.btn-tab-login.active').data('tag');
-            let username = $('#username').val().length >= 4;
-            let password = $('#password').val().length  >= 8;
-            let regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
-            let email = regex.test($('#email').val().trim());
-            let button = $('#login');
+            let $multi = $('.container-login').data('multi') === true;
+            let $select = $('.btn-tab-login.active').data('tag');
+            let $username = $('#username').val().length >= 4;
+            let $password = $('#password').val().length  >= 8;
+            let $regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
+            let $email = $regex.test($('#email').val().trim());
+            let $button = $('#login');
 
-            if(!multi) {
-                select = 'show-input-user';
+            if(!$multi) {
+                $select = 'show-input-user';
             }
 
-            if (select === 'show-input-user') {
-                if (username && password) {
-                    button.removeClass('disabled')
+            if ($select === 'show-input-user') {
+                if ($username && $password) {
+                    $button.removeClass('disabled')
                 } else {
-                    button.addClass('disabled')
+                    $button.addClass('disabled')
                 }
             }
 
-            if (select === 'show-input-email') {
-                if (email && password) {
-                    button.removeClass('disabled')
+            if ($select === 'show-input-email') {
+                if ($email && $password) {
+                    $button.removeClass('disabled')
                 } else {
-                    button.addClass('disabled')
+                    $button.addClass('disabled')
                 }
             }
         }
