@@ -525,6 +525,12 @@ iframe {
     transform: translateY(-50%);
 }
 
+@media screen and (max-width: 991px) {
+    .wrap-login .login-preview-bg .login-logo {
+        max-width: calc(100% - 120px);
+    }
+}
+
 @media screen and (max-width: 767px) {
     .container-login {
         display: block;
