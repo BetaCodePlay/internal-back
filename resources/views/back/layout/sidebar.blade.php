@@ -20,11 +20,11 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
-
+    <!--
         @can('access', [$permissions::$dashboard])
             @include('back.partials.sidebar.dashboard')
         @endif
-
+        -->
         @include('back.partials.sidebar.roleDashboard')
 
         @include('back.partials.sidebar.role')
