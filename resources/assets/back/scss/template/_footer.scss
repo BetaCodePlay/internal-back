@@ -1,11 +1,14 @@
 .footer {
-    display: flex;
     width: 100%;
     margin-top: auto;
     height: 200px;
     background: #111111;
+    padding: 25px;
 
     .footer-top {
+        display: flex;
+        justify-content: space-between;
+
         .footer-top-left {
             align-self: center;
             display: block;
