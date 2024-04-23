@@ -33,7 +33,7 @@
                                     </div>
 
                                     <div class="dash-balance-amount-balance">
-                                    <!--  <span class="minus">$</span>80,000.<span class="minus">00</span> -->
+                                        <!--  <span class="minus">$</span>80,000.<span class="minus">00</span> -->
                                         <span class="minus">$</span>{{ $dashboard['balance']['totalDeposited'] }}</span>
                                     </div>
                                 </div>
@@ -99,27 +99,38 @@
                             @foreach ($dashboard['transactions'] as $transactions)
                                 <div class="dash-transactions-item">
                                     <div class="dash-transactions-item-text">
-                                        @if( $transactions->transactionType == 1)
+                                        <div class="dash-transactions-item-text-top">
+                                            <span class="icon {{ $transactions->transactionType == 1 ? 'green' : '' }}">
+                                                @if( $transactions->transactionType == 1)
+                                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                                @else
+                                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                                @endif
+                                            </span>
+                                            {{ $transactions->username }}
+                                        </div>
+
+                                        {{--@if( $transactions->transactionType == 1)
                                             <div class="dash-transactions-item-text-top">
-                                                <span class="icon green"><i class="fa-solid fa-circle"></i></span>
+                                                <span class="icon {{ $transactions->transactionType == 1 ? 'green' : '' }}"><i class="fa-solid fa-arrow-trend-up"></i></span>
                                                 {{ $transactions->username }}
                                             </div>
                                         @else
                                             <div class="dash-transactions-item-text-top">
-                                                <span class="icon"><i class="fa-solid fa-circle"></i></span>
+                                                <span class="icon"><i class="fa-solid fa-arrow-trend-down"></i></span>
                                                 {{ $transactions->username }}
                                             </div>
-                                        @endif
+                                        @endif--}}
                                         <div class="dash-transactions-item-text-bottom">
                                             {{ $transactions->date }}
                                         </div>
                                     </div>
 
                                     <div class="dash-transactions-amount">
-                                        <span class="minus">$</span>  {{ $transactions->amount }}
+                                        <span class="minus">$</span> {{ $transactions->amount }}
                                     </div>
                                 </div>
-                           @endforeach
+                            @endforeach
                             <!--
                             <div class="dash-transactions-item">
                                 <div class="dash-transactions-item-text">
