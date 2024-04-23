@@ -109,18 +109,7 @@
                                             </span>
                                             {{ $transactions->username }}
                                         </div>
-
-                                        {{--@if( $transactions->transactionType == 1)
-                                            <div class="dash-transactions-item-text-top">
-                                                <span class="icon {{ $transactions->transactionType == 1 ? 'green' : '' }}"><i class="fa-solid fa-arrow-trend-up"></i></span>
-                                                {{ $transactions->username }}
-                                            </div>
-                                        @else
-                                            <div class="dash-transactions-item-text-top">
-                                                <span class="icon"><i class="fa-solid fa-arrow-trend-down"></i></span>
-                                                {{ $transactions->username }}
-                                            </div>
-                                        @endif--}}
+                                        <div class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ? _i('Received') : _i('Sent') }} {{ _i('by') }} <b>{{ _i('debit') }}</b> {{ _i('the') }}:</div>
                                         <div class="dash-transactions-item-text-bottom">
                                             {{ $transactions->date }}
                                         </div>
