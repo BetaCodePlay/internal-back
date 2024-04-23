@@ -93,7 +93,7 @@
 
             <div class="col-12 col-lg-6 col-xl-4 mb-4">
                 <div class="dashboard-content">
-                    <div class="dashboard-content-title">{{ _i('Transactions') }}</div>
+                    <div class="dashboard-content-title">{{ _i('Transactions') }} <a href="#">{{ _i('See more') }} <i class="fa-solid fa-angle-right"></i></a></div>
                     <div class="dash-transactions">
                         <div class="dash-transactions-ex">
                             @foreach ($dashboard['transactions'] as $transactions)
