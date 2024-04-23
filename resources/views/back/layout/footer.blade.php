@@ -12,5 +12,10 @@
                 <a href="#">{{ _i('Help') }}</a>
             </div>
         </div>
+
+        <div class="footer-bottom">
+            <a href="#">{{ _i('Legal information') }}</a>
+            <a href="#">{{ _i('Privacy policies') }}</a>
+        </div>
     </div>
 </footer>

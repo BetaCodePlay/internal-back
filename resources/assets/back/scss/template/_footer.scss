@@ -42,6 +42,21 @@
         }
     }
 
+    .footer-bottom {
+        margin-top: 30px;
+        text-align: right;
+
+        a {
+            color: #fff;
+            transition: .3s;
+
+            &:hover, &:focus {
+                color: #fff;
+                text-shadow: 0 0 3px #fff;
+            }
+        }
+    }
+
     @media screen and (max-width: 991px) {
         padding-bottom: 85px;
     }
