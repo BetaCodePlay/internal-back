@@ -15,6 +15,11 @@ body {
     }
 }
 
+.col-general {
+    display: flex;
+    flex-direction: column;
+}
+
 $theme: #7d2df5;
 $theme-hover: lighten($theme, 10%);
 
