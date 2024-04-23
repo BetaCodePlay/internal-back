@@ -129,12 +129,12 @@
                         line-height: 1.5;
                         padding-right: 15px;
                         color: #fff;
-                        font-size: 14px;
+                        font-size: 16px;
 
                         .dash-transactions-item-text-top {
                             .icon {
-                                font-size: 8px;
-                                margin-right: 3px;
+                                font-size: 18px;
+                                margin-right: 8px;
                                 vertical-align: middle;
                                 display: inline-block;
                                 color: #ff8c4b;
@@ -154,8 +154,8 @@
                     }
 
                     .dash-transactions-amount {
-                        font-size: 14px;
-                        align-self: center;
+                        font-size: 16px;
+                        align-self: start;
 
                         .minus {
                             font-size: 12px;
