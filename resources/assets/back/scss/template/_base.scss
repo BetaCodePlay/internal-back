@@ -9,15 +9,15 @@ body {
     font-family: 'Poppins', sans-serif !important;
     background-color: #141414 !important;
     color: #fff;
-
-    @media screen and (max-width: 767px) {
-        padding-bottom: 65px;
-    }
 }
 
 .col-general {
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 991px) {
+        min-height: calc(100svh - 66px);
+    }
 }
 
 $theme: #7d2df5;
