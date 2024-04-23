@@ -107,6 +107,10 @@ class BackOfficeServiceProvider extends ServiceProvider
             throw new InvalidArgumentException('Wrong host');
         }
 
+        if ($this->app->environment() === 'local') {
+            $hostHeader = 'dev-back.bestcasinos.lat';
+        }
+
         $configuration = $this->setConfiguration(
             $request,
             $coreCollection,
@@ -236,6 +240,7 @@ class BackOfficeServiceProvider extends ServiceProvider
     ) {
         $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
         $configurations = Configurations::getConfigurationsByURL($domain);
+        //dd($domain);
 
         if ($configurations->isEmpty()) {
             throw new InvalidArgumentException(

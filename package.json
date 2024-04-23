@@ -37,6 +37,7 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
+        "vue": "^2.6.11",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
@@ -78,6 +79,8 @@
         "material-design-iconic-font": "^2.2.0",
         "moment": "^2.29.4",
         "popper.js": "^1.15.0",
+        "primeicons": "^7.0.0",
+        "primevue": "^2",
         "push.js": "^1.0.12",
         "pusher-js": "^8.4.0-rc2",
         "select2": "^4.0.11",

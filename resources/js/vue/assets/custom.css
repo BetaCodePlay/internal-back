@@ -1,0 +1,162 @@
+
+/* 
+    Custom CSS to PrimeVue Components
+    Author: Hember Colmenares
+ */
+
+.p-tabview .p-tabview-nav {
+    border-bottom: 1px solid #383838;
+}
+
+.p-tabview-nav {
+    display: flex !important;
+}
+
+.p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+.p-tabview .p-tabview-panels {
+    background: transparent;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link::before {
+    content: "";
+    background: #7d2df5;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
+    text-decoration: none;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
+}
+
+.p-card {
+    padding: 10px 20px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    margin-top: 6px;
+}
+.p-tabview .p-tabview-panels {
+    padding: 0px;
+}
+.p-dropdown {
+    background: #474747;
+    border: 1px solid #ccc;    
+    border-radius: 8px;
+    height: 2.75rem;
+    width: 100%;
+    padding: 0px;
+}
+.p-dropdown .p-dropdown-label {
+    color: white;
+    font-weight: 400;
+    font-size: 1rem;
+}
+.p-card .p-card-body {
+    padding: 0px;
+}
+.p-dropdown-panel {
+    background: #474747;
+    color: rgba(255, 255, 255, 0.87);
+    border: 1px solid #474747;
+    border-radius: 8px;
+    box-shadow: none;
+}
+.p-dropdown-panel .p-dropdown-header {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #474747;
+    color: rgba(255, 255, 255, 0.87);
+    background: #474747;
+    margin: 0;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+    background: rgba(0, 0, 0, 0.35);
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background: #7d2df5;
+    color: rgba(255, 255, 255, 0.87);
+}
+.p-calendar {
+    background: #474747;
+    padding: 0px;
+    height: 2.7rem;
+    border-radius: 8px;
+}
+.p-calendar .p-inputtext {
+    background: transparent;
+    height: 100%;
+    border-radius: 8px;
+}
+.p-datepicker:not(.p-datepicker-inline) {
+    background: #474747;
+    border: 1px solid #474747;
+    box-shadow: none;
+}
+.p-datepicker .p-datepicker-header {
+    padding: 0.5rem;
+    color: rgba(255, 255, 255, 0.87);
+    background: #474747 !important;
+    font-weight: 600;
+    margin: 0;
+    border-bottom: none;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+.p-datepicker table td>span.p-highlight {
+    color: white;
+    background: #7d2df5;
+}
+.p-overlaypanel {
+    position: absolute;
+    margin-top: -40px;
+}
+.p-datatable-wrapper {
+    border-radius: 8px;
+}
+.p-datatable .p-datatable-thead>tr>th {
+    background: #1e1e1e;
+    border: none;
+}
+.p-datatable .p-datatable-tbody>tr>td {
+    background: #1e1e1e;
+    text-align: left;
+    border: 1px solid #111111;
+    border-width: 4px 0 0 0;
+    padding: 1rem 1rem;
+}
+.p-datatable .p-datatable-tbody>tr>td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.p-datatable .p-datatable-tbody>tr>td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

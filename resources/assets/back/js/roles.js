@@ -27,7 +27,7 @@ class Roles {
                     "targets": "_all"
                 }],
                 fixedHeader: true,
-                responsive: true,
+                "responsive": true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
                     let modalLockTarget = '[data-target="#role-lock"]';
@@ -671,7 +671,7 @@ class Roles {
                     "targets": "_all"
                 }],
                 fixedHeader: true,
-                responsive: true,
+                "responsive": true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     $('td:eq(3)', nRow).html((aData[3][1] === 1 ? '+ ' : '- ') + aData[3][0]);
                 },
