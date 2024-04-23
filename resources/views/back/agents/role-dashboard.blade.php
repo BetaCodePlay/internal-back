@@ -12,7 +12,7 @@
     <div class="page-dashboard">
         <div class="row">
             <div class="col-12 col-xl-4 mb-4">
-                <div class="dashboard-content">
+                <div class="dashboard-content dashboard-content-mobile">
                     <div class="dashboard-content-title">{{ _i('Total balance') }}</div>
                     <div class="dash-balance">
                         <div class="dash-balance-total">
@@ -33,7 +33,7 @@
                                     </div>
 
                                     <div class="dash-balance-amount-balance">
-                                    <!--  <span class="minus">$</span>80,000.<span class="minus">00</span> -->
+                                        <!--  <span class="minus">$</span>80,000.<span class="minus">00</span> -->
                                         <span class="minus">$</span>{{ $dashboard['balance']['totalDeposited'] }}</span>
                                     </div>
                                 </div>
@@ -99,27 +99,27 @@
                             @foreach ($dashboard['transactions'] as $transactions)
                                 <div class="dash-transactions-item">
                                     <div class="dash-transactions-item-text">
-                                        @if( $transactions->transactionType == 1)
-                                            <div class="dash-transactions-item-text-top">
-                                                <span class="icon green"><i class="fa-solid fa-circle"></i></span>
-                                                {{ $transactions->username }}
-                                            </div>
-                                        @else
-                                            <div class="dash-transactions-item-text-top">
-                                                <span class="icon"><i class="fa-solid fa-circle"></i></span>
-                                                {{ $transactions->username }}
-                                            </div>
-                                        @endif
+                                        <div class="dash-transactions-item-text-top">
+                                            <span class="icon {{ $transactions->transactionType == 1 ? 'green' : '' }}">
+                                                @if( $transactions->transactionType == 1)
+                                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                                @else
+                                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                                @endif
+                                            </span>
+                                            {{ $transactions->username }}
+                                        </div>
+                                        <div class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ? _i('Received') : _i('Sent') }} {{ _i('by') }} <b>{{ _i('debit') }}</b> {{ _i('the') }}:</div>
                                         <div class="dash-transactions-item-text-bottom">
                                             {{ $transactions->date }}
                                         </div>
                                     </div>
 
                                     <div class="dash-transactions-amount">
-                                        <span class="minus">$</span>  {{ $transactions->amount }}
+                                        <span class="minus">{{ $transactions->transactionType == 1 ? '+' : '-' }}$</span> {{ $transactions->amount }}
                                     </div>
                                 </div>
-                           @endforeach
+                            @endforeach
                             <!--
                             <div class="dash-transactions-item">
                                 <div class="dash-transactions-item-text">
@@ -304,7 +304,7 @@
 
             <div class="col-12 col-lg-6 col-xl-4 mb-4">
                 <div class="dashboard-content">
-                    <div class="dashboard-content-title">{{ _i('Recent activity') }}</div>
+                    <div class="dashboard-content-title">{{ _i('Recent activity') }} <a href="#">{{ _i('See more') }} <i class="fa-solid fa-angle-right"></i></a></div>
                     <div class="dash-recent-activity">
                         <div class="dash-recent-activity-ex">
                             @foreach ($dashboard['audits'] as $audits)
