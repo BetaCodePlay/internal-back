@@ -5,9 +5,9 @@
 
         .dashboard-content-title {
             color: #fff;
-            padding: 15px;
-            font-weight: 500;
-            font-size: 16px;
+            padding: 15px 20px;
+            font-weight: 400;
+            font-size: 17px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -72,7 +72,7 @@
 
                         .dash-balance-amount-balance {
                             font-size: 15px;
-                            align-self: center;
+                            align-self: start;
 
                             .minus {
                                 font-size: 12px;
@@ -83,7 +83,7 @@
                     @media screen and (min-width: 620px) {
                         scrollbar-color: #323232 transparent;
                         scrollbar-width: thin;
-                        padding: 0 10px;
+                        padding: 0 15px;
                     }
                 }
             }
@@ -150,7 +150,7 @@
                 @media screen and (min-width: 620px) {
                     scrollbar-color: #323232 transparent;
                     scrollbar-width: thin;
-                    padding: 0 10px;
+                    padding: 0 15px;
                 }
             }
         }
@@ -203,7 +203,7 @@
                 @media screen and (min-width: 620px) {
                     scrollbar-color: #323232 transparent;
                     scrollbar-width: thin;
-                    padding: 0 10px;
+                    padding: 0 15px;
                 }
             }
         }
