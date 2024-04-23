@@ -1,9 +1,15 @@
 .footer {
     width: 100%;
     margin-top: auto;
-    height: 200px;
     background: #111111;
     padding: 25px;
+
+    .footer-ex {
+        max-width: 100%;
+        width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
     .footer-top {
         display: flex;
@@ -14,10 +20,25 @@
             display: block;
             line-height: 1.5;
             padding-right: 15px;
+
+            .img-logo-footer {
+                height: auto;
+                width: 180px;
+            }
         }
 
         .footer-top-right {
             align-self: start;
+
+            a {
+                color: #fff;
+                transition: .3s;
+
+                &:hover, &:focus {
+                    color: #fff;
+                    text-shadow: 0 0 3px #fff;
+                }
+            }
         }
     }
 }
