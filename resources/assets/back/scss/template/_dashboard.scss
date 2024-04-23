@@ -3,6 +3,34 @@
         background: #1e1e1e;
         border-radius: 8px;
 
+        &.dashboard-content-mobile {
+            @media screen and (max-width: 991px) {
+                background: transparent;
+
+                .dashboard-content-title {
+                    padding-right: 0;
+                    padding-left: 0;
+                }
+
+                .dash-balance  {
+                    .dash-balance-total {
+                        padding-right: 0;
+                        padding-left: 0;
+                    }
+
+                    .dash-balance-amount {
+                        padding-right: 0;
+                        padding-left: 0;
+
+                        .dash-balance-amount-ex {
+                            padding-right: 0;
+                            padding-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+
         .dashboard-content-title {
             color: #fff;
             padding: 15px 20px;
