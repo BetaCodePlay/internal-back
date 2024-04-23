@@ -4,4 +4,17 @@
     margin-top: auto;
     height: 200px;
     background: #111111;
+
+    .footer-top {
+        .footer-top-left {
+            align-self: center;
+            display: block;
+            line-height: 1.5;
+            padding-right: 15px;
+        }
+
+        .footer-top-right {
+            align-self: start;
+        }
+    }
 }
