@@ -49,6 +49,11 @@
         a {
             color: #fff;
             transition: .3s;
+            margin-left: 15px;
+
+            &:first-child {
+                margin-left: 0;
+            }
 
             &:hover, &:focus {
                 color: #fff;
