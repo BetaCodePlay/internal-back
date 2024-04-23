@@ -117,7 +117,7 @@
                 .dash-transactions-item {
                     display: flex;
                     justify-content: space-between;
-                    margin-top: 12px;
+                    margin-top: 20px;
 
                     &:first-child {
                         margin-top: 0;
@@ -146,14 +146,14 @@
                         }
 
                         .dash-transactions-item-text-middle {
-                            padding-left: 15px;
+                            padding-left: 32px;
                             font-size: 14px;
                         }
 
                         .dash-transactions-item-text-bottom {
                             color: #666;
                             font-size: 12px;
-                            padding-left: 15px;
+                            padding-left: 32px;
                             font-weight: 500;
                         }
                     }
