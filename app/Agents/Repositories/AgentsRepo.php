@@ -742,7 +742,7 @@ class AgentsRepo
      * @param array|null $select
      * @return mixed
      */
-    function getPlayerQuery($userId, $currency, $whitelabelId, ?array $select = null)
+    function getPlayerQueryOld($userId, $currency, $whitelabelId, ?array $select = null)
     : mixed {
         $defaultSelect = [
             'users.username',
@@ -759,6 +759,7 @@ class AgentsRepo
         return User::select($select)
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
+            ->join('user_currencies', 'agent_user.agent_id', '=', 'agents.id')
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->where([
                 'agents.user_id'                => $userId,
@@ -766,6 +767,40 @@ class AgentsRepo
                 'users.whitelabel_id'           => $whitelabelId,
             ]);
     }
+
+    function getPlayerQuery($userId, $currency, $whitelabelId, ?array $select = null): mixed {
+        $defaultSelect = [
+            'users.username',
+            'users.type_user',
+            'users.type_user as typeId',
+            'users.id',
+            'users.action',
+            'users.status',
+            'agent_currencies.balance',
+        ];
+
+        $select = $select ?? $defaultSelect;
+
+        return User::select($select)
+            ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
+            ->join('user_currencies', function($join) use ($currency) {
+                $join->on('users.id', '=', 'user_currencies.user_id')
+                    ->where('user_currencies.currency_iso', '=', $currency)
+                    ->whereRaw('user_currencies.id = (
+                     SELECT MAX(id)
+                     FROM user_currencies
+                     WHERE user_currencies.user_id = users.id
+                     AND user_currencies.currency_iso = ?
+                 )', [$currency]);
+            })
+            ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where([
+                'agents.user_id'                => $userId,
+                'users.whitelabel_id'           => $whitelabelId,
+            ]);
+    }
+
 
 
     /**
