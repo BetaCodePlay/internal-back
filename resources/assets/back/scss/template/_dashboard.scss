@@ -179,11 +179,11 @@
                         line-height: 1.5;
                         padding-right: 15px;
                         color: #fff;
-                        font-size: 14px;
+                        font-size: 15px;
 
                         .dash-recent-activity-item-text-top {
                             .icon {
-                                font-size: 8px;
+                                font-size: 12px;
                                 margin-right: 3px;
                                 vertical-align: middle;
                                 display: inline-block;
@@ -192,10 +192,11 @@
                         }
 
                         .dash-recent-activity-item-text-bottom {
-                            color: #666;
+                            color: #5A5A5A;
                             font-size: 12px;
                             padding-left: 15px;
-                            font-weight: 500;
+                            font-weight: 400;
+                            margin-top: 2px;
                         }
                     }
                 }
