@@ -783,25 +783,18 @@ class AgentsRepo
 
         return User::select($select)
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
-            ->join('user_currencies', function($join) use ($currency) {
+            ->join('agents', function ($join) use ($userId) {
+                $join->on('agent_user.agent_id', '=', 'agents.id')
+                    ->where('agents.user_id', '=', $userId);
+            })
+            ->leftJoin('user_currencies', function ($join) use ($currency) {
                 $join->on('users.id', '=', 'user_currencies.user_id')
-                    ->where('user_currencies.currency_iso', '=', $currency)
-                    ->whereRaw('user_currencies.id = (
-                     SELECT MAX(id)
-                     FROM user_currencies
-                     WHERE user_currencies.user_id = users.id
-                     AND user_currencies.currency_iso = ?
-                 )', [$currency]);
+                    ->where('user_currencies.currency_iso', '=', $currency);
             })
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where([
-                'agents.user_id'                => $userId,
-                'users.whitelabel_id'           => $whitelabelId,
-            ]);
+            ->where('users.whitelabel_id', $whitelabelId)
+            ->groupBy('users.id');
     }
-
-
 
     /**
      * @param array $combinedResults
