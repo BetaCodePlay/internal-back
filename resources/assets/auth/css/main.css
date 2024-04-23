@@ -389,30 +389,30 @@ iframe {
 
 .wrap-login .login-form .login-form-ex .login-nav {
     display: flex;
-    background: #4b4b4b;
-    border-radius: 50px;
-    width: 300px;
-    margin: auto;
-    margin-bottom: 50px;
+    width: 100%;
+    margin-bottom: 30px;
     position: relative;
 }
 
 .wrap-login .login-form .login-form-ex .login-nav .btn {
     width: 50%;
     color: #fff;
-    padding: 8px;
+    padding: 8px 6px;
     font-size: 16px;
     position: relative;
     z-index: 5;
     transition: 0.3s;
-    border-radius: 50px;
-    border: 2px solid transparent;
+    border: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    border-radius: 0;
+    border-bottom: 3px solid #363636;
 }
 
 .wrap-login .login-form .login-form-ex .login-nav .btn.active {
-    background: #6f6f6f;
-    border: 2px solid #fff;
-    box-shadow: 0 0 8px #fff;
+    border-bottom-color: #7D2DF5;
 }
 
 .wrap-login .login-form .login-form-ex .login-form-line {
@@ -456,8 +456,8 @@ iframe {
     color: #fff;
     line-height: 1.2;
     font-size: 15px;
-    text-align: left;
-    margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 .wrap-login .login-preview-bg {
@@ -487,7 +487,7 @@ iframe {
 .wrap-login .login-preview-bg .login-logo {
     display: block;
     position: absolute;
-    max-width: calc(100% - 200px);
+    max-width: 320px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -524,6 +524,12 @@ iframe {
     transform: translateY(-50%);
 }
 
+@media screen and (max-width: 991px) {
+    .wrap-login .login-preview-bg .login-logo {
+        max-width: calc(100% - 120px);
+    }
+}
+
 @media screen and (max-width: 767px) {
     .container-login {
         display: block;
@@ -549,7 +555,10 @@ iframe {
         display: block;
         margin: auto;
         max-height: 78px;
-        max-width: 100%;
+        max-width: calc(100% - 40px);
+        width: 300px;
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 }
 
@@ -607,12 +616,20 @@ iframe {
 
 .a-login {
     font-weight: 600;
-    color: #7D2DF5;
+    color: #fff;
     transition: 0.15s;
 }
 
 .a-login:hover {
-    color: #964FFF;
+    color: #fff;
+    text-shadow: 0 0 3px #fff;
+}
+
+.disabled {
+    pointer-events: none;
+    background: #323232 !important;
+    color: #7d7d7d !important;
+    cursor: default !important;
 }
 
 /*---------------------------------------------*/
@@ -667,14 +684,15 @@ iframe {
 .btn-login-google {
     font-size: 15px;
     font-weight: 500;
-    color: #555;
     line-height: 1.2;
     display: block;
     padding: 12px 20px;
     width: 100%;
-    background: #fff;
+    background: transparent;
     border-radius: 10px;
     transition: .15s;
+    border: 1px solid #fff;
+    color: #fff;
 }
 
 .btn-login-google:hover {

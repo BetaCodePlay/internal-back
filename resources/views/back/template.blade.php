@@ -46,10 +46,8 @@
                     </div>
                 </div>
             </div>
-        </main>
-
-        @yield('modals')
-
+            @include('back.layout.footer')
+        </div>
     </div>
 
     <script src="{{ mix('js/manifest.js', 'back') }}"></script>
