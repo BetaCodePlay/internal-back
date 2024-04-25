@@ -75,6 +75,11 @@
 
         .footer-bottom-right {
             align-self: center;
+
+            @media screen and (max-width: 767px) {
+                text-align: center;
+                width: 100%;
+            }
         }
 
         a {
