@@ -302,6 +302,10 @@ body {
             display: block !important;
 
             &.u-sidebar-navigation-v1--mini {
+                .u-sidebar-navigation-v1-menu-item-search {
+                    display: block;
+                }
+
                 .u-side-nav--top-level-menu-item {
                     .u-side-nav--top-level-menu-link {
                         .icon-mobile {
@@ -311,10 +315,6 @@ body {
 
                     .u-header--search {
                         display: none;
-                    }
-
-                    .u-sidebar-navigation-v1-menu-item-search {
-                        display: block;
                     }
 
                     .u-side-nav--second-level-menu {
