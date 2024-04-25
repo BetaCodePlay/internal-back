@@ -5,6 +5,10 @@ body {
 
     .u-sidebar-navigation-v1-menu-item-search {
         display: none;
+
+        a {
+            background: #444;
+        }
     }
 
     .u-header--search {
