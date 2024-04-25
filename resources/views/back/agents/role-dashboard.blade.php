@@ -102,9 +102,9 @@
                                         <div class="dash-transactions-item-text-top">
                                             <span class="icon">
                                                 @if( $transactions->transactionType == 1)
-                                                    <i class="fa-solid fa-arrow-up-long"></i>
-                                                @else
                                                     <i class="fa-solid fa-arrow-down-long"></i>
+                                                @else
+                                                    <i class="fa-solid fa-arrow-up-long"></i>
                                                 @endif
                                             </span>
 
