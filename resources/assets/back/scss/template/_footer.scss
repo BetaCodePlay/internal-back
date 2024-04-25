@@ -49,6 +49,23 @@
 
         .footer-bottom-left {
             align-self: center;
+            width: 240px;
+
+            .form-group {
+                margin-bottom: 0;
+            }
+
+            .select2-container--default {
+                .select2-selection--single {
+                    background: #1e1e1e;
+                    border-color: #333;
+                    border-radius: 6px;
+
+                    .select2-selection__rendered {
+                        color: #fff;
+                    }
+                }
+            }
         }
 
         .footer-bottom-right {
