@@ -103,13 +103,15 @@
                                             <span class="icon">
                                                 @if( $transactions->transactionType == 1)
                                                     <i class="fa-solid fa-arrow-up-long"></i>
+                                                    {{ _i('You sent') }}
                                                 @else
                                                     <i class="fa-solid fa-arrow-down-long"></i>
+                                                    {{ _i('You receive') }}
                                                 @endif
                                             </span>
-                                            {{ $transactions->username }}
+
                                         </div>
-                                        <div class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ? _i('Received') : _i('Sent') }} {{ _i('by') }} <b>{{ _i('debit') }}</b> {{ _i('the') }}:</div>
+                                        <div class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ?_i('Payment with debit for') : _i('Transfer to') }} {{ $transactions->username }}</div>
                                         <div class="dash-transactions-item-text-bottom">
                                             {{ $transactions->date }}
                                         </div>
