@@ -9,8 +9,14 @@ body {
         .form-control-sidebar {
             background: #444;
             border-color: #444;
-            border-radius: 8px;
+            border-radius: 8px !important;
             color: #fff;
+        }
+
+        .btn-search {
+            &:hover, &:focus {
+                background: transparent !important;
+            }
         }
     }
 
