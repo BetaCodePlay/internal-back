@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="dash-transactions-amount">
+                                    <div class="dash-transactions-amount {{ $transactions->transactionType == 1 ? 'transactions-send' : '' }}">
                                         <span class="minus">{{ $transactions->transactionType == 1 ? '+' : '-' }}$</span> {{ $transactions->amount }}
                                     </div>
                                 </div>
