@@ -24,8 +24,8 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <form id="header-search-form" class="u-header--search col-sm" action="{{ route('users.search') }}" method="get">
                 <div class="input-group g-max-width-450">
-                    <input class="form-control form-control-md g-rounded-4" type="text" name="username" placeholder="{{ _i('Search user') }}" value="{{ isset($username) ? $username : '' }}">
-                    <button type="submit" class="btn u-btn-outline-primary g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
+                    <input class="form-control form-control-sidebar form-control-md g-rounded-4" type="text" name="username" placeholder="{{ _i('Search user') }}" value="{{ isset($username) ? $username : '' }}">
+                    <button type="submit" class="btn u-btn-outline-white g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
                         <i class="hs-admin-search"></i>
                     </button>
                 </div>

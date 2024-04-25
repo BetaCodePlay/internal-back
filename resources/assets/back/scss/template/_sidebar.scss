@@ -3,6 +3,17 @@ body {
         overflow: hidden;
     }
 
+    .u-header--search {
+        background: transparent;
+
+        .form-control-sidebar {
+            background: #444;
+            border-color: #444;
+            border-radius: 8px;
+            color: #fff;
+        }
+    }
+
     .u-side-nav--top-level-menu {
         padding-top: 25px;
         padding-bottom: 25px;
