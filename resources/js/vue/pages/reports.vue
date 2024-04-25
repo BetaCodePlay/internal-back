@@ -7,9 +7,9 @@
                 <TabPanel header="Reporte Financiero">
                     <components-reports-tables-financial />
                 </TabPanel>
-                <TabPanel header="Reporte de transacciones">
+              <!--   <TabPanel header="Reporte de transacciones">
                     <components-reports-tables-transactions />
-                </TabPanel>
+                </TabPanel> -->
             </TabView>
         </div>
     </div>

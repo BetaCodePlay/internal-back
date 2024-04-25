@@ -9,6 +9,7 @@ import TabPanel from "primevue/tabpanel";
 import Card from "primevue/card";
 import Dropdown from "primevue/dropdown";
 import OverlayPanel from "primevue/overlaypanel";
+import Row from "primevue/row";
 
 import "primevue/resources/themes/bootstrap4-dark-purple/theme.css";
 import "primevue/resources/primevue.min.css";
@@ -25,6 +26,7 @@ Vue.component("Dropdown", Dropdown);
 Vue.component("OverlayPanel", OverlayPanel);
 Vue.component("Column", Column);
 Vue.component("ColumnGroup", ColumnGroup);
+Vue.component("Row", Row);
 
 // Función para importar recursivamente todos los componentes
 function importComponents(context, path = "") {

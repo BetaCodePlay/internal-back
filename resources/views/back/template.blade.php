@@ -20,7 +20,23 @@
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.30">
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
-
+    <script>
+        window.authUserId = parseInt('{{json_encode(auth()->user()->id)}}')
+        String.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
+            return new Intl.NumberFormat("es-ES", {
+                style: "currency",
+                currency: "{{session('currency')}}",
+                minimumFractionDigits: decimalPlaces,
+            }).format(this);
+        };
+        Number.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
+            return new Intl.NumberFormat("es-ES", {
+                style: "currency",
+                currency: "{{session('currency')}}",
+                minimumFractionDigits: decimalPlaces,
+            }).format(this);
+        };
+    </script>
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
@@ -47,7 +63,7 @@
                 </div>
             </div>
             @include('back.layout.footer')
-        </div>
+    </main>
     </div>
 
     <script src="{{ mix('js/manifest.js', 'back') }}"></script>
@@ -65,14 +81,12 @@
     @endif
     @include('back.layout.chat')
     <script>
-        @if(env('APP_ENV') == 'testing')
+        /*  @if(env('APP_ENV') == 'testing')
         $(function() {
             let socket = new Socket();
-            socket.initChannel('{{ session()->get('
-                betpay_client_id ') }}', '{{ $favicon }}', '{{ route('
-                push - notifications.store ') }}');
+            socket.initChannel('{{ session()->get('betpay_client_id') }}', '{{ $favicon }}', '{{ route('push - notifications.store ') }}');
         });
-        @endif
+        @endif */
         Global.sidebar();
     </script>
 </body>

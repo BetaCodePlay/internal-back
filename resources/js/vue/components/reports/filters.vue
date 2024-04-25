@@ -6,10 +6,11 @@
                     <div class="col-md-4">
                         <label>Filtrar por</label>
                         <Dropdown
-                            v-model="selectedCity"
+                            v-model="value.selectedCity"
                             :options="cities"
                             class="form-control"
                             optionLabel="name"
+                            @change="updateFilters"
                             placeholder="Select city"
                             :filter="true"
                             filterPlaceholder="Find Car"
@@ -18,10 +19,11 @@
                     <div class="col-md-4">
                         <label>Usuario</label>
                         <Dropdown
-                            v-model="selectedCity"
+                            v-model="value.selectedCity"
                             :options="cities"
                             class="form-control"
                             optionLabel="name"
+                            @change="updateFilters"
                             placeholder="Select city"
                             :filter="true"
                             filterPlaceholder="Find Car"
@@ -30,7 +32,9 @@
                     <div class="col-md-4">
                         <label>Fechas</label>
                         <Calendar
-                            v-model="daterange"
+                            :locale="es"
+                            v-model="value.daterange"
+                            @input="updateFilters"
                             class="form-control"
                             selectionMode="range"
                         />
@@ -43,7 +47,7 @@
             <template #content>
                 <div class="row">
                     <div class="col-md-8 pt-2">
-                        <h4>Transacciones</h4>
+                        <h4>{{ title }}</h4>
                     </div>
                     <div class="col-md-2">
                         <i
@@ -64,44 +68,124 @@
                             class="form-control"
                         />
                     </div>
-                    <div class="col-md-2  pt-1">
-                        <a
-                            href="javascript:void(0)"
-                            style="color: white"
-                            @click="toggleFilters"
-                            >Filtrar contenido
-                            <i class="pi pi-angle-down ml-3"></i
-                        ></a>
-                        <span
-                            @click="toggleExports"
-                            class="btn ml-3"
-                            style="color: white"
-                            ><i class="fa-solid fa-ellipsis-vertical"></i
-                        ></span>
+                    <div class="col-md-2 pt-1">
+                        <div class="dropdown">
+                            <button
+                                class="btn"
+                                type="button"
+                                style="color: white"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                Filtrar contenido
+                                <i class="pi pi-angle-down ml-3"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Another action</a
+                                    >
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Something else here</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button
+                                class="btn"
+                                type="button"
+                                style="color: white"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Another action</a
+                                    >
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"
+                                        >Something else here</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </template>
         </Card>
-        <OverlayPanel ref="filters" :showCloseIcon="true">
-            <img
-                width="400px"
-                src="https://cdn.motor1.com/images/mgl/9mZpXv/s1/2020-2022-ford-mustang-shelby-gt500kr.webp"
-                alt="Nature Image"
-        /></OverlayPanel>
-        <OverlayPanel ref="exports" :showCloseIcon="true">
-            <img
-                width="400px"
-                src="https://cdn.motor1.com/images/mgl/9mZpXv/s1/2020-2022-ford-mustang-shelby-gt500kr.webp"
-                alt="Nature Image"
-        /></OverlayPanel>
     </div>
 </template>
 <script>
 export default {
+    props: ["value", "title"],
     data() {
         return {
-            daterange: "",
-            selectedCity: null,
+            es: {
+                firstDayOfWeek: 1,
+                dayNames: [
+                    "Domingo",
+                    "Lunes",
+                    "Martes",
+                    "Miércoles",
+                    "Jueves",
+                    "Viernes",
+                    "Sábado",
+                ],
+                dayNamesShort: [
+                    "Dom",
+                    "Lun",
+                    "Mar",
+                    "Mié",
+                    "Jue",
+                    "Vie",
+                    "Sáb",
+                ],
+                dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
+                monthNames: [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Diciembre",
+                ],
+                monthNamesShort: [
+                    "Ene",
+                    "Feb",
+                    "Mar",
+                    "Abr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Ago",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dic",
+                ],
+                today: "Hoy",
+                clear: "Borrar",
+                weekHeader: "Sm",
+            },
             cities: [
                 { name: "New York", code: "NY" },
                 { name: "Rome", code: "RM" },
@@ -112,12 +196,14 @@ export default {
         };
     },
     methods: {
-        toggleFilters(event) {
-            this.$refs.filters.toggle(event);
-        },
-        toggleExports(event) {
-            this.$refs.exports.toggle(event);
+        updateFilters() {
+            this.$emit("change", this.value);
         },
     },
 };
 </script>
+<style>
+.p-calendar .p-datepicker {
+    min-width: unset;
+}
+</style>

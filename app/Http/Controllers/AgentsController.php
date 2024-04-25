@@ -358,7 +358,7 @@ class AgentsController extends Controller
             $currency = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             $userData = $this->usersRepo->getUsernameByCurrency($username, $currency, $whitelabel);
-            if (! is_null($userData)) {
+            if (!is_null($userData)) {
                 $agentUserData = $this->agentsRepo->existAgent($userData->id);
                 if (is_null($agentUserData)) {
                     $agentUser = $this->agentsRepo->findUser($userData->id);
@@ -426,7 +426,7 @@ class AgentsController extends Controller
             $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
             $user = $this->agentsRepo->findUser($id);
 
-            if (! is_null($userAgent)) {
+            if (!is_null($userAgent)) {
                 $father = $this->usersRepo->findUsername($userAgent->owner);
                 $user  = $userAgent;
                 $balance = $userAgent->balance;
@@ -627,7 +627,7 @@ class AgentsController extends Controller
     public function agentsTransactionsByDatesData($startDate = null, $endDate = null)
     {
         try {
-            if (! is_null($startDate) && ! is_null($endDate)) {
+            if (!is_null($startDate) && !is_null($endDate)) {
                 $currency = session('currency');
                 if (session('admin_id')) {
                     $user = session('admin_id');
@@ -683,7 +683,7 @@ class AgentsController extends Controller
                 'column' => 'date',
                 'order' => 'asc',
             ];
-            if ($request->has('order') && ! empty($request->get('order'))) {
+            if ($request->has('order') && !empty($request->get('order'))) {
                 $orderCol = [
                     'column' => $request->get('columns')[$request->get('order')[0]['column']]['data'],
                     'order' => $request->get('order')[0]['dir']
@@ -694,10 +694,10 @@ class AgentsController extends Controller
             $providers = [Providers::$agents, Providers::$agents_users];
 
             //            $user = auth()->user()->id ? Auth::id() : null;
-//            if (is_null(Auth::user()->username) == 'romeo') {
-//                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-//                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
-//            }
+            //            if (is_null(Auth::user()->username) == 'romeo') {
+            //                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+            //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+            //            }
 
             //TODO get ids children from father
             $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather(
@@ -838,7 +838,7 @@ class AgentsController extends Controller
 
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $subAgents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            if (! is_null($agent)) {
+            if (!is_null($agent)) {
                 $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             } else {
                 $users[] = [
@@ -855,7 +855,7 @@ class AgentsController extends Controller
                 $maker
             );
             $newStatus        = (bool)$request->type;
-            $oldStatus        = ! $newStatus;
+            $oldStatus        = !$newStatus;
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
                     foreach ($usersToUpdate as $userToUpdate) {
@@ -994,7 +994,7 @@ class AgentsController extends Controller
 
             $agent     = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
             $subAgents = $this->agentsRepo->getAgentsByOwner($userId, $currency);
-            $users     = ! is_null($agent) ? $this->agentsRepo->getUsersByAgent(
+            $users     = !is_null($agent) ? $this->agentsRepo->getUsersByAgent(
                 $agent->agent,
                 $currency
             ) : [['id' => $userId]];
@@ -1009,7 +1009,7 @@ class AgentsController extends Controller
                 $maker
             );
             $newStatus     = $lockType;
-            $oldStatus     = ! $newStatus;
+            $oldStatus     = !$newStatus;
             $authUser = auth()->user();
 
             if ($lockType) {
@@ -1084,7 +1084,8 @@ class AgentsController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function blockAgent(Request $request): Response {
+    public function blockAgent(Request $request): Response
+    {
         try {
             $rules = [
                 'userId'      => ['required', 'exists:users,id'],
@@ -1129,7 +1130,7 @@ class AgentsController extends Controller
                     Configurations::getWhitelabel()
                 );
                 $father    = false;
-                if (! is_null($typeAudit) && isset($typeAudit->data->user_id)) {
+                if (!is_null($typeAudit) && isset($typeAudit->data->user_id)) {
                     $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id, $authUser->id);
                     if ($typeAudit->data->user_id == Auth::id()) {
                         $father = true;
@@ -1239,8 +1240,8 @@ class AgentsController extends Controller
                 $user = auth()->user()->id;
                 $username = auth()->user()->username;
             }
-            $startDate = Utils::startOfDayUtc(! is_null($startDate) ? $startDate : date('Y-m-d'));
-            $endDate   = Utils::endOfDayUtc(! is_null($endDate) ? $endDate : date('Y-m-d'));
+            $startDate = Utils::startOfDayUtc(!is_null($startDate) ? $startDate : date('Y-m-d'));
+            $endDate   = Utils::endOfDayUtc(!is_null($endDate) ? $endDate : date('Y-m-d'));
 
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $agentsIds = [];
@@ -1339,11 +1340,11 @@ class AgentsController extends Controller
     public function changeTypeUser(Request $request)
     {
         //        $users = $this->usersRepo->sqlShareTmp('users');
-//        foreach ($users as $value) {
-//            $this->usersRepo->sqlShareTmp('update_rol', $value->id);
-//        }
-//
-//        return $users;
+        //        foreach ($users as $value) {
+        //            $this->usersRepo->sqlShareTmp('update_rol', $value->id);
+        //        }
+        //
+        //        return $users;
         //return 'no disponible';
 
         //TODO CHANGE TYPE USER
@@ -1351,7 +1352,7 @@ class AgentsController extends Controller
         foreach ($users as $value) {
             $value->type_user = null;
             $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
-            if (! is_null($agentTmp)) {
+            if (!is_null($agentTmp)) {
                 $value->type_user = TypeUser::$agentCajero;
                 if (isset($agentTmp->master) && $agentTmp->master) {
                     $value->type_user = TypeUser::$agentMater;
@@ -1359,11 +1360,11 @@ class AgentsController extends Controller
             }
 
             $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
-            if (! is_null($playerTmp) && isset($playerTmp->agent_id)) {
+            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
                 $value->type_user = TypeUser::$player;
             }
             //TODO UPDATE
-            if (! is_null($value->type_user)) {
+            if (!is_null($value->type_user)) {
                 $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
             }
         }
@@ -1449,18 +1450,18 @@ class AgentsController extends Controller
 
                 //TODO VER SI YA EXISTE EL USUARIO SUPPORTGL COMO AGENTE
                 $existAgentGl = $agentRepo->existAgent($value->id);
-                if (! isset($existAgentGl->id)) {
+                if (!isset($existAgentGl->id)) {
                     $adms = $usersRepo->sqlShareTmp('user_admin', null, null, $value->whitelabel_id);
                     foreach ($adms as $a => $admin) {
                         //TODO SI EXISTE RELACION DE AGENTE
                         $agentAdminExist = $agentRepo->existAgent($admin->id);
-//                       Log::debug('changeUserGlTmp',[
-//                           'userGl'=>$value,
-//                           'userAdmin'=>$admin,
-//                           'UserAdmin-Agent'=>$agentAdminExist
-//                       ]);
+                        //                       Log::debug('changeUserGlTmp',[
+                        //                           'userGl'=>$value,
+                        //                           'userAdmin'=>$admin,
+                        //                           'UserAdmin-Agent'=>$agentAdminExist
+                        //                       ]);
                         //TODO GUARDANDO EL ID WOLF
-                        if (! empty($agentAdminExist) && ! is_null($agentAdminExist->owner_id)) {
+                        if (!empty($agentAdminExist) && !is_null($agentAdminExist->owner_id)) {
                             $wolf_id = $agentAdminExist->owner_id;
 
                             if (isset($agentAdminExist->id)) {
@@ -1485,7 +1486,8 @@ class AgentsController extends Controller
                                 }
 
                                 $rolesRepo->deleteRoles(['user_id' => $value->id]);
-                                $rolesRepo->assignRole(['user_id' => $value->id, 'role_id' => Roles::$admin_Beet_sweet]
+                                $rolesRepo->assignRole(
+                                    ['user_id' => $value->id, 'role_id' => Roles::$admin_Beet_sweet]
                                 );
                             }
                         }
@@ -1597,7 +1599,7 @@ class AgentsController extends Controller
         try {
             $startDate = $request->start_date;
             $endDate = $request->end_date;
-            if (! is_null($startDate) && ! is_null($endDate)) {
+            if (!is_null($startDate) && !is_null($endDate)) {
                 $transactionType = $request->transaction_type;
                 $currency     = $request->currency;
                 $whitelabel   = Configurations::getWhitelabel();
@@ -1661,7 +1663,7 @@ class AgentsController extends Controller
         $currency = null
     ) {
         try {
-            if (! is_null($startDate) && ! is_null($endDate)) {
+            if (!is_null($startDate) && !is_null($endDate)) {
                 $agentsBlocked = [];
                 $user       = auth()->user()->id;
                 $currency_iso = session('currency');
@@ -1685,7 +1687,7 @@ class AgentsController extends Controller
                         $agentsBlocked[] = $user;
                     }
                 }
-                if (! is_null($agentsBlocked)) {
+                if (!is_null($agentsBlocked)) {
                     $this->agentsCollection->formatExcludeMakersUser($agentsBlocked);
                     $data = [
                         'agents' => $agentsBlocked
@@ -1754,7 +1756,7 @@ class AgentsController extends Controller
             $userData = $this->usersRepo->getByUsername($username, $whitelabel);
             $agents   = $this->usersRepo->arraySonIds($user, $currency, $whitelabel);
 
-            if (! is_null($userData)) {
+            if (!is_null($userData)) {
                 $date                = Carbon::now('UTC')->format('Y-m-d H:i:s');
                 $makers = [$maker];
                 $categories = [];
@@ -1819,6 +1821,51 @@ class AgentsController extends Controller
             return Utils::failedResponse();
         }
     }
+    // MARK: financialStateDataV2
+
+    /**
+     * Data Financial State New "for support"
+     * @param ProvidersRepo $providersRepo
+     * @param $user
+     * @param $startDate
+     * @param $endDate
+     * @return Response
+     * @deprecated
+     */
+    public function financialStateDataV2(
+        Request $request,
+        ProvidersRepo $providersRepo,
+        $user = null,
+        $startDate = null,
+        $endDate = null
+    ) {
+        try {
+            if (is_null($user)) {
+                $user = Auth::id();
+            }
+
+            if (Auth::user()->username == 'romeo') {
+                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel(
+                    'wolf',
+                    session('currency'),
+                    Configurations::getWhitelabel()
+                );
+
+                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+            }
+            $data = $this->closuresUsersTotals2023Repo->getClosureFinancialState(
+                Utils::startOfDayUtc($startDate),
+                Utils::endOfDayUtc($endDate),
+                session('currency'),
+                Configurations::getWhitelabel(),
+                $user
+            );
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
 
     /**
      * Data Financial State New "for support"
@@ -1843,7 +1890,7 @@ class AgentsController extends Controller
 
         //if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
         $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
-        $percentage = ! empty($percentage) ? $percentage[0]->percentage : null;
+        $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
         //}
 
         if (Auth::user()->username == 'romeo') {
@@ -1875,9 +1922,9 @@ class AgentsController extends Controller
 
         return Utils::successResponse($data);
         //        } catch (\Exception $ex) {
-//            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-//            return Utils::failedResponse();
-//        }
+        //            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+        //            return Utils::failedResponse();
+        //        }
 
     }
 
@@ -1944,21 +1991,25 @@ class AgentsController extends Controller
             }
             $percentage = null;
             $username = null;
-            if ($request->has('username_like') && ! is_null($request->get('username_like'))
+            if (
+                $request->has('username_like') && !is_null($request->get('username_like'))
                 && $request->get(
                     'username_like'
-                ) != 'null') {
+                ) != 'null'
+            ) {
                 $username = $request->get('username_like');
             }
             $provider = null;
-            if ($request->has('provider_id') && ! is_null($request->get('provider_id'))
+            if (
+                $request->has('provider_id') && !is_null($request->get('provider_id'))
                 && $request->get(
                     'provider_id'
-                ) != 'null') {
+                ) != 'null'
+            ) {
                 $provider = $request->get('provider_id');
             }
 
-            if (! in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMaker(
                     Configurations::getWhitelabel(),
@@ -1970,7 +2021,7 @@ class AgentsController extends Controller
                 );
             } else {
                 //                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(),session('currency'));
-//                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
+                //                $percentage = !empty($percentage) ? $percentage[0]->percentage:null;
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerWithSon(
                     Configurations::getWhitelabel(),
                     session('currency'),
@@ -1985,8 +2036,8 @@ class AgentsController extends Controller
                 'table' => $this->agentsCollection->closuresTotalsProviderAndMaker($table, $percentage)
             ];
             //            $dataTmp = [
-//                $table, $user, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
-//            ];
+            //                $table, $user, Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+            //            ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
@@ -2014,7 +2065,7 @@ class AgentsController extends Controller
     ) {
         try {
             // dd([$request->currency_iso, $request->whitelabel_id]);
-            if (! in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(
                     Utils::startOfDayUtc($startDate),
@@ -2145,7 +2196,7 @@ class AgentsController extends Controller
             $today = Carbon::now()->setTimezone($timezone);
             $endDateOriginal = $endDate;
             //            $startDate = Utils::startOfDayUtc($startDate);
-//            $endDate = Utils::endOfDayUtc($endDate);
+            //            $endDate = Utils::endOfDayUtc($endDate);
 
             $startDate = Utils::startOfDayUtc($startDate);
             $endDate = Utils::endOfDayUtc($endDate);
@@ -2225,7 +2276,7 @@ class AgentsController extends Controller
         $endDate = null
     ) {
         //return [Roles::$support,session('roles'),in_array(Roles::$support, session('roles')),Auth::user()->username];
-//        try {
+        //        try {
         $percentage = null;
         if (in_array(Roles::$support, session('roles'))) {
             //TODO TODOS => EJE:SUPPORT
@@ -2244,15 +2295,15 @@ class AgentsController extends Controller
             //TODO FALTA EL TOTAL DE ITEMS
 
             //                $closureRepo = new ClosuresUsersTotals2023Repo();
-//                //TODO STATUS OF PROVIDERS IN PROD
-//                $arrayProviderTmp = array_map(function ($val) {
-//                    return $val->id;
-//                }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'), Configurations::getWhitelabel()));
-//
-//                $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
-//
-//                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
-//                $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+            //                //TODO STATUS OF PROVIDERS IN PROD
+            //                $arrayProviderTmp = array_map(function ($val) {
+            //                    return $val->id;
+            //                }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'), Configurations::getWhitelabel()));
+            //
+            //                $providersString = '{' . implode(',', $arrayProviderTmp) . '}';
+            //
+            //                $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
+            //                $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
             $table = $this->closuresUsersTotals2023Repo->getClosureByProviders(
                 Configurations::getWhitelabel(),
                 session('currency'),
@@ -2274,9 +2325,9 @@ class AgentsController extends Controller
         return response()->json($data);
 
         //        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-//            return Utils::failedResponse();
-//        }
+        //            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+        //            return Utils::failedResponse();
+        //        }
     }
 
     /**
@@ -2298,23 +2349,23 @@ class AgentsController extends Controller
         $endDate = null
     ) {
         //        try {
-//             TODO NEW CONSULT para el reporte
-//            $username = $request->has('username_like') ? '%' . $request->get('username_like') . '%':null;
-//            $table = $this->closuresUsersTotals2023Repo->getClosureByUsername(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id,$username,1000,0);
-//
-//            $percentage=null;
-//            $total_items = isset($table[0]->total_items)?$table[0]->total_items:0;
-//            $data = [
-//                'table' => $this->agentsCollection->closuresByUsername($table, $total_items,$percentage, $request),
-//            ];
-//
-//            return response()->json($data);
+        //             TODO NEW CONSULT para el reporte
+        //            $username = $request->has('username_like') ? '%' . $request->get('username_like') . '%':null;
+        //            $table = $this->closuresUsersTotals2023Repo->getClosureByUsername(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), Auth::user()->id,$username,1000,0);
+        //
+        //            $percentage=null;
+        //            $total_items = isset($table[0]->total_items)?$table[0]->total_items:0;
+        //            $data = [
+        //                'table' => $this->agentsCollection->closuresByUsername($table, $total_items,$percentage, $request),
+        //            ];
+        //
+        //            return response()->json($data);
 
 
         $percentage = null;
         if (in_array(Roles::$support, session('roles'))) {
             //TODO TODOS => EJE:SUPPORT
-            if ($request->has('username_like') && ! is_null($request->get('username_like'))) {
+            if ($request->has('username_like') && !is_null($request->get('username_like'))) {
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsername(
                     Configurations::getWhitelabel(),
                     session('currency'),
@@ -2332,10 +2383,10 @@ class AgentsController extends Controller
             }
         } else {
             $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
-            $percentage = ! empty($percentage) ? $percentage[0]->percentage : null;
+            $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
 
             //TODO ADMIN_BEET_SWEET
-            if ($request->has('username_like') && ! is_null($request->get('username_like'))) {
+            if ($request->has('username_like') && !is_null($request->get('username_like'))) {
                 //TODO validar user_id para tener dinamismo
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsernameWithSon(
                     Configurations::getWhitelabel(),
@@ -2365,9 +2416,9 @@ class AgentsController extends Controller
         return Utils::successResponse($data);
 
         //        } catch (\Exception $ex) {
-//            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-//            return Utils::failedResponse();
-//        }
+        //            \Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+        //            return Utils::failedResponse();
+        //        }
     }
 
     /**
@@ -2587,21 +2638,21 @@ class AgentsController extends Controller
                 $user = Auth::id();
             }
             //TODO REVISAR DATA TOTALES
-//            $percentage = null;
-//            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
-//                //TODO TODOS => EJE:SUPPORT
-//                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabel(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate));
-//            }else{
+            //            $percentage = null;
+            //            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            //                //TODO TODOS => EJE:SUPPORT
+            //                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabel(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate));
+            //            }else{
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
-            $percentage = ! empty($percentage) ? $percentage[0]->percentage : null;
+            $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
 
             //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 
             //TODO ENVIAR CAMPO _hour para consultar la otra tabla
             // if ($request->has('_hour') && !empty($request->get('_hour')) && $request->get('_hour') == '_hour') {
-//                Log::debug('financialStateSummaryDataNew:field _hour',[
-//                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
-//                ]);
+            //                Log::debug('financialStateSummaryDataNew:field _hour',[
+            //                    Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate)
+            //                ]);
             $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSonHour(
                 Configurations::getWhitelabel(),
                 session('currency'),
@@ -2657,7 +2708,7 @@ class AgentsController extends Controller
         ReportsCollection $reportsCollection
     ) {
         //        $currency = session('currency');
-//        $whitelabel = Configurations::getWhitelabel();
+        //        $whitelabel = Configurations::getWhitelabel();
         if (session('admin_id')) {
             $data['user'] = session('admin_id');
         } else {
@@ -2672,7 +2723,8 @@ class AgentsController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function find(Request $request): Response {
+    public function find(Request $request): Response
+    {
         $this->validate($request, [
             'id'   => 'required|exists:users,id',
             'type' => 'required',
@@ -2680,7 +2732,7 @@ class AgentsController extends Controller
 
         try {
             $authUserId          = session('admin_id') ?? auth()->id();
-            $agent_player        = ! session('admin_id');
+            $agent_player        = !session('admin_id');
             $currency            = session('currency');
             $whitelabel          = Configurations::getWhitelabel();
             $bonus               = Configurations::getBonus();
@@ -2699,7 +2751,7 @@ class AgentsController extends Controller
                 $myself  = $authUserId == $user->id;
             } else {
                 $user     = $this->agentsRepo->findUser($userId);
-                $father   = (! is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
+                $father   = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master   = false;
                 $wallet   = Wallet::getByClient($userId, $currency, $bonus);
                 $balance  = $wallet->data->wallet->balance;
@@ -2744,7 +2796,8 @@ class AgentsController extends Controller
      * @param int $user User ID
      * @return Response
      */
-    public function userFind($user){
+    public function userFind($user)
+    {
         try {
             $userData       = $this->usersRepo->find($user);
             $agentsRepo = new AgentsRepo();
@@ -2791,7 +2844,7 @@ class AgentsController extends Controller
                 'fathers' => [],
             ];
 
-            if (! is_null($cant)) {
+            if (!is_null($cant)) {
                 $data['cant_agents'] = $cant['agents'];
                 $data['cant_players'] = $cant['players'];
                 $data['fathers'] = $fathers;
@@ -2910,8 +2963,8 @@ class AgentsController extends Controller
      * @param Request $request
      * @return array
      */
-    public function getDirectChildren(Request $request)
-    : array {
+    public function getDirectChildren(Request $request): array
+    {
         return $this->agentsRepo->getDirectChildren($request, session('currency'), Configurations::getWhitelabel());
     }
 
@@ -2928,45 +2981,45 @@ class AgentsController extends Controller
     {
         try {
             //ProvidersRepo $providersRepo
-//            if (session('admin_id')) {
-//                $user = session('admin_id');
-//            } else {
-//                $user = auth()->user()->id ? Auth::id() : null;
-//                if (is_null(Auth::user()->username) == 'romeo') {
-//                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-//                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
-//                }
-//
-//            }
-//            $whitelabel = Configurations::getWhitelabel();
-//            $currency = session('currency');
-//            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-//            //TODO MOSTRAR EL AGENTE LOGUEADO
-//            $agent->user_id = $agent->id;
-//
-//            //$agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
-//            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgentsNew($this->agentsRepo, $currency, [$agent]);
-//
-//            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
-//            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-//            $data['currencies'] = Configurations::getCurrencies();
-//            $data['countries'] = []; //$countriesRepo->all();
-//            $data['timezones'] = []; //\DateTimeZone::listIdentifiers();
-//            $data['providers'] = $providers;
-//            $data['agent'] = $agent;
-//            $data['makers'] = $this->gamesRepo->getMakers();
-//            $data['agents'] = $agentAndSubAgents;
-//            $data['tree'] = $this->agentsCollection->childrenTree($agent, $user);
-//            //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
-//            $data['action'] = Auth::user()->action;
-//            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);
+            //            if (session('admin_id')) {
+            //                $user = session('admin_id');
+            //            } else {
+            //                $user = auth()->user()->id ? Auth::id() : null;
+            //                if (is_null(Auth::user()->username) == 'romeo') {
+            //                    $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+            //                    $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+            //                }
+            //
+            //            }
+            //            $whitelabel = Configurations::getWhitelabel();
+            //            $currency = session('currency');
+            //            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            //            //TODO MOSTRAR EL AGENTE LOGUEADO
+            //            $agent->user_id = $agent->id;
+            //
+            //            //$agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents([$agent]);
+            //            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgentsNew($this->agentsRepo, $currency, [$agent]);
+            //
+            //            $providerTypes = [ProviderTypes::$casino, ProviderTypes::$live_casino, ProviderTypes::$casino, ProviderTypes::$virtual, ProviderTypes::$sportbook, ProviderTypes::$racebook, ProviderTypes::$live_games, ProviderTypes::$poker];
+            //            $providers = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            //            $data['currencies'] = Configurations::getCurrencies();
+            //            $data['countries'] = []; //$countriesRepo->all();
+            //            $data['timezones'] = []; //\DateTimeZone::listIdentifiers();
+            //            $data['providers'] = $providers;
+            //            $data['agent'] = $agent;
+            //            $data['makers'] = $this->gamesRepo->getMakers();
+            //            $data['agents'] = $agentAndSubAgents;
+            //            $data['tree'] = $this->agentsCollection->childrenTree($agent, $user);
+            //            //$data['tree'] = json_encode($this->agentsCollection->childrenTreeSql($user));
+            //            $data['action'] = Auth::user()->action;
+            //            $data['iagent'] = $this->agentsRepo->findAgent($user,$whitelabel);
 
             //EN CASO DE ROMEO ENTRA COMO WOLF
             $user = Auth::user()->id;
-//            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
-//                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
-//                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
-//            }
+            //            if (Auth::user()->username == 'romeo' || Auth::user()->username == 'develop') {
+            //                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel('wolf', session('currency'), Configurations::getWhitelabel());
+            //                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+            //            }
 
             $whitelabel = Configurations::getWhitelabel();
             $agentUser = $this->agentsRepo->findAgent($user, $whitelabel);
@@ -3016,7 +3069,7 @@ class AgentsController extends Controller
     {
         try {
             $currency = $request->currency;
-            if (! is_null($currency)) {
+            if (!is_null($currency)) {
                 $whitelabel = Configurations::getWhitelabel();
                 $provider = $request->provider;
                 $agents = $this->agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
@@ -3070,7 +3123,7 @@ class AgentsController extends Controller
     public function manualTransactionsData($startDate = null, $endDate = null, $currency = null)
     {
         try {
-            if (! is_null($startDate) || ! is_null($endDate) && ! is_null($currency)) {
+            if (!is_null($startDate) || !is_null($endDate) && !is_null($currency)) {
                 if (session('admin_id')) {
                     $user = session('admin_id');
                 } else {
@@ -3078,7 +3131,7 @@ class AgentsController extends Controller
                 }
                 $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
                 $users = $this->agentsCollection->formatAgentsId($agents, $currency);
-                if (! in_array($user, $users)) {
+                if (!in_array($user, $users)) {
                     $users[] = $user;
                 }
                 $startDate    = Utils::startOfDayUtc($startDate);
@@ -3267,7 +3320,6 @@ class AgentsController extends Controller
                             'close' => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$not_found, $data);
-
                     }
 
                     $walletData = Wallet::getByClient($userData->id, $currency);
@@ -3282,7 +3334,6 @@ class AgentsController extends Controller
                             'close' => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
-
                     }
                     if ($transactionType == TransactionTypes::$credit) {
                         $uuid = Str::uuid()->toString();
@@ -3292,7 +3343,7 @@ class AgentsController extends Controller
                             'to' => $userData->username
                         ];
 
-                        if ( Configurations::getWhitelabel() == 1 ){
+                        if (Configurations::getWhitelabel() == 1) {
                             function microtime_float()
                             {
                                 [$usec, $sec] = explode(" ", microtime());
@@ -3308,7 +3359,7 @@ class AgentsController extends Controller
                             $time = $time_end - $time_start;
 
                             Log::debug('Tiempo que tarda', [
-                                'segundos'=>  $time
+                                'segundos' =>  $time
                             ]);
                         } else {
                             function microtime_float()
@@ -3329,7 +3380,7 @@ class AgentsController extends Controller
                             $time = $time_end - $time_start;
 
                             Log::debug('Tiempo que tarda', [
-                                'segundos'=>  $time
+                                'segundos' =>  $time
                             ]);
                             Log::debug('error data, wallet credit', [
                                 'transaction' => $transaction,
@@ -3344,7 +3395,6 @@ class AgentsController extends Controller
                                 'close' => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
-
                         }
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance - $amount;
@@ -3382,7 +3432,6 @@ class AgentsController extends Controller
                                 'close' => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
-
                         }
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
                         $ownerBalance = $ownerAgent->balance + $amount;
@@ -3416,7 +3465,6 @@ class AgentsController extends Controller
                             'close' => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
-
                     }
                     $transactionIdCreated = $ticket->id;
                     $button = sprintf(
@@ -3434,7 +3482,6 @@ class AgentsController extends Controller
                             'close' => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$not_found, $data);
-
                     }
 
                     /* Agent Balance */
@@ -3471,7 +3518,6 @@ class AgentsController extends Controller
                             'to' => $agent->username,
                             'balance' => $balance
                         ];
-
                     } /*If the transaction is debit type */ else {
                         if ($amount <= $agentBalance) {
                             /*Valid status */
@@ -3507,7 +3553,6 @@ class AgentsController extends Controller
                             $balance = $agentBalance;
                             $status = Status::$failed;
                         }
-
                     }
                     /*If valid status equals true*/
                     if ($status == Status::$ok) {
@@ -3535,7 +3580,6 @@ class AgentsController extends Controller
                                 'close' => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
-
                         }
                         $transactionIdCreated = $ticket->id;
 
@@ -3604,7 +3648,6 @@ class AgentsController extends Controller
                             'close' => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
-
                     }
                     //new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
                     $transactionUpdate = $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
@@ -3621,7 +3664,6 @@ class AgentsController extends Controller
                             'close' => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
-
                     }
                     $data = [
                         'title' => _i('Transaction performed'),
@@ -3671,7 +3713,7 @@ class AgentsController extends Controller
             ->post();
         $response = json_decode($curl);
         $result = true;
-        if (! isset($response->result) || $response->result != 'deliverable') {
+        if (!isset($response->result) || $response->result != 'deliverable') {
             Log::debug('validateEmail', [$response]);
             $result = false;
         }
@@ -3701,24 +3743,24 @@ class AgentsController extends Controller
 
         try {
             //            $email = strtolower($request->get('email'));
-//            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-//            if (!is_null($uniqueEmail)) {
-//                $data = [
-//                    'title' => _i('Email in use'),
-//                    'message' => _i('The indicated email is already in use'),
-//                    'close' => _i('Close'),
-//                ];
-//                return Utils::errorResponse(Codes::$forbidden, $data);
-//
-//            }
-//            if (!$this->validateEmail($email)) {
-//                $data = [
-//                    'title' => _i('Invalid email'),
-//                    'message' => _i('The email entered is invalid or does not exist'),
-//                    'close' => _i('Close'),
-//                ];
-//                return Utils::errorResponse(Codes::$forbidden, $data);
-//            }
+            //            $uniqueEmail = $this->usersRepo->uniqueEmail($email);
+            //            if (!is_null($uniqueEmail)) {
+            //                $data = [
+            //                    'title' => _i('Email in use'),
+            //                    'message' => _i('The indicated email is already in use'),
+            //                    'close' => _i('Close'),
+            //                ];
+            //                return Utils::errorResponse(Codes::$forbidden, $data);
+            //
+            //            }
+            //            if (!$this->validateEmail($email)) {
+            //                $data = [
+            //                    'title' => _i('Invalid email'),
+            //                    'message' => _i('The email entered is invalid or does not exist'),
+            //                    'close' => _i('Close'),
+            //                ];
+            //                return Utils::errorResponse(Codes::$forbidden, $data);
+            //            }
 
 
             $whitelabel = Configurations::getWhitelabel();
@@ -3731,7 +3773,7 @@ class AgentsController extends Controller
             $balance     = $request->balance;
             $master      = $request->master;
             $percentage = $request->percentage;
-            $currencies  = ! empty($request->currencies) ? $request->currencies : [$currency];
+            $currencies  = !empty($request->currencies) ? $request->currencies : [$currency];
             //TODO NEW WAY TO SAVE EMAIL
             $domain = Configurations::getDomain();
             $email = "$username@$domain";
@@ -3740,7 +3782,7 @@ class AgentsController extends Controller
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
 
-            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
+            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
                     'title' => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
@@ -3779,8 +3821,7 @@ class AgentsController extends Controller
                 'web_register' => false,
                 'register_currency' => $currency,
                 'type_user'    => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action'       => Configurations::getResetMainPassword(
-                ) ? ActionUser::$changed_password : ActionUser::$update_email,
+                'action'       => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
@@ -3957,7 +3998,7 @@ class AgentsController extends Controller
             $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
 
-            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
+            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 return Utils::errorResponse(Codes::$forbidden, [
                     'title'   => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
@@ -3970,7 +4011,7 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $currency   = session('currency');
             $username   = strtolower($request->username);
-            if (! is_null($request->dependence)) {
+            if (!is_null($request->dependence)) {
                 $owner  = $request->dependence;
             } else {
                 $owner  = auth()->user()->id;
@@ -3990,8 +4031,7 @@ class AgentsController extends Controller
                 'web_register'      => false,
                 'register_currency' => $currency,
                 'type_user'         => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action'            => Configurations::getResetMainPassword(
-                ) ? ActionUser::$changed_password : ActionUser::$update_email,
+                'action'            => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
@@ -4077,7 +4117,7 @@ class AgentsController extends Controller
 
         $email = strtolower($request->get('email'));
         $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-        if (! is_null($uniqueEmail)) {
+        if (!is_null($uniqueEmail)) {
             $data = [
                 'title' => _i('Email in use'),
                 'message' => _i('The indicated email is already in use'),
@@ -4093,7 +4133,7 @@ class AgentsController extends Controller
             $whitelabel = Configurations::getWhitelabel();
             $bonus = Configurations::getBonus($whitelabel);
             $uuid  = Str::uuid()->toString();
-            if (! is_null($request->dependence)) {
+            if (!is_null($request->dependence)) {
                 $owner  = $request->dependence;
             } else {
                 $owner  = auth()->user()->id;
@@ -4106,7 +4146,7 @@ class AgentsController extends Controller
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
 
-            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
+            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
                     'title' => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
@@ -4205,7 +4245,7 @@ class AgentsController extends Controller
 
 
                 // Check if $campaigns is not empty before proceeding
-                if (! empty($campaigns)) {
+                if (!empty($campaigns)) {
                     // Create a wallet for bonuses
                     $walletBonus = Wallet::store(
                         $user->id,
@@ -4336,7 +4376,7 @@ class AgentsController extends Controller
     public function relocationAgentsData($agentMoveId = null)
     {
         try {
-            if (! is_null($agentMoveId)) {
+            if (!is_null($agentMoveId)) {
                 $user  = auth()->user()->id;
                 $currency = session('currency');
                 $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
@@ -4379,13 +4419,13 @@ class AgentsController extends Controller
             $agentUser      = $authUser->agent;
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();
-            $customUsername = ! empty($username) ? $username : $authUser->username;
+            $customUsername = !empty($username) ? $username : $authUser->username;
             $currency       = session('currency');
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
             $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
             $percentage = null;
-          // dd($user->type_user);
+            // dd($user->type_user);
             $agentsRepo = new AgentsRepo();
             $agent = ($user->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
@@ -4395,7 +4435,7 @@ class AgentsController extends Controller
                 if (is_array($wallet->data)) {
                     Log::info("Error in user wallet array {$user->id}", [$wallet]);
                 }
-                $balance = ! is_array($wallet->data)
+                $balance = !is_array($wallet->data)
                     ? $wallet?->data?->wallet?->balance
                     : 0;
                 $usernameOwner = $agent->ownerAgent->username;
@@ -4490,8 +4530,8 @@ class AgentsController extends Controller
      *
      * @throws Exception If an error occurs during the search process.
      */
-    public function searchUserByUsername(Request $request)
-    : Response {
+    public function searchUserByUsername(Request $request): Response
+    {
         try {
             return $this->agentService->searchUserByUsername($request);
         } catch (Exception $ex) {
@@ -4600,7 +4640,7 @@ class AgentsController extends Controller
                     'balance' => 0
                 ];
 
-                if (! is_null($romeoAgent)) {
+                if (!is_null($romeoAgent)) {
                     $romeoAgentCurrencyData = [
                         'agent_id' => $romeoAgent->id,
                         'currency_iso' => $currency,
@@ -4608,14 +4648,14 @@ class AgentsController extends Controller
                     $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, $balance);
                 }
 
-                if (! is_null($supportAgent)) {
+                if (!is_null($supportAgent)) {
                     $supportAgentCurrencyData = [
                         'agent_id' => $supportAgent->id,
                         'currency_iso' => $currency,
                     ];
                     $this->agentCurrenciesRepo->store($supportAgentCurrencyData, $balance);
                 }
-                if (! is_null($supportAgentgl)) {
+                if (!is_null($supportAgentgl)) {
                     $supportAgentCurrencyData = [
                         'agent_id' => $supportAgentgl->id,
                         'currency_iso' => $currency,
@@ -4623,7 +4663,7 @@ class AgentsController extends Controller
                     $this->agentCurrenciesRepo->store($supportAgentCurrencyData, $balance);
                 }
 
-                if (! is_null($adminAgent)) {
+                if (!is_null($adminAgent)) {
                     $adminAgentCurrencyData = [
                         'agent_id' => $adminAgent->id,
                         'currency_iso' => $currency,
@@ -4652,7 +4692,7 @@ class AgentsController extends Controller
                             foreach ($currencies as $currency) {
                                 //TODO NO EXISTE LA RELACION CURRENCY => CREARLA
                                 $issetUserRol = $this->usersRepo->findCurrencyAgent($currency, $value->id_agent);
-                                if (! isset($issetUserRol->id)) {
+                                if (!isset($issetUserRol->id)) {
                                     $romeoAgentCurrencyData = [
                                         'agent_id' => $value->id_agent,
                                         'currency_iso' => $currency,
@@ -4695,7 +4735,7 @@ class AgentsController extends Controller
             'country' => 'required',
             'timezone' => 'required'
         ];
-        if (! is_null($request->email)) {
+        if (!is_null($request->email)) {
             $rules['email'] = ['required', new Email()];
         }
 
@@ -4703,7 +4743,7 @@ class AgentsController extends Controller
 
         $email = strtolower($request->get('email'));
         $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-        if (! is_null($uniqueEmail)) {
+        if (!is_null($uniqueEmail)) {
             $data = [
                 'title' => _i('Email in use'),
                 'message' => _i('The indicated email is already in use'),
@@ -4730,7 +4770,7 @@ class AgentsController extends Controller
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
 
-            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
+            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
                 $data = [
                     'title' => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
@@ -4829,7 +4869,7 @@ class AgentsController extends Controller
 
 
                 // Check if $campaigns is not empty before proceeding
-                if (! empty($campaigns)) {
+                if (!empty($campaigns)) {
                     // Create a wallet for bonuses
                     $walletBonus = Wallet::store(
                         $user->id,
@@ -4967,33 +5007,33 @@ class AgentsController extends Controller
         try {
             \Log::info(__METHOD__, ['type' => $request]);
             $type = $request->input('type');
-            $userId = $request->input('user_id' );
+            $userId = $request->input('user_id');
             $ownerId = $request->input('dependence');
-        $currency = session('currency');
-        if ( $type != 5){
-            $agentData = [
-                'percentage' =>  $request->input('percentage'),
-                'owner_id' =>  $ownerId,
-            ];
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
-            $this->agentsRepo->update($agent->agent, $agentData);
-            $data = [
-                'title' => _i('Agent updated'),
-                'message' => _i('agent successfully updated'),
-                'close' => _i('Close'),
-            ];
-            return Utils::successResponse($data);
-        } else {
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
-            $agentData = $this->agentsRepo->findAgentCashier($agent->agent);
-            $this->agentsRepo->moveAgentFromUser($agentData, $userId);
-            $data = [
-                'title' => _i('Player updated'),
-                'message' => _i('Player successfully updated'),
-                'close' => _i('Close'),
-            ];
-            return Utils::successResponse($data);
-        }
+            $currency = session('currency');
+            if ($type != 5) {
+                $agentData = [
+                    'percentage' =>  $request->input('percentage'),
+                    'owner_id' =>  $ownerId,
+                ];
+                $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
+                $this->agentsRepo->update($agent->agent, $agentData);
+                $data = [
+                    'title' => _i('Agent updated'),
+                    'message' => _i('agent successfully updated'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::successResponse($data);
+            } else {
+                $agent = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
+                $agentData = $this->agentsRepo->findAgentCashier($agent->agent);
+                $this->agentsRepo->moveAgentFromUser($agentData, $userId);
+                $data = [
+                    'title' => _i('Player updated'),
+                    'message' => _i('Player successfully updated'),
+                    'close' => _i('Close'),
+                ];
+                return Utils::successResponse($data);
+            }
         } catch (Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -5047,7 +5087,7 @@ class AgentsController extends Controller
                 $usersIds[] = $user->id;
             }
 
-            if (! empty($usersIds)) {
+            if (!empty($usersIds)) {
                 $wallets = Wallet::getUsersBalancesByIds($usersIds, $currency);
                 $walletsData = $wallets->data->wallets;
                 $usersData = $this->agentsCollection->usersBalances($walletsData);

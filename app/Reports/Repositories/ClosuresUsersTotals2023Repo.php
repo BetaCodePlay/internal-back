@@ -110,8 +110,6 @@ class ClosuresUsersTotals2023Repo
         }
 
         return json_decode(json_encode($userArray, true));
-
-
     }
 
     /**
@@ -149,11 +147,10 @@ class ClosuresUsersTotals2023Repo
             AND site.closures_users_totals_2023.currency_iso = '{$currency}'
             AND site.closures_users_totals_2023.start_date BETWEEN '{$startDate}' AND '{$endDate}'
             GROUP BY site.closures_users_totals_2023.{$fieldGroup}");
-
         } else {
 
             $arrayUsers = implode(',', $arrayUsers);
-//dd($arrayUsers);
+            //dd($arrayUsers);
             $closure = DB::select("SELECT
                 site.closures_users_totals_2023.{$fieldGroup},
                 SUM (site.closures_users_totals_2023.played) as total_played,
@@ -170,7 +167,6 @@ class ClosuresUsersTotals2023Repo
         }
 
         return $closure;
-
     }
 
     /**
@@ -253,6 +249,39 @@ class ClosuresUsersTotals2023Repo
     }
 
     /**
+     * Get Closure FinancialState
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param int $ownerId User ID (agent)
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @return array
+     */
+    public function getClosureFinancialState(string $startDate, string $endDate, $currency, $whitelabel, $ownerId)
+    {
+        return DB::select("
+            select g.type, g.name, sum(played)  as played, sum(won) as won,sum(profit) as profit, sum(profit*percentage/100) as commission,
+                case 
+                    when sum(profit) < 0 then 0
+                else sum(profit) end as profit,
+                case 
+                    when sum(profit*percentage/100) < 0 or sum(profit*percentage/100) is null then 0
+                else sum(profit*percentage/100) end as commission
+            from site.closures_users_totals_2023_hour cu 
+            inner join site.games g on cu.game_id=g.id 
+            inner join site.providers p on g.provider_id=p.id 
+            inner join site.agent_user au on cu.user_id=au.user_id
+            inner join site.agents a on a.id=au.agent_id 
+            where cu.currency_iso='{$currency}' and start_date between '{$startDate}' and '{$endDate}'
+            and a.user_id={$ownerId}
+            and cu.whitelabel_id={$whitelabel}
+            group by  g.type, g.name
+            order by g.type, won;
+        ");
+    }
+
+    /**
      * Get Closures Totals By Provider And Maker Global
      *
      * @param int $whitelabel Whitelabel Id
@@ -329,7 +358,7 @@ class ClosuresUsersTotals2023Repo
     }
 
 
-     /**
+    /**
      * @param $whitelabel
      * @param $currency
      * @param $startDate
@@ -342,7 +371,7 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureByUsername($whitelabel, $currency, $startDate, $endDate, $ownerId, $username, $limit, $page)
     {
-        return DB::select('SELECT * FROM site.get_closure_by_username(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$username,$limit,$page]);
+        return DB::select('SELECT * FROM site.get_closure_by_username(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $username, $limit, $page]);
     }
 
     /**
@@ -444,7 +473,7 @@ class ClosuresUsersTotals2023Repo
                                     AND (cut.user_id =  ? or cut.user_id  is null)
                                     GROUP BY p.id, p.name, cut.provider_id
                                     ORDER BY p.id DESC
-                                    ', [$arrayProvider,$whitelabel, $currency, $startDate, $endDate, $userId]);
+                                    ', [$arrayProvider, $whitelabel, $currency, $startDate, $endDate, $userId]);
     }
 
     /**
@@ -540,7 +569,7 @@ class ClosuresUsersTotals2023Repo
                                     AND (cut.user_id in (SELECT * FROM site.get_ids_children_from_father(?,?,?)) or cut.user_id  is null)
                                     GROUP BY p.id, p.name, cut.provider_id
                                     ORDER BY p.id DESC
-                                    ', [$arrayProvider,$whitelabel, $currency, $startDate, $endDate, $ownerId,$currency,$whitelabel]);
+                                    ', [$arrayProvider, $whitelabel, $currency, $startDate, $endDate, $ownerId, $currency, $whitelabel]);
     }
 
 
@@ -662,9 +691,9 @@ class ClosuresUsersTotals2023Repo
      * @param string $arrayProvider Array Provider Id
      * @return array
      */
-    public function getTotalsClosurePaymentsByOwner(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId,string $arrayProvider)
+    public function getTotalsClosurePaymentsByOwner(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_totals_closure_payments_owner(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$arrayProvider]);
+        return DB::select('SELECT * FROM site.get_totals_closure_payments_owner(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
     }
 
     /**
@@ -677,9 +706,9 @@ class ClosuresUsersTotals2023Repo
      * @param string $arrayProvider Array Provider Id
      * @return array
      */
-    public function getTotalsClosurePaymentsByUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $user,string $arrayProvider)
+    public function getTotalsClosurePaymentsByUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $user, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_totals_closure_payments_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $user,$arrayProvider]);
+        return DB::select('SELECT * FROM site.get_totals_closure_payments_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $user, $arrayProvider]);
     }
 
     /**
@@ -709,7 +738,6 @@ class ClosuresUsersTotals2023Repo
                      and u.whitelabel_id = {$whitelabel}
                      and uc.currency_iso = '{$currency}'
                     ) ORDER BY type_user ASC, username");
-
     }
 
     /**
@@ -741,7 +769,6 @@ class ClosuresUsersTotals2023Repo
                      and u.whitelabel_id = ?
                     )
                     ORDER BY type_user,username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
-
     }
 
     /**
@@ -758,22 +785,17 @@ class ClosuresUsersTotals2023Repo
 
         if (is_null($provider_name)) {
             switch ($idProvider) {
-                case 171:
-                {
-                    $provider_name = 'Bet Connections';
-                    break;
-                }
-                default:
-                {
-                    $provider_name = 'Sin definir';
-                    break;
-                }
+                case 171: {
+                        $provider_name = 'Bet Connections';
+                        break;
+                    }
+                default: {
+                        $provider_name = 'Sin definir';
+                        break;
+                    }
             }
         }
 
         return $provider_name;
-
-
     }
-
 }
