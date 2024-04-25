@@ -44,7 +44,16 @@
 
     .footer-bottom {
         margin-top: 20px;
-        text-align: right;
+        display: flex;
+        justify-content: space-between;
+
+        .footer-bottom-left {
+            align-self: center;
+        }
+
+        .footer-bottom-right {
+            align-self: center;
+        }
 
         a {
             color: #fff;
