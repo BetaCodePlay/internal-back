@@ -14,8 +14,24 @@
         </div>
 
         <div class="footer-bottom">
-            <a href="#">{{ _i('Legal information') }}</a>
-            <a href="#">{{ _i('Privacy policies') }}</a>
+            <div class="footer-bottom-left">
+                <div class="opt-footer-form-group">
+                    <div class="form-group">
+                        <select name="timezone" class="form-control change-timezone" data-route="{{ route('core.change-timezone') }}">
+                            @foreach ($global_timezones as $global_timezone)
+                                <option value="{{ $global_timezone['timezone'] }}" {{ $global_timezone['timezone'] == session()->get('timezone') ? 'selected' : '' }}>
+                                    {{ $global_timezone['text'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-right">
+                <a href="#">{{ _i('Legal information') }}</a>
+                <a href="#">{{ _i('Privacy policies') }}</a>
+            </div>
         </div>
     </div>
 </footer>
