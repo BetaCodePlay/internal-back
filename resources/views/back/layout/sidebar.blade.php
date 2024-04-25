@@ -31,6 +31,11 @@
                 </div>
             </form>
         </li>
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active u-sidebar-navigation-v1-menu-item-search">
+            <span class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden">
+                <span class="g-pos-rel"><i class="hs-admin-search"></i></span>
+            </span>
+        </li>
 
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>

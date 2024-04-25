@@ -3,6 +3,10 @@ body {
         overflow: hidden;
     }
 
+    .u-sidebar-navigation-v1-menu-item-search {
+        display: none;
+    }
+
     .u-header--search {
         background: transparent;
 
@@ -307,6 +311,10 @@ body {
 
                     .u-header--search {
                         display: none;
+                    }
+
+                    .u-sidebar-navigation-v1-menu-item-search {
+                        display: block;
                     }
 
                     .u-side-nav--second-level-menu {
