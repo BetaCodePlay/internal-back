@@ -16,6 +16,8 @@ body {
         .btn-search {
             &:hover, &:focus {
                 background: transparent !important;
+                color: #fff;
+                text-shadow: 0 0 3px #fff;
             }
         }
     }
@@ -301,6 +303,10 @@ body {
                         .icon-mobile {
                             display: none;
                         }
+                    }
+
+                    .u-header--search {
+                        display: none;
                     }
 
                     .u-side-nav--second-level-menu {
