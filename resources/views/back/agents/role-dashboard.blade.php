@@ -100,11 +100,11 @@
                                 <div class="dash-transactions-item">
                                     <div class="dash-transactions-item-text">
                                         <div class="dash-transactions-item-text-top">
-                                            <span class="icon {{ $transactions->transactionType == 1 ? 'green' : '' }}">
+                                            <span class="icon">
                                                 @if( $transactions->transactionType == 1)
-                                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                                    <i class="fa-solid fa-arrow-up-long"></i>
                                                 @else
-                                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                                    <i class="fa-solid fa-arrow-down-long"></i>
                                                 @endif
                                             </span>
                                             {{ $transactions->username }}
