@@ -47,4 +47,8 @@ $(function () {
 
 $(document).on('click', '.u-sidebar-navigation-v1-menu-item-search a', function (){
     $('.collapse-menu-action-s').click();
+
+    setTimeout(function (){
+        $(".form-control-sidebar").focus();
+    }, 300)
 })
