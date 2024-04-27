@@ -4045,7 +4045,7 @@ class AgentsController extends Controller
                 }
             }
 
-            Security::assignRole($user->id, Roles::$admin_Beet_sweet);
+            Security::assignRole($user->id, Roles::$admin_assiria);
 
             return Utils::successResponse([
                 'title'   => _i('Agent created'),
