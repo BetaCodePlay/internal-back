@@ -21,7 +21,9 @@
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
     <script>
-        window.authUserId = parseInt('{{json_encode(auth()->user()->id)}}')
+
+        window.authUserId = parseInt('{{auth()->user()->id}}')
+        window.timzone = "{{session('timezone')}}"
         String.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
             return new Intl.NumberFormat("es-ES", {
                 style: "currency",

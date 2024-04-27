@@ -1821,51 +1821,6 @@ class AgentsController extends Controller
             return Utils::failedResponse();
         }
     }
-    // MARK: financialStateDataV2
-
-    /**
-     * Data Financial State New "for support"
-     * @param ProvidersRepo $providersRepo
-     * @param $user
-     * @param $startDate
-     * @param $endDate
-     * @return Response
-     * @deprecated
-     */
-    public function financialStateDataV2(
-        Request $request,
-        ProvidersRepo $providersRepo,
-        $user = null,
-        $startDate = null,
-        $endDate = null
-    ) {
-        try {
-            if (is_null($user)) {
-                $user = Auth::id();
-            }
-
-            if (Auth::user()->username == 'romeo') {
-                $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel(
-                    'wolf',
-                    session('currency'),
-                    Configurations::getWhitelabel()
-                );
-
-                $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
-            }
-            $data = $this->closuresUsersTotals2023Repo->getClosureFinancialState(
-                Utils::startOfDayUtc($startDate),
-                Utils::endOfDayUtc($endDate),
-                session('currency'),
-                Configurations::getWhitelabel(),
-                $user
-            );
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
-            return Utils::failedResponse();
-        }
-    }
 
     /**
      * Data Financial State New "for support"

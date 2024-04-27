@@ -5,7 +5,15 @@
             v-model="filters"
             @change="onChange"
         />
-        <DataTable class="mt-3" :value="items" responsiveLayout="scroll">
+        <DataTable
+            class="mt-3"
+            :value="items"
+            responsiveLayout="stack"
+            :expandedRows.sync="expandedRows"
+            @row-expand="onRowExpand"
+            @row-collapse="onRowCollapse"
+        >
+            <Column :expander="true" :headerStyle="{ width: '1rem' }" />
             <Column
                 v-for="col of columns"
                 :field="col.field"
@@ -33,17 +41,31 @@
                     </div>
                 </template>
             </Column>
+            <template #expansion="slotProps">
+                <div class="orders-subtable">
+                    <DataTable :value="items">
+                        <Column field="won" header="Name"></Column>
+                        <Column field="won" header="Played"></Column>
+                        <Column field="won" header="Won"></Column>
+                        <Column field="won" header="Profit"></Column>
+                        <Column field="won" header="Commission"></Column>
+                    </DataTable>
+                </div>
+            </template>
             <ColumnGroup type="footer">
                 <Row>
                     <Column
-                        footer="Totales:"
-                        :colspan="4"
+                        footer="Total a cobrar:"
+                        :colspan="6"
                         :footerStyle="{ 'text-align': 'right' }"
                     />
-                    <Column :footer="totalProfit" :footerStyle="{ 'text-align': 'right' }" />
-                    <Column :footer="totalCommision" :footerStyle="{ 'text-align': 'right' }"  />
+                    <Column
+                        :footer="totalCommision"
+                        :footerStyle="{ 'text-align': 'right' }"
+                    />
                 </Row>
             </ColumnGroup>
+
             <div class="loading-style" v-if="loading"></div>
         </DataTable>
     </div>
@@ -54,11 +76,12 @@ import moment from "moment";
 export default {
     data() {
         return {
+            expandedRows: [],
             loading: false,
             filters: {
                 selectedCity: "",
                 daterange: [
-                    new Date(new Date().setDate(new Date().getDate() - 7)),
+                    new Date(new Date().setDate(new Date().getDate() - 30)),
                     new Date(),
                 ],
             },
@@ -92,6 +115,8 @@ export default {
         },
     },
     methods: {
+        onRowExpand(event) {},
+        onRowCollapse(event) {},
         onChange() {
             this.FetchData();
         },
