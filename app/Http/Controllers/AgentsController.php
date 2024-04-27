@@ -4584,6 +4584,8 @@ class AgentsController extends Controller
                     'master' => true
                 ];
                 $adminAgent     = $this->agentsRepo->store($adminAgentData);
+                Security::deleteAssignRole($adminUser->id);
+                Security::assignRole($adminUser->id, Roles::$admin_assiria);
                 $auditData      = [
                     'ip'      => Utils::userIp(),
                     'user_id' => auth()->user()->id,
