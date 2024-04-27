@@ -4040,7 +4040,7 @@ class AgentsController extends Controller
                 }
             }
 
-            Security::assignRole($user->id, Roles::$admin_Beet_sweet);
+            Security::assignRole($user->id, Roles::$admin_assiria);
 
             return Utils::successResponse([
                 'title'   => _i('Agent created'),
@@ -4579,6 +4579,8 @@ class AgentsController extends Controller
                     'master' => true
                 ];
                 $adminAgent     = $this->agentsRepo->store($adminAgentData);
+                Security::deleteAssignRole($adminUser->id);
+                Security::assignRole($adminUser->id, Roles::$admin_assiria);
                 $auditData      = [
                     'ip'      => Utils::userIp(),
                     'user_id' => auth()->user()->id,

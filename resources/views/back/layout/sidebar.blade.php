@@ -45,16 +45,18 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
-        <!--
         @can('access', [$permissions::$dashboard])
             @include('back.partials.sidebar.dashboard')
         @endif
-        -->
-        @include('back.partials.sidebar.roleDashboard')
-
-        @include('back.partials.sidebar.role')
-
-        @include('back.partials.sidebar.report')
+        @can('access', [$permissions::$dashboard_assiria])
+            @include('back.partials.sidebar.roleDashboard')
+        @endif
+        @can('access', [$permissions::$rol_assiria])
+            @include('back.partials.sidebar.role')
+        @endif
+        @can('access', [$permissions::$reports_assiria])
+            @include('back.partials.sidebar.report')
+        @endif
 
         @can('access', [$permissions::$users_menu])
             @include('back.partials.sidebar.users', ['permissions' => $permissions])
