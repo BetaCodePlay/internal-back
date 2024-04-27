@@ -17,10 +17,35 @@
             </div>
         </li>
 
+        @can('access', [\Dotworkers\Security\Enums\Permissions::$users_search])
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <div class="u-sidebar-title"><span>{{ _i('Search global') }}</span></div>
+            </li>
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <form id="header-search-form" class="u-header--search" action="{{ route('users.search') }}" method="get" autocomplete="destroy">
+                    <div class="input-group">
+                        <input class="form-control form-control-sidebar" type="text" name="username" placeholder="{{ _i('Search user') }}" value="">
+                        <button type="submit" class="btn btn-search u-btn-outline-white g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
+                            <i class="hs-admin-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </li>
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active u-sidebar-navigation-v1-menu-item-search">
+                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden">
+                    <span class="g-pos-rel"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </a>
+            </li>
+
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <hr>
+            </li>
+        @endcan
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span>{{ _i('Categories') }}</span></div>
         </li>
-    <!--
+        <!--
         @can('access', [$permissions::$dashboard])
             @include('back.partials.sidebar.dashboard')
         @endif
@@ -30,7 +55,7 @@
         @include('back.partials.sidebar.role')
 
         @include('back.partials.sidebar.report')
-        <!--
+
         @can('access', [$permissions::$users_menu])
             @include('back.partials.sidebar.users', ['permissions' => $permissions])
         @endif
@@ -109,7 +134,7 @@
         @can('access', [$permissions::$betpay_menu])
             @include('back.partials.sidebar.store', ['permissions' => $permissions])
         @endif
- -->
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
@@ -209,6 +234,8 @@
 
 
 
+
+
 @endif
 @can('access', [$permissions::$agents_dashboard])
     <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
@@ -217,6 +244,8 @@
                     <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
             </li>
+
+
 
 
 
@@ -334,9 +363,13 @@
 
 
 
+
+
 @endif
 @can('access', [$permissions::$agents_dashboard])
     <div class="nav-mobile-opt"><a href="{{ route('agents.index') }}"><i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Role') }}</span></a></div>
+
+
 
 
 

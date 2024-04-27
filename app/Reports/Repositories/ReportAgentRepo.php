@@ -26,7 +26,7 @@ class ReportAgentRepo
     {
         $getIdsChildren = DB::select('SELECT * FROM site.get_ids_children_from_father(?,?,?)', [$ownerId, $currency, $whitelabel]);
 
-        return array_column($getIdsChildren,'id');
+        return array_column($getIdsChildren, 'id');
     }
 
 
@@ -40,27 +40,121 @@ class ReportAgentRepo
      * @param string $endDate Date End
      * @return array
      */
-    public function getClosureFinancialState(string $startDate, string $endDate, $currency, $whitelabel, $ownerId)
+    public function getFinancialState(string $startDate, string $endDate, $currency, $whitelabel, $ownerId, $timezone = null, $provider = null, $child = null, $text = null)
     {
-        return DB::select("
-            select g.type, g.name, sum(played)  as played, sum(won) as won,sum(profit) as profit, sum(profit*percentage/100) as commission,
-                case 
-                    when sum(profit*percentage/100) < 0 or sum(profit*percentage/100) is null then 0
-                else sum(profit*percentage/100) end as commission
-            from site.closures_users_totals_2023_hour cu 
-            inner join site.games g on cu.game_id=g.id 
-            inner join site.providers p on g.provider_id=p.id 
-            inner join site.agent_user au on cu.user_id=au.user_id
-            inner join site.agents a on a.id=au.agent_id 
-            where cu.currency_iso='{$currency}' and start_date between '{$startDate}' and '{$endDate}'
-            and a.user_id={$ownerId}
-            and cu.whitelabel_id={$whitelabel}
-            group by  g.type, g.name
-            order by g.type, won;
-        ");
+
+        $sql = "
+        select g.category, sum(played)  as played, sum(won) as won,sum(profit) as profit,
+            case 
+                when sum(profit*percentage/100) < 0 or sum(profit*percentage/100) is null then 0
+            else sum(profit*percentage/100) end as commission
+        from site.closures_users_totals_2023_hour cu 
+        inner join site.games g on cu.game_id=g.id 
+        inner join site.providers p on g.provider_id=p.id 
+        inner join site.agent_user au on cu.user_id=au.user_id
+        inner join site.agents a on a.id=au.agent_id 
+        where cu.currency_iso='{$currency}'
+            AND a.user_id = {$ownerId}
+            AND cu.whitelabel_id = {$whitelabel}
+        ";
+
+        if (is_null($timezone)) {
+            $sql .= "AND start_date BETWEEN '{$startDate}' AND '$endDate}'";
+        } else {
+            $sql .= "AND start_date AT TIME ZONE '{$timezone}' BETWEEN '{$startDate}' AND '$endDate}'";
+        }
+
+        if (!is_null($provider) ) {
+            $sql .= "
+                AND g.maker = '{$provider}'
+                ";
+        }
+
+        if (!is_null($child)) {
+            $sql .= "
+                AND cu.user_id = {$child}
+                ";
+        }
+        if (!is_null($text)) {
+            $sql .= "
+                AND LOWER(g.category) LIKE LOWER('%{$text}%')
+                ";
+        }
+
+
+        $sql .= "GROUP BY  
+                g.category 
+            ORDER BY 
+                won;
+                ";
+
+        return DB::select($sql);
     }
 
-  /**
+    /**
+     * Get Closure FinancialState
+     *
+     * @param int $whitelabel Whitelabel Id
+     * @param int $ownerId User ID (agent)
+     * @param string $currency Iso Currency
+     * @param string $startDate Date Start
+     * @param string $endDate Date End
+     * @return array
+     */
+    public function getFinancialStateByCategory(string $startDate, string $endDate, $currency, $whitelabel, $ownerId, $category, $timezone = null, $provider = null, $child = null)
+    {
+        $sql = "
+            SELECT 
+                g.name, 
+                g.maker AS provider, 
+                SUM(played) AS played, 
+                SUM(won) AS won,
+                SUM(profit) AS profit,
+                CASE 
+                    WHEN SUM(profit*percentage/100) < 0 OR SUM(profit*percentage/100) IS NULL THEN 0
+                    ELSE SUM(profit*percentage/100) 
+                END AS commission
+            FROM 
+                site.closures_users_totals_2023_hour cu 
+                INNER JOIN site.games g ON cu.game_id = g.id 
+                INNER JOIN site.providers p ON g.provider_id = p.id 
+                INNER JOIN site.agent_user au ON cu.user_id = au.user_id
+                INNER JOIN site.agents a ON a.id = au.agent_id 
+            WHERE 
+                cu.currency_iso = '{$currency}'
+                AND a.user_id = {$ownerId}
+                AND cu.whitelabel_id = {$whitelabel}
+                AND g.category = '{$category}'
+            ";
+
+        if (is_null($timezone)) {
+            $sql .= "AND start_date BETWEEN '{$startDate}' AND '$endDate}'";
+        } else {
+            $sql .= "AND start_date AT TIME ZONE '{$timezone}' BETWEEN '{$startDate}' AND '$endDate}'";
+        }
+
+        if (!is_null($provider)) {
+            $sql .= "
+                AND g.maker = '{$provider}'
+                ";
+        }
+
+        if (!is_null($child)) {
+            $sql .= "
+                AND cu.user_id = {$child}
+                ";
+        }
+
+
+        $sql .= "GROUP BY  
+                g.category, g.name, g.maker
+            ORDER BY 
+                won;
+                ";
+
+        return DB::select($sql);
+    }
+    /**
      * Get Ids User Childrens
      *
      * @param int $ownerId id user Father
@@ -70,7 +164,7 @@ class ReportAgentRepo
      */
     public function getChildrens(int $ownerId, string $currency, int $whitelabel)
     {
-        $childs_users_id = implode(',', array_column(DB::select('SELECT * FROM site.get_ids_children_from_father(?,?,?)', [$ownerId, $currency, $whitelabel]),'id'));
+        $childs_users_id = implode(',', array_column(DB::select('SELECT * FROM site.get_ids_children_from_father(?,?,?)', [$ownerId, $currency, $whitelabel]), 'id'));
 
         $users = DB::select("SELECT id, username FROM site.users where id in ({$childs_users_id})");
 
@@ -78,4 +172,17 @@ class ReportAgentRepo
     }
 
 
+    /**
+     * Get Providers
+     *
+     * @return array
+     */
+
+    public function getProviders()
+    {
+
+        $providers = DB::select("SELECT maker as provider FROM site.games group by maker");
+
+        return $providers;
+    }
 }

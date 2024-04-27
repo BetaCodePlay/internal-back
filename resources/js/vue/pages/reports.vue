@@ -2,7 +2,7 @@
     <div>
         <div class="wrapper-title g-pb-30">Actividad General</div>
         <div class="page-roles">
-            <!-- <components-reports-header /> -->
+            <components-reports-header class="mb-3" />
             <TabView>
                 <TabPanel header="Reporte Financiero">
                     <components-reports-tables-financial />

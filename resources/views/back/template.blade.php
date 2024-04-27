@@ -21,9 +21,9 @@
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
     <script>
-
         window.authUserId = parseInt('{{auth()->user()->id}}')
-        window.timzone = "{{session('timezone')}}"
+        window.timezone = "{{session('timezone')}}"
+        window.userBalance = "{{getAuthenticatedUserBalance() }}"
         String.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
             return new Intl.NumberFormat("es-ES", {
                 style: "currency",
@@ -38,7 +38,10 @@
                 minimumFractionDigits: decimalPlaces,
             }).format(this);
         };
+
     </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
+
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {
@@ -65,7 +68,7 @@
                 </div>
             </div>
             @include('back.layout.footer')
-    </main>
+        </main>
     </div>
 
     <script src="{{ mix('js/manifest.js', 'back') }}"></script>

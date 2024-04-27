@@ -2918,8 +2918,9 @@ class AgentsController extends Controller
      * @param Request $request
      * @return array
      */
-    public function getDirectChildren(Request $request): array
-    {
+    public function getDirectChildren(Request $request)
+    : array {
+        Log::notice(__METHOD__, ['currency' => session('currency')]);
         return $this->agentsRepo->getDirectChildren($request, session('currency'), Configurations::getWhitelabel());
     }
 

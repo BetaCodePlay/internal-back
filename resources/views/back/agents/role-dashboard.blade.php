@@ -100,22 +100,27 @@
                                 <div class="dash-transactions-item">
                                     <div class="dash-transactions-item-text">
                                         <div class="dash-transactions-item-text-top">
-                                            <span class="icon {{ $transactions->transactionType == 1 ? 'green' : '' }}">
+                                            <span class="icon">
                                                 @if( $transactions->transactionType == 1)
-                                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                                    <i class="fa-solid fa-arrow-down-long"></i>
                                                 @else
-                                                    <i class="fa-solid fa-arrow-trend-down"></i>
+                                                    <i class="fa-solid fa-arrow-up-long"></i>
                                                 @endif
                                             </span>
-                                            {{ $transactions->username }}
+
+                                            @if( $transactions->transactionType == 1)
+                                                {{ _i('You receive') }}
+                                            @else
+                                                {{ _i('You sent') }}
+                                            @endif
                                         </div>
-                                        <div class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ? _i('Received') : _i('Sent') }} {{ _i('by') }} <b>{{ _i('debit') }}</b> {{ _i('the') }}:</div>
+                                        <div class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ?_i('Payment with debit for') : _i('Transfer to') }} {{ $transactions->username }}</div>
                                         <div class="dash-transactions-item-text-bottom">
                                             {{ $transactions->date }}
                                         </div>
                                     </div>
 
-                                    <div class="dash-transactions-amount">
+                                    <div class="dash-transactions-amount {{ $transactions->transactionType == 1 ? '' : 'transactions-send' }}">
                                         <span class="minus">{{ $transactions->transactionType == 1 ? '+' : '-' }}$</span> {{ $transactions->amount }}
                                     </div>
                                 </div>

@@ -162,11 +162,17 @@
 
                         .dash-transactions-item-text-top {
                             .icon {
-                                font-size: 18px;
-                                margin-right: 8px;
+                                margin-right: 5px;
                                 vertical-align: middle;
                                 display: inline-block;
-                                color: #ff8c4b;
+                                color: #fff;
+                                background: #343434;
+                                width: 34px;
+                                text-align: center;
+                                height: 34px;
+                                line-height: 34px;
+                                font-size: 16px;
+                                border-radius: 50px;
 
                                 &.green {
                                     color: #d7fe62;
@@ -175,14 +181,15 @@
                         }
 
                         .dash-transactions-item-text-middle {
-                            padding-left: 32px;
-                            font-size: 14px;
+                            padding-left: 44px;
+                            font-size: 13px;
+                            margin-top: -5px;
                         }
 
                         .dash-transactions-item-text-bottom {
                             color: #666;
                             font-size: 12px;
-                            padding-left: 32px;
+                            padding-left: 44px;
                             font-weight: 500;
                         }
                     }
@@ -190,9 +197,10 @@
                     .dash-transactions-amount {
                         font-size: 16px;
                         align-self: start;
+                        color: #D7FE62;
 
-                        .minus {
-
+                        &.transactions-send {
+                            color: #FF3B5D;
                         }
                     }
                 }

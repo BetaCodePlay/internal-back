@@ -1,4 +1,115 @@
 .footer {
+    width: 100%;
+    margin-top: auto;
     background: #111111;
-    height: 200px;
+    padding: 40px 25px;
+
+    .footer-ex {
+        max-width: 100%;
+        width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .footer-top {
+        display: flex;
+        justify-content: space-between;
+
+        .footer-top-left {
+            align-self: center;
+            display: block;
+            line-height: 1.5;
+            padding-right: 15px;
+
+            .img-logo-footer {
+                height: auto;
+                width: 180px;
+            }
+        }
+
+        .footer-top-right {
+            align-self: center;
+
+            a {
+                color: #fff;
+                transition: .3s;
+
+                &:hover, &:focus {
+                    color: #fff;
+                    text-shadow: 0 0 3px #fff;
+                }
+            }
+        }
+    }
+
+    .footer-bottom {
+        margin-top: 35px;
+        display: flex;
+        justify-content: space-between;
+
+        .footer-bottom-left {
+            align-self: center;
+            width: 280px;
+
+            .form-group {
+                margin-bottom: 0;
+            }
+
+            .select2-container--default {
+                .select2-selection--single {
+                    background: #1e1e1e;
+                    border-color: #333;
+                    border-radius: 6px;
+
+                    .select2-selection__rendered {
+                        color: #fff;
+                    }
+                }
+            }
+
+            @media screen and (max-width: 767px) {
+                width: 100%;
+                margin-bottom: 20px;
+                text-align: center;
+
+                .opt-footer-form-group {
+                    width: 280px;
+                    display: inline-block;
+                    text-align: left;
+                }
+            }
+        }
+
+        .footer-bottom-right {
+            align-self: center;
+
+            @media screen and (max-width: 767px) {
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        a {
+            color: #fff;
+            transition: .3s;
+            margin-left: 15px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:hover, &:focus {
+                color: #fff;
+                text-shadow: 0 0 3px #fff;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            display: block;
+        }
+    }
+
+    @media screen and (max-width: 991px) {
+        padding-bottom: 85px;
+    }
 }
