@@ -71,6 +71,8 @@
         </main>
     </div>
 
+    @yield('modals')
+
     <script src="{{ mix('js/manifest.js', 'back') }}"></script>
     <script src="{{ mix('js/vendor.js', 'back') }}"></script>
     <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
