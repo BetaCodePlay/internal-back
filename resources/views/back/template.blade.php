@@ -65,10 +65,9 @@
                         @endif
                         @endif
                     </div>
-
-                    @include('back.layout.footer')
                 </div>
             </div>
+            @include('back.layout.footer')
         </main>
     </div>
 
