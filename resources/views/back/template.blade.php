@@ -56,7 +56,7 @@
         <main class="container-fluid px-0 g-pt-65">
             <div class="row no-gutters g-pos-rel">
                 @include('back.layout.sidebar')
-                <div class="col">
+                <div class="col col-general">
                     <div class="g-pa-20 g-pt-30 g-pb-30">
                         @yield('content')
                         @if(!empty($action))
