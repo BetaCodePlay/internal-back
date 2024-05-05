@@ -13,10 +13,6 @@ class Roles {
     static globaluserid;
     static globaluseridcurrent = $('.page-role').data('id');
 
-    init() {
-
-    }
-
     initTableRoles() {
         let $table = $('#table-roles');
         let $route = $table.data('route');
