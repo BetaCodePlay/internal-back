@@ -13,35 +13,11 @@ class Roles {
     static globaluserid;
     static globaluseridcurrent = $('.page-role').data('id');
 
-    init() {
-        let tabInformation = $('#roleTabMoreInformation');
-        let tableInformationID = $('#table-information');
-        let $route = tableInformationID.data('route');
-
-        tableInformationID.DataTable({
-            ajax: $route,
-            processing: true,
-            serverSide: true,
-            columnDefs: [{
-                "defaultContent": "-",
-                "targets": "_all"
-            }],
-            fixedHeader: true,
-            responsive: true,
-            fnCreatedRow: function (nRow, aData, iDataIndex) {
-
-            },
-            initComplete: function () {
-
-            },
-        });
-    }
-
     initTableRoles() {
         let $table = $('#table-roles');
         let $route = $table.data('route');
 
-        if ($table.length > 0) {
+        if($table.length > 0) {
             Roles.globaltable = $table.DataTable({
                 ajax: $route,
                 processing: true,
@@ -543,7 +519,7 @@ class Roles {
             $modal.find('.loading-style').show();
             $modal.find('.d-agent').removeClass('d-none');
 
-            if (Roles.globalrolid === 5) {
+            if(Roles.globalrolid === 5) {
                 $modal.find('.d-agent').addClass('d-none');
             }
 
@@ -611,17 +587,49 @@ class Roles {
         let tabTransaction = '#roleTabTransactions';
         let tabInformation = '#roleTabMoreInformation';
         let tabLock = '#roleTabLocks';
-
+        let tableInformationID = $('#table-information');
         let tableInformation;
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
         let picker = initLitepickerEndTodayNew();
         let routeTransaction;
 
+
         $(document).on('click', $button, function () {
             let $this = $(this);
             let $target = $this.data('target');
             let $route;
+
+            if ($target === tabInformation) {
+                $route = tableInformationID.data('route');
+
+                if (tableInformation !== undefined) {
+                    tableInformation.destroy();
+                }
+
+                $($target).find('.table-load').removeClass('table-complete');
+                $($target).find('.loading-style').show();
+
+
+                tableInformation = tableInformationID.DataTable({
+                    ajax: $route,
+                    processing: true,
+                    serverSide: true,
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    fixedHeader: true,
+                    responsive: true,
+                    fnCreatedRow: function (nRow, aData, iDataIndex) {
+
+                    },
+                    initComplete: function () {
+                        $($target).find('.table-load').addClass('table-complete');
+                        $($target).find('.loading-style').hide();
+                    },
+                });
+            }
 
             if ($target === tabTransaction) {
                 routeTransaction = tableTransactionID.data('route');
