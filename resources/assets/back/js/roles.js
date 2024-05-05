@@ -16,6 +16,7 @@ class Roles {
     init() {
         let tabInformation = $('#roleTabMoreInformation');
         let $route = tabInformation.data('route');
+        let tableInformationID = $('#table-information');
 
         tableInformationID.DataTable({
             ajax: $route,
@@ -611,7 +612,7 @@ class Roles {
         let tabTransaction = '#roleTabTransactions';
         let tabInformation = '#roleTabMoreInformation';
         let tabLock = '#roleTabLocks';
-        let tableInformationID = $('#table-information');
+
         let tableInformation;
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
