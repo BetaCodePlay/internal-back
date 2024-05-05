@@ -22,12 +22,7 @@
         <div class="nav-roles">
             <ul class="nav nav-tabs" id="roleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active tab-role" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="true">
-                        {{ _i('More information') }}
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="false">
+                    <button class="nav-link active tab-role" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="true">
                         {{ _i('Profile management') }}
                     </button>
                 </li>
@@ -37,54 +32,18 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
+                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
+                        {{ _i('More information') }}
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabLocks" type="button" role="tab" aria-controls="roleTabLocks" aria-selected="false">
                         {{ _i('Locks') }}
                     </button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
-                    <div class="tab-manager">
-                        <div class="tab-manager-top">
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Created the') }}</div>
-                                <div class="data-text">{{ ($authUser->created_at)->format('d-m-Y ') }}</div>
-                            </div>
-                            @if(auth()->user()->id !== $authUser->id)
-                                <div class="tab-manager-data">
-                                    <div class="data-title">{{ _i('Father') }}</div>
-                                    <div class="data-text">{{ $authUser->owner }}</div>
-                                </div>
-                            @endif
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Percentage') }}</div>
-                                <div class="data-text text-finish">{{ $authUser->percentage }}%</div>
-                            </div>
-                        </div>
-
-                        <div class="tab-manager-data">
-                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
-                        </div>
-                    </div>
-
-                    <div class="tab-body">
-                        <form autocomplete="destroy" class="col table-load">
-                            <table id="table-information" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
-                                <thead>
-                                <tr>
-                                    <th data-priority="1">{{ _i('IP') }}</th>
-                                    <th data-priority="2">{{ _i('Quantity') }}</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </form>
-                        <div class="loading-style"></div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade show active" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="tab-manager">
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
@@ -222,6 +181,47 @@
                                     <th data-priority="1">{{ _i('Destination') }}</th>
                                     <th data-priority="2">{{ _i('Amount') }}</th>
                                     <th>{{ _i('Balance') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </form>
+                        <div class="loading-style"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
+                    <div class="tab-manager">
+                        <div class="tab-manager-top">
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Created the') }}</div>
+                                <div class="data-text">{{ ($authUser->created_at)->format('d-m-Y ') }}</div>
+                            </div>
+                            @if(auth()->user()->id !== $authUser->id)
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Father') }}</div>
+                                    <div class="data-text">{{ $authUser->owner }}</div>
+                                </div>
+                            @endif
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Percentage') }}</div>
+                                <div class="data-text text-finish">{{ $authUser->percentage }}%</div>
+                            </div>
+                        </div>
+
+                        <div class="tab-manager-data">
+                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
+                        </div>
+                    </div>
+
+                    <div class="tab-body">
+                        <form autocomplete="destroy" class="col table-load">
+                            <table id="table-information" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
+                                <thead>
+                                <tr>
+                                    <th data-priority="1">{{ _i('IP') }}</th>
+                                    <th data-priority="2">{{ _i('Quantity') }}</th>
                                 </tr>
                                 </thead>
                             </table>
