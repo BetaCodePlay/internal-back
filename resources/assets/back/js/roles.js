@@ -18,7 +18,6 @@ class Roles {
         let tableInformationID = $('#table-information');
         let $route = tableInformationID.data('route');
 
-
         tableInformationID.DataTable({
             ajax: $route,
             processing: true,
@@ -33,8 +32,7 @@ class Roles {
 
             },
             initComplete: function () {
-                tabInformation.find('.table-load').addClass('table-complete');
-                tabInformation.find('.loading-style').hide();
+
             },
         });
     }
