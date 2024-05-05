@@ -592,6 +592,7 @@ class Roles {
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
         let picker = initLitepickerEndTodayNew();
+        ;
         let routeTransaction;
 
 
