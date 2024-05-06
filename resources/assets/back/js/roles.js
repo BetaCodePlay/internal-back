@@ -615,7 +615,8 @@ class Roles {
                     ajax: $route,
                     dom: 'Bfrtip',
                     buttons: [
-                        'colvis',
+                        'copy',
+                        'pdf',
                         'excel',
                         'print'
                     ],
