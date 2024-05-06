@@ -1,4 +1,5 @@
 import {activeMenu, getCookie, setCookie} from './commons.js';
+import 'datatables.net-buttons';
 
 window.$ = window.jQuery = require('jquery');
 window.Popper = require('popper.js').default;
@@ -12,6 +13,7 @@ require('datatables.net-buttons');
 require('jquery-mousewheel');
 require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar');
 activeMenu();
+
 
 $.ajaxSetup({
     headers: {
