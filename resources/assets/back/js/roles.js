@@ -22,6 +22,7 @@ class Roles {
                 ajax: $route,
                 processing: true,
                 serverSide: true,
+                buttons: ['copy', 'excel', 'pdf', 'print'],
                 columnDefs: [{
                     "defaultContent": "-",
                     "targets": "_all"
@@ -69,7 +70,10 @@ class Roles {
                     $('.page-role .page-body .table-load').addClass('table-complete');
                     $('.page-role .page-body .loading-style').hide();
                 },
-            });
+            })
+            .buttons()
+            .container()
+            .appendTo(`#table-roles_wrapper .col-md-6:eq(0)`);
         }
 
         $(document).on('click', '.currentDataRole', function () {

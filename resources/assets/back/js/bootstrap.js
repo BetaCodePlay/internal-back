@@ -7,6 +7,7 @@ require('jquery.cookie');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
 require('datatables.net-dt');
 require('datatables.net-responsive/js/dataTables.responsive');
+require('datatables.net-buttons');
 // require('datatables.net-rowgroup');
 require('jquery-mousewheel');
 require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar');
@@ -29,23 +30,9 @@ $.extend(true, $.fn.dataTable.defaults, {
     processing: true,
     deferRender: true,
     responsive: true,
+    
     language: {
         url: "/i18n/datatables/" + locale + ".lang"
-    },
-    buttons: {
-        buttons: [
-            {
-                extend: 'excel',
-                className: 'd-none d-sm-none d-md-block'
-            },
-            {
-                extend: 'copy',
-                className: 'd-none d-sm-none d-md-block',
-                text: function (dt) {
-                    return dt.i18n('buttons.copy', 'Copy');
-                }
-            }
-        ]
     }
 });
 
