@@ -21,10 +21,6 @@
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
 
-    <link href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css" rel="stylesheet">
-
 <!--    <link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">-->
 
     <script>
