@@ -41,7 +41,6 @@
 
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
-
     @yield('styles')
     <style>
         li.has-active .u-side-nav-opened {

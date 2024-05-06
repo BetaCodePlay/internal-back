@@ -19,7 +19,6 @@ mix.sass(
 mix.styles([
         'public/back/scss/vendor.min.css',
         'node_modules/animate.css/animate.css',
-        'node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css',
         'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
         'node_modules/jstree/dist/themes/default/style.css'
     ],
