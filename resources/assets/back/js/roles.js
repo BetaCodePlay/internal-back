@@ -22,11 +22,12 @@ class Roles {
                 ajax: $route,
                 processing: true,
                 serverSide: true,
-                buttons: ['copy', 'excel', 'pdf', 'print'],
-                columnDefs: [{
-                    "defaultContent": "-",
-                    "targets": "_all"
-                }],
+                dom: 'Bfrtip',
+                buttons: [
+                    'colvis',
+                    'excel',
+                    'print'
+                ],
                 fixedHeader: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
