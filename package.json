@@ -80,6 +80,7 @@
         "malihu-custom-scrollbar-plugin": "^3.1.5",
         "material-design-iconic-font": "^2.2.0",
         "moment": "^2.29.4",
+        "pdfmake": "^0.2.10",
         "popper.js": "^1.15.0",
         "primeicons": "^7.0.0",
         "primevue": "^2",

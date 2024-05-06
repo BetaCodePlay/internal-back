@@ -2,7 +2,8 @@ import {activeMenu, getCookie, setCookie} from './commons.js';
 
 window.$ = window.jQuery = require('jquery');
 window.Popper = require('popper.js').default;
-require( 'jszip' );
+require('jszip');
+require('pdfmake');
 require('bootstrap');
 require('jquery.cookie');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
