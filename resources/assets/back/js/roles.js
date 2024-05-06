@@ -2,7 +2,7 @@ import {
     clipboard
 } from "../../commons/js/core";
 import {initLitepickerEndTodayNew} from "./commons";
-
+import 'datatables.net-buttons';
 import moment from 'moment';
 
 class Roles {

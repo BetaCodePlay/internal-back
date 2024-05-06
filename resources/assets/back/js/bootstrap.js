@@ -1,5 +1,4 @@
 import {activeMenu, getCookie, setCookie} from './commons.js';
-import 'datatables.net-buttons';
 
 window.$ = window.jQuery = require('jquery');
 window.Popper = require('popper.js').default;
