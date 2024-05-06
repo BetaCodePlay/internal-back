@@ -6,7 +6,7 @@ require('bootstrap');
 require('jquery.cookie');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
 require('datatables.net-dt');
-require( 'datatables.net-responsive-dt' );
+require('datatables.net-responsive-dt');
 //require('datatables.net-responsive/js/dataTables.responsive');
 // require('datatables.net-buttons');
 require('datatables.net-buttons-dt');
