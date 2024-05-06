@@ -1,5 +1,6 @@
 import {activeMenu, getCookie, setCookie} from './commons.js';
 
+var $ = require( 'jquery' );
 window.$ = window.jQuery = require('jquery');
 window.Popper = require('popper.js').default;
 require('bootstrap');
