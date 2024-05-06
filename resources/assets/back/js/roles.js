@@ -22,11 +22,7 @@ class Roles {
                 ajax: $route,
                 processing: true,
                 serverSide: true,
-                buttons: [
-                    'colvis',
-                    'excel',
-                    'print'
-                ],
+                buttons: ['copy', 'excel', 'pdf'],
                 fixedHeader: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
