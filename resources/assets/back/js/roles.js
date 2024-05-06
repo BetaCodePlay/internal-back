@@ -2,7 +2,7 @@ import {
     clipboard
 } from "../../commons/js/core";
 import {initLitepickerEndTodayNew} from "./commons";
-import 'datatables.net-buttons';
+
 import moment from 'moment';
 
 class Roles {
@@ -22,11 +22,11 @@ class Roles {
                 ajax: $route,
                 processing: true,
                 serverSide: true,
-                layout: {
-                    topStart: {
-                        buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-                    }
-                },
+                buttons: [
+                    'colvis',
+                    'excel',
+                    'print'
+                ],
                 fixedHeader: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
