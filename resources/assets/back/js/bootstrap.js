@@ -10,6 +10,7 @@ require( 'datatables.net-responsive-dt' );
 //require('datatables.net-responsive/js/dataTables.responsive');
 // require('datatables.net-buttons');
 require('datatables.net-buttons-dt');
+require('datatables.net-buttons/js/buttons.html5.js');
 // require('datatables.net-rowgroup');
 require('jquery-mousewheel');
 require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar');

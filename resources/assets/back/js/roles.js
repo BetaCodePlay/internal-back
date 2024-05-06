@@ -617,7 +617,6 @@ class Roles {
 
                 tableInformation = tableInformationID.DataTable({
                     ajax: $route,
-                    dom: 'Bfrtip',
                     buttons: [
                         'colvis',
                         'excel',
