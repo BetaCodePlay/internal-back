@@ -9,8 +9,7 @@ mix.setPublicPath("public/back/");
 */
 mix.sass(
     "resources/assets/back/scss/template.scss",
-    "public/back/css/template.min.css",
-    'node_modules/datatables.net-dt/css/dataTables.dataTables.css'
+    "public/back/css/template.min.css"
 ).version();
 
 /*
