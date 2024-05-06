@@ -16,14 +16,10 @@
     <title>{{ $title ?? _i('BackOffice') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=6.25">
-    <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.30">
+    <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=6.26">
+    <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.31">
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
-
-    <link href="https://cdn.datatables.net/2.0.6/css/dataTables.dataTables.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.dataTables.css" rel="stylesheet">
 
 <!--    <link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">-->
 
