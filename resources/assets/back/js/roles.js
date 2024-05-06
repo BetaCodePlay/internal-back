@@ -22,7 +22,6 @@ class Roles {
                 ajax: $route,
                 processing: true,
                 serverSide: true,
-                dom: 'Bfrtip',
                 buttons: [
                     'colvis',
                     'excel',
