@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.30">
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
+
+    <link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">
+
     <script>
         window.authUserId = parseInt('{{auth()->user()->id}}')
         window.timezone = "{{session('timezone')}}"
