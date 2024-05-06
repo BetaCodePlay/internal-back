@@ -5,9 +5,16 @@ window.Popper = require('popper.js').default;
 require('bootstrap');
 require('jquery.cookie');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
-require('datatables.net-dt');
+/*require('datatables.net-dt');
 require('datatables.net-responsive/js/dataTables.responsive');
+require('datatables.net-buttons');*/
+
+require('datatables.net-bs4');
 require('datatables.net-buttons');
+require('datatables.net-buttons-bs4');
+require('datatables.net-responsive/js/dataTables.responsive');
+require('datatables.net-buttons/js/buttons.html5.min');
+require('datatables.net-buttons/js/buttons.print.min');
 // require('datatables.net-rowgroup');
 require('jquery-mousewheel');
 require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar');
