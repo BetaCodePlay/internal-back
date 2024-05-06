@@ -20,7 +20,6 @@ class Roles {
         if($table.length > 0) {
             Roles.globaltable = $table.DataTable({
                 ajax: $route,
-                "responsive": true,
                 processing: true,
                 serverSide: true,
                 columnDefs: [{
