@@ -50,7 +50,7 @@ $.extend(true, $.fn.dataTable.defaults, {
 String.prototype.ucwords = function () {
     let str = this.toLowerCase();
     return (str + '')
-        .replace(/^(.)|\s+(.)/g, function ($letter) {
+        .replace(/^(.)|\s+(  )*(  )/g, function ($letter) {
             return $letter.toUpperCase()
         })
 };

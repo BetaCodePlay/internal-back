@@ -20,8 +20,7 @@ class Roles {
         if($table.length > 0) {
             Roles.globaltable = $table.DataTable({
                 ajax: $route,
-                processing: true,
-                serverSide: true,
+                pageLength: 25,
                 buttons: ['copy', 'excel', 'pdf'],
                 fixedHeader: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
@@ -67,9 +66,6 @@ class Roles {
                     $('.page-role .page-body .loading-style').hide();
                 },
             })
-            .buttons()
-            .container()
-            .appendTo(`#table-roles_wrapper .col-md-6:eq(0)`);
         }
 
         $(document).on('click', '.currentDataRole', function () {
