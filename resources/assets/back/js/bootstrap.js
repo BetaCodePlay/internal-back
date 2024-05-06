@@ -1,6 +1,5 @@
 import {activeMenu, getCookie, setCookie} from './commons.js';
-
-var $ = require( 'jquery' );
+import 'datatables.net-buttons'
 window.$ = window.jQuery = require('jquery');
 window.Popper = require('popper.js').default;
 require('bootstrap');
@@ -8,7 +7,7 @@ require('jquery.cookie');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
 require('datatables.net-dt');
 require('datatables.net-responsive/js/dataTables.responsive');
-require( 'datatables.net-buttons' )( window, $ );
+
 // require('datatables.net-rowgroup');
 require('jquery-mousewheel');
 require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar');
