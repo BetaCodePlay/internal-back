@@ -41,6 +41,11 @@ $.extend(true, $.fn.dataTable.defaults, {
     serverSide: true,
     searching: true,
     paging: true,
+    columnDefs: [ {
+        targets: [6], /* column index */
+        orderable: false, /* true or false */
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    }],
     language: {
         url: "/i18n/datatables/" + locale + ".lang"
     }
