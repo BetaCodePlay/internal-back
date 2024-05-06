@@ -292,6 +292,7 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"></script>
     <script>
         $(function () {
             let roles = new Roles();
