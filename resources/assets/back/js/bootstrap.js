@@ -41,11 +41,6 @@ $.extend(true, $.fn.dataTable.defaults, {
     serverSide: true,
     searching: true,
     paging: true,
-    layout: {
-        topStart: {
-            buttons: ['pageLength']
-        }
-    },
     language: {
         url: "/i18n/datatables/" + locale + ".lang"
     }
