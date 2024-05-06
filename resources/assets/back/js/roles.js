@@ -608,7 +608,7 @@ class Roles {
 
                 tableInformation = tableInformationID.DataTable({
                     ajax: $route,
-                    buttons: false,
+                    lengthChange: true,
                     initComplete: function () {
                         $($target).find('.table-load').addClass('table-complete');
                         $($target).find('.loading-style').hide();
