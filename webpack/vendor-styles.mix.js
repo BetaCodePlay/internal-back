@@ -20,6 +20,7 @@ mix.styles([
         'public/back/scss/vendor.min.css',
         'node_modules/animate.css/animate.css',
         'node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
-        'node_modules/jstree/dist/themes/default/style.css'
+        'node_modules/jstree/dist/themes/default/style.css',
+        'node_modules/datatables.net-dt/css/dataTables.dataTables.css'
     ],
     'public/back/css/vendor.min.css');
