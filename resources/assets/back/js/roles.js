@@ -617,17 +617,11 @@ class Roles {
 
                 tableInformation = tableInformationID.DataTable({
                     ajax: $route,
-                    processing: true,
-                    serverSide: true,
-                    columnDefs: [{
-                        "defaultContent": "-",
-                        "targets": "_all"
-                    }],
-                    fixedHeader: true,
-                    responsive: true,
-                    fnCreatedRow: function (nRow, aData, iDataIndex) {
-
-                    },
+                    buttons: [
+                        'colvis',
+                        'excel',
+                        'print'
+                    ],
                     initComplete: function () {
                         $($target).find('.table-load').addClass('table-complete');
                         $($target).find('.loading-style').hide();
