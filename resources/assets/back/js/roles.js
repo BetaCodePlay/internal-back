@@ -21,7 +21,7 @@ class Roles {
             Roles.globaltable = $table.DataTable({
                 ajax: $route,
                 pageLength: 25,
-                buttons: ['pageLength', 'copy', 'excel', 'pdf'],
+                buttons: ['copy', 'excel', 'pdf'],
                 fixedHeader: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
@@ -587,7 +587,6 @@ class Roles {
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
         let picker = initLitepickerEndTodayNew();
-        ;
         let routeTransaction;
 
 
@@ -609,12 +608,7 @@ class Roles {
 
                 tableInformation = tableInformationID.DataTable({
                     ajax: $route,
-                    buttons: [
-                        'copy',
-                        'pdf',
-                        'excel',
-                        'print'
-                    ],
+                    buttons: false,
                     initComplete: function () {
                         $($target).find('.table-load').addClass('table-complete');
                         $($target).find('.loading-style').hide();
