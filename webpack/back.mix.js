@@ -65,7 +65,6 @@ mix.autoload({
             "resources/assets/back/js/chat.js",
             "resources/assets/back/js/global.js",
             "resources/assets/commons/plugins/toastr/js/toastr.min.js",
-            "https://cdn.datatables.net/responsive/3.0.2/js/responsive.dataTables.js"
         ],
         "public/back/js/custom.min.js"
     )
