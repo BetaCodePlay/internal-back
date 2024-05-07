@@ -33,7 +33,7 @@ locale = (locale === null || locale === '') ? 'en_US' : locale;
 $.fn.dataTable.ext.errMode = 'throw';
 
 $.extend(true, $.fn.dataTable.defaults, {
-    dom: '<Blfrtip',
+    dom: '<"top"Blfr>tip',
     lengthMenu: [[10, 25, 50, 100, 250, 500, 1000], [10, 25, 50, 100, 250, 500, 1000]],
     processing: true,
     deferRender: true,
