@@ -20,14 +20,9 @@ class Roles {
         if($table.length > 0) {
             Roles.globaltable = $table.DataTable({
                 ajax: $route,
-                processing: true,
-                serverSide: true,
-                columnDefs: [{
-                    "defaultContent": "-",
-                    "targets": "_all"
-                }],
+                pageLength: 25,
+                buttons: ['copy', 'excel', 'pdf'],
                 fixedHeader: true,
-                "responsive": true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
                     let modalLockTarget = '[data-target="#role-lock"]';
@@ -70,7 +65,7 @@ class Roles {
                     $('.page-role .page-body .table-load').addClass('table-complete');
                     $('.page-role .page-body .loading-style').hide();
                 },
-            });
+            })
         }
 
         $(document).on('click', '.currentDataRole', function () {
@@ -592,7 +587,6 @@ class Roles {
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
         let picker = initLitepickerEndTodayNew();
-        ;
         let routeTransaction;
 
 
@@ -614,17 +608,7 @@ class Roles {
 
                 tableInformation = tableInformationID.DataTable({
                     ajax: $route,
-                    processing: true,
-                    serverSide: true,
-                    columnDefs: [{
-                        "defaultContent": "-",
-                        "targets": "_all"
-                    }],
-                    fixedHeader: true,
-                    responsive: true,
-                    fnCreatedRow: function (nRow, aData, iDataIndex) {
-
-                    },
+                    lengthChange: true,
                     initComplete: function () {
                         $($target).find('.table-load').addClass('table-complete');
                         $($target).find('.loading-style').hide();

@@ -38,7 +38,6 @@ class Agents {
                     username: $('#username').val(),
                     agent: $('#agent').val()
                 }
-
             }).done(function (json) {
                 $form.trigger('reset');
                 swalSuccessWithButton(json);
