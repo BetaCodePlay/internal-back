@@ -667,7 +667,7 @@ class TransactionsRepo
         return [$transactions, $countTransactions];
     }
 
-    public function getByUserAndProvidersPaginateNew(Request $request)
+    public function getByUserAndProvidersPaginateNew(Request $request, string|int $agent)
     : array {
         $startDate = Utils::startOfDayUtc(
             $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
@@ -718,7 +718,7 @@ class TransactionsRepo
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
         }
 
-        return $transactions->paginate($perPage);
+        return $transactions->paginate($request->input('per_page', 10));
     }
 
 
