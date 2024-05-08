@@ -666,17 +666,12 @@ class TransactionsRepo
     }
 
     public function getByUserAndProvidersPaginateNew(
-        $user,
         $providers,
         $currency,
         $startDate,
         $endDate,
-        $limit = 2000,
-        $offset = 0,
-        $username = null,
         $typeUser = null,
         $arraySonIds = [],
-        $orderCol,
         $typeTransaction = null
     )
     : array {
@@ -704,27 +699,13 @@ class TransactionsRepo
             $transactions->whereNotNull('data->provider_transaction');
         }
 
-        if (is_null($typeTransaction) || $typeTransaction === 'all') {
-        } elseif ($typeTransaction === 'credit') {
-            $typeTransaction = 1;
-            $transactions    = $transactions->where('transactions.transaction_type_id', $typeTransaction);
-        } else {
-            $typeTransaction = 2;
-            $transactions    = $transactions->where('transactions.transaction_type_id', $typeTransaction);
+        $typeTransactionId = ($typeTransaction === 'credit') ? 1 : (($typeTransaction === 'debit') ? 2 : null);
+
+        if ($typeTransactionId !== null) {
+            $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
         }
 
-        if (! is_null($username)) {
-            $transactions = $transactions->where('transactions.data->from', 'like', "%$username%")->orWhere(
-                'transactions.data->to',
-                'like',
-                "%$username%"
-            );
-        }
-
-        $countTransactions = $transactions->count();
-        $transactions      = $transactions->limit($limit)->offset($offset)->get();
-
-        return [$transactions, $countTransactions];
+        return $transactions->paginate($perPage);
     }
 
 

@@ -739,13 +739,11 @@ class AgentsController extends Controller
     public function transactions(Request $request, string|int $agent)
     {
         try {
-            $itemsPerPage = request()->input('per_page', 10);
-            $currentPage  = request()->input('page', 1);
-            $startDate    = Utils::startOfDayUtc(
+            $startDate = Utils::startOfDayUtc(
                 $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
             );
-            $endDate      = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $typeUser     = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+            $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
             $typeTransaction = 'credit';
             if (Gate::allows('access', Permissions::$users_search)) {
@@ -761,29 +759,23 @@ class AgentsController extends Controller
                 Configurations::getWhitelabel()
             );
 
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate(
-                $agent,
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew(
                 $providers,
                 $currency,
                 $startDate,
                 $endDate,
-                $limit,
-                $offset,
-                $username,
                 $typeUser,
                 $arraySonIds,
-                $orderCol,
                 $typeTransaction
             );
 
-            //TODO draw table in collection
-            $data = $this->agentsCollection->formatAgentTransactionsPaginate(
+            /*$data = $this->agentsCollection->formatAgentTransactionsPaginate(
                 $transactions[0],
                 $transactions[1],
                 $request
-            );
+            );*/
 
-            return response()->json($data);
+            return response()->json($transactions);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
