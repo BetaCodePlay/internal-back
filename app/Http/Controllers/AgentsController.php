@@ -660,7 +660,7 @@ class AgentsController extends Controller
      * @param int $agent User ID
      * @return Response
      */
-    public function agentsTransactionsPaginate($agent, Request $request)
+    public function agentsTransactionsPaginate(Request $request)
     {
         try {
             //dd('here', $request->all());
@@ -736,10 +736,10 @@ class AgentsController extends Controller
         }
     }
 
-    public function transactions(string|int $agent, Request $request)
+    public function transactions(Request $request, string|int $agent)
     {
         try {
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew($request);
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew($request, $agent);
 
             /*$data = $this->agentsCollection->formatAgentTransactionsPaginate(
                 $transactions[0],
