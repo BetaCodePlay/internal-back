@@ -747,7 +747,43 @@ class AgentsController extends Controller
             $endDate      = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
             $typeUser     = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
-            dd('here', $itemsPerPage, $currentPage, $startDate, $endDate, $typeUser);
+            $typeTransaction = 'credit';
+            if (Gate::allows('access', Permissions::$users_search)) {
+                $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+            }
+
+            $currency  = session('currency');
+            $providers = [Providers::$agents, Providers::$agents_users];
+
+            $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+                $agent,
+                session('currency'),
+                Configurations::getWhitelabel()
+            );
+
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginate(
+                $agent,
+                $providers,
+                $currency,
+                $startDate,
+                $endDate,
+                $limit,
+                $offset,
+                $username,
+                $typeUser,
+                $arraySonIds,
+                $orderCol,
+                $typeTransaction
+            );
+
+            //TODO draw table in collection
+            $data = $this->agentsCollection->formatAgentTransactionsPaginate(
+                $transactions[0],
+                $transactions[1],
+                $request
+            );
+
+            return response()->json($data);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();

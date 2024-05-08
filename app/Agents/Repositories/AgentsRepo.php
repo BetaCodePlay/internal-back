@@ -649,10 +649,10 @@ class AgentsRepo
         $userId      = getUserIdByUsernameOrCurrent($request);
 
         $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
-        $agentQuery->where(function ($query) use ($searchValue) {
+       /* $agentQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%")
                 ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
-        });
+        });*/
 
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
@@ -664,9 +664,9 @@ class AgentsRepo
         );
 
         $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId);
-        $playerQuery->where(function ($query) use ($searchValue) {
+      /*  $playerQuery->where(function ($query) use ($searchValue) {
             $query->where('users.username', 'like', "%$searchValue%");
-        });
+        });*/
 
         $orderKey = array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
             ? $orderableColumns[$orderColumn]

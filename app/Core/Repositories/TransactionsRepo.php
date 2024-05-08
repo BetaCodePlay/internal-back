@@ -665,6 +665,69 @@ class TransactionsRepo
         return [$transactions, $countTransactions];
     }
 
+    public function getByUserAndProvidersPaginateNew(
+        $user,
+        $providers,
+        $currency,
+        $startDate,
+        $endDate,
+        $limit = 2000,
+        $offset = 0,
+        $username = null,
+        $typeUser = null,
+        $arraySonIds = [],
+        $orderCol,
+        $typeTransaction = null
+    )
+    : array {
+        $transactions = Transaction::select(
+            'users.username',
+            'transactions.user_id',
+            'transactions.id',
+            'transactions.amount',
+            'transactions.transaction_type_id',
+            'transactions.created_at',
+            'transactions.provider_id',
+            'transactions.data',
+            'transactions.transaction_status_id',
+            'transactions.data->balance AS balance_final'
+        )
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->whereIn('transactions.user_id', $arraySonIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers);
+
+        if ($typeUser === 'agent') {
+            $transactions->whereNull('data->provider_transaction');
+        } elseif ($typeUser === 'provider') {
+            $transactions->whereNotNull('data->provider_transaction');
+        }
+
+        if (is_null($typeTransaction) || $typeTransaction === 'all') {
+        } elseif ($typeTransaction === 'credit') {
+            $typeTransaction = 1;
+            $transactions    = $transactions->where('transactions.transaction_type_id', $typeTransaction);
+        } else {
+            $typeTransaction = 2;
+            $transactions    = $transactions->where('transactions.transaction_type_id', $typeTransaction);
+        }
+
+        if (! is_null($username)) {
+            $transactions = $transactions->where('transactions.data->from', 'like', "%$username%")->orWhere(
+                'transactions.data->to',
+                'like',
+                "%$username%"
+            );
+        }
+
+        $countTransactions = $transactions->count();
+        $transactions      = $transactions->limit($limit)->offset($offset)->get();
+
+        return [$transactions, $countTransactions];
+    }
+
+
     /**
      * @param $user
      * @param $providers
