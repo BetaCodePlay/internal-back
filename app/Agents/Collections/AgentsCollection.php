@@ -3807,9 +3807,9 @@ class AgentsCollection
 
     public function formatAgentTransactionsNew($paginatedResults, $timezone)
     {
-        $items = $paginatedResults->items();
+        $data = $paginatedResults->items();
 
-        foreach ($items as $transaction) {
+        foreach ($data as $transaction) {
             $transaction->date    = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->amount  = number_format($transaction->amount, 2);
             $transaction->debit   = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
@@ -3823,6 +3823,7 @@ class AgentsCollection
             'current_page' => $paginatedResults->currentPage(),
             'total'        => $paginatedResults->total(),
             'per_page'     => $paginatedResults->perPage(),
+            'data'         => $data
         ];
     }
 
