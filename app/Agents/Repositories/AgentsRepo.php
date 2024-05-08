@@ -651,20 +651,8 @@ class AgentsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-        $userId      = getUserIdByUsernameOrCurrent($request);
-        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
-
-
-
-        dd(auth()->id(), 'info', $agentQuery->get(), [
-            $draw,
-            $start,
-            $length,
-            $searchValue,
-            $orderColumn,
-            $orderDir,
-            $userId,
-        ]);
+        $userId      = getUserIdByUsernameOrCurrent($request, $whitelabelId);
+        $agentQuery  = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
 
         if (! is_null($searchValue)) {
             $agentQuery->where(function ($query) use ($searchValue) {
@@ -672,7 +660,6 @@ class AgentsRepo
                     ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
             });
         }
-
 
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
