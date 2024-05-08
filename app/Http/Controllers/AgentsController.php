@@ -740,7 +740,7 @@ class AgentsController extends Controller
     public function transactions(Request $request, string | int $agent)
     {
         try {
-            dd($request->all(), agent);
+            dd($request->all(), $agent);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
