@@ -745,9 +745,9 @@ class AgentsController extends Controller
                 $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
             );
             $endDate      = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $typeUser     = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
-
-            dd('here', $itemsPerPage, $currentPage, $startDate, $endDate);
+            dd('here', $itemsPerPage, $currentPage, $startDate, $endDate, $typeUser);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
