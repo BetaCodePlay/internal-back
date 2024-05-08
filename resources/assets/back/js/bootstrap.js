@@ -39,7 +39,6 @@ $.extend(true, $.fn.dataTable.defaults, {
     deferRender: true,
     responsive: true,
     searching: true,
-    ordering: false,
     paging: true,
     language: {
         url: "/i18n/datatables/" + locale + ".lang"
