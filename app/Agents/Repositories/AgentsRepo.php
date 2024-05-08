@@ -655,6 +655,8 @@ class AgentsRepo
 
         $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
 
+        dd('info', $agentQuery->get());
+
         if (! is_null($searchValue)) {
             $agentQuery->where(function ($query) use ($searchValue) {
                 $query->where('users.username', 'like', "%$searchValue%")
@@ -662,7 +664,7 @@ class AgentsRepo
             });
         }
 
-        dd('info', $agentQuery->get());
+
 
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
