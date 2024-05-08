@@ -3812,12 +3812,14 @@ class AgentsCollection
         ];
     }
 
-    public function formatAgentTransactionsNew($transactions)
+    public function formatAgentTransactionsNew($transactions, $timezone)
     {
         $transactions = $transactions->items();
 
         foreach ($transactions as $transaction) {
-            dd($transaction);
+            $transaction->date   = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+
+            dd($transaction, $timezone);
         }
     }
 

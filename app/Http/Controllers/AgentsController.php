@@ -747,7 +747,7 @@ class AgentsController extends Controller
                 $request
             );*/
 
-            $this->agentsCollection->formatAgentTransactionsNew($transactions);
+            $this->agentsCollection->formatAgentTransactionsNew($transactions, $request->input('timezone'));
 
             //return response()->json($data);
         } catch (Exception $ex) {
