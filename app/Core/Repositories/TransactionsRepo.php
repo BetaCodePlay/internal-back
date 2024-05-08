@@ -718,7 +718,7 @@ class TransactionsRepo
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
         }
 
-        return $transactions->paginate($perPage);
+        return $transactions->paginate($request->input('per_page', 10));
     }
 
 
