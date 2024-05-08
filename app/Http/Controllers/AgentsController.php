@@ -660,7 +660,7 @@ class AgentsController extends Controller
      * @param int $agent User ID
      * @return Response
      */
-    public function agentsTransactionsPaginate(Request $request)
+    public function agentsTransactionsPaginate($agent, Request $request)
     {
         try {
             //dd('here', $request->all());

@@ -668,7 +668,7 @@ class TransactionsRepo
     }
 
     public function getByUserAndProvidersPaginateNew(Request $request, string|int $agent)
-    : array {
+    {
         $startDate = Utils::startOfDayUtc(
             $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
         );
