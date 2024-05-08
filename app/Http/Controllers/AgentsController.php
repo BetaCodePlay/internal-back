@@ -741,15 +741,7 @@ class AgentsController extends Controller
         try {
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew($request, $agent);
 
-            /*$data = $this->agentsCollection->formatAgentTransactionsPaginate(
-                $transactions[0],
-                $transactions[1],
-                $request
-            );*/
-
-            $this->agentsCollection->formatAgentTransactionsNew($transactions, $request->input('timezone'));
-
-            //return response()->json($data);
+            return response()->json($this->agentsCollection->formatAgentTransactionsNew($transactions, $request->input('timezone')));
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();

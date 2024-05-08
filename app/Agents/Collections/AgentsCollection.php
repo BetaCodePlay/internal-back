@@ -3,26 +3,19 @@
 namespace App\Agents\Collections;
 
 use App\Agents\Repositories\AgentsRepo;
-use App\Users\Repositories\UsersRepo;
-use App\Core\Repositories\TransactionsRepo;
 use App\Core\Repositories\GamesRepo;
+use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
+use App\Users\Repositories\UsersRepo;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
-use Dotworkers\Security\Entities\Role;
-use Dotworkers\Security\Enums\Roles;
-use Dotworkers\Security\Security;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsCollection
@@ -3817,10 +3810,16 @@ class AgentsCollection
         $transactions = $transactions->items();
 
         foreach ($transactions as $transaction) {
-            $transaction->date   = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
-
-            dd($transaction, $timezone);
+            $transaction->date    = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $transaction->amount  = number_format($transaction->amount, 2);
+            $transaction->debit   = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
+            $transaction->credit  = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
+            $transaction->balance = isset($transaction->data->balance)
+                ? number_format($transaction->data->balance, 2)
+                : 0;
         }
+
+        return $transactions;
     }
 
     /**
@@ -4023,11 +4022,11 @@ class AgentsCollection
     public function formatUserFind($agent)
     {
         \Log::notice(__METHOD__, ['agent' => $agent]);
-        if ($agent->type_user == 5){
-            $ownerId = $agent->owner;
-            $owner = $agent->owner_id;
+        if ($agent->type_user == 5) {
+            $ownerId         = $agent->owner;
+            $owner           = $agent->owner_id;
             $agent->owner_id = $ownerId;
-            $agent->owner = $owner;
+            $agent->owner    = $owner;
         }
         return $agent;
     }
