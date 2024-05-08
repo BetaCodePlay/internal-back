@@ -669,10 +669,20 @@ class TransactionsRepo
 
     public function getByUserAndProvidersPaginateNew(Request $request, string|int $agent)
     {
+        // ($date, $originalFormat = 'Y-m-d', $finalFormat = 'Y-m-d H:i:s', $timezone = null)
+        $timezone  = $request->input('timezone', session()->get('timezone'));
         $startDate = Utils::startOfDayUtc(
-            $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
+            $request->has('startDate') ? $request->get('startDate') : date('Y-m-d'),
+            'Y-m-d',
+            'Y-m-d H:i:s',
+            $timezone
         );
-        $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $endDate   = Utils::endOfDayUtc(
+            $request->has('endDate') ? $request->get('endDate') : date('Y-m-d'),
+            'Y-m-d',
+            'Y-m-d H:i:s',
+            $timezone
+        );
         $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
         $typeTransaction = 'credit';
