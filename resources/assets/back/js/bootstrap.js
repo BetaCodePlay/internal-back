@@ -38,12 +38,12 @@ $.extend(true, $.fn.dataTable.defaults, {
     processing: true,
     deferRender: true,
     responsive: true,
-    serverSide: true,
     searching: true,
+    ordering: false,
     paging: true,
     language: {
         url: "/i18n/datatables/" + locale + ".lang"
-    }
+    },
 });
 
 // Ucwords
