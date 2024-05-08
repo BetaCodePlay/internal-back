@@ -20,6 +20,7 @@ class Roles {
         if($table.length > 0) {
             Roles.globaltable = $table.DataTable({
                 ajax: $route,
+                serverSide: true,
                 pageLength: 25,
                 buttons: ['copy', 'excel', 'pdf'],
                 fixedHeader: true,
