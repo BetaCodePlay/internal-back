@@ -739,35 +739,7 @@ class AgentsController extends Controller
     public function transactions(Request $request, string|int $agent)
     {
         try {
-            $startDate = Utils::startOfDayUtc(
-                $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
-            );
-            $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
-
-            $typeTransaction = 'credit';
-            if (Gate::allows('access', Permissions::$users_search)) {
-                $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
-            }
-
-            $currency  = session('currency');
-            $providers = [Providers::$agents, Providers::$agents_users];
-
-            $arraySonIds = $this->reportAgentRepo->getIdsChildrenFromFather(
-                $agent,
-                session('currency'),
-                Configurations::getWhitelabel()
-            );
-
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew(
-                $providers,
-                $currency,
-                $startDate,
-                $endDate,
-                $typeUser,
-                $arraySonIds,
-                $typeTransaction
-            );
+            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew($request);
 
             /*$data = $this->agentsCollection->formatAgentTransactionsPaginate(
                 $transactions[0],

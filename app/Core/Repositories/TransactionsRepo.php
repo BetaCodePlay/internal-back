@@ -11,10 +11,12 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Permissions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Utilities\Helper;
 
@@ -397,13 +399,13 @@ class TransactionsRepo
 
         $orderCol = [
             'column' => 'date',
-            'order' => 'asc',
+            'order'  => 'asc',
         ];
 
         if ($request->has('order') && ! empty($request->get('order'))) {
             $orderCol = [
                 'column' => $request->get('columns')[$request->get('order')[0]['column']]['data'],
-                'order' => $request->get('order')[0]['dir']
+                'order'  => $request->get('order')[0]['dir']
             ];
         }
         DB::connection()->enableQueryLog();
@@ -464,7 +466,7 @@ class TransactionsRepo
             });
         }
         $queries = \DB::getQueryLog();
-        Log::info(__METHOD__ . " Transaction repo queries ", [ $queries]);
+        Log::info(__METHOD__ . " Transaction repo queries ", [$queries]);
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
@@ -507,9 +509,9 @@ class TransactionsRepo
                 session('timezone')
             )->toDateTimeString();
 
-            $from     = $transaction->data->from ?? null;
-            $to       = $transaction->data->to ?? null;
-            $balance  = $transaction->data->balance ?? null;
+            $from    = $transaction->data->from ?? null;
+            $to      = $transaction->data->to ?? null;
+            $balance = $transaction->data->balance ?? null;
             //$receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
             $receiver = $to;
             return [
@@ -665,16 +667,27 @@ class TransactionsRepo
         return [$transactions, $countTransactions];
     }
 
-    public function getByUserAndProvidersPaginateNew(
-        $providers,
-        $currency,
-        $startDate,
-        $endDate,
-        $typeUser = null,
-        $arraySonIds = [],
-        $typeTransaction = null
-    )
+    public function getByUserAndProvidersPaginateNew(Request $request)
     : array {
+        $startDate = Utils::startOfDayUtc(
+            $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
+        );
+        $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+        $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+
+        $typeTransaction = 'credit';
+        if (Gate::allows('access', Permissions::$users_search)) {
+            $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+        }
+
+        $currency  = session('currency');
+        $providers = [Providers::$agents, Providers::$agents_users];
+
+        $arraySonIds  = $this->reportAgentRepo->getIdsChildrenFromFather(
+            $agent,
+            session('currency'),
+            Configurations::getWhitelabel()
+        );
         $transactions = Transaction::select(
             'users.username',
             'transactions.user_id',
