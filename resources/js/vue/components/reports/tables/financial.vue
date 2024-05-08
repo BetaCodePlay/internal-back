@@ -2,10 +2,14 @@
     <div>
         
         <components-reports-filters
-            title="Transacciones"
+            title="Reporte Financiero"
             v-model="filters"
             @change="onChange"
             @export="exportData"
+            
+            :showUser="true"
+            :showProvider="true"
+            :showTimezone="true"
         />
         <DataTable
             ref="financialTable"

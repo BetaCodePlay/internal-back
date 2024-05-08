@@ -168,3 +168,81 @@ tfoot {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+.p-paginator {
+    background: #1e1e1e;
+    color: #c298d8;
+    border: none;
+    border-radius: 8px !important;
+    margin-top: 5px;
+    border-width: 0;
+    padding: 0.75rem;
+    border-radius: 4px;
+}
+.p-paginator-bottom .p-dropdown {
+    width: 66px;
+}
+.p-paginator .p-paginator-current {
+    background-color: #474747;
+    border: 1px solid white;
+    border-radius: 8px;
+    color: white;
+    min-width: 2.357rem;
+    height: 2.357rem;
+    margin: 0 0 0 -1px;
+    padding: 0 0.5rem;
+}
+.p-paginator-element {
+    background-color: #474747  !important;
+    border: 1px solid white  !important;
+    color: white  !important;
+    border-radius: 8px !important;
+    min-width: 2.357rem;
+    height: 2.357rem;
+    margin: 0 0 0 -1px;
+    transition: box-shadow 0.15s;
+    border-radius: 0;
+}
+.el-range-editor {
+    border-color: #ccc !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+    color: white !important;
+    background: #474747 !important;
+}
+.el-date-editor .el-range-input {
+    background: #474747 !important;
+    color: white !important;
+}
+.el-date-editor .el-range-separator{
+    color: white !important;
+
+}
+.el-picker-panel {
+    transform-origin: center top;
+    z-index: 2021;
+    border: none;
+    border-radius: 8px;
+    position: absolute;
+    box-shadow: 10px 10px 38px 22px rgba(0, 0, 0, 0.71) !important;
+}
+.el-picker-panel__sidebar, .el-picker-panel__body {
+    background-color: #1e1e1e !important;
+    border: none !important;
+    border-radius: 8px !important;
+}
+.is-left, .is-right {
+    border: none !important;
+    border-radius: 8px !important;
+}
+.el-picker-panel {
+    color: white !important;
+    border: none !important;
+    background: #1e1e1e  !important;
+    border-radius: 8px !important;
+}
+.el-picker-panel__shortcut {
+    color: white !important
+}
+.el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div {
+    background-color: #595959 !important;
+}
