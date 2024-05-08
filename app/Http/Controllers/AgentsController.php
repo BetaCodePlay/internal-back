@@ -737,9 +737,14 @@ class AgentsController extends Controller
         }
     }
 
-    public function transactions()
+    public function transactions(Request $request, string | int $agent)
     {
-        dd('here');
+        try {
+            dd($request->all(), agent);
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
     }
 
     /**
