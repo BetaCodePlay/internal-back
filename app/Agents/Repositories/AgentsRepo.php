@@ -640,7 +640,10 @@ class AgentsRepo
      */
     public function getDirectChildren(Request $request, string $currency, int $whitelabelId)
     : array {
-        Log::notice('test request', ['request' => $request->all(), 'currency' => $currency, 'whitelabelId' => $whitelabelId]);
+        Log::notice(
+            'test request',
+            ['request' => $request->all(), 'currency' => $currency, 'whitelabelId' => $whitelabelId]
+        );
 
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
@@ -651,10 +654,13 @@ class AgentsRepo
         $userId      = getUserIdByUsernameOrCurrent($request);
 
         $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
-        $agentQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%")
-                ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
-        });
+
+        if (! is_null($searchValue)) {
+            $agentQuery->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%")
+                    ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
+            });
+        }
 
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
@@ -666,9 +672,12 @@ class AgentsRepo
         );
 
         $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId);
-        $playerQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%");
-        });
+
+        if (! is_null($searchValue)) {
+            $playerQuery->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%");
+            });
+        }
 
         $orderKey = array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
             ? $orderableColumns[$orderColumn]
