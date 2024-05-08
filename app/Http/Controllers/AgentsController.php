@@ -664,6 +664,7 @@ class AgentsController extends Controller
     public function agentsTransactionsPaginate($agent, Request $request)
     {
         try {
+            dd('here', $request->all());
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit = $request->has('length') ? $request->get('length') : 2000;
 
@@ -5008,8 +5009,6 @@ class AgentsController extends Controller
     {
         try {
             $currency = session('currency');
-
-            dd('currency', $currency);
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $this->agentsCollection->formatUsers($users, $currency);
