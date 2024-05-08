@@ -1,180 +1,168 @@
 <template>
     <div>
-        <components-reports-filters />
-        <<DataTable :value="sales" responsiveLayout="scroll">
-            <ColumnGroup type="header">
-                <Row>
-                    <Column header="Product" :rowspan="3" />
-                    <Column header="Sale Rate" :colspan="4" />
-                </Row>
-                <Row>
-                    <Column header="Sales" :colspan="2" />
-                    <Column header="Profits" :colspan="2" />
-                </Row>
-                <Row>
-                    <Column
-                        header="Last Year"
-                        :sortable="true"
-                        field="lastYearSale"
-                    />
-                    <Column
-                        header="This Year"
-                        :sortable="true"
-                        field="thisYearSale"
-                    />
-                    <Column
-                        header="Last Year"
-                        :sortable="true"
-                        field="lastYearProfit"
-                    />
-                    <Column
-                        header="This Year"
-                        :sortable="true"
-                        field="thisYearProfit"
-                    />
-                </Row>
-            </ColumnGroup>
-            <Column field="product" />
-            <Column field="lastYearSale">
+        <components-reports-filters
+            title="Transacciones"
+            v-model="filters"
+            @change="onChange"
+            @export="exportData"
+            :showTypeUser="true"
+            :showTypeTransaction="true"
+            :showTimezone="true"
+        />
+        <DataTable
+            ref="transactionsTable"
+            class="mt-3"
+            :value="items"
+            responsiveLayout="scroll"
+            :paginator="true"
+            :rows="10"
+            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+            :rowsPerPageOptions="[10, 20, 50]"
+            currentPageReportTemplate="Mostrando desde {first} hasta {last} de {totalRecords}"
+        >
+            <Column
+                v-for="col of columns"
+                :field="col.field"
+                :header="col.header"
+                :key="`key-${col.field}-${force}`"
+            >
                 <template #body="slotProps">
-                    {{ slotProps.data.lastYearSale }}%
+                    <div class="text-center" v-if="col.field == 'date'">
+                        <strong>{{
+                            moment(slotProps.data.date).format("YYYY-MM-DD")
+                        }}</strong>
+                    </div>
+                    <div
+                        class="text-center"
+                        v-else-if="col.field == 'new_amount'"
+                    >
+                        <div v-html="slotProps.data.new_amount"></div>
+                    </div>
+                    <div class="text-center" v-else-if="col.field == 'from'">
+                        {{ slotProps.data.data.from }}
+                    </div>
+                    <div class="text-center" v-else-if="col.field == 'to'">
+                        {{ slotProps.data.data.to }}
+                    </div>
+
+                    <div class="text-center" v-else>
+                        {{ slotProps.data[col.field] }}
+                    </div>
                 </template>
             </Column>
-            <Column field="thisYearSale">
-                <template #body="slotProps">
-                    {{ slotProps.data.thisYearSale }}%
-                </template>
-            </Column>
-            <Column field="lastYearProfit">
-                <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.lastYearProfit) }}
-                </template>
-            </Column>
-            <Column field="thisYearProfit">
-                <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.thisYearProfit) }}
-                </template>
-            </Column>
-            <ColumnGroup type="footer">
-                <Row>
-                    <Column
-                        footer="Totals:"
-                        :colspan="3"
-                        :footerStyle="{ 'text-align': 'right' }"
-                    />
-                    <Column :footer="lastYearTotal" />
-                    <Column :footer="thisYearTotal" />
-                </Row>
-            </ColumnGroup>
+
+            <div class="loading-style" v-if="loading"></div>
         </DataTable>
     </div>
 </template>
 <script>
+import axios from "axios";
+import moment from "moment";
 export default {
     data() {
         return {
-            sales: null,
+            moment,
+            force: 0,
+            expandedRows: [],
+            loading: false,
+            filters: {
+                query: "",
+                daterange: [
+                    new Date(new Date().setDate(new Date().getDate() - 30)),
+                    new Date(),
+                ],
+                selectedTimezone: window.timezone ?? "",
+                typeUser: "all",
+                typeTransaction: "all",
+                timezone: "all",
+            },
+            items: [],
+            columns: [
+                { field: "date", header: "Fecha" },
+                { field: "from", header: "Agente" },
+                { field: "to", header: "Cuenta destino" },
+                { field: "new_amount", header: "Monto" },
+                { field: "balance", header: "Balance" },
+            ],
         };
     },
-    created() {
-        this.sales = [
-            {
-                product: "Bamboo Watch",
-                lastYearSale: 51,
-                thisYearSale: 40,
-                lastYearProfit: 54406,
-                thisYearProfit: 43342,
-            },
-            {
-                product: "Black Watch",
-                lastYearSale: 83,
-                thisYearSale: 9,
-                lastYearProfit: 423132,
-                thisYearProfit: 312122,
-            },
-            {
-                product: "Blue Band",
-                lastYearSale: 38,
-                thisYearSale: 5,
-                lastYearProfit: 12321,
-                thisYearProfit: 8500,
-            },
-            {
-                product: "Blue T-Shirt",
-                lastYearSale: 49,
-                thisYearSale: 22,
-                lastYearProfit: 745232,
-                thisYearProfit: 65323,
-            },
-            {
-                product: "Brown Purse",
-                lastYearSale: 17,
-                thisYearSale: 79,
-                lastYearProfit: 643242,
-                thisYearProfit: 500332,
-            },
-            {
-                product: "Chakra Bracelet",
-                lastYearSale: 52,
-                thisYearSale: 65,
-                lastYearProfit: 421132,
-                thisYearProfit: 150005,
-            },
-            {
-                product: "Galaxy Earrings",
-                lastYearSale: 82,
-                thisYearSale: 12,
-                lastYearProfit: 131211,
-                thisYearProfit: 100214,
-            },
-            {
-                product: "Game Controller",
-                lastYearSale: 44,
-                thisYearSale: 45,
-                lastYearProfit: 66442,
-                thisYearProfit: 53322,
-            },
-            {
-                product: "Gaming Set",
-                lastYearSale: 90,
-                thisYearSale: 56,
-                lastYearProfit: 765442,
-                thisYearProfit: 296232,
-            },
-            {
-                product: "Gold Phone Case",
-                lastYearSale: 75,
-                thisYearSale: 54,
-                lastYearProfit: 21212,
-                thisYearProfit: 12533,
-            },
-        ];
+    computed: {
+        totalProfit() {
+            let total = 0;
+            for (let sale of this.items) {
+                total += parseFloat(sale.profit);
+            }
+
+            return total.formatMoney();
+        },
+        totalCommision() {
+            let total = 0;
+            for (let sale of this.items) {
+                total += parseFloat(sale.commission);
+            }
+
+            return total.formatMoney();
+        },
     },
     methods: {
-        formatCurrency(value) {
-            return value.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-            });
+        exportXLS() {
+            let filename = `Reporte-Financiero-${moment().format(
+                "DD-MM-YYYY"
+            )}.xlsx`;
+            let data = this.items;
+            var ws = XLSX.utils.json_to_sheet(data);
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Reporte Financiero");
+            XLSX.writeFile(wb, filename);
+        },
+        exportData(type) {
+            console.log(type);
+            switch (type) {
+                case "excel":
+                    this.exportXLS();
+                    break;
+            }
+        },
+        onChange() {
+            this.FetchData();
+        },
+        FetchData() {
+            if (this.filters.daterange[1]) {
+                this.loading = true;
+                axios
+                    .get(
+                        `/agents/transactions/paginate/${
+                            window.authUserId
+                        }?startDate=${moment(this.filters.daterange[0]).format(
+                            "YYYY-MM-DD"
+                        )}&endDate=${moment(this.filters.daterange[1]).format(
+                            "YYYY-MM-DD"
+                        )}&typeUser=${this.filters.typeUser}&typeTransaction=${
+                            this.filters.typeTransaction
+                        }&timezone=${this.filters.selectedTimezone}`
+                    )
+                    .then((resp) => {
+                        this.items = resp.data.data;
+                        this.loading = false;
+                    })
+                    .catch(() => {
+                        this.loading = false;
+                    });
+            }
         },
     },
-    computed: {
-        lastYearTotal() {
-            let total = 0;
-            for (let sale of this.sales) {
-                total += sale.lastYearProfit;
-            }
-
-            return this.formatCurrency(total);
-        },
-        thisYearTotal() {
-            let total = 0;
-            for (let sale of this.sales) {
-                total += sale.thisYearProfit;
-            }
-
-            return this.formatCurrency(total);
-        },
+    mounted() {
+        this.FetchData();
     },
 };
 </script>
+<style>
+.p-column-header-content {
+    justify-content: center;
+}
+.orders-subtable {
+    border: 1px solid #8080800f;
+    border-radius: 8px;
+    padding: 10px;
+}
+</style>

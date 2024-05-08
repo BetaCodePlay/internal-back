@@ -58,6 +58,7 @@
         "daterangepicker": "^3.1.0",
         "datetimepicker": "^0.1.39",
         "elegant-icons": "^0.0.1",
+        "element-ui": "^2.15.14",
         "font-awesome": "^4.7.0",
         "glob-parent": ">=5.1.2",
         "hamburgers": "^1.2.1",
