@@ -662,6 +662,8 @@ class AgentsRepo
             });
         }
 
+        dd('info', $agentQuery->get());
+
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
         $agentQuery->orderBy(
