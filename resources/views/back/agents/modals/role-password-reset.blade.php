@@ -19,7 +19,7 @@
 						            <span class="btn-show-pass">
 							            <i class="fa fa-eye-slash"></i>
 						            </span>
-                                    <input class="form-control" type="password" name="password" id="password-role-reset" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
+                                    <input class="form-control" type="password" id="password-role-reset" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
                                 </div>
                             </div>
                         </div>
