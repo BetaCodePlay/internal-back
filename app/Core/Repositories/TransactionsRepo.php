@@ -13,11 +13,14 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Security\Enums\Permissions;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Utilities\Helper;
 
 
@@ -667,9 +670,20 @@ class TransactionsRepo
         return [$transactions, $countTransactions];
     }
 
-    public function getByUserAndProvidersPaginateNew(Request $request, string|int $agent)
-    {
-        // ($date, $originalFormat = 'Y-m-d', $finalFormat = 'Y-m-d H:i:s', $timezone = null)
+    /**
+     * Get user and provider transactions paginated.
+     *
+     * Retrieve paginated transaction data based on a specified user and provider(s).
+     * Transactions can be filtered based on a specific type.
+     *
+     * @param Request $request
+     * @param string|int $agent
+     * @return LengthAwarePaginator
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function getUserProviderTransactionsPaginated(Request $request, string|int $agent)
+    : LengthAwarePaginator {
         $timezone  = $request->input('timezone', session()->get('timezone'));
         $startDate = Utils::startOfDayUtc(
             $request->has('startDate') ? $request->get('startDate') : date('Y-m-d'),

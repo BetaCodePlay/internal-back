@@ -3805,8 +3805,8 @@ class AgentsCollection
         ];
     }
 
-    public function formatAgentTransactionsNew($paginatedResults, $timezone)
-    {
+    public function formatAgentTransactionsPaginated($paginatedResults, $timezone)
+    : array {
         $data = $paginatedResults->items();
 
         foreach ($data as $transaction) {
