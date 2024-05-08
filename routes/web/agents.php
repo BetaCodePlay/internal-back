@@ -155,7 +155,7 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 
     Route::get('{agent}/transactions', [
         'as' => 'agents.formatAgentTransactionsPaginated',
-        'uses' => 'AgentsController@formatAgentTransactionsPaginated'
+        'uses' => 'AgentsController@transactions'
     ]);
 
     // Agents transactions

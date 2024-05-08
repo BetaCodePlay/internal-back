@@ -70,6 +70,8 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Ixudra\Curl\Facades\Curl;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Xinax\LaravelGettext\Facades\LaravelGettext;
 
@@ -739,10 +741,12 @@ class AgentsController extends Controller
     public function transactions(Request $request, string|int $agent)
     {
         try {
-            $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew($request, $agent);
+            $transactions = $this->transactionsRepo->getUserProviderTransactionsPaginated($request, $agent);
 
-            return response()->json($this->agentsCollection->formatAgentTransactionsNew($transactions, $request->input('timezone')));
-        } catch (Exception $ex) {
+            return response()->json(
+                $this->agentsCollection->formatAgentTransactionsPaginated($transactions, $request->input('timezone'))
+            );
+        } catch (Exception|NotFoundExceptionInterface|ContainerExceptionInterface $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
