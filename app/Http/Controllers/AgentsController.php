@@ -664,7 +664,7 @@ class AgentsController extends Controller
     public function agentsTransactionsPaginate($agent, Request $request)
     {
         try {
-            dd('here', $request->all());
+            //dd('here', $request->all());
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit = $request->has('length') ? $request->get('length') : 2000;
 
@@ -735,6 +735,11 @@ class AgentsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
+    }
+
+    public function transactions()
+    {
+        dd('here');
     }
 
     /**
