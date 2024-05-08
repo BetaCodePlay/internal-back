@@ -19,6 +19,7 @@ class Roles {
 
         if($table.length > 0) {
             Roles.globaltable = $table.DataTable({
+                serverSide: true,
                 ajax: $route,
                 pageLength: 25,
                 buttons: ['copy', 'excel', 'pdf'],
@@ -165,8 +166,9 @@ class Roles {
                     method: 'post',
                     data: $data
                 }).done(function (json) {
-                    console.log(Roles.globaltable.length);
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                     Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                     $('#role-password-reset').modal('hide');
                     $password.val('');
@@ -217,7 +219,9 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                 }
             }).fail(function (json) {
                 Roles.errorResponse(json);
@@ -324,7 +328,9 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                 }
 
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
@@ -446,7 +452,9 @@ class Roles {
                 method: 'post',
                 data: $data
             }).done(function (json) {
-                Roles.globaltable.ajax.reload();
+                if (Roles.globaltable !== undefined) {
+                    Roles.globaltable.ajax.reload();
+                }
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-create').modal('hide');
                 $('#createRolUsername').val('');
@@ -567,7 +575,9 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                 }
             }).fail(function (json) {
                 Roles.errorResponse(json);
@@ -608,8 +618,8 @@ class Roles {
 
 
                 tableInformation = tableInformationID.DataTable({
+                    serverSide: true,
                     ajax: $route,
-                    lengthChange: true,
                     initComplete: function () {
                         $($target).find('.table-load').addClass('table-complete');
                         $($target).find('.loading-style').hide();
@@ -648,9 +658,9 @@ class Roles {
             }
 
             tableTransaction = tableTransactionID.DataTable({
+                serverSide: true,
                 ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=' + $type + '&typeTransaction=' + $action,
                 processing: true,
-                serverSide: true,
                 columnDefs: [{
                     "defaultContent": "-",
                     "targets": "_all"
