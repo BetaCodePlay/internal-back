@@ -741,13 +741,15 @@ class AgentsController extends Controller
         try {
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew($request, $agent);
 
-            $data = $this->agentsCollection->formatAgentTransactionsPaginate(
+            /*$data = $this->agentsCollection->formatAgentTransactionsPaginate(
                 $transactions[0],
                 $transactions[1],
                 $request
-            );
+            );*/
 
-            return response()->json($data);
+            $this->agentsCollection->formatAgent($transactions);
+
+            //return response()->json($data);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();

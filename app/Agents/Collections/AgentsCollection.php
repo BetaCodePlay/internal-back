@@ -3812,6 +3812,15 @@ class AgentsCollection
         ];
     }
 
+    public function formatAgentTransactionsNew($transactions)
+    {
+        dd($transactions);
+
+        foreach ($transactions as $transaction) {
+
+        }
+    }
+
     /**
      * Format agents transactions report
      *
