@@ -651,15 +651,12 @@ class AgentsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-
-        dd($request->all());
         $userId      = getUserIdByUsernameOrCurrent($request);
-
         $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
 
 
 
-        dd('info', $agentQuery->get(), [
+        dd(auth()->id(), 'info', $agentQuery->get(), [
             $draw,
             $start,
             $length,
