@@ -747,7 +747,7 @@ class AgentsController extends Controller
                 $request
             );*/
 
-            $this->agentsCollection->formatAgent($transactions);
+            $this->agentsCollection->formatAgentTransactionsNew($transactions);
 
             //return response()->json($data);
         } catch (Exception $ex) {
