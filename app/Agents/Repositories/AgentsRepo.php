@@ -640,11 +640,6 @@ class AgentsRepo
      */
     public function getDirectChildren(Request $request, string $currency, int $whitelabelId)
     : array {
-        Log::notice(
-            'test request',
-            ['request' => $request->all(), 'currency' => $currency, 'whitelabelId' => $whitelabelId]
-        );
-
         $draw        = $request->input('draw', 1);
         $start       = $request->input('start', 0);
         $length      = $request->input('length', 10);
@@ -738,6 +733,7 @@ class AgentsRepo
             ->join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->orderBy('users.created_at', 'desc')
             ->where([
                 'agents.owner_id'               => $userId,
                 'agent_currencies.currency_iso' => $currency,
@@ -770,6 +766,7 @@ class AgentsRepo
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->orderBy('users.created_at', 'desc')
             ->where([
                 'agents.user_id'                => $userId,
                 'agent_currencies.currency_iso' => $currency,
