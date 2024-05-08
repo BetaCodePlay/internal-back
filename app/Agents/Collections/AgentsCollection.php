@@ -3814,10 +3814,10 @@ class AgentsCollection
 
     public function formatAgentTransactionsNew($transactions)
     {
-        dd($transactions);
+        $transactions = $transactions->items();
 
         foreach ($transactions as $transaction) {
-
+            dd($transaction);
         }
     }
 
