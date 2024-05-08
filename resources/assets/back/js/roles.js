@@ -618,6 +618,7 @@ class Roles {
 
 
                 tableInformation = tableInformationID.DataTable({
+                    serverSide: true,
                     ajax: $route,
                     lengthChange: true,
                     initComplete: function () {
@@ -658,9 +659,9 @@ class Roles {
             }
 
             tableTransaction = tableTransactionID.DataTable({
+                serverSide: true,
                 ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=' + $type + '&typeTransaction=' + $action,
                 processing: true,
-                serverSide: true,
                 columnDefs: [{
                     "defaultContent": "-",
                     "targets": "_all"
