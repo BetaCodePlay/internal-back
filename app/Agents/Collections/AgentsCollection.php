@@ -15,6 +15,7 @@ use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 /**
@@ -3805,7 +3806,18 @@ class AgentsCollection
         ];
     }
 
-    public function formatAgentTransactionsPaginated($paginatedResults, $timezone)
+    /**
+     * Format paginated agent transactions with timezone.
+     *
+     * Formats the paginated transaction data of an agent with the specified timezone.
+     * Each transaction's date, amount, debit, credit, and balance are formatted accordingly.
+     * Returns an array containing formatted transaction data along with pagination details.
+     *
+     * @param  LengthAwarePaginator  $paginatedResults The paginated transaction data.
+     * @param string $timezone The timezone to format the transaction dates.
+     * @return array An array containing formatted transaction data and pagination details.
+     */
+    public function formatAgentTransactionsPaginated($paginatedResults, string $timezone)
     : array {
         $data = $paginatedResults->items();
 

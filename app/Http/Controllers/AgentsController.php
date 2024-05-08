@@ -738,8 +738,18 @@ class AgentsController extends Controller
         }
     }
 
+    /**
+     * Retrieve and format paginated transactions for a specific agent.
+     *
+     * Retrieves paginated transaction data for a specified agent using the provided request parameters.
+     * The transaction data is then formatted using the agents collection service based on the specified timezone.
+     *
+     * @param Request $request The HTTP request object containing parameters for filtering and formatting.
+     * @param string|int $agent The ID or identifier of the agent whose transactions are to be retrieved.
+     * @return JsonResponse|Response A JSON response containing the formatted transaction data or an error message.
+     */
     public function transactions(Request $request, string|int $agent)
-    {
+    : JsonResponse | Response {
         try {
             $transactions = $this->transactionsRepo->getUserProviderTransactionsPaginated($request, $agent);
 
