@@ -5008,6 +5008,8 @@ class AgentsController extends Controller
     {
         try {
             $currency = session('currency');
+
+            dd('currency', $currency);
             $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $this->agentsCollection->formatUsers($users, $currency);
