@@ -25,7 +25,6 @@ use App\Reports\Repositories\ReportAgentRepo;
 use App\Reports\Repositories\ReportRepo;
 use App\Security\Repositories\RolesRepo;
 use App\Transactions\Services\UserTransactionService;
-use App\Transactions\Services\UserTransactionServiceOld;
 use App\Users\Collections\UsersCollection;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
@@ -329,12 +328,12 @@ class AgentsController extends Controller
      */
     public function addUsers()
     {
-        $user       = auth()->user()->id;
-        $currency   = session('currency');
-        $agentsData = $this->agentsRepo->getAgentsByOwner($user, $currency);
-        $agents     = $this->agentsCollection->childAgents($agentsData, $currency);
+        $user           = auth()->user()->id;
+        $currency       = session('currency');
+        $agentsData     = $this->agentsRepo->getAgentsByOwner($user, $currency);
+        $agents         = $this->agentsCollection->childAgents($agentsData, $currency);
         $data['agents'] = $agents;
-        $data['title'] = _i('Add users');
+        $data['title']  = _i('Add users');
         return view('back.agents.add-users', $data);
     }
 
@@ -349,48 +348,48 @@ class AgentsController extends Controller
     {
         $this->validate($request, [
             'username' => ['required', new Username()],
-            'agent' => 'required'
+            'agent'    => 'required'
         ]);
 
         try {
-            $username = strtolower(trim($request->username));
-            $agent = $request->agent;
-            $currency = session('currency');
+            $username   = strtolower(trim($request->username));
+            $agent      = $request->agent;
+            $currency   = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $userData = $this->usersRepo->getUsernameByCurrency($username, $currency, $whitelabel);
-            if (!is_null($userData)) {
+            $userData   = $this->usersRepo->getUsernameByCurrency($username, $currency, $whitelabel);
+            if (! is_null($userData)) {
                 $agentUserData = $this->agentsRepo->existAgent($userData->id);
                 if (is_null($agentUserData)) {
                     $agentUser = $this->agentsRepo->findUser($userData->id);
                     if (is_null($agentUser)) {
-                        $add = $this->agentsRepo->addUser($agent, $userData->id);
+                        $add  = $this->agentsRepo->addUser($agent, $userData->id);
                         $data = [
-                            'title' => _i('Added user'),
+                            'title'   => _i('Added user'),
                             'message' => _i('The user has been successfully added'),
-                            'close' => _i('Close'),
+                            'close'   => _i('Close'),
                         ];
                         return Utils::successResponse($data);
                     } else {
                         $data = [
-                            'title' => _i('Assigned user'),
+                            'title'   => _i('Assigned user'),
                             'message' => _i("The user is already assigned to an agent"),
-                            'close' => _i('Close')
+                            'close'   => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
                 } else {
                     $data = [
-                        'title' => _i('Agent user'),
+                        'title'   => _i('Agent user'),
                         'message' => _i("The user is an agent, it cannot be associated to another agent."),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                     return Utils::errorResponse(Codes::$forbidden, $data);
                 }
             } else {
                 $data = [
-                    'title' => _i('The user does not exist'),
+                    'title'   => _i('The user does not exist'),
                     'message' => _i("Please check and try again"),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
@@ -414,48 +413,48 @@ class AgentsController extends Controller
 
         try {
             if (session('admin_id')) {
-                $userId = session('admin_id');
+                $userId      = session('admin_id');
                 $agentPlayer = false;
             } else {
-                $userId = auth()->user()->id;
+                $userId      = auth()->user()->id;
                 $agentPlayer = true;
             }
-            $currency = session('currency');
-            $id   = $request->id;
-            $walletId = null;
+            $currency  = session('currency');
+            $id        = $request->id;
+            $walletId  = null;
             $userAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-            $user = $this->agentsRepo->findUser($id);
+            $user      = $this->agentsRepo->findUser($id);
 
-            if (!is_null($userAgent)) {
-                $father = $this->usersRepo->findUsername($userAgent->owner);
-                $user  = $userAgent;
+            if (! is_null($userAgent)) {
+                $father  = $this->usersRepo->findUsername($userAgent->owner);
+                $user    = $userAgent;
                 $balance = $userAgent->balance;
-                $master = $userAgent->master;
-                $agent = true;
-                $myself = $userId == $userAgent->id;
-                $type  = 'agent';
+                $master  = $userAgent->master;
+                $agent   = true;
+                $myself  = $userId == $userAgent->id;
+                $type    = 'agent';
             } else {
-                $father = $this->usersRepo->findUsername($user->owner_id);
-                $user   = $this->agentsRepo->findUser($id);
-                $master = false;
-                $wallet = Wallet::getByClient($id, $currency);
-                $balance = $wallet->data->wallet->balance;
-                $agent  = false;
+                $father   = $this->usersRepo->findUsername($user->owner_id);
+                $user     = $this->agentsRepo->findUser($id);
+                $master   = false;
+                $wallet   = Wallet::getByClient($id, $currency);
+                $balance  = $wallet->data->wallet->balance;
+                $agent    = false;
                 $walletId = $wallet->data->wallet->id;
-                $myself = false;
-                $type   = 'user';
+                $myself   = false;
+                $type     = 'user';
             }
             $this->agentsCollection->formatAgent($user);
             $data = [
-                'user'   => $user,
-                'balance' => number_format($balance, 2),
-                'master' => $master,
-                'father' => $father->username ?? '---',
-                'fathers' => [],
-                'agent'  => $agent,
-                'wallet' => $walletId,
-                'type'   => $type,
-                'myself' => $myself,
+                'user'         => $user,
+                'balance'      => number_format($balance, 2),
+                'master'       => $master,
+                'father'       => $father->username ?? '---',
+                'fathers'      => [],
+                'agent'        => $agent,
+                'wallet'       => $walletId,
+                'type'         => $type,
+                'myself'       => $myself,
                 'agent_player' => $agentPlayer
             ];
             return Utils::successResponse($data);
@@ -474,8 +473,8 @@ class AgentsController extends Controller
     public function agents($user)
     {
         try {
-            $currency = session('currency');
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $currency   = session('currency');
+            $agents     = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $agentsData = $this->agentsCollection->formatAgents($agents);
             return Utils::successResponse($agentsData);
         } catch (Exception $ex) {
@@ -508,8 +507,8 @@ class AgentsController extends Controller
             } else {
                 $user = auth()->user()->id;
             }
-            $currency = session('currency');
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $currency   = session('currency');
+            $agents     = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $agentsData = $this->agentsCollection->formatAgents($agents);
             return Utils::successResponse($agentsData);
         } catch (Exception $ex) {
@@ -548,14 +547,14 @@ class AgentsController extends Controller
                 }
             }
             $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $currency   = session('currency');
+            $agent      = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             //return [$agent,$user,$currency];
-            $agents         = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users          = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $tree           = $this->agentsCollection->dependencyTree($agent, $agents, $users);
-            $agentAndSubAgents = $this->agentsCollection->formatAgentandSubAgents($agents);
-            $providerTypes  = [
+            $agents             = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users              = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $tree               = $this->agentsCollection->dependencyTree($agent, $agents, $users);
+            $agentAndSubAgents  = $this->agentsCollection->formatAgentandSubAgents($agents);
+            $providerTypes      = [
                 ProviderTypes::$casino,
                 ProviderTypes::$live_casino,
                 ProviderTypes::$casino,
@@ -565,15 +564,15 @@ class AgentsController extends Controller
                 ProviderTypes::$live_games,
                 ProviderTypes::$poker
             ];
-            $providers      = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $providers          = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
             $data['currencies'] = Configurations::getCurrencies();
-            $data['countries'] = $countriesRepo->all();
-            $data['timezones'] = \DateTimeZone::listIdentifiers();
-            $data['providers'] = $providers;
-            $data['agent']  = $agent;
-            $data['agents'] = $agentAndSubAgents;
-            $data['tree']   = $tree;
-            $data['title']  = _i('Agents Payments');
+            $data['countries']  = $countriesRepo->all();
+            $data['timezones']  = \DateTimeZone::listIdentifiers();
+            $data['providers']  = $providers;
+            $data['agent']      = $agent;
+            $data['agents']     = $agentAndSubAgents;
+            $data['tree']       = $tree;
+            $data['title']      = _i('Agents Payments');
 
             return view('back.agents.reports.payments', $data);
         } catch (Exception $ex) {
@@ -591,11 +590,11 @@ class AgentsController extends Controller
     public function agentsTransactions($agent)
     {
         try {
-            $currency = session('currency');
-            $providers = [Providers::$agents, Providers::$agents_users];
+            $currency     = session('currency');
+            $providers    = [Providers::$agents, Providers::$agents_users];
             $transactions = $this->transactionsRepo->getByUserAndProviders($agent, $providers, $currency);
             $transactions = $this->agentsCollection->formatAgentTransactions($transactions);
-            $data     = [
+            $data         = [
                 'transactions' => $transactions
             ];
             return Utils::successResponse($data);
@@ -627,7 +626,7 @@ class AgentsController extends Controller
     public function agentsTransactionsByDatesData($startDate = null, $endDate = null)
     {
         try {
-            if (!is_null($startDate) && !is_null($endDate)) {
+            if (! is_null($startDate) && ! is_null($endDate)) {
                 $currency = session('currency');
                 if (session('admin_id')) {
                     $user = session('admin_id');
@@ -666,12 +665,12 @@ class AgentsController extends Controller
         try {
             //dd('here', $request->all());
             $offset = $request->has('start') ? $request->get('start') : 0;
-            $limit = $request->has('length') ? $request->get('length') : 2000;
+            $limit  = $request->has('length') ? $request->get('length') : 2000;
 
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
-            $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $username = $request->get('search')['value'] ?? null;
-            $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+            $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $username  = $request->get('search')['value'] ?? null;
+            $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
             $typeTransaction = 'credit';
             if (Gate::allows('access', Permissions::$users_search)) {
@@ -682,16 +681,16 @@ class AgentsController extends Controller
 
             $orderCol = [
                 'column' => 'date',
-                'order' => 'asc',
+                'order'  => 'asc',
             ];
-            if ($request->has('order') && !empty($request->get('order'))) {
+            if ($request->has('order') && ! empty($request->get('order'))) {
                 $orderCol = [
                     'column' => $request->get('columns')[$request->get('order')[0]['column']]['data'],
-                    'order' => $request->get('order')[0]['dir']
+                    'order'  => $request->get('order')[0]['dir']
                 ];
             }
 
-            $currency = session('currency');
+            $currency  = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
 
             //            $user = auth()->user()->id ? Auth::id() : null;
@@ -737,10 +736,18 @@ class AgentsController extends Controller
         }
     }
 
-    public function transactions(Request $request, string | int $agent)
+    public function transactions(Request $request, string|int $agent)
     {
         try {
-            dd($request->all(), $agent);
+            $itemsPerPage = request()->input('per_page', 10);
+            $currentPage  = request()->input('page', 1);
+            $startDate    = Utils::startOfDayUtc(
+                $request->has('startDate') ? $request->get('startDate') : date('Y-m-d')
+            );
+            $endDate      = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+
+
+            dd('here', $itemsPerPage, $currentPage, $startDate, $endDate);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -756,10 +763,10 @@ class AgentsController extends Controller
     {
         try {
             $whitelabel = Configurations::getWhitelabel();
-            $ticket = $this->transactionsRepo->ticketTransactionsUser($ticketId, $whitelabel);
+            $ticket     = $this->transactionsRepo->ticketTransactionsUser($ticketId, $whitelabel);
             $this->agentsCollection->ticketFormatter($ticket);
             $filename = \Carbon\Carbon::now()->format('dmY-His');
-            $pdf = PDF::loadView('back.agents.ticket.ticket', ['ticket' => $ticket, 'filename' => $filename]);
+            $pdf      = PDF::loadView('back.agents.ticket.ticket', ['ticket' => $ticket, 'filename' => $filename]);
             $pdf->setPaper('A4', 'portrait');
             return $pdf->stream();
         } catch (Exception $ex) {
@@ -778,12 +785,12 @@ class AgentsController extends Controller
     {
         try {
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
-            $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
-            $typeUser = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+            $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
 
-            $currency = session('currency');
+            $currency  = session('currency');
             $providers = [Providers::$agents, Providers::$agents_users];
-            $totals  = $this->transactionsRepo->getByUserAndProvidersTotales(
+            $totals    = $this->transactionsRepo->getByUserAndProvidersTotales(
                 $agent,
                 $providers,
                 $currency,
@@ -814,9 +821,9 @@ class AgentsController extends Controller
                 $user = auth()->user()->id;
             }
             $currency = session('currency');
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $agent    = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents   = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users    = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
 
             $tree = $this->agentsCollection->dependencyTreeFilter($agent, $agents, $users, $status);
             return Utils::successResponse($tree);
@@ -835,28 +842,28 @@ class AgentsController extends Controller
     public function blockAgentsData(Request $request)
     {
         $this->validate($request, [
-            'maker' => ['required_if:lock_users,false'],
+            'maker'       => ['required_if:lock_users,false'],
             'description' => ['required_if:lock_users,true'],
         ]);
 
         try {
-            $user  = $request->user;
-            $currency = session('currency');
-            $maker = $request->maker;
-            $category = $request->category;
-            $type  = $request->type;
+            $user      = $request->user;
+            $currency  = session('currency');
+            $maker     = $request->maker;
+            $category  = $request->category;
+            $type      = $request->type;
             $lockUsers = $request->lock_users;
 
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agent     = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $subAgents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            if (!is_null($agent)) {
+            if (! is_null($agent)) {
                 $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             } else {
                 $users[] = [
                     'id' => $user
                 ];
             }
-            $usersToUpdate    = $this->agentsCollection->formatDataLock(
+            $usersToUpdate = $this->agentsCollection->formatDataLock(
                 $lockUsers,
                 $subAgents,
                 $users,
@@ -865,36 +872,36 @@ class AgentsController extends Controller
                 $category,
                 $maker
             );
-            $newStatus        = (bool)$request->type;
-            $oldStatus        = !$newStatus;
+            $newStatus     = (bool)$request->type;
+            $oldStatus     = ! $newStatus;
             if ($lockUsers == 'false') {
                 if ($type == 'true') {
                     foreach ($usersToUpdate as $userToUpdate) {
-                        $user = $userToUpdate['user_id'];
+                        $user     = $userToUpdate['user_id'];
                         $category = $userToUpdate['category'];
-                        $data = [
+                        $data     = [
                             'currency_iso' => $userToUpdate['currency_iso'],
-                            'category' => $userToUpdate['category'],
-                            'makers'   => $userToUpdate['makers'],
-                            'user_id'  => $user,
-                            'created_at' => $userToUpdate['created_at'],
-                            'updated_at' => $userToUpdate['updated_at']
+                            'category'     => $userToUpdate['category'],
+                            'makers'       => $userToUpdate['makers'],
+                            'user_id'      => $user,
+                            'created_at'   => $userToUpdate['created_at'],
+                            'updated_at'   => $userToUpdate['updated_at']
                         ];
                         $this->agentsRepo->updateBlockAgents($currency, $category, $user, $data);
                     }
                     $data = [
-                        'title' => _i('Locked provider'),
+                        'title'   => _i('Locked provider'),
                         'message' => _i('The provider was locked to the agent and his entire tree'),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                 }
 
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
-                        $currencyIso = $userToUpdate['currency_iso'];
-                        $category = $userToUpdate['category'];
-                        $userId   = $userToUpdate['user_id'];
-                        $makers   = json_decode($userToUpdate['makers']);
+                        $currencyIso  = $userToUpdate['currency_iso'];
+                        $category     = $userToUpdate['category'];
+                        $userId       = $userToUpdate['user_id'];
+                        $makers       = json_decode($userToUpdate['makers']);
                         $unBlockMaker = array_values(array_diff($makers, [$maker]));
                         if (empty($unBlockMaker)) {
                             $this->agentsRepo->unBlockAgents($currencyIso, $category, $userId);
@@ -904,9 +911,9 @@ class AgentsController extends Controller
                         }
                     }
                     $data = [
-                        'title' => _i('Unlocked provider'),
+                        'title'   => _i('Unlocked provider'),
                         'message' => _i('The provider was unlocked to the agent and his entire tree'),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                 }
             }
@@ -917,11 +924,11 @@ class AgentsController extends Controller
                         $this->agentsRepo->blockUsers($user);
                         Sessions::deleteByUser($user);
                         $auditData = [
-                            'ip'       => Utils::userIp(),
-                            'user_id'  => auth()->user()->id,
-                            'username' => auth()->user()->username,
-                            'old_status' => $oldStatus,
-                            'new_status' => $newStatus,
+                            'ip'          => Utils::userIp(),
+                            'user_id'     => auth()->user()->id,
+                            'username'    => auth()->user()->username,
+                            'old_status'  => $oldStatus,
+                            'new_status'  => $newStatus,
                             'description' => $request->description
                         ];
                         Audits::store(
@@ -932,31 +939,31 @@ class AgentsController extends Controller
                         );
                     }
                     $data = [
-                        'title' => _i('Locked users'),
+                        'title'   => _i('Locked users'),
                         'message' => _i('The agent and his entire tree was locked'),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                 }
                 if ($type == 'false') {
                     foreach ($usersToUpdate as $userToUpdate) {
-                        $user = $userToUpdate['user_id'];
+                        $user     = $userToUpdate['user_id'];
                         $userData = $this->agentsRepo->statusActionByUser($user);
                         if (isset($userData->action) && $userData->action == ActionUser::$locked_higher) {
                             $data = [
-                                'title' => ActionUser::getName($userData->action),
+                                'title'   => ActionUser::getName($userData->action),
                                 'message' => _i('Contact your superior...'),
-                                'close' => _i('Close')
+                                'close'   => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$not_found, $data);
                         }
                         $this->agentsRepo->unBlockUsers($user);
 
                         $auditData = [
-                            'ip'       => Utils::userIp(),
-                            'user_id'  => auth()->user()->id,
-                            'username' => auth()->user()->username,
-                            'old_status' => $oldStatus,
-                            'new_status' => $newStatus,
+                            'ip'          => Utils::userIp(),
+                            'user_id'     => auth()->user()->id,
+                            'username'    => auth()->user()->username,
+                            'old_status'  => $oldStatus,
+                            'new_status'  => $newStatus,
                             'description' => $request->description
                         ];
                         Audits::store(
@@ -967,9 +974,9 @@ class AgentsController extends Controller
                         );
                     }
                     $data = [
-                        'title' => _i('Unlocked users'),
+                        'title'   => _i('Unlocked users'),
                         'message' => _i('The agent and his entire tree was unlocked'),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                 }
             }
@@ -1005,7 +1012,7 @@ class AgentsController extends Controller
 
             $agent     = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
             $subAgents = $this->agentsRepo->getAgentsByOwner($userId, $currency);
-            $users     = !is_null($agent) ? $this->agentsRepo->getUsersByAgent(
+            $users     = ! is_null($agent) ? $this->agentsRepo->getUsersByAgent(
                 $agent->agent,
                 $currency
             ) : [['id' => $userId]];
@@ -1020,8 +1027,8 @@ class AgentsController extends Controller
                 $maker
             );
             $newStatus     = $lockType;
-            $oldStatus     = !$newStatus;
-            $authUser = auth()->user();
+            $oldStatus     = ! $newStatus;
+            $authUser      = auth()->user();
 
             if ($lockType) {
                 foreach ($usersToUpdate as $userToUpdate) {
@@ -1095,16 +1102,16 @@ class AgentsController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function blockAgent(Request $request): Response
-    {
+    public function blockAgent(Request $request)
+    : Response {
         try {
             $rules = [
-                'userId'      => ['required', 'exists:users,id'],
-                'lockType'    => ['required'],
+                'userId'   => ['required', 'exists:users,id'],
+                'lockType' => ['required'],
             ];
 
             $userId      = $request->input('userId');
-            $lockType = $request->boolean('lockType');
+            $lockType    = $request->boolean('lockType');
             $description = $lockType
                 ? $request->input('descriptionLock')
                 : $request->input('descriptionUnlock');
@@ -1127,7 +1134,7 @@ class AgentsController extends Controller
 
             $statusUpdate = false;
             $data         = [];
-            $authUser = auth()->user();
+            $authUser     = auth()->user();
             if ($lockType) {
                 $data         = [
                     'action' => ActionUser::$locked_higher,
@@ -1141,7 +1148,7 @@ class AgentsController extends Controller
                     Configurations::getWhitelabel()
                 );
                 $father    = false;
-                if (!is_null($typeAudit) && isset($typeAudit->data->user_id)) {
+                if (! is_null($typeAudit) && isset($typeAudit->data->user_id)) {
                     $father = $this->usersCollection->treeFatherValidate($typeAudit->data->user_id, $authUser->id);
                     if ($typeAudit->data->user_id == Auth::id()) {
                         $father = true;
@@ -1187,13 +1194,14 @@ class AgentsController extends Controller
         }
     }
 
-    public function custom_message(): array
+    public function custom_message()
+    : array
     {
         return [
             'description.required' => __('Description is required'),
-            'lock_type.required' => __('Lock type is required'),
-            'user_id.required' => __('ID user is required'),
-            'user_id.exists' => __('ID user does not exist'),
+            'lock_type.required'   => __('Lock type is required'),
+            'user_id.required'     => __('ID user is required'),
+            'user_id.exists'       => __('ID user does not exist'),
         ];
     }
 
@@ -1207,10 +1215,10 @@ class AgentsController extends Controller
     private function createAgentBalance($agent, $currency, $balance = 0)
     {
         $agentData = [
-            'agent_id' => $agent,
+            'agent_id'     => $agent,
             'currency_iso' => $currency,
         ];
-        $balance = [
+        $balance   = [
             'balance' => $balance
         ];
         $this->agentCurrenciesRepo->store($agentData, $balance);
@@ -1241,20 +1249,20 @@ class AgentsController extends Controller
         $endDate = null
     ) {
         try {
-            $currency = session('currency');
+            $currency   = session('currency');
             $whitelabel = Configurations::getWhitelabel();
 
             if (session('admin_id')) {
-                $user = session('admin_id');
+                $user     = session('admin_id');
                 $username = session('admin_agent_username');
             } else {
-                $user = auth()->user()->id;
+                $user     = auth()->user()->id;
                 $username = auth()->user()->username;
             }
-            $startDate = Utils::startOfDayUtc(!is_null($startDate) ? $startDate : date('Y-m-d'));
-            $endDate   = Utils::endOfDayUtc(!is_null($endDate) ? $endDate : date('Y-m-d'));
+            $startDate = Utils::startOfDayUtc(! is_null($startDate) ? $startDate : date('Y-m-d'));
+            $endDate   = Utils::endOfDayUtc(! is_null($endDate) ? $endDate : date('Y-m-d'));
 
-            $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $agents    = $this->agentsRepo->getAgentsByOwner($user, $currency);
             $agentsIds = [];
 
             foreach ($agents as $agent) {
@@ -1297,9 +1305,9 @@ class AgentsController extends Controller
             $this->agentsRepo->updateActionTemp();
 
             $data = [
-                'title' => 'Campo Accion Cambiado',
+                'title'   => 'Campo Accion Cambiado',
                 'message' => 'Campo accion cambiado por id 10 solo los agentes...',
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -1320,7 +1328,7 @@ class AgentsController extends Controller
             $agentData = [
                 'master' => true
             ];
-            $agentDb = $this->agentsRepo->update($agent, $agentData);
+            $agentDb   = $this->agentsRepo->update($agent, $agentData);
             if (isset($agentDb->user_id)) {
                 $userData = [
                     'type_user' => TypeUser::$agentMater
@@ -1331,9 +1339,9 @@ class AgentsController extends Controller
             //$user = $this->agentsRepo->findAgentCashier($agent);
             //$this->agentsCollection->formatChangeAgentType($user);
             $data = [
-                'title' => _i('Agent type changed'),
+                'title'   => _i('Agent type changed'),
                 'message' => _i('Agent type was successfully changed'),
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
                 //'user_type' => $user->type,
             ];
             return Utils::successResponse($data);
@@ -1362,8 +1370,8 @@ class AgentsController extends Controller
         $users = $this->usersRepo->sqlShareTmp('users');
         foreach ($users as $value) {
             $value->type_user = null;
-            $agentTmp = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
-            if (!is_null($agentTmp)) {
+            $agentTmp         = $this->usersRepo->sqlShareTmp('agent', $value->id)[0] ?? null;
+            if (! is_null($agentTmp)) {
                 $value->type_user = TypeUser::$agentCajero;
                 if (isset($agentTmp->master) && $agentTmp->master) {
                     $value->type_user = TypeUser::$agentMater;
@@ -1371,11 +1379,11 @@ class AgentsController extends Controller
             }
 
             $playerTmp = $this->usersRepo->sqlShareTmp('agent_user', $value->id)[0] ?? null;
-            if (!is_null($playerTmp) && isset($playerTmp->agent_id)) {
+            if (! is_null($playerTmp) && isset($playerTmp->agent_id)) {
                 $value->type_user = TypeUser::$player;
             }
             //TODO UPDATE
-            if (!is_null($value->type_user)) {
+            if (! is_null($value->type_user)) {
                 $this->usersRepo->sqlShareTmp('update', $value->id, $value->type_user);
             }
         }
@@ -1410,12 +1418,12 @@ class AgentsController extends Controller
     public function consultBalanceByType(Request $request)
     {
         try {
-            $id   = $request->has('user') ? $request->get('user') : Auth::id();
-            $type = $request->has('type') ? $request->get('type') : 'agent';
+            $id       = $request->has('user') ? $request->get('user') : Auth::id();
+            $type     = $request->has('type') ? $request->get('type') : 'agent';
             $currency = session('currency');
-            $balance = 0;
+            $balance  = 0;
             if ($type == 'agent') {
-                $agent = $this->agentsRepo->balanceCurrentAgent($id, $currency);
+                $agent   = $this->agentsRepo->balanceCurrentAgent($id, $currency);
                 $balance = isset($agent->balance) ? number_format($agent->balance, 2) : 0;
             } /* else {
                 $user = $this->agentsRepo->findUser($id);
@@ -1428,7 +1436,7 @@ class AgentsController extends Controller
             }*/
 
             $json_data = array(
-                "status" => true,
+                "status"  => true,
                 "balance" => $balance
             );
         } catch (Exception $ex) {
@@ -1461,7 +1469,7 @@ class AgentsController extends Controller
 
                 //TODO VER SI YA EXISTE EL USUARIO SUPPORTGL COMO AGENTE
                 $existAgentGl = $agentRepo->existAgent($value->id);
-                if (!isset($existAgentGl->id)) {
+                if (! isset($existAgentGl->id)) {
                     $adms = $usersRepo->sqlShareTmp('user_admin', null, null, $value->whitelabel_id);
                     foreach ($adms as $a => $admin) {
                         //TODO SI EXISTE RELACION DE AGENTE
@@ -1472,7 +1480,7 @@ class AgentsController extends Controller
                         //                           'UserAdmin-Agent'=>$agentAdminExist
                         //                       ]);
                         //TODO GUARDANDO EL ID WOLF
-                        if (!empty($agentAdminExist) && !is_null($agentAdminExist->owner_id)) {
+                        if (! empty($agentAdminExist) && ! is_null($agentAdminExist->owner_id)) {
                             $wolf_id = $agentAdminExist->owner_id;
 
                             if (isset($agentAdminExist->id)) {
@@ -1537,9 +1545,9 @@ class AgentsController extends Controller
     public function dataTransactionTimeline(Request $request)
     {
         try {
-            $currency = session('currency');
+            $currency   = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $providers = [Providers::$agents, Providers::$agents_users];
+            $providers  = [Providers::$agents, Providers::$agents_users];
             //TODO CONVERSION OF ARRAY '{16,25}';
             $providers = '{' . implode(', ', $providers) . '}';
             $startDate = Utils::startOfDayUtc(
@@ -1549,17 +1557,17 @@ class AgentsController extends Controller
             $timezone  = session('timezone');
 
             $offset = $request->has('start') ? $request->get('start') : 0;
-            $limit = $request->has('length') ? $request->get('length') : 2000;
+            $limit  = $request->has('length') ? $request->get('length') : 2000;
             //$user = $request->has('user_id')?$request->get('user_id'):Auth::id();
             $user = Auth::id();
 
             //TODO TEST ARRAYS OF IDS
             //CHANGE BY FUNCTION SQL DATABASE
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agent  = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $trees = $this->agentsCollection->dependencyTreeIds($agent, $agents, $users);
-            $trees = '{' . implode(', ', $trees) . '}';
+            $users  = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $trees  = $this->agentsCollection->dependencyTreeIds($agent, $agents, $users);
+            $trees  = '{' . implode(', ', $trees) . '}';
 
             //TODO Return View Data
             $transactions = $this->transactionsRepo->getTransactionsTimelinePage(
@@ -1609,14 +1617,14 @@ class AgentsController extends Controller
     {
         try {
             $startDate = $request->start_date;
-            $endDate = $request->end_date;
-            if (!is_null($startDate) && !is_null($endDate)) {
+            $endDate   = $request->end_date;
+            if (! is_null($startDate) && ! is_null($endDate)) {
                 $transactionType = $request->transaction_type;
-                $currency     = $request->currency;
-                $whitelabel   = Configurations::getWhitelabel();
-                $startDate    = Utils::startOfDayUtc($startDate);
-                $endDate      = Utils::endOfDayUtc($endDate);
-                $transactions = $this->transactionsRepo->getDeposistsWithdrawalsProvider(
+                $currency        = $request->currency;
+                $whitelabel      = Configurations::getWhitelabel();
+                $startDate       = Utils::startOfDayUtc($startDate);
+                $endDate         = Utils::endOfDayUtc($endDate);
+                $transactions    = $this->transactionsRepo->getDeposistsWithdrawalsProvider(
                     $currency,
                     $startDate,
                     $endDate,
@@ -1648,9 +1656,9 @@ class AgentsController extends Controller
             $user = (int)$user;
             $this->agentsRepo->unBlockAgents($currency, $category, $user);
             $data = [
-                'title' => _i('User activated'),
+                'title'   => _i('User activated'),
                 'message' => _i('User was activated correctly'),
-                'close' => _i('Close')
+                'close'   => _i('Close')
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -1674,18 +1682,18 @@ class AgentsController extends Controller
         $currency = null
     ) {
         try {
-            if (!is_null($startDate) && !is_null($endDate)) {
+            if (! is_null($startDate) && ! is_null($endDate)) {
                 $agentsBlocked = [];
-                $user       = auth()->user()->id;
-                $currency_iso = session('currency');
-                $whitelabel = Configurations::getWhitelabel();
-                $agents     = $this->usersRepo->arraySonIds($user, $currency_iso, $whitelabel);
-                $startDate  = Utils::startOfDayUtc($startDate);
-                $endDate    = Utils::endOfDayUtc($endDate);
-                $category   = $request->category;
-                $maker      = $request->maker;
-                $currency   = $request->currency;
-                $users      = $this->usersRepo->getExcludeProviderUserByDates(
+                $user          = auth()->user()->id;
+                $currency_iso  = session('currency');
+                $whitelabel    = Configurations::getWhitelabel();
+                $agents        = $this->usersRepo->arraySonIds($user, $currency_iso, $whitelabel);
+                $startDate     = Utils::startOfDayUtc($startDate);
+                $endDate       = Utils::endOfDayUtc($endDate);
+                $category      = $request->category;
+                $maker         = $request->maker;
+                $currency      = $request->currency;
+                $users         = $this->usersRepo->getExcludeProviderUserByDates(
                     $currency,
                     $category,
                     $maker,
@@ -1698,7 +1706,7 @@ class AgentsController extends Controller
                         $agentsBlocked[] = $user;
                     }
                 }
-                if (!is_null($agentsBlocked)) {
+                if (! is_null($agentsBlocked)) {
                     $this->agentsCollection->formatExcludeMakersUser($agentsBlocked);
                     $data = [
                         'agents' => $agentsBlocked
@@ -1727,17 +1735,17 @@ class AgentsController extends Controller
      */
     public function excludeProvidersAgents(ProvidersRepo $providersRepo)
     {
-        $currency          = session('currency');
-        $whitelabel        = Configurations::getWhitelabel();
-        $providers         = $providersRepo->getByWhitelabel($whitelabel, $currency);
-        $categories        = $this->gamesRepo->getCategories();
-        $makers            = $this->gamesRepo->getMakers();
+        $currency                = session('currency');
+        $whitelabel              = Configurations::getWhitelabel();
+        $providers               = $providersRepo->getByWhitelabel($whitelabel, $currency);
+        $categories              = $this->gamesRepo->getCategories();
+        $makers                  = $this->gamesRepo->getMakers();
         $data['currency_client'] = Configurations::getCurrenciesByWhitelabel($whitelabel);
-        $data['providers'] = $providers;
-        $data['whitelabel'] = $whitelabel;
-        $data['categories'] = $categories;
-        $data['makers']    = $makers;
-        $data['title']     = _i('Exclude agents from providers');
+        $data['providers']       = $providers;
+        $data['whitelabel']      = $whitelabel;
+        $data['categories']      = $categories;
+        $data['makers']          = $makers;
+        $data['title']           = _i('Exclude agents from providers');
         return view('back.agents.reports.exclude-providers-agents', $data);
     }
 
@@ -1753,23 +1761,23 @@ class AgentsController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'currency' => 'required',
-            'maker' => 'required',
+            'maker'    => 'required',
         ]);
 
         try {
-            $usersData = [];
-            $user     = auth()->user()->id;
-            $username = strtolower(trim($request->username));
-            $category = $request->category;
-            $maker    = $request->maker;
+            $usersData  = [];
+            $user       = auth()->user()->id;
+            $username   = strtolower(trim($request->username));
+            $category   = $request->category;
+            $maker      = $request->maker;
             $whitelabel = Configurations::getWhitelabel();
-            $currency = $request->currency;
-            $userData = $this->usersRepo->getByUsername($username, $whitelabel);
-            $agents   = $this->usersRepo->arraySonIds($user, $currency, $whitelabel);
+            $currency   = $request->currency;
+            $userData   = $this->usersRepo->getByUsername($username, $whitelabel);
+            $agents     = $this->usersRepo->arraySonIds($user, $currency, $whitelabel);
 
-            if (!is_null($userData)) {
-                $date                = Carbon::now('UTC')->format('Y-m-d H:i:s');
-                $makers = [$maker];
+            if (! is_null($userData)) {
+                $date       = Carbon::now('UTC')->format('Y-m-d H:i:s');
+                $makers     = [$maker];
                 $categories = [];
                 if (in_array($userData->id, $agents)) {
                     if (is_null($category)) {
@@ -1779,24 +1787,24 @@ class AgentsController extends Controller
                         $categories[] = $category;
                     }
                     foreach ($categories as $category) {
-                        $excludeUser = $this->usersRepo->findExcludeMakerUser($category, $userData->id, $currency);
+                        $excludeUser   = $this->usersRepo->findExcludeMakerUser($category, $userData->id, $currency);
                         $makersExclude = isset($excludeUser->makers) ? json_decode($excludeUser->makers) : [];
-                        $dataMakers  = array_merge($makers, $makersExclude);
-                        $makersArray = array_values(array_filter(array_unique($dataMakers)));
-                        $usersData[] = [
-                            'category' => $category,
-                            'makers' => json_encode($makersArray),
+                        $dataMakers    = array_merge($makers, $makersExclude);
+                        $makersArray   = array_values(array_filter(array_unique($dataMakers)));
+                        $usersData[]   = [
+                            'category'     => $category,
+                            'makers'       => json_encode($makersArray),
                             'currency_iso' => $currency
                         ];
                     }
                     foreach ($usersData as $userToUpdate) {
                         $data = [
                             'currency_iso' => $userToUpdate['currency_iso'],
-                            'category' => $userToUpdate['category'],
-                            'makers'   => $userToUpdate['makers'],
-                            'user_id'  => $userData->id,
-                            'created_at' => $date,
-                            'updated_at' => $date
+                            'category'     => $userToUpdate['category'],
+                            'makers'       => $userToUpdate['makers'],
+                            'user_id'      => $userData->id,
+                            'created_at'   => $date,
+                            'updated_at'   => $date
                         ];
                         $this->agentsRepo->updateBlockAgents(
                             $currency,
@@ -1806,24 +1814,24 @@ class AgentsController extends Controller
                         );
                     }
                     $data = [
-                        'title' => _i('Excluded user'),
+                        'title'   => _i('Excluded user'),
                         'message' => _i('The user has been successfully excluded'),
-                        'close' => _i('Close'),
+                        'close'   => _i('Close'),
                     ];
                     return Utils::successResponse($data);
                 } else {
                     $data = [
-                        'title' => _i('You cannot block providers for this user'),
+                        'title'   => _i('You cannot block providers for this user'),
                         'message' => _i("Please check and try again"),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                     return Utils::errorResponse(Codes::$forbidden, $data);
                 }
             } else {
                 $data = [
-                    'title' => _i('The user does not exist'),
+                    'title'   => _i('The user does not exist'),
                     'message' => _i("Please check and try again"),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
@@ -1856,7 +1864,7 @@ class AgentsController extends Controller
 
         //if(in_array(Roles::$admin_Beet_sweet, session('roles'))){
         $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
-        $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+        $percentage = ! empty($percentage) ? $percentage[0]->percentage : null;
         //}
 
         if (Auth::user()->username == 'romeo') {
@@ -1866,7 +1874,7 @@ class AgentsController extends Controller
                 Configurations::getWhitelabel()
             );
 
-            $user = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
+            $user       = isset($userTmp[0]->id) ? $userTmp[0]->id : null;
             $percentage = null;
         }
 
@@ -1902,16 +1910,16 @@ class AgentsController extends Controller
      */
     public function showFinancialStatement(string $userId = null, string $startDate = null, string $endDate = null)
     {
-        $userId = is_null($userId) ? Auth::id() : $userId;
-        $currency = session('currency');
+        $userId     = is_null($userId) ? Auth::id() : $userId;
+        $currency   = session('currency');
         $percentage = $this->agentsRepo->myPercentageByCurrency($userId, $currency);
 
-        $percentage = $percentage[0]->percentage ?? null;
+        $percentage   = $percentage[0]->percentage ?? null;
         $whitelabelId = Configurations::getWhitelabel();
 
         if (Auth::user()->username === \App\Agents\Enums\Username::ROMEO) {
-            $userTmp = $this->usersRepo->findUserCurrencyByWhitelabel(AgentType::WOLF, $currency, $whitelabelId);
-            $userId = $userTmp[0]->id ?? null;
+            $userTmp    = $this->usersRepo->findUserCurrencyByWhitelabel(AgentType::WOLF, $currency, $whitelabelId);
+            $userId     = $userTmp[0]->id ?? null;
             $percentage = null;
         }
 
@@ -1956,9 +1964,9 @@ class AgentsController extends Controller
                 $user = Auth::id();
             }
             $percentage = null;
-            $username = null;
+            $username   = null;
             if (
-                $request->has('username_like') && !is_null($request->get('username_like'))
+                $request->has('username_like') && ! is_null($request->get('username_like'))
                 && $request->get(
                     'username_like'
                 ) != 'null'
@@ -1967,7 +1975,7 @@ class AgentsController extends Controller
             }
             $provider = null;
             if (
-                $request->has('provider_id') && !is_null($request->get('provider_id'))
+                $request->has('provider_id') && ! is_null($request->get('provider_id'))
                 && $request->get(
                     'provider_id'
                 ) != 'null'
@@ -1975,7 +1983,7 @@ class AgentsController extends Controller
                 $provider = $request->get('provider_id');
             }
 
-            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (! in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMaker(
                     Configurations::getWhitelabel(),
@@ -2031,7 +2039,7 @@ class AgentsController extends Controller
     ) {
         try {
             // dd([$request->currency_iso, $request->whitelabel_id]);
-            if (!in_array(Roles::$admin_Beet_sweet, session('roles'))) {
+            if (! in_array(Roles::$admin_Beet_sweet, session('roles'))) {
                 //TODO TODOS => EJE:SUPPORT
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByProviderAndMakerGlobal(
                     Utils::startOfDayUtc($startDate),
@@ -2070,7 +2078,7 @@ class AgentsController extends Controller
     {
         try {
             $startDate = Utils::startOfDayUtc($request->has('startDate') ? $request->get('startDate') : date('Y-m-d'));
-            $endDate = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
+            $endDate   = Utils::endOfDayUtc($request->has('endDate') ? $request->get('endDate') : date('Y-m-d'));
             // $currency = session('currency');
             // $providers = [Providers::$agents, Providers::$agents_users];
             $totals = $this->transactionsRepo->getFinancialDataMakersTotals(
@@ -2102,14 +2110,14 @@ class AgentsController extends Controller
         $endDate = null
     ) {
         try {
-            $timezone      = session('timezone');
-            $today         = Carbon::now()->setTimezone($timezone);
+            $timezone        = session('timezone');
+            $today           = Carbon::now()->setTimezone($timezone);
             $endDateOriginal = $endDate;
-            $startDate     = Utils::startOfDayUtc($startDate);
-            $endDate       = Utils::endOfDayUtc($endDate);
-            $currency      = session('currency');
-            $whitelabel    = Configurations::getWhitelabel();
-            $providerTypes = [
+            $startDate       = Utils::startOfDayUtc($startDate);
+            $endDate         = Utils::endOfDayUtc($endDate);
+            $currency        = session('currency');
+            $whitelabel      = Configurations::getWhitelabel();
+            $providerTypes   = [
                 ProviderTypes::$casino,
                 ProviderTypes::$live_casino,
                 ProviderTypes::$virtual,
@@ -2118,11 +2126,11 @@ class AgentsController extends Controller
                 ProviderTypes::$live_games,
                 ProviderTypes::$poker
             ];
-            $providers     = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
-            $agent         = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents        = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users         = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table         = $this->agentsCollection->financialStateRow2(
+            $providers       = $providersRepo->getByWhitelabelAndTypes($whitelabel, $currency, $providerTypes);
+            $agent           = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents          = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users           = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $table           = $this->agentsCollection->financialStateRow2(
                 $whitelabel,
                 $agents,
                 $users,
@@ -2133,7 +2141,7 @@ class AgentsController extends Controller
                 $endDateOriginal,
                 $today
             );
-            $data          = [
+            $data            = [
                 'table' => $table
             ];
             return Utils::successResponse($data);
@@ -2158,14 +2166,14 @@ class AgentsController extends Controller
         $endDate = null
     ) {
         try {
-            $timezone = session('timezone');
-            $today = Carbon::now()->setTimezone($timezone);
+            $timezone        = session('timezone');
+            $today           = Carbon::now()->setTimezone($timezone);
             $endDateOriginal = $endDate;
             //            $startDate = Utils::startOfDayUtc($startDate);
             //            $endDate = Utils::endOfDayUtc($endDate);
 
             $startDate = Utils::startOfDayUtc($startDate);
-            $endDate = Utils::endOfDayUtc($endDate);
+            $endDate   = Utils::endOfDayUtc($endDate);
 
             $currency      = session('currency');
             $whitelabel    = Configurations::getWhitelabel();
@@ -2213,7 +2221,7 @@ class AgentsController extends Controller
         ClosuresUsersTotalsRepo $closuresUsersTotalsRepo,
         ReportsCollection $reportsCollection
     ) {
-        $currency = session('currency');
+        $currency   = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         if (session('admin_id')) {
             $data['user'] = session('admin_id');
@@ -2281,7 +2289,7 @@ class AgentsController extends Controller
             );
         }
         $total_items = isset($table[0]->total_items) ? $table[0]->total_items : 0;
-        $data = $this->agentsCollection->formatClosuresTotalsProviderPaginate(
+        $data        = $this->agentsCollection->formatClosuresTotalsProviderPaginate(
             $table,
             $total_items,
             $percentage,
@@ -2331,7 +2339,7 @@ class AgentsController extends Controller
         $percentage = null;
         if (in_array(Roles::$support, session('roles'))) {
             //TODO TODOS => EJE:SUPPORT
-            if ($request->has('username_like') && !is_null($request->get('username_like'))) {
+            if ($request->has('username_like') && ! is_null($request->get('username_like'))) {
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsername(
                     Configurations::getWhitelabel(),
                     session('currency'),
@@ -2349,10 +2357,10 @@ class AgentsController extends Controller
             }
         } else {
             $percentage = $this->agentsRepo->myPercentageByCurrency(Auth::id(), session('currency'));
-            $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+            $percentage = ! empty($percentage) ? $percentage[0]->percentage : null;
 
             //TODO ADMIN_BEET_SWEET
-            if ($request->has('username_like') && !is_null($request->get('username_like'))) {
+            if ($request->has('username_like') && ! is_null($request->get('username_like'))) {
                 //TODO validar user_id para tener dinamismo
                 $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByUsernameWithSon(
                     Configurations::getWhitelabel(),
@@ -2393,7 +2401,7 @@ class AgentsController extends Controller
      */
     public function financialStateDetails()
     {
-        $currency = session('currency');
+        $currency   = session('currency');
         $whitelabel = Configurations::getWhitelabel();
         if (session('admin_id')) {
             $data['user'] = session('admin_id');
@@ -2417,7 +2425,7 @@ class AgentsController extends Controller
     public function financialStateMakers()
     {
         $whitelabel = null;
-        $currency = null;
+        $currency   = null;
         if (session('admin_id')) {
             $data['user'] = session('admin_id');
         } else {
@@ -2442,7 +2450,7 @@ class AgentsController extends Controller
     public function financialStateMakersDetails()
     {
         $whitelabel = null;
-        $currency = null;
+        $currency   = null;
         if (session('admin_id')) {
             $data['user'] = session('admin_id');
         } else {
@@ -2491,14 +2499,14 @@ class AgentsController extends Controller
     public function financialStateSummaryBonusData($user = null, $startDate = null, $endDate = null)
     {
         try {
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate  = Utils::endOfDayUtc($endDate);
-            $currency = session('currency');
+            $startDate  = Utils::startOfDayUtc($startDate);
+            $endDate    = Utils::endOfDayUtc($endDate);
+            $currency   = session('currency');
             $whitelabel = Configurations::getWhitelabel();
-            $agent    = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $agents   = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users    = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table    = $this->agentsCollection->financialStateSummaryBonus(
+            $agent      = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agents     = $this->agentsRepo->getAgentsByOwner($user, $currency);
+            $users      = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $table      = $this->agentsCollection->financialStateSummaryBonus(
                 $whitelabel,
                 $agents,
                 $users,
@@ -2506,7 +2514,7 @@ class AgentsController extends Controller
                 $startDate,
                 $endDate
             );
-            $data     = [
+            $data       = [
                 'table' => $table
             ];
             return Utils::successResponse($data);
@@ -2544,17 +2552,17 @@ class AgentsController extends Controller
     public function financialStateSummaryData($user = null, $startDate = null, $endDate = null)
     {
         try {
-            $startDate = Utils::startOfDayUtc($startDate);
-            $endDate  = Utils::endOfDayUtc($endDate);
-            $currency = session('currency');
+            $startDate  = Utils::startOfDayUtc($startDate);
+            $endDate    = Utils::endOfDayUtc($endDate);
+            $currency   = session('currency');
             $whitelabel = Configurations::getWhitelabel();
             //TODO PERCENTAGE AGENT
             $iAgent = $this->agentsRepo->iAgent($user);
 
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $agent  = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
             $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
-            $table    = $this->agentsCollection->financialStateSummary(
+            $users  = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $table  = $this->agentsCollection->financialStateSummary(
                 $whitelabel,
                 $agents,
                 $users,
@@ -2563,7 +2571,7 @@ class AgentsController extends Controller
                 $endDate,
                 $iAgent
             );
-            $data     = [
+            $data   = [
                 'table' => $table
             ];
             return Utils::successResponse($data);
@@ -2610,7 +2618,7 @@ class AgentsController extends Controller
             //                $table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabel(Configurations::getWhitelabel(), session('currency'),Utils::startOfDayUtc($startDate) ,Utils::endOfDayUtc($endDate));
             //            }else{
             $percentage = $this->agentsRepo->myPercentageByCurrency($user, session('currency'));
-            $percentage = !empty($percentage) ? $percentage[0]->percentage : null;
+            $percentage = ! empty($percentage) ? $percentage[0]->percentage : null;
 
             //$table = $this->closuresUsersTotals2023Repo->getClosureTotalsByWhitelabelWithSon(Configurations::getWhitelabel(), session('currency'), Utils::startOfDayUtc($startDate), Utils::endOfDayUtc($endDate), $user);
 
@@ -2689,8 +2697,8 @@ class AgentsController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function find(Request $request): Response
-    {
+    public function find(Request $request)
+    : Response {
         $this->validate($request, [
             'id'   => 'required|exists:users,id',
             'type' => 'required',
@@ -2698,7 +2706,7 @@ class AgentsController extends Controller
 
         try {
             $authUserId          = session('admin_id') ?? auth()->id();
-            $agent_player        = !session('admin_id');
+            $agent_player        = ! session('admin_id');
             $currency            = session('currency');
             $whitelabel          = Configurations::getWhitelabel();
             $bonus               = Configurations::getBonus();
@@ -2717,7 +2725,7 @@ class AgentsController extends Controller
                 $myself  = $authUserId == $user->id;
             } else {
                 $user     = $this->agentsRepo->findUser($userId);
-                $father   = (!is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
+                $father   = (! is_null($user)) ? $this->usersRepo->findUsername($user->owner_id) : null;
                 $master   = false;
                 $wallet   = Wallet::getByClient($userId, $currency, $bonus);
                 $balance  = $wallet->data->wallet->balance;
@@ -2765,14 +2773,14 @@ class AgentsController extends Controller
     public function userFind($user)
     {
         try {
-            $userData       = $this->usersRepo->find($user);
+            $userData   = $this->usersRepo->find($user);
             $agentsRepo = new AgentsRepo();
-            $agent = ($userData->type_user == 'agent')
+            $agent      = ($userData->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($userData->id, session('currency'))
                 : $agentsRepo->findUser($userData->id);
             $this->agentsCollection->formatUserFind($agent);
             $usersData = [
-                'userData'        => $agent,
+                'userData' => $agent,
             ];
             return Utils::successResponse($usersData);
         } catch (Exception $ex) {
@@ -2792,28 +2800,28 @@ class AgentsController extends Controller
     {
         try {
             $currency = session('currency');
-            $id = $request->id;
-            $type = $request->type;
-            $cant = null;
+            $id       = $request->id;
+            $type     = $request->type;
+            $cant     = null;
 
             if ($type == 'agent') {
-                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $cant    = $this->usersRepo->numberChildren($id, $currency);
                 $fathers = $this->usersRepo->getParentsFromChild($id, $currency, Auth::user()->id, $type);
             } else {
-                $cant = $this->usersRepo->numberChildren($id, $currency);
+                $cant    = $this->usersRepo->numberChildren($id, $currency);
                 $fathers = $this->usersRepo->getParentsFromChild($id, $currency, Auth::user()->id, $type);
             }
 
             $data = [
-                'cant_agents' => 0,
+                'cant_agents'  => 0,
                 'cant_players' => 0,
-                'fathers' => [],
+                'fathers'      => [],
             ];
 
-            if (!is_null($cant)) {
-                $data['cant_agents'] = $cant['agents'];
+            if (! is_null($cant)) {
+                $data['cant_agents']  = $cant['agents'];
                 $data['cant_players'] = $cant['players'];
-                $data['fathers'] = $fathers;
+                $data['fathers']      = $fathers;
             }
 
             return Utils::successResponse($data);
@@ -2835,15 +2843,15 @@ class AgentsController extends Controller
     {
         try {
             $startDateClosure = $startDate;
-            $endDateClosure = $endDate;
+            $endDateClosure   = $endDate;
 
             $startDate = Carbon::now()->subDays(30);
-            $endDate = Carbon::now();
+            $endDate   = Carbon::now();
             if (session('admin_id')) {
-                $userId = session('admin_id');
+                $userId      = session('admin_id');
                 $agentPlayer = false;
             } else {
-                $userId = auth()->user()->id;
+                $userId      = auth()->user()->id;
                 $agentPlayer = true;
             }
             $user         = intval($user);
@@ -2858,8 +2866,8 @@ class AgentsController extends Controller
                 $endDate
             );
 
-            $closureRepo = new ClosuresUsersTotals2023Repo();
-            $typeUser = $this->usersRepo->findTypeUser($user);
+            $closureRepo      = new ClosuresUsersTotals2023Repo();
+            $typeUser         = $this->usersRepo->findTypeUser($user);
             $arrayProviderTmp = array_map(function ($val) {
                 return $val->id;
             }, $closureRepo->getProvidersActiveByCredentials(true, session('currency'), $whitelabel));
@@ -2892,12 +2900,12 @@ class AgentsController extends Controller
             //\Log::debug('closures',[$closures] );
             $data = [
                 'payments' => [
-                    'username' => 'qwerty',
-                    'loads'    => $transactions,
-                    'downloads' => $transactions['debit'],
-                    'total'    => '1231',
-                    'comission' => '1232',
-                    'payment'  => '35645',
+                    'username'   => 'qwerty',
+                    'loads'      => $transactions,
+                    'downloads'  => $transactions['debit'],
+                    'total'      => '1231',
+                    'comission'  => '1232',
+                    'payment'    => '35645',
                     'receivable' => '33243'
                 ]
             ];
@@ -2916,7 +2924,7 @@ class AgentsController extends Controller
     {
         try {
             return Utils::successResponse([
-                'tree' => $this->agentsCollection->childrenTreeSql(Auth::id()),
+                'tree'   => $this->agentsCollection->childrenTreeSql(Auth::id()),
                 'makers' => $this->gamesRepo->getMakers()
             ]);
         } catch (Exception $ex) {
@@ -2989,24 +2997,24 @@ class AgentsController extends Controller
             //            }
 
             $whitelabel = Configurations::getWhitelabel();
-            $agentUser = $this->agentsRepo->findAgent($user, $whitelabel);
-            $userData = $this->usersRepo->getUsers($user);
+            $agentUser  = $this->agentsRepo->findAgent($user, $whitelabel);
+            $userData   = $this->usersRepo->getUsers($user);
             foreach ($userData as $users) {
                 $confirmation = $users->confirmation_email;
             }
 
-            $data['agent']  = $this->agentsRepo->findUserProfile($user, session('currency') ?? '');
-            $data['makers'] = [];
-            $data['agents'] = json_decode(
+            $data['agent']              = $this->agentsRepo->findUserProfile($user, session('currency') ?? '');
+            $data['makers']             = [];
+            $data['agents']             = json_decode(
                 json_encode(
                     $this->agentsRepo->getAgentsAllByOwner($user, session('currency'), Configurations::getWhitelabel())
                 ),
                 true
             );
-            $data['action'] = auth()->user()->action;
-            $data['iagent'] = $agentUser;
+            $data['action']             = auth()->user()->action;
+            $data['iagent']             = $agentUser;
             $data['confirmation_email'] = $confirmation;
-            $data['title']  = _i('Agents module');
+            $data['title']              = _i('Agents module');
 
             return view('back.agents.index', $data);
         } catch (Exception $ex) {
@@ -3036,10 +3044,10 @@ class AgentsController extends Controller
     {
         try {
             $currency = $request->currency;
-            if (!is_null($currency)) {
+            if (! is_null($currency)) {
                 $whitelabel = Configurations::getWhitelabel();
-                $provider = $request->provider;
-                $agents = $this->agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
+                $provider   = $request->provider;
+                $agents     = $this->agentsRepo->getAgentLockByProvider($currency, $provider, $whitelabel);
             } else {
                 $agents = [];
             }
@@ -3062,7 +3070,7 @@ class AgentsController extends Controller
      */
     public function mainAgents()
     {
-        $data['title'] = _i('Create main agents');
+        $data['title']       = _i('Create main agents');
         $data['whitelabels'] = $this->whitelabelsRepo->all();
         return view('back.agents.main-agents', $data);
     }
@@ -3090,15 +3098,15 @@ class AgentsController extends Controller
     public function manualTransactionsData($startDate = null, $endDate = null, $currency = null)
     {
         try {
-            if (!is_null($startDate) || !is_null($endDate) && !is_null($currency)) {
+            if (! is_null($startDate) || ! is_null($endDate) && ! is_null($currency)) {
                 if (session('admin_id')) {
                     $user = session('admin_id');
                 } else {
                     $user = auth()->user()->id;
                 }
                 $agents = $this->agentsRepo->getAgentsByOwner($user, $currency);
-                $users = $this->agentsCollection->formatAgentsId($agents, $currency);
-                if (!in_array($user, $users)) {
+                $users  = $this->agentsCollection->formatAgentsId($agents, $currency);
+                if (! in_array($user, $users)) {
                     $users[] = $user;
                 }
                 $startDate    = Utils::startOfDayUtc($startDate);
@@ -3142,28 +3150,28 @@ class AgentsController extends Controller
 
         try {
             $userAgent = $request->user;
-            $agentId = $request->agent;
-            $agent   = $this->agentsRepo->existAgent($userAgent);
-            $userData = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
+            $agentId   = $request->agent;
+            $agent     = $this->agentsRepo->existAgent($userAgent);
+            $userData  = $this->agentsRepo->findByUserIdAndCurrency($userAgent, session('currency'));
             if ($userData->action == ActionUser::$locked_higher) {
                 $data = [
-                    'title' => ActionUser::getName($userData->action),
+                    'title'   => ActionUser::getName($userData->action),
                     'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
             if (is_null($agent)) {
                 $data = [
-                    'title' => _i('Agent moved'),
+                    'title'   => _i('Agent moved'),
                     'message' => _i('Agent not displaced'),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
             $agentData = [
                 'owner_id' => $agentId,
-                'user_id' => $userAgent,
+                'user_id'  => $userAgent,
             ];
 
             //TODO CONSULTAR USUARIO PADRE
@@ -3175,9 +3183,9 @@ class AgentsController extends Controller
 
             $this->agentsRepo->update($agent->id, $agentData);
             $data = [
-                'title' => _i('Agent moved'),
+                'title'   => _i('Agent moved'),
                 'message' => _i('Agent moved successfully'),
-                'close' => _i('Close')
+                'close'   => _i('Close')
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -3199,15 +3207,15 @@ class AgentsController extends Controller
         ]);
         try {
             $userAgent = $request->user;
-            $agentId = $request->agent;
+            $agentId   = $request->agent;
 
-            $agent = $this->agentsRepo->existAgent($agentId);
+            $agent    = $this->agentsRepo->existAgent($agentId);
             $userData = $this->agentsRepo->statusActionByUser($userAgent);
             if (isset($userData->action) && $userData->action == ActionUser::$locked_higher || isset($userData->status) && $userData->status == false) {
                 $data = [
-                    'title' => ActionUser::getName($userData->action),
+                    'title'   => ActionUser::getName($userData->action),
                     'message' => _i('Contact your superior...'),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
@@ -3220,9 +3228,9 @@ class AgentsController extends Controller
 
             $this->agentsRepo->moveAgentFromUser($agent, $userAgent);
             $data = [
-                'title' => _i('User moved'),
+                'title'   => _i('User moved'),
                 'message' => _i('User moved successfully'),
-                'close' => _i('Close')
+                'close'   => _i('Close')
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -3235,42 +3243,42 @@ class AgentsController extends Controller
      * @param TransactionRequest $request
      * @return Response
      */
-    public function performTransactions(TransactionRequest $request): Response
-    {
+    public function performTransactions(TransactionRequest $request)
+    : Response {
         try {
             return $this->userTransactionService->manageCreditDebitTransactions($request);
         } catch (Exception $ex) {
             return $this->userTransactionService->handleAndRespondToError($request, $ex);
         }
     }
+
     public function performTransactionsOld(Request $request)
     {
         $this->validate($request, [
-            'amount' => 'required|numeric|gt:0',
-            'user' => 'required|exists:users,id',
-            'type' => 'required',
+            'amount'           => 'required|numeric|gt:0',
+            'user'             => 'required|exists:users,id',
+            'type'             => 'required',
             'transaction_type' => 'required',
         ]);
         try {
-            $id = auth()->user()->id;
-            $currency = session('currency');
-            $type = $request->get('type');
-            $user = $request->get('user');
-            $amount = $request->get('amount');
-            $transactionType = $request->get('transaction_type');
-            $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
-            $ownerBalanceFinal = $ownerAgent->balance;
+            $id                   = auth()->user()->id;
+            $currency             = session('currency');
+            $type                 = $request->get('type');
+            $user                 = $request->get('user');
+            $amount               = $request->get('amount');
+            $transactionType      = $request->get('transaction_type');
+            $ownerAgent           = $this->agentsRepo->findByUserIdAndCurrency($id, $currency);
+            $ownerBalanceFinal    = $ownerAgent->balance;
             $transactionIdCreated = null;
 
             /* If the logged in user is different from the user that the balance is added to*/
             if ($id != $user) {
-
                 /*Insufficient balance */
                 if ($transactionType == TransactionTypes::$credit && $amount > $ownerAgent->balance && $ownerAgent->username != 'wolf') {
                     $data = [
-                        'title' => _i('Insufficient balance'),
+                        'title'   => _i('Insufficient balance'),
                         'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                     return Utils::errorResponse(Codes::$forbidden, $data);
                 }
@@ -3282,9 +3290,9 @@ class AgentsController extends Controller
                     $userData = $this->agentsRepo->findUser($user);
                     if ($userData->action == ActionUser::$locked_higher) {
                         $data = [
-                            'title' => _i('Blocked by a superior!'),
+                            'title'   => _i('Blocked by a superior!'),
                             'message' => _i('Contact your superior...'),
-                            'close' => _i('Close')
+                            'close'   => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$not_found, $data);
                     }
@@ -3293,21 +3301,23 @@ class AgentsController extends Controller
                     if (empty($walletData)) {
                         Log::error('error data, wallet getByClient', [
                             'userData' => $userData,
-                            'currency' => $currency, $request->all(), Auth::user()->id
+                            'currency' => $currency,
+                            $request->all(),
+                            Auth::user()->id
                         ]);
                         $data = [
-                            'title' => _i('An error occurred'),
+                            'title'   => _i('An error occurred'),
                             'message' => _i("please contact support"),
-                            'close' => _i('Close')
+                            'close'   => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
                     if ($transactionType == TransactionTypes::$credit) {
-                        $uuid = Str::uuid()->toString();
+                        $uuid           = Str::uuid()->toString();
                         $additionalData = [
                             'provider_transaction' => $uuid,
-                            'from' => $ownerAgent->username,
-                            'to' => $userData->username
+                            'from'                 => $ownerAgent->username,
+                            'to'                   => $userData->username
                         ];
 
                         if (Configurations::getWhitelabel() == 1) {
@@ -3319,14 +3329,19 @@ class AgentsController extends Controller
 
                             $time_start = microtime_float();
 
-                            $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                            $transaction = Wallet::creditManualTransactions(
+                                $amount,
+                                Providers::$agents_users,
+                                $additionalData,
+                                $wallet
+                            );
 
                             $time_end = microtime_float();
 
                             $time = $time_end - $time_start;
 
                             Log::debug('Tiempo que tarda', [
-                                'segundos' =>  $time
+                                'segundos' => $time
                             ]);
                         } else {
                             function microtime_float()
@@ -3337,66 +3352,74 @@ class AgentsController extends Controller
 
                             $time_start = microtime_float();
 
-                            $transaction = Wallet::creditManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                            $transaction = Wallet::creditManualTransactions(
+                                $amount,
+                                Providers::$agents_users,
+                                $additionalData,
+                                $wallet
+                            );
                         }
 
                         if (empty($transaction) || empty($transaction->data)) {
-
                             $time_end = microtime_float();
 
                             $time = $time_end - $time_start;
 
                             Log::debug('Tiempo que tarda', [
-                                'segundos' =>  $time
+                                'segundos' => $time
                             ]);
                             Log::debug('error data, wallet credit', [
-                                'transaction' => $transaction,
+                                'transaction'    => $transaction,
                                 'additionalData' => $additionalData,
-                                'request' => $request->all(),
-                                'Auth' => Auth::user()->id
+                                'request'        => $request->all(),
+                                'Auth'           => Auth::user()->id
                             ]);
 
                             $data = [
-                                'title' => _i('An error occurred'),
+                                'title'   => _i('An error occurred'),
                                 'message' => _i("please contact support"),
-                                'close' => _i('Close')
+                                'close'   => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
                         //new TransactionNotAllowed($amount, $user, Providers::$agents_users, $transactionType);
-                        $ownerBalance = $ownerAgent->balance - $amount;
+                        $ownerBalance      = $ownerAgent->balance - $amount;
                         $agentBalanceFinal = $walletData->data->wallet->balance;
                     } else {
-
                         $agentBalanceFinal = $walletData->data->wallet->balance;
                         if ($amount > $walletData->data->wallet->balance) {
                             $data = [
-                                'title' => _i('Insufficient balance'),
+                                'title'   => _i('Insufficient balance'),
                                 'message' => _i("The user's balance is insufficient to perform the transaction"),
-                                'close' => _i('Close')
+                                'close'   => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
 
-                        $uuid = Str::uuid()->toString();
+                        $uuid           = Str::uuid()->toString();
                         $additionalData = [
                             'provider_transaction' => $uuid,
-                            'from' => $ownerAgent->username,
-                            'to' => $userData->username
+                            'from'                 => $ownerAgent->username,
+                            'to'                   => $userData->username
                         ];
-                        $transaction = Wallet::debitManualTransactions($amount, Providers::$agents_users, $additionalData, $wallet);
+                        $transaction    = Wallet::debitManualTransactions(
+                            $amount,
+                            Providers::$agents_users,
+                            $additionalData,
+                            $wallet
+                        );
                         if (empty($transaction) || empty($transaction->data)) {
                             Log::debug('error data, wallet debit', [
-                                'transaction' => $transaction,
+                                'transaction'    => $transaction,
                                 'additionalData' => $additionalData,
-                                'request' => $request->all(),
-                                'Auth' => Auth::user()->id
+                                'request'        => $request->all(),
+                                'Auth'           => Auth::user()->id
                             ]);
 
                             $data = [
-                                'title' => _i('An error occurred'),
+                                'title'   => _i('An error occurred'),
                                 'message' => _i("please contact support"),
-                                'close' => _i('Close')
+                                'close'   => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
@@ -3404,37 +3427,40 @@ class AgentsController extends Controller
                         $ownerBalance = $ownerAgent->balance + $amount;
                     }
 
-                    $balance = $transaction->data->wallet->balance;
-                    $status = $transaction->status;
-                    $userAdditionalData = $additionalData;
+                    $balance                                  = $transaction->data->wallet->balance;
+                    $status                                   = $transaction->status;
+                    $userAdditionalData                       = $additionalData;
                     $userAdditionalData['wallet_transaction'] = $transaction->data->transaction->id;
 
                     $transactionData = [
                         //'id' => $transactionID,
-                        'user_id' => $user,
-                        'amount' => $amount,
-                        'currency_iso' => $currency,
-                        'transaction_type_id' => $transactionType,
+                        'user_id'               => $user,
+                        'amount'                => $amount,
+                        'currency_iso'          => $currency,
+                        'transaction_type_id'   => $transactionType,
                         'transaction_status_id' => TransactionStatus::$approved,
-                        'provider_id' => Providers::$agents_users,
-                        'data' => $userAdditionalData,
-                        'whitelabel_id' => Configurations::getWhitelabel()
+                        'provider_id'           => Providers::$agents_users,
+                        'data'                  => $userAdditionalData,
+                        'whitelabel_id'         => Configurations::getWhitelabel()
                     ];
-                    $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                    $ticket          = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []
+                    );
                     if (empty($ticket)) {
                         Log::error('error data, TransactionsRepo Store ', [
                             '$transactionData' => $transactionData,
-                            'approved' => TransactionStatus::$approved, $request->all(), Auth::user()->id
+                            'approved'         => TransactionStatus::$approved,
+                            $request->all(),
+                            Auth::user()->id
                         ]);
                         $data = [
-                            'title' => _i('An error occurred'),
+                            'title'   => _i('An error occurred'),
                             'message' => _i("please contact support"),
-                            'close' => _i('Close')
+                            'close'   => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
                     $transactionIdCreated = $ticket->id;
-                    $button = sprintf(
+                    $button               = sprintf(
                         '<a class="btn u-btn-3d u-btn-blue btn-block" id="ticket" href="%s" target="_blank">%s</a>',
                         route('agents.ticket', [$ticket->id]),
                         _i('Print ticket')
@@ -3444,9 +3470,9 @@ class AgentsController extends Controller
                     $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
                     if ($agent->action == ActionUser::$locked_higher) {
                         $data = [
-                            'title' => _i('Blocked by a superior!'),
+                            'title'   => _i('Blocked by a superior!'),
                             'message' => _i('Contact your superior...'),
-                            'close' => _i('Close')
+                            'close'   => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$not_found, $data);
                     }
@@ -3466,7 +3492,7 @@ class AgentsController extends Controller
                         $agentBalanceFinal = $agent->balance + $amount;
                         /*$agentData: agent id and selected currency are saved */
                         $agentData = [
-                            'agent_id' => $agent->agent,
+                            'agent_id'     => $agent->agent,
                             'currency_iso' => $currency
                         ];
                         /*$balanceData: balance is saved */
@@ -3481,8 +3507,8 @@ class AgentsController extends Controller
                         $ownerBalance = $ownerAgent->balance - $amount;
                         /*$additionalData: This is what is stored in the data field of the transactions table  */
                         $additionalData = [
-                            'from' => $ownerAgent->username,
-                            'to' => $agent->username,
+                            'from'    => $ownerAgent->username,
+                            'to'      => $agent->username,
                             'balance' => $balance
                         ];
                     } /*If the transaction is debit type */ else {
@@ -3496,7 +3522,7 @@ class AgentsController extends Controller
 
                             /*$agentData: agent id and selected currency are saved */
                             $agentData = [
-                                'agent_id' => $agent->agent,
+                                'agent_id'     => $agent->agent,
                                 'currency_iso' => $currency
                             ];
 
@@ -3512,39 +3538,41 @@ class AgentsController extends Controller
                             $ownerBalance = $ownerAgent->balance + $amount;
                             /*$additionalData: This is what is stored in the data field of the transactions table  */
                             $additionalData = [
-                                'from' => $ownerAgent->username,
-                                'to' => $agent->username,
+                                'from'    => $ownerAgent->username,
+                                'to'      => $agent->username,
                                 'balance' => $balance
                             ];
                         } else {
                             $balance = $agentBalance;
-                            $status = Status::$failed;
+                            $status  = Status::$failed;
                         }
                     }
                     /*If valid status equals true*/
                     if ($status == Status::$ok) {
                         /*$transactionData: This is the data of the first transaction that is generated. */
                         $transactionData = [
-                            'user_id' => $agent->id,
-                            'amount' => $amount,
-                            'currency_iso' => $currency,
-                            'transaction_type_id' => $transactionType,
+                            'user_id'               => $agent->id,
+                            'amount'                => $amount,
+                            'currency_iso'          => $currency,
+                            'transaction_type_id'   => $transactionType,
                             'transaction_status_id' => TransactionStatus::$approved,
-                            'provider_id' => Providers::$agents,
-                            'data' => $additionalData,
-                            'whitelabel_id' => Configurations::getWhitelabel()
+                            'provider_id'           => Providers::$agents,
+                            'data'                  => $additionalData,
+                            'whitelabel_id'         => Configurations::getWhitelabel()
                         ];
                         /* $ticket: here the first transaction in the table is generated.*/
                         $ticket = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
                         if (empty($ticket)) {
                             Log::error('error data, TransactionsRepo Store', [
                                 'transactionData' => $transactionData,
-                                'approved' => TransactionStatus::$approved, $request->all(), Auth::user()->id
+                                'approved'        => TransactionStatus::$approved,
+                                $request->all(),
+                                Auth::user()->id
                             ]);
                             $data = [
-                                'title' => _i('An error occurred'),
+                                'title'   => _i('An error occurred'),
                                 'message' => _i("please contact support"),
-                                'close' => _i('Close')
+                                'close'   => _i('Close')
                             ];
                             return Utils::errorResponse(Codes::$forbidden, $data);
                         }
@@ -3562,7 +3590,7 @@ class AgentsController extends Controller
                 if ($status == Status::$ok) {
                     /*$agentData: agent id and selected currency are saved */
                     $agentData = [
-                        'agent_id' => $ownerAgent->agent,
+                        'agent_id'     => $ownerAgent->agent,
                         'currency_iso' => $currency
                     ];
                     /*$balanceData: balance is saved */
@@ -3589,70 +3617,90 @@ class AgentsController extends Controller
                     /*it is assigned the id of the transaction created first */
                     $additionalData['transaction_id'] = $transactionIdCreated;
 
-                    $additionalData['second_balance'] = $transactionType == TransactionTypes::$credit ? round($agentBalanceFinal, 2) : round($agentBalanceFinal, 2) - $amount;
+                    $additionalData['second_balance'] = $transactionType == TransactionTypes::$credit ? round(
+                        $agentBalanceFinal,
+                        2
+                    ) : round($agentBalanceFinal, 2) - $amount;
 
                     $transactionData = [
                         //'id' => $transactionID,
-                        'user_id' => $id,
-                        'amount' => $amount,
-                        'currency_iso' => $currency,
-                        'transaction_type_id' => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
+                        'user_id'               => $id,
+                        'amount'                => $amount,
+                        'currency_iso'          => $currency,
+                        'transaction_type_id'   => $transactionType == TransactionTypes::$credit ? TransactionTypes::$debit : TransactionTypes::$credit,
                         'transaction_status_id' => TransactionStatus::$approved,
-                        'provider_id' => Providers::$agents,
-                        'data' => $additionalData,
-                        'whitelabel_id' => Configurations::getWhitelabel()
+                        'provider_id'           => Providers::$agents,
+                        'data'                  => $additionalData,
+                        'whitelabel_id'         => Configurations::getWhitelabel()
                     ];
 
-                    $transactionFinal = $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
+                    $transactionFinal = $this->transactionsRepo->store(
+                        $transactionData,
+                        TransactionStatus::$approved,
+                        []
+                    );
                     if (empty($transactionFinal)) {
                         Log::error('error data, TransactionsRepo Store', [
                             'transactionData' => $transactionData,
-                            'approved' => TransactionStatus::$approved, $request->all(), Auth::user()->id
+                            'approved'        => TransactionStatus::$approved,
+                            $request->all(),
+                            Auth::user()->id
                         ]);
                         $data = [
-                            'title' => _i('An error occurred'),
+                            'title'   => _i('An error occurred'),
                             'message' => _i("please contact support"),
-                            'close' => _i('Close')
+                            'close'   => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
                     //new TransactionNotAllowed($amount, $id, Providers::$agents, $transactionType);
-                    $transactionUpdate = $this->transactionsRepo->updateData($transactionIdCreated, $transactionFinal->id, $transactionType == TransactionTypes::$credit ? round($ownerBalanceFinal, 2) - $amount : round($ownerBalanceFinal, 2) + $amount);
+                    $transactionUpdate = $this->transactionsRepo->updateData(
+                        $transactionIdCreated,
+                        $transactionFinal->id,
+                        $transactionType == TransactionTypes::$credit
+                            ? round($ownerBalanceFinal, 2) - $amount
+                            : round(
+                                  $ownerBalanceFinal,
+                                  2
+                              ) + $amount
+                    );
                     if (empty($transactionUpdate)) {
                         Log::error('error data, TransactionsRepo Store', [
                             'transactionIdCreated' => $transactionIdCreated,
-                            'transactionFinal' => $transactionFinal,
-                            'approved' => TransactionStatus::$approved,
-                            'transactionType' => $transactionType, $request->all(), Auth::user()->id
+                            'transactionFinal'     => $transactionFinal,
+                            'approved'             => TransactionStatus::$approved,
+                            'transactionType'      => $transactionType,
+                            $request->all(),
+                            Auth::user()->id
                         ]);
                         $data = [
-                            'title' => _i('An error occurred'),
+                            'title'   => _i('An error occurred'),
                             'message' => _i("please contact support"),
-                            'close' => _i('Close')
+                            'close'   => _i('Close')
                         ];
                         return Utils::errorResponse(Codes::$forbidden, $data);
                     }
                     $data = [
-                        'title' => _i('Transaction performed'),
+                        'title'   => _i('Transaction performed'),
                         'message' => _i('The transaction was successfully made to the user'),
-                        'close' => _i('Close'),
+                        'close'   => _i('Close'),
                         'balance' => number_format($balance, 2),
-                        'button' => $button
+                        'button'  => $button
                     ];
                     return Utils::successResponse($data);
                 } else {
                     $data = [
-                        'title' => _i('Insufficient balance'),
+                        'title'   => _i('Insufficient balance'),
                         'message' => _i("The user's balance is insufficient to perform the transaction"),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                     return Utils::errorResponse(Codes::$forbidden, $data);
                 }
             } else {
                 $data = [
-                    'title' => _i('Error'),
+                    'title'   => _i('Error'),
                     'message' => _i('You cannot make transactions to yourself'),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
@@ -3670,17 +3718,17 @@ class AgentsController extends Controller
      */
     private function validateEmail($email)
     {
-        $data = [
+        $data     = [
             'address' => strtolower($email)
         ];
-        $curl = Curl::to(env('MAILGUN_VALIDATION_URL'))
+        $curl     = Curl::to(env('MAILGUN_VALIDATION_URL'))
             ->withOption('HTTPAUTH', CURLAUTH_BASIC)
             ->withOption('USERPWD', 'api:' . env('MAILGUN_SECRET'))
             ->withData($data)
             ->post();
         $response = json_decode($curl);
-        $result = true;
-        if (!isset($response->result) || $response->result != 'deliverable') {
+        $result   = true;
+        if (! isset($response->result) || $response->result != 'deliverable') {
             Log::debug('validateEmail', [$response]);
             $result = false;
         }
@@ -3700,12 +3748,12 @@ class AgentsController extends Controller
     public function store(Request $request, UsersTempRepo $usersTempRepo, UserCurrenciesRepo $userCurrenciesRepo)
     {
         $this->validate($request, [
-            'username' => ['required', new Username()],
-            'password' => ['required', new Password()],
+            'username'   => ['required', new Username()],
+            'password'   => ['required', new Password()],
             //'email' => ['required', new Email()],
-            'balance' => 'required',
+            'balance'    => 'required',
             'percentage' => 'required|numeric|between:1,99',
-            'timezone' => 'required'
+            'timezone'   => 'required'
         ]);
 
         try {
@@ -3731,29 +3779,29 @@ class AgentsController extends Controller
 
 
             $whitelabel = Configurations::getWhitelabel();
-            $uuid        = Str::uuid()->toString();
-            $owner       = auth()->user()->id;
-            $currency    = session('currency');
-            $username    = strtolower($request->username);
-            $password    = $request->password;
-            $timezone    = $request->timezone;
-            $balance     = $request->balance;
-            $master      = $request->master;
+            $uuid       = Str::uuid()->toString();
+            $owner      = auth()->user()->id;
+            $currency   = session('currency');
+            $username   = strtolower($request->username);
+            $password   = $request->password;
+            $timezone   = $request->timezone;
+            $balance    = $request->balance;
+            $master     = $request->master;
             $percentage = $request->percentage;
-            $currencies  = !empty($request->currencies) ? $request->currencies : [$currency];
+            $currencies = ! empty($request->currencies) ? $request->currencies : [$currency];
             //TODO NEW WAY TO SAVE EMAIL
             $domain = Configurations::getDomain();
-            $email = "$username@$domain";
+            $email  = "$username@$domain";
 
-            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+            $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+            $userExclude        = $this->agentsRepo->getExcludeUserMaker($owner);
 
-            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
+            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
                 $data = [
-                    'title' => _i('Username in use'),
+                    'title'   => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
-                    'close' => _i('Close'),
+                    'close'   => _i('Close'),
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
@@ -3762,38 +3810,39 @@ class AgentsController extends Controller
 
             if ($balance > $ownerAgent->balance) {
                 $data = [
-                    'title' => _i('Insufficient balance'),
+                    'title'   => _i('Insufficient balance'),
                     'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $ipForwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                $ip = explode(',', $ipForwarded)[0];
+                $ip          = explode(',', $ipForwarded)[0];
             } else {
                 $ip = $request->getClientIp();
             }
 
             $store       = Configurations::getStore()->active;
             $userData    = [
-                'username'     => $username,
-                'email'        => $email,
-                'password'     => $password,
-                'uuid'         => $uuid,
-                'ip'           => $ip,
-                'status'       => true,
-                'whitelabel_id' => $whitelabel,
-                'web_register' => false,
+                'username'          => $username,
+                'email'             => $email,
+                'password'          => $password,
+                'uuid'              => $uuid,
+                'ip'                => $ip,
+                'status'            => true,
+                'whitelabel_id'     => $whitelabel,
+                'web_register'      => false,
                 'register_currency' => $currency,
-                'type_user'    => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action'       => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
+                'type_user'         => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
+                'action'            => Configurations::getResetMainPassword(
+                ) ? ActionUser::$changed_password : ActionUser::$update_email,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
-                'timezone' => $timezone,
-                'level' => 1
+                'timezone'    => $timezone,
+                'level'       => 1
             ];
             $user        = $this->usersRepo->store($userData, $profileData);
             $this->generateReferenceCode->generateReferenceCode($user->id);
@@ -3805,7 +3854,7 @@ class AgentsController extends Controller
                     $agentCurrency
                 );
                 $this->agentsRepo->blockAgentsMakers($excludedUser);
-                $wallet   = Wallet::store(
+                $wallet     = Wallet::store(
                     $user->id,
                     $user->username,
                     $uuid,
@@ -3813,13 +3862,13 @@ class AgentsController extends Controller
                     $whitelabel,
                     session('wallet_access_token')
                 );
-                $userData = [
-                    'user_id' => $user->id,
+                $userData   = [
+                    'user_id'      => $user->id,
                     'currency_iso' => $agentCurrency
                 ];
                 $walletData = [
                     'wallet_id' => $wallet->data->wallet->id,
-                    'default' => $key == 0
+                    'default'   => $key == 0
                 ];
                 $userCurrenciesRepo->store($userData, $walletData);
                 if ($store) {
@@ -3828,9 +3877,9 @@ class AgentsController extends Controller
             }
 
             $agentData = [
-                'user_id' => $user->id,
-                'owner_id' => $owner,
-                'master'  => $master,
+                'user_id'    => $user->id,
+                'owner_id'   => $owner,
+                'master'     => $master,
                 'percentage' => $percentage,
             ];
             $agent     = $this->agentsRepo->store($agentData);
@@ -3845,45 +3894,45 @@ class AgentsController extends Controller
 
             if ($balance > 0 && in_array($currency, $currencies)) {
                 $ownerBalance = $ownerAgent->balance - $balance;
-                $agentData = [
-                    'agent_id' => $ownerAgent->agent,
+                $agentData    = [
+                    'agent_id'     => $ownerAgent->agent,
                     'currency_iso' => $currency
                 ];
-                $balanceData = [
+                $balanceData  = [
                     'balance' => $ownerBalance
                 ];
                 $this->agentCurrenciesRepo->store($agentData, $balanceData);
 
                 $additionalData   = [
-                    'from' => $ownerAgent->username,
-                    'to' => $user->username,
+                    'from'    => $ownerAgent->username,
+                    'to'      => $user->username,
                     'balance' => $ownerBalance
                 ];
                 $transactionData1 = [
-                    'user_id'       => $ownerAgent->id,
-                    'amount'        => $balance,
-                    'currency_iso'  => $currency,
-                    'transaction_type_id' => TransactionTypes::$debit,
+                    'user_id'               => $ownerAgent->id,
+                    'amount'                => $balance,
+                    'currency_iso'          => $currency,
+                    'transaction_type_id'   => TransactionTypes::$debit,
                     'transaction_status_id' => TransactionStatus::$approved,
-                    'provider_id'   => Providers::$agents,
-                    'data'          => $additionalData,
-                    'whitelabel_id' => Configurations::getWhitelabel()
+                    'provider_id'           => Providers::$agents,
+                    'data'                  => $additionalData,
+                    'whitelabel_id'         => Configurations::getWhitelabel()
                 ];
                 $transactionTmp1  = $this->transactionsRepo->store($transactionData1, TransactionStatus::$approved, []);
 
-                $additionalData['balance'] = $balance;
+                $additionalData['balance']        = $balance;
                 $additionalData['transaction_id'] = $transactionTmp1->id;
-                $transactionData2 = [
-                    'user_id'       => $user->id,
-                    'amount'        => $balance,
-                    'currency_iso'  => $currency,
-                    'transaction_type_id' => TransactionTypes::$credit,
+                $transactionData2                 = [
+                    'user_id'               => $user->id,
+                    'amount'                => $balance,
+                    'currency_iso'          => $currency,
+                    'transaction_type_id'   => TransactionTypes::$credit,
                     'transaction_status_id' => TransactionStatus::$approved,
-                    'provider_id'   => Providers::$agents,
-                    'data'          => $additionalData,
-                    'whitelabel_id' => Configurations::getWhitelabel()
+                    'provider_id'           => Providers::$agents,
+                    'data'                  => $additionalData,
+                    'whitelabel_id'         => Configurations::getWhitelabel()
                 ];
-                $transactionTmp2  = $this->transactionsRepo->store(
+                $transactionTmp2                  = $this->transactionsRepo->store(
                     $transactionData2,
                     TransactionStatus::$approved,
                     []
@@ -3891,9 +3940,9 @@ class AgentsController extends Controller
 
                 //TODO AUDIT 2 CREDIT
                 $auditDataTransaction2 = [
-                    'ip'      => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
+                    'ip'               => Utils::userIp(),
+                    'user_id'          => auth()->user()->id,
+                    'username'         => auth()->user()->username,
                     'transaction_data' => $transactionData2
                 ];
                 Audits::store(
@@ -3911,9 +3960,9 @@ class AgentsController extends Controller
 
                 //TODO AUDIT 1 DEBIT
                 $auditDataTransaction1 = [
-                    'ip'      => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
+                    'ip'               => Utils::userIp(),
+                    'user_id'          => auth()->user()->id,
+                    'username'         => auth()->user()->username,
                     'transaction_data' => $transactionData1_updated
                 ];
                 Audits::store(
@@ -3930,11 +3979,11 @@ class AgentsController extends Controller
             Security::assignRole($user->id, Roles::$admin_Beet_sweet); //TODO NUEVO ROL OF AGENT
 
             $data = [
-                'title' => _i('Agent created'),
+                'title'   => _i('Agent created'),
                 'message' => _i('Agent created successfully'),
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
                 'balance' => number_format($ownerBalance, 2),
-                'route' => route('agents.index'),
+                'route'   => route('agents.index'),
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -3965,7 +4014,7 @@ class AgentsController extends Controller
             $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
 
-            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
+            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
                 return Utils::errorResponse(Codes::$forbidden, [
                     'title'   => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
@@ -3973,15 +4022,15 @@ class AgentsController extends Controller
                 ]);
             }
 
-            $ip     = $request->header('X-Forwarded-For') ?? $request->ip();
-            $domain = Configurations::getDomain();
+            $ip         = $request->header('X-Forwarded-For') ?? $request->ip();
+            $domain     = Configurations::getDomain();
             $whitelabel = Configurations::getWhitelabel();
             $currency   = session('currency');
             $username   = strtolower($request->username);
-            if (!is_null($request->dependence)) {
-                $owner  = $request->dependence;
+            if (! is_null($request->dependence)) {
+                $owner = $request->dependence;
             } else {
-                $owner  = auth()->user()->id;
+                $owner = auth()->user()->id;
             }
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
             $master     = $request->input('master');
@@ -3998,7 +4047,8 @@ class AgentsController extends Controller
                 'web_register'      => false,
                 'register_currency' => $currency,
                 'type_user'         => $master == 'true' ? TypeUser::$agentMater : TypeUser::$agentCajero,
-                'action'            => Configurations::getResetMainPassword() ? ActionUser::$changed_password : ActionUser::$update_email,
+                'action'            => Configurations::getResetMainPassword(
+                ) ? ActionUser::$changed_password : ActionUser::$update_email,
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
@@ -4082,13 +4132,13 @@ class AgentsController extends Controller
 
         $this->validate($request, $rules);
 
-        $email = strtolower($request->get('email'));
+        $email       = strtolower($request->get('email'));
         $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-        if (!is_null($uniqueEmail)) {
+        if (! is_null($uniqueEmail)) {
             $data = [
-                'title' => _i('Email in use'),
+                'title'   => _i('Email in use'),
                 'message' => _i('The indicated email is already in use'),
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
             ];
             return Utils::errorResponse(Codes::$forbidden, $data);
         }
@@ -4098,26 +4148,26 @@ class AgentsController extends Controller
             $currency = session('currency');
             //Whitelabel id
             $whitelabel = Configurations::getWhitelabel();
-            $bonus = Configurations::getBonus($whitelabel);
-            $uuid  = Str::uuid()->toString();
-            if (!is_null($request->dependence)) {
-                $owner  = $request->dependence;
+            $bonus      = Configurations::getBonus($whitelabel);
+            $uuid       = Str::uuid()->toString();
+            if (! is_null($request->dependence)) {
+                $owner = $request->dependence;
             } else {
-                $owner  = auth()->user()->id;
+                $owner = auth()->user()->id;
             }
             $username = strtolower($request->username);
             $password = $request->password;
             //$email = $request->email;
-            $balance     = 0;
-            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+            $balance            = 0;
+            $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+            $userExclude        = $this->agentsRepo->getExcludeUserMaker($owner);
 
-            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
+            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
                 $data = [
-                    'title' => _i('Username in use'),
+                    'title'   => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
-                    'close' => _i('Close'),
+                    'close'   => _i('Close'),
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
@@ -4125,52 +4175,52 @@ class AgentsController extends Controller
             if (is_null($request->email)) {
                 $domain = strtolower($_SERVER['HTTP_HOST']);
                 $domain = str_replace('www.', '', $domain);
-                $email   = "$username@$domain";
+                $email  = "$username@$domain";
             }
 
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
 
             if ($balance > $ownerAgent->balance) {
                 $data = [
-                    'title' => _i('Insufficient balance'),
+                    'title'   => _i('Insufficient balance'),
                     'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $ipForwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                $ip = explode(',', $ipForwarded)[0];
+                $ip          = explode(',', $ipForwarded)[0];
             } else {
                 $ip = $request->getClientIp();
             }
 
 
             $userData    = [
-                'username'     => $username,
-                'email'        => $email,
-                'password'     => $password,
-                'uuid'         => $uuid,
-                'ip'           => $ip,
-                'status'       => true,
-                'whitelabel_id' => $whitelabel,
-                'web_register' => false,
+                'username'          => $username,
+                'email'             => $email,
+                'password'          => $password,
+                'uuid'              => $uuid,
+                'ip'                => $ip,
+                'status'            => true,
+                'whitelabel_id'     => $whitelabel,
+                'web_register'      => false,
                 'register_currency' => $currency,
-                'type_user'    => TypeUser::$player,
-                'action'       => ActionUser::$active
+                'type_user'         => TypeUser::$player,
+                'action'            => ActionUser::$active
             ];
             $profileData = [
                 'country_iso' => $ownerAgent->country_iso,
                 'timezone'    => session('timezone'),
-                'level' => 1
+                'level'       => 1
             ];
             $user        = $this->usersRepo->store($userData, $profileData);
             $auditData   = [
-                'ip'       => Utils::userIp(),
-                'user_id'  => auth()->user()->id,
-                'username' => auth()->user()->username,
-                'player_data' => $userData,
+                'ip'           => Utils::userIp(),
+                'user_id'      => auth()->user()->id,
+                'username'     => auth()->user()->username,
+                'player_data'  => $userData,
                 'profile_data' => $profileData
             ];
             Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
@@ -4186,13 +4236,13 @@ class AgentsController extends Controller
                 session('wallet_access_token')
             );
             $this->generateReferenceCode->generateReferenceCode($user->id);
-            $userData           = [
-                'user_id' => $user->id,
+            $userData   = [
+                'user_id'      => $user->id,
                 'currency_iso' => $currency
             ];
             $walletData = [
                 'wallet_id' => $wallet->data->wallet->id,
-                'default' => true
+                'default'   => true
             ];
             $userCurrenciesRepo->store($userData, $walletData);
             $this->agentsRepo->addUser($ownerAgent->agent, $user->id);
@@ -4212,7 +4262,7 @@ class AgentsController extends Controller
 
 
                 // Check if $campaigns is not empty before proceeding
-                if (!empty($campaigns)) {
+                if (! empty($campaigns)) {
                     // Create a wallet for bonuses
                     $walletBonus = Wallet::store(
                         $user->id,
@@ -4255,10 +4305,10 @@ class AgentsController extends Controller
 
             if ($balance > 0) {
                 $providerTransaction = Str::uuid()->toString();
-                $additionalData = [
+                $additionalData      = [
                     'provider_transaction' => $providerTransaction,
-                    'from' => $ownerAgent->username,
-                    'to' => $user->username
+                    'from'                 => $ownerAgent->username,
+                    'to'                   => $user->username
                 ];
                 Wallet::creditManualTransactions(
                     $balance,
@@ -4268,25 +4318,25 @@ class AgentsController extends Controller
                 );
 
                 $ownerBalance = $ownerAgent->balance - $balance;
-                $agentData       = [
-                    'agent_id' => $ownerAgent->agent,
+                $agentData    = [
+                    'agent_id'     => $ownerAgent->agent,
                     'currency_iso' => $currency
                 ];
-                $balanceData = [
+                $balanceData  = [
                     'balance' => $ownerBalance
                 ];
                 $this->agentCurrenciesRepo->store($agentData, $balanceData);
 
                 $additionalData['balance'] = $ownerBalance;
-                $transactionData = [
-                    'user_id'       => $ownerAgent->id,
-                    'amount'        => $balance,
-                    'currency_iso'  => $currency,
-                    'transaction_type_id' => TransactionTypes::$debit,
+                $transactionData           = [
+                    'user_id'               => $ownerAgent->id,
+                    'amount'                => $balance,
+                    'currency_iso'          => $currency,
+                    'transaction_type_id'   => TransactionTypes::$debit,
                     'transaction_status_id' => TransactionStatus::$approved,
-                    'provider_id'   => Providers::$agents,
-                    'data'          => $additionalData,
-                    'whitelabel_id' => Configurations::getWhitelabel()
+                    'provider_id'           => Providers::$agents,
+                    'data'                  => $additionalData,
+                    'whitelabel_id'         => Configurations::getWhitelabel()
                 ];
                 $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
             } else {
@@ -4294,9 +4344,9 @@ class AgentsController extends Controller
             }
 
             $data = [
-                'title' => _i('Player created'),
+                'title'   => _i('Player created'),
                 'message' => _i('Player created successfully'),
-                'close' => _i('Close')
+                'close'   => _i('Close')
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -4343,10 +4393,10 @@ class AgentsController extends Controller
     public function relocationAgentsData($agentMoveId = null)
     {
         try {
-            if (!is_null($agentMoveId)) {
-                $user  = auth()->user()->id;
-                $currency = session('currency');
-                $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            if (! is_null($agentMoveId)) {
+                $user       = auth()->user()->id;
+                $currency   = session('currency');
+                $agent      = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
                 $whitelabel = Configurations::getWhitelabel();
 
                 $agents = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
@@ -4379,22 +4429,23 @@ class AgentsController extends Controller
     public function role(string $username = '')
     {
         try {
-            $authUser   = Auth::user();
-            $authUserId = $authUser->id;
-            $whitelabel = Configurations::getWhitelabel();
-            $bonus         = Configurations::getBonus();
+            $authUser       = Auth::user();
+            $authUserId     = $authUser->id;
+            $whitelabel     = Configurations::getWhitelabel();
+            $bonus          = Configurations::getBonus();
             $agentUser      = $authUser->agent;
             $userData       = $this->usersRepo->getUsers($authUserId);
             $confirmation   = $userData->pluck('confirmation_email')->first();
-            $customUsername = !empty($username) ? $username : $authUser->username;
+            $customUsername = ! empty($username) ? $username : $authUser->username;
             $currency       = session('currency');
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
-            $user = !empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel) : Auth::user();
-            $percentage = null;
+            $user           = ! empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel)
+                : Auth::user();
+            $percentage     = null;
             // dd($user->type_user);
             $agentsRepo = new AgentsRepo();
-            $agent = ($user->type_user == 'agent')
+            $agent      = ($user->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                 : $agentsRepo->findUser($user->id);
             if ($user->type_user == 'player') {
@@ -4402,18 +4453,18 @@ class AgentsController extends Controller
                 if (is_array($wallet->data)) {
                     Log::info("Error in user wallet array {$user->id}", [$wallet]);
                 }
-                $balance = !is_array($wallet->data)
+                $balance       = ! is_array($wallet->data)
                     ? $wallet?->data?->wallet?->balance
                     : 0;
                 $usernameOwner = $agent->ownerAgent->username;
             } else {
-                $userOwner = $this->usersRepo->getTokenByUser($agent->owner);
-                $percentage = $agent->percentage;
+                $userOwner     = $this->usersRepo->getTokenByUser($agent->owner);
+                $percentage    = $agent->percentage;
                 $usernameOwner = $userOwner->username;
-                $balance = ($user->type_user == 'agent') ?  $agent?->balance :  $agent?->wallet?->balance;
+                $balance       = ($user->type_user == 'agent') ? $agent?->balance : $agent?->wallet?->balance;
             }
             $agentsCollection = new AgentsCollection();
-            $userAgent = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
+            $userAgent        = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
@@ -4447,7 +4498,7 @@ class AgentsController extends Controller
     {
         try {
             return view('back.agents.role-dashboard', [
-                'dashboard'              =>  $this->reportRepo->dashboard()
+                'dashboard' => $this->reportRepo->dashboard()
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
@@ -4466,12 +4517,12 @@ class AgentsController extends Controller
     public function searchAgent(Request $request)
     {
         try {
-            $user     = auth()->user()->id;
-            $currency = session('currency');
-            $whitelabel = Configurations::getWhitelabel();
-            $name     = strtolower($request->user);
-            $agents   = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
-            $status   = false;
+            $user        = auth()->user()->id;
+            $currency    = session('currency');
+            $whitelabel  = Configurations::getWhitelabel();
+            $name        = strtolower($request->user);
+            $agents      = $this->agentsRepo->getSearchAgentsByOwner($currency, $user, $whitelabel);
+            $status      = false;
             $selectUsers = $this->agentsCollection->dependencySelect($name, $agents, [], $whitelabel, $status);
 
             $data = [
@@ -4497,8 +4548,8 @@ class AgentsController extends Controller
      *
      * @throws Exception If an error occurs during the search process.
      */
-    public function searchUserByUsername(Request $request): Response
-    {
+    public function searchUserByUsername(Request $request)
+    : Response {
         try {
             return $this->agentService->searchUserByUsername($request);
         } catch (Exception $ex) {
@@ -4520,82 +4571,82 @@ class AgentsController extends Controller
         ]);
 
         try {
-            $whitelabel   = $request->whitelabel;
-            $admin        = 'admin';
-            $support      = 'wolf';
-            $supportgl    = 'supportgl';
-            $romeoAgent   = null;
-            $supportAgent = null;
-            $supportAgl   = null;
-            $adminAgent   = null;
+            $whitelabel     = $request->whitelabel;
+            $admin          = 'admin';
+            $support        = 'wolf';
+            $supportgl      = 'supportgl';
+            $romeoAgent     = null;
+            $supportAgent   = null;
+            $supportAgl     = null;
+            $adminAgent     = null;
             $supportAgentgl = null;
-            $supportUser  = $this->usersRepo->getByUsername($support, $whitelabel);
-            $adminUser    = $this->usersRepo->getByUsername($admin, $whitelabel);
-            $supportglUser = $this->usersRepo->getByUsername($supportgl, $whitelabel);
+            $supportUser    = $this->usersRepo->getByUsername($support, $whitelabel);
+            $adminUser      = $this->usersRepo->getByUsername($admin, $whitelabel);
+            $supportglUser  = $this->usersRepo->getByUsername($supportgl, $whitelabel);
 
             if (is_null($supportUser)) {
                 $data = [
-                    'title' => _i('User %s does not exist', [$support]),
+                    'title'   => _i('User %s does not exist', [$support]),
                     'message' => _i('The %s user has not yet been created. Please create it first', [$support]),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
             if (is_null($supportglUser)) {
                 $data = [
-                    'title' => _i('User %s does not exist', [$supportgl]),
+                    'title'   => _i('User %s does not exist', [$supportgl]),
                     'message' => _i('The %s user has not yet been created. Please create it first', [$supportgl]),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
             if (is_null($adminUser)) {
                 $data = [
-                    'title' => _i('User %s does not exist', [$admin]),
+                    'title'   => _i('User %s does not exist', [$admin]),
                     'message' => _i('The %s user has not yet been created. Please create it first', [$admin]),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
             $supportAgent = $this->agentsRepo->existAgent($supportUser->id);
-            $supportAgl = $this->agentsRepo->existAgent($supportglUser->id);
-            $adminAgent = $this->agentsRepo->existAgent($adminUser->id);
-            $currencies = Configurations::getCurrenciesByWhitelabel($whitelabel);
+            $supportAgl   = $this->agentsRepo->existAgent($supportglUser->id);
+            $adminAgent   = $this->agentsRepo->existAgent($adminUser->id);
+            $currencies   = Configurations::getCurrenciesByWhitelabel($whitelabel);
 
             if (is_null($supportAgent)) {
                 $supportAgentData = [
-                    'user_id' => $supportUser->id,
+                    'user_id'  => $supportUser->id,
                     'owner_id' => null,
-                    'master' => true
+                    'master'   => true
                 ];
                 $supportAgent     = $this->agentsRepo->store($supportAgentData);
             }
 
             if (is_null($supportAgl)) {
                 $supportAgentData = [
-                    'user_id' => $supportglUser->id,
+                    'user_id'  => $supportglUser->id,
                     'owner_id' => $supportUser->id,
-                    'master' => true
+                    'master'   => true
                 ];
                 $supportAgentgl   = $this->agentsRepo->store($supportAgentData);
             }
 
             if (is_null($adminAgent)) {
                 $adminAgentData = [
-                    'user_id' => $adminUser->id,
+                    'user_id'  => $adminUser->id,
                     'owner_id' => $supportglUser->id,
-                    'master' => true
+                    'master'   => true
                 ];
                 $adminAgent     = $this->agentsRepo->store($adminAgentData);
                 Security::deleteAssignRole($adminUser->id);
                 Security::assignRole($adminUser->id, Roles::$admin_assiria);
-                $auditData      = [
-                    'ip'      => Utils::userIp(),
-                    'user_id' => auth()->user()->id,
-                    'username' => auth()->user()->username,
+                $auditData = [
+                    'ip'          => Utils::userIp(),
+                    'user_id'     => auth()->user()->id,
+                    'username'    => auth()->user()->username,
                     'agents_data' => [
                         'type' => $admin,
                         'data' => $adminAgentData
@@ -4609,32 +4660,32 @@ class AgentsController extends Controller
                     'balance' => 0
                 ];
 
-                if (!is_null($romeoAgent)) {
+                if (! is_null($romeoAgent)) {
                     $romeoAgentCurrencyData = [
-                        'agent_id' => $romeoAgent->id,
+                        'agent_id'     => $romeoAgent->id,
                         'currency_iso' => $currency,
                     ];
                     $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, $balance);
                 }
 
-                if (!is_null($supportAgent)) {
+                if (! is_null($supportAgent)) {
                     $supportAgentCurrencyData = [
-                        'agent_id' => $supportAgent->id,
+                        'agent_id'     => $supportAgent->id,
                         'currency_iso' => $currency,
                     ];
                     $this->agentCurrenciesRepo->store($supportAgentCurrencyData, $balance);
                 }
-                if (!is_null($supportAgentgl)) {
+                if (! is_null($supportAgentgl)) {
                     $supportAgentCurrencyData = [
-                        'agent_id' => $supportAgentgl->id,
+                        'agent_id'     => $supportAgentgl->id,
                         'currency_iso' => $currency,
                     ];
                     $this->agentCurrenciesRepo->store($supportAgentCurrencyData, $balance);
                 }
 
-                if (!is_null($adminAgent)) {
+                if (! is_null($adminAgent)) {
                     $adminAgentCurrencyData = [
-                        'agent_id' => $adminAgent->id,
+                        'agent_id'     => $adminAgent->id,
                         'currency_iso' => $currency,
                     ];
                     $this->agentCurrenciesRepo->store($adminAgentCurrencyData, $balance);
@@ -4661,9 +4712,9 @@ class AgentsController extends Controller
                             foreach ($currencies as $currency) {
                                 //TODO NO EXISTE LA RELACION CURRENCY => CREARLA
                                 $issetUserRol = $this->usersRepo->findCurrencyAgent($currency, $value->id_agent);
-                                if (!isset($issetUserRol->id)) {
+                                if (! isset($issetUserRol->id)) {
                                     $romeoAgentCurrencyData = [
-                                        'agent_id' => $value->id_agent,
+                                        'agent_id'     => $value->id_agent,
                                         'currency_iso' => $currency,
                                     ];
                                     $this->agentCurrenciesRepo->store($romeoAgentCurrencyData, ['balance' => 0]);
@@ -4675,9 +4726,9 @@ class AgentsController extends Controller
             }
 
             $data = [
-                'title' => _i('Agents created'),
+                'title'   => _i('Agents created'),
                 'message' => _i('Agents were created successfully'),
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -4700,23 +4751,23 @@ class AgentsController extends Controller
         $rules = [
             'username' => ['required', new Username()],
             'password' => ['required', new Password()],
-            'balance' => 'required',
-            'country' => 'required',
+            'balance'  => 'required',
+            'country'  => 'required',
             'timezone' => 'required'
         ];
-        if (!is_null($request->email)) {
+        if (! is_null($request->email)) {
             $rules['email'] = ['required', new Email()];
         }
 
         $this->validate($request, $rules);
 
-        $email = strtolower($request->get('email'));
+        $email       = strtolower($request->get('email'));
         $uniqueEmail = $this->usersRepo->uniqueEmail($email);
-        if (!is_null($uniqueEmail)) {
+        if (! is_null($uniqueEmail)) {
             $data = [
-                'title' => _i('Email in use'),
+                'title'   => _i('Email in use'),
                 'message' => _i('The indicated email is already in use'),
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
             ];
             return Utils::errorResponse(Codes::$forbidden, $data);
         }
@@ -4726,24 +4777,24 @@ class AgentsController extends Controller
             $currency = session('currency');
             //Whitelabel id
             $whitelabel = Configurations::getWhitelabel();
-            $bonus = Configurations::getBonus($whitelabel);
-            $uuid  = Str::uuid()->toString();
-            $owner = auth()->user()->id;
-            $username = strtolower($request->username);
-            $password = $request->password;
+            $bonus      = Configurations::getBonus($whitelabel);
+            $uuid       = Str::uuid()->toString();
+            $owner      = auth()->user()->id;
+            $username   = strtolower($request->username);
+            $password   = $request->password;
             //$email = $request->email;
-            $balance     = $request->balance;
-            $country     = $request->country;
-            $timezone    = $request->timezone;
-            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+            $balance            = $request->balance;
+            $country            = $request->country;
+            $timezone           = $request->timezone;
+            $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
-            $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
+            $userExclude        = $this->agentsRepo->getExcludeUserMaker($owner);
 
-            if (!is_null($uniqueUsername) || !is_null($uniqueTempUsername)) {
+            if (! is_null($uniqueUsername) || ! is_null($uniqueTempUsername)) {
                 $data = [
-                    'title' => _i('Username in use'),
+                    'title'   => _i('Username in use'),
                     'message' => _i('The indicated username is already in use'),
-                    'close' => _i('Close'),
+                    'close'   => _i('Close'),
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
@@ -4751,52 +4802,52 @@ class AgentsController extends Controller
             if (is_null($request->email)) {
                 $domain = strtolower($_SERVER['HTTP_HOST']);
                 $domain = str_replace('www.', '', $domain);
-                $email   = "$username@$domain";
+                $email  = "$username@$domain";
             }
 
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
 
             if ($balance > $ownerAgent->balance) {
                 $data = [
-                    'title' => _i('Insufficient balance'),
+                    'title'   => _i('Insufficient balance'),
                     'message' => _i("The agents's operational balance is insufficient to perform the transaction"),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
 
             if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $ipForwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                $ip = explode(',', $ipForwarded)[0];
+                $ip          = explode(',', $ipForwarded)[0];
             } else {
                 $ip = $request->getClientIp();
             }
 
 
             $userData    = [
-                'username'     => $username,
-                'email'        => $email,
-                'password'     => $password,
-                'uuid'         => $uuid,
-                'ip'           => $ip,
-                'status'       => true,
-                'whitelabel_id' => $whitelabel,
-                'web_register' => false,
+                'username'          => $username,
+                'email'             => $email,
+                'password'          => $password,
+                'uuid'              => $uuid,
+                'ip'                => $ip,
+                'status'            => true,
+                'whitelabel_id'     => $whitelabel,
+                'web_register'      => false,
                 'register_currency' => $currency,
-                'type_user'    => TypeUser::$player,
-                'action'       => ActionUser::$active
+                'type_user'         => TypeUser::$player,
+                'action'            => ActionUser::$active
             ];
             $profileData = [
                 'country_iso' => $country,
-                'timezone' => $timezone,
-                'level' => 1
+                'timezone'    => $timezone,
+                'level'       => 1
             ];
             $user        = $this->usersRepo->store($userData, $profileData);
             $auditData   = [
-                'ip'       => Utils::userIp(),
-                'user_id'  => auth()->user()->id,
-                'username' => auth()->user()->username,
-                'player_data' => $userData,
+                'ip'           => Utils::userIp(),
+                'user_id'      => auth()->user()->id,
+                'username'     => auth()->user()->username,
+                'player_data'  => $userData,
                 'profile_data' => $profileData
             ];
             Audits::store($user->id, AuditTypes::$user_creation, Configurations::getWhitelabel(), $auditData);
@@ -4812,13 +4863,13 @@ class AgentsController extends Controller
                 session('wallet_access_token')
             );
             $this->generateReferenceCode->generateReferenceCode($user->id);
-            $userData           = [
-                'user_id' => $user->id,
+            $userData   = [
+                'user_id'      => $user->id,
                 'currency_iso' => $currency
             ];
             $walletData = [
                 'wallet_id' => $wallet->data->wallet->id,
-                'default' => true
+                'default'   => true
             ];
             $userCurrenciesRepo->store($userData, $walletData);
             $this->agentsRepo->addUser($ownerAgent->agent, $user->id);
@@ -4838,7 +4889,7 @@ class AgentsController extends Controller
 
 
                 // Check if $campaigns is not empty before proceeding
-                if (!empty($campaigns)) {
+                if (! empty($campaigns)) {
                     // Create a wallet for bonuses
                     $walletBonus = Wallet::store(
                         $user->id,
@@ -4881,10 +4932,10 @@ class AgentsController extends Controller
 
             if ($balance > 0) {
                 $providerTransaction = Str::uuid()->toString();
-                $additionalData = [
+                $additionalData      = [
                     'provider_transaction' => $providerTransaction,
-                    'from' => $ownerAgent->username,
-                    'to' => $user->username
+                    'from'                 => $ownerAgent->username,
+                    'to'                   => $user->username
                 ];
                 Wallet::creditManualTransactions(
                     $balance,
@@ -4894,25 +4945,25 @@ class AgentsController extends Controller
                 );
 
                 $ownerBalance = $ownerAgent->balance - $balance;
-                $agentData       = [
-                    'agent_id' => $ownerAgent->agent,
+                $agentData    = [
+                    'agent_id'     => $ownerAgent->agent,
                     'currency_iso' => $currency
                 ];
-                $balanceData = [
+                $balanceData  = [
                     'balance' => $ownerBalance
                 ];
                 $this->agentCurrenciesRepo->store($agentData, $balanceData);
 
                 $additionalData['balance'] = $ownerBalance;
-                $transactionData = [
-                    'user_id'       => $ownerAgent->id,
-                    'amount'        => $balance,
-                    'currency_iso'  => $currency,
-                    'transaction_type_id' => TransactionTypes::$debit,
+                $transactionData           = [
+                    'user_id'               => $ownerAgent->id,
+                    'amount'                => $balance,
+                    'currency_iso'          => $currency,
+                    'transaction_type_id'   => TransactionTypes::$debit,
                     'transaction_status_id' => TransactionStatus::$approved,
-                    'provider_id'   => Providers::$agents,
-                    'data'          => $additionalData,
-                    'whitelabel_id' => Configurations::getWhitelabel()
+                    'provider_id'           => Providers::$agents,
+                    'data'                  => $additionalData,
+                    'whitelabel_id'         => Configurations::getWhitelabel()
                 ];
                 $this->transactionsRepo->store($transactionData, TransactionStatus::$approved, []);
             } else {
@@ -4920,11 +4971,11 @@ class AgentsController extends Controller
             }
 
             $data = [
-                'title' => _i('Player created'),
+                'title'   => _i('Player created'),
                 'message' => _i('Player created successfully'),
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
                 'balance' => number_format($ownerBalance, 2),
-                'route' => route('agents.index')
+                'route'   => route('agents.index')
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -4945,13 +4996,13 @@ class AgentsController extends Controller
             $agentData = [
                 'percentage' => $request->percentage
             ];
-            $agentId = $request->agent_id;
+            $agentId   = $request->agent_id;
             $this->agentsRepo->update($agentId, $agentData);
 
             $data = [
-                'title' => _i('Percentage updated'),
+                'title'   => _i('Percentage updated'),
                 'message' => _i('Percentage of agent successfully updated'),
-                'close' => _i('Close'),
+                'close'   => _i('Close'),
             ];
             return Utils::successResponse($data);
         } catch (Exception $ex) {
@@ -4970,36 +5021,36 @@ class AgentsController extends Controller
     {
         $this->validate($request, [
             'dependence' => ['required'],
-            'type' => ['required'],
-            'user_id' => ['required'],
+            'type'       => ['required'],
+            'user_id'    => ['required'],
         ]);
         try {
             \Log::info(__METHOD__, ['type' => $request]);
-            $type = $request->input('type');
-            $userId = $request->input('user_id');
-            $ownerId = $request->input('dependence');
+            $type     = $request->input('type');
+            $userId   = $request->input('user_id');
+            $ownerId  = $request->input('dependence');
             $currency = session('currency');
             if ($type != 5) {
                 $agentData = [
-                    'percentage' =>  $request->input('percentage'),
-                    'owner_id' =>  $ownerId,
+                    'percentage' => $request->input('percentage'),
+                    'owner_id'   => $ownerId,
                 ];
-                $agent = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
+                $agent     = $this->agentsRepo->findByUserIdAndCurrency($userId, $currency);
                 $this->agentsRepo->update($agent->agent, $agentData);
                 $data = [
-                    'title' => _i('Agent updated'),
+                    'title'   => _i('Agent updated'),
                     'message' => _i('agent successfully updated'),
-                    'close' => _i('Close'),
+                    'close'   => _i('Close'),
                 ];
                 return Utils::successResponse($data);
             } else {
-                $agent = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
+                $agent     = $this->agentsRepo->findByUserIdAndCurrency($ownerId, $currency);
                 $agentData = $this->agentsRepo->findAgentCashier($agent->agent);
                 $this->agentsRepo->moveAgentFromUser($agentData, $userId);
                 $data = [
-                    'title' => _i('Player updated'),
+                    'title'   => _i('Player updated'),
                     'message' => _i('Player successfully updated'),
-                    'close' => _i('Close'),
+                    'close'   => _i('Close'),
                 ];
                 return Utils::successResponse($data);
             }
@@ -5019,8 +5070,8 @@ class AgentsController extends Controller
     {
         try {
             $currency = session('currency');
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $agent    = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $users    = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $this->agentsCollection->formatUsers($users, $currency);
             $data = [
                 'users' => $users
@@ -5048,21 +5099,21 @@ class AgentsController extends Controller
                 $user = auth()->user()->id;
             }
             $currency = session('currency');
-            $agent = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
-            $users = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
+            $agent    = $this->agentsRepo->findByUserIdAndCurrency($user, $currency);
+            $users    = $this->agentsRepo->getUsersByAgent($agent->agent, $currency);
             $usersIds = [];
 
             foreach ($users as $user) {
                 $usersIds[] = $user->id;
             }
 
-            if (!empty($usersIds)) {
-                $wallets = Wallet::getUsersBalancesByIds($usersIds, $currency);
+            if (! empty($usersIds)) {
+                $wallets     = Wallet::getUsersBalancesByIds($usersIds, $currency);
                 $walletsData = $wallets->data->wallets;
-                $usersData = $this->agentsCollection->usersBalances($walletsData);
+                $usersData   = $this->agentsCollection->usersBalances($walletsData);
             } else {
                 $usersData = [
-                    'users' => [],
+                    'users'          => [],
                     'total_balances' => '0.00'
                 ];
             }
@@ -5109,7 +5160,7 @@ class AgentsController extends Controller
                 $id      = isset($userTmp[0]->id) ? $userTmp[0]->id : auth()->user()->id;
             }
 
-            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
+            $data['agent']     = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
             $data['countries'] = $countriesRepo->all();
             $data['timezones'] = \DateTimeZone::listIdentifiers();
 
@@ -5147,10 +5198,10 @@ class AgentsController extends Controller
                 $id      = isset($userTmp[0]->id) ? $userTmp[0]->id : auth()->user()->id;
             }
 
-            $data['agent'] = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
+            $data['agent']     = $this->agentsRepo->findByUserIdAndCurrency($id, session('currency'));
             $data['countries'] = $countriesRepo->all();
             $data['timezones'] = \DateTimeZone::listIdentifiers();
-            $data['title'] = _i('Create player');
+            $data['title']     = _i('Create player');
 
             return view('back.agents.user-and-agent.create-user', $data);
         } catch (Exception $ex) {
