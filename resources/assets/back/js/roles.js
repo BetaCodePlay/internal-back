@@ -165,8 +165,6 @@ class Roles {
                     method: 'post',
                     data: $data
                 }).done(function (json) {
-                    console.log(Roles.globaltable.length);
-                    Roles.globaltable.ajax.reload();
                     Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                     $('#role-password-reset').modal('hide');
                     $password.val('');
