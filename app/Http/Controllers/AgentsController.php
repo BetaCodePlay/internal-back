@@ -736,7 +736,7 @@ class AgentsController extends Controller
         }
     }
 
-    public function transactions(Request $request, string|int $agent)
+    public function transactions(string|int $agent, Request $request)
     {
         try {
             $transactions = $this->transactionsRepo->getByUserAndProvidersPaginateNew($request);
