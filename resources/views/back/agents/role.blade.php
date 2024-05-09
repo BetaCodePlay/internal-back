@@ -170,7 +170,7 @@
                     </div>
 
                     <div class="tab-body">
-                        <form autocomplete="destroy" class="col table-load">
+                        <form autocomplete="destroy" class="table-load">
                             <table id="table-information" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
                                 <thead>
                                 <tr>
