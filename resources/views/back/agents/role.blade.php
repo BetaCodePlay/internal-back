@@ -27,12 +27,12 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabTransactions" type="button" role="tab" aria-controls="roleTabTransactions" aria-selected="false">
+                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
                         {{ _i('Roles') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
+                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabTransactions" type="button" role="tab" aria-controls="roleTabTransactions" aria-selected="false">
                         {{ _i('Transactions') }}
                     </button>
                 </li>
@@ -183,6 +183,35 @@
                         <div class="loading-style"></div>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
+                    <div class="tab-manager">
+                        <div class="tab-manager-top">
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Created the') }}</div>
+                                <div class="data-text">{{ ($authUser->created_at)->format('d-m-Y ') }}</div>
+                            </div>
+                            @if(auth()->user()->id !== $authUser->id)
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Father') }}</div>
+                                    <div class="data-text">{{ $authUser->owner }}</div>
+                                </div>
+                            @endif
+                            <div class="tab-manager-data">
+                                <div class="data-title">{{ _i('Percentage') }}</div>
+                                <div class="data-text text-finish">{{ $authUser->percentage }}%</div>
+                            </div>
+                        </div>
+
+                        <div class="tab-manager-data">
+                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
+                        </div>
+                    </div>
+
+
+                </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <form autocomplete="destroy" class="tab-form">
                         <div class="row">
@@ -237,35 +266,6 @@
                         </form>
                         <div class="loading-style"></div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
-                    <div class="tab-manager">
-                        <div class="tab-manager-top">
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Created the') }}</div>
-                                <div class="data-text">{{ ($authUser->created_at)->format('d-m-Y ') }}</div>
-                            </div>
-                            @if(auth()->user()->id !== $authUser->id)
-                                <div class="tab-manager-data">
-                                    <div class="data-title">{{ _i('Father') }}</div>
-                                    <div class="data-text">{{ $authUser->owner }}</div>
-                                </div>
-                            @endif
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Percentage') }}</div>
-                                <div class="data-text text-finish">{{ $authUser->percentage }}%</div>
-                            </div>
-                        </div>
-
-                        <div class="tab-manager-data">
-                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
-                        </div>
-                    </div>
-
-
                 </div>
                 <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">
                     <br>
