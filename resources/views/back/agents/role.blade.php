@@ -36,11 +36,11 @@
                         {{ _i('Transactions') }}
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
+<!--                <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabLocks" type="button" role="tab" aria-controls="roleTabLocks" aria-selected="false">
                         {{ _i('Providers') }}
                     </button>
-                </li>
+                </li>-->
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">
@@ -272,11 +272,11 @@
                         <div class="loading-style"></div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">
+<!--                <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">
                     <br>
                     <div class="text-center"><b>{{ _i('Coming soon') }}...</b></div>
                     <br>
-                </div>
+                </div>-->
             </div>
         </div>
 
