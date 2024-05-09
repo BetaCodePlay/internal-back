@@ -107,11 +107,6 @@
                                     <div class="tab-manager-data text-center">
                                         <div class="data-title">{{ _i('Password') }}</div>
                                         <div class="data-text">
-                                            <span class="separator">
-                                                @if(auth()->user()->id !== $authUser->id)
-                                                    &nbsp;
-                                                @endif
-                                            </span>
                                             <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset"
                                                     data-userid="{{ $authUser->id}}"
                                                     data-username="{{ $authUser->username }}"
@@ -123,9 +118,7 @@
                                         <div class="tab-manager-data text-center">
                                             <div class="data-title">{{ _i('Account') }}</div>
                                             <div class="data-text">
-                                            <span class="separator">
-                                                  &nbsp;
-                                            </span>
+
                                                 <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-modify"
                                                         data-userid="{{ $authUser->id}}"
                                                         data-username="{{ $authUser->username }}"
