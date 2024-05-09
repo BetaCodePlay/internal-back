@@ -166,13 +166,7 @@
                     </div>
 
                     <div class="tab-content-body-simple">
-                        <div class="tab-content-title">
-                            @if(auth()->user()->id !== $authUser->id)
-                                {{ _i('roles in charge of') }} {{ $authUser->username }}
-                            @else
-                                {{ _i('Roles in my charge') }}
-                            @endif
-                        </div>
+                        <div class="tab-content-title">{{ _i('Connection activity') }}</div>
                     </div>
 
                     <div class="tab-body">
@@ -191,8 +185,15 @@
                 </div>
                 <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
                     <div class="tab-content-body-simple">
-                        <div class="tab-content-title">{{ _i('Actividad de conexión') }}</div>
+                        <div class="tab-content-title">
+                            @if(auth()->user()->id !== $authUser->id)
+                                {{ _i('roles in charge of') }} {{ $authUser->username }}
+                            @else
+                                {{ _i('Roles in my charge') }}
+                            @endif
+                        </div>
                     </div>
+
                     @if($authUser->agentType !== 5)
                         <div class="page-body">
                             <form autocomplete="destroy" class="table-load">
