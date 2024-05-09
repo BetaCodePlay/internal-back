@@ -598,10 +598,6 @@ class Roles {
         let picker = initLitepickerEndTodayNew();
         let routeTransaction;
 
-        $(window).on('load', function (){
-            $('.page-role .nav-roles .nav-tabs .nav-item .tab-role').eq(0).click();
-        });
-
         $(document).on('click', $button, function () {
             let $this = $(this);
             let $target = $this.data('target');
@@ -679,6 +675,8 @@ class Roles {
                 },
             });
         });
+
+        $('.page-role .nav-roles .nav-tabs .nav-item .tab-role').eq(0).click();
     }
 
     static errorResponse(json) {
