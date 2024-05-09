@@ -506,7 +506,7 @@ class TransactionsRepo
 
         $sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
 
-        Log::info('sqlWithValues', $sqlWithValues);
+        Log::info('sqlWithValues', [$sqlWithValues]);
 
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
