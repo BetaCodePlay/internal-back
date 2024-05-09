@@ -48,16 +48,35 @@
                     <div class="tab-manager">
                         <div class="tab-manager-top">
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Name') }}</div>
-                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->type_user }}</span></div>
-                            </div>
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text text-id">{{ $authUser->id }} <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs clipboard" data-title="{{ _i('Copied') }}" data-clipboard-text="{{ $authUser->id }}">{{ _i('Copy') }}</button>
+<!--                                <div class="data-title">{{ _i('Name') }}</div>
+                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->type_user }}</span></div>-->
+
+                                <div class="data-title">{{ _i('Balance') }}</div>
+                                <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                                    @if($authUser->status)
+                                        <span class="separator"></span>
+                                        @if(auth()->user()->id !== $authUser->id)
+                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
+                                                    data-userid="{{ $authUser->id}}"
+                                                    data-username="{{ $authUser->username }}"
+                                                    data-rol="{{ $authUser->agentType }}">{{ _i('Adjustment') }}
+                                            </button>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                             <div class="tab-manager-data">
+<!--                                <div class="data-title">{{ _i('ID User') }}</div>
+                                <div class="data-text text-id">{{ $authUser->id }} <span class="separator"></span>
+                                    <button class="btn btn-theme btn-xs clipboard" data-title="{{ _i('Copied') }}" data-clipboard-text="{{ $authUser->id }}">{{ _i('Copy') }}</button>
+                                </div>-->
+
+                                <div class="data-title">{{ _i('Profit') }}</div>
+                                <div class="data-text text-id">
+                                    $12.000,00 <span class="number">05%</span>
+                                </div>
+                            </div>
+<!--                            <div class="tab-manager-data">
                                 <div class="data-title">{{ _i('Status') }}</div>
                                 <div class="data-text text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
                                     @if(auth()->user()->id !== $authUser->id)
@@ -77,27 +96,18 @@
                                         <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
                                     @endif
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
 
                         <div class="tab-manager-bottom">
                             <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Balance') }}</div>
-                                <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
-                                    @if($authUser->status)
-                                        <span class="separator"></span>
-                                        @if(auth()->user()->id !== $authUser->id)
-                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
-                                                    data-userid="{{ $authUser->id}}"
-                                                    data-username="{{ $authUser->username }}"
-                                                    data-rol="{{ $authUser->agentType }}">{{ _i('Adjustment') }}
-                                            </button>
-                                        @endif
-                                    @endif
-                                </div>
+                                <div class="data-title">{{ _i('Number of dependent agents') }}</div>
+                                <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                                <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                                <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
                             </div>
 
-                            @if($authUser->status)
+                            {{--@if($authUser->status)
                                 <div class="tab-manager-data text-center">
                                     <div class="data-title">{{ _i('Password') }}</div>
                                     <div class="data-text">
@@ -129,7 +139,7 @@
                                         </div>
                                     </div>
                                 @endif
-                            @endif
+                            @endif--}}
                         </div>
 
                     </div>
