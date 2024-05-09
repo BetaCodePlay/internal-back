@@ -3983,7 +3983,7 @@ class AgentsController extends Controller
             }
 
             //Security::assignRole($user->id, 3); //TODO ROL AGENTS DEFAULT
-            Security::assignRole($user->id, Roles::$admin_Beet_sweet); //TODO NUEVO ROL OF AGENT
+            Security::assignRole($user->id, Roles::$admin_assiria); //TODO NUEVO ROL OF AGENT
 
             $data = [
                 'title'   => _i('Agent created'),
