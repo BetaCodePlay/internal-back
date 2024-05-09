@@ -37,10 +37,19 @@
         position: absolute;
         margin: 0;
         width: 100%;
-        text-align: right;
+        text-align: left;
         left: 0;
         right: 0;
         padding: 15px 15px 0 15px;
         top: 0;
+
+        .dt-button {
+            background: #4a4a4a;
+            color: #fff;
+            border: 0;
+            padding: 4px 11px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
     }
 }

@@ -21,7 +21,6 @@ class Roles {
             Roles.globaltable = $table.DataTable({
                 serverSide: true,
                 ajax: $route,
-                buttons: ['copy', 'excel', 'pdf'],
                 fixedHeader: true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     let buttons = $('#user-buttons');
