@@ -69,6 +69,48 @@
         border-top: 2px solid #3b3b3b;
         display: flex;
         justify-content: space-between;
+
+        .dt-info {
+            align-self: center;
+            display: block;
+        }
+
+        .dt-paging {
+            align-self: center;
+            display: block;
+
+            .dt-paging-button {
+                border-radius: 5px;
+                background: transparent;
+                border: 1px solid transparent;
+                color: #fff;
+                font-weight: 500;
+                transition: .15s;
+                padding: 0.5rem 0.9rem;
+
+                &:hover {
+                    text-shadow: 0 0 3px #fff;
+                }
+
+                &:focus {
+                    z-index: 3;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.2rem transparent;
+                }
+
+                &.disabled {
+                    opacity: .5;
+                    pointer-events: none;
+                }
+
+                &.current {
+                    pointer-events: none;
+                    background: transparent;
+                    border-color: #fff;
+                    color: #Fff;
+                }
+            }
+        }
     }
 
     .dataTable {
