@@ -164,6 +164,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="tab-content-body-simple">
+                        <div class="tab-content-title">{{ _i('Actividad de conexión') }}</div>
+                    </div>
+
+
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <form autocomplete="destroy" class="tab-form">
