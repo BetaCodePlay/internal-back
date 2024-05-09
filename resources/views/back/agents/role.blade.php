@@ -238,7 +238,7 @@
         </div>
         @if($authUser->agentType !== 5)
             <div class="page-body">
-                <form autocomplete="destroy" class="col table-load">
+                <form autocomplete="destroy" class="table-load">
                     <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
                         <thead>
                         <tr>
