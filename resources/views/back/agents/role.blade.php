@@ -43,6 +43,7 @@
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
+                <div class="tab-content-title">{{ _i('Activity') }}</div>
                 <div class="tab-pane fade show active" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="tab-manager">
                         <div class="tab-manager-top">
