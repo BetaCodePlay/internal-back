@@ -252,22 +252,22 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="tab-body">
-                            <form autocomplete="destroy" class="col table-load">
-                                <table id="table-transactions" class="display nowrap" data-route="{{ $authUser->agentType === 5 ? route('transactions.players') : route('transactions.agents') }}">
-                                    <thead>
-                                    <tr>
-                                        <th>{{ _i('Date') }}</th>
-                                        <th data-priority="3">{{ _i('Origin') }}</th>
-                                        <th data-priority="1">{{ _i('Destination') }}</th>
-                                        <th data-priority="2">{{ _i('Amount') }}</th>
-                                        <th>{{ _i('Balance') }}</th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </form>
-                            <div class="loading-style"></div>
-                        </div>
+                    </div>
+                    <div class="tab-body">
+                        <form autocomplete="destroy" class="col table-load">
+                            <table id="table-transactions" class="display nowrap" data-route="{{ $authUser->agentType === 5 ? route('transactions.players') : route('transactions.agents') }}">
+                                <thead>
+                                <tr>
+                                    <th>{{ _i('Date') }}</th>
+                                    <th data-priority="3">{{ _i('Origin') }}</th>
+                                    <th data-priority="1">{{ _i('Destination') }}</th>
+                                    <th data-priority="2">{{ _i('Amount') }}</th>
+                                    <th>{{ _i('Balance') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </form>
+                        <div class="loading-style"></div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">
