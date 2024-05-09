@@ -598,7 +598,9 @@ class Roles {
         let picker = initLitepickerEndTodayNew();
         let routeTransaction;
 
-        $('.page-role .nav-roles .nav-tabs .nav-item .tab-role').eq(0).click();
+        $(window).on('load', function (){
+            $('.page-role .nav-roles .nav-tabs .nav-item .tab-role').eq(0).click();
+        });
 
         $(document).on('click', $button, function () {
             let $this = $(this);
