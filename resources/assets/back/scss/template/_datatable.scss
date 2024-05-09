@@ -54,6 +54,90 @@
         }
     }
 
+    .dataTable {
+        thead {
+            tr {
+                th {
+                    padding: 15px 26px 15px 10px;
+                    background: #333;
+
+                    @media screen and (max-width: 767px) {
+                        padding: 15px 10px;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    padding: 10px;
+                    border-bottom: 0 !important;
+
+                    .dtr-control{
+                        &::before {
+                            display: none;
+                        }
+                    }
+
+                    .btn-tr-details {
+                        display: none;
+                        margin-right: 5px;
+                        color: #aaa;
+                        font-size: 16px;
+                        vertical-align: middle;
+                        transition: .15s;
+                    }
+
+                    @media screen and (max-width: 767px) {
+                        padding: 10px 8px;
+                    }
+                }
+
+                &.even {
+                    background: #252525;
+                }
+
+                &.child {
+                    background: #2d2d2d;
+
+                    .dtr-details {
+                        margin: 0;
+                        padding-left: 20px;
+
+                        li {
+                            padding-left: 5px;
+                            padding-top: 5px;
+                            padding-bottom: 5px;
+                            border-bottom: 1px solid #444;
+
+                            &:last-child {
+                                border-bottom: 0;
+                            }
+
+                            .dtr-title {
+                                font-weight: 500;
+                                margin-right: 10px;
+                                min-width: 100px;
+                                display: inline-block;
+                            }
+
+                            .dtr-data {
+
+                            }
+                        }
+                    }
+                }
+
+                &:last-of-type {
+                    td {
+                        border-bottom: 0 solid transparent !important;
+                    }
+                }
+            }
+        }
+    }
+
     @media screen and (max-width: 640px) {
         .datatable-header {
             display: block;
