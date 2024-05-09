@@ -411,6 +411,8 @@ class TransactionsRepo
                 'order'  => $request->get('order')[0]['dir']
             ];
         }
+
+        dd($startDate, $endDate, $currency);
         DB::connection()->enableQueryLog();
         $transactionsQuery = Transaction::select([
             'users.username',
@@ -515,7 +517,6 @@ class TransactionsRepo
             $from    = $transaction->data->from ?? null;
             $to      = $transaction->data->to ?? null;
             $balance = $transaction->data->balance ?? null;
-            //$receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
             $receiver = $to;
             return [
                 $formattedDateTimeWithTimezone,
