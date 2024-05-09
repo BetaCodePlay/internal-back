@@ -166,7 +166,13 @@
                     </div>
 
                     <div class="tab-content-body-simple">
-                        <div class="tab-content-title">{{ _i('Actividad de conexión') }}</div>
+                        <div class="tab-content-title">
+                            @if(auth()->user()->id !== $authUser->id)
+                                {{ _i('roles in charge of') }} {{ $authUser->username }}
+                            @else
+                                {{ _i('Roles in my charge') }}
+                            @endif
+                        </div>
                     </div>
 
                     <div class="tab-body">
@@ -184,33 +190,28 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel" aria-labelledby="information-tab">
-                    <div class="tab-manager">
-                        <div class="tab-manager-top">
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Created the') }}</div>
-                                <div class="data-text">{{ ($authUser->created_at)->format('d-m-Y ') }}</div>
-                            </div>
-                            @if(auth()->user()->id !== $authUser->id)
-                                <div class="tab-manager-data">
-                                    <div class="data-title">{{ _i('Father') }}</div>
-                                    <div class="data-text">{{ $authUser->owner }}</div>
-                                </div>
-                            @endif
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Percentage') }}</div>
-                                <div class="data-text text-finish">{{ $authUser->percentage }}%</div>
-                            </div>
-                        </div>
-
-                        <div class="tab-manager-data">
-                            <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
-                            <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
-                        </div>
+                    <div class="tab-content-body-simple">
+                        <div class="tab-content-title">{{ _i('Actividad de conexión') }}</div>
                     </div>
-
-
+                    @if($authUser->agentType !== 5)
+                        <div class="page-body">
+                            <form autocomplete="destroy" class="table-load">
+                                <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
+                                    <thead>
+                                    <tr>
+                                        <th data-priority="1">{{ _i('Name') }}</th>
+                                        <th>{{ _i('Rol') }}</th>
+                                        <th>{{ _i('ID User') }}</th>
+                                        <th>{{ _i('Status') }}</th>
+                                        <th data-priority="3">{{ _i('Balance') }}</th>
+                                        <th data-priority="2"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </form>
+                            <div class="loading-style"></div>
+                        </div>
+                    @endif
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <div class="tab-content-body">
@@ -277,25 +278,6 @@
                 </div>
             </div>
         </div>
-        @if($authUser->agentType !== 5)
-            <div class="page-body">
-                <form autocomplete="destroy" class="table-load">
-                    <table id="table-roles" class="display nowrap" data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
-                        <thead>
-                        <tr>
-                            <th data-priority="1">{{ _i('Name') }}</th>
-                            <th>{{ _i('Rol') }}</th>
-                            <th>{{ _i('ID User') }}</th>
-                            <th>{{ _i('Status') }}</th>
-                            <th data-priority="3">{{ _i('Balance') }}</th>
-                            <th data-priority="2"></th>
-                        </tr>
-                        </thead>
-                    </table>
-                </form>
-                <div class="loading-style"></div>
-            </div>
-        @endif
 
         <div class="d-none" id="user-buttons">
             <div class="d-inline-block dropdown">
