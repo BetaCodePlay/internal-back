@@ -95,6 +95,7 @@
 
 
 
+
                                 @else
                                     <span class="separator"> &nbsp;</span>
                                         <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
@@ -192,7 +193,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                {{--@if($authUser->status)
+                                @if($authUser->status)
                                     <div class="tab-manager-data text-center">
                                         <div class="data-title">{{ _i('Password') }}</div>
                                         <div class="data-text">
@@ -224,7 +225,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                @endif--}}
+                                @endif
                             </div>
                         </div>
                     </div>
