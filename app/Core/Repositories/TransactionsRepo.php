@@ -412,8 +412,6 @@ class TransactionsRepo
             ];
         }
 
-        dd($startDate, $endDate, $currency);
-        DB::connection()->enableQueryLog();
         $transactionsQuery = Transaction::select([
             'users.username',
             'transactions.user_id',
@@ -470,8 +468,6 @@ class TransactionsRepo
                     ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
             });
         }
-        $queries = \DB::getQueryLog();
-        Log::info(__METHOD__ . " Transaction repo queries ", [$queries]);
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
@@ -507,6 +503,10 @@ class TransactionsRepo
 
         $resultCount   = $transactionsQuery->count();
         $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
+
+        $sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
+
+        Log::info('sqlWithValues', $sqlWithValues);
 
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
