@@ -506,7 +506,7 @@ class TransactionsRepo
 
         $sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
 
-        Log::info('sqlWithValues', [$sqlWithValues]);
+        Log::info('sqlWithValues', ['sqlWithValues' => $sqlWithValues]);
 
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
@@ -514,9 +514,9 @@ class TransactionsRepo
                 session('timezone')
             )->toDateTimeString();
 
-            $from    = $transaction->data->from ?? null;
-            $to      = $transaction->data->to ?? null;
-            $balance = $transaction->data->balance ?? null;
+            $from     = $transaction->data->from ?? null;
+            $to       = $transaction->data->to ?? null;
+            $balance  = $transaction->data->balance ?? null;
             $receiver = $to;
             return [
                 $formattedDateTimeWithTimezone,
