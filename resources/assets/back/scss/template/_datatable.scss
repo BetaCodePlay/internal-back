@@ -54,12 +54,19 @@
         }
     }
 
+    .datatable-body {
+        background: #1e1e1e;
+        overflow: hidden;
+        width: 100%;
+        border-radius: 5px;
+    }
+
     .dataTable {
         thead {
             tr {
                 th {
                     padding: 15px 26px 15px 10px;
-                    background: #333;
+                    background: #222;
 
                     @media screen and (max-width: 767px) {
                         padding: 15px 10px;
