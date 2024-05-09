@@ -187,9 +187,9 @@
                     <div class="tab-content-body-simple">
                         <div class="tab-content-title">
                             @if(auth()->user()->id !== $authUser->id)
-                                {{ _i('roles in charge of') }} {{ $authUser->username }}
+                                {{ _i('roles in charge of') }} <span class="text">{{ $authUser->username }}</span>
                             @else
-                                {{ _i('Roles in my charge') }}
+                                {{ _i('Roles in') }} <span class="text">{{ _i('my charge') }}</span>
                             @endif
                         </div>
                     </div>
