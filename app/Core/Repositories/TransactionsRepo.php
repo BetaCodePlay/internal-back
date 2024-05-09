@@ -507,6 +507,8 @@ class TransactionsRepo
        /* $sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
         dd($sqlWithValues);*/
 
+        dd($startDate, $endDate);
+
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
             $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
