@@ -83,10 +83,10 @@
                 border-radius: 5px;
                 background: transparent;
                 border: 1px solid transparent;
-                color: #fff;
+                color: #fff !important;
                 font-weight: 500;
-                transition: .15s;
-                padding: 0.5rem 0.9rem;
+                transition: 0.15s;
+                padding: 0.35rem 0.9rem;
 
                 &:hover {
                     text-shadow: 0 0 3px #fff;
@@ -101,7 +101,7 @@
                 &.disabled {
                     opacity: .5;
                     pointer-events: none;
-                    color: #fff;
+                    color: #fff !important;
                 }
 
                 &.current {
@@ -208,6 +208,24 @@
 
             .dt-buttons {
                 text-align: center;
+            }
+        }
+
+        .datatable-footer {
+            display: block;
+
+            .dt-info {
+                text-align: center;
+            }
+
+            .dt-paging {
+                text-align: center;
+                margin-top: 10px;
+
+                .dt-paging-button {
+                    padding: 0.35rem 0.75rem;
+                    font-size: 12px;
+                }
             }
         }
     }
