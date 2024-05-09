@@ -33,13 +33,14 @@ locale = (locale === null || locale === '') ? 'en_US' : locale;
 $.fn.dataTable.ext.errMode = 'throw';
 
 $.extend(true, $.fn.dataTable.defaults, {
-    dom: '<"top"Blfr>tip',
+    dom: '<"datatable-header"lBfr>tip',
     lengthMenu: [[10, 25, 50, 100, 250, 500, 1000], [10, 25, 50, 100, 250, 500, 1000]],
     processing: true,
     deferRender: true,
     responsive: true,
     searching: true,
     paging: true,
+    buttons: ['copy', 'excel', 'pdf', 'print'],
     language: {
         url: "/i18n/datatables/" + locale + ".lang"
     },
