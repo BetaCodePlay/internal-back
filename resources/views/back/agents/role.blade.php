@@ -23,114 +23,146 @@
             <ul class="nav nav-tabs" id="roleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active tab-role" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="true">
-                        {{ _i('Profile management') }}
+                        {{ _i('My data') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabTransactions" type="button" role="tab" aria-controls="roleTabTransactions" aria-selected="false">
-                        {{ _i('Transactions') }}
+                        {{ _i('Roles') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
-                        {{ _i('More information') }}
+                        {{ _i('Transactions') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabLocks" type="button" role="tab" aria-controls="roleTabLocks" aria-selected="false">
-                        {{ _i('Locks') }}
+                        {{ _i('Providers') }}
                     </button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="roleTabProfileManager" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="tab-manager">
-                        <div class="tab-manager-top">
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Name') }}</div>
-                                <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->type_user }}</span></div>
-                            </div>
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('ID User') }}</div>
-                                <div class="data-text text-id">{{ $authUser->id }} <span class="separator"></span>
-                                    <button class="btn btn-theme btn-xs clipboard" data-title="{{ _i('Copied') }}" data-clipboard-text="{{ $authUser->id }}">{{ _i('Copy') }}</button>
+                    <div class="tab-content-body">
+                        <div class="tab-content-title">{{ _i('Activity') }}</div>
+                        <div class="tab-manager">
+                            <div class="tab-manager-top">
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Balance') }}</div>
+                                    <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                                        @if($authUser->status)
+                                            <span class="separator"></span>
+                                            @if(auth()->user()->id !== $authUser->id)
+                                                <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
+                                                        data-userid="{{ $authUser->id}}"
+                                                        data-username="{{ $authUser->username }}"
+                                                        data-rol="{{ $authUser->agentType }}">{{ _i('Adjustment') }}
+                                                </button>
+                                            @endif
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Profit') }}</div>
+                                    <div class="data-text text-id">
+                                        $12.000,00 <span class="number">{{ $authUser->percentage }}%</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Status') }}</div>
-                                <div class="data-text text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
-                                    @if(auth()->user()->id !== $authUser->id)
-                                        <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
-                                        <span class="separator"></span>
-                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
-                                                data-lock="{{ _i('Lock profile') }}"
-                                                data-unlock="{{ _i('Unlock profile') }}"
-                                                data-value="{{ $authUser->status ? 'true' : 'false' }}"
-                                                data-type="{{ $authUser->action }}"
-                                                data-userid="{{ $authUser->id }}"
-                                                data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $authUser->agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
-                                        </button>
-                                    @else
-                                        <span class="separator"> &nbsp;</span>
-                                        <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
-                                    @endif
+
+                            <div class="tab-manager-bottom">
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Number of dependent agents') }}</div>
+                                    <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                                    <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                                    <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="tab-manager-bottom">
-                            <div class="tab-manager-data">
-                                <div class="data-title">{{ _i('Balance') }}</div>
-                                <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
-                                    @if($authUser->status)
-                                        <span class="separator"></span>
-                                        @if(auth()->user()->id !== $authUser->id)
-                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-balance"
-                                                    data-userid="{{ $authUser->id}}"
-                                                    data-username="{{ $authUser->username }}"
-                                                    data-rol="{{ $authUser->agentType }}">{{ _i('Adjustment') }}
-                                            </button>
-                                        @endif
-                                    @endif
+                    <div class="tab-content-body">
+                        <div class="tab-content-title">{{ _i('Account info') }}</div>
+                        <div class="tab-manager">
+                            <div class="tab-manager-top">
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Name') }}</div>
+                                    <div class="data-text">{{ $authUser->username }} <span class="separator"></span><span class="deco-role">{{ $authUser->type_user }}</span></div>
+                                </div>
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('ID User') }}</div>
+                                    <div class="data-text text-id">{{ $authUser->id }} <span class="separator"></span>
+                                        <button class="btn btn-theme btn-xs clipboard" data-title="{{ _i('Copied') }}" data-clipboard-text="{{ $authUser->id }}">{{ _i('Copy') }}</button>
+                                    </div>
+                                </div>
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Created the') }}</div>
+                                    <div class="data-text">{{ ($authUser->created_at)->format('d-m-Y ') }}</div>
                                 </div>
                             </div>
 
-                            @if($authUser->status)
-                                <div class="tab-manager-data text-center">
-                                    <div class="data-title">{{ _i('Password') }}</div>
-                                    <div class="data-text">
-                                        <span class="separator">
-                                            @if(auth()->user()->id !== $authUser->id)
-                                                &nbsp;
-                                            @endif
-                                        </span>
-                                        <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset"
-                                                data-userid="{{ $authUser->id}}"
-                                                data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $authUser->agentType }}">{{ _i('Reset') }}
-                                        </button>
-                                    </div>
-                                </div>
-                                @if(auth()->user()->id !== $authUser->id)
+                            <div class="tab-manager-bottom">
+                                @if($authUser->status)
                                     <div class="tab-manager-data text-center">
-                                        <div class="data-title">{{ _i('Account') }}</div>
+                                        <div class="data-title">{{ _i('Password') }}</div>
                                         <div class="data-text">
-                                        <span class="separator">
-                                              &nbsp;
-                                        </span>
-                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-modify"
+                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-password-reset"
                                                     data-userid="{{ $authUser->id}}"
                                                     data-username="{{ $authUser->username }}"
-                                                    data-rol="{{ $authUser->agentType }}"
-                                                    data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
+                                                    data-rol="{{ $authUser->agentType }}">{{ _i('Reset') }}
                                             </button>
                                         </div>
                                     </div>
-                                @endif
-                            @endif
-                        </div>
+                                    @if(auth()->user()->id !== $authUser->id)
+                                        <div class="tab-manager-data text-center">
+                                            <div class="data-title">{{ _i('Account') }}</div>
+                                            <div class="data-text">
 
+                                                <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-modify"
+                                                        data-userid="{{ $authUser->id}}"
+                                                        data-username="{{ $authUser->username }}"
+                                                        data-rol="{{ $authUser->agentType }}"
+                                                        data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
+
+                                @if(auth()->user()->id !== $authUser->id)
+                                    <div class="tab-manager-data">
+                                        <div class="data-title">{{ _i('Father') }}</div>
+                                        <div class="data-text">{{ $authUser->owner }}</div>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="tab-manager-bottom">
+                                <div class="tab-manager-data">
+                                    <div class="data-title">{{ _i('Status') }}</div>
+                                    <div class="data-text text-status {{ !$authUser->status ? 'force-text-finish' : '' }}">
+                                        @if(auth()->user()->id !== $authUser->id)
+                                            <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
+                                            <span class="separator"></span>
+                                            <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal" data-target="#role-lock"
+                                                    data-lock="{{ _i('Lock profile') }}"
+                                                    data-unlock="{{ _i('Unlock profile') }}"
+                                                    data-value="{{ $authUser->status ? 'true' : 'false' }}"
+                                                    data-type="{{ $authUser->action }}"
+                                                    data-userid="{{ $authUser->id }}"
+                                                    data-username="{{ $authUser->username }}"
+                                                    data-rol="{{ $authUser->agentType }}">{{ $authUser->status ? _i('Lock') : _i('Unlock') }}
+                                            </button>
+
+                                        @else
+                                            <span class="separator"> &nbsp;</span>
+                                            <i class="fa-solid i-status fa-circle {{ $authUser->status ? 'green' : 'red' }}"></i> {{ $authUser->statusText }}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">

@@ -1,4 +1,10 @@
 .dt-container {
+    color: #fff;
+
+    .table {
+        color: #fff;
+    }
+
     .datatable-header {
         background: #1e1e1e;
         border-radius: 12px 12px 0 0;
@@ -120,6 +126,7 @@
                 th {
                     padding: 15px 26px 15px 10px;
                     background: #222;
+                    color: #fff !important;
 
                     @media screen and (max-width: 767px) {
                         padding: 15px 10px;
