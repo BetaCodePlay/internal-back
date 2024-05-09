@@ -766,10 +766,12 @@ class AgentsRepo
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->leftJoin('user_currencies', 'users.id', '=', 'user_currencies.user_id')
             ->orderBy('users.created_at', 'desc')
             ->where([
                 'agents.user_id'                => $userId,
                 'agent_currencies.currency_iso' => $currency,
+                'user_currencies.currency_iso'  => $currency,
                 'users.whitelabel_id'           => $whitelabelId,
             ]);
     }
