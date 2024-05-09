@@ -504,8 +504,8 @@ class TransactionsRepo
         $resultCount   = $transactionsQuery->count();
         $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
 
-       $sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
-        dd($sqlWithValues);
+       /*$sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
+        dd($sqlWithValues);*/
 
         //dd($startDate, $endDate);
 
