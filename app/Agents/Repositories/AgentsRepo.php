@@ -646,13 +646,15 @@ class AgentsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-        $userId      = getUserIdByUsernameOrCurrent($request);
+        $userId      = getUserIdByUsernameOrCurrent($request, $whitelabelId);
+        $agentQuery  = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
 
-        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
-        $agentQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%")
-                ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
-        });
+        if (! is_null($searchValue)) {
+            $agentQuery->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%")
+                    ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
+            });
+        }
 
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
@@ -664,9 +666,12 @@ class AgentsRepo
         );
 
         $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId);
-        $playerQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%");
-        });
+
+        if (! is_null($searchValue)) {
+            $playerQuery->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%");
+            });
+        }
 
         $orderKey = array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
             ? $orderableColumns[$orderColumn]
@@ -728,6 +733,7 @@ class AgentsRepo
             ->join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
+            ->orderBy('users.created_at', 'desc')
             ->where([
                 'agents.owner_id'               => $userId,
                 'agent_currencies.currency_iso' => $currency,
@@ -760,9 +766,12 @@ class AgentsRepo
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->leftJoin('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->orderBy('users.created_at', 'desc')
             ->where([
                 'agents.user_id'                => $userId,
                 'agent_currencies.currency_iso' => $currency,
+                'user_currencies.currency_iso'  => $currency,
                 'users.whitelabel_id'           => $whitelabelId,
             ]);
     }

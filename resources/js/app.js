@@ -10,11 +10,14 @@ import Card from "primevue/card";
 import Dropdown from "primevue/dropdown";
 import OverlayPanel from "primevue/overlaypanel";
 import Row from "primevue/row";
+import ElementUI from 'element-ui'
 
 import "primevue/resources/themes/bootstrap4-dark-purple/theme.css";
 import "primevue/resources/primevue.min.css";
 import "./vue/assets/custom.css";
 //import "primeicons/primeicons.css";
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/es'
 
 Vue.use(PrimeVue);
 Vue.component("Calendar", Calendar);
@@ -27,6 +30,7 @@ Vue.component("OverlayPanel", OverlayPanel);
 Vue.component("Column", Column);
 Vue.component("ColumnGroup", ColumnGroup);
 Vue.component("Row", Row);
+Vue.use(ElementUI, {locale})
 
 // Función para importar recursivamente todos los componentes
 function importComponents(context, path = "") {

@@ -38,97 +38,196 @@
                                         data-toggle="dropdown"
                                         aria-expanded="false"
                                         data-offset="10,20"
+                                        data-auto-close="false"
                                     >
                                         Filtrar contenido
                                         <i class="pi pi-angle-down ml-3"></i>
                                     </button>
-                                    <form
+                                    <div
                                         class="dropdown-menu dropdown-menu-right custom-report-dropdown"
-                                        style="min-width: 400px"
                                     >
-                                        <Card style="margin-top: 0px">
-                                            <template #content>
-                                                <div class="row">
-                                                    <div class="col-12 mb-3">
-                                                        <label>Fechas</label>
-                                                        <Calendar
-                                                            :locale="es"
-                                                            v-model="
-                                                                value.daterange
-                                                            "
-                                                            @input="
-                                                                updateFilters
-                                                            "
-                                                            class="form-control"
-                                                            selectionMode="range"
-                                                        />
-                                                    </div>
-                                                    <div class="col-12 mb-3">
-                                                        <label
-                                                            >Zona Horaria</label
+                                        <form style="min-width: 400px">
+                                            <Card style="margin-top: 0px">
+                                                <template #content>
+                                                    <div class="row">
+                                                        <div
+                                                            class="col-12 mb-3"
                                                         >
-                                                        <Dropdown
-                                                            v-model="
-                                                                value.selectedTimezone
+                                                            <label
+                                                                >Fechas</label
+                                                            >
+                                                            <el-date-picker
+                                                                v-model="
+                                                                    value.daterange
+                                                                "
+                                                                type="daterange"
+                                                                align="right"
+                                                                unlink-panels
+                                                                size="large"
+                                                                @input="
+                                                                    updateFilters
+                                                                "
+                                                                range-separator="-"
+                                                                start-placeholder="Fecha Inicial"
+                                                                end-placeholder="Fecha Final"
+                                                                :picker-options="
+                                                                    pickerOptions
+                                                                "
+                                                            >
+                                                            </el-date-picker>
+                                                        </div>
+                                                        <div
+                                                            class="col-12 mb-3"
+                                                            v-if="showTimezone"
+                                                        >
+                                                            <label
+                                                                >Zona
+                                                                Horaria</label
+                                                            >
+                                                            <Dropdown
+                                                                v-model="
+                                                                    value.selectedTimezone
+                                                                "
+                                                                :options="
+                                                                    timezones
+                                                                "
+                                                                class="form-control"
+                                                                optionLabel="timezone"
+                                                                optionValue="timezone"
+                                                                dataKey="timezone"
+                                                                :showClear="
+                                                                    true
+                                                                "
+                                                                @change="
+                                                                    updateFilters
+                                                                "
+                                                                placeholder="Selecciona zona horaria"
+                                                                :filter="true"
+                                                                filterPlaceholder="Buscar zona horaria"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="col-12 mb-3"
+                                                            v-if="showProvider"
+                                                        >
+                                                            <label
+                                                                >Proveedor</label
+                                                            >
+                                                            <Dropdown
+                                                                v-model="
+                                                                    value.selectedProvider
+                                                                "
+                                                                :options="
+                                                                    providers
+                                                                "
+                                                                class="form-control"
+                                                                optionLabel="provider"
+                                                                optionValue="provider"
+                                                                dataKey="provider"
+                                                                :showClear="
+                                                                    true
+                                                                "
+                                                                @change="
+                                                                    updateFilters
+                                                                "
+                                                                placeholder="Seleccionar proveedor"
+                                                                :filter="true"
+                                                                filterPlaceholder="Buscar Proveedor"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="col-12 mb-3"
+                                                            v-if="showUser"
+                                                        >
+                                                            <label
+                                                                >Usuario</label
+                                                            >
+                                                            <Dropdown
+                                                                v-model="
+                                                                    value.selectedUser
+                                                                "
+                                                                :options="
+                                                                    childs
+                                                                "
+                                                                class="form-control"
+                                                                optionLabel="username"
+                                                                optionValue="id"
+                                                                dataKey="id"
+                                                                :showClear="
+                                                                    true
+                                                                "
+                                                                @change="
+                                                                    updateFilters
+                                                                "
+                                                                placeholder="Seleccionar usuario"
+                                                                :filter="true"
+                                                                filterPlaceholder="Buscar usuario"
+                                                            />
+                                                        </div>
+
+                                                        <div
+                                                            class="col-12 mb-3"
+                                                            v-if="
+                                                                showTypeTransaction
                                                             "
-                                                            :options="timezones"
-                                                            class="form-control"
-                                                            optionLabel="timezone"
-                                                            optionValue="timezone"
-                                                            dataKey="timezone"
-                                                            :showClear="true"
-                                                            @change="
-                                                                updateFilters
-                                                            "
-                                                            placeholder="Selecciona zona horaria"
-                                                            :filter="true"
-                                                            filterPlaceholder="Buscar zona horaria"
-                                                        />
+                                                        >
+                                                            <label
+                                                                >Tipo de
+                                                                Transacción</label
+                                                            >
+                                                            <Dropdown
+                                                                v-model="
+                                                                    value.typeTransaction
+                                                                "
+                                                                :options="
+                                                                    typeTransactions
+                                                                "
+                                                                class="form-control"
+                                                                optionLabel="label"
+                                                                optionValue="value"
+                                                                dataKey="value"
+                                                                :showClear="
+                                                                    true
+                                                                "
+                                                                @change="
+                                                                    updateFilters
+                                                                "
+                                                                placeholder="Seleccionar tipo de transacción"
+                                                            />
+                                                        </div>
+                                                        <div
+                                                            class="col-12 mb-3"
+                                                            v-if="showTypeUser"
+                                                        >
+                                                            <label
+                                                                >Tipo de
+                                                                Usuario</label
+                                                            >
+                                                            <Dropdown
+                                                                v-model="
+                                                                    value.typeUser
+                                                                "
+                                                                :options="
+                                                                    typeUsers
+                                                                "
+                                                                class="form-control"
+                                                                optionLabel="label"
+                                                                optionValue="value"
+                                                                dataKey="value"
+                                                                :showClear="
+                                                                    true
+                                                                "
+                                                                @change="
+                                                                    updateFilters
+                                                                "
+                                                                placeholder="Seleccionar tipo de usuario"
+                                                            />
+                                                        </div>
                                                     </div>
-                                                    <div class="col-12 mb-3">
-                                                        <label>Proveedor</label>
-                                                        <Dropdown
-                                                            v-model="
-                                                                value.selectedProvider
-                                                            "
-                                                            :options="providers"
-                                                            class="form-control"
-                                                            optionLabel="provider"
-                                                            optionValue="provider"
-                                                            dataKey="provider"
-                                                            :showClear="true"
-                                                            @change="
-                                                                updateFilters
-                                                            "
-                                                            placeholder="Seleccionar proveedor"
-                                                            :filter="true"
-                                                            filterPlaceholder="Buscar Proveedor"
-                                                        />
-                                                    </div>
-                                                    <div class="col-12 mb-3">
-                                                        <label>Usuario</label>
-                                                        <Dropdown
-                                                            v-model="
-                                                                value.selectedUser
-                                                            "
-                                                            :options="childs"
-                                                            class="form-control"
-                                                            optionLabel="username"
-                                                            optionValue="id"
-                                                            dataKey="id"
-                                                            :showClear="true"
-                                                            @change="
-                                                                updateFilters
-                                                            "
-                                                            placeholder="Seleccionar usuario"
-                                                            :filter="true"
-                                                            filterPlaceholder="Buscar usuario"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </template>
-                                        </Card>
-                                    </form>
+                                                </template>
+                                            </Card>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -149,11 +248,14 @@
                                         class="dropdown-menu dropdown-menu-right custom-report-dropdown"
                                     >
                                         <li>
-                                            <a @click="exportData('excel')" class="dropdown-item" href="javascript:void(0)"
+                                            <a
+                                                @click="exportData('excel')"
+                                                class="dropdown-item"
+                                                href="javascript:void(0)"
                                                 >Export Excel</a
                                             >
                                         </li>
-                                       <!--  <li>
+                                        <!--  <li>
                                             <a @click="exportData('pdf')" class="dropdown-item" href="javascript:void(0)"
                                                 >Export PDF</a
                                             >
@@ -176,21 +278,98 @@ export default {
         value: {
             type: Object,
             default: {
-                query:"",
+                query: "",
                 daterange: [],
                 selectedUser: "",
                 selectedTimezone: "",
                 selectedProvider: "",
+                typeUser: "all",
+                typeTransaction: "all",
             },
         },
         title: {
             type: String,
             default: "",
         },
+        showProvider: {
+            type: Boolean,
+            default: false,
+        },
+        showUser: {
+            type: Boolean,
+            default: false,
+        },
+
+        showTypeTransaction: {
+            type: Boolean,
+            default: false,
+        },
+        showTimezone: {
+            type: Boolean,
+            default: false,
+        },
+        showTypeUser: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    mounted() {
+        document
+            .querySelector(".dp-link")
+            .addEventListener("click", function (event) {
+                event.preventDefault();
+            });
     },
     data() {
         return {
+            pickerOptions: {
+                shortcuts: [
+                    {
+                        text: "Última semana",
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(
+                                start.getTime() - 3600 * 1000 * 24 * 7
+                            );
+                            picker.$emit("pick", [start, end]);
+                        },
+                    },
+                    {
+                        text: "Último mes",
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(
+                                start.getTime() - 3600 * 1000 * 24 * 30
+                            );
+                            picker.$emit("pick", [start, end]);
+                        },
+                    },
+                    {
+                        text: "Últimos 3 meses",
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(
+                                start.getTime() - 3600 * 1000 * 24 * 90
+                            );
+                            picker.$emit("pick", [start, end]);
+                        },
+                    },
+                ],
+            },
             childs: [],
+            typeUsers: [
+                { label: "Todos", value: "all" },
+                { label: "Agente", value: "agent" },
+                { label: "Usuario", value: "user" },
+            ],
+            typeTransactions: [
+                { label: "Todos", value: "all" },
+                { label: "Cargo", value: "credit" },
+                { label: "Descarga", value: "debit" },
+            ],
             providers: [],
             es: {
                 firstDayOfWeek: 1,
@@ -266,7 +445,7 @@ export default {
         },
         updateFilters() {
             this.$emit("change", this.value);
-        },  
+        },
         exportData(type) {
             this.$emit("export", type);
         },

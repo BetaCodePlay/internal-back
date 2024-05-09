@@ -7442,11 +7442,17 @@ if (! function_exists('authenticatedUserBalance')) {
 }
 
 if (! function_exists('getUserIdByUsernameOrCurrent')) {
-    function getUserIdByUsernameOrCurrent(Request $request)
+    function getUserIdByUsernameOrCurrent(Request $request, string $whitelabel = null)
     {
         if ($request->has('username')) {
-            $username = $request->input('username');
-            return User::where('username', $username)->value('id');
+            $username     = $request->input('username');
+            $whitelabelId = is_null($whitelabel) ? Configurations::getWhitelabel() : $whitelabel;
+            return User::where('username', $username)
+                ->where([
+                    'username'      => $username,
+                    'whitelabel_id' => $whitelabelId,
+                ])
+                ->value('id');
         }
         return Auth::id();
     }

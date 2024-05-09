@@ -52906,28 +52906,28 @@ input[type="checkbox"]:checked + * + .g-color-gray-light-v11--checked {
 }
 
 .g-color-gray-dark-v6 {
-    color: #53585e !important;
+    color: #999 !important;
 }
 
 .g-color-gray-dark-v6--hover:hover, .g-color-gray-dark-v6--focus:focus, .g-color-gray-dark-v6--disabled:disabled, .g-color-gray-dark-v6--active.active, .g-color-gray-dark-v6--opened[aria-expanded="true"] {
-    color: #53585e !important;
+    color: #999 !important;
 }
 
 input[type="checkbox"]:checked + .g-color-gray-dark-v6--checked,
 input[type="checkbox"]:checked + * + .g-color-gray-dark-v6--checked {
-    color: #53585e !important;
+    color: #999 !important;
 }
 
 .g-parent:hover .g-color-gray-dark-v6--parent-hover {
-    color: #53585e !important;
+    color: #999 !important;
 }
 
 .g-parent.active .g-color-gray-dark-v6--parent-active {
-    color: #53585e !important;
+    color: #999 !important;
 }
 
 .u-sibling.opened + .g-color-gray-dark-v6--sibling-opened {
-    color: #53585e !important;
+    color: #999 !important;
 }
 
 .g-color-gray-dark-v7 {

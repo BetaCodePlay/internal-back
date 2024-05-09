@@ -111,14 +111,44 @@
         }
 
         .tab-content {
-            position: relative;
-            padding: 10px 20px;
-            background: #1e1e1e;
-            border-radius: 8px;
-            margin-top: 6px;
+            .tab-content-title {
+                padding: 10px 20px;
+                font-size: 15px;
 
-            @media screen and (max-width: 767px) {
-                padding: 10px 10px;
+                .text {
+                    font-weight: 500;
+                }
+            }
+
+            .tab-content-body-simple {
+                position: relative;
+                background: #1e1e1e;
+                border-radius: 8px;
+                margin-top: 18px;
+            }
+
+            .tab-content-body {
+                position: relative;
+                padding: 10px 20px;
+                background: #1e1e1e;
+                border-radius: 8px;
+                margin-top: 18px;
+
+                .tab-content-title {
+                    margin-top: -10px;
+                    margin-left: -20px;
+                    margin-right: -20px;
+                    border-bottom: 1px solid #464646;
+
+                    @media screen and (max-width: 767px) {
+                        margin-left: -10px;
+                        margin-right: -10px;
+                    }
+                }
+
+                @media screen and (max-width: 767px) {
+                    padding: 10px 10px;
+                }
             }
         }
 
@@ -160,6 +190,13 @@
                     display: block;
                     margin-top: 5px;
                     padding-top: 5px;
+                    padding-bottom: 5px;
+                    margin-bottom: 5px;
+
+                    &:last-child {
+                        padding-bottom: 0;
+                        margin-bottom: 0;
+                    }
 
                     &::before {
                         content: "";
@@ -168,7 +205,7 @@
                         position: absolute;
                         bottom: calc(100% + 5px);
                         height: 2px;
-                        background: #3c3c3c;
+                        background: #222;
                         left: -10px;
                     }
 
@@ -238,6 +275,16 @@
                     }
                 }
 
+                .number {
+                    background: #7d2df5;
+                    font-weight: 500;
+                    color: #fff;
+                    padding: 2px 6px;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    margin-left: 5px;
+                }
+
                 .data-text-inline {
                     display: inline-block;
                     font-size: 14px;
@@ -245,17 +292,15 @@
                     color: #aaa;
                     border-left: 2px solid #3c3c3c;
 
-                    .number {
-                        background: #7d2df5;
-                        font-weight: 500;
-                        color: #fff;
-                        padding: 2px 6px;
-                        border-radius: 5px;
-                        font-size: 12px;
-                        margin-left: 5px;
-                    }
-
                     @media screen and (max-width: 767px) {
+                        border-left: 0 solid transparent;
+                        border-right: 2px solid #3c3c3c;
+                        text-align: center;
+
+                        &:last-child {
+                            border-right: 0;
+                        }
+
                         .name {
                             display: block;
                             margin-bottom: 10px;
@@ -348,6 +393,7 @@
         .tab-body {
             min-height: 240px;
             position: relative;
+            margin-top: 10px;
 
             .table-load {
                 opacity: 0;

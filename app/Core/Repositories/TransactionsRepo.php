@@ -11,11 +11,16 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Permissions;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Utilities\Helper;
 
 
@@ -397,16 +402,16 @@ class TransactionsRepo
 
         $orderCol = [
             'column' => 'date',
-            'order' => 'asc',
+            'order'  => 'asc',
         ];
 
         if ($request->has('order') && ! empty($request->get('order'))) {
             $orderCol = [
                 'column' => $request->get('columns')[$request->get('order')[0]['column']]['data'],
-                'order' => $request->get('order')[0]['dir']
+                'order'  => $request->get('order')[0]['dir']
             ];
         }
-        DB::connection()->enableQueryLog();
+
         $transactionsQuery = Transaction::select([
             'users.username',
             'transactions.user_id',
@@ -463,8 +468,6 @@ class TransactionsRepo
                     ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
             });
         }
-        $queries = \DB::getQueryLog();
-        Log::info(__METHOD__ . " Transaction repo queries ", [ $queries]);
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
@@ -501,6 +504,11 @@ class TransactionsRepo
         $resultCount   = $transactionsQuery->count();
         $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
 
+       /*$sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
+        dd($sqlWithValues);*/
+
+        //dd($startDate, $endDate);
+
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
             $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
@@ -510,7 +518,6 @@ class TransactionsRepo
             $from     = $transaction->data->from ?? null;
             $to       = $transaction->data->to ?? null;
             $balance  = $transaction->data->balance ?? null;
-            //$receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
             $receiver = $to;
             return [
                 $formattedDateTimeWithTimezone,
@@ -664,6 +671,82 @@ class TransactionsRepo
 
         return [$transactions, $countTransactions];
     }
+
+    /**
+     * Get user and provider transactions paginated.
+     *
+     * Retrieve paginated transaction data based on a specified user and provider(s).
+     * Transactions can be filtered based on a specific type.
+     *
+     * @param Request $request
+     * @param string|int $agent
+     * @return LengthAwarePaginator
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function getUserProviderTransactionsPaginated(Request $request, string|int $agent)
+    : LengthAwarePaginator {
+        $timezone  = $request->input('timezone', session()->get('timezone'));
+        $startDate = Utils::startOfDayUtc(
+            $request->has('startDate') ? $request->get('startDate') : date('Y-m-d'),
+            'Y-m-d',
+            'Y-m-d H:i:s',
+            $timezone
+        );
+        $endDate   = Utils::endOfDayUtc(
+            $request->has('endDate') ? $request->get('endDate') : date('Y-m-d'),
+            'Y-m-d',
+            'Y-m-d H:i:s',
+            $timezone
+        );
+        $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+
+        $typeTransaction = 'credit';
+        if (Gate::allows('access', Permissions::$users_search)) {
+            $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+        }
+
+        $currency  = session('currency');
+        $providers = [Providers::$agents, Providers::$agents_users];
+
+        $arraySonIds  = $this->reportAgentRepo->getIdsChildrenFromFather(
+            $agent,
+            session('currency'),
+            Configurations::getWhitelabel()
+        );
+        $transactions = Transaction::select(
+            'users.username',
+            'transactions.user_id',
+            'transactions.id',
+            'transactions.amount',
+            'transactions.transaction_type_id',
+            'transactions.created_at',
+            'transactions.provider_id',
+            'transactions.data',
+            'transactions.transaction_status_id',
+            'transactions.data->balance AS balance_final'
+        )
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->whereIn('transactions.user_id', $arraySonIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers);
+
+        if ($typeUser === 'agent') {
+            $transactions->whereNull('data->provider_transaction');
+        } elseif ($typeUser === 'provider') {
+            $transactions->whereNotNull('data->provider_transaction');
+        }
+
+        $typeTransactionId = ($typeTransaction === 'credit') ? 1 : (($typeTransaction === 'debit') ? 2 : null);
+
+        if ($typeTransactionId !== null) {
+            $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
+        }
+
+        return $transactions->paginate($request->input('per_page', 10));
+    }
+
 
     /**
      * @param $user

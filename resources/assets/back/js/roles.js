@@ -18,54 +18,7 @@ class Roles {
         let $route = $table.data('route');
 
         if($table.length > 0) {
-            Roles.globaltable = $table.DataTable({
-                ajax: $route,
-                pageLength: 25,
-                buttons: ['copy', 'excel', 'pdf'],
-                fixedHeader: true,
-                fnCreatedRow: function (nRow, aData, iDataIndex) {
-                    let buttons = $('#user-buttons');
-                    let modalLockTarget = '[data-target="#role-lock"]';
-                    let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
-                    let modalBalanceTarget = '[data-target="#role-balance"]';
-                    let modalCreateTarget = '[data-target="#role-create"]';
-                    let modalModifyTarget = '[data-target="#role-modify"]';
 
-                    buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]).attr('data-rol', aData[1][1]);
-                    buttons.find('.btn-href').attr('href', '/agents/role/' + aData[0]);
-                    buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock')).attr('data-type', aData[3][2]);
-
-                    if (aData[3][1]) {
-                        buttons.find(modalResetPasswordTarget).parent().removeClass('d-none');
-                        buttons.find(modalBalanceTarget).parent().removeClass('d-none');
-                        buttons.find(modalCreateTarget).parent().removeClass('d-none');
-                        buttons.find(modalModifyTarget).parent().removeClass('d-none');
-                        buttons.find(modalLockTarget).parent().removeClass('united');
-
-                        if (aData[1][1] === 5) {
-                            buttons.find(modalCreateTarget).parent().addClass('d-none');
-                        } else {
-                            buttons.find(modalCreateTarget).parent().removeClass('d-none');
-                        }
-                    } else {
-                        buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
-                        buttons.find(modalBalanceTarget).parent().addClass('d-none');
-                        buttons.find(modalCreateTarget).parent().addClass('d-none');
-                        buttons.find(modalModifyTarget).parent().addClass('d-none');
-                        buttons.find(modalLockTarget).parent().addClass('united');
-                    }
-
-                    $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
-                    $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1][0] + '</span>');
-                    $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
-                    $('td:eq(4)', nRow).html('$' + aData[4]);
-                    $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
-                },
-                initComplete: function () {
-                    $('.page-role .page-body .table-load').addClass('table-complete');
-                    $('.page-role .page-body .loading-style').hide();
-                },
-            })
         }
 
         $(document).on('click', '.currentDataRole', function () {
@@ -165,7 +118,9 @@ class Roles {
                     method: 'post',
                     data: $data
                 }).done(function (json) {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                     Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                     $('#role-password-reset').modal('hide');
                     $password.val('');
@@ -216,7 +171,9 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                 }
             }).fail(function (json) {
                 Roles.errorResponse(json);
@@ -323,7 +280,9 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                 }
 
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
@@ -445,7 +404,9 @@ class Roles {
                 method: 'post',
                 data: $data
             }).done(function (json) {
-                Roles.globaltable.ajax.reload();
+                if (Roles.globaltable !== undefined) {
+                    Roles.globaltable.ajax.reload();
+                }
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-create').modal('hide');
                 $('#createRolUsername').val('');
@@ -566,7 +527,9 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                 }
             }).fail(function (json) {
                 Roles.errorResponse(json);
@@ -586,16 +549,17 @@ class Roles {
         let tableInformation;
         let tableTransactionID = $('#table-transactions');
         let tableTransaction;
+        let tableRolesID = $('#table-roles');
+        let tableRoles;
         let picker = initLitepickerEndTodayNew();
         let routeTransaction;
-
 
         $(document).on('click', $button, function () {
             let $this = $(this);
             let $target = $this.data('target');
             let $route;
 
-            if ($target === tabInformation) {
+            if ($target === tabManager) {
                 $route = tableInformationID.data('route');
 
                 if (tableInformation !== undefined) {
@@ -607,13 +571,69 @@ class Roles {
 
 
                 tableInformation = tableInformationID.DataTable({
+                    serverSide: true,
                     ajax: $route,
-                    lengthChange: true,
                     initComplete: function () {
                         $($target).find('.table-load').addClass('table-complete');
                         $($target).find('.loading-style').hide();
                     },
                 });
+            }
+
+            if ($target === tabInformation) {
+                $route = tableRolesID.data('route');
+
+                if (tableRoles !== undefined) {
+                    tableRoles.destroy();
+                }
+
+                tableRoles = tableRolesID.DataTable({
+                    serverSide: true,
+                    ajax: $route,
+                    fixedHeader: true,
+                    fnCreatedRow: function (nRow, aData, iDataIndex) {
+                        let buttons = $('#user-buttons');
+                        let modalLockTarget = '[data-target="#role-lock"]';
+                        let modalResetPasswordTarget = '[data-target="#role-password-reset"]';
+                        let modalBalanceTarget = '[data-target="#role-balance"]';
+                        let modalCreateTarget = '[data-target="#role-create"]';
+                        let modalModifyTarget = '[data-target="#role-modify"]';
+
+                        buttons.find('[data-toggle="modal"]').attr('data-userid', aData[2]).attr('data-username', aData[0]).attr('data-rol', aData[1][1]);
+                        buttons.find('.btn-href').attr('href', '/agents/role/' + aData[0]);
+                        buttons.find(modalLockTarget).attr('data-value', aData[3][1]).html(aData[3][1] ? $(modalLockTarget).data('lock') : $(modalLockTarget).data('unlock')).attr('data-type', aData[3][2]);
+
+                        if (aData[3][1]) {
+                            buttons.find(modalResetPasswordTarget).parent().removeClass('d-none');
+                            buttons.find(modalBalanceTarget).parent().removeClass('d-none');
+                            buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                            buttons.find(modalModifyTarget).parent().removeClass('d-none');
+                            buttons.find(modalLockTarget).parent().removeClass('united');
+
+                            if (aData[1][1] === 5) {
+                                buttons.find(modalCreateTarget).parent().addClass('d-none');
+                            } else {
+                                buttons.find(modalCreateTarget).parent().removeClass('d-none');
+                            }
+                        } else {
+                            buttons.find(modalResetPasswordTarget).parent().addClass('d-none');
+                            buttons.find(modalBalanceTarget).parent().addClass('d-none');
+                            buttons.find(modalCreateTarget).parent().addClass('d-none');
+                            buttons.find(modalModifyTarget).parent().addClass('d-none');
+                            buttons.find(modalLockTarget).parent().addClass('united');
+                        }
+
+                        $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
+                        $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1][0] + '</span>');
+                        $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
+                        $('td:eq(4)', nRow).html('$' + aData[4]);
+                        $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
+                    },
+                    initComplete: function () {
+                        $('.page-role .page-body .table-load').addClass('table-complete');
+                        $('.page-role .page-body .loading-style').hide();
+                    },
+                })
             }
 
             if ($target === tabTransaction) {
@@ -647,9 +667,9 @@ class Roles {
             }
 
             tableTransaction = tableTransactionID.DataTable({
+                serverSide: true,
                 ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=' + $type + '&typeTransaction=' + $action,
                 processing: true,
-                serverSide: true,
                 columnDefs: [{
                     "defaultContent": "-",
                     "targets": "_all"
@@ -667,6 +687,8 @@ class Roles {
                 },
             });
         });
+
+        $('.page-role .nav-roles .nav-tabs .nav-item .tab-role').eq(0).click();
     }
 
     static errorResponse(json) {
