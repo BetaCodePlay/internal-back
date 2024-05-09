@@ -604,7 +604,7 @@ class Roles {
             let $target = $this.data('target');
             let $route;
 
-            if ($target === tabInformation) {
+            if ($target === tabManager) {
                 $route = tableInformationID.data('route');
 
                 if (tableInformation !== undefined) {

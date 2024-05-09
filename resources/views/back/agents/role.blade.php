@@ -169,7 +169,19 @@
                         <div class="tab-content-title">{{ _i('Actividad de conexión') }}</div>
                     </div>
 
-
+                    <div class="tab-body">
+                        <form autocomplete="destroy" class="col table-load">
+                            <table id="table-information" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
+                                <thead>
+                                <tr>
+                                    <th data-priority="1">{{ _i('IP') }}</th>
+                                    <th data-priority="2">{{ _i('Quantity') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </form>
+                        <div class="loading-style"></div>
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <form autocomplete="destroy" class="tab-form">
@@ -253,19 +265,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-body">
-                        <form autocomplete="destroy" class="col table-load">
-                            <table id="table-information" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
-                                <thead>
-                                <tr>
-                                    <th data-priority="1">{{ _i('IP') }}</th>
-                                    <th data-priority="2">{{ _i('Quantity') }}</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </form>
-                        <div class="loading-style"></div>
-                    </div>
+
                 </div>
                 <div class="tab-pane fade" id="roleTabLocks" role="tabpanel" aria-labelledby="locks-tab">
                     <br>
