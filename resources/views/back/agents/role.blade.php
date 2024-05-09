@@ -23,22 +23,22 @@
             <ul class="nav nav-tabs" id="roleTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active tab-role" data-toggle="tab" data-target="#roleTabProfileManager" type="button" role="tab" aria-controls="roleTabProfileManager" aria-selected="true">
-                        {{ _i('Profile management') }}
+                        {{ _i('My data') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabTransactions" type="button" role="tab" aria-controls="roleTabTransactions" aria-selected="false">
-                        {{ _i('Transactions') }}
+                        {{ _i('Roles') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation" type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
-                        {{ _i('More information') }}
+                        {{ _i('Transactions') }}
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabLocks" type="button" role="tab" aria-controls="roleTabLocks" aria-selected="false">
-                        {{ _i('Locks') }}
+                        {{ _i('Providers') }}
                     </button>
                 </li>
             </ul>
