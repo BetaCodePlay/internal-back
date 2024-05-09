@@ -254,7 +254,7 @@
                         </form>
                     </div>
                     <div class="tab-body">
-                        <form autocomplete="destroy" class="col table-load">
+                        <form autocomplete="destroy" class="table-load">
                             <table id="table-transactions" class="display nowrap" data-route="{{ $authUser->agentType === 5 ? route('transactions.players') : route('transactions.agents') }}">
                                 <thead>
                                 <tr>
