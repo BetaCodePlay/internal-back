@@ -54,6 +54,150 @@
         }
     }
 
+    .datatable-body {
+        background: #1e1e1e;
+        overflow: hidden;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .datatable-footer {
+        background: #1e1e1e;
+        border-radius: 0 0 12px 12px;
+        padding: 15px 15px 15px 15px;
+        margin-top: 5px;
+        border-top: 2px solid #3b3b3b;
+        display: flex;
+        justify-content: space-between;
+
+        .dt-info {
+            align-self: center;
+            display: block;
+        }
+
+        .dt-paging {
+            align-self: center;
+            display: block;
+
+            .dt-paging-button {
+                border-radius: 5px;
+                background: transparent;
+                border: 1px solid transparent;
+                color: #fff !important;
+                font-weight: 500;
+                transition: 0.15s;
+                padding: 0.35rem 0.9rem;
+
+                &:hover {
+                    text-shadow: 0 0 3px #fff;
+                }
+
+                &:focus {
+                    z-index: 3;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.2rem transparent;
+                }
+
+                &.disabled {
+                    opacity: .5;
+                    pointer-events: none;
+                    color: #fff !important;
+                }
+
+                &.current {
+                    pointer-events: none;
+                    background: transparent;
+                    border-color: #fff;
+                    color: #Fff;
+                }
+            }
+        }
+    }
+
+    .dataTable {
+        thead {
+            tr {
+                th {
+                    padding: 15px 26px 15px 10px;
+                    background: #222;
+
+                    @media screen and (max-width: 767px) {
+                        padding: 15px 10px;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    padding: 10px;
+                    border-bottom: 0 !important;
+
+                    &.dtr-control{
+                        &::before {
+                            display: none !important;
+                        }
+                    }
+
+                    .btn-tr-details {
+                        display: none;
+                        margin-right: 5px;
+                        color: #aaa;
+                        font-size: 16px;
+                        vertical-align: middle;
+                        transition: .15s;
+                    }
+
+                    @media screen and (max-width: 767px) {
+                        padding: 10px 8px;
+                    }
+                }
+
+                &.even {
+                    background: #252525;
+                }
+
+                &.child {
+                    background: #2d2d2d;
+
+                    .dtr-details {
+                        margin: 0;
+                        padding-left: 20px;
+
+                        li {
+                            padding-left: 5px;
+                            padding-top: 5px;
+                            padding-bottom: 5px;
+                            border-bottom: 1px solid #444;
+
+                            &:last-child {
+                                border-bottom: 0;
+                            }
+
+                            .dtr-title {
+                                font-weight: 500;
+                                margin-right: 10px;
+                                min-width: 100px;
+                                display: inline-block;
+                            }
+
+                            .dtr-data {
+
+                            }
+                        }
+                    }
+                }
+
+                &:last-of-type {
+                    td {
+                        border-bottom: 0 solid transparent !important;
+                    }
+                }
+            }
+        }
+    }
+
     @media screen and (max-width: 640px) {
         .datatable-header {
             display: block;
@@ -64,6 +208,24 @@
 
             .dt-buttons {
                 text-align: center;
+            }
+        }
+
+        .datatable-footer {
+            display: block;
+
+            .dt-info {
+                text-align: center;
+            }
+
+            .dt-paging {
+                text-align: center;
+                margin-top: 10px;
+
+                .dt-paging-button {
+                    padding: 0.35rem 0.75rem;
+                    font-size: 12px;
+                }
             }
         }
     }
