@@ -128,8 +128,8 @@ export default {
         },
         FetchData() {
             if (this.filters.daterange[1]) {
-                this.loading = true;
-                axios
+                //this.loading = true;
+                /*axios
                     .get(
                         `/agents/transactions/paginate/${
                             window.authUserId
@@ -147,9 +147,19 @@ export default {
                     })
                     .catch(() => {
                         this.loading = false;
-                    });
+                    });*/
+
+                console.log('my log', `/agents/transactions/paginate/${
+                    window.authUserId
+                }?startDate=${moment(this.filters.daterange[0]).format(
+                    "YYYY-MM-DD"
+                )}&endDate=${moment(this.filters.daterange[1]).format(
+                    "YYYY-MM-DD"
+                )}&typeUser=${this.filters.typeUser}&typeTransaction=${
+                    this.filters.typeTransaction
+                }&timezone=${this.filters.selectedTimezone}`);
             }
-        },
+        }
     },
     mounted() {
         this.FetchData();
