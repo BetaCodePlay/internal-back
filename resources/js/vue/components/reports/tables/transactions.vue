@@ -126,30 +126,6 @@ export default {
         onChange() {
             this.fetchData();
         },
-        /*FetchData() {
-            if (this.filters.daterange[1]) {
-                this.loading = true;
-                axios
-                    .get(
-                        `/agents/transactions/paginate/${
-                            window.authUserId
-                        }?startDate=${moment(this.filters.daterange[0]).format(
-                            "YYYY-MM-DD"
-                        )}&endDate=${moment(this.filters.daterange[1]).format(
-                            "YYYY-MM-DD"
-                        )}&typeUser=${this.filters.typeUser}&typeTransaction=${
-                            this.filters.typeTransaction
-                        }&timezone=${this.filters.selectedTimezone}`
-                    )
-                    .then((resp) => {
-                        this.items = resp.data.data;
-                        this.loading = false;
-                    })
-                    .catch(() => {
-                        this.loading = false;
-                    });
-            }
-        }*/
         fetchData() {
             this.loading = true;
             const { daterange, typeUser, typeTransaction, selectedTimezone } = this.filters;
@@ -169,8 +145,8 @@ export default {
                             timezone: selectedTimezone
                         }
                     })
-                    .then((resp) => {
-                        //this.items = resp.data.data;
+                    .then(({ data }) => {
+                        this.items = data;
                         this.loading = false;
                     })
                     .catch(() => {
