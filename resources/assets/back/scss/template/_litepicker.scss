@@ -2,6 +2,7 @@
     color: #fff;
 
     .container__months {
+        box-shadow: 0 0 5px #666;
         background-color: #2c2c2c;
 
         .month-item-header {
@@ -15,6 +16,21 @@
 
             &.is-locked {
                 color: #666;
+            }
+
+            &.is-end-date {
+                color: $theme;
+            }
+
+            &.is-in-range {
+                background-color: #444;
+                border-radius: 0;
+            }
+
+            &:hover {
+                color: $theme;
+                -webkit-box-shadow: inset 0 0 0 1px $theme;
+                box-shadow: inset 0 0 0 1px $theme;
             }
         }
     }
