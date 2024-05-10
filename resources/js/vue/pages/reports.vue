@@ -2,9 +2,9 @@
     <div>
         <div class="wrapper-title g-pb-30">Movimiento diario</div>
         <div class="page-roles">
+            <div class="wrapper-title g-pb-30">Actividad general</div>
             <components-reports-header class="mb-3"/>
             <TabView>
-                <TabPanel header="Actividad general"></TabPanel>
                 <TabPanel header="Reporte Financiero">
                     <components-reports-tables-financial/>
                 </TabPanel>
