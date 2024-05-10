@@ -3813,7 +3813,7 @@ class AgentsCollection
      * Each transaction's date, amount, debit, credit, and balance are formatted accordingly.
      * Returns an array containing formatted transaction data along with pagination details.
      *
-     * @param  LengthAwarePaginator  $paginatedResults The paginated transaction data.
+     * @param LengthAwarePaginator $paginatedResults The paginated transaction data.
      * @param string $timezone The timezone to format the transaction dates.
      * @return array An array containing formatted transaction data and pagination details.
      */
@@ -3829,6 +3829,9 @@ class AgentsCollection
             $transaction->balance = isset($transaction->data->balance)
                 ? number_format($transaction->data->balance, 2)
                 : 0;
+
+            $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
+            $transaction->new_amount = $symbol . $transaction->amount;
         }
 
         return [

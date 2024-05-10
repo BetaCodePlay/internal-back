@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Utilities\Helper;
@@ -393,8 +392,7 @@ class TransactionsRepo
         $typeUser        = $request->has('typeUser') ? $request->get('typeUser') : 'all';
         $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
         $username        = $request->get('search')['value'] ?? null;
-
-        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+        $childrenIds     = $this->reportAgentRepo->getIdsChildrenFromFather(
             $userId,
             $currency,
             Configurations::getWhitelabel()
@@ -448,7 +446,7 @@ class TransactionsRepo
                 $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
             }
         }
-        Log::info(__METHOD__ . " Transaction repo ", [$request]);
+
         if (! is_null($username)) {
             $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
                 'transactions.data->to',
@@ -468,6 +466,7 @@ class TransactionsRepo
                     ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
             });
         }
+
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
@@ -501,14 +500,8 @@ class TransactionsRepo
             }
         }
 
-        $resultCount   = $transactionsQuery->count();
-        $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
-
-       /*$sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
-        dd($sqlWithValues);*/
-
-        //dd($startDate, $endDate);
-
+        $resultCount      = $transactionsQuery->count();
+        $slicedResults    = $transactionsQuery->offset($start)->limit($length)->get();
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
             $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
@@ -736,6 +729,14 @@ class TransactionsRepo
             $transactions->whereNull('data->provider_transaction');
         } elseif ($typeUser === 'provider') {
             $transactions->whereNotNull('data->provider_transaction');
+        }
+
+        if (! empty($request->get('query'))) {
+            $query = $request->get('query');
+            $transactions->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('data->from', 'LIKE', "%$query%")
+                    ->orWhere('data->to', 'LIKE', "%$query%");
+            });
         }
 
         $typeTransactionId = ($typeTransaction === 'credit') ? 1 : (($typeTransaction === 'debit') ? 2 : null);
