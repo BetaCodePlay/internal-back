@@ -15,7 +15,6 @@ require('jquery-mousewheel');
 require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar');
 activeMenu();
 
-
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
