@@ -160,6 +160,8 @@ export default {
                     .then(({data}) => {
                         this.items = data.data;
                         this.totalRecords = data.total;
+
+                        console.log(data, data.total, data.per_page);
                         this.loading = false;
                     })
                     .catch(() => {
