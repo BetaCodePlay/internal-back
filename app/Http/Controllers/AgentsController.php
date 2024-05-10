@@ -754,7 +754,8 @@ class AgentsController extends Controller
             $transactions = $this->transactionsRepo->getUserProviderTransactionsPaginated($request, $agent);
 
             return response()->json(
-                $this->agentsCollection->formatAgentTransactionsPaginated($transactions, $request->input('timezone'))
+                //$this->agentsCollection->formatAgentTransactionsPaginated($transactions, $request->input('timezone'))
+                $this->transactionsRepo->getUserProviderTransactionsPaginated($request, $agent)
             );
         } catch (Exception|NotFoundExceptionInterface|ContainerExceptionInterface $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
