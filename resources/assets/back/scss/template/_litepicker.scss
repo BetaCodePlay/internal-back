@@ -9,6 +9,8 @@
             color: #fff;
 
             .button-previous-month, .button-next-month {
+                cursor: pointer;
+
                 &:hover {
                     color: $theme;
 
