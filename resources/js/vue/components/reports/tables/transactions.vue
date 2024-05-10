@@ -155,7 +155,11 @@ export default {
             const { daterange, typeUser, typeTransaction, selectedTimezone } = this.filters;
 
             if (daterange[1]) {
-                console.log({
+                const startDate = moment(daterange[0]).format("YYYY-MM-DD");
+                const endDate = moment(daterange[1]).format("YYYY-MM-DD");
+                const userId = window.authUserId;
+
+                console.log('request params', {
                     startDate,
                     endDate,
                     typeUser,
