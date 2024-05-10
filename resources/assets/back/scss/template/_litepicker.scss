@@ -24,9 +24,11 @@
     .container__days {
         .day-item {
             color: #fff;
+            cursor: pointer;
 
             &.is-locked {
                 color: #666;
+                cursor: default;
             }
 
             &.is-end-date {
