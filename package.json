@@ -72,6 +72,7 @@
         "jquery.repeater": "^1.2.1",
         "jspdf": "^2.5.1",
         "jstree": "^3.3.9",
+        "jszip": "^3.10.1",
         "laravel-echo": "^1.15.3",
         "litepicker": "^1.5.7",
         "malihu-custom-scrollbar-plugin": "^3.1.5",
