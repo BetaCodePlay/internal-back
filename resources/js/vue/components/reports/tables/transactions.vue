@@ -154,20 +154,28 @@ export default {
             this.loading = true;
             const { daterange, typeUser, typeTransaction, selectedTimezone } = this.filters;
 
-            console.log('test onChange', daterange[1])
-
             if (daterange[1]) {
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
                 const userId = window.authUserId;
 
-                console.log('request params', {
-                    startDate,
-                    endDate,
-                    typeUser,
-                    typeTransaction,
-                    timezone: selectedTimezone
-                });
+                axios
+                    .get(`/agents/${userId}/transactions`, {
+                        params: {
+                            startDate,
+                            endDate,
+                            typeUser,
+                            typeTransaction,
+                            timezone: selectedTimezone
+                        }
+                    })
+                    .then((resp) => {
+                        //this.items = resp.data.data;
+                        this.loading = false;
+                    })
+                    .catch(() => {
+                        this.loading = false;
+                    });
             }
         }
     },
