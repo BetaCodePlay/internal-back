@@ -135,7 +135,7 @@ export default {
             this.currentPage = event.page + 1;
             this.fetchData();
         },
-        fetchData() {
+        fetchData1() {
             this.loading = true;
             const {daterange, typeUser, typeTransaction, selectedTimezone} = this.filters;
 
@@ -167,7 +167,41 @@ export default {
                         this.loading = false;
                     });
             }
+        },
+        async fetchData() {
+            this.loading = true;
+            const {daterange, typeUser, typeTransaction, selectedTimezone} = this.filters;
+
+            if (daterange[1]) {
+                const startDate = moment(daterange[0]).format("YYYY-MM-DD");
+                const endDate = moment(daterange[1]).format("YYYY-MM-DD");
+                const userId = window.authUserId;
+
+                try {
+                    const {data} = await axios.get(`/agents/${userId}/transactions`, {
+                        params: {
+                            startDate,
+                            endDate,
+                            typeUser,
+                            typeTransaction,
+                            timezone: selectedTimezone,
+                            per_page: this.perPage,
+                            page: this.currentPage
+                        }
+                    });
+
+                    this.items = data.data;
+                    this.totalRecords = data.total;
+
+                    console.log(data, data.total, data.per_page);
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    this.loading = false;
+                }
+            }
         }
+
     },
     mounted() {
         this.fetchData();
