@@ -229,21 +229,22 @@ class TransactionsController extends Controller
      * @param Request $request
      * @return array|mixed
      */
-    public function playersTransactions(Request $request): mixed {
+    public function playersTransactions(Request $request)
+    : mixed {
         try {
-            $userId   = getUserIdByUsernameOrCurrent($request);
-            $bonus    = Configurations::getBonus();
-            $wallet   = Wallet::getByClient($userId, session('currency'), $bonus);
+            $userId = getUserIdByUsernameOrCurrent($request);
+            $bonus  = Configurations::getBonus();
+            $wallet = Wallet::getByClient($userId, session('currency'), $bonus);
 
             if (is_array($wallet->data)) {
                 Log::info(__METHOD__ . " Error in user wallet array {$userId}", [$wallet]);
             }
 
-            $token    = session('wallet_access_token');
-            $url      = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
+            $token = session('wallet_access_token');
+            $url   = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
 
-            $data = $request->all();
-            $data['wallet'] = !is_array($wallet->data) ? $wallet?->data?->wallet?->id : 0;
+            $data           = $request->all();
+            $data['wallet'] = ! is_array($wallet->data) ? $wallet?->data?->wallet?->id : 0;
 
             $response = Http::withHeaders([
                 'Accept'        => 'application/json',
