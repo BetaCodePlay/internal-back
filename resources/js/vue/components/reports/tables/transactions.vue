@@ -29,8 +29,8 @@
                 <template #body="slotProps">
                     <div class="text-center" v-if="col.field == 'date'">
                         <strong>{{
-                            moment(slotProps.data.date).format("YYYY-MM-DD")
-                        }}</strong>
+                                moment(slotProps.data.date).format("YYYY-MM-DD")
+                            }}</strong>
                     </div>
                     <div
                         class="text-center"
@@ -58,6 +58,7 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+
 export default {
     data() {
         return {
@@ -78,11 +79,11 @@ export default {
             },
             items: [],
             columns: [
-                { field: "date", header: "Fecha" },
-                { field: "from", header: "Agente" },
-                { field: "to", header: "Cuenta destino" },
-                { field: "new_amount", header: "Monto" },
-                { field: "balance", header: "Balance" },
+                {field: "date", header: "Fecha"},
+                {field: "from", header: "Agente"},
+                {field: "to", header: "Cuenta destino"},
+                {field: "new_amount", header: "Monto"},
+                {field: "balance", header: "Balance"},
             ],
         };
     },
@@ -128,7 +129,7 @@ export default {
         },
         fetchData() {
             this.loading = true;
-            const { daterange, typeUser, typeTransaction, selectedTimezone } = this.filters;
+            const {daterange, typeUser, typeTransaction, selectedTimezone} = this.filters;
 
             if (daterange[1]) {
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
@@ -145,10 +146,8 @@ export default {
                             timezone: selectedTimezone
                         }
                     })
-                    .then(({ data }) => {
-                        //this.items = data;
-
-                        console.log({data});
+                    .then(({data}) => {
+                        this.items = data.data;
                         this.loading = false;
                     })
                     .catch(() => {
@@ -166,6 +165,7 @@ export default {
 .p-column-header-content {
     justify-content: center;
 }
+
 .orders-subtable {
     border: 1px solid #8080800f;
     border-radius: 8px;
