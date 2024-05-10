@@ -53,6 +53,12 @@
             </Column>
 
             <div class="loading-style" v-if="loading"></div>
+
+            <template>
+                <div class="card">
+                    <Paginator :rows="perPage" :totalRecords="totalRecords" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
+                </div>
+            </template>
         </DataTable>
     </div>
 </template>
