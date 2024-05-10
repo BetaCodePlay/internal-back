@@ -731,7 +731,7 @@ class TransactionsRepo
             $transactions->whereNotNull('data->provider_transaction');
         }
 
-        if ($request->has('query')) {
+        if (! empty($request->get('query'))) {
             $transactions->whereJsonContains('data->to', $request->query('query'));
         }
 
