@@ -178,7 +178,7 @@ tfoot {
     padding: 0.75rem;
     border-radius: 4px;
 }
-.p-paginator-bottom .p-dropdown {
+.p-paginator .p-dropdown {
     width: 66px;
 }
 .p-paginator .p-paginator-current {
