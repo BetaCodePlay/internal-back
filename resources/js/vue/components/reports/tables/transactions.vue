@@ -15,8 +15,10 @@
             :value="items"
             responsiveLayout="scroll"
             :paginator="true"
-            :rows="10"
+            :rows="perPage"
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+            :totalRecords="totalRecords"
+            @onPage="handlePageChange"
             :rowsPerPageOptions="[10, 20, 50]"
             currentPageReportTemplate="Mostrando desde {first} hasta {last} de {totalRecords}"
         >
@@ -66,6 +68,9 @@ export default {
             force: 0,
             expandedRows: [],
             loading: false,
+            currentPage: 1,
+            perPage: 10,
+            totalRecords: 0,
             filters: {
                 query: "",
                 daterange: [
@@ -127,6 +132,10 @@ export default {
         onChange() {
             this.fetchData();
         },
+        handlePageChange(event) {
+            this.currentPage = event.page + 1;
+            this.fetchData();
+        },
         fetchData() {
             this.loading = true;
             const {daterange, typeUser, typeTransaction, selectedTimezone} = this.filters;
@@ -143,11 +152,13 @@ export default {
                             endDate,
                             typeUser,
                             typeTransaction,
-                            timezone: selectedTimezone
+                            timezone: selectedTimezone,
+                            page: this.currentPage
                         }
                     })
                     .then(({data}) => {
                         this.items = data.data;
+                        this.totalRecords = data.total;
                         this.loading = false;
                     })
                     .catch(() => {
