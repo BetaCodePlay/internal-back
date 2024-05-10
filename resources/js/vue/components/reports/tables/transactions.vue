@@ -15,10 +15,10 @@
             :value="items"
             responsiveLayout="scroll"
             :paginator="true"
-            :rows="perPage"
-            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             :totalRecords="totalRecords"
-            @onPage="handlePageChange"
+            :rows="perPage"
+            :currentPage="currentPage"
+            :onPage="onPageChange"
             :rowsPerPageOptions="[10, 20, 50]"
             currentPageReportTemplate="Mostrando desde {first} hasta {last} de {totalRecords}"
         >
@@ -132,7 +132,7 @@ export default {
         onChange() {
             this.fetchData();
         },
-        handlePageChange(event) {
+        onPageChange(event) {
             this.currentPage = event.page + 1;
             this.fetchData();
         },
@@ -153,6 +153,7 @@ export default {
                             typeUser,
                             typeTransaction,
                             timezone: selectedTimezone,
+                            per_page: this.perPage,
                             page: this.currentPage
                         }
                     })
