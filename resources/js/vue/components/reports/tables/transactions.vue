@@ -14,13 +14,12 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
-            :paginator="true"
+            paginator
             :totalRecords="totalRecords"
             :rows="perPage"
             :currentPage="currentPage"
             :onPage="onPageChange"
             :rowsPerPageOptions="[10, 20, 50]"
-            currentPageReportTemplate="Mostrando desde {first} hasta {last} de {totalRecords}"
         >
             <Column
                 v-for="col of columns"
