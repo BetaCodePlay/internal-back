@@ -14,6 +14,11 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
+            paginator="false"
+            :totalRecords="totalRecords"
+            :rows="perPage"
+            :currentPage="currentPage"
+            :onPage="onPageChange"
             :rowsPerPageOptions="[10, 20, 50]"
         >
             <Column
