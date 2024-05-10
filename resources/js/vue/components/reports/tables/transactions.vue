@@ -146,7 +146,9 @@ export default {
                         }
                     })
                     .then(({ data }) => {
-                        this.items = data;
+                        //this.items = data;
+
+                        console.log({data});
                         this.loading = false;
                     })
                     .catch(() => {
