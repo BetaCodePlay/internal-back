@@ -732,7 +732,11 @@ class TransactionsRepo
         }
 
         if (! empty($request->get('query'))) {
-            $transactions->whereJsonContains('data->to', $request->query('query'));
+            $query = $request->get('query');
+            $transactions->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('data->from', 'LIKE', "%$query%")
+                    ->orWhere('data->to', 'LIKE', "%$query%");
+            });
         }
 
         $typeTransactionId = ($typeTransaction === 'credit') ? 1 : (($typeTransaction === 'debit') ? 2 : null);
