@@ -731,6 +731,10 @@ class TransactionsRepo
             $transactions->whereNotNull('data->provider_transaction');
         }
 
+        if ($request->has('query')) {
+            $transactions->whereJsonContains('data->to', $request->query('query'));
+        }
+
         $typeTransactionId = ($typeTransaction === 'credit') ? 1 : (($typeTransaction === 'debit') ? 2 : null);
 
         if ($typeTransactionId !== null) {
