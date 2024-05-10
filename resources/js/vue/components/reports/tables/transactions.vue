@@ -14,11 +14,6 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
-            paginator="false"
-            :totalRecords="totalRecords"
-            :rows="perPage"
-            :currentPage="currentPage"
-            :onPage="onPageChange"
             :rowsPerPageOptions="[10, 20, 50]"
         >
             <Column
@@ -55,7 +50,20 @@
             <div class="loading-style" v-if="loading"></div>
         </DataTable>
 
-        <Paginator :rows="perPage" :totalRecords="totalRecords" :rowsPerPageOptions="[10, 20, 30]"></Paginator>
+        <template>
+            <div class="card">
+                <Paginator :rows="perPage" :totalRecords="totalRecords" :rowsPerPageOptions="[10, 20, 30]">
+                    <template #start="slotProps">
+                        Page: {{ slotProps.state.page }}
+                        First: {{ slotProps.state.first }}
+                        Rows: {{ slotProps.state.rows }}
+                    </template>
+                    <template #end>
+                        <Button type="button" icon="pi pi-search" />
+                    </template>
+                </Paginator>
+            </div>
+        </template>
     </div>
 </template>
 <script>
