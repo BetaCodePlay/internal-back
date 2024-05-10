@@ -14,7 +14,7 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
-            paginator="false"
+            paginator
             :totalRecords="totalRecords"
             :rows="perPage"
             :currentPage="currentPage"
