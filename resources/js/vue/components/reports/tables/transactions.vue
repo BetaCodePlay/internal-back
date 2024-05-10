@@ -154,6 +154,8 @@ export default {
             this.loading = true;
             const { daterange, typeUser, typeTransaction, selectedTimezone } = this.filters;
 
+            console.log('test onChange', daterange[1])
+
             if (daterange[1]) {
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
