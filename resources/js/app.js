@@ -10,6 +10,7 @@ import Card from "primevue/card";
 import Dropdown from "primevue/dropdown";
 import OverlayPanel from "primevue/overlaypanel";
 import Row from "primevue/row";
+import Paginator from 'primevue/paginator';
 import ElementUI from 'element-ui'
 
 import "primevue/resources/themes/bootstrap4-dark-purple/theme.css";
@@ -30,6 +31,7 @@ Vue.component("OverlayPanel", OverlayPanel);
 Vue.component("Column", Column);
 Vue.component("ColumnGroup", ColumnGroup);
 Vue.component("Row", Row);
+Vue.component("Paginator", Paginator)
 Vue.use(ElementUI, {locale})
 
 // Función para importar recursivamente todos los componentes
