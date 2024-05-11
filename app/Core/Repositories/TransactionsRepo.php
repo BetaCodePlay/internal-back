@@ -1816,8 +1816,7 @@ class TransactionsRepo
         $startDate = Utils::startOfDayUtc($today);
         $endDate   = Utils::endOfDayUtc($today);
 
-        $deposits = Transaction::where('user_id', $userId)
-            ->whereBetween('created_at', [$startDate, $endDate])
+        $deposits = Transaction::whereBetween('created_at', [$startDate, $endDate])
             ->where([
                 'user_id'             => $userId,
                 'whitelabel_id'       => $whitelabelId,
@@ -1826,8 +1825,7 @@ class TransactionsRepo
             ])
             ->sum('amount');
 
-        $withdrawals = Transaction::where('user_id', $userId)
-            ->whereBetween('created_at', [$startDate, $endDate])
+        $withdrawals = Transaction::whereBetween('created_at', [$startDate, $endDate])
             ->where([
                 'user_id'             => $userId,
                 'whitelabel_id'       => $whitelabelId,
@@ -1836,11 +1834,7 @@ class TransactionsRepo
             ])
             ->sum('amount');
 
-        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
-            $userId,
-            $currency,
-            $whitelabelId
-        );
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather($userId, $currency, $whitelabelId);
 
         $totalProfit = DB::table('closures_users_totals_2023_hour')
             ->whereBetween('created_at', [$startDate, $endDate])
