@@ -1799,7 +1799,7 @@ class TransactionsRepo
         $endDate   = Utils::endOfDayUtc($today);
 
         $deposits = Transaction::where('user_id', $userId)
-            //->whereDate('created_at', $today)
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->where([
                 'user_id'             => $userId,
                 'whitelabel_id'       => $whitelabelId,
@@ -1809,7 +1809,7 @@ class TransactionsRepo
             ->sum('amount');
 
         $withdrawals = Transaction::where('user_id', $userId)
-            //->whereDate('created_at', $today)
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->where([
                 'user_id'             => $userId,
                 'whitelabel_id'       => $whitelabelId,
