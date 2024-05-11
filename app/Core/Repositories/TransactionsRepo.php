@@ -1792,8 +1792,17 @@ class TransactionsRepo
         return $transaction;
     }
 
-    public function getDailyMovementsOfChildren()
+    public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
     {
-        dd('test getDailyMovementsOfChildren');
+        $today = Carbon::now()->toDateString();
+
+        $deposits = Transaction::where('user_id', $userId)
+            ->where('transaction_type_id', 1)
+            ->whereDate('created_at', $today)
+            ->where('whitelabel', $whitelabelId)
+            ->where('currency', $currency)
+            ->sum('amount');
+
+        return compact('deposits');
     }
 }

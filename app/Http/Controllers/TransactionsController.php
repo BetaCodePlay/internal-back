@@ -13,6 +13,7 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Wallet\Wallet;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -133,7 +134,7 @@ class TransactionsController extends Controller
     /**
      * Dashboard graphic data
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function dashboardGraphicData()
     {
@@ -259,7 +260,14 @@ class TransactionsController extends Controller
     }
 
     public function getDailyMovementsOfChildren()
+    : JsonResponse
     {
-        $this->transactionsRepo->getDailyMovementsOfChildren();
+        return response()->json(
+            $this->transactionsRepo->getDailyMovementsOfChildren(
+                auth()->id(),
+                Configurations::getWhitelabel(),
+                session('currency')
+            )
+        );
     }
 }
