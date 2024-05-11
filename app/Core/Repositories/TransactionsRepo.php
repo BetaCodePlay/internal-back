@@ -1798,19 +1798,28 @@ class TransactionsRepo
 
         $deposits = Transaction::where('user_id', $userId)
             //->whereDate('created_at', $today)
-            ->where(
-                [
-                    'user_id'             => $userId,
-                    'whitelabel_id'       => $whitelabelId,
-                    'currency_iso'        => $currency,
-                    'transaction_type_id' => 1,
-                ]
-            )
+            ->where([
+                'user_id'             => $userId,
+                'whitelabel_id'       => $whitelabelId,
+                'currency_iso'        => $currency,
+                'transaction_type_id' => 1,
+            ])
+            ->sum('amount');
+
+        $withdrawals = Transaction::where('user_id', $userId)
+            //->whereDate('created_at', $today)
+            ->where([
+                'user_id'             => $userId,
+                'whitelabel_id'       => $whitelabelId,
+                'currency_iso'        => $currency,
+                'transaction_type_id' => 2,
+            ])
             ->sum('amount');
 
         return [
-            'deposits' => number_format($deposits, 2),
-            'today'    => $today,
+            'deposits'    => number_format($deposits, 2),
+            'withdrawals' => number_format($withdrawals, 2),
+            'today'       => $today,
         ];
     }
 }
