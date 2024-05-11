@@ -1824,7 +1824,6 @@ class TransactionsRepo
                 'user_id'             => $userId,
                 'whitelabel_id'       => $whitelabelId,
                 'currency_iso'        => $currency,
-                'transaction_type_id' => TransactionTypes::$debit,
             ])
             ->sum('profit');
 
