@@ -1796,9 +1796,11 @@ class TransactionsRepo
     {
         $today = Carbon::now()->toDateString();
 
+        dd($userId, $whitelabelId, $currency);
+
         $deposits = Transaction::where('user_id', $userId)
             ->where('transaction_type_id', 1)
-            ->whereDate('created_at', $today)
+            //->whereDate('created_at', $today)
             ->where('whitelabel_id', $whitelabelId)
             ->where('currency_iso', $currency)
             ->sum('amount');
