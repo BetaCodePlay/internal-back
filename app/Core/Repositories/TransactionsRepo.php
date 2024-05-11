@@ -1795,7 +1795,7 @@ class TransactionsRepo
     public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
     {
         $today     = date('Y-m-d');
-        dd('today');
+        dd('today', $today);
         $startDate = Utils::startOfDayUtc($today);
         $endDate   = Utils::endOfDayUtc($today);
 
