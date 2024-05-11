@@ -12,26 +12,10 @@
                         </template>
                     </Card>
                 </div>
-                <div class="col-4 col-lg-2 mt-2">
-                    <Card class="card-transparent">
-                        <template #content>
-                            <span
-                                class="text-center mt-2"
-                                style="width: 100%; display: block"
-                                >Retirado</span
-                            >
-                            <h5 class="text-center">
-                                {{ parseFloat(window.userBalance).formatMoney() }}
-                            </h5>
-                        </template>
-                    </Card>
-                </div>
+                
                 <div
                     class="col-4 col-lg-2 mt-2"
-                    style="
-                        border-right: 0.5px solid #2d2d2d;
-                        border-left: 0.5px solid #2d2d2d;
-                    "
+                    
                 >
                     <Card class="card-transparent">
                         <template #content>
@@ -46,13 +30,30 @@
                         </template>
                     </Card>
                 </div>
-                <div class="col-4 col-lg-2 mt-2">
+                <div class="col-4 col-lg-2 mt-2" style="
+                        border-right: 0.5px solid #2d2d2d;
+                        border-left: 0.5px solid #2d2d2d;
+                    ">
                     <Card class="card-transparent">
                         <template #content>
                             <span
                                 class="text-center mt-2"
                                 style="width: 100%; display: block"
                                 >Ganancia</span
+                            >
+                            <h5 class="text-center">
+                                {{ parseFloat(window.userBalance).formatMoney() }}
+                            </h5>
+                        </template>
+                    </Card>
+                </div>
+                <div class="col-4 col-lg-2 mt-2">
+                    <Card class="card-transparent">
+                        <template #content>
+                            <span
+                                class="text-center mt-2"
+                                style="width: 100%; display: block"
+                                >Retirado</span
                             >
                             <h5 class="text-center">
                                 {{ parseFloat(window.userBalance).formatMoney() }}

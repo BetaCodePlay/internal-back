@@ -65,7 +65,7 @@
                         <Column field="provider" header="Proveedor">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.name }}
+                                    {{ slotProps.data.provider }}
                                 </div>
                             </template></Column
                         >
