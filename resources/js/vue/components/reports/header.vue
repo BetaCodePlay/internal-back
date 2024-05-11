@@ -66,7 +66,6 @@
     </div>
 </template>
 <script>
-import moment from "moment/moment";
 import axios from "axios";
 
 export default {
@@ -79,7 +78,7 @@ export default {
         async loadChildDailyMovements() {
             this.loading = true;
             try {
-                const {data} = await axios.get("api-transactions/daily-movements-of-children");
+                const {data} = await axios.get("/api-transactions/daily-movements-of-children");
 
                 console.log('data', data)
             } catch (error) {
@@ -88,7 +87,8 @@ export default {
                 this.loading = false;
             }
         },
-    }, mounted() {
+    },
+    mounted() {
         this.loadChildDailyMovements();
     },
 }
