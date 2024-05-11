@@ -1792,7 +1792,7 @@ class TransactionsRepo
         return $transaction;
     }
 
-    public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency, $timezone)
+    public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
     {
         $today = Utils::startOfDayUtc(Carbon::now());
 
