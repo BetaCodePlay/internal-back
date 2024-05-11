@@ -71,7 +71,10 @@ import axios from "axios";
 export default {
     data() {
         return {
-            window
+            window,
+            deposits: 0,
+            withdrawals: 0,
+            profit: 0
         }
     },
     methods: {
@@ -79,8 +82,11 @@ export default {
             this.loading = true;
             try {
                 const {data} = await axios.get("/api-transactions/daily-movements-of-children");
+                const {deposits, withdrawals, profit} = data;
 
-                console.log('data', data)
+                this.deposits = deposits;
+                this.withdrawals = withdrawals;
+                this.profit = profit;
             } catch (error) {
                 console.error(error);
             } finally {
