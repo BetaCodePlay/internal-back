@@ -259,6 +259,24 @@ class TransactionsController extends Controller
         }
     }
 
+    /**
+     * Get daily movements of children.
+     *
+     * Retrieves and returns the daily movements of children for the currently authenticated user,
+     * whitelabel ID from configurations, and currency from session.
+     *
+     * @return JsonResponse Returns a JSON response containing the daily movements of children,
+     *                                         including deposits, withdrawals, profit, start date, end date, and children IDs.
+     *                                         The response is in the following format:
+     *                                         {
+     *                                             "deposits": "Total deposits made by children",
+     *                                             "withdrawals": "Total withdrawals made by children",
+     *                                             "profit": "Total profit made by children",
+     *                                             "startDate": "Start date of the daily movements",
+     *                                             "endDate": "End date of the daily movements",
+     *                                             "childrenIds": ["IDs of children belonging to the user"]
+     *                                         }
+     */
     public function getDailyMovementsOfChildren()
     : JsonResponse
     {

@@ -1792,8 +1792,26 @@ class TransactionsRepo
         return $transaction;
     }
 
+    /**
+     * Get daily movements of children.
+     *
+     * Retrieves the daily movements of children for a given user ID, whitelabel ID, and currency.
+     *
+     * @param int|string $userId      The ID of the user.
+     * @param int|string $whitelabelId The ID of the whitelabel.
+     * @param string     $currency     The currency.
+     *
+     * @return array Returns an array containing the daily movements of children, including deposits, withdrawals,
+     *               profit, start date, end date, and children IDs.
+     *               - 'deposits': Total deposits made by children.
+     *               - 'withdrawals': Total withdrawals made by children.
+     *               - 'profit': Total profit made by children.
+     *               - 'startDate': The start date of the daily movements.
+     *               - 'endDate': The end date of the daily movements.
+     *               - 'childrenIds': The IDs of children belonging to the user.
+     */
     public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
-    {
+    : array {
         $today     = date('Y-m-d');
         $startDate = Utils::startOfDayUtc($today);
         $endDate   = Utils::endOfDayUtc($today);
