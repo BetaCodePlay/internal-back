@@ -1796,13 +1796,6 @@ class TransactionsRepo
     {
         $today = Carbon::now()->toDateString();
 
-        dd([
-            'user_id'             => $userId,
-            'whitelabel_id'       => $whitelabelId,
-            'currency_iso'        => $currency,
-            'transaction_type_id' => 1,
-        ]);
-
         $deposits = Transaction::where('user_id', $userId)
             //->whereDate('created_at', $today)
             ->where(
