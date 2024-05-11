@@ -260,6 +260,6 @@ class TransactionsController extends Controller
 
     public function getDailyMovementsOfChildren()
     {
-        $this->transactionsService->getDailyMovementsOfChildren();
+        $this->transactionsRepo->getDailyMovementsOfChildren();
     }
 }

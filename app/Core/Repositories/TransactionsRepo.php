@@ -1791,4 +1791,9 @@ class TransactionsRepo
         $transaction->save();
         return $transaction;
     }
+
+    public function getDailyMovementsOfChildren()
+    {
+        dd('test getDailyMovementsOfChildren');
+    }
 }
