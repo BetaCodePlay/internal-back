@@ -1794,7 +1794,7 @@ class TransactionsRepo
 
     public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
     {
-        $today = Utils::startOfDayUtc(Carbon::now()->toString());
+        $today = Utils::startOfDayUtc(Carbon::now()->format('Y-m-d H:i:s'));
 
         $deposits = Transaction::where('user_id', $userId)
             //->whereDate('created_at', $today)
