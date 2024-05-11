@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Collections\TransactionsCollection;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use App\Transactions\Services\UserTransactionService;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Configurations\Configurations;
@@ -48,20 +49,19 @@ class TransactionsController extends Controller
      */
     private $closuresUserTotalsRepo;
 
-    /**
-     * TransactionsController constructor
-     *
-     * @param TransactionsRepo $transactionsRepo
-     * @param TransactionsCollection $transactionsCollection
-     */
+    private $transactionsService;
+
+
     public function __construct(
         TransactionsRepo $transactionsRepo,
         TransactionsCollection $transactionsCollection,
         ClosuresUsersTotalsRepo $closuresUserTotalsRepo,
+        UserTransactionService $transactionsService
     ) {
         $this->transactionsRepo       = $transactionsRepo;
         $this->transactionsCollection = $transactionsCollection;
         $this->closuresUserTotalsRepo = $closuresUserTotalsRepo;
+        $this->transactionsService    = $transactionsService;
     }
 
     /**
@@ -256,5 +256,10 @@ class TransactionsController extends Controller
             Log::error('Error al realizar la solicitud HTTP: ' . $e->getMessage());
             return null;
         }
+    }
+
+    public function getDailyMovementsOfChildren()
+    {
+        $this->transactionsService->getDailyMovementsOfChildren();
     }
 }

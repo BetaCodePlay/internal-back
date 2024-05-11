@@ -9,9 +9,6 @@ use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Http\Requests\TransactionRequest;
 use Dotworkers\Configurations\Enums\Status;
-use Dotworkers\Configurations\Enums\TransactionStatus;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -97,5 +94,10 @@ class UserTransactionService extends BaseTransactionService
         }
 
         return $this->processTransactionAndGenerateResponse($request, $ownerAgent, $userManagementResult);
+    }
+
+    public function getDailyMovementsOfChildren()
+    {
+        dd('api test');
     }
 }

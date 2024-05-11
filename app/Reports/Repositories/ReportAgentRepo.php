@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
  * Class ReportAgentRepo
  *
  * @package App\Reports\Repositories
- * 
+ *
  */
 class ReportAgentRepo
 {
@@ -45,14 +45,14 @@ class ReportAgentRepo
 
         $sql = "
         select g.category, sum(played)  as played, sum(won) as won,sum(profit) as profit,
-            case 
+            case
                 when sum(profit*percentage/100) < 0 or sum(profit*percentage/100) is null then 0
             else sum(profit*percentage/100) end as commission
-        from site.closures_users_totals_2023_hour cu 
-        inner join site.games g on cu.game_id=g.id 
-        inner join site.providers p on g.provider_id=p.id 
+        from site.closures_users_totals_2023_hour cu
+        inner join site.games g on cu.game_id=g.id
+        inner join site.providers p on g.provider_id=p.id
         inner join site.agent_user au on cu.user_id=au.user_id
-        inner join site.agents a on a.id=au.agent_id 
+        inner join site.agents a on a.id=au.agent_id
         where cu.currency_iso='{$currency}'
             AND a.user_id = {$ownerId}
             AND cu.whitelabel_id = {$whitelabel}
@@ -82,9 +82,9 @@ class ReportAgentRepo
         }
 
 
-        $sql .= "GROUP BY  
-                g.category 
-            ORDER BY 
+        $sql .= "GROUP BY
+                g.category
+            ORDER BY
                 won;
                 ";
 
@@ -104,23 +104,23 @@ class ReportAgentRepo
     public function getFinancialStateByCategory(string $startDate, string $endDate, $currency, $whitelabel, $ownerId, $category, $timezone = null, $provider = null, $child = null)
     {
         $sql = "
-            SELECT 
-                g.name, 
-                g.maker AS provider, 
-                SUM(played) AS played, 
+            SELECT
+                g.name,
+                g.maker AS provider,
+                SUM(played) AS played,
                 SUM(won) AS won,
                 SUM(profit) AS profit,
-                CASE 
+                CASE
                     WHEN SUM(profit*percentage/100) < 0 OR SUM(profit*percentage/100) IS NULL THEN 0
-                    ELSE SUM(profit*percentage/100) 
+                    ELSE SUM(profit*percentage/100)
                 END AS commission
-            FROM 
-                site.closures_users_totals_2023_hour cu 
-                INNER JOIN site.games g ON cu.game_id = g.id 
-                INNER JOIN site.providers p ON g.provider_id = p.id 
+            FROM
+                site.closures_users_totals_2023_hour cu
+                INNER JOIN site.games g ON cu.game_id = g.id
+                INNER JOIN site.providers p ON g.provider_id = p.id
                 INNER JOIN site.agent_user au ON cu.user_id = au.user_id
-                INNER JOIN site.agents a ON a.id = au.agent_id 
-            WHERE 
+                INNER JOIN site.agents a ON a.id = au.agent_id
+            WHERE
                 cu.currency_iso = '{$currency}'
                 AND a.user_id = {$ownerId}
                 AND cu.whitelabel_id = {$whitelabel}
@@ -146,9 +146,9 @@ class ReportAgentRepo
         }
 
 
-        $sql .= "GROUP BY  
+        $sql .= "GROUP BY
                 g.category, g.name, g.maker
-            ORDER BY 
+            ORDER BY
                 won;
                 ";
 
