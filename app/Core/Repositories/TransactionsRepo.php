@@ -1839,6 +1839,7 @@ class TransactionsRepo
             'profit'      => number_format($totalProfit, 2),
             'startDate'   => $startDate,
             'endDate'     => $endDate,
+            'childrenIds' => $childrenIds,
         ];
     }
 }
