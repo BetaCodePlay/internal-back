@@ -25,7 +25,7 @@
                             >Depositado</span
                             >
                             <h5 class="text-center">
-                                {{ parseFloat(window.userBalance).formatMoney() }}
+                                {{ deposits }}
                             </h5>
                         </template>
                     </Card>
@@ -42,7 +42,7 @@
                             >Ganancia</span
                             >
                             <h5 class="text-center">
-                                {{ parseFloat(window.userBalance).formatMoney() }}
+                                {{ profit }}
                             </h5>
                         </template>
                     </Card>
@@ -56,7 +56,7 @@
                             >Retirado</span
                             >
                             <h5 class="text-center">
-                                {{ parseFloat(window.userBalance).formatMoney() }}
+                                {{ withdrawals }}
                             </h5>
                         </template>
                     </Card>
