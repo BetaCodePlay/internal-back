@@ -61,6 +61,7 @@
                         </template>
                     </Card>
                 </div>
+                <div class="loading-style" v-if="loading"></div>
             </div>
         </div>
     </div>
@@ -72,6 +73,7 @@ export default {
     data() {
         return {
             window,
+            loading: false,
             deposits: 0,
             withdrawals: 0,
             profit: 0
