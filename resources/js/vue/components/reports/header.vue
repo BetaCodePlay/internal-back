@@ -7,22 +7,22 @@
                         <template #content>
                             <h3 class="text-center">Balance total</h3>
                             <h1 class="text-center">
-                                {{ parseFloat(window.userBalance).formatMoney()  }}
+                                {{ parseFloat(window.userBalance).formatMoney() }}
                             </h1>
                         </template>
                     </Card>
                 </div>
-                
+
                 <div
                     class="col-4 col-lg-2 mt-2"
-                    
+
                 >
                     <Card class="card-transparent">
                         <template #content>
                             <span
                                 class="text-center mt-2"
                                 style="width: 100%; display: block"
-                                >Depositado</span
+                            >Depositado</span
                             >
                             <h5 class="text-center">
                                 {{ parseFloat(window.userBalance).formatMoney() }}
@@ -39,7 +39,7 @@
                             <span
                                 class="text-center mt-2"
                                 style="width: 100%; display: block"
-                                >Ganancia</span
+                            >Ganancia</span
                             >
                             <h5 class="text-center">
                                 {{ parseFloat(window.userBalance).formatMoney() }}
@@ -53,7 +53,7 @@
                             <span
                                 class="text-center mt-2"
                                 style="width: 100%; display: block"
-                                >Retirado</span
+                            >Retirado</span
                             >
                             <h5 class="text-center">
                                 {{ parseFloat(window.userBalance).formatMoney() }}
@@ -66,12 +66,31 @@
     </div>
 </template>
 <script>
+import moment from "moment/moment";
+import axios from "axios";
+
 export default {
-    data(){
+    data() {
         return {
             window
         }
-    }
+    },
+    methods: {
+        async loadChildDailyMovements() {
+            this.loading = true;
+            try {
+                const {data} = await axios.get("api-transactions/daily-movements-of-children");
+
+                console.log('data', data)
+            } catch (error) {
+                console.error(error);
+            } finally {
+                this.loading = false;
+            }
+        },
+    }, mounted() {
+        this.loadChildDailyMovements();
+    },
 }
 </script>
 <style>
@@ -80,6 +99,7 @@ export default {
     height: 100px;
     background-color: magenta;
 }
+
 .card-transparent {
     padding: 5px;
     background: transparent;
