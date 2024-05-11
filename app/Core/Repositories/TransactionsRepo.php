@@ -1794,7 +1794,7 @@ class TransactionsRepo
 
     public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
     {
-        $today     = Carbon::parse(Carbon::now())->format('Y-m-d H:i:s');
+        $today     = Carbon::now()->format('Y-m-d H:i:s');
         $startDate = Utils::startOfDayUtc($today);
         $endDate   = Utils::endOfDayUtc($today);
 
