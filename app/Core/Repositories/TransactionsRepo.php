@@ -1808,6 +1808,9 @@ class TransactionsRepo
             )
             ->sum('amount');
 
-        return compact('deposits');
+        return [
+            'deposits' => number_format($deposits, 2),
+            'today'    => $today,
+        ];
     }
 }
