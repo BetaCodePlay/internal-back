@@ -1818,12 +1818,18 @@ class TransactionsRepo
             ])
             ->sum('amount');
 
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+            $userId,
+            $currency,
+            $whitelabelId
+        );
+
         $totalProfit = DB::table('closures_users_totals_2023_hour')
             //->whereBetween('created_at', [$startDate, $endDate])
+            ->whereIn('user_id', $childrenIds)
             ->where([
-                'user_id'             => $userId,
-                'whitelabel_id'       => $whitelabelId,
-                'currency_iso'        => $currency,
+                'whitelabel_id' => $whitelabelId,
+                'currency_iso'  => $currency,
             ])
             ->sum('profit');
 
