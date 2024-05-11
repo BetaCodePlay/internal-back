@@ -1799,8 +1799,8 @@ class TransactionsRepo
         $deposits = Transaction::where('user_id', $userId)
             ->where('transaction_type_id', 1)
             ->whereDate('created_at', $today)
-            ->where('whitelabel', $whitelabelId)
-            ->where('currency', $currency)
+            ->where('whitelabel_id', $whitelabelId)
+            ->where('currency_iso', $currency)
             ->sum('amount');
 
         return compact('deposits');
