@@ -1796,13 +1796,23 @@ class TransactionsRepo
     {
         $today = Carbon::now()->toDateString();
 
-        dd($userId, $whitelabelId, $currency);
+        dd([
+            'user_id'             => $userId,
+            'whitelabel_id'       => $whitelabelId,
+            'currency_iso'        => $currency,
+            'transaction_type_id' => 1,
+        ]);
 
         $deposits = Transaction::where('user_id', $userId)
-            ->where('transaction_type_id', 1)
             //->whereDate('created_at', $today)
-            ->where('whitelabel_id', $whitelabelId)
-            ->where('currency_iso', $currency)
+            ->where(
+                [
+                    'user_id'             => $userId,
+                    'whitelabel_id'       => $whitelabelId,
+                    'currency_iso'        => $currency,
+                    'transaction_type_id' => 1,
+                ]
+            )
             ->sum('amount');
 
         return compact('deposits');
