@@ -7463,7 +7463,7 @@ if (! function_exists('imageUrlFormat')) {
     function imageUrlFormat($game, $bucket): string
     {
         $image      = $game->image;
-        $imageLobby = $game->lobby_image;
+        //$imageLobby = $game->lobby_image;
 
         $image = $game->provider_id == Providers::$softgaming
             ? $image
