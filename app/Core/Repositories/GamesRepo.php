@@ -447,6 +447,9 @@ class GamesRepo
                 DB::raw(
                     "(SELECT name FROM games WHERE games.provider_id = closures_users_totals_2023_hour.game_id) AS provider_id"
                 ),
+                DB::raw(
+                    "(SELECT image FROM lobby_games WHERE lobby_games.game_id = closures_users_totals_2023_hour.game_id) AS lobby_image"
+                )
             )
             ->groupBy(
                 'closures_users_totals_2023_hour.game_id',

@@ -504,6 +504,7 @@
                                                 <figure style="background-image: url('{{ imageUrlFormat($game, $game?->maker) }}')">
                                                 {{ $game?->name }}
                                             </div>
+
                                             <div class="top-ten-games-body-th">
                                                 {{ $game?->maker }}
                                             </div>
