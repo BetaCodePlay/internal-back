@@ -1797,9 +1797,9 @@ class TransactionsRepo
      *
      * Retrieves the daily movements of children for a given user ID, whitelabel ID, and currency.
      *
-     * @param int|string $userId      The ID of the user.
+     * @param int|string $userId The ID of the user.
      * @param int|string $whitelabelId The ID of the whitelabel.
-     * @param string     $currency     The currency.
+     * @param string $currency The currency.
      *
      * @return array Returns an array containing the daily movements of children, including deposits, withdrawals,
      *               profit, start date, end date, and children IDs.
@@ -1824,6 +1824,28 @@ class TransactionsRepo
                 'transaction_type_id' => TransactionTypes::$credit,
             ])
             ->sum('amount');
+
+        $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
+        /*public function totalByProviderTypesWithUser(
+            $whitelabel,
+            $transactionType,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate,
+            $userId
+        )*/
+
+
+        $deposits = $this->totalByProviderTypesWithUser(
+            $whitelabelId,
+            TransactionTypes::$credit,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate,
+            $userId
+        );
 
         $withdrawals = Transaction::whereBetween('created_at', [$startDate, $endDate])
             ->where([
