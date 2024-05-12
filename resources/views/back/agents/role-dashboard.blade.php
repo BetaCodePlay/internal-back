@@ -498,7 +498,7 @@
 
                             <div class="top-ten-games-body">
                                 <div class="top-ten-games-body-ex">
-                                    @foreach($games as $game)
+                                    @foreach($dashboard['games'] as $game)
                                         <div class="top-ten-games-body-tr">
                                             <div class="top-ten-games-body-th">
                                                 <figure
