@@ -1758,17 +1758,6 @@ class TransactionsRepo
                 'transactions.user_id'       => $userId,
             ])
             ->sum('amount');
-
-
-
-       /* return Transaction::whereBetween('created_at', [$startDate, $endDate])
-            ->where([
-                'user_id'             => $userId,
-                'whitelabel_id'       => $whitelabelId,
-                'currency_iso'        => $currency,
-                'transaction_type_id' => TransactionTypes::$credit,
-            ])
-            ->sum('amount');*/
     }
 
     /**
