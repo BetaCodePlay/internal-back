@@ -55,6 +55,8 @@ class ReportRepo
         $today                  = Carbon::now($timezone);
         $startDate              = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $endDate                = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
+        $lastMonth = Carbon::now()->subMonth()->setTimezone($timezone);
+
         $providerTypes          = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
 
         $totalDeposited = $this->transactionsRepo->totalByProviderTypesWithUser(
@@ -76,7 +78,7 @@ class ReportRepo
                 'totalBalance'   => getAuthenticatedUserBalance(),
                 'totalDeposited' => number_format($totalDeposited, 2),
             ],
-            'games'         => $this->gamesRepo->best10($whitelabelId, $currency),
+            'games'         => $this->gamesRepo->best10($whitelabelId, $currency, $lastMonth),
             'manufacturers' => [
                 [
                     'name'        => 'Pragmatic Play',

@@ -426,7 +426,7 @@ class GamesRepo
             ->get();
     }
 
-    public function best10(string|int $whitelabelId, string $currency)
+    public function best10(string|int $whitelabelId, string $currency, string $lastMonth)
     {
         return DB::table('closures_users_totals_2023_hour')
             ->select(
@@ -454,6 +454,7 @@ class GamesRepo
                 'currency_iso' => $currency,
                 'whitelabel_id' => $whitelabelId,
             ])
+            ->where('created_at', '>=', $lastMonth)
             ->orderByDesc('total_played')
             ->limit(10)
             ->get();
