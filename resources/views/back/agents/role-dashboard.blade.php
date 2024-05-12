@@ -492,7 +492,7 @@
                                     {{ _i('Provider') }}
                                 </div>
                                 <div class="top-ten-games-head-tr">
-                                    {{ _i('Amount') }}
+                                    {{ _i('Players') }}
                                 </div>
                             </div>
 
