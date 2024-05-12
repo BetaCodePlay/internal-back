@@ -483,11 +483,6 @@ class GamesRepo
     public function bestMakers(int $whitelabelId, string $currency, string $lastMonth): Collection {
         return DB::table('closures_users_totals_2023_hour')
             ->join('games', 'closures_users_totals_2023_hour.game_id', '=', 'games.id')
-            ->select(
-                'games.maker AS maker',
-                DB::raw('COUNT(DISTINCT closures_users_totals_2023_hour.game_id) AS total_games'),
-                DB::raw('SUM(closures_users_totals_2023_hour.user_id) AS total_users')
-            )
             ->where([
                 ['closures_users_totals_2023_hour.currency_iso', '=', $currency],
                 ['closures_users_totals_2023_hour.whitelabel_id', '=', $whitelabelId],
@@ -496,7 +491,11 @@ class GamesRepo
             ->groupBy('games.maker')
             ->orderByDesc('total_games')
             ->limit(10)
-            ->get();
+            ->get([
+                'games.maker AS maker',
+                DB::raw('COUNT(DISTINCT closures_users_totals_2023_hour.game_id) AS total_games'),
+                DB::raw('SUM(closures_users_totals_2023_hour.user_id) AS total_users')
+            ]);
     }
 
 }
