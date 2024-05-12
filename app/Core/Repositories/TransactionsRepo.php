@@ -1812,30 +1812,10 @@ class TransactionsRepo
      */
     public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
     : array {
-        $today     = date('Y-m-d');
-        $startDate = Utils::startOfDayUtc($today);
-        $endDate   = Utils::endOfDayUtc($today);
-
-        $deposits = Transaction::whereBetween('created_at', [$startDate, $endDate])
-            ->where([
-                'user_id'             => $userId,
-                'whitelabel_id'       => $whitelabelId,
-                'currency_iso'        => $currency,
-                'transaction_type_id' => TransactionTypes::$credit,
-            ])
-            ->sum('amount');
-
+        $today         = date('Y-m-d');
+        $startDate     = Utils::startOfDayUtc($today);
+        $endDate       = Utils::endOfDayUtc($today);
         $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
-        /*public function totalByProviderTypesWithUser(
-            $whitelabel,
-            $transactionType,
-            $currency,
-            $providerTypes,
-            $startDate,
-            $endDate,
-            $userId
-        )*/
-
 
         $deposits = $this->totalByProviderTypesWithUser(
             $whitelabelId,
@@ -1847,14 +1827,15 @@ class TransactionsRepo
             $userId
         );
 
-        $withdrawals = Transaction::whereBetween('created_at', [$startDate, $endDate])
-            ->where([
-                'user_id'             => $userId,
-                'whitelabel_id'       => $whitelabelId,
-                'currency_iso'        => $currency,
-                'transaction_type_id' => TransactionTypes::$debit,
-            ])
-            ->sum('amount');
+        $withdrawals = $this->totalByProviderTypesWithUser(
+            $whitelabelId,
+            TransactionTypes::$debit,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate,
+            $userId
+        );
 
         $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather($userId, $currency, $whitelabelId);
 
