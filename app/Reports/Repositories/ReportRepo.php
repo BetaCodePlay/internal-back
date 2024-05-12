@@ -68,7 +68,7 @@ class ReportRepo
         );
 
 
-        dd($this->gamesRepo->best10());
+        dd($this->gamesRepo->best10($whitelabelId, $currency));
 
         return [
             'audits'        => $audits,

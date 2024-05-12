@@ -77,12 +77,26 @@ class GamesRepo
             ->where('credentials.status', true)
             ->whereIn('providers.id', $providers)
             ->where('providers.status', true)
-            ->where(function($query) use ($whitelabel) {
-                $query->where(function($query) use($whitelabel) {
-                    $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
+            ->where(function ($query) use ($whitelabel) {
+                $query->where(function ($query) use ($whitelabel) {
+                    $query->whereNotIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    )
                         ->where('games.status', GamesStatus::$active);
                 })
-                    ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
+                    ->orWhereIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    );
             })
             ->get();
         return $games;
@@ -107,15 +121,29 @@ class GamesRepo
             ->where('credentials.status', true)
             ->where('providers.id', $provider)
             ->where('providers.status', true)
-            ->where(function($query) use ($whitelabel) {
-                $query->where(function($query) use($whitelabel) {
-                    $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
+            ->where(function ($query) use ($whitelabel) {
+                $query->where(function ($query) use ($whitelabel) {
+                    $query->whereNotIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    )
                         ->where('games.status', GamesStatus::$active);
                 })
-                    ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
+                    ->orWhereIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    );
             });
 
-        if (!is_null($devices)) {
+        if (! is_null($devices)) {
             if ($devices == 'true') {
                 $games->where('games.mobile', true);
             }
@@ -152,20 +180,41 @@ class GamesRepo
      */
     public function getGames($whitelabel, $currency, $provider)
     {
-        $games = Game::select('games.id', 'games.name', 'games.slug', 'games.image', 'games.maker',
-            'games.category', 'games.provider_id')
+        $games = Game::select(
+            'games.id',
+            'games.name',
+            'games.slug',
+            'games.image',
+            'games.maker',
+            'games.category',
+            'games.provider_id'
+        )
             ->join('providers', 'games.provider_id', '=', 'providers.id')
             ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
             ->where('credentials.client_id', $whitelabel)
             ->where('credentials.currency_iso', $currency)
             ->where('providers.id', $provider)
             ->where('credentials.status', true)
-            ->where(function($query) use ($whitelabel) {
-                $query->where(function($query) use($whitelabel) {
-                    $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
+            ->where(function ($query) use ($whitelabel) {
+                $query->where(function ($query) use ($whitelabel) {
+                    $query->whereNotIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    )
                         ->where('games.status', GamesStatus::$active);
                 })
-                    ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
+                    ->orWhereIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    );
             })
             ->get();
         return $games;
@@ -183,37 +232,58 @@ class GamesRepo
      */
     public function getGamesByCategoryAndMaker($whitelabel, $currency, $provider, $category, $maker, $product)
     {
-        $games = Game::select('games.id', 'games.name', 'games.slug', 'games.image', 'games.maker',
-            'games.category', 'games.provider_id')
+        $games = Game::select(
+            'games.id',
+            'games.name',
+            'games.slug',
+            'games.image',
+            'games.maker',
+            'games.category',
+            'games.provider_id'
+        )
             ->join('providers', 'games.provider_id', '=', 'providers.id')
             ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
             ->where('credentials.client_id', $whitelabel)
             ->where('credentials.currency_iso', $currency)
             ->where('credentials.status', true)
-            ->where(function($query) use ($whitelabel) {
-                $query->where(function($query) use($whitelabel) {
-                    $query->whereNotIn('games.id', [\DB::raw("SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'")])
+            ->where(function ($query) use ($whitelabel) {
+                $query->where(function ($query) use ($whitelabel) {
+                    $query->whereNotIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT exclude_games.game_id FROM exclude_games WHERE exclude_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    )
                         ->where('games.status', GamesStatus::$active);
                 })
-                    ->orWhereIn('games.id', [\DB::raw("SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'")]);
+                    ->orWhereIn(
+                        'games.id',
+                        [
+                            \DB::raw(
+                                "SELECT include_games.game_id FROM include_games WHERE include_games.whitelabel_id = '$whitelabel'"
+                            )
+                        ]
+                    );
             });
 
-            if (!is_null($provider)) {
-                $games->where('providers.id', $provider);
-            }
+        if (! is_null($provider)) {
+            $games->where('providers.id', $provider);
+        }
 
-            if (!is_null($category)) {
-                $games->where('games.category', $category);
-            }
+        if (! is_null($category)) {
+            $games->where('games.category', $category);
+        }
 
-            if (!is_null($maker)) {
-                $games->where('games.maker',  $maker);
-            }
+        if (! is_null($maker)) {
+            $games->where('games.maker', $maker);
+        }
 
-            if (!is_null($product)) {
-                $games->where('games.product_id', $product);
-            }
-            $data = $games->get();
+        if (! is_null($product)) {
+            $games->where('games.product_id', $product);
+        }
+        $data = $games->get();
         return $data;
     }
 
@@ -242,13 +312,13 @@ class GamesRepo
     public function getDotSuiteGamesByProviderAndMakerAndCategoryAndProduct($provider, $category, $maker, $product)
     {
         $games = Game::where('maker', $maker);
-        if(!is_null($provider)){
+        if (! is_null($provider)) {
             $games->where('provider_id', $provider);
         }
-        if(!is_null($category)){
+        if (! is_null($category)) {
             $games->where('category', $category);
         }
-        if(!is_null($product)){
+        if (! is_null($product)) {
             $games->where('product_id', $product);
         }
         $data = $games->get();
@@ -263,8 +333,8 @@ class GamesRepo
     public function getCategories()
     {
         $games = Game::select('category')
-        ->distinct()
-        ->get();
+            ->distinct()
+            ->get();
         return $games;
     }
 
@@ -276,9 +346,9 @@ class GamesRepo
     public function getCategoriesByMaker($maker)
     {
         $games = Game::select('category')
-        ->distinct()
-        ->where('maker', $maker)
-        ->get();
+            ->distinct()
+            ->where('maker', $maker)
+            ->get();
         return $games;
     }
 
@@ -291,9 +361,9 @@ class GamesRepo
     public function getMakersByCategory($category)
     {
         $games = Game::select('maker')
-        ->distinct()
-        ->where('category', $category)
-        ->get();
+            ->distinct()
+            ->where('category', $category)
+            ->get();
         return $games;
     }
 
@@ -306,8 +376,8 @@ class GamesRepo
     public function getMakers()
     {
         $games = Game::select('maker')
-        ->distinct()
-        ->get();
+            ->distinct()
+            ->get();
         return $games;
     }
 
@@ -320,13 +390,13 @@ class GamesRepo
     public function getMakersByProvider($provider)
     {
         $games = Game::select('maker')
-        ->distinct()
-        ->where('provider_id', $provider)
-        ->get();
+            ->distinct()
+            ->where('provider_id', $provider)
+            ->get();
         return $games;
     }
 
-     /**
+    /**
      * Get products
      *
      * @param int
@@ -335,12 +405,12 @@ class GamesRepo
     public function getProducts()
     {
         return Game::select('product_id')
-        ->distinct()
-        ->where('provider_id', Providers::$bet_connections)
-        ->get();
+            ->distinct()
+            ->where('provider_id', Providers::$bet_connections)
+            ->get();
     }
 
-     /**
+    /**
      * Get providers by maker
      *
      * @param int
@@ -349,20 +419,25 @@ class GamesRepo
     public function getProvidersByMaker($maker)
     {
         return Game::select('providers.id', 'providers.name')
-        ->distinct()
-        ->join('providers', 'games.provider_id', '=', 'providers.id')
-        ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
-        ->where('games.maker', $maker)
-        ->get();
+            ->distinct()
+            ->join('providers', 'games.provider_id', '=', 'providers.id')
+            ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
+            ->where('games.maker', $maker)
+            ->get();
     }
 
-    public function best10()
+    public function best10(string|int $whitelabelId, string $currency)
     {
-       return DB::table('closures_users_totals_2023_hour')
-            ->select('game_id', 'currency_iso', 'whitelabel_id',
-                DB::raw("SUM(played) AS total_played"))
-            ->groupBy('game_id', 'currency_iso', 'whitelabel_id', 'month')
+        return DB::table('closures_users_totals_2023_hour')
+            ->select(
+                'game_id',
+                'currency_iso',
+                'whitelabel_id',
+                DB::raw("SUM(played) AS total_played")
+            )
+            ->groupBy('game_id', 'currency_iso', 'whitelabel_id')
             ->orderByDesc('total_played')
+            ->where(['whitelabel_id' => $whitelabelId, 'currency_iso' => $currency])
             ->limit(10)
             ->get();
     }
