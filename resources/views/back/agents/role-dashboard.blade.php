@@ -50,7 +50,8 @@
                                     </div>
 
                                     <div class="dash-balance-amount-balance">
-                                        <span class="minus">$</span>{{ $dashboard['amounts']['totalPrizeWinningAmount'] }}</span>
+                                        <span
+                                            class="minus">$</span>{{ $dashboard['amounts']['totalPrizeWinningAmount'] }}</span>
                                     </div>
                                 </div>
 
@@ -66,7 +67,8 @@
                                     </div>
 
                                     <div class="dash-balance-amount-balance">
-                                        <span class="minus">$</span>{{ $dashboard['amounts']['totalPlayedAmount'] }}</span>
+                                        <span
+                                            class="minus">$</span>{{ $dashboard['amounts']['totalPlayedAmount'] }}</span>
                                     </div>
                                 </div>
 
@@ -501,7 +503,8 @@
                                     @foreach($dashboard['games'] as $game)
                                         <div class="top-ten-games-body-tr">
                                             <div class="top-ten-games-body-th">
-                                                <figure style="background-image: url('{{ imageUrlFormat($game, $game?->maker) }}')">
+                                                <figure
+                                                    style="background-image: url('{{ imageUrlFormat($game, $game?->maker) }}')">
                                                 {{ $game?->name }}
                                             </div>
 
@@ -539,145 +542,21 @@
 
                             <div class="top-ten-games-body">
                                 <div class="top-ten-games-body-ex">
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
-                                            Pragmatic
+                                    @foreach ($dashboard['makers'] as $maker)
+                                        <div class="top-ten-games-body-tr">
+                                            <div class="top-ten-games-body-th">
+                                                {{--<figure
+                                                    style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>--}}
+                                                {{ $maker->name }}
+                                            </div>
+                                            <div class="top-ten-games-body-th">
+                                                <span class="deco-text">{{ $maker->total_games }}</span>
+                                            </div>
+                                            <div class="top-ten-games-body-th">
+                                                <span class="deco-text">{{ $maker->total_users }}</span>
+                                            </div>
                                         </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">259</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
-                                            Netent
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,152</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">3,251</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">259</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
-                                            Netent
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,152</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">3,251</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">259</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
-                                            Netent
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,152</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">3,251</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">259</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
-                                            Netent
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,152</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">3,251</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">259</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure
-                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
-                                            Netent
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,152</span>
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">3,251</span>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
