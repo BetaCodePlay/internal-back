@@ -4504,6 +4504,7 @@ class AgentsController extends Controller
     public function dashboard()
     {
         try {
+            dd('here');
             return view('back.agents.role-dashboard', [
                 'dashboard' => $this->reportRepo->dashboard()
             ]);
