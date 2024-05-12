@@ -78,12 +78,21 @@ class ReportRepo
             'field'        => 'won',
         ]);
 
+        $totalPlayedAmount = $this->transactionsRepo->sumByField([
+            'userId'       => $authUserId,
+            'whitelabelId' => $whitelabelId,
+            'currency'     => $currency,
+            'lastMonth'    => $lastMonth,
+            'field'        => 'played',
+        ]);
+
         return [
             'audits'        => $audits,
             'amounts'       => [
                 'totalBalance'            => getAuthenticatedUserBalance(),
                 'totalDeposited'          => number_format($totalDeposited, 2),
                 'totalPrizeWinningAmount' => number_format($totalPrizeWinningAmount, 2),
+                'totalPlayedAmount'       => number_format($totalPlayedAmount, 2),
             ],
             'games'         => $this->gamesRepo->best10($whitelabelId, $currency, $lastMonth),
             'manufacturers' => [

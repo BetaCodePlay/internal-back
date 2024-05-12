@@ -50,7 +50,7 @@
                                     </div>
 
                                     <div class="dash-balance-amount-balance">
-                                        <span class="minus">${{ $dashboard['amounts']['totalPrizeWinningAmount'] }}</span>
+                                        <span class="minus">$</span>{{ $dashboard['amounts']['totalPrizeWinningAmount'] }}</span>
                                     </div>
                                 </div>
 
@@ -66,7 +66,7 @@
                                     </div>
 
                                     <div class="dash-balance-amount-balance">
-                                        <span class="minus">$</span>17,550.<span class="minus">00</span>
+                                        <span class="minus">$</span>{{ $dashboard['amounts']['totalPlayedAmount'] }}</span>
                                     </div>
                                 </div>
 
