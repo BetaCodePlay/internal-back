@@ -1871,7 +1871,7 @@ class TransactionsRepo
      * @return float|null      The sum of the specified field, or null if no records match the criteria.
      */
     public function sumByField(array $params)
-    {
+    : ?float {
         return DB::table('closures_users_totals_2023_hour')
             ->whereBetween('created_at', [$params['startDate'], $params['endDate']])
             ->whereIn(
@@ -1882,11 +1882,12 @@ class TransactionsRepo
                     $params['whitelabelId']
                 )
             )
+            ->where('created_at', '>=', $params['lastMonth'])
             ->where([
                 'whitelabel_id' => $params['whitelabelId'],
                 'currency_iso'  => $params['currency'],
             ])
-            ->sum($params['campo']);
+            ->sum($params['field']);
     }
 
 }

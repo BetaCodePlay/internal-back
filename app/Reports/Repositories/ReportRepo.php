@@ -21,6 +21,7 @@ class ReportRepo
      * @param TransactionsRepo $transactionsRepo
      * @param AuditsRepo $auditsRepo
      * @param AgentsRepo $agentsRepo
+     * @param GamesRepo $gamesRepo
      */
     public function __construct(
         private TransactionsRepo $transactionsRepo,
@@ -55,9 +56,9 @@ class ReportRepo
         $today                  = Carbon::now($timezone);
         $startDate              = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $endDate                = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
-        $lastMonth = Carbon::now()->subMonth()->setTimezone($timezone);
+        $lastMonth              = Carbon::now()->subMonth()->setTimezone($timezone);
 
-        $providerTypes          = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
+        $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
 
         $totalDeposited = $this->transactionsRepo->totalByProviderTypesWithUser(
             $whitelabelId,
@@ -73,16 +74,15 @@ class ReportRepo
             'userId'       => $authUserId,
             'whitelabelId' => $whitelabelId,
             'currency'     => $currency,
-            'startDate'    => $startDate,
-            'endDate'      => $endDate,
-            'campo'        => 'won',
+            'lastMonth'    => $lastMonth,
+            'field'        => 'won',
         ]);
 
         return [
             'audits'        => $audits,
             'amounts'       => [
-                'totalBalance'   => getAuthenticatedUserBalance(),
-                'totalDeposited' => number_format($totalDeposited, 2),
+                'totalBalance'            => getAuthenticatedUserBalance(),
+                'totalDeposited'          => number_format($totalDeposited, 2),
                 'totalPrizeWinningAmount' => number_format($totalPrizeWinningAmount, 2),
             ],
             'games'         => $this->gamesRepo->best10($whitelabelId, $currency, $lastMonth),
