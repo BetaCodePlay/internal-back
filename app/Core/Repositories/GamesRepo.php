@@ -5,6 +5,7 @@ namespace App\Core\Repositories;
 use App\Core\Entities\Game;
 use Dotworkers\Configurations\Enums\GamesStatus;
 use Dotworkers\Configurations\Enums\Providers;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -426,10 +427,28 @@ class GamesRepo
             ->get();
     }
 
+    /**
+     * @param string|int $whitelabelId
+     * @param string $currency
+     * @param string $lastMonth
+     * @return Collection
+     */
     public function best10(string|int $whitelabelId, string $currency, string $lastMonth)
-    {
+    : Collection {
         return DB::table('closures_users_totals_2023_hour')
-            ->select(
+            ->groupBy(
+                'closures_users_totals_2023_hour.game_id',
+                'closures_users_totals_2023_hour.currency_iso',
+                'closures_users_totals_2023_hour.whitelabel_id'
+            )
+            ->where([
+                'currency_iso' => $currency,
+                'whitelabel_id' => $whitelabelId,
+            ])
+            ->where('created_at', '>=', $lastMonth)
+            ->orderByDesc('total_played')
+            ->limit(10)
+            ->get([
                 'closures_users_totals_2023_hour.game_id',
                 'closures_users_totals_2023_hour.currency_iso',
                 'closures_users_totals_2023_hour.whitelabel_id',
@@ -450,20 +469,6 @@ class GamesRepo
                 DB::raw(
                     "(SELECT image FROM lobby_games WHERE lobby_games.game_id = closures_users_totals_2023_hour.game_id) AS lobby_image"
                 )
-            )
-            ->groupBy(
-                'closures_users_totals_2023_hour.game_id',
-                'closures_users_totals_2023_hour.currency_iso',
-                'closures_users_totals_2023_hour.whitelabel_id'
-            )
-            ->where([
-                'currency_iso' => $currency,
-                'whitelabel_id' => $whitelabelId,
-            ])
-            ->where('created_at', '>=', $lastMonth)
-            ->orderByDesc('total_played')
-            ->limit(10)
-            ->get();
+            ]);
     }
-
 }
