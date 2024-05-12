@@ -1873,7 +1873,6 @@ class TransactionsRepo
     public function sumByField(array $params)
     : ?float {
         return DB::table('closures_users_totals_2023_hour')
-            ->whereBetween('created_at', [$params['startDate'], $params['endDate']])
             ->whereIn(
                 'user_id',
                 $this->reportAgentRepo->getIdsChildrenFromFather(
