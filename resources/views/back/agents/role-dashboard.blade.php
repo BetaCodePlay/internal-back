@@ -114,14 +114,17 @@
                                                 {{ _i('You sent') }}
                                             @endif
                                         </div>
-                                        <div class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ?_i('Payment with debit for') : _i('Transfer to') }} {{ $transactions->username }}</div>
+                                        <div
+                                            class="dash-transactions-item-text-middle">{{ $transactions->transactionType == 1 ?_i('Payment with debit for') : _i('Transfer to') }} {{ $transactions->username }}</div>
                                         <div class="dash-transactions-item-text-bottom">
                                             {{ $transactions->date }}
                                         </div>
                                     </div>
 
-                                    <div class="dash-transactions-amount {{ $transactions->transactionType == 1 ? '' : 'transactions-send' }}">
-                                        <span class="minus">{{ $transactions->transactionType == 1 ? '+' : '-' }}$</span> {{ $transactions->amount }}
+                                    <div
+                                        class="dash-transactions-amount {{ $transactions->transactionType == 1 ? '' : 'transactions-send' }}">
+                                        <span
+                                            class="minus">{{ $transactions->transactionType == 1 ? '+' : '-' }}$</span> {{ $transactions->amount }}
                                     </div>
                                 </div>
                             @endforeach
@@ -309,7 +312,8 @@
 
             <div class="col-12 col-lg-6 col-xl-4 mb-4">
                 <div class="dashboard-content">
-                    <div class="dashboard-content-title">{{ _i('Recent activity') }} <a href="#">{{ _i('See more') }} <i class="fa-solid fa-angle-right"></i></a></div>
+                    <div class="dashboard-content-title">{{ _i('Recent activity') }} <a href="#">{{ _i('See more') }} <i
+                                class="fa-solid fa-angle-right"></i></a></div>
                     <div class="dash-recent-activity">
                         <div class="dash-recent-activity-ex">
                             @foreach ($dashboard['audits'] as $audits)
@@ -488,141 +492,27 @@
                                     {{ _i('Provider') }}
                                 </div>
                                 <div class="top-ten-games-head-tr">
-                                    {{ _i('Players') }}
+                                    {{ _i('Amount') }}
                                 </div>
                             </div>
 
                             <div class="top-ten-games-body">
                                 <div class="top-ten-games-body-ex">
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
-                                            Black jack
+                                    @foreach($games as $game)
+                                        <div class="top-ten-games-body-tr">
+                                            <div class="top-ten-games-body-th">
+                                                <figure
+                                                    style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
+                                                {{ $game?->name }}
+                                            </div>
+                                            <div class="top-ten-games-body-th">
+                                                {{ $game?->maker }}
+                                            </div>
+                                            <div class="top-ten-games-body-th">
+                                                <span class="deco-text">{{ $game?->total_played }}</span>
+                                            </div>
                                         </div>
-                                        <div class="top-ten-games-body-th">
-                                            Vivogames
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
-                                            Ruleta
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,547</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
-                                            Black jack
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Vivogames
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
-                                            Ruleta
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,547</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
-                                            Black jack
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Vivogames
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
-                                            Ruleta
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,547</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
-                                            Black jack
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Vivogames
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
-                                            Ruleta
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,547</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/564/non_2x/dark-roulette-casino-3d-design-elements-png.png')"></figure>
-                                            Black jack
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Vivogames
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">500</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="top-ten-games-body-tr">
-                                        <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://static.vecteezy.com/system/resources/previews/008/854/560/non_2x/black-gold-roulette-casino-3d-design-elements-free-png.png')"></figure>
-                                            Ruleta
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            Pragmatic
-                                        </div>
-                                        <div class="top-ten-games-body-th">
-                                            <span class="deco-text">1,547</span>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -651,7 +541,8 @@
                                 <div class="top-ten-games-body-ex">
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -664,7 +555,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -677,7 +569,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -690,7 +583,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -703,7 +597,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -716,7 +611,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -729,7 +625,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -742,7 +639,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -755,7 +653,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>
                                             Pragmatic
                                         </div>
                                         <div class="top-ten-games-body-th">
@@ -768,7 +667,8 @@
 
                                     <div class="top-ten-games-body-tr">
                                         <div class="top-ten-games-body-th">
-                                            <figure style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
+                                            <figure
+                                                style="background-image: url('https://nodepositslots.org/static/softwares/netent.png')"></figure>
                                             Netent
                                         </div>
                                         <div class="top-ten-games-body-th">

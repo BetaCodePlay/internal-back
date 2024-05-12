@@ -435,7 +435,10 @@ class GamesRepo
                 'closures_users_totals_2023_hour.whitelabel_id',
                 DB::raw("SUM(closures_users_totals_2023_hour.played) AS total_played"),
                 DB::raw(
-                    "(SELECT name FROM games WHERE games.id = closures_users_totals_2023_hour.game_id) AS game_name"
+                    "(SELECT name FROM games WHERE games.id = closures_users_totals_2023_hour.game_id) AS name"
+                ),
+                DB::raw(
+                    "(SELECT maker FROM games WHERE games.id = closures_users_totals_2023_hour.game_id) AS maker"
                 )
             )
             ->groupBy(
