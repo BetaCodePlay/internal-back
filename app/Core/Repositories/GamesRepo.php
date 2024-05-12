@@ -493,8 +493,8 @@ class GamesRepo
             ->limit(10)
             ->get([
                 'games.maker AS name',
-                DB::raw('COUNT(DISTINCT closures_users_totals_2023_hour.game_id) AS total_games'),
-                DB::raw('SUM(closures_users_totals_2023_hour.user_id) AS total_users')
+                DB::raw('COUNT(DISTINCT closures_users_totals_2023_hour.game_id) AS totalGames'),
+                DB::raw('SUM(closures_users_totals_2023_hour.user_id) AS totalUsers')
             ]);
     }
 }

@@ -547,13 +547,13 @@
                                             <div class="top-ten-games-body-th">
                                                 {{--<figure
                                                     style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>--}}
-                                                {{ $maker->name }}
+                                                {{ $maker?->name }}
                                             </div>
                                             <div class="top-ten-games-body-th">
-                                                <span class="deco-text">{{ $maker->total_games }}</span>
+                                                <span class="deco-text">{{ $maker?->totalGames }}</span>
                                             </div>
                                             <div class="top-ten-games-body-th">
-                                                <span class="deco-text">{{ $maker->total_users }}</span>
+                                                <span class="deco-text">{{ $maker?->totalUsers }}</span>
                                             </div>
                                         </div>
                                     @endforeach
