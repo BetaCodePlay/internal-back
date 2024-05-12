@@ -501,7 +501,7 @@
                                     @foreach($dashboard['games'] as $game)
                                         <div class="top-ten-games-body-tr">
                                             <div class="top-ten-games-body-th">
-                                                <figure style="background-image: url('{{ $game?->image }}')">
+                                                <figure style="background-image: url('{{ imageUrlFormat($game, $game?->maker) }}')">
                                                 {{ $game?->name }}
                                             </div>
                                             <div class="top-ten-games-body-th">
