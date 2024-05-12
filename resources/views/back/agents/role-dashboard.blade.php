@@ -547,7 +547,7 @@
                                             <div class="top-ten-games-body-th">
                                                 {{--<figure
                                                     style="background-image: url('https://www.gammastack.com/wp-content/uploads/2021/12/PragmaticPlay-300x173.png')"></figure>--}}
-                                                {{ $maker?->name }}
+                                                {{ $maker?->maker }}
                                             </div>
                                             <div class="top-ten-games-body-th">
                                                 <span class="deco-text">{{ $maker?->totalGames }}</span>
