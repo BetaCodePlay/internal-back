@@ -69,7 +69,7 @@ class ReportRepo
             'audits'        => $audits,
             'balance'       => [
                 'totalBalance'   => getAuthenticatedUserBalance(),
-                'totalDeposited' => number_format($totalDeposited, 2),
+                'totalDeposited' => number_format('1', 2),
             ],
             'games'         => [
                 [
