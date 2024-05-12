@@ -86,8 +86,6 @@ class ReportRepo
             'field'        => 'played',
         ]);
 
-        dd($this->gamesRepo->bestMakers($whitelabelId, $currency, $lastMonth));
-
         return [
             'audits'       => $audits,
             'amounts'      => [
