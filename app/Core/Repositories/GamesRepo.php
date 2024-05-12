@@ -433,7 +433,7 @@ class GamesRepo
                 DB::raw("SUM(closures_users_totals_2023_hour.played) AS total_played"),
                 'games.name AS game_name')
             ->join('games', 'closures_users_totals_2023_hour.game_id', '=', 'games.id')
-            ->groupBy('closures_users_totals_2023_hour.game_id', 'closures_users_totals_2023_hour.currency_iso', 'closures_users_totals_2023_hour.whitelabel_id', 'month')
+            ->groupBy('closures_users_totals_2023_hour.game_id', 'closures_users_totals_2023_hour.currency_iso', 'closures_users_totals_2023_hour.whitelabel_id')
             ->orderByDesc('total_played')
             ->limit(10)
             ->get();
