@@ -4,6 +4,7 @@ namespace App\Reports\Repositories;
 
 use App\Agents\Repositories\AgentsRepo;
 use App\Audits\Repositories\AuditsRepo;
+use App\Core\Repositories\GamesRepo;
 use App\Core\Repositories\TransactionsRepo;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
@@ -25,6 +26,7 @@ class ReportRepo
         private TransactionsRepo $transactionsRepo,
         private AuditsRepo $auditsRepo,
         private AgentsRepo $agentsRepo,
+        private GamesRepo $gamesRepo,
     ) {
     }
 
@@ -62,14 +64,17 @@ class ReportRepo
             $providerTypes,
             $startDate,
             $endDate,
-            auth()->id()
+            $authUserId
         );
+
+
+        dd($this->gamesRepo->best10());
 
         return [
             'audits'        => $audits,
             'balance'       => [
                 'totalBalance'   => getAuthenticatedUserBalance(),
-                'totalDeposited' => number_format('1', 2),
+                'totalDeposited' => number_format($totalDeposited, 2),
             ],
             'games'         => [
                 [

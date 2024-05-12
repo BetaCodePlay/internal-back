@@ -209,7 +209,7 @@ class GamesRepo
             if (!is_null($maker)) {
                 $games->where('games.maker',  $maker);
             }
-            
+
             if (!is_null($product)) {
                 $games->where('games.product_id', $product);
             }
@@ -256,7 +256,7 @@ class GamesRepo
     }
 
     /**
-     * Get categories 
+     * Get categories
      *
      * @return mixed
      */
@@ -329,33 +329,42 @@ class GamesRepo
      /**
      * Get products
      *
-     * @param int 
+     * @param int
      * @return mixed
      */
     public function getProducts()
     {
-        $games = Game::select('product_id')
+        return Game::select('product_id')
         ->distinct()
         ->where('provider_id', Providers::$bet_connections)
         ->get();
-        return $games;
     }
 
      /**
      * Get providers by maker
      *
-     * @param int 
+     * @param int
      * @return mixed
      */
     public function getProvidersByMaker($maker)
     {
-        $games = Game::select('providers.id', 'providers.name')
+        return Game::select('providers.id', 'providers.name')
         ->distinct()
         ->join('providers', 'games.provider_id', '=', 'providers.id')
         ->join('credentials', 'providers.id', '=', 'credentials.provider_id')
         ->where('games.maker', $maker)
         ->get();
-        return $games;
+    }
+
+    public function best10()
+    {
+       return DB::table('closures_users_totals_2023_hour')
+            ->select('game_id', 'currency_iso', 'whitelabel_id',
+                DB::raw("SUM(played) AS total_played"))
+            ->groupBy('game_id', 'currency_iso', 'whitelabel_id', 'month')
+            ->orderByDesc('total_played')
+            ->limit(10)
+            ->get();
     }
 
 }
