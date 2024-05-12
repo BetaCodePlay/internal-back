@@ -1857,4 +1857,36 @@ class TransactionsRepo
             'childrenIds' => $childrenIds,
         ];
     }
+
+    /**
+     * Sum the values of a specific field in the closures_users_totals_2023_hour table.
+     *
+     * @param  array  $params An associative array containing the parameters for the query:
+     *                        - userId: The user ID.
+     *                        - whitelabelId: The whitelabel ID.
+     *                        - currency: The currency ISO.
+     *                        - startDate: The start date for the date range.
+     *                        - endDate: The end date for the date range.
+     *                        - field: The name of the field to sum.
+     * @return float|null      The sum of the specified field, or null if no records match the criteria.
+     */
+    public function sumByField(array $params)
+    {
+        return DB::table('closures_users_totals_2023_hour')
+            ->whereBetween('created_at', [$params['startDate'], $params['endDate']])
+            ->whereIn(
+                'user_id',
+                $this->reportAgentRepo->getIdsChildrenFromFather(
+                    $params['userId'],
+                    $params['currency'],
+                    $params['whitelabelId']
+                )
+            )
+            ->where([
+                'whitelabel_id' => $params['whitelabelId'],
+                'currency_iso'  => $params['currency'],
+            ])
+            ->sum($params['campo']);
+    }
+
 }
