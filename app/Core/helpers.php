@@ -7469,10 +7469,10 @@ if (! function_exists('imageUrlFormat')) {
             ? $image
             : "https://bestcasinos-llc.s3.us-east-2.amazonaws.com/providers/$bucket/200x200/$image";
 
-        if (! is_null($imageLobby)) {
+        /*if (! is_null($imageLobby)) {
             $s3Directory = Configurations::getS3Directory();
             $image       = "https://24livewhitelabel.s3.amazonaws.com/$s3Directory/lobby/$imageLobby";
-        }
+        }*/
 
         return $image;
     }
