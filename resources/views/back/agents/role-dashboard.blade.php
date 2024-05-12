@@ -508,7 +508,7 @@
                                                 {{ $game?->maker }}
                                             </div>
                                             <div class="top-ten-games-body-th">
-                                                <span class="deco-text">{{ $game?->total_played }}</span>
+                                                <span class="deco-text">{{ $game?->total_users }}</span>
                                             </div>
                                         </div>
                                     @endforeach
