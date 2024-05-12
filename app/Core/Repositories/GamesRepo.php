@@ -429,18 +429,15 @@ class GamesRepo
     public function best10(string|int $whitelabelId, string $currency)
     {
         return DB::table('closures_users_totals_2023_hour')
+            ->select('closures_users_totals_2023_hour.game_id', 'closures_users_totals_2023_hour.currency_iso', 'closures_users_totals_2023_hour.whitelabel_id',
+                DB::raw("DATE_FORMAT(closures_users_totals_2023_hour.created_at, '%Y-%m') AS month"),
+                DB::raw("SUM(closures_users_totals_2023_hour.played) AS total_played"),
+                'games.name AS game_name')
             ->join('games', 'closures_users_totals_2023_hour.game_id', '=', 'games.id')
-            ->groupBy('game_id', 'currency_iso', 'whitelabel_id')
+            ->groupBy('closures_users_totals_2023_hour.game_id', 'closures_users_totals_2023_hour.currency_iso', 'closures_users_totals_2023_hour.whitelabel_id', 'month')
             ->orderByDesc('total_played')
-            ->where(['whitelabel_id' => $whitelabelId, 'currency_iso' => $currency])
             ->limit(10)
-            ->get([
-                'game_id',
-                'games.name',
-                'currency_iso',
-                'whitelabel_id',
-                DB::raw('SUM(played) AS total_played')
-            ]);
+            ->get();
     }
 
 }
