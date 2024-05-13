@@ -314,8 +314,11 @@
 
             <div class="col-12 col-lg-6 col-xl-4 mb-4">
                 <div class="dashboard-content">
-                    <div class="dashboard-content-title">{{ _i('Recent activity') }} <a href="#">{{ _i('See more') }} <i
-                                class="fa-solid fa-angle-right"></i></a></div>
+                    <div class="dashboard-content-title">
+                        {{ _i('Recent activity') }}
+                        {{--<a href="#">{{ _i('See more') }} <i class="fa-solid fa-angle-right"></i></a>--}}
+                    </div>
+
                     <div class="dash-recent-activity">
                         <div class="dash-recent-activity-ex">
                             @foreach ($dashboard['audits'] as $audits)
