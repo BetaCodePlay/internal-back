@@ -45,11 +45,11 @@
 						</span>
                             <input class="input-login" type="password" name="password" id="password" autocomplete="off" placeholder="{{ _i('At least 8 characters') }}" required>
                         </div>
-
+                            <!--
                         <div class="wrap-input-login">
                             <a href="#" class="a-login">{{ _i('have you forgotten your password?')}}</a>
                         </div>
-
+                            -->
                         <div class="container-login-form-btn">
                             <button class="btn-login disabled" id="login" type="button" data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Please wait...') }}">
                                 {{ _i('Login') }}

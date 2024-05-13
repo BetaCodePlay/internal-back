@@ -136,7 +136,7 @@
         @can('access', [$permissions::$betpay_menu])
             @include('back.partials.sidebar.store', ['permissions' => $permissions])
         @endif
-
+        <!--
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
@@ -163,7 +163,7 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
-
+-->
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-logout">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('auth.logout') }}" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-power-off"></i></span> <span class="media-body align-self-center">{{ _i('Logout') }}</span>
@@ -183,19 +183,20 @@
         @can('access', [$permissions::$dashboard])
             <div class="nav-mobile-opt"><a class="active" href="{{ route('core.dashboard') }}"><i class="fa-solid fa-house-chimney"></i> <span class="name">{{ _i('Home') }}</span></a></div>
         @endif
-
-        <div class="nav-mobile-opt">
-            <a href="{{ route('agents.role') }}">
-                <i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Role') }}</span>
-            </a>
-        </div>
-
-        <div class="nav-mobile-opt">
-            <a href="#">
-                <i class="fa-solid fa-chart-column"></i> <span class="name">{{ _i('Reports') }}</span>
-            </a>
-        </div>
-
+        @can('access', [$permissions::$rol_assiria])
+            <div class="nav-mobile-opt">
+                <a href="{{ route('agents.role') }}">
+                    <i class="fa-solid fa-people-group"></i> <span class="name">{{ _i('Role') }}</span>
+                </a>
+            </div>
+        @endif
+        @can('access', [$permissions::$reports_assiria])
+            <div class="nav-mobile-opt">
+                <a href="{{ route('agents.reports.management') }}">
+                    <i class="fa-solid fa-chart-column"></i> <span class="name">{{ _i('Reports') }}</span>
+                </a>
+            </div>
+        @endif
         <div class="nav-mobile-opt action-mobile-menu">
             <a href="javascript:void(0)">
                 <i class="fa-solid fa-bars"></i> <span class="name">{{ _i('Menu') }}</span>
