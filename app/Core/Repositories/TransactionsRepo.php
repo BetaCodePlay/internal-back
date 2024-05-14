@@ -749,7 +749,7 @@ class TransactionsRepo
             $typeTransactionId = 2;
         }
 
-        if ($typeTransactionId !== null) {
+        if (! is_null($typeTransactionId)) {
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
         }
 
