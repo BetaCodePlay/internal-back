@@ -739,7 +739,15 @@ class TransactionsRepo
             });
         }
 
-        $typeTransactionId = ($typeTransaction === 'credit') ? 1 : (($typeTransaction === 'debit') ? 2 : null);
+        $typeTransactionId = null;
+
+        if ($typeTransaction === 'credit') {
+            $typeTransactionId = 1;
+        }
+
+        if ($typeTransaction === 'debit') {
+            $typeTransactionId = 2;
+        }
 
         if ($typeTransactionId !== null) {
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
@@ -1861,7 +1869,7 @@ class TransactionsRepo
     /**
      * Sum the values of a specific field in the closures_users_totals_2023_hour table.
      *
-     * @param  array  $params An associative array containing the parameters for the query:
+     * @param array $params An associative array containing the parameters for the query:
      *                        - userId: The user ID.
      *                        - whitelabelId: The whitelabel ID.
      *                        - currency: The currency ISO.
