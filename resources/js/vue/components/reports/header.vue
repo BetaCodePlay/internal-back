@@ -1,5 +1,10 @@
 <template>
-    <div class="row">
+    <div
+        class="row"
+        v-loading="loading"
+        element-loading-text="Cargando..."
+        element-loading-spinner="el-icon-loading"
+    >
         <div class="col-lg-9 mb-2">
             <div class="row">
                 <div class="col-lg-5 mt-2">
@@ -7,22 +12,21 @@
                         <template #content>
                             <h3 class="text-center">Balance total</h3>
                             <h1 class="text-center">
-                                {{ parseFloat(window.userBalance).formatMoney() }}
+                                {{
+                                    parseFloat(window.userBalance).formatMoney()
+                                }}
                             </h1>
                         </template>
                     </Card>
                 </div>
 
-                <div
-                    class="col-4 col-lg-2 mt-2"
-
-                >
+                <div class="col-4 col-lg-2 mt-2">
                     <Card class="card-transparent">
                         <template #content>
                             <span
                                 class="text-center mt-2"
                                 style="width: 100%; display: block"
-                            >Depositado</span
+                                >Depositado</span
                             >
                             <h5 class="text-center">
                                 {{ deposits }}
@@ -30,16 +34,19 @@
                         </template>
                     </Card>
                 </div>
-                <div class="col-4 col-lg-2 mt-2" style="
+                <div
+                    class="col-4 col-lg-2 mt-2"
+                    style="
                         border-right: 0.5px solid #2d2d2d;
                         border-left: 0.5px solid #2d2d2d;
-                    ">
+                    "
+                >
                     <Card class="card-transparent">
                         <template #content>
                             <span
                                 class="text-center mt-2"
                                 style="width: 100%; display: block"
-                            >Ganancia</span
+                                >Ganancia</span
                             >
                             <h5 class="text-center">
                                 {{ profit }}
@@ -53,7 +60,7 @@
                             <span
                                 class="text-center mt-2"
                                 style="width: 100%; display: block"
-                            >Retirado</span
+                                >Retirado</span
                             >
                             <h5 class="text-center">
                                 {{ withdrawals }}
@@ -76,15 +83,17 @@ export default {
             loading: false,
             deposits: 0,
             withdrawals: 0,
-            profit: 0
-        }
+            profit: 0,
+        };
     },
     methods: {
         async loadChildDailyMovements() {
             this.loading = true;
             try {
-                const {data} = await axios.get("/api-transactions/daily-movements-of-children");
-                const {deposits, withdrawals, profit} = data;
+                const { data } = await axios.get(
+                    "/api-transactions/daily-movements-of-children"
+                );
+                const { deposits, withdrawals, profit } = data;
 
                 this.deposits = deposits;
                 this.withdrawals = withdrawals;
@@ -92,14 +101,16 @@ export default {
             } catch (error) {
                 console.error(error);
             } finally {
-                this.loading = false;
+                setTimeout(() => {
+                    this.loading = false;
+                }, 500);
             }
         },
     },
     mounted() {
         this.loadChildDailyMovements();
     },
-}
+};
 </script>
 <style>
 .cuadrado {
