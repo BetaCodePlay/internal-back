@@ -12,6 +12,7 @@
                 <a href="{{ route('agents.role.dashboard') }}" class="navbar-brand-mini">
                     <img src="{{ $favicon }}" alt="Logo" width="180" height="37" class="img-logo-mini">
                 </a>
+
                 <a class="js-side-nav u-header__nav-toggler align-self-center ml-auto collapse-menu-action" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
 
@@ -43,9 +44,10 @@
                                     </ul>
                                 </div>
                             @endif
-
+                        <!--
                             <div class="d-inline-block g-pos-rel btn-mini-h notified-active"><i class="fa-regular fa-bell"></i></div>
                             <div class="d-inline-block g-pos-rel btn-mini-h pos-mobile-hidden"><i class="fa-solid fa-gear"></i></div>
+                            -->
                             <div class="d-inline-block g-pos-rel pos-mobile-hidden">
                                 @php
                                     $avatar = \App\Users\Users::getAvatar();

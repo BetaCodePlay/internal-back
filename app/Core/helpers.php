@@ -7457,3 +7457,23 @@ if (! function_exists('getUserIdByUsernameOrCurrent')) {
         return Auth::id();
     }
 }
+
+
+if (! function_exists('imageUrlFormat')) {
+    function imageUrlFormat($game, $bucket): string
+    {
+        $image      = $game->image;
+        $imageLobby = $game->lobby_image;
+
+        $image = $game->provider_id == Providers::$softgaming
+            ? $image
+            : "https://bestcasinos-llc.s3.us-east-2.amazonaws.com/providers/$bucket/200x200/$image";
+
+        if (! is_null($imageLobby)) {
+            $s3Directory = Configurations::getS3Directory();
+            $image       = "https://24livewhitelabel.s3.amazonaws.com/$s3Directory/lobby/$imageLobby";
+        }
+
+        return $image;
+    }
+}

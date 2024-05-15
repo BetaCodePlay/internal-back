@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Collections\TransactionsCollection;
 use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
+use App\Transactions\Services\UserTransactionService;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Dotworkers\Configurations\Configurations;
@@ -12,6 +13,7 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Wallet\Wallet;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -48,20 +50,19 @@ class TransactionsController extends Controller
      */
     private $closuresUserTotalsRepo;
 
-    /**
-     * TransactionsController constructor
-     *
-     * @param TransactionsRepo $transactionsRepo
-     * @param TransactionsCollection $transactionsCollection
-     */
+    private $transactionsService;
+
+
     public function __construct(
         TransactionsRepo $transactionsRepo,
         TransactionsCollection $transactionsCollection,
         ClosuresUsersTotalsRepo $closuresUserTotalsRepo,
+        UserTransactionService $transactionsService
     ) {
         $this->transactionsRepo       = $transactionsRepo;
         $this->transactionsCollection = $transactionsCollection;
         $this->closuresUserTotalsRepo = $closuresUserTotalsRepo;
+        $this->transactionsService    = $transactionsService;
     }
 
     /**
@@ -133,7 +134,7 @@ class TransactionsController extends Controller
     /**
      * Dashboard graphic data
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function dashboardGraphicData()
     {
@@ -229,21 +230,22 @@ class TransactionsController extends Controller
      * @param Request $request
      * @return array|mixed
      */
-    public function playersTransactions(Request $request): mixed {
+    public function playersTransactions(Request $request)
+    : mixed {
         try {
-            $userId   = getUserIdByUsernameOrCurrent($request);
-            $bonus    = Configurations::getBonus();
-            $wallet   = Wallet::getByClient($userId, session('currency'), $bonus);
+            $userId = getUserIdByUsernameOrCurrent($request);
+            $bonus  = Configurations::getBonus();
+            $wallet = Wallet::getByClient($userId, session('currency'), $bonus);
 
             if (is_array($wallet->data)) {
                 Log::info(__METHOD__ . " Error in user wallet array {$userId}", [$wallet]);
             }
 
-            $token    = session('wallet_access_token');
-            $url      = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
+            $token = session('wallet_access_token');
+            $url   = config('wallet.url') . '/api/transactions/get-player-transactions-by-wallet';
 
-            $data = $request->all();
-            $data['wallet'] = !is_array($wallet->data) ? $wallet?->data?->wallet?->id : 0;
+            $data           = $request->all();
+            $data['wallet'] = ! is_array($wallet->data) ? $wallet?->data?->wallet?->id : 0;
 
             $response = Http::withHeaders([
                 'Accept'        => 'application/json',
@@ -255,5 +257,35 @@ class TransactionsController extends Controller
             Log::error('Error al realizar la solicitud HTTP: ' . $e->getMessage());
             return null;
         }
+    }
+
+    /**
+     * Get daily movements of children.
+     *
+     * Retrieves and returns the daily movements of children for the currently authenticated user,
+     * whitelabel ID from configurations, and currency from session.
+     *
+     * @return JsonResponse Returns a JSON response containing the daily movements of children,
+     *                                         including deposits, withdrawals, profit, start date, end date, and children IDs.
+     *                                         The response is in the following format:
+     *                                         {
+     *                                             "deposits": "Total deposits made by children",
+     *                                             "withdrawals": "Total withdrawals made by children",
+     *                                             "profit": "Total profit made by children",
+     *                                             "startDate": "Start date of the daily movements",
+     *                                             "endDate": "End date of the daily movements",
+     *                                             "childrenIds": ["IDs of children belonging to the user"]
+     *                                         }
+     */
+    public function getDailyMovementsOfChildren()
+    : JsonResponse
+    {
+        return response()->json(
+            $this->transactionsRepo->getDailyMovementsOfChildren(
+                auth()->id(),
+                Configurations::getWhitelabel(),
+                session('currency')
+            )
+        );
     }
 }

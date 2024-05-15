@@ -28,7 +28,7 @@ class BaseTransactionService extends BaseService
      *
      * @param TransactionsRepo|null $transactionsRepo The repository for transactions.
      */
-    private ?TransactionsRepo $transactionsRepo;
+    protected ?TransactionsRepo $transactionsRepo;
 
     public function __construct(?TransactionsRepo $transactionsRepo)
     {

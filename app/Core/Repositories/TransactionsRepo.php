@@ -18,7 +18,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Utilities\Helper;
@@ -393,8 +392,7 @@ class TransactionsRepo
         $typeUser        = $request->has('typeUser') ? $request->get('typeUser') : 'all';
         $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
         $username        = $request->get('search')['value'] ?? null;
-
-        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+        $childrenIds     = $this->reportAgentRepo->getIdsChildrenFromFather(
             $userId,
             $currency,
             Configurations::getWhitelabel()
@@ -448,7 +446,7 @@ class TransactionsRepo
                 $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
             }
         }
-        Log::info(__METHOD__ . " Transaction repo ", [$request]);
+
         if (! is_null($username)) {
             $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
                 'transactions.data->to',
@@ -468,6 +466,7 @@ class TransactionsRepo
                     ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
             });
         }
+
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
@@ -501,14 +500,8 @@ class TransactionsRepo
             }
         }
 
-        $resultCount   = $transactionsQuery->count();
-        $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
-
-       /*$sqlWithValues = str_replace_array('?', $transactionsQuery->getBindings(), $transactionsQuery->toSql());
-        dd($sqlWithValues);*/
-
-        //dd($startDate, $endDate);
-
+        $resultCount      = $transactionsQuery->count();
+        $slicedResults    = $transactionsQuery->offset($start)->limit($length)->get();
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
             $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
@@ -738,9 +731,25 @@ class TransactionsRepo
             $transactions->whereNotNull('data->provider_transaction');
         }
 
-        $typeTransactionId = ($typeTransaction === 'credit') ? 1 : (($typeTransaction === 'debit') ? 2 : null);
+        if (! empty($request->get('query'))) {
+            $query = $request->get('query');
+            $transactions->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('data->from', 'LIKE', "%$query%")
+                    ->orWhere('data->to', 'LIKE', "%$query%");
+            });
+        }
 
-        if ($typeTransactionId !== null) {
+        $typeTransactionId = null;
+
+        if ($typeTransaction === 'credit') {
+            $typeTransactionId = 1;
+        }
+
+        if ($typeTransaction === 'debit') {
+            $typeTransactionId = 2;
+        }
+
+        if (! is_null($typeTransactionId)) {
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
         }
 
@@ -1790,4 +1799,102 @@ class TransactionsRepo
         $transaction->save();
         return $transaction;
     }
+
+    /**
+     * Get daily movements of children.
+     *
+     * Retrieves the daily movements of children for a given user ID, whitelabel ID, and currency.
+     *
+     * @param int|string $userId The ID of the user.
+     * @param int|string $whitelabelId The ID of the whitelabel.
+     * @param string $currency The currency.
+     *
+     * @return array Returns an array containing the daily movements of children, including deposits, withdrawals,
+     *               profit, start date, end date, and children IDs.
+     *               - 'deposits': Total deposits made by children.
+     *               - 'withdrawals': Total withdrawals made by children.
+     *               - 'profit': Total profit made by children.
+     *               - 'startDate': The start date of the daily movements.
+     *               - 'endDate': The end date of the daily movements.
+     *               - 'childrenIds': The IDs of children belonging to the user.
+     */
+    public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
+    : array {
+        $today         = date('Y-m-d');
+        $startDate     = Utils::startOfDayUtc($today);
+        $endDate       = Utils::endOfDayUtc($today);
+        $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
+
+        $deposits = $this->totalByProviderTypesWithUser(
+            $whitelabelId,
+            TransactionTypes::$credit,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate,
+            $userId
+        );
+
+        $withdrawals = $this->totalByProviderTypesWithUser(
+            $whitelabelId,
+            TransactionTypes::$debit,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate,
+            $userId
+        );
+
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather($userId, $currency, $whitelabelId);
+
+        $totalProfit = DB::table('closures_users_totals_2023_hour')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereIn('user_id', $childrenIds)
+            ->where([
+                'whitelabel_id' => $whitelabelId,
+                'currency_iso'  => $currency,
+            ])
+            ->sum('profit');
+
+        return [
+            'deposits'    => number_format($deposits, 2) . ' ' . $currency,
+            'withdrawals' => number_format($withdrawals, 2) . ' ' . $currency,
+            'profit'      => number_format($totalProfit, 2) . ' ' . $currency,
+            'startDate'   => $startDate,
+            'endDate'     => $endDate,
+            'childrenIds' => $childrenIds,
+        ];
+    }
+
+    /**
+     * Sum the values of a specific field in the closures_users_totals_2023_hour table.
+     *
+     * @param array $params An associative array containing the parameters for the query:
+     *                        - userId: The user ID.
+     *                        - whitelabelId: The whitelabel ID.
+     *                        - currency: The currency ISO.
+     *                        - startDate: The start date for the date range.
+     *                        - endDate: The end date for the date range.
+     *                        - field: The name of the field to sum.
+     * @return float|null      The sum of the specified field, or null if no records match the criteria.
+     */
+    public function sumByField(array $params)
+    : ?float {
+        return DB::table('closures_users_totals_2023_hour')
+            ->whereIn(
+                'user_id',
+                $this->reportAgentRepo->getIdsChildrenFromFather(
+                    $params['userId'],
+                    $params['currency'],
+                    $params['whitelabelId']
+                )
+            )
+            ->where('created_at', '>=', $params['lastMonth'])
+            ->where([
+                'whitelabel_id' => $params['whitelabelId'],
+                'currency_iso'  => $params['currency'],
+            ])
+            ->sum($params['field']);
+    }
+
 }

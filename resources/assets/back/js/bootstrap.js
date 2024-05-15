@@ -2,23 +2,18 @@ import {activeMenu, getCookie, setCookie} from './commons.js';
 
 window.$ = window.jQuery = require('jquery');
 window.Popper = require('popper.js').default;
-require('jszip');
 require('pdfmake');
 require('bootstrap');
 require('jquery.cookie');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
 require('datatables.net-dt');
-//require('datatables.net-responsive/js/dataTables.responsive');
-// require('datatables.net-buttons');
 require('datatables.net-buttons-dt');
 require('datatables.net-buttons/js/buttons.html5.js');
 require('datatables.net-buttons/js/buttons.print.js');
 require('datatables.net-responsive-dt');
-// require('datatables.net-rowgroup');
 require('jquery-mousewheel');
 require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar');
 activeMenu();
-
 
 $.ajaxSetup({
     headers: {
@@ -34,7 +29,7 @@ $.fn.dataTable.ext.errMode = 'throw';
 
 $.extend(true, $.fn.dataTable.defaults, {
     dom: '<"datatable-header"lBfr><"datatable-body"t><"datatable-footer"ip>',
-    lengthMenu: [[10, 25, 50, 100, 250, 500, 1000], [10, 25, 50, 100, 250, 500, 1000]],
+    lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
     processing: true,
     deferRender: true,
     responsive: true,
