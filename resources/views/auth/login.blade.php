@@ -3,7 +3,11 @@
 @section('content')
     <div class="container-login" data-multi="{{ $envType ? 'true' : 'false' }}">
         <div class="wrap-login">
-            <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v2.jpg')">
+            @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 2)
+                <div class="login-preview-bg" style="background-image: url('https://bestcasinoswhitelabel.s3.amazonaws.com/planeta/section-images/sin-logo1715699957.png')">
+            @else
+                <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v2.jpg')">
+            @endif
                 <div class="bg-opacity"></div>
                 <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
             </div>
