@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
  * This class allows to manage agents requests
  *
  * @package App\Http\Controllers
- * 
- * 
+ *
+ *
  */
 class AgentsReportsController extends Controller
 {
@@ -108,6 +108,10 @@ class AgentsReportsController extends Controller
 
             );
 
+            foreach ($data as $item) {
+                dd('here', $item);
+            }
+
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
@@ -160,9 +164,9 @@ class AgentsReportsController extends Controller
 
     /**
      * getChildrens
-     * 
+     *
      * @return Response
-     * 
+     *
      */
     public function getChildrens(
         Request $request
