@@ -109,7 +109,7 @@ class AgentsReportsController extends Controller
             );
 
             foreach ($data as $item) {
-                dd('here', $item);
+                $item->won = formatAmount($item->won);
             }
 
             return Utils::successResponse($data);
