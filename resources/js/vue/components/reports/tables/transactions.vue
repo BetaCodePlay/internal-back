@@ -10,6 +10,9 @@
             :showTimezone="true"
         />
         <DataTable
+            v-loading="loading"
+            element-loading-text="Cargando..."
+            element-loading-spinner="el-icon-loading"
             ref="transactionsTable"
             class="mt-3"
             :value="items"
@@ -23,9 +26,7 @@
             >
                 <template #body="slotProps">
                     <div class="text-center" v-if="col.field == 'date'">
-                        <strong>{{
-                            slotProps.data.date
-                        }}</strong>
+                        <strong>{{ slotProps.data.date }}</strong>
                     </div>
                     <div
                         class="text-center"
@@ -55,7 +56,6 @@
             :rowsPerPageOptions="[10, 20, 30]"
             @page="onPageChange"
         >
-           
         </Paginator>
     </div>
 </template>
@@ -140,8 +140,13 @@ export default {
         },
         async fetchData() {
             this.loading = true;
-            const { query, daterange, typeUser, typeTransaction, selectedTimezone } =
-                this.filters;
+            const {
+                query,
+                daterange,
+                typeUser,
+                typeTransaction,
+                selectedTimezone,
+            } = this.filters;
 
             if (daterange[1]) {
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
@@ -167,10 +172,11 @@ export default {
 
                     this.items = data.data;
                     this.totalRecords = data.total;
-                } catch (error) {
                     console.error(error);
                 } finally {
-                    this.loading = false;
+                    setTimeout(() => {
+                        this.loading = false;
+                    }, 500);
                 }
             }
         },

@@ -1,17 +1,18 @@
 <template>
     <div>
-        
         <components-reports-filters
             title="Reporte Financiero"
             v-model="filters"
             @change="onChange"
             @export="exportData"
-            
             :showUser="true"
             :showProvider="true"
             :showTimezone="true"
         />
         <DataTable
+            v-loading="loading"
+            element-loading-text="Cargando..."
+            element-loading-spinner="el-icon-loading"
             ref="financialTable"
             class="mt-3"
             :value="items"
@@ -53,7 +54,9 @@
             </Column>
             <template #expansion="slotProps">
                 <div class="orders-subtable">
-                    <h4 class="ml-3">Detalle de: {{slotProps.data.category}}</h4>
+                    <h4 class="ml-3">
+                        Detalle de: {{ slotProps.data.category }}
+                    </h4>
                     <DataTable :value="slotProps.data.items">
                         <Column field="name" header="Juego">
                             <template #body="slotProps">
@@ -79,7 +82,7 @@
                         <Column field="won" header="Ganado">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                   {{ slotProps.data.won.formatMoney() }}
+                                    {{ slotProps.data.won.formatMoney() }}
                                 </div>
                             </template></Column
                         >
@@ -93,7 +96,9 @@
                         <Column field="commission" header="Comision">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.commission.formatMoney() }}
+                                    {{
+                                        slotProps.data.commission.formatMoney()
+                                    }}
                                 </div>
                             </template></Column
                         >
@@ -113,8 +118,6 @@
                     />
                 </Row>
             </ColumnGroup>
-
-            <div class="loading-style" v-if="loading"></div>
         </DataTable>
     </div>
 </template>
@@ -186,8 +189,8 @@ export default {
         },
         onRowExpand(event) {
             //this.expandedRows = null;
-            this.expandedRows = []
-            this.expandedRows.push(event.data)
+            this.expandedRows = [];
+            this.expandedRows.push(event.data);
             this.getDetailsCategory(event.data.category);
         },
         onRowCollapse(event) {},
@@ -241,10 +244,14 @@ export default {
                     )
                     .then((resp) => {
                         this.items = resp.data.data;
-                        this.loading = false;
+                        setTimeout(() => {
+                            this.loading = false;
+                        }, 500);
                     })
                     .catch(() => {
-                        this.loading = false;
+                        tsetTimeout(() => {
+                            this.loading = false;
+                        }, 500);
                     });
             }
         },

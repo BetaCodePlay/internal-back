@@ -246,3 +246,13 @@ tfoot {
 .el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div {
     background-color: #595959 !important;
 }
+
+.el-loading-spinner i {
+    color: #7d2df5 !important;
+}
+.el-loading-spinner .el-loading-text {
+    color: #7d2df5 !important;
+}
+.el-loading-mask {
+    background-color: rgb(9 9 9 / 93%) !important;
+}
