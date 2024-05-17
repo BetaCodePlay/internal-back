@@ -189,74 +189,57 @@ export default {
         },
         getDetailsCategory(category) {
             this.loading = true;
-            axios
-                .get(
-                    `/agents/reports/financial-state-data-v2-category/${
-                        window.authUserId
-                    }/${moment(this.filters.daterange[0]).format(
-                        "YYYY-MM-DD"
-                    )}/${moment(this.filters.daterange[1]).format(
-                        "YYYY-MM-DD"
-                    )}/${category}?timezone=${
-                        this.filters.selectedTimezone
-                    }&provider=${this.filters.selectedProvider}&child=${
-                        this.filters.selectedUser
-                    }&text=${this.filters.query}`
-                )
+
+            const { authUserId } = window;
+            const { daterange, selectedTimezone, selectedProvider, selectedUser, query } = this.filters;
+            const startDate = moment(daterange[0]).format("YYYY-MM-DD");
+            const endDate = moment(daterange[1]).format("YYYY-MM-DD");
+
+            const url = `/agents/reports/financial-state-data-v2-category/${authUserId}/${startDate}/${endDate}/${category}`;
+
+            const params = {
+                timezone: selectedTimezone,
+                provider: selectedProvider,
+                child: selectedUser,
+                text: query
+            };
+
+            axios.get(url, { params })
                 .then((resp) => {
                     this.$nextTick(() => {
-                        this.items.find((i) => i.category == category).items =
-                            resp.data.data;
-                        this.force++;
-                        this.loading = false;
+                        const categoryItem = this.items.find((i) => i.category === category);
+                        if (categoryItem) {
+                            categoryItem.items = resp.data.data;
+                            this.force++;
+                        }
                     });
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error("Error fetching category details:", error);
+                })
+                .finally(() => {
                     this.loading = false;
                 });
-        },
-        FetchData() {
-            if (this.filters.daterange[1]) {
-                this.loading = true;
-                axios
-                    .get(
-                        `/agents/reports/financial-state-data-v2/${
-                            window.authUserId
-                        }/${moment(this.filters.daterange[0]).format(
-                            "YYYY-MM-DD"
-                        )}/${moment(this.filters.daterange[1]).format(
-                            "YYYY-MM-DD"
-                        )}?timezone=${this.filters.selectedTimezone}&provider=${
-                            this.filters.selectedProvider
-                        }&child=${this.filters.selectedUser}&text=${
-                            this.filters.query
-                        }`
-                    )
-                    .then((resp) => {
-                        this.items = resp.data.data;
-                        this.totalCommission = resp.data.totalCommission;
-                        setTimeout(() => {
-                            this.loading = false;
-                        }, 500);
-                    })
-                    .catch(() => {
-                        setTimeout(() => {
-                            this.loading = false;
-                        }, 500);
-                    });
-            }
         },
         fetchData() {
             if (this.filters.daterange[1]) {
                 this.loading = true;
-                const {authUserId} = window;
-                const {daterange, selectedTimezone, selectedProvider, selectedUser, query} = this.filters;
+
+                const { authUserId } = window;
+                const { daterange, selectedTimezone, selectedProvider, selectedUser, query } = this.filters;
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
-                const url = `/agents/reports/financial-state-data-v2/${authUserId}/${startDate}/${endDate}?timezone=${selectedTimezone}&provider=${selectedProvider}&child=${selectedUser}&text=${query}`;
+                const url = `/agents/reports/financial-state-data-v2/${authUserId}/${startDate}/${endDate}`;
 
-                axios.get(url)
+                const params = {
+                    timezone: selectedTimezone,
+                    provider: selectedProvider,
+                    child: selectedUser,
+                    text: query
+                };
+
+                axios.get(url, { params })
                     .then((resp) => {
                         this.items = resp.data.data;
                         this.totalCommission = resp.data.totalCommission;
