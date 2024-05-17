@@ -27,7 +27,7 @@
         window.authUserId = parseInt('{{ auth()->id() }}')
         window.timezone = "{{ session('timezone') }}"
         window.userBalance = "{{ getAuthenticatedUserBalance() }}"
-        /*String.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
+        String.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
             return new Intl.NumberFormat("es-ES", {
                 style: "currency",
                 currency: "{{session('currency')}}",
@@ -40,7 +40,7 @@
                 currency: "{{session('currency')}}",
                 minimumFractionDigits: decimalPlaces,
             }).format(this);
-        };*/
+        };
 
     </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script>
