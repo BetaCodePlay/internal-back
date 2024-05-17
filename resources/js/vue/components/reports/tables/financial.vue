@@ -113,7 +113,7 @@
                         :footerStyle="{ 'text-align': 'right' }"
                     />
                     <Column
-                        :footer="totalCommision"
+                        :footer="totalCommission"
                         :footerStyle="{ 'text-align': 'right' }"
                     />
                 </Row>
@@ -130,6 +130,7 @@ export default {
             force: 0,
             expandedRows: [],
             loading: false,
+            totalCommission: 0,
             filters: {
                 query: "",
                 daterange: [
@@ -149,24 +150,6 @@ export default {
                 { field: "commission", header: "Comisión" },
             ],
         };
-    },
-    computed: {
-        totalProfit() {
-            let total = 0;
-            for (let sale of this.items) {
-                total += parseFloat(sale.profit);
-            }
-
-            return total.formatMoney();
-        },
-        totalCommision() {
-            let total = 0;
-            for (let sale of this.items) {
-                total += parseFloat(sale.commission);
-            }
-
-            return total.formatMoney();
-        },
     },
     methods: {
         exportXLS() {
@@ -244,6 +227,7 @@ export default {
                     )
                     .then((resp) => {
                         this.items = resp.data.data;
+                        this.totalCommission = resp.data.totalCommission;
                         setTimeout(() => {
                             this.loading = false;
                         }, 500);

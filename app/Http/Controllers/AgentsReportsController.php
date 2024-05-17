@@ -124,10 +124,10 @@ class AgentsReportsController extends Controller
             }
 
             return [
-                'status' => Response::HTTP_OK,
-                'code'   => Codes::$ok,
-                'data'   => $data,
-                'total'  => formatAmount($totalCommission)
+                'status'          => Response::HTTP_OK,
+                'code'            => Codes::$ok,
+                'data'            => $data,
+                'totalCommission' => formatAmount($totalCommission)
             ];
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
