@@ -12,9 +12,7 @@
                         <template #content>
                             <h3 class="text-center">Balance total</h3>
                             <h1 class="text-center">
-                                {{
-                                    parseFloat(window.userBalance).formatMoney()
-                                }}
+                                {{ window.userBalance }}
                             </h1>
                         </template>
                     </Card>
