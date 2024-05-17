@@ -75,21 +75,21 @@
                         <Column field="played" header="Jugado">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.played.formatMoney() }}
+                                    {{ slotProps.data.played }}
                                 </div>
                             </template></Column
                         >
                         <Column field="won" header="Ganado">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.won.formatMoney() }}
+                                    {{ slotProps.data.won }}
                                 </div>
                             </template></Column
                         >
                         <Column field="profit" header="Netwin">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.profit.formatMoney() }}
+                                    {{ slotProps.data.profit }}
                                 </div>
                             </template></Column
                         >
@@ -97,7 +97,7 @@
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{
-                                        slotProps.data.commission.formatMoney()
+                                        slotProps.data.commission
                                     }}
                                 </div>
                             </template></Column
