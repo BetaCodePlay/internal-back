@@ -26,7 +26,7 @@
     <script>
         window.authUserId = parseInt('{{ auth()->id() }}')
         window.timezone = "{{ session('timezone') }}"
-        window.userBalance = "{{ getAuthenticatedUserBalance() }}"
+        window.userBalance = "{{ getAuthenticatedUserBalance(true) }}"
         String.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
             return new Intl.NumberFormat("es-ES", {
                 style: "currency",

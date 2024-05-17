@@ -7414,9 +7414,8 @@ if (! function_exists('convertArrayToObject')) {
 }
 
 if (! function_exists('authenticatedUserBalance')) {
-    function getAuthenticatedUserBalance()
-    : string
-    {
+    function getAuthenticatedUserBalance($hasCurrency = false)
+    : string {
         $authenticatedUser = auth()->user();
 
         if (! $authenticatedUser) {
@@ -7437,7 +7436,11 @@ if (! function_exists('authenticatedUserBalance')) {
             ? $user?->balance
             : $user?->data?->wallet?->balance;
 
-        return formatAmount($balance, $currency);
+        if ($hasCurrency) {
+            return formatAmount($balance, $currency);
+        }
+
+        return formatAmount($balance);
     }
 }
 
