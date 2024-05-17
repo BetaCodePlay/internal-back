@@ -7437,7 +7437,7 @@ if (! function_exists('authenticatedUserBalance')) {
             ? $user?->balance
             : $user?->data?->wallet?->balance;
 
-        return formatAmount($balance);
+        return formatAmount($balance, $currency);
     }
 }
 
