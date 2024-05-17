@@ -1857,9 +1857,9 @@ class TransactionsRepo
             ->sum('profit');
 
         return [
-            'deposits'    => number_format($deposits, 2) . ' ' . $currency,
-            'withdrawals' => number_format($withdrawals, 2) . ' ' . $currency,
-            'profit'      => number_format($totalProfit, 2) . ' ' . $currency,
+            'deposits'    => formatAmount($deposits, $currency),
+            'withdrawals' => formatAmount($withdrawals, $currency),
+            'profit'      => formatAmount($totalProfit, $currency),
             'startDate'   => $startDate,
             'endDate'     => $endDate,
             'childrenIds' => $childrenIds,

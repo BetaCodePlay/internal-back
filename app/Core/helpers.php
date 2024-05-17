@@ -7460,8 +7460,8 @@ if (! function_exists('getUserIdByUsernameOrCurrent')) {
 
 
 if (! function_exists('imageUrlFormat')) {
-    function imageUrlFormat($game, $bucket): string
-    {
+    function imageUrlFormat($game, $bucket)
+    : string {
         $image      = $game->image;
         $imageLobby = $game->lobby_image;
 
@@ -7475,5 +7475,18 @@ if (! function_exists('imageUrlFormat')) {
         }
 
         return $image;
+    }
+}
+
+if (! function_exists('formatAmount')) {
+    function formatAmount($amount, $includeCurrency = '', $currencySymbol = '$')
+    : string {
+        $formattedAmount = number_format($amount, 2);
+
+        if (! empty($includeCurrency)) {
+            $formattedAmount = $formattedAmount . ' ' . $includeCurrency;
+        }
+
+        return $currencySymbol . ' ' . $formattedAmount;
     }
 }
