@@ -3832,7 +3832,7 @@ class AgentsCollection
 
             $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-$ ' : '+$ ';
             $transaction->new_amount = $symbol . $transaction->amount;
-            $transaction->balance    = '$ ' . $transaction->balance;
+            $transaction->balance    = formatAmount($transaction->balance);
         }
 
         return [
