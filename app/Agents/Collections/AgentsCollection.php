@@ -3823,7 +3823,6 @@ class AgentsCollection
 
         foreach ($data as $transaction) {
             $transaction->date    = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
-            $transaction->amount  = number_format($transaction->amount, 2);
             $transaction->debit   = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
             $transaction->credit  = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
             $transaction->balance = isset($transaction->data->balance)
