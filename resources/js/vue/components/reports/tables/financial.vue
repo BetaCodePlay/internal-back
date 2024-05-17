@@ -33,19 +33,19 @@
                         <strong>{{ slotProps.data.category }}</strong>
                     </div>
                     <div class="text-right" v-else-if="col.field == 'played'">
-                        {{ slotProps.data.played.formatMoney() }}
+                        {{ slotProps.data.played}}
                     </div>
                     <div class="text-right" v-else-if="col.field == 'won'">
-                        {{ slotProps.data.won.formatMoney() }}
+                        {{ slotProps.data.won }}
                     </div>
                     <div class="text-right" v-else-if="col.field == 'profit'">
-                        {{ slotProps.data.profit.formatMoney() }}
+                        {{ slotProps.data.profit }}
                     </div>
                     <div
                         class="text-right"
                         v-else-if="col.field == 'commission'"
                     >
-                        {{ slotProps.data.commission.formatMoney() }}
+                        {{ slotProps.data.commission }}
                     </div>
                     <div class="text-center" v-else>
                         {{ slotProps.data[col.field] }}
