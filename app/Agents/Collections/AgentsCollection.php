@@ -3830,8 +3830,8 @@ class AgentsCollection
                 ? number_format($transaction->data->balance, 2)
                 : 0;
 
-            $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-$ ' : '+$ ';
-            $transaction->new_amount = $symbol . $transaction->amount;
+            $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
+            $transaction->new_amount = $symbol . formatAmount($transaction->amount);
             $transaction->balance    = formatAmount($transaction->balance);
         }
 
