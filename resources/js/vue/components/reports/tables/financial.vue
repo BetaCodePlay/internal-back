@@ -21,7 +21,7 @@
             @row-expand="onRowExpand"
             @row-collapse="onRowCollapse"
         >
-            <Column :expander="true" :headerStyle="{ width: '1rem' }" />
+            <Column :expander="true" :headerStyle="{ width: '1rem' }"/>
             <Column
                 v-for="col of columns"
                 :field="col.field"
@@ -33,7 +33,7 @@
                         <strong>{{ slotProps.data.category }}</strong>
                     </div>
                     <div class="text-right" v-else-if="col.field == 'played'">
-                        {{ slotProps.data.played}}
+                        {{ slotProps.data.played }}
                     </div>
                     <div class="text-right" v-else-if="col.field == 'won'">
                         {{ slotProps.data.won }}
@@ -70,28 +70,32 @@
                                 <div class="text-center">
                                     {{ slotProps.data.provider }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="played" header="Jugado">
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{ slotProps.data.played }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="won" header="Ganado">
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{ slotProps.data.won }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="profit" header="Netwin">
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{ slotProps.data.profit }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="commission" header="Comision">
                             <template #body="slotProps">
@@ -100,7 +104,8 @@
                                         slotProps.data.commission
                                     }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                     </DataTable>
                 </div>
@@ -124,6 +129,7 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+
 export default {
     data() {
         return {
@@ -143,11 +149,11 @@ export default {
             },
             items: [],
             columns: [
-                { field: "category", header: "Categoría" },
-                { field: "played", header: "Jugado" },
-                { field: "won", header: "Ganado" },
-                { field: "profit", header: "NetWin" },
-                { field: "commission", header: "Comisión" },
+                {field: "category", header: "Categoría"},
+                {field: "played", header: "Jugado"},
+                {field: "won", header: "Ganado"},
+                {field: "profit", header: "NetWin"},
+                {field: "commission", header: "Comisión"},
             ],
         };
     },
@@ -176,9 +182,10 @@ export default {
             this.expandedRows.push(event.data);
             this.getDetailsCategory(event.data.category);
         },
-        onRowCollapse(event) {},
+        onRowCollapse(event) {
+        },
         onChange() {
-            this.FetchData();
+            this.fetchData();
         },
         getDetailsCategory(category) {
             this.loading = true;
@@ -233,15 +240,40 @@ export default {
                         }, 500);
                     })
                     .catch(() => {
-                        tsetTimeout(() => {
+                        setTimeout(() => {
                             this.loading = false;
                         }, 500);
                     });
             }
         },
+        fetchData() {
+            if (this.filters.daterange[1]) {
+                this.loading = true;
+                const {authUserId} = window;
+                const {daterange, selectedTimezone, selectedProvider, selectedUser, query} = this.filters;
+                const startDate = moment(daterange[0]).format("YYYY-MM-DD");
+                const endDate = moment(daterange[1]).format("YYYY-MM-DD");
+
+                const url = `/agents/reports/financial-state-data-v2/${authUserId}/${startDate}/${endDate}?timezone=${selectedTimezone}&provider=${selectedProvider}&child=${selectedUser}&text=${query}`;
+
+                axios.get(url)
+                    .then((resp) => {
+                        this.items = resp.data.data;
+                        this.totalCommission = resp.data.totalCommission;
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching financial state data:", error);
+                    })
+                    .finally(() => {
+                        setTimeout(() => {
+                            this.loading = false;
+                        }, 500);
+                    });
+            }
+        }
     },
     mounted() {
-        this.FetchData();
+        this.fetchData();
     },
 };
 </script>
@@ -249,6 +281,7 @@ export default {
 .p-column-header-content {
     justify-content: center;
 }
+
 .orders-subtable {
     border: 1px solid #8080800f;
     border-radius: 8px;
