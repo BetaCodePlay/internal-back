@@ -38,7 +38,7 @@ class AgentsReportsController extends Controller
         ReportAgentRepo $reportAgentRepo
     ) {
         $this->reportAgentRepo = $reportAgentRepo;
-        $this->coreCollection = $coreCollection;
+        $this->coreCollection  = $coreCollection;
     }
 
 
@@ -101,15 +101,22 @@ class AgentsReportsController extends Controller
                 session('currency'),
                 Configurations::getWhitelabel(),
                 $user,
-                !is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get('timezone') : null,
-                !is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get('provider') : null,
-                !is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null,
-                !is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null,
+                ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
+                    'timezone'
+                ) : null,
+                ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
+                    'provider'
+                ) : null,
+                ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null,
+                ! is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null,
 
             );
 
             foreach ($data as $item) {
-                $item->won = formatAmount($item->won);
+                $item->played     = formatAmount($item->played);
+                $item->won        = formatAmount($item->won);
+                $item->profit     = formatAmount($item->profit);
+                $item->commission = formatAmount($item->commission);
             }
 
             return Utils::successResponse($data);
@@ -135,7 +142,6 @@ class AgentsReportsController extends Controller
         $category,
     ) {
         try {
-
             if (is_null($user)) {
                 $user = Auth::id();
             }
@@ -147,9 +153,13 @@ class AgentsReportsController extends Controller
                 Configurations::getWhitelabel(),
                 $user,
                 $category,
-                !is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get('timezone') : null,
-                !is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get('provider') : null,
-                !is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null
+                ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
+                    'timezone'
+                ) : null,
+                ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
+                    'provider'
+                ) : null,
+                ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null
             );
 
             return Utils::successResponse($data);
@@ -159,7 +169,6 @@ class AgentsReportsController extends Controller
             return Utils::failedResponse();
         }
     }
-
 
 
     /**
