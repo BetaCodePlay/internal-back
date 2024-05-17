@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Collections\CoreCollection;
 use App\Reports\Repositories\ReportAgentRepo;
 use Dotworkers\Configurations\Configurations;
+use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,11 +79,12 @@ class AgentsReportsController extends Controller
 
     /**
      * Data Financial State New "for support"
+     *
+     * @param Request $request
      * @param $user
      * @param $startDate
      * @param $endDate
-     * @return Response
-     * @deprecated
+     * @return array|Response
      */
     public function financialStateData(
         Request $request,
@@ -112,14 +114,21 @@ class AgentsReportsController extends Controller
 
             );
 
+            $totalCommission = 0;
             foreach ($data as $item) {
+                $totalCommission  += $item->commission;
                 $item->played     = formatAmount($item->played);
                 $item->won        = formatAmount($item->won);
                 $item->profit     = formatAmount($item->profit);
                 $item->commission = formatAmount($item->commission);
             }
 
-            return Utils::successResponse($data);
+            return [
+                'status' => Response::HTTP_OK,
+                'code'   => Codes::$ok,
+                'data'   => $data,
+                'total'  => formatAmount($totalCommission)
+            ];
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
