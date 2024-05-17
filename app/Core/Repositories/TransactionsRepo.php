@@ -753,7 +753,8 @@ class TransactionsRepo
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
         }
 
-        return $transactions->paginate($request->input('per_page', 10));
+        return $transactions->orderBy('transactions.created_at', 'desc')
+            ->paginate($request->input('per_page', 10));
     }
 
 
