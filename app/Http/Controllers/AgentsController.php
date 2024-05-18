@@ -4501,7 +4501,7 @@ class AgentsController extends Controller
                 'authUser'           => $userAgent,
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
-                'profit'             => $profit,
+                'profit'             => formatAmount($profit),
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
