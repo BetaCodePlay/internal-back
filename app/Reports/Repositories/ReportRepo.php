@@ -60,7 +60,7 @@ class ReportRepo
 
         $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
 
-        $totalDeposited = $this->transactionsRepo->totalByProviderTypesWithUser(
+        /*$totalDeposited = $this->transactionsRepo->totalByProviderTypesWithUser(
             $whitelabelId,
             TransactionTypes::$credit,
             $currency,
@@ -84,15 +84,19 @@ class ReportRepo
             'currency'     => $currency,
             'lastMonth'    => $lastMonth,
             'field'        => 'played',
-        ]);
+        ]);*/
 
         return [
             'audits'       => $audits,
             'amounts'      => [
                 'totalBalance'            => getAuthenticatedUserBalance(),
-                'totalDeposited'          => formatAmount($totalDeposited),
+           /*     'totalDeposited'          => formatAmount($totalDeposited),
                 'totalPrizeWinningAmount' => formatAmount($totalPrizeWinningAmount),
-                'totalPlayedAmount'       => formatAmount($totalPlayedAmount),
+                'totalPlayedAmount'       => formatAmount($totalPlayedAmount),*/
+
+                'totalDeposited'          => formatAmount('0'),
+                'totalPrizeWinningAmount' => formatAmount('0'),
+                'totalPlayedAmount'       => formatAmount('0'),
             ],
             'games'        => $this->gamesRepo->best10($whitelabelId, $currency, $lastMonth),
             'makers'       => $this->gamesRepo->bestMakers($whitelabelId, $currency, $lastMonth),
