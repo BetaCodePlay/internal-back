@@ -4470,7 +4470,7 @@ class AgentsController extends Controller
                 $balance       = ($user->type_user == 'agent') ? $agent?->balance : $agent?->wallet?->balance;
             }
 
-            dd('authUser', $authUser, $agent);
+            //dd('authUser', $authUser, $agent);
             $agentsCollection = new AgentsCollection();
             $userAgent        = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
 
