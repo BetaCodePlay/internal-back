@@ -18,7 +18,6 @@ mix.sass(
 |--------------------------------------------------------------------------
 */
 mix.styles([
-        'resources/assets/auth/css/main.css',
         'resources/assets/commons/plugins/toastr/css/toastr.min.css',
         'resources/assets/auth/css/util.ccs'
     ],

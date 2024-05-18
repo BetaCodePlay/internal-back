@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.43">
     <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.0">
 
     <!--<link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">-->
 

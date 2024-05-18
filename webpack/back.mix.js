@@ -7,10 +7,10 @@ mix.setPublicPath("public/back/");
 | SASS
 |--------------------------------------------------------------------------
 */
-mix.sass(
+/*mix.sass(
     "resources/assets/back/scss/template.scss",
     "public/back/css/template.min.css"
-).version();
+).version();*/
 
 /*
  |--------------------------------------------------------------------------
