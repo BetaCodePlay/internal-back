@@ -1900,7 +1900,7 @@ class TransactionsRepo
     )
     : float {
         return DB::table('closures_users_totals_2023_hour')
-            ->whereBetween('created_at', [$startDate, $endDate])
+            //->whereBetween('created_at', [$startDate, $endDate])
             ->whereIn('user_id', $userIds)
             ->where([
                 'whitelabel_id' => $whitelabelId,
