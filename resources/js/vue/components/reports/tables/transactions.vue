@@ -30,6 +30,10 @@
                     </div>
                     <div
                         class="text-center"
+                        :class="{
+                            negative: slotProps.data.new_amount.includes('-'),
+                            positive: slotProps.data.new_amount.includes('+'),
+                        }"
                         v-else-if="col.field == 'new_amount'"
                     >
                         {{ slotProps.data.new_amount }}
@@ -195,5 +199,13 @@ export default {
     border: 1px solid #8080800f;
     border-radius: 8px;
     padding: 10px;
+}
+.negative {
+    color: #e71818;
+    font-weight: 500;
+}
+.positive {
+    color: #30a430;
+    font-weight: 500;
 }
 </style>
