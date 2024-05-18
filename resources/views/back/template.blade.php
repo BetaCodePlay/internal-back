@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=6.33">
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.43">
-    <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">
+<!--    <link rel="stylesheet" href="{{ mix('css/template.min.css', 'back') }} ">-->
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.0">
 
