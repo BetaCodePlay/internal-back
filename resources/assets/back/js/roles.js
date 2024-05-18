@@ -1,7 +1,7 @@
 import {
     clipboard
 } from "../../commons/js/core";
-import {initLitepickerEndTodayNew, initLitepickerEndTodayNewTwo} from "./commons";
+import {initLitepickerEndTodayNew} from "./commons";
 
 import moment from 'moment';
 
@@ -556,7 +556,6 @@ class Roles {
         let tableRolesID = $('#table-roles');
         let tableRoles;
         let picker = initLitepickerEndTodayNew();
-        let pickerTwo = initLitepickerEndTodayNewTwo();
         let routeTransaction;
         let routeBets;
 
@@ -657,13 +656,33 @@ class Roles {
             if ($target === tabBets) {
                 routeBets = tableBetsID.data('route');
 
+                $($target).find('.table-load').removeClass('table-complete');
+                $($target).find('.loading-style').show();
+
                 if (tableBets !== undefined) {
                     tableBets.destroy();
                 }
 
-                $($target).find('.tab-body').addClass('d-none');
-                $($target).find('.table-load').removeClass('table-complete');
-                $($target).find('.loading-style').hide();
+                tableBets = tableBetsID.DataTable({
+                    serverSide: true,
+                    ajax: routeBets + '?' + Roles.globalusername,
+                    processing: true,
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
+                    fixedHeader: true,
+                    "responsive": true,
+                    fnCreatedRow: function (nRow, aData, iDataIndex) {
+
+                    },
+                    initComplete: function () {
+                        $($target).find('.tab-body').removeClass('d-none');
+                        $($target).find('.table-load').addClass('table-complete');
+                        $($target).find('.loading-style').hide();
+                        $this.button('reset');
+                    },
+                });
             }
         });
 
@@ -696,43 +715,6 @@ class Roles {
                 "responsive": true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
                     $('td:eq(3)', nRow).html((aData[3][1] === 1 ? '+ ' : '- ') + aData[3][0]);
-                },
-                initComplete: function () {
-                    $($target).find('.tab-body').removeClass('d-none');
-                    $($target).find('.table-load').addClass('table-complete');
-                    $($target).find('.loading-style').hide();
-                    $this.button('reset');
-                },
-            });
-        });
-
-        $(document).on('click', '.searchBetsRole', function () {
-            let $this = $(this);
-            let startDate = moment(pickerTwo.getStartDate()).format('YYYY-MM-DD');
-            let endDate = moment(pickerTwo.getEndDate()).format('YYYY-MM-DD');
-            let $target = '#roleTabTransactions';
-
-            $this.button('loading');
-
-            $($target).find('.table-load').removeClass('table-complete');
-            $($target).find('.loading-style').show();
-
-            if (tableBets !== undefined) {
-                tableBets.destroy();
-            }
-
-            tableBets = tableBetsID.DataTable({
-                serverSide: true,
-                ajax: routeBets + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate,
-                processing: true,
-                columnDefs: [{
-                    "defaultContent": "-",
-                    "targets": "_all"
-                }],
-                fixedHeader: true,
-                "responsive": true,
-                fnCreatedRow: function (nRow, aData, iDataIndex) {
-
                 },
                 initComplete: function () {
                     $($target).find('.tab-body').removeClass('d-none');
