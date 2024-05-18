@@ -21,7 +21,7 @@
             @row-expand="onRowExpand"
             @row-collapse="onRowCollapse"
         >
-            <Column :expander="true" :headerStyle="{ width: '1rem' }" />
+            <Column :expander="true" :headerStyle="{ width: '1rem' }"/>
             <Column
                 v-for="col of columns"
                 :field="col.field"
@@ -33,19 +33,19 @@
                         <strong>{{ slotProps.data.category }}</strong>
                     </div>
                     <div class="text-right" v-else-if="col.field == 'played'">
-                        {{ slotProps.data.played.formatMoney() }}
+                        {{ slotProps.data.played }}
                     </div>
                     <div class="text-right" v-else-if="col.field == 'won'">
-                        {{ slotProps.data.won.formatMoney() }}
+                        {{ slotProps.data.won }}
                     </div>
                     <div class="text-right" v-else-if="col.field == 'profit'">
-                        {{ slotProps.data.profit.formatMoney() }}
+                        {{ slotProps.data.profit }}
                     </div>
                     <div
                         class="text-right"
                         v-else-if="col.field == 'commission'"
                     >
-                        {{ slotProps.data.commission.formatMoney() }}
+                        {{ slotProps.data.commission }}
                     </div>
                     <div class="text-center" v-else>
                         {{ slotProps.data[col.field] }}
@@ -70,37 +70,42 @@
                                 <div class="text-center">
                                     {{ slotProps.data.provider }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="played" header="Jugado">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.played.formatMoney() }}
+                                    {{ slotProps.data.played }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="won" header="Ganado">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.won.formatMoney() }}
+                                    {{ slotProps.data.won }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="profit" header="Netwin">
                             <template #body="slotProps">
                                 <div class="text-center">
-                                    {{ slotProps.data.profit.formatMoney() }}
+                                    {{ slotProps.data.profit }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                         <Column field="commission" header="Comision">
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{
-                                        slotProps.data.commission.formatMoney()
+                                        slotProps.data.commission
                                     }}
                                 </div>
-                            </template></Column
+                            </template>
+                        </Column
                         >
                     </DataTable>
                 </div>
@@ -113,7 +118,7 @@
                         :footerStyle="{ 'text-align': 'right' }"
                     />
                     <Column
-                        :footer="totalCommision"
+                        :footer="totalCommission"
                         :footerStyle="{ 'text-align': 'right' }"
                     />
                 </Row>
@@ -124,12 +129,14 @@
 <script>
 import axios from "axios";
 import moment from "moment";
+
 export default {
     data() {
         return {
             force: 0,
             expandedRows: [],
             loading: false,
+            totalCommission: 0,
             filters: {
                 query: "",
                 daterange: [
@@ -142,31 +149,13 @@ export default {
             },
             items: [],
             columns: [
-                { field: "category", header: "Categoría" },
-                { field: "played", header: "Jugado" },
-                { field: "won", header: "Ganado" },
-                { field: "profit", header: "NetWin" },
-                { field: "commission", header: "Comisión" },
+                {field: "category", header: "Categoría"},
+                {field: "played", header: "Jugado"},
+                {field: "won", header: "Ganado"},
+                {field: "profit", header: "NetWin"},
+                {field: "commission", header: "Comisión"},
             ],
         };
-    },
-    computed: {
-        totalProfit() {
-            let total = 0;
-            for (let sale of this.items) {
-                total += parseFloat(sale.profit);
-            }
-
-            return total.formatMoney();
-        },
-        totalCommision() {
-            let total = 0;
-            for (let sale of this.items) {
-                total += parseFloat(sale.commission);
-            }
-
-            return total.formatMoney();
-        },
     },
     methods: {
         exportXLS() {
@@ -193,71 +182,81 @@ export default {
             this.expandedRows.push(event.data);
             this.getDetailsCategory(event.data.category);
         },
-        onRowCollapse(event) {},
+        onRowCollapse(event) {
+        },
         onChange() {
-            this.FetchData();
+            this.fetchData();
         },
         getDetailsCategory(category) {
             this.loading = true;
-            axios
-                .get(
-                    `/agents/reports/financial-state-data-v2-category/${
-                        window.authUserId
-                    }/${moment(this.filters.daterange[0]).format(
-                        "YYYY-MM-DD"
-                    )}/${moment(this.filters.daterange[1]).format(
-                        "YYYY-MM-DD"
-                    )}/${category}?timezone=${
-                        this.filters.selectedTimezone
-                    }&provider=${this.filters.selectedProvider}&child=${
-                        this.filters.selectedUser
-                    }&text=${this.filters.query}`
-                )
+
+            const { authUserId } = window;
+            const { daterange, selectedTimezone, selectedProvider, selectedUser, query } = this.filters;
+            const startDate = moment(daterange[0]).format("YYYY-MM-DD");
+            const endDate = moment(daterange[1]).format("YYYY-MM-DD");
+
+            const url = `/agents/reports/financial-state-data-v2-category/${authUserId}/${startDate}/${endDate}/${category}`;
+
+            const params = {
+                timezone: selectedTimezone,
+                provider: selectedProvider,
+                child: selectedUser,
+                text: query
+            };
+
+            axios.get(url, { params })
                 .then((resp) => {
                     this.$nextTick(() => {
-                        this.items.find((i) => i.category == category).items =
-                            resp.data.data;
-                        this.force++;
-                        this.loading = false;
+                        const categoryItem = this.items.find((i) => i.category === category);
+                        if (categoryItem) {
+                            categoryItem.items = resp.data.data;
+                            this.force++;
+                        }
                     });
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error("Error fetching category details:", error);
+                })
+                .finally(() => {
                     this.loading = false;
                 });
         },
-        FetchData() {
+        fetchData() {
             if (this.filters.daterange[1]) {
                 this.loading = true;
-                axios
-                    .get(
-                        `/agents/reports/financial-state-data-v2/${
-                            window.authUserId
-                        }/${moment(this.filters.daterange[0]).format(
-                            "YYYY-MM-DD"
-                        )}/${moment(this.filters.daterange[1]).format(
-                            "YYYY-MM-DD"
-                        )}?timezone=${this.filters.selectedTimezone}&provider=${
-                            this.filters.selectedProvider
-                        }&child=${this.filters.selectedUser}&text=${
-                            this.filters.query
-                        }`
-                    )
+
+                const { authUserId } = window;
+                const { daterange, selectedTimezone, selectedProvider, selectedUser, query } = this.filters;
+                const startDate = moment(daterange[0]).format("YYYY-MM-DD");
+                const endDate = moment(daterange[1]).format("YYYY-MM-DD");
+
+                const url = `/agents/reports/financial-state-data-v2/${authUserId}/${startDate}/${endDate}`;
+
+                const params = {
+                    timezone: selectedTimezone,
+                    provider: selectedProvider,
+                    child: selectedUser,
+                    text: query
+                };
+
+                axios.get(url, { params })
                     .then((resp) => {
                         this.items = resp.data.data;
-                        setTimeout(() => {
-                            this.loading = false;
-                        }, 500);
+                        this.totalCommission = resp.data.totalCommission;
                     })
-                    .catch(() => {
-                        tsetTimeout(() => {
+                    .catch((error) => {
+                        console.error("Error fetching financial state data:", error);
+                    })
+                    .finally(() => {
+                        setTimeout(() => {
                             this.loading = false;
                         }, 500);
                     });
             }
-        },
+        }
     },
     mounted() {
-        this.FetchData();
+        this.fetchData();
     },
 };
 </script>
@@ -265,6 +264,7 @@ export default {
 .p-column-header-content {
     justify-content: center;
 }
+
 .orders-subtable {
     border: 1px solid #8080800f;
     border-radius: 8px;

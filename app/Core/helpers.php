@@ -7414,9 +7414,8 @@ if (! function_exists('convertArrayToObject')) {
 }
 
 if (! function_exists('authenticatedUserBalance')) {
-    function getAuthenticatedUserBalance()
-    : string
-    {
+    function getAuthenticatedUserBalance($hasCurrency = false)
+    : string {
         $authenticatedUser = auth()->user();
 
         if (! $authenticatedUser) {
@@ -7437,7 +7436,11 @@ if (! function_exists('authenticatedUserBalance')) {
             ? $user?->balance
             : $user?->data?->wallet?->balance;
 
-        return number_format($balance, 2);
+        if ($hasCurrency) {
+            return formatAmount($balance, $currency);
+        }
+
+        return formatAmount($balance);
     }
 }
 
@@ -7460,8 +7463,8 @@ if (! function_exists('getUserIdByUsernameOrCurrent')) {
 
 
 if (! function_exists('imageUrlFormat')) {
-    function imageUrlFormat($game, $bucket): string
-    {
+    function imageUrlFormat($game, $bucket)
+    : string {
         $image      = $game->image;
         $imageLobby = $game->lobby_image;
 
@@ -7475,5 +7478,18 @@ if (! function_exists('imageUrlFormat')) {
         }
 
         return $image;
+    }
+}
+
+if (! function_exists('formatAmount')) {
+    function formatAmount($amount, $includeCurrency = '', $currencySymbol = '$')
+    : string {
+        $formattedAmount = number_format($amount, 2);
+
+        if (! empty($includeCurrency)) {
+            $formattedAmount = $formattedAmount . ' ' . $includeCurrency;
+        }
+
+        return $currencySymbol . ' ' . $formattedAmount;
     }
 }

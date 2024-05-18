@@ -851,7 +851,7 @@ class AgentsRepo
                 [$item['type_user'], $item['typeId']],
                 $userId,
                 [$action, $isBlocked, $actionItem],
-                number_format($balance, 2),
+                formatAmount($balance),
                 $item['status'],
             ];
         }, $results);

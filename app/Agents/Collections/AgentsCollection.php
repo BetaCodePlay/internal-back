@@ -1305,16 +1305,16 @@ class AgentsCollection
     /**
      * FormatRole
      *
-     * @param String $usernameOwner Owner Agent data
-     * @param array $users User data
-     * @param var $balance Balance User
-     * @param var $percentage Percentage User
-     * @return array
+     * @param $usernameOwner
+     * @param $user
+     * @param $balance
+     * @param $percentage
+     * @return mixed
      */
     public function formatRole($usernameOwner, $user, $balance, $percentage)
-    {
+    : mixed {
         $user->statusText  = ActionUser::getName($user->action);
-        $user->balanceUser = number_format($balance, 2);
+        $user->balanceUser = formatAmount($balance);
         $user->agentType   = $user->type;
         $user->owner       = $usernameOwner;
         $user->percentage  = $percentage;
@@ -3822,16 +3822,13 @@ class AgentsCollection
         $data = $paginatedResults->items();
 
         foreach ($data as $transaction) {
-            $transaction->date    = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
-            $transaction->amount  = number_format($transaction->amount, 2);
-            $transaction->debit   = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
-            $transaction->credit  = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
-            $transaction->balance = isset($transaction->data->balance)
-                ? number_format($transaction->data->balance, 2)
-                : 0;
-
+            $transaction->date       = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $transaction->debit      = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
+            $transaction->credit     = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
+            $transaction->balance    = $transaction->data->balance ?? 0;
             $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
-            $transaction->new_amount = $symbol . $transaction->amount;
+            $transaction->new_amount = $symbol . formatAmount($transaction->amount);
+            $transaction->balance    = formatAmount($transaction->balance);
         }
 
         return [
