@@ -4431,10 +4431,11 @@ class AgentsController extends Controller
     /**
      * Show role
      *
+     * @param string $username
      * @return Application|Factory|View
      */
     public function role(string $username = '')
-    {
+    : Factory|View|Application {
         try {
             $authUser       = Auth::user();
             $authUserId     = $authUser->id;
