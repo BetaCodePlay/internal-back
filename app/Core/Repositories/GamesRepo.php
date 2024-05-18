@@ -433,43 +433,41 @@ class GamesRepo
      * @param string $lastMonth
      * @return Collection
      */
-    public function best10(string|int $whitelabelId, string $currency, string $lastMonth)
-    : Collection {
+    public function best10(string|int $whitelabelId, string $currency, string $lastMonth): Collection
+    {
         return DB::table('closures_users_totals_2023_hour')
-            ->groupBy(
-                'closures_users_totals_2023_hour.game_id',
-                'closures_users_totals_2023_hour.currency_iso',
-                'closures_users_totals_2023_hour.whitelabel_id'
-            )
-            ->where([
-                'currency_iso' => $currency,
-                'whitelabel_id' => $whitelabelId,
-            ])
-            ->where('created_at', '>=', $lastMonth)
-            ->orderByDesc('total_played')
-            ->limit(10)
-            ->get([
+            ->select([
                 'closures_users_totals_2023_hour.game_id',
                 'closures_users_totals_2023_hour.currency_iso',
                 'closures_users_totals_2023_hour.whitelabel_id',
                 DB::raw("SUM(closures_users_totals_2023_hour.played) AS total_played"),
-                DB::raw(
-                    "(SELECT name FROM games WHERE games.id = closures_users_totals_2023_hour.game_id) AS name"
-                ),
-                DB::raw(
-                    "(SELECT image FROM games WHERE games.id = closures_users_totals_2023_hour.game_id) AS image"
-                ),
-                DB::raw(
-                    "(SELECT maker FROM games WHERE games.id = closures_users_totals_2023_hour.game_id) AS maker"
-                ),
-                DB::raw("SUM(closures_users_totals_2023_hour.user_id) AS total_users"),
-                DB::raw(
-                    "(SELECT name FROM games WHERE games.provider_id = closures_users_totals_2023_hour.game_id) AS provider_id"
-                ),
-                DB::raw(
-                    "(SELECT image FROM lobby_games WHERE lobby_games.game_id = closures_users_totals_2023_hour.game_id) AS lobby_image"
-                )
-            ]);
+                'games.name',
+                'games.image',
+                'games.maker',
+                DB::raw("COUNT(DISTINCT closures_users_totals_2023_hour.user_id) AS total_users"),
+                'games.provider_id',
+                'lobby_games.image AS lobby_image'
+            ])
+            ->leftJoin('games', 'games.id', '=', 'closures_users_totals_2023_hour.game_id')
+            ->leftJoin('lobby_games', 'lobby_games.game_id', '=', 'closures_users_totals_2023_hour.game_id')
+            ->where([
+                'closures_users_totals_2023_hour.currency_iso' => $currency,
+                'closures_users_totals_2023_hour.whitelabel_id' => $whitelabelId,
+            ])
+            ->where('closures_users_totals_2023_hour.created_at', '>=', $lastMonth)
+            ->groupBy(
+                'closures_users_totals_2023_hour.game_id',
+                'closures_users_totals_2023_hour.currency_iso',
+                'closures_users_totals_2023_hour.whitelabel_id',
+                'games.name',
+                'games.image',
+                'games.maker',
+                'games.provider_id',
+                'lobby_games.image'
+            )
+            ->orderByDesc('total_played')
+            ->limit(10)
+            ->get();
     }
 
     /**
