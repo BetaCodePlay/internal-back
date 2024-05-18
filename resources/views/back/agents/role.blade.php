@@ -66,7 +66,7 @@
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Profit') }}</div>
                                     <div class="data-text text-id">
-                                        $ 12.000,00 <span class="number">{{ $authUser->percentage }}%</span>
+                                        $ {{ $profit }} <span class="number">{{ $authUser->percentage }}%</span>
                                     </div>
                                 </div>
                             </div>

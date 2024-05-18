@@ -749,7 +749,7 @@ class AgentsController extends Controller
      * @return JsonResponse|Response A JSON response containing the formatted transaction data or an error message.
      */
     public function transactions(Request $request, string|int $agent)
-    : JsonResponse | Response {
+    : JsonResponse|Response {
         try {
             $transactions = $this->transactionsRepo->getUserProviderTransactionsPaginated($request, $agent);
 
@@ -4438,7 +4438,7 @@ class AgentsController extends Controller
         try {
             $authUser       = Auth::user();
             $authUserId     = $authUser->id;
-            $whitelabel     = Configurations::getWhitelabel();
+            $whitelabelId   = Configurations::getWhitelabel();
             $bonus          = Configurations::getBonus();
             $agentUser      = $authUser->agent;
             $userData       = $this->usersRepo->getUsers($authUserId);
@@ -4447,13 +4447,20 @@ class AgentsController extends Controller
             $currency       = session('currency');
             $agentsData     = $this->agentsRepo->getAgentsByOwner($authUserId, $currency);
             $dependence     = $this->agentsCollection->childAgents($agentsData, $currency);
-            $user           = ! empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel)
-                : Auth::user();
-            $percentage     = null;
+
+            $user = ! empty($username) ? $this->usersRepo->getByUsername(
+                $username,
+                $whitelabelId
+            ) : Auth::user();
+
+            $userId     = $user?->id;
+            $percentage = null;
             $agentsRepo = new AgentsRepo();
-            $agent      = ($user->type_user == 'agent')
+
+            $agent = ($user->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                 : $agentsRepo->findUser($user->id);
+
             if ($user->type_user == 'player') {
                 $wallet = Wallet::getByClient($user->id, $currency, $bonus);
                 if (is_array($wallet->data)) {
@@ -4470,9 +4477,14 @@ class AgentsController extends Controller
                 $balance       = ($user->type_user == 'agent') ? $agent?->balance : $agent?->wallet?->balance;
             }
 
-            //dd('authUser', $authUser, $agent);
             $agentsCollection = new AgentsCollection();
             $userAgent        = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
+
+            $profit = $this->transactionsRepo->calculateChildrenTotalProfitForCurrentMonthToDate(
+                $userId,
+                $currency,
+                $whitelabelId
+            );
 
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
@@ -4480,7 +4492,7 @@ class AgentsController extends Controller
                 'agents'             => $this->agentsRepo->getAgentsAllByOwner(
                     $authUserId,
                     $currency,
-                    $whitelabel
+                    $whitelabelId
                 ),
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
@@ -4489,6 +4501,7 @@ class AgentsController extends Controller
                 'authUser'           => $userAgent,
                 'username'           => $customUsername,
                 'dependencies'       => $dependence,
+                'profit'             => $profit,
             ]);
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);

@@ -1848,15 +1848,7 @@ class TransactionsRepo
         );
 
         $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather($userId, $currency, $whitelabelId);
-
-        $totalProfit = DB::table('closures_users_totals_2023_hour')
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->whereIn('user_id', $childrenIds)
-            ->where([
-                'whitelabel_id' => $whitelabelId,
-                'currency_iso'  => $currency,
-            ])
-            ->sum('profit');
+        $totalProfit = $this->calculateTotalProfit($childrenIds, $currency, $whitelabelId, $startDate, $endDate);
 
         return [
             'deposits'    => formatAmount($deposits, $currency),
@@ -1866,6 +1858,55 @@ class TransactionsRepo
             'endDate'     => $endDate,
             'childrenIds' => $childrenIds,
         ];
+    }
+
+    /**
+     * Calculate the total profit of a user's children from the start of the current month to today.
+     *
+     * @param string|int $userId The ID of the parent user.
+     * @param string $currency The currency code (ISO 4217 format).
+     * @param string|int $whitelabelId The ID of the whitelabel.
+     * @return float The total profit of the user's children for the current month up to today.
+     */
+    public function calculateChildrenTotalProfitForCurrentMonthToDate(
+        string|int $userId,
+        string $currency,
+        string|int $whitelabelId
+    )
+    : float {
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather($userId, $currency, $whitelabelId);
+        $startDate   = now()->startOfMonth()->format('Y-m-d H:i:s');
+        $endDate     = now()->format('Y-m-d H:i:s');
+
+        return $this->calculateTotalProfit($childrenIds, $currency, $whitelabelId, $startDate, $endDate);
+    }
+
+    /**
+     * Calculate the total profit for a given set of user IDs within a date range.
+     *
+     * @param array $userIds Array of user IDs.
+     * @param string $currency The currency code (ISO 4217 format).
+     * @param string|int $whitelabelId The ID of the whitelabel.
+     * @param string $startDate The start date for the profit calculation (Y-m-d H:i:s format).
+     * @param string $endDate The end date for the profit calculation (Y-m-d H:i:s format).
+     * @return float The total profit for the given user IDs and date range.
+     */
+    private function calculateTotalProfit(
+        array $userIds,
+        string $currency,
+        string|int $whitelabelId,
+        string $startDate,
+        string $endDate
+    )
+    : float {
+        return DB::table('closures_users_totals_2023_hour')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereIn('user_id', $userIds)
+            ->where([
+                'whitelabel_id' => $whitelabelId,
+                'currency_iso'  => $currency,
+            ])
+            ->sum('profit');
     }
 
     /**
