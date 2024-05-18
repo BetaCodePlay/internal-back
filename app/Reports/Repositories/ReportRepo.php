@@ -90,9 +90,9 @@ class ReportRepo
             'audits'       => $audits,
             'amounts'      => [
                 'totalBalance'            => getAuthenticatedUserBalance(),
-                'totalDeposited'          => number_format($totalDeposited, 2),
-                'totalPrizeWinningAmount' => number_format($totalPrizeWinningAmount, 2),
-                'totalPlayedAmount'       => number_format($totalPlayedAmount, 2),
+                'totalDeposited'          => formatAmount($totalDeposited),
+                'totalPrizeWinningAmount' => formatAmount($totalPrizeWinningAmount),
+                'totalPlayedAmount'       => formatAmount($totalPlayedAmount),
             ],
             'games'        => $this->gamesRepo->best10($whitelabelId, $currency, $lastMonth),
             'makers'       => $this->gamesRepo->bestMakers($whitelabelId, $currency, $lastMonth),
