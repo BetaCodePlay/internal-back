@@ -305,6 +305,25 @@ let initLitepickerEndTodayNew = (start = moment(),end=moment()) => {
     });
 };
 
+let initLitepickerEndTodayNewTwo = (start = moment(),end=moment()) => {
+    let locale = getCookie('language-js');
+    locale = locale.replace('_', '-');
+
+    return new Litepicker({
+        element: document.getElementById('date_range_new_two'),
+        autoRefresh:true,
+        format: 'DD/MM/YYYY',
+        singleMode: false,
+        startDate: start,
+        endDate: end,
+        maxDate: moment(),
+        numberOfMonths: 2,
+        numberOfColumns: 2,
+        showTooltip: false,
+        lang: locale
+    });
+};
+
 // Init file input
 let initFileInput = (preview, field) => {
     let locale = getCookie('language-js');
@@ -476,6 +495,7 @@ export {
     initDateRangePickerEndMonth,
     initLitepickerEndToday,
     initLitepickerEndTodayNew,
+    initLitepickerEndTodayNewTwo,
     initFileInput,
     initSelect2,
     initTinyMCE,

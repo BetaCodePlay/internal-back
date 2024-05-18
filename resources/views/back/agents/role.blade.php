@@ -318,7 +318,7 @@
                                 <div class="col-12 col-form col-lg-6">
                                     <div class="form-group">
                                         <label>{{ _i('Date') }}</label>
-                                        <input type="text" class="form-control date_range_new" placeholder="">
+                                        <input type="text" class="form-control" id="date_range_new_two" placeholder="">
                                     </div>
                                 </div>
                                 <div class="col-12 col-form col-lg-6">

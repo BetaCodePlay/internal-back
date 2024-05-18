@@ -1,7 +1,7 @@
 import {
     clipboard
 } from "../../commons/js/core";
-import {initLitepickerEndTodayNew} from "./commons";
+import {initLitepickerEndTodayNew, initLitepickerEndTodayNewTwo} from "./commons";
 
 import moment from 'moment';
 
@@ -556,6 +556,7 @@ class Roles {
         let tableRolesID = $('#table-roles');
         let tableRoles;
         let picker = initLitepickerEndTodayNew();
+        let pickerTwo = initLitepickerEndTodayNewTwo();
         let routeTransaction;
         let routeBets;
 
@@ -707,8 +708,8 @@ class Roles {
 
         $(document).on('click', '.searchBetsRole', function () {
             let $this = $(this);
-            let startDate = moment(picker.getStartDate()).format('YYYY-MM-DD');
-            let endDate = moment(picker.getEndDate()).format('YYYY-MM-DD');
+            let startDate = moment(pickerTwo.getStartDate()).format('YYYY-MM-DD');
+            let endDate = moment(pickerTwo.getEndDate()).format('YYYY-MM-DD');
             let $target = '#roleTabTransactions';
 
             $this.button('loading');
