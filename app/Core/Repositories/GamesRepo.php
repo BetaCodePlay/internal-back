@@ -478,7 +478,8 @@ class GamesRepo
      * @param  string  $lastMonth    The start date for the date range (format: 'YYYY-MM-DD').
      * @return Collection
      */
-    public function bestMakers(int $whitelabelId, string $currency, string $lastMonth): Collection {
+    public function bestMakers(int $whitelabelId, string $currency, string $lastMonth): Collection
+    {
         return DB::table('closures_users_totals_2023_hour')
             ->join('games', 'closures_users_totals_2023_hour.game_id', '=', 'games.id')
             ->where([
@@ -492,8 +493,7 @@ class GamesRepo
             ->get([
                 'games.maker AS maker',
                 DB::raw('COUNT(DISTINCT closures_users_totals_2023_hour.game_id) AS total_games'),
-                DB::raw('SUM(closures_users_totals_2023_hour.user_id) AS total_users')
+                DB::raw('COUNT(DISTINCT closures_users_totals_2023_hour.user_id) AS total_users')
             ]);
     }
-
 }
