@@ -50,7 +50,7 @@
                             <div class="tab-manager-top">
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Balance') }}</div>
-                                    <div class="data-text text-id">$ {{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                                    <div class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
                                         @if($authUser->status)
                                             <span class="separator"></span>
                                             @if(auth()->user()->id !== $authUser->id)
@@ -66,7 +66,7 @@
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Profit') }}</div>
                                     <div class="data-text text-id">
-                                        $12.000,00 <span class="number">{{ $authUser->percentage }}%</span>
+                                        $ 12.000,00 <span class="number">{{ $authUser->percentage }}%</span>
                                     </div>
                                 </div>
                             </div>
