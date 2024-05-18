@@ -174,9 +174,7 @@ class AgentsReportsController extends Controller
                 ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null
             );
 
-            $totalCommission = 0;
             foreach ($data as $item) {
-                $totalCommission  += $item->commission;
                 $item->played     = formatAmount($item->played);
                 $item->won        = formatAmount($item->won);
                 $item->profit     = formatAmount($item->profit);
