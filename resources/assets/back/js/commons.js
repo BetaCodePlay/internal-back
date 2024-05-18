@@ -291,7 +291,7 @@ let initLitepickerEndTodayNew = (start = moment(),end=moment()) => {
     locale = locale.replace('_', '-');
 
     return new Litepicker({
-        element: document.getElementsByClassName('date_range_new'),
+        element: document.getElementById('date_range_new'),
         autoRefresh:true,
         format: 'DD/MM/YYYY',
         singleMode: false,
