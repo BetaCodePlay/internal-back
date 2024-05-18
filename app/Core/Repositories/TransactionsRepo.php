@@ -512,12 +512,13 @@ class TransactionsRepo
             $to       = $transaction->data->to ?? null;
             $balance  = $transaction->data->balance ?? null;
             $receiver = $to;
+
             return [
                 $formattedDateTimeWithTimezone,
                 $from,
                 $receiver,
-                [number_format($transaction->amount, 2), $transaction->transaction_type_id],
-                number_format((float)$balance, 2)
+                [formatAmount($transaction->amount), $transaction->transaction_type_id],
+                formatAmount((float)$balance)
             ];
         })->toArray();
 
