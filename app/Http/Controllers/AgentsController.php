@@ -4450,7 +4450,6 @@ class AgentsController extends Controller
             $user           = ! empty($username) ? $this->usersRepo->getByUsername($username, $whitelabel)
                 : Auth::user();
             $percentage     = null;
-            // dd($user->type_user);
             $agentsRepo = new AgentsRepo();
             $agent      = ($user->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
@@ -4470,6 +4469,8 @@ class AgentsController extends Controller
                 $usernameOwner = $userOwner->username;
                 $balance       = ($user->type_user == 'agent') ? $agent?->balance : $agent?->wallet?->balance;
             }
+
+            dd('authUser', $authUser);
             $agentsCollection = new AgentsCollection();
             $userAgent        = $agentsCollection->formatRole($usernameOwner, $user, $balance, $percentage);
 
