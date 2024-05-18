@@ -94,9 +94,8 @@ class ReportRepo
                 'totalPrizeWinningAmount' => formatAmount($totalPrizeWinningAmount),
                 'totalPlayedAmount'       => formatAmount($totalPlayedAmount),
             ],
-            /*'games'        => $this->gamesRepo->best10($whitelabelId, $currency, $lastMonth),*/
+            'games'        => $this->gamesRepo->best10($whitelabelId, $currency, $lastMonth),
             'makers'       => $this->gamesRepo->bestMakers($whitelabelId, $currency, $lastMonth),
-            'games'        => [],
             'transactions' => $transactions,
         ];
     }
