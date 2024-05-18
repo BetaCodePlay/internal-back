@@ -24,9 +24,6 @@ body {
     }
 }
 
-$theme: #7d2df5;
-$theme-hover: lighten($theme, 10%);
-
 .select2-container--default {
     .select2-dropdown {
         background: #333;
