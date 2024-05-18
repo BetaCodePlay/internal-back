@@ -205,7 +205,7 @@ export default {
     font-weight: 500;
 }
 .positive {
-    color: #30a430;
+    color: #D7FE62;
     font-weight: 500;
 }
 </style>
