@@ -3822,13 +3822,10 @@ class AgentsCollection
         $data = $paginatedResults->items();
 
         foreach ($data as $transaction) {
-            $transaction->date    = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
-            $transaction->debit   = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
-            $transaction->credit  = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
-            $transaction->balance = isset($transaction->data->balance)
-                ? number_format($transaction->data->balance, 2)
-                : 0;
-
+            $transaction->date       = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $transaction->debit      = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
+            $transaction->credit     = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
+            $transaction->balance    = $transaction->data->balance ?? 0;
             $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
             $transaction->new_amount = $symbol . formatAmount($transaction->amount);
             $transaction->balance    = formatAmount($transaction->balance);
