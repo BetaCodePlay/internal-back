@@ -34,7 +34,7 @@
 
                                     <div class="dash-balance-amount-balance">
                                         <!--  <span class="minus">$</span>80,000.<span class="minus">00</span> -->
-                                        <span class="minus">$</span>{{ $dashboard['amounts']['totalDeposited'] }}</span>
+                                        {{--<span class="minus">$</span>--}}{{ $dashboard['amounts']['totalDeposited'] }}
                                     </div>
                                 </div>
 
