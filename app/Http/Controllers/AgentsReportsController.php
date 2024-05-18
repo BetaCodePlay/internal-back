@@ -135,13 +135,16 @@ class AgentsReportsController extends Controller
         }
     }
 
+
     /**
      * Data Financial State New "for support"
+     *
+     * @param Request $request
      * @param $user
      * @param $startDate
      * @param $endDate
-     * @return Response
-     * @deprecated
+     * @param $category
+     * @return array|string
      */
     public function financialStateByCategoryData(
         Request $request,
@@ -171,9 +174,21 @@ class AgentsReportsController extends Controller
                 ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null
             );
 
-            return Utils::successResponse($data);
+            $totalCommission = 0;
+            foreach ($data as $item) {
+                $totalCommission  += $item->commission;
+                $item->played     = formatAmount($item->played);
+                $item->won        = formatAmount($item->won);
+                $item->profit     = formatAmount($item->profit);
+                $item->commission = formatAmount($item->commission);
+            }
+
+            return [
+                'status' => Response::HTTP_OK,
+                'code'   => Codes::$ok,
+                'data'   => $data,
+            ];
         } catch (\Exception $ex) {
-            return $ex->getMessage();
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
