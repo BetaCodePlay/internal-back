@@ -72,7 +72,7 @@
                                     </div>
                                 </div>
 
-                                <div class="dash-balance-amount-item">
+                                {{--<div class="dash-balance-amount-item">
                                     <div class="dash-balance-amount-name">
                                         <div class="dash-balance-amount-icon">
                                             <i class="fa-solid fa-arrow-trend-up"></i>
@@ -86,7 +86,7 @@
                                     <div class="dash-balance-amount-balance">
                                         <span class="minus">$</span>5,000.<span class="minus">00</span>
                                     </div>
-                                </div>
+                                </div>--}}
                             </div>
                         </div>
                     </div>
