@@ -62,7 +62,6 @@
                                                                 "
                                                                 type="daterange"
                                                                 align="right"
-                                                                unlink-panels
                                                                 size="large"
                                                                 @input="
                                                                     updateFilters
@@ -70,9 +69,6 @@
                                                                 range-separator="-"
                                                                 start-placeholder="Fecha Inicial"
                                                                 end-placeholder="Fecha Final"
-                                                                :picker-options="
-                                                                    pickerOptions
-                                                                "
                                                             >
                                                             </el-date-picker>
                                                         </div>
@@ -473,5 +469,20 @@ export default {
 }
 .custom-report-dropdown .dropdown-item {
     color: white;
+}
+
+@media screen and (max-width: 625px) {
+    .el-date-range-picker .el-picker-panel__body {
+        min-width: unset !important;
+    }
+    .el-picker-panel {
+        width: 100% !important;
+    }
+    .el-date-table th {
+        font-size: 10px !important;
+    }
+    .el-date-range-picker__content .el-date-range-picker__header div {
+        font-size: 11px !important;
+    }
 }
 </style>
