@@ -753,7 +753,8 @@ class TransactionsRepo
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
         }
 
-        return $transactions->paginate($request->input('per_page', 10));
+        return $transactions->orderBy('transactions.created_at', 'desc')
+            ->paginate($request->input('per_page', 10));
     }
 
 
@@ -1857,9 +1858,9 @@ class TransactionsRepo
             ->sum('profit');
 
         return [
-            'deposits'    => number_format($deposits, 2) . ' ' . $currency,
-            'withdrawals' => number_format($withdrawals, 2) . ' ' . $currency,
-            'profit'      => number_format($totalProfit, 2) . ' ' . $currency,
+            'deposits'    => formatAmount($deposits, $currency),
+            'withdrawals' => formatAmount($withdrawals, $currency),
+            'profit'      => formatAmount($totalProfit, $currency),
             'startDate'   => $startDate,
             'endDate'     => $endDate,
             'childrenIds' => $childrenIds,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Core\Collections\CoreCollection;
 use App\Reports\Repositories\ReportAgentRepo;
 use Dotworkers\Configurations\Configurations;
+use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
  * This class allows to manage agents requests
  *
  * @package App\Http\Controllers
- * 
- * 
+ *
+ *
  */
 class AgentsReportsController extends Controller
 {
@@ -38,7 +39,7 @@ class AgentsReportsController extends Controller
         ReportAgentRepo $reportAgentRepo
     ) {
         $this->reportAgentRepo = $reportAgentRepo;
-        $this->coreCollection = $coreCollection;
+        $this->coreCollection  = $coreCollection;
     }
 
 
@@ -78,11 +79,12 @@ class AgentsReportsController extends Controller
 
     /**
      * Data Financial State New "for support"
+     *
+     * @param Request $request
      * @param $user
      * @param $startDate
      * @param $endDate
-     * @return Response
-     * @deprecated
+     * @return array|Response
      */
     public function financialStateData(
         Request $request,
@@ -101,27 +103,48 @@ class AgentsReportsController extends Controller
                 session('currency'),
                 Configurations::getWhitelabel(),
                 $user,
-                !is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get('timezone') : null,
-                !is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get('provider') : null,
-                !is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null,
-                !is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null,
+                ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
+                    'timezone'
+                ) : null,
+                ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
+                    'provider'
+                ) : null,
+                ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null,
+                ! is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null,
 
             );
 
-            return Utils::successResponse($data);
+            $totalCommission = 0;
+            foreach ($data as $item) {
+                $totalCommission  += $item->commission;
+                $item->played     = formatAmount($item->played);
+                $item->won        = formatAmount($item->won);
+                $item->profit     = formatAmount($item->profit);
+                $item->commission = formatAmount($item->commission);
+            }
+
+            return [
+                'status'          => Response::HTTP_OK,
+                'code'            => Codes::$ok,
+                'data'            => $data,
+                'totalCommission' => formatAmount($totalCommission)
+            ];
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
     }
 
+
     /**
      * Data Financial State New "for support"
+     *
+     * @param Request $request
      * @param $user
      * @param $startDate
      * @param $endDate
-     * @return Response
-     * @deprecated
+     * @param $category
+     * @return array|string
      */
     public function financialStateByCategoryData(
         Request $request,
@@ -131,7 +154,6 @@ class AgentsReportsController extends Controller
         $category,
     ) {
         try {
-
             if (is_null($user)) {
                 $user = Auth::id();
             }
@@ -143,26 +165,39 @@ class AgentsReportsController extends Controller
                 Configurations::getWhitelabel(),
                 $user,
                 $category,
-                !is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get('timezone') : null,
-                !is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get('provider') : null,
-                !is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null
+                ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
+                    'timezone'
+                ) : null,
+                ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
+                    'provider'
+                ) : null,
+                ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null
             );
 
-            return Utils::successResponse($data);
+            foreach ($data as $item) {
+                $item->played     = formatAmount($item->played);
+                $item->won        = formatAmount($item->won);
+                $item->profit     = formatAmount($item->profit);
+                $item->commission = formatAmount($item->commission);
+            }
+
+            return [
+                'status' => Response::HTTP_OK,
+                'code'   => Codes::$ok,
+                'data'   => $data,
+            ];
         } catch (\Exception $ex) {
-            return $ex->getMessage();
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
         }
     }
 
 
-
     /**
      * getChildrens
-     * 
+     *
      * @return Response
-     * 
+     *
      */
     public function getChildrens(
         Request $request

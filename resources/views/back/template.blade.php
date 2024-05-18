@@ -24,9 +24,9 @@
 <!--    <link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">-->
 
     <script>
-        window.authUserId = parseInt('{{auth()->user()->id}}')
-        window.timezone = "{{session('timezone')}}"
-        window.userBalance = "{{getAuthenticatedUserBalance() }}"
+        window.authUserId = parseInt('{{ auth()->id() }}')
+        window.timezone = "{{ session('timezone') }}"
+        window.userBalance = "{{ getAuthenticatedUserBalance(true) }}"
         String.prototype.formatMoney = function(decimalPlaces = 2, currency = null) {
             return new Intl.NumberFormat("es-ES", {
                 style: "currency",
