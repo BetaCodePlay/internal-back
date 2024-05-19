@@ -164,6 +164,8 @@ class TransactionsCollection
             $timezone         = session()->get('timezone');
             $data['timezone'] = $timezone;
             $resp             = Wallet::getTransactionsByWalletAssiria($data);
+
+            dd('orlando', $resp);
             $transactionsData = $resp->transactions ?? [];
             $recordsTotal     = $resp->recordsTotal ?? 0;
 
