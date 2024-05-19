@@ -2943,7 +2943,7 @@ class AgentsController extends Controller
 
     public function updateAgentQuantitiesFromTree()
     {
-        $authUserId = auth()->user();
+        $authUserId = auth()->id();
         $childrenTree = $this->agentsCollection->childrenTreeSql($authUserId);
         $agents = $this->agentsRepo->getAgentsAllByOwner($authUserId, session('currency'), Configurations::getWhitelabel());
 
