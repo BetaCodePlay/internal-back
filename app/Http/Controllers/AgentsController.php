@@ -2955,9 +2955,9 @@ class AgentsController extends Controller
         foreach ($agents as $agent) {
             $childAgents = $childrenTree->where('owner_id', $agent->user_id);
 
-            $masterCount  = $childAgents->where('type_user', 1)->count();
-            $cashierCount = $childAgents->where('type_user', 2)->count();
-            $playerCount  = $childAgents->where('type_user', 5)->count();
+            $masterCount  = $childAgents->where('type_user', TypeUser::$agentMater)->count();
+            $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
+            $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
 
             $agentInfo = Agent::where('user_id', $agent->user_id)->first();
 
