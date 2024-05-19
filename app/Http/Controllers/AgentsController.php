@@ -2943,11 +2943,35 @@ class AgentsController extends Controller
 
     public function updateAgentQuantitiesFromTree()
     {
-        $authUserId = auth()->id();
+        $authUserId   = auth()->id();
         $childrenTree = $this->agentsCollection->childrenTreeSql($authUserId);
-        $agents = $this->agentsRepo->getAgentsAllByOwner($authUserId, session('currency'), Configurations::getWhitelabel());
+        $agents       = $this->agentsRepo->getAgentsAllByOwner(
+            $authUserId,
+            session('currency'),
+            Configurations::getWhitelabel()
+        );
 
-        dd('here', $childrenTree, $agents);
+        $masterCount  = 0;
+        $cashierCount = 0;
+        $playerCount  = 0;
+
+        $filteredAgents = $agents->filter(
+            function ($agent) use ($childrenTree, &$masterCount, &$cashierCount, &$playerCount) {
+                $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
+                if ($isOwner) {
+                    if ($agent->type_user == 1) {
+                        $masterCount++;
+                    } elseif ($agent->type_user == 2) {
+                        $cashierCount++;
+                    } elseif ($agent->type_user == 5) {
+                        $playerCount++;
+                    }
+                }
+                return $isOwner;
+            }
+        );
+
+        dd('filteredAgents', $filteredAgents);
     }
 
     /**
