@@ -2969,7 +2969,18 @@ class AgentsController extends Controller
             }
         }
 
-        dd('filteredAgents', $masterCount, $cashierCount, $playerCount);
+       foreach ($agents as $agent) {
+            $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
+            if ($isOwner) {
+                $typeUser = $childrenTree->where('owner_id', $agent->user_id)->first()->type_user;
+                $agent->master_quantity = $typeUser == 1 ? $masterCount : 0;
+                $agent->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
+                $agent->player_quantity = $typeUser == 5 ? $playerCount : 0;
+                $agent->save();
+            }
+        }
+
+        return response()->json(['message' => 'Agent quantities updated successfully']);
     }
 
     /**
