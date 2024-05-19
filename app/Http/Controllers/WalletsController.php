@@ -228,7 +228,6 @@ class WalletsController extends Controller
      */
     public function transactionsAssiria(Request $request)
     : array|Response {
-        \Log::info(__METHOD__, ['$request' => $request]);
         $wallet = $this->userCurrenciesRepo->findDefault($request->input('userId'));
         return $this->transactionsCollection->formatTransactionsAssiria($request, $wallet->wallet_id);
     }
