@@ -2957,6 +2957,8 @@ class AgentsController extends Controller
         $cashierCount = 0;
         $playerCount  = 0;
 
+        dd($authUserId, $childrenTree, $agents);
+
         foreach ($agents as $agent) {
             $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
             if ($isOwner) {
