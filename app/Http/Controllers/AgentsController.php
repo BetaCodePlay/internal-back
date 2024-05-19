@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Collections\AgentsCollection;
+use App\Agents\Entities\Agent;
 use App\Agents\Enums\AgentType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
@@ -2945,7 +2946,7 @@ class AgentsController extends Controller
     {
         $authUserId   = auth()->id();
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
-        $agents       = $this->agentsRepo->getAgentsAllByOwnerTwo(
+        $agents       = $this->agentsRepo->getAgentsAllByOwner(
             $authUserId,
             session('currency'),
             Configurations::getWhitelabel()
@@ -2969,16 +2970,25 @@ class AgentsController extends Controller
             }
         }
 
-       foreach ($agents as $agent) {
-            $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
-            if ($isOwner) {
-                $typeUser = $childrenTree->where('owner_id', $agent->user_id)->first()->type_user;
-                $agent->master_quantity = $typeUser == 1 ? $masterCount : 0;
-                $agent->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
-                $agent->player_quantity = $typeUser == 5 ? $playerCount : 0;
-                $agent->save();
-            }
+foreach ($agents as $agent) {
+    dd($agent);
+    $agentInfo = Agent::select('id', 'owner_id')
+        ->where('user_id', $agent->user_id)
+        ->first();
+
+    dd($agentInfo);
+
+    if ($agentInfo) {
+        $isOwner = $childrenTree->contains('owner_id', $agentInfo->id);
+        if ($isOwner) {
+            $typeUser = $childrenTree->where('owner_id', $agentInfo->id)->first()->type_user;
+            $agent->master_quantity = $typeUser == 1 ? $masterCount : 0;
+            $agent->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
+            $agent->player_quantity = $typeUser == 5 ? $playerCount : 0;
+            $agent->save();
         }
+    }
+}
 
         return response()->json(['message' => 'Agent quantities updated successfully']);
     }
