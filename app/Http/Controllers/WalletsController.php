@@ -30,14 +30,18 @@ class WalletsController extends Controller
      */
     private $transactionsCollection;
 
+    private $userCurrenciesRepo;
+
     /**
      * WalletsController constructor
      *
      * @param TransactionsCollection $transactionsCollection
+     * @param UserCurrenciesRepo $userCurrenciesRepo
      */
-    public function __construct(TransactionsCollection $transactionsCollection)
+    public function __construct(TransactionsCollection $transactionsCollection, UserCurrenciesRepo $userCurrenciesRepo)
     {
         $this->transactionsCollection = $transactionsCollection;
+        $this->userCurrenciesRepo     = $userCurrenciesRepo;
     }
 
     /**
@@ -225,6 +229,8 @@ class WalletsController extends Controller
     public function transactionsAssiria(Request $request)
     : array|Response {
         \Log::info(__METHOD__, ['$request' => $request]);
+        $wallet = $this->userCurrenciesRepo->findDefault($request->input('userId'));
+        dd($wallet);
         return $this->transactionsCollection->formatTransactionsAssiria($request);
     }
 }

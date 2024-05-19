@@ -2942,37 +2942,34 @@ class AgentsController extends Controller
     }
 
     public function updateAgentQuantitiesFromTree()
+    : JsonResponse
     {
         $authUserId   = auth()->id();
-        $childrenTree = $this->agentsCollection->childrenTreeSql($authUserId);
+        $currency     = session('currency');
+        $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
         $agents       = $this->agentsRepo->getAgentsAllByOwner(
             $authUserId,
-            session('currency'),
+            $currency,
             Configurations::getWhitelabel()
         );
 
-        $masterCount  = 0;
-        $cashierCount = 0;
-        $playerCount  = 0;
+        foreach ($agents as $agent) {
+            $childAgents = $childrenTree->where('owner_id', $agent->user_id);
 
-        $filteredAgents = $agents->filter(
-            function ($agent) use ($childrenTree, &$masterCount, &$cashierCount, &$playerCount) {
-                $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
-                if ($isOwner) {
-                    if ($agent->type_user == 1) {
-                        $masterCount++;
-                    } elseif ($agent->type_user == 2) {
-                        $cashierCount++;
-                    } elseif ($agent->type_user == 5) {
-                        $playerCount++;
-                    }
-                }
-                return $isOwner;
+            $masterCount  = $childAgents->where('type_user', TypeUser::$agentMater)->count();
+            $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
+            $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
+
+            $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($agent->user_id, $currency);
+
+            if ($agentInfo) {
+                $this->agentsRepo->updateAgentQuantities($agentInfo, $masterCount, $cashierCount, $playerCount);
             }
-        );
+        }
 
-        dd('filteredAgents', $filteredAgents);
+        return response()->json(['message' => 'Agent quantities updated successfully']);
     }
+
 
     /**
      * @param Request $request
@@ -4470,7 +4467,7 @@ class AgentsController extends Controller
     public function role(string $username = '')
     : Factory|View|Application {
         try {
-            $authUser       = Auth::user();
+            $authUser       = auth()->user();
             $authUserId     = $authUser->id;
             $whitelabelId   = Configurations::getWhitelabel();
             $bonus          = Configurations::getBonus();
@@ -4485,7 +4482,7 @@ class AgentsController extends Controller
             $user = ! empty($username) ? $this->usersRepo->getByUsername(
                 $username,
                 $whitelabelId
-            ) : Auth::user();
+            ) : $authUser;
 
             $userId     = $user?->id;
             $percentage = null;
@@ -4521,13 +4518,13 @@ class AgentsController extends Controller
             );
 
             return view('back.agents.role', [
-                'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
+                'agent'              => $this->agentsRepo->findUserProfile($user->id, $currency ?? ''),
                 'makers'             => [],
-                'agents'             => $this->agentsRepo->getAgentsAllByOwner(
+             /*   'agents'             => $this->agentsRepo->getAgentsAllByOwner(
                     $authUserId,
                     $currency,
                     $whitelabelId
-                ),
+                ),*/
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,

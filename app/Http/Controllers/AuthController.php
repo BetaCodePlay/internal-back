@@ -26,6 +26,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -225,6 +226,12 @@ class AuthController extends Controller
                             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                             Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                         }
+                    }
+
+                    $response = Http::get(route('agents.update.quantities.from.tree'));
+
+                    if (! $response->successful()) {
+                        Log::info('Error: update-agent-quantities-from-tree');
                     }
 
                     $data = [
