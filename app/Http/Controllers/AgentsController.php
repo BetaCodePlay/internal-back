@@ -2955,23 +2955,20 @@ class AgentsController extends Controller
         $cashierCount = 0;
         $playerCount  = 0;
 
-        $filteredAgents = $agents->filter(
-            function ($agent) use ($childrenTree, &$masterCount, &$cashierCount, &$playerCount) {
-                $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
-                if ($isOwner) {
-                    if ($agent->type_user == 1) {
-                        $masterCount++;
-                    } elseif ($agent->type_user == 2) {
-                        $cashierCount++;
-                    } elseif ($agent->type_user == 5) {
-                        $playerCount++;
-                    }
+        foreach ($agents as $agent) {
+            $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
+            if ($isOwner) {
+                if ($agent->type_user == 1) {
+                    $masterCount++;
+                } elseif ($agent->type_user == 2) {
+                    $cashierCount++;
+                } elseif ($agent->type_user == 5) {
+                    $playerCount++;
                 }
-                return $isOwner;
             }
-        );
+        }
 
-        dd('filteredAgents', $filteredAgents);
+        dd('filteredAgents', $masterCount, $cashierCount, $playerCount);
     }
 
     /**
