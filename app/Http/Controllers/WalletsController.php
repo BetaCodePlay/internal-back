@@ -224,17 +224,6 @@ class WalletsController extends Controller
      */
     public function transactionsAssiria(Request $request)
     : array|Response {
-        $draw             = $request->input('draw', 1);
-        $data             = $request->all();
-        $timezone         = session()->get('timezone');
-        $data['timezone'] = $timezone;
-        $token            = session('wallet_access_token');
-        $resp             = Wallet::getTransactionsByWalletAssiriaBack($data);
-
-        $transactions = Wallet::getTransactionsByWalletAndClient(80, 10, 2000);
-
-        dd($resp, $transactions, session('wallet_access_token'));
-
         return $this->transactionsCollection->formatTransactionsAssiria($request);
     }
 }

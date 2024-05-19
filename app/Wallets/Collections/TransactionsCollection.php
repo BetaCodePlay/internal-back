@@ -34,18 +34,18 @@ class TransactionsCollection
     {
         foreach ($transactions as $transaction) {
             try {
-                $totalBalance      = $transaction->balance;
-                $timezone          = session('timezone');
-                $transaction->date = Carbon::createFromFormat(
+                $totalBalance                 = $transaction->balance;
+                $timezone                     = session('timezone');
+                $transaction->date            = Carbon::createFromFormat(
                     'Y-m-d H:i:s',
                     $transaction->created_at
                 )->setTimezone(
                     $timezone
                 )->format('d-m-Y H:i:s');
-                $transaction->amount = number_format($transaction->amount, 2);
+                $transaction->amount          = number_format($transaction->amount, 2);
                 $transaction->modified_amount = $transaction->transaction_type_id == TransactionTypes::$debit ? "-{$transaction->amount}" : "+{$transaction->amount}";
-                $transaction->debit = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
-                $transaction->credit = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
+                $transaction->debit           = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
+                $transaction->credit          = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
                 if ((Configurations::getWhitelabel() == 1)
                     && ($transaction->provider_id == 171)
                     && ($transaction->id == 13315112)) {
@@ -134,10 +134,10 @@ class TransactionsCollection
         }
 
         $json_data = array(
-            "draw" => intval($request->input('draw')),
-            "recordsTotal" => intval($total),
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($total),
             "recordsFiltered" => intval($total),
-            "data" => $data
+            "data"            => $data
         );
 
         return $json_data;
@@ -163,9 +163,7 @@ class TransactionsCollection
             $data             = $request->all();
             $timezone         = session()->get('timezone');
             $data['timezone'] = $timezone;
-            $resp             = Wallet::getTransactionsByWalletAssiria($data);
-
-            dd('orlando', $resp);
+            $resp             = Wallet::getTransactionsByWalletAssiriaBack($data);
             $transactionsData = $resp->transactions ?? [];
             $recordsTotal     = $resp->recordsTotal ?? 0;
 
