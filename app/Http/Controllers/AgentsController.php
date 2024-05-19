@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Collections\AgentsCollection;
-use App\Agents\Entities\Agent;
 use App\Agents\Enums\AgentType;
 use App\Agents\Repositories\AgentCurrenciesRepo;
 use App\Agents\Repositories\AgentsRepo;
@@ -2942,13 +2941,15 @@ class AgentsController extends Controller
         }
     }
 
-    public function updateAgentQuantitiesFromTree(): JsonResponse
+    public function updateAgentQuantitiesFromTree()
+    : JsonResponse
     {
         $authUserId   = auth()->id();
+        $currency     = session('currency');
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
         $agents       = $this->agentsRepo->getAgentsAllByOwner(
             $authUserId,
-            session('currency'),
+            $currency,
             Configurations::getWhitelabel()
         );
 
@@ -2959,13 +2960,10 @@ class AgentsController extends Controller
             $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
             $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
 
-            $agentInfo = Agent::where('user_id', $agent->user_id)->first();
+            $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($agent->user_id, $currency);
 
             if ($agentInfo) {
-                $agentInfo->master_quantity  = $masterCount;
-                $agentInfo->cashier_quantity = $cashierCount;
-                $agentInfo->player_quantity  = $playerCount;
-                $agentInfo->save();
+                $this->agentsRepo->updateAgentQuantities($agentInfo, $masterCount, $cashierCount, $playerCount);
             }
         }
 

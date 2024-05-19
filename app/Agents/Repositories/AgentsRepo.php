@@ -527,6 +527,39 @@ class AgentsRepo
     }
 
     /**
+     * Retrieve agent information along with its currency data.
+     *
+     * @param int $userId The ID of the user.
+     * @param string $currency The currency ISO code.
+     * @return Agent|null The agent information or null if not found.
+     */
+    public function getAgentInfoWithCurrency(int $userId, string $currency)
+    : ?Agent {
+        return Agent::join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.user_id', $userId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->select('agents.*')
+            ->first();
+    }
+
+    /**
+     * Update the quantities for a specific agent.
+     *
+     * @param Agent $agentInfo The agent instance.
+     * @param int $masterCount The count of master agents.
+     * @param int $cashierCount The count of cashier agents.
+     * @param int $playerCount The count of player agents.
+     * @return bool True if the update was successful, otherwise false.
+     */
+    public function updateAgentQuantities(Agent $agentInfo, int $masterCount, int $cashierCount, int $playerCount): bool
+    {
+        $agentInfo->master_quantity  = $masterCount;
+        $agentInfo->cashier_quantity = $cashierCount;
+        $agentInfo->player_quantity  = $playerCount;
+        return $agentInfo->save();
+    }
+
+    /**
      * Format Json Tree V1.0
      * Get user and agents son (first generation)
      * @param int $owner Owner ID
