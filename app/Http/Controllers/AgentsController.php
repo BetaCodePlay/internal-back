@@ -2980,10 +2980,10 @@ class AgentsController extends Controller
                 $isOwner = $childrenTree->contains('owner_id', $agentInfo->id);
                 if ($isOwner) {
                     $typeUser                = $childrenTree->where('owner_id', $agentInfo->id)->first()->type_user;
-                    $agent->master_quantity  = $typeUser == 1 ? $masterCount : 0;
-                    $agent->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
-                    $agent->player_quantity  = $typeUser == 5 ? $playerCount : 0;
-                    $agent->save();
+                    $agentInfo->master_quantity  = $typeUser == 1 ? $masterCount : 0;
+                    $agentInfo->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
+                    $agentInfo->player_quantity  = $typeUser == 5 ? $playerCount : 0;
+                    $agentInfo->save();
                 }
             }
         }
