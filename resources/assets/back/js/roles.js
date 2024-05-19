@@ -665,7 +665,7 @@ class Roles {
 
                 tableBets = tableBetsID.DataTable({
                     serverSide: true,
-                    ajax: routeBets + '?' + Roles.globalusername,
+                    ajax: routeBets,
                     processing: true,
                     columnDefs: [{
                         "defaultContent": "-",

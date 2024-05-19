@@ -315,35 +315,9 @@
                 </div>-->
                 @if($authUser->agentType === 5)
                     <div class="tab-pane fade" id="roleTabBets" role="tabpanel" aria-labelledby="bet-tab">
-                        <div class="tab-content-body">
-                            <div class="tab-content-title">{{ _i('Bets movements') }}</div>
-                            <form autocomplete="destroy" class="tab-form">
-                                <div class="row">
-                                    <div class="col-12 col-form col-lg-6">
-                                        <div class="form-group">
-                                            <label>{{ _i('Date') }}</label>
-                                            <input type="text" class="form-control" id="date_range_new_two" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-form col-lg-6">
-                                        <div class="form-group">
-                                            <label class="d-none d-lg-block">&nbsp;</label>
-                                            <button type="button"
-                                                    class="btn btn-theme btn-block currentDataRole searchBetsRole"
-                                                    data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching..."
-                                                    data-userid="{{ $authUser->id}}"
-                                                    data-username="{{ $authUser->username }}"
-                                                    data-rol="{{ $authUser->agentType }}">
-                                                {{ _i('Search') }}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
                         <div class="tab-body">
                             <form autocomplete="destroy" class="table-load">
-                                <table id="table-bets" class="display nowrap" data-route="">
+                                <table id="table-bets" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
                                     <thead>
                                     <tr>
                                         <th>{{ _i('Date') }}</th>
