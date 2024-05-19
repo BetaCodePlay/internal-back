@@ -2942,8 +2942,7 @@ class AgentsController extends Controller
         }
     }
 
-    public function updateAgentQuantitiesFromTree()
-    : JsonResponse
+    public function updateAgentQuantitiesFromTree(): JsonResponse
     {
         $authUserId   = auth()->id();
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
@@ -2953,44 +2952,26 @@ class AgentsController extends Controller
             Configurations::getWhitelabel()
         );
 
-        $masterCount  = 0;
-        $cashierCount = 0;
-        $playerCount  = 0;
-
         foreach ($agents as $agent) {
-            dd($agent);
-            $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
-            if ($isOwner) {
-                $typeUser = $childrenTree->where('owner_id', $agent->user_id)->first()->type_user;
-                if ($typeUser == 1) {
-                    $masterCount++;
-                } elseif ($typeUser == 2) {
-                    $cashierCount++;
-                } elseif ($typeUser == 5) {
-                    $playerCount++;
-                }
-            }
-        }
+            $childAgents = $childrenTree->where('owner_id', $agent->user_id);
 
-        foreach ($agents as $agent) {
-            $agentInfo = Agent::select('id', 'owner_id')
-                ->where('user_id', $agent->user_id)
-                ->first();
+            $masterCount  = $childAgents->where('type_user', 1)->count();
+            $cashierCount = $childAgents->where('type_user', 2)->count();
+            $playerCount  = $childAgents->where('type_user', 5)->count();
+
+            $agentInfo = Agent::where('user_id', $agent->user_id)->first();
 
             if ($agentInfo) {
-                $isOwner = $childrenTree->contains('owner_id', $agentInfo->id);
-                if ($isOwner) {
-                    $typeUser                = $childrenTree->where('owner_id', $agentInfo->id)->first()->type_user;
-                    $agentInfo->master_quantity  = $typeUser == 1 ? $masterCount : 0;
-                    $agentInfo->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
-                    $agentInfo->player_quantity  = $typeUser == 5 ? $playerCount : 0;
-                    $agentInfo->save();
-                }
+                $agentInfo->master_quantity  = $masterCount;
+                $agentInfo->cashier_quantity = $cashierCount;
+                $agentInfo->player_quantity  = $playerCount;
+                $agentInfo->save();
             }
         }
 
         return response()->json(['message' => 'Agent quantities updated successfully']);
     }
+
 
     /**
      * @param Request $request
