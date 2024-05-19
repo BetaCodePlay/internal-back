@@ -2971,9 +2971,8 @@ class AgentsController extends Controller
         }
 
 foreach ($agents as $agent) {
-    dd($agent);
     $agentInfo = Agent::select('id', 'owner_id')
-        ->where('user_id', $agent->user_id)
+        ->where('id', $agent->id)
         ->first();
 
     dd($agentInfo);
