@@ -2943,6 +2943,7 @@ class AgentsController extends Controller
     }
 
     public function updateAgentQuantitiesFromTree()
+    : JsonResponse
     {
         $authUserId   = auth()->id();
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
@@ -2970,24 +2971,22 @@ class AgentsController extends Controller
             }
         }
 
-foreach ($agents as $agent) {
-    $agentInfo = Agent::select('id', 'owner_id')
-        ->where('user_id', $agent->user_id)
-        ->first();
+        foreach ($agents as $agent) {
+            $agentInfo = Agent::select('id', 'owner_id')
+                ->where('user_id', $agent->user_id)
+                ->first();
 
-    dd($agent, $agentInfo);
-
-    if ($agentInfo) {
-        $isOwner = $childrenTree->contains('owner_id', $agentInfo->id);
-        if ($isOwner) {
-            $typeUser = $childrenTree->where('owner_id', $agentInfo->id)->first()->type_user;
-            $agent->master_quantity = $typeUser == 1 ? $masterCount : 0;
-            $agent->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
-            $agent->player_quantity = $typeUser == 5 ? $playerCount : 0;
-            $agent->save();
+            if ($agentInfo) {
+                $isOwner = $childrenTree->contains('owner_id', $agentInfo->id);
+                if ($isOwner) {
+                    $typeUser                = $childrenTree->where('owner_id', $agentInfo->id)->first()->type_user;
+                    $agent->master_quantity  = $typeUser == 1 ? $masterCount : 0;
+                    $agent->cashier_quantity = $typeUser == 2 ? $cashierCount : 0;
+                    $agent->player_quantity  = $typeUser == 5 ? $playerCount : 0;
+                    $agent->save();
+                }
+            }
         }
-    }
-}
 
         return response()->json(['message' => 'Agent quantities updated successfully']);
     }
