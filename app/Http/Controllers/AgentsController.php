@@ -2953,6 +2953,7 @@ class AgentsController extends Controller
         );
 
         foreach ($agents as $agent) {
+            dd($agent);
             $childAgents = $childrenTree->where('owner_id', $agent->user_id);
 
             $masterCount  = $childAgents->where('type_user', 1)->count();
