@@ -156,14 +156,14 @@ class TransactionsCollection
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function formatTransactionsAssiria(Request $request)
+    public function formatTransactionsAssiria(Request $request, int | string $walletId)
     : array|Response {
         try {
             $draw             = $request->input('draw', 1);
             $data             = $request->all();
             $timezone         = session()->get('timezone');
             $data['timezone'] = $timezone;
-            dd($data);
+            dd($data, $walletId);
             $resp             = Wallet::getTransactionsByWalletAssiriaBack($data);
             $transactionsData = $resp->transactions ?? [];
             $recordsTotal     = $resp->recordsTotal ?? 0;

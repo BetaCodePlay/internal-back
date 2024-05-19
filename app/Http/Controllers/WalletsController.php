@@ -230,7 +230,6 @@ class WalletsController extends Controller
     : array|Response {
         \Log::info(__METHOD__, ['$request' => $request]);
         $wallet = $this->userCurrenciesRepo->findDefault($request->input('userId'));
-        dd($wallet);
-        return $this->transactionsCollection->formatTransactionsAssiria($request);
+        return $this->transactionsCollection->formatTransactionsAssiria($request, $wallet->wallet_id);
     }
 }
