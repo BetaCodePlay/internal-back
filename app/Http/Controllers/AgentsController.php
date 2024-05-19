@@ -4492,6 +4492,8 @@ class AgentsController extends Controller
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                 : $agentsRepo->findUser($user->id);
 
+            dd($agent);
+
             if ($user->type_user == 'player') {
                 $wallet = Wallet::getByClient($user->id, $currency, $bonus);
                 if (is_array($wallet->data)) {
