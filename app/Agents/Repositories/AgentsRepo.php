@@ -531,6 +531,7 @@ class AgentsRepo
             ->orderBy('username', 'ASC')
             ->get();
     }
+
     /**
      * Get agents children by owner
      *
