@@ -2941,6 +2941,13 @@ class AgentsController extends Controller
         }
     }
 
+    public function updateAgentQuantitiesFromTree()
+    {
+        $childrenTree = $this->agentsCollection->childrenTreeSql(Auth::id());
+
+        dd($childrenTree);
+    }
+
     /**
      * @param Request $request
      * @return array
