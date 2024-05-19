@@ -224,6 +224,7 @@ class WalletsController extends Controller
      */
     public function transactionsAssiria(Request $request)
     : array|Response {
+        \Log::info(__METHOD__, ['$request' => $request]);
         return $this->transactionsCollection->formatTransactionsAssiria($request);
     }
 }
