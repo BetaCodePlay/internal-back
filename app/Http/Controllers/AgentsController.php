@@ -2944,7 +2944,7 @@ class AgentsController extends Controller
     public function updateAgentQuantitiesFromTree()
     {
         $authUserId   = auth()->id();
-        $childrenTree = $this->agentsCollection->childrenTreeSql($authUserId);
+        $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
         $agents       = $this->agentsRepo->getAgentsAllByOwner(
             $authUserId,
             session('currency'),
@@ -2956,14 +2956,14 @@ class AgentsController extends Controller
         $playerCount  = 0;
 
         foreach ($agents as $agent) {
-            dd($agent);
             $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
             if ($isOwner) {
-                if ($agent->type_user == 1) {
+                $typeUser = $childrenTree->where('owner_id', $agent->user_id)->first()->type_user;
+                if ($typeUser == 1) {
                     $masterCount++;
-                } elseif ($agent->type_user == 2) {
+                } elseif ($typeUser == 2) {
                     $cashierCount++;
-                } elseif ($agent->type_user == 5) {
+                } elseif ($typeUser == 5) {
                     $playerCount++;
                 }
             }
