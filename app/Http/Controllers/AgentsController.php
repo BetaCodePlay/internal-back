@@ -4467,7 +4467,7 @@ class AgentsController extends Controller
     public function role(string $username = '')
     : Factory|View|Application {
         try {
-            $authUser       = Auth::user();
+            $authUser       = auth()->user();
             $authUserId     = $authUser->id;
             $whitelabelId   = Configurations::getWhitelabel();
             $bonus          = Configurations::getBonus();
@@ -4482,7 +4482,7 @@ class AgentsController extends Controller
             $user = ! empty($username) ? $this->usersRepo->getByUsername(
                 $username,
                 $whitelabelId
-            ) : Auth::user();
+            ) : $authUser;
 
             $userId     = $user?->id;
             $percentage = null;
@@ -4491,8 +4491,6 @@ class AgentsController extends Controller
             $agent = ($user->type_user == 'agent')
                 ? $agentsRepo->findByUserIdAndCurrency($user->id, session('currency'))
                 : $agentsRepo->findUser($user->id);
-
-            dd($agent);
 
             if ($user->type_user == 'player') {
                 $wallet = Wallet::getByClient($user->id, $currency, $bonus);
@@ -4520,7 +4518,7 @@ class AgentsController extends Controller
             );
 
             return view('back.agents.role', [
-                'agent'              => $this->agentsRepo->findUserProfile($authUserId, $currency ?? ''),
+                'agent'              => $this->agentsRepo->findUserProfile($user->id, $currency ?? ''),
                 'makers'             => [],
                 'agents'             => $this->agentsRepo->getAgentsAllByOwner(
                     $authUserId,
