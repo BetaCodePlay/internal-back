@@ -238,9 +238,12 @@ class BackOfficeServiceProvider extends ServiceProvider
         Agent $agent,
         string $hostHeader
     ) {
+        if (app()->runningInConsole()) {
+            return [];
+        }
+
         $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
         $configurations = Configurations::getConfigurationsByURL($domain);
-        //dd($domain);
 
         if ($configurations->isEmpty()) {
             throw new InvalidArgumentException(
