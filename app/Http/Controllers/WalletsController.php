@@ -231,7 +231,7 @@ class WalletsController extends Controller
         $token            = session('wallet_access_token');
         $resp             = Wallet::getTransactionsByWalletAssiria($data, $token);
 
-        $transactions = Wallet::getTransactionsByWalletAndClient($data, 10, 2000);
+        $transactions = Wallet::getTransactionsByWalletAndClient(80, 10, 2000);
 
         dd($resp, $transactions, session('wallet_access_token'));
 
