@@ -4517,6 +4517,12 @@ class AgentsController extends Controller
                 $whitelabelId
             );
 
+            dd($this->agentsRepo->getAgentsAllByOwner(
+                $authUserId,
+                $currency,
+                $whitelabelId
+            ));
+
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($user->id, $currency ?? ''),
                 'makers'             => [],
