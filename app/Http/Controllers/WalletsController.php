@@ -10,7 +10,6 @@ use Dotworkers\Configurations\Utils;
 use Dotworkers\Store\Store;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -55,15 +54,22 @@ class WalletsController extends Controller
     {
         try {
             $whitelabel = Configurations::getWhitelabel();
-            $wallet = Wallet::store($user, $username, $uuid, $currency, $whitelabel, session('wallet_access_token'));
+            $wallet     = Wallet::store(
+                $user,
+                $username,
+                $uuid,
+                $currency,
+                $whitelabel,
+                session('wallet_access_token')
+            );
 
-            $userData = [
-                'user_id' => $user,
+            $userData   = [
+                'user_id'      => $user,
                 'currency_iso' => $currency
             ];
             $walletData = [
                 'wallet_id' => $wallet->data->wallet->id,
-                'default' => false
+                'default'   => false
             ];
             $userCurrenciesRepo->store($userData, $walletData);
 
@@ -71,9 +77,18 @@ class WalletsController extends Controller
             if ($store) {
                 Store::storeWallet($user, $currency);
             }
-
         } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'user' => $user, 'username' => $username, 'uuid' => $uuid, 'currency' => $currency, 'whitelabel' => $whitelabel]);
+            \Log::error(
+                __METHOD__,
+                [
+                    'exception'  => $ex,
+                    'user'       => $user,
+                    'username'   => $username,
+                    'uuid'       => $uuid,
+                    'currency'   => $currency,
+                    'whitelabel' => $whitelabel
+                ]
+            );
         }
         return redirect()->back();
     }
@@ -87,42 +102,41 @@ class WalletsController extends Controller
     public function lockBalance(Request $request)
     {
         try {
-            $user = $request->user;
-            $wallet = $request->wallet;
-            $amount = $request->amount;
-            $provider = $request->provider;
-            $currency = session('currency');
+            $user       = $request->user;
+            $wallet     = $request->wallet;
+            $amount     = $request->amount;
+            $provider   = $request->provider;
+            $currency   = session('currency');
             $walletData = Wallet::getByClient($user, $currency);
 
             if ($walletData->data->wallet->balance >= $amount) {
                 $transactionData = [
                     'provider_transaction' => Str::uuid()->toString()
                 ];
-                $lockBalance = Wallet::debitLockTransactions($amount, $provider, $transactionData, $wallet);
+                $lockBalance     = Wallet::debitLockTransactions($amount, $provider, $transactionData, $wallet);
                 if ($lockBalance->status == 'OK') {
                     $data = [
-                        'title' => _i('Balance locked'),
+                        'title'   => _i('Balance locked'),
                         'message' => _i('User balance was successfully locked'),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                     return Utils::successResponse($data);
                 } else {
                     $data = [
-                        'title' => _i('Error'),
+                        'title'   => _i('Error'),
                         'message' => _i('It is not allowed to lock balance if the user already has a locked amount'),
-                        'close' => _i('Close')
+                        'close'   => _i('Close')
                     ];
                     return Utils::errorResponse(Codes::$forbidden, $data);
                 }
             } else {
                 $data = [
-                    'title' => _i('Insufficient balance'),
+                    'title'   => _i('Insufficient balance'),
                     'message' => _i("The user's balance is less than the one you want to block"),
-                    'close' => _i('Close')
+                    'close'   => _i('Close')
                 ];
                 return Utils::errorResponse(Codes::$forbidden, $data);
             }
-
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -135,15 +149,14 @@ class WalletsController extends Controller
      * @param int $wallet Wallet ID
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function transactions(Request $request,$wallet = null)
+    public function transactions(Request $request, $wallet = null)
     {
         try {
-
             $offset = $request->has('start') ? $request->get('start') : 0;
-            $limit = $request->has('length') ? $request->get('length') : 2000;
-            $data = [];
-            if (!is_null(($wallet))) {
-                $transactions = Wallet::getTransactionsByWalletAndClient($wallet, $limit, $offset);
+            $limit  = $request->has('length') ? $request->get('length') : 2000;
+            $data   = [];
+            if (! is_null(($wallet))) {
+                $transactions     = Wallet::getTransactionsByWalletAndClient($wallet, $limit, $offset);
                 $transactionsData = $transactions->data->transactions;
                 //Log::info('transactions user',[$transactions->data]);
                 $this->transactionsCollection->formatTransactions($transactionsData);
@@ -157,7 +170,6 @@ class WalletsController extends Controller
                 ];
             }
             return Utils::successResponse($data);
-
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -173,8 +185,12 @@ class WalletsController extends Controller
     public function transactionsHistoric($wallet = null)
     {
         try {
-            if (!is_null(($wallet))) {
-                $transactions = Wallet::getTransactionsByWalletAndClientHistoric($wallet, $limit = 2000, $offset = 0);
+            if (! is_null(($wallet))) {
+                $transactions     = Wallet::getTransactionsByWalletAndClientHistoric(
+                    $wallet,
+                    $limit = 2000,
+                    $offset = 0
+                );
                 $transactionsData = $transactions->data->transactions;
                 $this->transactionsCollection->formatTransactions($transactionsData);
                 $data = [
@@ -186,7 +202,6 @@ class WalletsController extends Controller
                 ];
             }
             return Utils::successResponse($data);
-
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -213,11 +228,12 @@ class WalletsController extends Controller
         $data             = $request->all();
         $timezone         = session()->get('timezone');
         $data['timezone'] = $timezone;
-        $resp             = Wallet::getTransactionsByWalletAssiria($data);
+        $token            = session('wallet_access_token');
+        $resp             = Wallet::getTransactionsByWalletAssiria($data, $token);
 
         $transactions = Wallet::getTransactionsByWalletAndClient($data, 10, 2000);
 
-        dd($resp,$transactions, session('wallet_access_token'));
+        dd($resp, $transactions, session('wallet_access_token'));
 
         return $this->transactionsCollection->formatTransactionsAssiria($request);
     }
