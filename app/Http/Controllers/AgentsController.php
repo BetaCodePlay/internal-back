@@ -2956,6 +2956,7 @@ class AgentsController extends Controller
         $playerCount  = 0;
 
         foreach ($agents as $agent) {
+            dd($agent);
             $isOwner = $childrenTree->contains('owner_id', $agent->user_id);
             if ($isOwner) {
                 if ($agent->type_user == 1) {
