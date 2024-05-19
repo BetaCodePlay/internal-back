@@ -513,23 +513,25 @@ class AgentsRepo
             ->select('u.id', 'u.id as user_id', 'u.username')
             ->where('u.whitelabel_id', $whitelabel)
             ->whereIn('u.id', function ($query) use ($owner, $currency) {
-                $query->select('agents.user_id')
-                    ->from('site.agents as agents')
-                    ->join('site.agent_currencies as agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                    ->where('agents.user_id', $owner)
-                    ->where('currency_iso', $currency)
-                    ->unionAll(function ($query) use ($currency) {
-                        $query->select('agents.user_id')
-                            ->from('site.agents as agents')
-                            ->join('site.agent_currencies as agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-                            ->join('all_agents', 'agents.owner_id', '=', 'all_agents.user_id')
-                            ->where('agent_currencies.currency_iso', $currency);
-                    });
+                $query->select('user_id')
+                    ->from(DB::raw('(WITH RECURSIVE all_agents AS (
+                    SELECT agents.user_id
+                    FROM site.agents AS agents
+                    JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                    WHERE agents.user_id = ?
+                    AND currency_iso = ?
+                    UNION ALL
+                    SELECT agents.user_id
+                    FROM site.agents AS agents
+                    JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                    JOIN all_agents ON agents.owner_id = all_agents.user_id
+                    WHERE agent_currencies.currency_iso = ?
+                ) SELECT user_id FROM all_agents) as all_agents_subquery'))
+                    ->setBindings([$owner, $currency, $currency]);
             })
             ->orderBy('u.username', 'ASC')
             ->get();
     }
-
     /**
      * Get agents children by owner
      *
