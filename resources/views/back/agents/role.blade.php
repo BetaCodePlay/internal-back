@@ -30,12 +30,14 @@
                         {{ _i('My data') }}
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation"
-                            type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
-                        {{ _i('Roles') }}
-                    </button>
-                </li>
+                @if($authUser->agentType !== 5)
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabMoreInformation"
+                                type="button" role="tab" aria-controls="roleTabMoreInformation" aria-selected="false">
+                            {{ _i('Roles') }}
+                        </button>
+                    </li>
+                @endif
                 <li class="nav-item" role="presentation">
                     <button class="nav-link tab-role" data-toggle="tab" data-target="#roleTabTransactions" type="button"
                             role="tab" aria-controls="roleTabTransactions" aria-selected="false">
@@ -210,39 +212,41 @@
                         <div class="loading-style"></div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel"
-                     aria-labelledby="information-tab">
-                    <div class="tab-content-body-simple">
-                        <div class="tab-content-title">
-                            @if(auth()->user()->id !== $authUser->id)
-                                {{ _i('roles in charge of') }} <span class="text">{{ $authUser->username }}</span>
-                            @else
-                                {{ _i('Roles in') }} <span class="text">{{ _i('my charge') }}</span>
-                            @endif
+                @if($authUser->agentType !== 5)
+                    <div class="tab-pane fade" id="roleTabMoreInformation" role="tabpanel"
+                         aria-labelledby="information-tab">
+                        <div class="tab-content-body-simple">
+                            <div class="tab-content-title">
+                                @if(auth()->user()->id !== $authUser->id)
+                                    {{ _i('roles in charge of') }} <span class="text">{{ $authUser->username }}</span>
+                                @else
+                                    {{ _i('Roles in') }} <span class="text">{{ _i('my charge') }}</span>
+                                @endif
+                            </div>
                         </div>
-                    </div>
 
-                    @if($authUser->agentType !== 5)
-                        <div class="page-body">
-                            <form autocomplete="destroy" class="table-load">
-                                <table id="table-roles" class="display nowrap"
-                                       data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
-                                    <thead>
-                                    <tr>
-                                        <th data-priority="1">{{ _i('Name') }}</th>
-                                        <th>{{ _i('Rol') }}</th>
-                                        <th>{{ _i('ID User') }}</th>
-                                        <th>{{ _i('Status') }}</th>
-                                        <th data-priority="3">{{ _i('Balance') }}</th>
-                                        <th data-priority="2"></th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </form>
-                            <div class="loading-style"></div>
-                        </div>
-                    @endif
-                </div>
+                        @if($authUser->agentType !== 5)
+                            <div class="page-body">
+                                <form autocomplete="destroy" class="table-load">
+                                    <table id="table-roles" class="display nowrap"
+                                           data-route="{{ route('agents.get.direct.children') }}?draw=2&start=0&username={{ $username }}">
+                                        <thead>
+                                        <tr>
+                                            <th data-priority="1">{{ _i('Name') }}</th>
+                                            <th>{{ _i('Rol') }}</th>
+                                            <th>{{ _i('ID User') }}</th>
+                                            <th>{{ _i('Status') }}</th>
+                                            <th data-priority="3">{{ _i('Balance') }}</th>
+                                            <th data-priority="2"></th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </form>
+                                <div class="loading-style"></div>
+                            </div>
+                        @endif
+                    </div>
+                @endif
                 <div class="tab-pane fade" id="roleTabTransactions" role="tabpanel" aria-labelledby="transactions-tab">
                     <div class="tab-content-body">
                         <div class="tab-content-title">{{ _i('Daily movements') }}</div>
@@ -310,50 +314,50 @@
                     <br>
                 </div>-->
                 @if($authUser->agentType === 5)
-                <div class="tab-pane fade" id="roleTabBets" role="tabpanel" aria-labelledby="bet-tab">
-                    <div class="tab-content-body">
-                        <div class="tab-content-title">{{ _i('Bets movements') }}</div>
-                        <form autocomplete="destroy" class="tab-form">
-                            <div class="row">
-                                <div class="col-12 col-form col-lg-6">
-                                    <div class="form-group">
-                                        <label>{{ _i('Date') }}</label>
-                                        <input type="text" class="form-control" id="date_range_new_two" placeholder="">
+                    <div class="tab-pane fade" id="roleTabBets" role="tabpanel" aria-labelledby="bet-tab">
+                        <div class="tab-content-body">
+                            <div class="tab-content-title">{{ _i('Bets movements') }}</div>
+                            <form autocomplete="destroy" class="tab-form">
+                                <div class="row">
+                                    <div class="col-12 col-form col-lg-6">
+                                        <div class="form-group">
+                                            <label>{{ _i('Date') }}</label>
+                                            <input type="text" class="form-control" id="date_range_new_two" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-form col-lg-6">
+                                        <div class="form-group">
+                                            <label class="d-none d-lg-block">&nbsp;</label>
+                                            <button type="button"
+                                                    class="btn btn-theme btn-block currentDataRole searchBetsRole"
+                                                    data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching..."
+                                                    data-userid="{{ $authUser->id}}"
+                                                    data-username="{{ $authUser->username }}"
+                                                    data-rol="{{ $authUser->agentType }}">
+                                                {{ _i('Search') }}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-form col-lg-6">
-                                    <div class="form-group">
-                                        <label class="d-none d-lg-block">&nbsp;</label>
-                                        <button type="button"
-                                                class="btn btn-theme btn-block currentDataRole searchBetsRole"
-                                                data-loading-text="<i class='fa fa-spin fa-spinner'></i> Searching..."
-                                                data-userid="{{ $authUser->id}}"
-                                                data-username="{{ $authUser->username }}"
-                                                data-rol="{{ $authUser->agentType }}">
-                                            {{ _i('Search') }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+                        <div class="tab-body">
+                            <form autocomplete="destroy" class="table-load">
+                                <table id="table-bets" class="display nowrap" data-route="">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ _i('Date') }}</th>
+                                        <th data-priority="3">{{ _i('Origin') }}</th>
+                                        <th data-priority="1">{{ _i('Destination') }}</th>
+                                        <th data-priority="2">{{ _i('Amount') }}</th>
+                                        <th>{{ _i('Balance') }}</th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </form>
+                            <div class="loading-style"></div>
+                        </div>
                     </div>
-                    <div class="tab-body">
-                        <form autocomplete="destroy" class="table-load">
-                            <table id="table-bets" class="display nowrap" data-route="">
-                                <thead>
-                                <tr>
-                                    <th>{{ _i('Date') }}</th>
-                                    <th data-priority="3">{{ _i('Origin') }}</th>
-                                    <th data-priority="1">{{ _i('Destination') }}</th>
-                                    <th data-priority="2">{{ _i('Amount') }}</th>
-                                    <th>{{ _i('Balance') }}</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </form>
-                        <div class="loading-style"></div>
-                    </div>
-                </div>
                 @endif
             </div>
         </div>
