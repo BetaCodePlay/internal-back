@@ -542,7 +542,9 @@ class AgentsRepo
             return $user;
         });
 
-        $agents->load('agents');
+        $agents->each(function ($user) {
+            $user->load('agents');
+        });
 
         return $agents;
     }
