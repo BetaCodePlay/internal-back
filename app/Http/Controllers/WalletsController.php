@@ -215,7 +215,7 @@ class WalletsController extends Controller
         $data['timezone'] = $timezone;
         $resp             = Wallet::getTransactionsByWalletAssiria($data);
 
-        $transactions = Wallet::getTransactionsByWalletAndClient($data);
+        $transactions = Wallet::getTransactionsByWalletAndClient($data, 10, 2000);
 
         dd($resp,$transactions);
 
