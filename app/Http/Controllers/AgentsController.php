@@ -2945,7 +2945,7 @@ class AgentsController extends Controller
     {
         $authUserId   = auth()->id();
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
-        $agents       = $this->agentsRepo->getAgentsAllByOwner(
+        $agents       = $this->agentsRepo->getAgentsAllByOwnerTwo(
             $authUserId,
             session('currency'),
             Configurations::getWhitelabel()

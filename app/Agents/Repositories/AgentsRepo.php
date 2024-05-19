@@ -507,6 +507,47 @@ class AgentsRepo
         );
     }
 
+    public function getAgentsAllByOwnerTwo(int $owner, string $currency, int $whitelabel)
+    {
+        $results = DB::select(
+            'SELECT u.id, u.username
+         FROM site.users AS u
+         WHERE u.whitelabel_id = ? AND
+               u.id IN (WITH RECURSIVE all_agents AS (
+                    SELECT agents.user_id
+                    FROM site.agents AS agents
+                    JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                    WHERE agents.user_id = ?
+                    AND currency_iso = ?
+                    UNION ALL
+                    SELECT agents.user_id
+                    FROM site.agents AS agents
+                    JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                    JOIN all_agents ON agents.owner_id = all_agents.user_id
+                    WHERE agent_currencies.currency_iso = ?
+               ) SELECT user_id FROM all_agents)
+         ORDER BY username ASC',
+            [
+                $whitelabel,
+                $owner,
+                $currency,
+                $currency
+            ]
+        );
+
+        $agents = collect($results)->map(function ($result) {
+            $user = new User();
+            $user->id = $result->id;
+            $user->username = $result->username;
+            return $user;
+        });
+
+        $agents->load('agents');
+
+        return $agents;
+    }
+
+
     /**
      * Get agents children by owner
      *
