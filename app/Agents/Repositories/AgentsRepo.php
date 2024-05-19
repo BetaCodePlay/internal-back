@@ -510,26 +510,25 @@ class AgentsRepo
     public function getAgentsAllByOwnerTwo(int $owner, string $currency, int $whitelabel)
     {
         return User::select('users.id', 'users.id as user_id', 'users.username')
-            ->select('u.id', 'u.id as user_id', 'u.username')
-            ->where('u.whitelabel_id', $whitelabel)
-            ->whereIn('u.id', function ($query) use ($owner, $currency) {
+            ->where('whitelabel_id', $whitelabel)
+            ->whereIn('id', function ($query) use ($owner, $currency) {
                 $query->select('user_id')
                     ->from(DB::raw('(WITH RECURSIVE all_agents AS (
                     SELECT agents.user_id
-                    FROM site.agents AS agents
-                    JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
-                    WHERE agents.user_id = ?
-                    AND currency_iso = ?
+                    FROM agents
+                    JOIN agent_currencies ON agents.id = agent_currencies.agent_id
+                    WHERE agents.user_id = :owner
+                    AND currency_iso = :currency
                     UNION ALL
                     SELECT agents.user_id
-                    FROM site.agents AS agents
-                    JOIN site.agent_currencies AS agent_currencies ON agents.id = agent_currencies.agent_id
+                    FROM agents
+                    JOIN agent_currencies ON agents.id = agent_currencies.agent_id
                     JOIN all_agents ON agents.owner_id = all_agents.user_id
-                    WHERE agent_currencies.currency_iso = ?
+                    WHERE agent_currencies.currency_iso = :currency2
                 ) SELECT user_id FROM all_agents) as all_agents_subquery'))
-                    ->setBindings([$owner, $currency, $currency]);
+                    ->setBindings(['owner' => $owner, 'currency' => $currency, 'currency2' => $currency]);
             })
-            ->orderBy('u.username', 'ASC')
+            ->orderBy('username', 'ASC')
             ->get();
     }
     /**
