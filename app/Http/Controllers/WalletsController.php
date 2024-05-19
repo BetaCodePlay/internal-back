@@ -229,7 +229,7 @@ class WalletsController extends Controller
         $timezone         = session()->get('timezone');
         $data['timezone'] = $timezone;
         $token            = session('wallet_access_token');
-        $resp             = Wallet::getTransactionsByWalletAssiria($data, $token);
+        $resp             = Wallet::getTransactionsByWalletAssiriaBack($data);
 
         $transactions = Wallet::getTransactionsByWalletAndClient(80, 10, 2000);
 
