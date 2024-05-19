@@ -32,12 +32,16 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@blockAgentsData'
     ]);
 
+    Route::get('update-agent-quantities-from-tree', [
+        'as' => 'agents.update.quantities.from.tree',
+        'uses' => 'AgentsController@updateAgentQuantitiesFromTree'
+    ]);
+
     // Get Tree Josn
     Route::get('get/tree/users', [
         'as' => 'agents.get.tree.users',
         'uses' => 'AgentsController@getTreeUsers'
     ]);
-
 
     // Get Tree Json format
     Route::get('get/tree/users/format', [
