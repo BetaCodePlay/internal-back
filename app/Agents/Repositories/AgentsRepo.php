@@ -509,7 +509,7 @@ class AgentsRepo
 
     public function getAgentsAllByOwnerTwo(int $owner, string $currency, int $whitelabel)
     {
-        return DB::table('site.users as u')
+        return User::select('users.id', 'users.id as user_id', 'users.username')
             ->select('u.id', 'u.id as user_id', 'u.username')
             ->where('u.whitelabel_id', $whitelabel)
             ->whereIn('u.id', function ($query) use ($owner, $currency) {
