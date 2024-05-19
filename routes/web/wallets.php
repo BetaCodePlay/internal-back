@@ -4,6 +4,10 @@
  * Wallets routes
  */
 Route::group(['prefix' => 'wallets', 'middleware' => ['auth']], function () {
+    Route::get('transactions-assiria', [
+        'as' => 'wallets.transactions.assiria',
+        'uses' => 'WalletsController@transactionsAssiria'
+    ]);
 
     // Create wallets
     Route::get('create/{user}/{username}/{uuid}/{currency}', [

@@ -12,6 +12,9 @@ use Dotworkers\Wallet\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class WalletsController
@@ -188,5 +191,24 @@ class WalletsController extends Controller
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
+    }
+
+
+    /**
+     * Retrieves and formats Assiria transactions.
+     *
+     * This method retrieves transactions from the Assiria collection and formats them according to
+     * Assiria specifications.
+     *
+     * @param Request $request The HTTP request containing necessary data for processing.
+     *
+     * @return array|Response The formatted transaction data or an error response.
+     *
+     * @throws ContainerExceptionInterface If a container exception occurs during processing.
+     * @throws NotFoundExceptionInterface If a dependency is not found during processing.
+     */
+    public function transactionsAssiria(Request $request)
+    : array|Response {
+        return $this->transactionsCollection->formatTransactionsAssiria($request);
     }
 }
