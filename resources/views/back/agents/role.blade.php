@@ -317,14 +317,15 @@
                     <div class="tab-pane fade" id="roleTabBets" role="tabpanel" aria-labelledby="bet-tab">
                         <div class="tab-body">
                             <form autocomplete="destroy" class="table-load">
-                                <table id="table-bets" class="display nowrap" data-route="{{ route('users.user-ip-data') }}?userId={{ $authUser->id}}">
+                                <table id="table-bets" class="display nowrap" data-route="{{ route('wallets.transactions.assiria') }}?userId={{ $authUser->id}}">
                                     <thead>
                                     <tr>
-                                        <th>{{ _i('Date') }}</th>
-                                        <th data-priority="3">{{ _i('Origin') }}</th>
-                                        <th data-priority="1">{{ _i('Destination') }}</th>
+                                        <th data-priority="3">{{ _i('N') }}</th>
+                                        <th data-priority="1">{{ _i('Fecha') }}</th>
+                                        <th>{{ _i('ID') }}</th>
+                                        <th>{{ _i('Concept') }}</th>
                                         <th data-priority="2">{{ _i('Amount') }}</th>
-                                        <th>{{ _i('Balance') }}</th>
+                                        <th>{{ _i('Description') }}</th>
                                     </tr>
                                     </thead>
                                 </table>
