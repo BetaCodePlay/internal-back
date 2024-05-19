@@ -2975,7 +2975,7 @@ foreach ($agents as $agent) {
         ->where('id', $agent->id)
         ->first();
 
-    dd($agentInfo);
+    dd($agent, $agentInfo);
 
     if ($agentInfo) {
         $isOwner = $childrenTree->contains('owner_id', $agentInfo->id);
