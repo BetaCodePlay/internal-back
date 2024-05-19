@@ -317,7 +317,7 @@
                     <div class="tab-pane fade" id="roleTabBets" role="tabpanel" aria-labelledby="bet-tab">
                         <div class="tab-body">
                             <form autocomplete="destroy" class="table-load">
-                                <table id="table-bets" class="display nowrap" data-route="{{ route('wallets.transactions.assiria') }}?userId={{ $authUser->id}}">
+                                <table id="table-bets" class="display nowrap" data-route="{{ route('wallets.transactions.assiria') }}?wallet={{ 80 }}">
                                     <thead>
                                     <tr>
                                         <th data-priority="3">{{ _i('N') }}</th>
