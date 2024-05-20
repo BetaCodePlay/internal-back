@@ -292,9 +292,7 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    if (Roles.globaltable !== undefined) {
-                        Roles.globaltable.ajax.reload();
-                    }
+                    Roles.globaltable.ajax.reload();
                 }
 
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
