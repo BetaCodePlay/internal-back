@@ -17,10 +17,6 @@ class Roles {
         let $table = $('#table-roles');
         let $route = $table.data('route');
 
-        if($table.length > 0) {
-
-        }
-
         $(document).on('click', '.currentDataRole', function () {
             let $username = $(this).data('username');
             let $userid = $(this).data('userid');
@@ -292,7 +288,9 @@ class Roles {
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
-                    Roles.globaltable.ajax.reload();
+                    if (Roles.globaltable !== undefined) {
+                        Roles.globaltable.ajax.reload();
+                    }
                 }
 
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
@@ -601,7 +599,7 @@ class Roles {
                     tableRoles.destroy();
                 }
 
-                tableRoles = tableRolesID.DataTable({
+                Roles.globaltable = tableRolesID.DataTable({
                     serverSide: true,
                     ajax: $route,
                     fixedHeader: true,
@@ -647,7 +645,9 @@ class Roles {
                         $('.page-role .page-body .table-load').addClass('table-complete');
                         $('.page-role .page-body .loading-style').hide();
                     },
-                })
+                });
+
+                 tableRoles = Roles.globaltable;
             }
 
             if ($target === tabTransaction) {
