@@ -286,6 +286,9 @@ class Roles {
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
 
+                console.log(Roles.globaluserid);
+                console.log(Roles.globaluseridcurrent);
+
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
