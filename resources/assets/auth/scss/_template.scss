@@ -296,7 +296,7 @@
     .btn-send {
         font-size: 15px;
         font-weight: 500;
-        color: #fff;
+        color: $theme-color;
         line-height: 1.2;
         display: block;
         padding: 14px 20px;
@@ -307,6 +307,7 @@
     }
 
     .btn-send:hover, .btn-send:focus {
+        color: $theme-color;
         background: $theme-hover;
     }
 
@@ -643,7 +644,7 @@
     .btn-login {
         font-size: 15px;
         font-weight: 500;
-        color: #fff;
+        color: $theme-color;
         line-height: 1.2;
         display: block;
         padding: 14px 20px;
@@ -906,7 +907,7 @@
     .modal-reset-password .btn-reset-password {
         font-size: 15px;
         font-weight: 500;
-        color: #fff;
+        color: $theme-color;
         line-height: 1.2;
         display: block;
         padding: 14px 20px;
