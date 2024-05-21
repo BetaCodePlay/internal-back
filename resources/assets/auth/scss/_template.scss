@@ -301,13 +301,13 @@
         display: block;
         padding: 14px 20px;
         width: 100%;
-        background: #7D2DF5;
+        background: $theme;
         border-radius: 10px;
         transition: 0.3s;
     }
 
     .btn-send:hover, .btn-send:focus {
-        background: #964FFF;
+        background: $theme-hover;
     }
 
     .container-auth .content .auth-title {
@@ -388,7 +388,7 @@
     }
 
     .wrap-login .login-form .login-form-ex .login-nav .btn.active {
-        border-bottom-color: #7D2DF5;
+        border-bottom-color: $theme;
     }
 
     .wrap-login .login-form .login-form-ex .login-form-line {
@@ -587,7 +587,7 @@
     }
 
     .input-login:focus {
-        border-color: #7D2DF5 !important;
+        border-color: $theme !important;
     }
 
     .a-login {
@@ -648,13 +648,13 @@
         display: block;
         padding: 14px 20px;
         width: 100%;
-        background: #7D2DF5;
+        background: $theme;
         border-radius: 10px;
         transition: 0.3s;
     }
 
     .btn-login:hover, .btn-login:focus {
-        background: #964FFF;
+        background: $theme-hover;
     }
 
     .btn-login-google {
@@ -807,7 +807,7 @@
         width: 48px;
         height: 48px;
         border-radius: 50%;
-        border-bottom: 4px solid #7D2DF5;
+        border-bottom: 4px solid $theme;
         border-left: 4px solid transparent;
     }
     @keyframes rotation {
@@ -876,7 +876,7 @@
 
     .modal-reset-password .reset-password-content .reset-password-content-ex .reset-password-success {
         display: none;
-        color: #7D2DF5;
+        color: $theme;
         font-size: 62px;
         line-height: 1;
     }
@@ -911,13 +911,13 @@
         display: block;
         padding: 14px 20px;
         width: 100%;
-        background: #7D2DF5;
+        background: $theme;
         border-radius: 10px;
         transition: 0.3s;
     }
 
     .btn-reset-password:hover, .btn-reset-password:focus {
-        background: #964FFF;
+        background: $theme-hover;
     }
 
     .modal-reset-password .reset-password-close {
