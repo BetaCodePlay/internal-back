@@ -247,13 +247,13 @@ class Roles {
                         let {wallet} = data;
                         resolve(wallet);
 
-                        if (Roles.globaluserid === Roles.globaluseridcurrent) {
+                        /*if (Roles.globaluserid === Roles.globaluseridcurrent) {
                             window.location.reload()
                         } else {
                             if (Roles.globaltable !== undefined) {
                                 Roles.globaltable.ajax.reload();
                             }
-                        }
+                        }*/
                     },
                     error: function (error) {
                         console.error("Error obtaining user information:", error);
