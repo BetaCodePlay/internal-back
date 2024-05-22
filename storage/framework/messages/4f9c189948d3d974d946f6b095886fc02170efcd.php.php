@@ -9,9 +9,10 @@
                         <?php endif; ?>
                     <?php endif; ?>
                 </a>
-                <a href="<?php echo e(route('core.dashboard')); ?>" class="navbar-brand-mini">
+                <a href="<?php echo e(route('agents.role.dashboard')); ?>" class="navbar-brand-mini">
                     <img src="<?php echo e($favicon); ?>" alt="Logo" width="180" height="37" class="img-logo-mini">
                 </a>
+
                 <a class="js-side-nav u-header__nav-toggler align-self-center ml-auto collapse-menu-action" href="#!"
                    data-hssm-class="u-side-nav--mini u-sidebar-navigation-v1--mini"
 
@@ -23,7 +24,6 @@
 
 
             <div class="col-auto d-flex g-py-12 ml-auto">
-
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">
                         <div class="d-block">
@@ -43,9 +43,10 @@
                                     </ul>
                                 </div>
                             <?php endif; ?>
-
+                        <!--
                             <div class="d-inline-block g-pos-rel btn-mini-h notified-active"><i class="fa-regular fa-bell"></i></div>
                             <div class="d-inline-block g-pos-rel btn-mini-h pos-mobile-hidden"><i class="fa-solid fa-gear"></i></div>
+                            -->
                             <div class="d-inline-block g-pos-rel pos-mobile-hidden">
                                 <?php
                                     $avatar = \App\Users\Users::getAvatar();

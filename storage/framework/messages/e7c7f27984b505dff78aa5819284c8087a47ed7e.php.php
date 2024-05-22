@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <p><span class="font-weight-bold text-form"><?php echo e(_i('Are you sure you want to reset the agent key?')); ?></span> <span class="username-form"></span></p>
                 <p><?php echo e(_i('Check for security that the user is correct, when logging in the agent will be able to enter a new password.')); ?></p>
-                <div class="form">
+                <form class="form" autocomplete="destroy">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
@@ -19,12 +19,12 @@
 						            <span class="btn-show-pass">
 							            <i class="fa fa-eye-slash"></i>
 						            </span>
-                                    <input class="form-control" type="password" name="password" id="password-role-reset" autocomplete="off" placeholder="<?php echo e(_i('At least 8 characters')); ?>" required>
+                                    <input class="form-control" type="password" id="password-role-reset" autocomplete="off" placeholder="<?php echo e(_i('At least 8 characters')); ?>" required>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">

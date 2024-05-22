@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo e(mix('css/vendor.min.css', 'auth')); ?> ">
     <link rel="stylesheet" href="<?php echo e(mix('css/custom.min.css', 'auth')); ?> ">
+    <link rel="stylesheet" href="<?php echo e(asset("themes/$theme")); ?>?v=1.011">
     <!--===============================================================================================-->
 </head>
 <body class="body-auth">

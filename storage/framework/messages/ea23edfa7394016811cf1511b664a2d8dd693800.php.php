@@ -145,4 +145,18 @@ class Roles
      */
     public static $admin_Beet_sweet = 19;
 
+    /**
+     * Hunder
+     *
+     * @var int
+     */
+    public static $hunder = 20;
+
+    /**
+     * Admin Assiria
+     *
+     * @var int
+     */
+    public static $admin_assiria = 21;
+
 }

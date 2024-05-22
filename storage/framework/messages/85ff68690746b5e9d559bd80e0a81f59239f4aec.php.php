@@ -35,6 +35,19 @@ class Security
     }
 
     /**
+     * Delete assign role by security
+     *
+     * @param int $user User ID
+     * @return mixed
+     */
+    public static function deleteAssignRole($user)
+    {
+        $rolesRepo  = new RolesRepo();
+        $assignRole = $rolesRepo->deleteAssignRole($user);
+        return $assignRole;
+    }
+
+    /**
      * Check user permissions
      *
      * @param int $permission Permission

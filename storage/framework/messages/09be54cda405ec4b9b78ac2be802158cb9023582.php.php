@@ -64,8 +64,7 @@ class BackOfficeServiceProvider extends ServiceProvider
             'all_currencies'              => $allCurrencies,
             'global_timezones'            => $coreCollection->formatTimezones(),
             'free_currency'               => Configurations::getFreeCurrency(),
-          //  'logo'                        => Configurations::getLogo(true),
-            'logo'                        => 'https://bestcasinos-llc.s3.us-east-2.amazonaws.com/logos/default/logo.png',
+            'logo'                        => Configurations::getLogo(true),
             'iphone'                      => ($agent->browser() == 'Safari')
                                              && ($agent->isMobile()
                                                  || $agent->isPhone()
@@ -106,6 +105,10 @@ class BackOfficeServiceProvider extends ServiceProvider
     : void {
         if (! $hostHeader = $request->server('HTTP_HOST')) {
             throw new InvalidArgumentException('Wrong host');
+        }
+
+        if ($this->app->environment() === 'local') {
+            $hostHeader = 'dev-back.bestcasinos.lat';
         }
 
         $configuration = $this->setConfiguration(
@@ -235,9 +238,12 @@ class BackOfficeServiceProvider extends ServiceProvider
         Agent $agent,
         string $hostHeader
     ) {
+        if (app()->runningInConsole()) {
+            return [];
+        }
+
         $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
-      //  $configurations = Configurations::getConfigurationsByURL($domain);
-        $configurations = Configurations::getConfigurationsByURL('backoffice.test');
+        $configurations = Configurations::getConfigurationsByURL($domain);
 
         if ($configurations->isEmpty()) {
             throw new InvalidArgumentException(

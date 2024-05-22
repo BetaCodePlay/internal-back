@@ -11,11 +11,15 @@ use Dotworkers\Configurations\Enums\ProviderTypes;
 use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
+use Dotworkers\Security\Enums\Permissions;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Gate;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Utilities\Helper;
 
 
@@ -388,8 +392,7 @@ class TransactionsRepo
         $typeUser        = $request->has('typeUser') ? $request->get('typeUser') : 'all';
         $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
         $username        = $request->get('search')['value'] ?? null;
-
-        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather(
+        $childrenIds     = $this->reportAgentRepo->getIdsChildrenFromFather(
             $userId,
             $currency,
             Configurations::getWhitelabel()
@@ -397,16 +400,16 @@ class TransactionsRepo
 
         $orderCol = [
             'column' => 'date',
-            'order' => 'asc',
+            'order'  => 'asc',
         ];
 
         if ($request->has('order') && ! empty($request->get('order'))) {
             $orderCol = [
                 'column' => $request->get('columns')[$request->get('order')[0]['column']]['data'],
-                'order' => $request->get('order')[0]['dir']
+                'order'  => $request->get('order')[0]['dir']
             ];
         }
-        DB::connection()->enableQueryLog();
+
         $transactionsQuery = Transaction::select([
             'users.username',
             'transactions.user_id',
@@ -443,7 +446,7 @@ class TransactionsRepo
                 $transactionsQuery->where('transactions.transaction_type_id', TransactionTypes::$debit);
             }
         }
-        Log::info(__METHOD__ . " Transaction repo ", [$request]);
+
         if (! is_null($username)) {
             $transactionsQuery->where('transactions.data->from', 'like', "%$username%")->orWhere(
                 'transactions.data->to',
@@ -463,8 +466,7 @@ class TransactionsRepo
                     ->orWhere('transactions.transaction_status_id', 'like', "%$searchValue%");
             });
         }
-        $queries = \DB::getQueryLog();
-        Log::info(__METHOD__ . " Transaction repo queries ", [ $queries]);
+
         if (! empty($orderCol)) {
             if ($orderCol['column'] == 'date') {
                 $transactionsQuery->orderBy('transactions.created_at', $orderCol['order']);
@@ -498,9 +500,8 @@ class TransactionsRepo
             }
         }
 
-        $resultCount   = $transactionsQuery->count();
-        $slicedResults = $transactionsQuery->offset($start)->limit($length)->get();
-
+        $resultCount      = $transactionsQuery->count();
+        $slicedResults    = $transactionsQuery->offset($start)->limit($length)->get();
         $formattedResults = $slicedResults->map(function ($transaction) {
             $formattedDateTime             = Carbon::parse($transaction->created_at)->format('Y-m-d H:i:s');
             $formattedDateTimeWithTimezone = Carbon::parse($formattedDateTime)->setTimezone(
@@ -510,14 +511,14 @@ class TransactionsRepo
             $from     = $transaction->data->from ?? null;
             $to       = $transaction->data->to ?? null;
             $balance  = $transaction->data->balance ?? null;
-            //$receiver = $transaction->data->from === $transaction->username ? $transaction->data->from : $to;
             $receiver = $to;
+
             return [
                 $formattedDateTimeWithTimezone,
                 $from,
                 $receiver,
-                [number_format($transaction->amount, 2), $transaction->transaction_type_id],
-                number_format((float)$balance, 2)
+                [formatAmount($transaction->amount), $transaction->transaction_type_id],
+                formatAmount((float)$balance)
             ];
         })->toArray();
 
@@ -664,6 +665,99 @@ class TransactionsRepo
 
         return [$transactions, $countTransactions];
     }
+
+    /**
+     * Get user and provider transactions paginated.
+     *
+     * Retrieve paginated transaction data based on a specified user and provider(s).
+     * Transactions can be filtered based on a specific type.
+     *
+     * @param Request $request
+     * @param string|int $agent
+     * @return LengthAwarePaginator
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function getUserProviderTransactionsPaginated(Request $request, string|int $agent)
+    : LengthAwarePaginator {
+        $timezone  = $request->input('timezone', session()->get('timezone'));
+        $startDate = Utils::startOfDayUtc(
+            $request->has('startDate') ? $request->get('startDate') : date('Y-m-d'),
+            'Y-m-d',
+            'Y-m-d H:i:s',
+            $timezone
+        );
+        $endDate   = Utils::endOfDayUtc(
+            $request->has('endDate') ? $request->get('endDate') : date('Y-m-d'),
+            'Y-m-d',
+            'Y-m-d H:i:s',
+            $timezone
+        );
+        $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+
+        $typeTransaction = 'credit';
+        if (Gate::allows('access', Permissions::$users_search)) {
+            $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
+        }
+
+        $currency  = session('currency');
+        $providers = [Providers::$agents, Providers::$agents_users];
+
+        $arraySonIds  = $this->reportAgentRepo->getIdsChildrenFromFather(
+            $agent,
+            session('currency'),
+            Configurations::getWhitelabel()
+        );
+        $transactions = Transaction::select(
+            'users.username',
+            'transactions.user_id',
+            'transactions.id',
+            'transactions.amount',
+            'transactions.transaction_type_id',
+            'transactions.created_at',
+            'transactions.provider_id',
+            'transactions.data',
+            'transactions.transaction_status_id',
+            'transactions.data->balance AS balance_final'
+        )
+            ->join('users', 'transactions.user_id', '=', 'users.id')
+            ->whereIn('transactions.user_id', $arraySonIds)
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->where('transactions.currency_iso', $currency)
+            ->whereIn('transactions.provider_id', $providers);
+
+        if ($typeUser === 'agent') {
+            $transactions->whereNull('data->provider_transaction');
+        } elseif ($typeUser === 'provider') {
+            $transactions->whereNotNull('data->provider_transaction');
+        }
+
+        if (! empty($request->get('query'))) {
+            $query = $request->get('query');
+            $transactions->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->where('data->from', 'LIKE', "%$query%")
+                    ->orWhere('data->to', 'LIKE', "%$query%");
+            });
+        }
+
+        $typeTransactionId = null;
+
+        if ($typeTransaction === 'credit') {
+            $typeTransactionId = 1;
+        }
+
+        if ($typeTransaction === 'debit') {
+            $typeTransactionId = 2;
+        }
+
+        if (! is_null($typeTransactionId)) {
+            $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
+        }
+
+        return $transactions->orderBy('transactions.created_at', 'desc')
+            ->paginate($request->input('per_page', 10));
+    }
+
 
     /**
      * @param $user
@@ -1707,4 +1801,143 @@ class TransactionsRepo
         $transaction->save();
         return $transaction;
     }
+
+    /**
+     * Get daily movements of children.
+     *
+     * Retrieves the daily movements of children for a given user ID, whitelabel ID, and currency.
+     *
+     * @param int|string $userId The ID of the user.
+     * @param int|string $whitelabelId The ID of the whitelabel.
+     * @param string $currency The currency.
+     *
+     * @return array Returns an array containing the daily movements of children, including deposits, withdrawals,
+     *               profit, start date, end date, and children IDs.
+     *               - 'deposits': Total deposits made by children.
+     *               - 'withdrawals': Total withdrawals made by children.
+     *               - 'profit': Total profit made by children.
+     *               - 'startDate': The start date of the daily movements.
+     *               - 'endDate': The end date of the daily movements.
+     *               - 'childrenIds': The IDs of children belonging to the user.
+     */
+    public function getDailyMovementsOfChildren(int|string $userId, int|string $whitelabelId, string $currency)
+    : array {
+        $today         = date('Y-m-d');
+        $startDate     = Utils::startOfDayUtc($today);
+        $endDate       = Utils::endOfDayUtc($today);
+        $providerTypes = [ProviderTypes::$dotworkers, ProviderTypes::$payment, ProviderTypes::$agents];
+
+        $deposits = $this->totalByProviderTypesWithUser(
+            $whitelabelId,
+            TransactionTypes::$credit,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate,
+            $userId
+        );
+
+        $withdrawals = $this->totalByProviderTypesWithUser(
+            $whitelabelId,
+            TransactionTypes::$debit,
+            $currency,
+            $providerTypes,
+            $startDate,
+            $endDate,
+            $userId
+        );
+
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather($userId, $currency, $whitelabelId);
+        $totalProfit = $this->calculateTotalProfit($childrenIds, $currency, $whitelabelId, $startDate, $endDate);
+
+        return [
+            'deposits'    => formatAmount($deposits, $currency),
+            'withdrawals' => formatAmount($withdrawals, $currency),
+            'profit'      => formatAmount($totalProfit, $currency),
+            'startDate'   => $startDate,
+            'endDate'     => $endDate,
+            'childrenIds' => $childrenIds,
+        ];
+    }
+
+    /**
+     * Calculate the total profit of a user's children from the start of the current month to today.
+     *
+     * @param string|int $userId The ID of the parent user.
+     * @param string $currency The currency code (ISO 4217 format).
+     * @param string|int $whitelabelId The ID of the whitelabel.
+     * @return float The total profit of the user's children for the current month up to today.
+     */
+    public function calculateChildrenTotalProfitForCurrentMonthToDate(
+        string|int $userId,
+        string $currency,
+        string|int $whitelabelId
+    )
+    : float {
+        $childrenIds = $this->reportAgentRepo->getIdsChildrenFromFather($userId, $currency, $whitelabelId);
+        $startDate   = now()->startOfMonth()->format('Y-m-d H:i:s');
+        $endDate     = now()->format('Y-m-d H:i:s');
+
+        return $this->calculateTotalProfit($childrenIds, $currency, $whitelabelId, $startDate, $endDate);
+    }
+
+    /**
+     * Calculate the total profit for a given set of user IDs within a date range.
+     *
+     * @param array $userIds Array of user IDs.
+     * @param string $currency The currency code (ISO 4217 format).
+     * @param string|int $whitelabelId The ID of the whitelabel.
+     * @param string $startDate The start date for the profit calculation (Y-m-d H:i:s format).
+     * @param string $endDate The end date for the profit calculation (Y-m-d H:i:s format).
+     * @return float The total profit for the given user IDs and date range.
+     */
+    private function calculateTotalProfit(
+        array $userIds,
+        string $currency,
+        string|int $whitelabelId,
+        string $startDate,
+        string $endDate
+    )
+    : float {
+        return DB::table('closures_users_totals_2023_hour')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereIn('user_id', $userIds)
+            ->where([
+                'whitelabel_id' => $whitelabelId,
+                'currency_iso'  => $currency,
+            ])
+            ->sum('profit');
+    }
+
+    /**
+     * Sum the values of a specific field in the closures_users_totals_2023_hour table.
+     *
+     * @param array $params An associative array containing the parameters for the query:
+     *                        - userId: The user ID.
+     *                        - whitelabelId: The whitelabel ID.
+     *                        - currency: The currency ISO.
+     *                        - startDate: The start date for the date range.
+     *                        - endDate: The end date for the date range.
+     *                        - field: The name of the field to sum.
+     * @return float|null      The sum of the specified field, or null if no records match the criteria.
+     */
+    public function sumByField(array $params)
+    : ?float {
+        return DB::table('closures_users_totals_2023_hour')
+            ->whereIn(
+                'user_id',
+                $this->reportAgentRepo->getIdsChildrenFromFather(
+                    $params['userId'],
+                    $params['currency'],
+                    $params['whitelabelId']
+                )
+            )
+            ->where('created_at', '>=', $params['lastMonth'])
+            ->where([
+                'whitelabel_id' => $params['whitelabelId'],
+                'currency_iso'  => $params['currency'],
+            ])
+            ->sum($params['field']);
+    }
+
 }

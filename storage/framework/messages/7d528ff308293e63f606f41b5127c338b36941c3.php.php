@@ -110,8 +110,6 @@ class ClosuresUsersTotals2023Repo
         }
 
         return json_decode(json_encode($userArray, true));
-
-
     }
 
     /**
@@ -149,11 +147,10 @@ class ClosuresUsersTotals2023Repo
             AND site.closures_users_totals_2023.currency_iso = '{$currency}'
             AND site.closures_users_totals_2023.start_date BETWEEN '{$startDate}' AND '{$endDate}'
             GROUP BY site.closures_users_totals_2023.{$fieldGroup}");
-
         } else {
 
             $arrayUsers = implode(',', $arrayUsers);
-//dd($arrayUsers);
+            //dd($arrayUsers);
             $closure = DB::select("SELECT
                 site.closures_users_totals_2023.{$fieldGroup},
                 SUM (site.closures_users_totals_2023.played) as total_played,
@@ -170,7 +167,6 @@ class ClosuresUsersTotals2023Repo
         }
 
         return $closure;
-
     }
 
     /**
@@ -252,6 +248,8 @@ class ClosuresUsersTotals2023Repo
         return DB::select('SELECT * FROM site.get_closure_totals_by_provider_and_maker(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $provider, $username]);
     }
 
+
+
     /**
      * Get Closures Totals By Provider And Maker Global
      *
@@ -329,7 +327,7 @@ class ClosuresUsersTotals2023Repo
     }
 
 
-     /**
+    /**
      * @param $whitelabel
      * @param $currency
      * @param $startDate
@@ -342,7 +340,7 @@ class ClosuresUsersTotals2023Repo
      */
     public function getClosureByUsername($whitelabel, $currency, $startDate, $endDate, $ownerId, $username, $limit, $page)
     {
-        return DB::select('SELECT * FROM site.get_closure_by_username(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$username,$limit,$page]);
+        return DB::select('SELECT * FROM site.get_closure_by_username(?,?,?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $username, $limit, $page]);
     }
 
     /**
@@ -444,7 +442,7 @@ class ClosuresUsersTotals2023Repo
                                     AND (cut.user_id =  ? or cut.user_id  is null)
                                     GROUP BY p.id, p.name, cut.provider_id
                                     ORDER BY p.id DESC
-                                    ', [$arrayProvider,$whitelabel, $currency, $startDate, $endDate, $userId]);
+                                    ', [$arrayProvider, $whitelabel, $currency, $startDate, $endDate, $userId]);
     }
 
     /**
@@ -540,7 +538,7 @@ class ClosuresUsersTotals2023Repo
                                     AND (cut.user_id in (SELECT * FROM site.get_ids_children_from_father(?,?,?)) or cut.user_id  is null)
                                     GROUP BY p.id, p.name, cut.provider_id
                                     ORDER BY p.id DESC
-                                    ', [$arrayProvider,$whitelabel, $currency, $startDate, $endDate, $ownerId,$currency,$whitelabel]);
+                                    ', [$arrayProvider, $whitelabel, $currency, $startDate, $endDate, $ownerId, $currency, $whitelabel]);
     }
 
 
@@ -662,9 +660,9 @@ class ClosuresUsersTotals2023Repo
      * @param string $arrayProvider Array Provider Id
      * @return array
      */
-    public function getTotalsClosurePaymentsByOwner(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId,string $arrayProvider)
+    public function getTotalsClosurePaymentsByOwner(int $whitelabel, string $currency, string $startDate, string $endDate, int $ownerId, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_totals_closure_payments_owner(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId,$arrayProvider]);
+        return DB::select('SELECT * FROM site.get_totals_closure_payments_owner(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $ownerId, $arrayProvider]);
     }
 
     /**
@@ -677,9 +675,9 @@ class ClosuresUsersTotals2023Repo
      * @param string $arrayProvider Array Provider Id
      * @return array
      */
-    public function getTotalsClosurePaymentsByUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $user,string $arrayProvider)
+    public function getTotalsClosurePaymentsByUser(int $whitelabel, string $currency, string $startDate, string $endDate, int $user, string $arrayProvider)
     {
-        return DB::select('SELECT * FROM site.get_totals_closure_payments_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $user,$arrayProvider]);
+        return DB::select('SELECT * FROM site.get_totals_closure_payments_user(?,?,?,?,?,?)', [$whitelabel, $currency, $startDate, $endDate, $user, $arrayProvider]);
     }
 
     /**
@@ -709,7 +707,6 @@ class ClosuresUsersTotals2023Repo
                      and u.whitelabel_id = {$whitelabel}
                      and uc.currency_iso = '{$currency}'
                     ) ORDER BY type_user ASC, username");
-
     }
 
     /**
@@ -741,7 +738,6 @@ class ClosuresUsersTotals2023Repo
                      and u.whitelabel_id = ?
                     )
                     ORDER BY type_user,username ASC', [$user, $whitelabel, $currency, $user, $currency, $whitelabel]);
-
     }
 
     /**
@@ -758,22 +754,17 @@ class ClosuresUsersTotals2023Repo
 
         if (is_null($provider_name)) {
             switch ($idProvider) {
-                case 171:
-                {
-                    $provider_name = 'Bet Connections';
-                    break;
-                }
-                default:
-                {
-                    $provider_name = 'Sin definir';
-                    break;
-                }
+                case 171: {
+                        $provider_name = 'Bet Connections';
+                        break;
+                    }
+                default: {
+                        $provider_name = 'Sin definir';
+                        break;
+                    }
             }
         }
 
         return $provider_name;
-
-
     }
-
 }

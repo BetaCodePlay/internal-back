@@ -9,9 +9,6 @@ use App\Agents\Repositories\AgentsRepo;
 use App\Core\Repositories\TransactionsRepo;
 use App\Http\Requests\TransactionRequest;
 use Dotworkers\Configurations\Enums\Status;
-use Dotworkers\Configurations\Enums\TransactionStatus;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -49,7 +46,7 @@ class UserTransactionService extends BaseTransactionService
      */
     public function manageCreditDebitTransactions(TransactionRequest $request)
     : mixed {
-        $userAuthId = $request->user()->id;
+        $userAuthId       = $request->user()->id;
         $userToAddBalance = $request->get('user');
 
         //$user = auth()->user();
@@ -62,10 +59,10 @@ class UserTransactionService extends BaseTransactionService
             );
         }
 
-        $transactionType = $request->get('transaction_type');
+        $transactionType   = $request->get('transaction_type');
         $transactionAmount = $request->get('amount');
-        $currency        = session('currency');
-        $ownerAgent      = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
+        $currency          = session('currency');
+        $ownerAgent        = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
 
         if ($isBalanceInsufficient = $this->isInsufficientBalance($transactionType, $transactionAmount, $ownerAgent)) {
             return $isBalanceInsufficient;

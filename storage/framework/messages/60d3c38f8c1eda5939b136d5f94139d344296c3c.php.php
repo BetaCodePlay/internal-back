@@ -29,6 +29,20 @@ class RolesRepo
     }
 
     /**
+     * Delete assign role
+     *
+     * @param int $id user ID
+     * @return mixed
+     */
+    public function deleteAssignRole($id)
+    {
+        $role =\DB::table('role_user')
+            ->where('user_id', $id)
+            ->delete();
+        return $role;
+    }
+
+    /**
      *  Get permissions by user
      *
      * @param int $user User ID

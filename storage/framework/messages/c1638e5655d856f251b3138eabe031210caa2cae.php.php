@@ -7414,9 +7414,8 @@ if (! function_exists('convertArrayToObject')) {
 }
 
 if (! function_exists('authenticatedUserBalance')) {
-    function getAuthenticatedUserBalance()
-    : string
-    {
+    function getAuthenticatedUserBalance($hasCurrency = false)
+    : string {
         $authenticatedUser = auth()->user();
 
         if (! $authenticatedUser) {
@@ -7437,17 +7436,60 @@ if (! function_exists('authenticatedUserBalance')) {
             ? $user?->balance
             : $user?->data?->wallet?->balance;
 
-        return number_format($balance, 2);
+        if ($hasCurrency) {
+            return formatAmount($balance, $currency);
+        }
+
+        return formatAmount($balance);
     }
 }
 
 if (! function_exists('getUserIdByUsernameOrCurrent')) {
-    function getUserIdByUsernameOrCurrent(Request $request)
+    function getUserIdByUsernameOrCurrent(Request $request, string $whitelabel = null)
     {
         if ($request->has('username')) {
-            $username = $request->input('username');
-            return User::where('username', $username)->value('id');
+            $username     = $request->input('username');
+            $whitelabelId = is_null($whitelabel) ? Configurations::getWhitelabel() : $whitelabel;
+            return User::where('username', $username)
+                ->where([
+                    'username'      => $username,
+                    'whitelabel_id' => $whitelabelId,
+                ])
+                ->value('id');
         }
         return Auth::id();
+    }
+}
+
+
+if (! function_exists('imageUrlFormat')) {
+    function imageUrlFormat($game, $bucket)
+    : string {
+        $image      = $game->image;
+        $imageLobby = $game->lobby_image;
+
+        $image = $game->provider_id == Providers::$softgaming
+            ? $image
+            : "https://bestcasinos-llc.s3.us-east-2.amazonaws.com/providers/$bucket/200x200/$image";
+
+        if (! is_null($imageLobby)) {
+            $s3Directory = Configurations::getS3Directory();
+            $image       = "https://24livewhitelabel.s3.amazonaws.com/$s3Directory/lobby/$imageLobby";
+        }
+
+        return $image;
+    }
+}
+
+if (! function_exists('formatAmount')) {
+    function formatAmount($amount, $includeCurrency = '', $currencySymbol = '$')
+    : string {
+        $formattedAmount = number_format($amount, 2);
+
+        if (! empty($includeCurrency)) {
+            $formattedAmount = $formattedAmount . ' ' . $includeCurrency;
+        }
+
+        return $currencySymbol . ' ' . $formattedAmount;
     }
 }

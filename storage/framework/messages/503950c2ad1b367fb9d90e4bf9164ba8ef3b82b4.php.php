@@ -1849,4 +1849,25 @@ class Permissions
      * @var int
      */
     public static $debit_pix_menu = 278;
+
+    /**
+     * Dashboard assiria
+     *
+     * @var int
+     */
+    public static $dashboard_assiria = 279;
+
+    /**
+     * Rol assiria
+     *
+     * @var int
+     */
+    public static $rol_assiria = 280;
+
+    /**
+     * Reports assiria
+     *
+     * @var int
+     */
+    public static $reports_assiria = 281;
 }

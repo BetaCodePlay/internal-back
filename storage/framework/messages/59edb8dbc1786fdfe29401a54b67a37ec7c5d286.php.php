@@ -26,6 +26,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -145,6 +146,7 @@ class AuthController extends Controller
 
                 if (Security::checkPermissions(Permissions::$dotpanel_login, $permissions)) {
                     $permissionsMerge = $permissions;
+                    /*
                     if ($user !== 89985){
                         //TODO IF AGENT ADD NEW PERMISSIONS
                         if(Auth::user()->type_user == TypeUser::$agentMater){
@@ -154,13 +156,14 @@ class AuthController extends Controller
                         if (in_array(Roles::$agents, $roles) || in_array(Roles::$admin_Beet_sweet, $roles) && Auth::user()->username == 'admin') {
                             $permissionsMerge = array_merge($permissions,[Permissions::$dashboard,Permissions::$dashboard_widgets]);
                         }
-                    }
+                    }*/
 
 
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
                     session()->put('country_iso', $profile->country_iso);
-                    session()->put('permissions', $permissionsMerge);
+                    //session()->put('permissions', $permissionsMerge);
+                    session()->put('permissions', $permissions);
                     session()->put('roles', $roles);
                     $this->walletAccessToken();
                     BetPay::getBetPayClientAccessToken();
@@ -188,7 +191,9 @@ class AuthController extends Controller
                             $route = route('core.dashboard');
                         }
                     }
-
+                    if (in_array(Roles::$admin_assiria, $roles)) {
+                        $route = route('agents.role.dashboard');
+                    }
                     if (in_array(Roles::$marketing, $roles)) {
                         $route = route('pages.index');
                     }
@@ -221,6 +226,12 @@ class AuthController extends Controller
                             $emailConfiguration = Configurations::getEmailContents($whitelabelId, EmailTypes::$login_notification);
                             Mail::to($userTemp)->send(new Users($whitelabelId, $url, $request->username, $emailConfiguration, EmailTypes::$login_notification, $ip));
                         }
+                    }
+
+                    $response = Http::get(route('agents.update.quantities.from.tree'));
+
+                    if (! $response->successful()) {
+                        Log::info('Error: update-agent-quantities-from-tree');
                     }
 
                     $data = [
@@ -412,6 +423,8 @@ class AuthController extends Controller
                 session()->put('intended_url', url()->previous());
             }
             return view('auth.login', [
+                //'envType' => env('APP_ENV'),
+                'envType' => false,
                 'title' => Configurations::getWhitelabelDescription(),
                 'logo'  => Configurations::getLogo(true),
             ]);

@@ -18,20 +18,47 @@
             </div>
         </li>
 
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [\Dotworkers\Security\Enums\Permissions::$users_search])): ?>
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <div class="u-sidebar-title"><span><?php echo e(_i('Search global')); ?></span></div>
+            </li>
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <form id="header-search-form" class="u-header--search" action="<?php echo e(route('users.search')); ?>" method="get" autocomplete="destroy">
+                    <div class="input-group">
+                        <input class="form-control form-control-sidebar" type="text" name="username" placeholder="<?php echo e(_i('Search user')); ?>" value="">
+                        <button type="submit" class="btn btn-search u-btn-outline-white g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
+                            <i class="hs-admin-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </li>
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active u-sidebar-navigation-v1-menu-item-search">
+                <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden">
+                    <span class="g-pos-rel"><i class="fa-solid fa-magnifying-glass"></i></span>
+                </a>
+            </li>
+
+            <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
+                <hr>
+            </li>
+        <?php endif; ?>
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <div class="u-sidebar-title"><span><?php echo e(_i('Categories')); ?></span></div>
         </li>
-        <!--
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$dashboard])): ?>
             <?php echo $__env->make('back.partials.sidebar.dashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php endif; ?>
-        -->
-        <?php echo $__env->make('back.partials.sidebar.roleDashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$dashboard_assiria])): ?>
+            <?php echo $__env->make('back.partials.sidebar.roleDashboard', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php endif; ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$rol_assiria])): ?>
+            <?php echo $__env->make('back.partials.sidebar.role', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php endif; ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$reports_assiria])): ?>
+            <?php echo $__env->make('back.partials.sidebar.report', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php endif; ?>
 
-        <?php echo $__env->make('back.partials.sidebar.role', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
-        <?php echo $__env->make('back.partials.sidebar.report', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-    <!--
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$users_menu])): ?>
             <?php echo $__env->make('back.partials.sidebar.users', ['permissions' => $permissions], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php endif; ?>
@@ -110,7 +137,7 @@
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$betpay_menu])): ?>
             <?php echo $__env->make('back.partials.sidebar.store', ['permissions' => $permissions], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php endif; ?>
-        -->
+        <!--
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
@@ -137,7 +164,7 @@
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
         </li>
-
+-->
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-logout">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="<?php echo e(route('auth.logout')); ?>" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-power-off"></i></span> <span class="media-body align-self-center"><?php echo e(_i('Logout')); ?></span>
@@ -157,19 +184,20 @@
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$dashboard])): ?>
             <div class="nav-mobile-opt"><a class="active" href="<?php echo e(route('core.dashboard')); ?>"><i class="fa-solid fa-house-chimney"></i> <span class="name"><?php echo e(_i('Home')); ?></span></a></div>
         <?php endif; ?>
-
-        <div class="nav-mobile-opt">
-            <a href="<?php echo e(route('agents.role')); ?>">
-                <i class="fa-solid fa-people-group"></i> <span class="name"><?php echo e(_i('Role')); ?></span>
-            </a>
-        </div>
-
-        <div class="nav-mobile-opt">
-            <a href="#">
-                <i class="fa-solid fa-chart-column"></i> <span class="name"><?php echo e(_i('Reports')); ?></span>
-            </a>
-        </div>
-
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$rol_assiria])): ?>
+            <div class="nav-mobile-opt">
+                <a href="<?php echo e(route('agents.role')); ?>">
+                    <i class="fa-solid fa-people-group"></i> <span class="name"><?php echo e(_i('Role')); ?></span>
+                </a>
+            </div>
+        <?php endif; ?>
+        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$reports_assiria])): ?>
+            <div class="nav-mobile-opt">
+                <a href="<?php echo e(route('agents.reports.management')); ?>">
+                    <i class="fa-solid fa-chart-column"></i> <span class="name"><?php echo e(_i('Reports')); ?></span>
+                </a>
+            </div>
+        <?php endif; ?>
         <div class="nav-mobile-opt action-mobile-menu">
             <a href="javascript:void(0)">
                 <i class="fa-solid fa-bars"></i> <span class="name"><?php echo e(_i('Menu')); ?></span>
@@ -210,6 +238,8 @@
 
 
 
+
+
 <?php endif; ?>
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$agents_dashboard])): ?>
     <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
@@ -218,6 +248,8 @@
                     <span class="icon-mobile"><i class="fa-solid fa-chevron-down"></i></span>
                 </a>
             </li>
+
+
 
 
 
@@ -335,9 +367,13 @@
 
 
 
+
+
 <?php endif; ?>
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('access', [$permissions::$agents_dashboard])): ?>
     <div class="nav-mobile-opt"><a href="<?php echo e(route('agents.index')); ?>"><i class="fa-solid fa-people-group"></i> <span class="name"><?php echo e(_i('Role')); ?></span></a></div>
+
+
 
 
 

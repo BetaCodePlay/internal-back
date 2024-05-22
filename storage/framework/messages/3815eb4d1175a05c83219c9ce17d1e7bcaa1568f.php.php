@@ -527,6 +527,39 @@ class AgentsRepo
     }
 
     /**
+     * Retrieve agent information along with its currency data.
+     *
+     * @param int $userId The ID of the user.
+     * @param string $currency The currency ISO code.
+     * @return Agent|null The agent information or null if not found.
+     */
+    public function getAgentInfoWithCurrency(int $userId, string $currency)
+    : ?Agent {
+        return Agent::join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
+            ->where('agents.user_id', $userId)
+            ->where('agent_currencies.currency_iso', $currency)
+            ->select('agents.*')
+            ->first();
+    }
+
+    /**
+     * Update the quantities for a specific agent.
+     *
+     * @param Agent $agentInfo The agent instance.
+     * @param int $masterCount The count of master agents.
+     * @param int $cashierCount The count of cashier agents.
+     * @param int $playerCount The count of player agents.
+     * @return bool True if the update was successful, otherwise false.
+     */
+    public function updateAgentQuantities(Agent $agentInfo, int $masterCount, int $cashierCount, int $playerCount): bool
+    {
+        $agentInfo->master_quantity  = $masterCount;
+        $agentInfo->cashier_quantity = $cashierCount;
+        $agentInfo->player_quantity  = $playerCount;
+        return $agentInfo->save();
+    }
+
+    /**
      * Format Json Tree V1.0
      * Get user and agents son (first generation)
      * @param int $owner Owner ID
@@ -634,7 +667,6 @@ class AgentsRepo
 
     /**
      * @param Request $request
-     * @param int $userAuthId
      * @param string $currency
      * @param int $whitelabelId
      * @return array
@@ -647,13 +679,15 @@ class AgentsRepo
         $searchValue = $request->input('search.value');
         $orderColumn = $request->input('order.0.column');
         $orderDir    = $request->input('order.0.dir');
-        $userId      = getUserIdByUsernameOrCurrent($request);
+        $userId      = getUserIdByUsernameOrCurrent($request, $whitelabelId);
+        $agentQuery  = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
 
-        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId);
-        $agentQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%")
-                ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
-        });
+        if (! is_null($searchValue)) {
+            $agentQuery->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%")
+                    ->orWhere('agent_currencies.balance', 'like', "%$searchValue%");
+            });
+        }
 
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
@@ -665,9 +699,12 @@ class AgentsRepo
         );
 
         $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId);
-        $playerQuery->where(function ($query) use ($searchValue) {
-            $query->where('users.username', 'like', "%$searchValue%");
-        });
+
+        if (! is_null($searchValue)) {
+            $playerQuery->where(function ($query) use ($searchValue) {
+                $query->where('users.username', 'like', "%$searchValue%");
+            });
+        }
 
         $orderKey = array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
             ? $orderableColumns[$orderColumn]
@@ -711,7 +748,8 @@ class AgentsRepo
      * @param array|null $select
      * @return mixed
      */
-    function getUserAgentQuery($userId, $currency, $whitelabelId, ?array $select = null): mixed {
+    function getUserAgentQuery($userId, $currency, $whitelabelId, ?array $select = null)
+    : mixed {
         $defaultSelect = [
             'users.username',
             'users.type_user',
@@ -728,9 +766,12 @@ class AgentsRepo
             ->join('agents', 'users.id', '=', 'agents.user_id')
             ->join('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
             ->leftJoin('agent_user', 'users.id', '=', 'agent_user.user_id')
-            ->where('agents.owner_id', $userId)
-            ->where('agent_currencies.currency_iso', $currency)
-            ->where('users.whitelabel_id', $whitelabelId);
+            ->orderBy('users.created_at', 'desc')
+            ->where([
+                'agents.owner_id'               => $userId,
+                'agent_currencies.currency_iso' => $currency,
+                'users.whitelabel_id'           => $whitelabelId,
+            ]);
     }
 
     /**
@@ -740,7 +781,8 @@ class AgentsRepo
      * @param array|null $select
      * @return mixed
      */
-    function getPlayerQuery($userId, $currency, $whitelabelId, ?array $select = null): mixed {
+    function getPlayerQuery($userId, $currency, $whitelabelId, ?array $select = null)
+    : mixed {
         $defaultSelect = [
             'users.username',
             'users.type_user',
@@ -757,11 +799,15 @@ class AgentsRepo
             ->join('agent_user', 'users.id', '=', 'agent_user.user_id')
             ->join('agents', 'agent_user.agent_id', '=', 'agents.id')
             ->leftJoin('agent_currencies', 'agents.id', '=', 'agent_currencies.agent_id')
-            ->where('agents.user_id', $userId)
-            ->where('users.whitelabel_id', $whitelabelId)
-            ->where('agent_currencies.currency_iso', $currency);
+            ->leftJoin('user_currencies', 'users.id', '=', 'user_currencies.user_id')
+            ->orderBy('users.created_at', 'desc')
+            ->where([
+                'agents.user_id'                => $userId,
+                'agent_currencies.currency_iso' => $currency,
+                'user_currencies.currency_iso'  => $currency,
+                'users.whitelabel_id'           => $whitelabelId,
+            ]);
     }
-
 
     /**
      * @param array $combinedResults
@@ -797,9 +843,9 @@ class AgentsRepo
      */
     public function getChildrenIdsWithParentAuth($userId, $currency, $whitelabelId)
     : array {
-        $agentQuery = $this->getUserAgentQuery($userId, $currency, $whitelabelId, ['users.id']);
-        $playerQuery = $this->getPlayerQuery($userId, $currency, $whitelabelId, ['users.id']);
-        $combinedIds = Arr::collapse([$agentQuery->pluck('id')->toArray(), $playerQuery->pluck('id')->toArray()]);
+        $agentQuery    = $this->getUserAgentQuery($userId, $currency, $whitelabelId, ['users.id']);
+        $playerQuery   = $this->getPlayerQuery($userId, $currency, $whitelabelId, ['users.id']);
+        $combinedIds   = Arr::collapse([$agentQuery->pluck('id')->toArray(), $playerQuery->pluck('id')->toArray()]);
         $combinedIds[] = $userId;
 
         return $combinedIds;
@@ -838,7 +884,7 @@ class AgentsRepo
                 [$item['type_user'], $item['typeId']],
                 $userId,
                 [$action, $isBlocked, $actionItem],
-                number_format($balance, 2),
+                formatAmount($balance),
                 $item['status'],
             ];
         }, $results);

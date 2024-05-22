@@ -3,26 +3,20 @@
 namespace App\Agents\Collections;
 
 use App\Agents\Repositories\AgentsRepo;
-use App\Users\Repositories\UsersRepo;
-use App\Core\Repositories\TransactionsRepo;
 use App\Core\Repositories\GamesRepo;
+use App\Core\Repositories\TransactionsRepo;
 use App\Reports\Repositories\ClosuresUsersTotals2023Repo;
 use App\Reports\Repositories\ClosuresUsersTotalsRepo;
 use App\Users\Enums\ActionUser;
 use App\Users\Enums\TypeUser;
+use App\Users\Repositories\UsersRepo;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
-use Dotworkers\Security\Entities\Role;
-use Dotworkers\Security\Enums\Roles;
-use Dotworkers\Security\Security;
 use Dotworkers\Wallet\Wallet;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsCollection
@@ -1307,18 +1301,17 @@ class AgentsCollection
         return $data->unique('id')->values()->all();
     }
 
-
     /**
      * FormatRole
      *
-     * @param String $usernameOwner Owner Agent data
-     * @param array $users User data
-     * @param var $balance Balance User
-     * @param var $percentage Percentage User
-     * @return array
+     * @param $usernameOwner
+     * @param $user
+     * @param $balance
+     * @param $percentage
+     * @return mixed
      */
     public function formatRole($usernameOwner, $user, $balance, $percentage)
-    {
+    : mixed {
         $user->statusText  = ActionUser::getName($user->action);
         $user->balanceUser = number_format($balance, 2);
         $user->agentType   = $user->type;
@@ -3813,6 +3806,39 @@ class AgentsCollection
     }
 
     /**
+     * Format paginated agent transactions with timezone.
+     *
+     * Formats the paginated transaction data of an agent with the specified timezone.
+     * Each transaction's date, amount, debit, credit, and balance are formatted accordingly.
+     * Returns an array containing formatted transaction data along with pagination details.
+     *
+     * @param LengthAwarePaginator $paginatedResults The paginated transaction data.
+     * @param string $timezone The timezone to format the transaction dates.
+     * @return array An array containing formatted transaction data and pagination details.
+     */
+    public function formatAgentTransactionsPaginated($paginatedResults, string $timezone)
+    : array {
+        $data = $paginatedResults->items();
+
+        foreach ($data as $transaction) {
+            $transaction->date       = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
+            $transaction->debit      = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
+            $transaction->credit     = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
+            $transaction->balance    = $transaction->data->balance ?? 0;
+            $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
+            $transaction->new_amount = $symbol . formatAmount($transaction->amount);
+            $transaction->balance    = formatAmount($transaction->balance);
+        }
+
+        return [
+            'current_page' => $paginatedResults->currentPage(),
+            'total'        => $paginatedResults->total(),
+            'per_page'     => $paginatedResults->perPage(),
+            'data'         => $data
+        ];
+    }
+
+    /**
      * Format agents transactions report
      *
      * @param array $transactions Transactions data
@@ -4012,11 +4038,11 @@ class AgentsCollection
     public function formatUserFind($agent)
     {
         \Log::notice(__METHOD__, ['agent' => $agent]);
-        if ($agent->type_user == 5){
-            $ownerId = $agent->owner;
-            $owner = $agent->owner_id;
+        if ($agent->type_user == 5) {
+            $ownerId         = $agent->owner;
+            $owner           = $agent->owner_id;
             $agent->owner_id = $ownerId;
-            $agent->owner = $owner;
+            $agent->owner    = $owner;
         }
         return $agent;
     }
