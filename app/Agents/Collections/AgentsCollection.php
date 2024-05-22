@@ -1301,7 +1301,6 @@ class AgentsCollection
         return $data->unique('id')->values()->all();
     }
 
-
     /**
      * FormatRole
      *
@@ -1314,7 +1313,7 @@ class AgentsCollection
     public function formatRole($usernameOwner, $user, $balance, $percentage)
     : mixed {
         $user->statusText  = ActionUser::getName($user->action);
-        $user->balanceUser = $balance;
+        $user->balanceUser = number_format($balance, 2);
         $user->agentType   = $user->type;
         $user->owner       = $usernameOwner;
         $user->percentage  = $percentage;
