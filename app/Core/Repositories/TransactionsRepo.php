@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Core\Entities\Transaction;
 use App\Reports\Repositories\ReportAgentRepo;
+use App\Users\Enums\TypeUser;
 use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Providers;
@@ -12,12 +13,14 @@ use Dotworkers\Configurations\Enums\TransactionStatus;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Configurations\Utils;
 use Dotworkers\Security\Enums\Permissions;
+use Dotworkers\Wallet\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Yajra\DataTables\Utilities\Helper;
@@ -412,6 +415,8 @@ class TransactionsRepo
 
         $transactionsQuery = Transaction::select([
             'users.username',
+            'users.type_user as typeUser',
+            'users.id as userId',
             'transactions.user_id',
             'transactions.id',
             'transactions.amount',
@@ -425,7 +430,8 @@ class TransactionsRepo
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $childrenIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.currency_iso', $currency);
+            ->where('transactions.currency_iso', $currency)
+            ->orderBy('transactions.created_at', 'desc');
 
         if ($typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
@@ -512,6 +518,22 @@ class TransactionsRepo
             $to       = $transaction->data->to ?? null;
             $balance  = $transaction->data->balance ?? null;
             $receiver = $to;
+
+
+            if ($transaction->typeUser == TypeUser::$player) {
+                $currency = session('currency');
+                $bonus    = Configurations::getBonus();
+                $userId   = $transaction->userId;
+                $wallet   = Wallet::getByClient($transaction->userId, $currency, $bonus);
+
+                if (is_array($wallet->data)) {
+                    Log::info("Error in user wallet array {$userId}", [$wallet]);
+                }
+
+                $balance = ! is_array($wallet->data)
+                    ? $wallet?->data?->wallet?->balance
+                    : 0;
+            }
 
             return [
                 $formattedDateTimeWithTimezone,
@@ -710,6 +732,8 @@ class TransactionsRepo
         );
         $transactions = Transaction::select(
             'users.username',
+            'users.id as userId',
+            'users.type_user as typeUser',
             'transactions.user_id',
             'transactions.id',
             'transactions.amount',
