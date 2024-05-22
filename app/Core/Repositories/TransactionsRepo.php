@@ -732,6 +732,8 @@ class TransactionsRepo
         );
         $transactions = Transaction::select(
             'users.username',
+            'users.id as userId',
+            'users.type_user as typeUser',
             'transactions.user_id',
             'transactions.id',
             'transactions.amount',
