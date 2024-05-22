@@ -425,7 +425,8 @@ class TransactionsRepo
             ->join('users', 'transactions.user_id', '=', 'users.id')
             ->whereIn('transactions.user_id', $childrenIds)
             ->whereBetween('transactions.created_at', [$startDate, $endDate])
-            ->where('transactions.currency_iso', $currency);
+            ->where('transactions.currency_iso', $currency)
+            ->orderBy('transactions.created_at', 'desc');
 
         if ($typeUser !== 'all') {
             $transactionsQuery->where(function ($query) use ($typeUser) {
