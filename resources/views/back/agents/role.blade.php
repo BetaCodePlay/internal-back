@@ -67,7 +67,7 @@
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Balance') }}</div>
                                     <div
-                                        class="data-text text-id">{{ $authUser->balanceUser }} {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
+                                        class="data-text text-id"><span id="role-balance-refresh">{{ $authUser->balanceUser }}</span> {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}
                                         @if($authUser->status)
                                             <span class="separator"></span>
                                             @if(auth()->user()->id !== $authUser->id)

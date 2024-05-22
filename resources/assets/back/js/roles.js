@@ -281,6 +281,7 @@ class Roles {
 
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
+                $('#role-balance-refresh').html(balance);
 
                 console.log(Roles.globaluserid);
                 console.log(Roles.globaluseridcurrent);
