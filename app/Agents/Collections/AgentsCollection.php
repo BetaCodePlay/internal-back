@@ -1314,7 +1314,7 @@ class AgentsCollection
     public function formatRole($usernameOwner, $user, $balance, $percentage)
     : mixed {
         $user->statusText  = ActionUser::getName($user->action);
-        $user->balanceUser = formatAmount($balance);
+        $user->balanceUser = $balance;
         $user->agentType   = $user->type;
         $user->owner       = $usernameOwner;
         $user->percentage  = $percentage;
