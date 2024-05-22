@@ -19,7 +19,7 @@
 
 header {
     .img-avatar {
-        border: 2px solid #7d2df5;
+        border: 2px solid $theme;
     }
 
     .g-pos-rel {
@@ -48,7 +48,7 @@ header {
                 &::before{
                     content: "";
                     position: absolute;
-                    background: #7d2df5;
+                    background: $theme;
                     height: 8px;
                     width: 8px;
                     border-radius: 50px;
