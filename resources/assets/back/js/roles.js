@@ -11,11 +11,13 @@ class Roles {
     static globalrolid;
     static globaltable;
     static globaluserid;
+    static globaluseridLogin;
     static globaluseridcurrent = $('.page-role').data('id');
 
     initTableRoles() {
         let $table = $('#table-roles');
         let $route = $table.data('route');
+        Roles.globaluseridLogin = $('[data-auth-user]').data('auth-user');
 
         $(document).on('click', '.currentDataRole', function () {
             let $username = $(this).data('username');
@@ -277,6 +279,7 @@ class Roles {
 
                 console.log(Roles.globaluserid);
                 console.log(Roles.globaluseridcurrent);
+                console.log(Roles.globaluseridLogin);
 
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     /*window.location.reload()*/

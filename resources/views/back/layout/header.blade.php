@@ -24,7 +24,6 @@
 
 
             <div class="col-auto d-flex g-py-12 ml-auto">
-
                 <div class="col-auto d-flex g-pt-5 g-pt-0--sm g-pl-5 g-pr-10">
                     <div class="g-pos-rel">
                         <div class="d-block">
