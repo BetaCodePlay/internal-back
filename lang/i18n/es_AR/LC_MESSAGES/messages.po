@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Dotpanel\n"
-"POT-Creation-Date: 2024-05-22 14:39-0400\n"
-"PO-Revision-Date: 2024-05-22 17:43-0400\n"
+"POT-Creation-Date: 2024-05-22 17:55-0400\n"
+"PO-Revision-Date: 2024-05-22 19:40-0400\n"
 "Last-Translator: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language-Team: Miguel Sira <miguel.sira@dotworkers.com>\n"
 "Language: es_AR\n"
@@ -14523,7 +14523,6 @@ msgid "My data"
 msgstr "Mis datos"
 
 #: ../storage/framework/messages/5b301c894585412835fb44d02a9c78615f823ca7.php.php:70
-#| msgid "Activate"
 msgid "Activity"
 msgstr "Actividad"
 
