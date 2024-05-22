@@ -276,11 +276,6 @@ class Roles {
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
 
-
-                console.log(Roles.globaluserid);
-                console.log(Roles.globaluseridcurrent);
-                console.log(Roles.globaluseridLogin);
-
                 if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     /*window.location.reload()*/
                     $('#role-balance-refresh').html(balance);
@@ -288,6 +283,10 @@ class Roles {
                     if (Roles.globaltable !== undefined) {
                         Roles.globaltable.ajax.reload();
                     }
+                }
+
+                if(Roles.globaluseridcurrent === Roles.globaluseridLogin) {
+                    $('#role-balance-refresh').html(authBalance);
                 }
 
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
