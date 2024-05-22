@@ -273,18 +273,19 @@ class Roles {
 
                 document.getElementsByClassName(amountRefreshTxt).innerHTML = authBalance;
                 $(amountRefreshClass).text(authBalance);
-                $('#role-balance-refresh').html(balance);
+
 
                 console.log(Roles.globaluserid);
                 console.log(Roles.globaluseridcurrent);
 
-                /*if (Roles.globaluserid === Roles.globaluseridcurrent) {
-                    window.location.reload()
+                if (Roles.globaluserid === Roles.globaluseridcurrent) {
+                    /*window.location.reload()*/
+                    $('#role-balance-refresh').html(balance);
                 } else {
                     if (Roles.globaltable !== undefined) {
                         Roles.globaltable.ajax.reload();
                     }
-                }*/
+                }
 
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-balance').modal('hide');
