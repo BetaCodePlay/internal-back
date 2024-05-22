@@ -285,13 +285,13 @@ class Roles {
                 console.log(Roles.globaluserid);
                 console.log(Roles.globaluseridcurrent);
 
-                if (Roles.globaluserid === Roles.globaluseridcurrent) {
+                /*if (Roles.globaluserid === Roles.globaluseridcurrent) {
                     window.location.reload()
                 } else {
                     if (Roles.globaltable !== undefined) {
                         Roles.globaltable.ajax.reload();
                     }
-                }
+                }*/
 
                 Toastr.notifyToastr(json.data.title, json.data.message, 'success');
                 $('#role-balance').modal('hide');
