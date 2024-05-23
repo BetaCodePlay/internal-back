@@ -11,6 +11,7 @@ use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Utils;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,5 +67,34 @@ class AgentService extends BaseService
                 $username,
             ),
         ]);
+    }
+
+    public function updateAgentQuantitiesFromTree()
+    : array
+    {
+        $authUserId   = auth()->id();
+        $currency     = session('currency');
+        $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
+        $agents       = $this->agentsRepo->getAgentsAllByOwner(
+            $authUserId,
+            $currency,
+            Configurations::getWhitelabel()
+        );
+
+        foreach ($agents as $agent) {
+            $childAgents = $childrenTree->where('owner_id', $agent->user_id);
+
+            $masterCount  = $childAgents->where('type_user', TypeUser::$agentMater)->count();
+            $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
+            $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
+
+            $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($agent->user_id, $currency);
+
+            if ($agentInfo) {
+                $this->agentsRepo->updateAgentQuantities($agentInfo, $masterCount, $cashierCount, $playerCount);
+            }
+        }
+
+        return ['message' => 'Agent quantities updated successfully'];
     }
 }
