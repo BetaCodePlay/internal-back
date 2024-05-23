@@ -647,7 +647,7 @@ class Roles {
             }
 
             /*if ($target === tabTransaction) {
-                routeTransaction = tableTransactionID.data('route');
+
 
                 if (tableTransaction !== undefined) {
                     tableTransaction.destroy();
@@ -698,6 +698,7 @@ class Roles {
             let $action = $('#roleTabTransactionsAction').val();
             let $type = $('#roleTabTransactionsType').val();
             let $target = '#roleTabTransactions';
+            routeTransaction = tableTransactionID.data('route');
 
             $this.button('loading');
 
