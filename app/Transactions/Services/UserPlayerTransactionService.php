@@ -250,7 +250,7 @@ class UserPlayerTransactionService extends BaseTransactionService
         $transaction                        = $transactionResult->data;
         $additionalData                     = $transaction?->transaction->data;
         $additionalData->wallet_transaction = $transaction->transaction->id;
-        $balance                            = ($transaction?->wallet?->balance ?? 0) - $transactionAmount;
+        $balance                            = ($transaction?->wallet?->balance ?? 0) + $transactionAmount;
         $additionalData->balance            = $balance;
         $additionalData                     = get_object_vars((object)$additionalData);
 
