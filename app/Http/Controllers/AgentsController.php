@@ -4110,7 +4110,7 @@ class AgentsController extends Controller
                     $agentCurrency
                 );
                 $this->agentsRepo->blockAgentsMakers($excludedUser);
-                $wallet     = Wallet::store(
+                $wallet = Wallet::store(
                     $user->id,
                     $user->username,
                     $uuid,
@@ -4118,7 +4118,20 @@ class AgentsController extends Controller
                     $whitelabel,
                     session('wallet_access_token')
                 );
-                Log::error(__METHOD__, ['wallet' =>  $wallet]);
+
+                if (empty($wallet)) {
+                    Log::error(__METHOD__ . __LINE__, [
+                        'user_id'       => $user->id,
+                        'username'      => $user->username,
+                        'uuid'          => $uuid,
+                        'agentCurrency' => $agentCurrency,
+                        'whitelabel'    => $whitelabel,
+                        'msg'           => 'Failed to create wallet for user',
+                    ]);
+
+                    return Utils::failedResponse();
+                }
+
                 $userData   = [
                     'user_id'      => $user->id,
                     'currency_iso' => $agentCurrency
@@ -4521,11 +4534,11 @@ class AgentsController extends Controller
             return view('back.agents.role', [
                 'agent'              => $this->agentsRepo->findUserProfile($user->id, $currency ?? ''),
                 'makers'             => [],
-             /*   'agents'             => $this->agentsRepo->getAgentsAllByOwner(
-                    $authUserId,
-                    $currency,
-                    $whitelabelId
-                ),*/
+                /*   'agents'             => $this->agentsRepo->getAgentsAllByOwner(
+                       $authUserId,
+                       $currency,
+                       $whitelabelId
+                   ),*/
                 'action'             => $authUser->action,
                 'iagent'             => $agentUser,
                 'confirmation_email' => $confirmation,
