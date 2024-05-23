@@ -230,6 +230,8 @@ class AuthController extends Controller
 
                     $response = Http::get(route('agents.update.quantities.from.tree'));
 
+                    Log::info('count: ', ['response' => $response]);
+
                     if (! $response->successful()) {
                         Log::info('Error: update-agent-quantities-from-tree');
                     }
