@@ -710,7 +710,7 @@ class Roles {
 
             tableTransaction = tableTransactionID.DataTable({
                 serverSide: true,
-                ajax: routeTransaction + '?' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=' + $type + '&typeTransaction=' + $action,
+                ajax: routeTransaction + '?username=' + Roles.globalusername + '&startDate=' + startDate + '&endDate=' + endDate + '&typeUser=' + $type + '&typeTransaction=' + $action,
                 processing: true,
                 columnDefs: [{
                     "defaultContent": "-",
