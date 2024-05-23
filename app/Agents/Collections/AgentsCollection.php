@@ -3824,7 +3824,7 @@ class AgentsCollection
             $transaction->date       = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->debit      = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
             $transaction->credit     = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
-            $transaction->balance    = $transaction->data->balance ?? 0;
+            $transaction->balance    = $transaction->balance_final ?? 0;
             $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
             $transaction->new_amount = $symbol . formatAmount($transaction->amount);
             $transaction->balance    = formatAmount($transaction->balance);
