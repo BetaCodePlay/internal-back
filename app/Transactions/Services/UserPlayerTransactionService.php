@@ -192,8 +192,8 @@ class UserPlayerTransactionService extends BaseTransactionService
         $transaction                        = $transactionResult->data;
         $additionalData                     = $transaction?->transaction->data;
         $additionalData->wallet_transaction = $transaction?->transaction->id;
-        $balance                            = ($transaction?->wallet?->balance ?? 0) - $transactionAmount;
-        $additionalData->balance            = $balance;
+        $balance                            = $transaction?->wallet?->balance ?? 0;
+        $additionalData->balance            = $balance - $transactionAmount;
         $additionalData                     = get_object_vars((object)$additionalData);
 
         return (object)[
@@ -250,8 +250,8 @@ class UserPlayerTransactionService extends BaseTransactionService
         $transaction                        = $transactionResult->data;
         $additionalData                     = $transaction?->transaction->data;
         $additionalData->wallet_transaction = $transaction->transaction->id;
-        $balance                            = ($transaction?->wallet?->balance ?? 0) + $transactionAmount;
-        $additionalData->balance            = $balance;
+        $balance                            = $transaction?->wallet?->balance ?? 0;
+        $additionalData->balance            = $balance  + $transactionAmount;
         $additionalData                     = get_object_vars((object)$additionalData);
 
         return (object)[
