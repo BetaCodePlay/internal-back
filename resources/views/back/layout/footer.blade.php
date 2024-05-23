@@ -8,9 +8,12 @@
                     @endif
                 @endif
             </div>
-            <div class="footer-top-right">
-                <a href="#">{{ _i('Help') }}</a>
-            </div>
+            @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 2)
+            @else
+                <div class="footer-top-right">
+                    <a href="#">{{ _i('Help') }}</a>
+                </div>
+            @endif
         </div>
 
         <div class="footer-bottom">
@@ -27,11 +30,13 @@
                     </div>
                 </div>
             </div>
-
-            <div class="footer-bottom-right">
-                <a href="#">{{ _i('Legal information') }}</a>
-                <a href="#">{{ _i('Privacy policies') }}</a>
-            </div>
+            @if (\Dotworkers\Configurations\Configurations::getWhitelabel() == 2)
+            @else
+                <div class="footer-bottom-right">
+                    <a href="#">{{ _i('Legal information') }}</a>
+                    <a href="#">{{ _i('Privacy policies') }}</a>
+                </div>
+            @endif
         </div>
     </div>
 </footer>
