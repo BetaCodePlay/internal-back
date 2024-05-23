@@ -4118,6 +4118,7 @@ class AgentsController extends Controller
                     $whitelabel,
                     session('wallet_access_token')
                 );
+                Log::error(__METHOD__, ['wallet' =>  $wallet]);
                 $userData   = [
                     'user_id'      => $user->id,
                     'currency_iso' => $agentCurrency
