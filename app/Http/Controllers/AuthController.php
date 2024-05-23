@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Agents\Repositories\AgentsRepo;
+use App\Agents\Services\AgentService;
 use App\Audits\Enums\AuditTypes;
 use App\BetPay\BetPay;
 use App\Users\Enums\ActionUser;
@@ -51,6 +52,7 @@ class AuthController extends Controller
     public function __construct(
         private UsersRepo $usersRepo,
         private AgentsRepo $agentsRepo,
+        private AgentService $agentService,
     ) { }
 
     /**
@@ -228,19 +230,14 @@ class AuthController extends Controller
                         }
                     }
 
-                    $response = Http::get(route('agents.update.quantities.from.tree'));
+                    $this->agentService->updateAgentQuantitiesFromTree();
 
-                    if (! $response->successful()) {
-                        Log::info('Error: update-agent-quantities-from-tree');
-                    }
-
-                    $data = [
+                    $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
                         'route' => $route,
                         'language' => $language
-                    ];
-                    $response = Utils::successResponse($data);
+                    ]);
 
                 } else {
                     session()->flush();

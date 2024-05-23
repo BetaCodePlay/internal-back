@@ -12,6 +12,7 @@ use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Utils;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -46,11 +47,11 @@ class AgentService extends BaseService
      *
      * @throws Exception If an error occurs during the search process.
      */
-    public function searchUserByUsername(Request $request): Response
-    {
+    public function searchUserByUsername(Request $request)
+    : Response {
         $username = Str::lower($request->get('user'));
 
-        if (!Configurations::getAgents()?->active && $request->has('type')) {
+        if (! Configurations::getAgents()?->active && $request->has('type')) {
             $users = $this->usersRepo->search($username, TypeUser::$agentMater);
 
             return Utils::successResponse(
@@ -66,5 +67,57 @@ class AgentService extends BaseService
                 $username,
             ),
         ]);
+    }
+
+    /**
+     * Updates the agent quantities from the tree structure.
+     *
+     * This method retrieves the current authenticated user's ID and currency from the session,
+     * fetches the children tree and agents associated with the user, and updates the quantities
+     * of different types of agents for each agent. If an error occurs during the process, it is
+     * logged, and an appropriate error message is returned.
+     *
+     * @return array An array containing a message indicating the result of the operation.
+     *
+     * @throws Exception If there is an error while updating agent quantities, it is caught and logged.
+     */
+    public function updateAgentQuantitiesFromTree()
+    : array
+    {
+        $authUserId   = auth()->id();
+        $currency     = session('currency');
+        $childrenTree = collect($this->agentsCollection->childrenTreeSql($authUserId));
+
+        try {
+            $agents = $this->agentsRepo->getAgentsAllByOwner(
+                $authUserId,
+                $currency,
+                Configurations::getWhitelabel()
+            );
+
+            foreach ($agents as $agent) {
+                $childAgents = $childrenTree->where('owner_id', $agent->user_id);
+
+                $masterCount  = $childAgents->where('type_user', TypeUser::$agentMater)->count();
+                $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
+                $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
+
+                $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($agent->user_id, $currency);
+
+                if ($agentInfo) {
+                    $this->agentsRepo->updateAgentQuantities($agentInfo, $masterCount, $cashierCount, $playerCount);
+                }
+            }
+
+            return ['message' => 'Agent quantities updated successfully'];
+        } catch (Exception $e) {
+            Log::error('Error updating agent quantities', [
+                'user_id'   => $authUserId,
+                'currency'  => $currency,
+                'exception' => $e->getMessage(),
+            ]);
+
+            return ['message' => 'An error occurred while updating agent quantities'];
+        }
     }
 }
