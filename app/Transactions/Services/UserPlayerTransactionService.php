@@ -192,13 +192,14 @@ class UserPlayerTransactionService extends BaseTransactionService
         $transaction                        = $transactionResult->data;
         $additionalData                     = $transaction?->transaction->data;
         $additionalData->wallet_transaction = $transaction?->transaction->id;
-        $additionalData->balance            = $transaction?->wallet?->balance ?? 0;
+        $balance                            = ($transaction?->wallet?->balance ?? 0) - $transactionAmount;
+        $additionalData->balance            = $balance;
         $additionalData                     = get_object_vars((object)$additionalData);
 
         return (object)[
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
-            'balance'           => $transaction?->wallet?->balance ?? 0,
+            'balance'           => $balance,
             'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance - $transactionAmount,
             'status'            => $transactionResult->status,
@@ -247,16 +248,16 @@ class UserPlayerTransactionService extends BaseTransactionService
         }
 
         $transaction                        = $transactionResult->data;
-        $walletBalance                      = $transaction?->wallet?->balance ?? 0;
         $additionalData                     = $transaction?->transaction->data;
         $additionalData->wallet_transaction = $transaction->transaction->id;
-        $additionalData->balance            = $walletBalance;
+        $balance                            = ($transaction?->wallet?->balance ?? 0) - $transactionAmount;
+        $additionalData->balance            = $balance;
         $additionalData                     = get_object_vars((object)$additionalData);
 
         return (object)[
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
-            'balance'           => $walletBalance,
+            'balance'           => $balance,
             'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance + $transactionAmount,
             'status'            => $transactionResult->status,
