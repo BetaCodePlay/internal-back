@@ -230,25 +230,14 @@ class AuthController extends Controller
                         }
                     }
 
-                    /*$response = Http::get(route('agents.update.quantities.from.tree'));
+                    $this->agentService->updateAgentQuantitiesFromTree();
 
-                    Log::info('count: ', ['response' => $response]);
-
-                    if (! $response->successful()) {
-                        Log::info('Error: update-agent-quantities-from-tree');
-                    }*/
-
-                    $agentQuantities = $this->agentService->updateAgentQuantitiesFromTree();
-
-                    Log::info('agentQuantities: ', ['response' => $agentQuantities]);
-
-                    $data = [
+                    $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
                         'route' => $route,
                         'language' => $language
-                    ];
-                    $response = Utils::successResponse($data);
+                    ]);
 
                 } else {
                     session()->flush();
