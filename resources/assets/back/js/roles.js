@@ -646,8 +646,8 @@ class Roles {
                  tableRoles = Roles.globaltable;
             }
 
-            if ($target === tabTransaction) {
-                routeTransaction = tableTransactionID.data('route');
+            /*if ($target === tabTransaction) {
+
 
                 if (tableTransaction !== undefined) {
                     tableTransaction.destroy();
@@ -656,7 +656,7 @@ class Roles {
                 $($target).find('.tab-body').addClass('d-none');
                 $($target).find('.table-load').removeClass('table-complete');
                 $($target).find('.loading-style').hide();
-            }
+            }*/
 
             if ($target === tabBets) {
                 routeBets = tableBetsID.data('route');
@@ -698,6 +698,7 @@ class Roles {
             let $action = $('#roleTabTransactionsAction').val();
             let $type = $('#roleTabTransactionsType').val();
             let $target = '#roleTabTransactions';
+            routeTransaction = tableTransactionID.data('route');
 
             $this.button('loading');
 
