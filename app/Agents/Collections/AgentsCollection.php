@@ -17,7 +17,6 @@ use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class AgentsCollection
@@ -3825,21 +3824,7 @@ class AgentsCollection
             $transaction->date       = $transaction->created_at->setTimezone($timezone)->format('d-m-Y H:i:s');
             $transaction->debit      = $transaction->transaction_type_id == TransactionTypes::$debit ? $transaction->amount : '-';
             $transaction->credit     = $transaction->transaction_type_id == TransactionTypes::$credit ? $transaction->amount : '-';
-            $transaction->balance    = $transaction->data->balance ?? 0;
-
-            if ($transaction->typeUser == TypeUser::$player) {
-                $currency = session('currency');
-                $bonus    = Configurations::getBonus();
-                $userId   = $transaction->userId;
-                $wallet   = Wallet::getByClient($transaction->userId, $currency, $bonus);
-
-                if (is_array($wallet->data)) {
-                    Log::info("Error in user wallet array {$userId}", [$wallet]);
-                }
-
-                $transaction->balance = ! is_array($wallet->data) ? $wallet?->data?->wallet?->balance : 0;;
-            }
-
+            $transaction->balance    = $transaction->balance_final ?? 0;
             $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
             $transaction->new_amount = $symbol . formatAmount($transaction->amount);
             $transaction->balance    = formatAmount($transaction->balance);

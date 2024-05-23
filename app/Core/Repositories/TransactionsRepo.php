@@ -519,22 +519,6 @@ class TransactionsRepo
             $balance  = $transaction->data->balance ?? null;
             $receiver = $to;
 
-
-            if ($transaction->typeUser == TypeUser::$player) {
-                $currency = session('currency');
-                $bonus    = Configurations::getBonus();
-                $userId   = $transaction->userId;
-                $wallet   = Wallet::getByClient($transaction->userId, $currency, $bonus);
-
-                if (is_array($wallet->data)) {
-                    Log::info("Error in user wallet array {$userId}", [$wallet]);
-                }
-
-                $balance = ! is_array($wallet->data)
-                    ? $wallet?->data?->wallet?->balance
-                    : 0;
-            }
-
             return [
                 $formattedDateTimeWithTimezone,
                 $from,

@@ -11,7 +11,6 @@ use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Enums\Providers;
 use Dotworkers\Configurations\Enums\TransactionTypes;
 use Dotworkers\Wallet\Wallet;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -150,8 +149,6 @@ class UserPlayerTransactionService extends BaseTransactionService
         $userAuthId        = $request->user()->id;
         $ownerAgent        = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
 
-        \Log::notice('SQL', ['agent' => $ownerAgent]);
-
         $transactionResult = Wallet::creditManualTransactions(
             $transactionAmount,
             Providers::$agents_users,
@@ -195,12 +192,14 @@ class UserPlayerTransactionService extends BaseTransactionService
         $transaction                        = $transactionResult->data;
         $additionalData                     = $transaction?->transaction->data;
         $additionalData->wallet_transaction = $transaction?->transaction->id;
+        $balance                            = $transaction?->wallet?->balance ?? 0;
+        $additionalData->balance            = $balance - $transactionAmount;
         $additionalData                     = get_object_vars((object)$additionalData);
 
         return (object)[
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
-            'balance'           => $transaction?->wallet?->balance ?? 0,
+            'balance'           => $balance,
             'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance - $transactionAmount,
             'status'            => $transactionResult->status,
@@ -251,12 +250,14 @@ class UserPlayerTransactionService extends BaseTransactionService
         $transaction                        = $transactionResult->data;
         $additionalData                     = $transaction?->transaction->data;
         $additionalData->wallet_transaction = $transaction->transaction->id;
+        $balance                            = $transaction?->wallet?->balance ?? 0;
+        $additionalData->balance            = $balance  + $transactionAmount;
         $additionalData                     = get_object_vars((object)$additionalData);
 
         return (object)[
             'additionalData'    => $additionalData,
             'agentBalanceFinal' => $walletDetail->data->wallet->balance,
-            'balance'           => $transaction?->wallet?->balance ?? 0,
+            'balance'           => $balance,
             'balanceBonus'      => $balanceBonus ?? 0,
             'ownerBalance'      => $ownerAgent->balance + $transactionAmount,
             'status'            => $transactionResult->status,
