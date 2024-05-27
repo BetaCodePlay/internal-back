@@ -4036,17 +4036,21 @@ class AgentsController extends Controller
                 ]);
             }
 
-            //$ip         = $request->header('X-Forwarded-For') ?? $request->ip();
-            $ip         = '172.70.255.200';
+            // $ip         = '172.70.255.200';
+
+            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ipForwarded = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                $ip          = explode(',', $ipForwarded)[0];
+            } else {
+                $ip = $request->getClientIp();
+            }
+
             $domain     = Configurations::getDomain();
             $whitelabel = Configurations::getWhitelabel();
             $currency   = session('currency');
             $username   = strtolower($request->username);
-            if (! is_null($request->dependence)) {
-                $owner = $request->dependence;
-            } else {
-                $owner = auth()->user()->id;
-            }
+            $owner      = ! is_null($request->dependence) ? $request->dependence : auth()->user()->id;
+
             $ownerAgent = $this->agentsRepo->findByUserIdAndCurrency($owner, $currency);
             $master     = $request->input('master');
             $uuid       = Str::uuid()->toString();
@@ -4071,7 +4075,7 @@ class AgentsController extends Controller
                 'level'       => 1
             ];
             Log::info(__METHOD__, ['$userData, $profileData' => $userData, $profileData]);
-            $user        = $this->usersRepo->store($userData, $profileData);
+            $user = $this->usersRepo->store($userData, $profileData);
             $this->generateReferenceCode->generateReferenceCode($user->id);
             $currencies  = [$currency];
             $userExclude = $this->agentsRepo->getExcludeUserMaker($owner);
