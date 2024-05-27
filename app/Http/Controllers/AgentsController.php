@@ -4069,6 +4069,7 @@ class AgentsController extends Controller
                 'timezone'    => session('timezone'),
                 'level'       => 1
             ];
+            Log::info(__METHOD__, ['$userData, $profileData' => $userData, $profileData]);
             $user        = $this->usersRepo->store($userData, $profileData);
             $this->generateReferenceCode->generateReferenceCode($user->id);
             $currencies  = [$currency];
