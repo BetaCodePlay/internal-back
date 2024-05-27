@@ -4036,7 +4036,8 @@ class AgentsController extends Controller
                 ]);
             }
 
-            $ip         = $request->header('X-Forwarded-For') ?? $request->ip();
+            //$ip         = $request->header('X-Forwarded-For') ?? $request->ip();
+            $ip         = '172.70.255.200';
             $domain     = Configurations::getDomain();
             $whitelabel = Configurations::getWhitelabel();
             $currency   = session('currency');
