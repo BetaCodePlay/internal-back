@@ -147,11 +147,14 @@
 
                     .btn-tr-details {
                         display: none;
-                        margin-right: 5px;
                         color: #aaa;
                         font-size: 16px;
                         vertical-align: middle;
                         transition: .15s;
+                        position: absolute;
+                        left: 10px;
+                        top: 50%;
+                        transform: translateY(-50%);
                     }
 
                     @media screen and (max-width: 767px) {
@@ -208,6 +211,8 @@
                     td {
                         &.dtr-control {
                             cursor: pointer;
+                            position: relative;
+                            padding-left: 40px;
 
                             .btn-tr-details {
                                 display: inline-block;
