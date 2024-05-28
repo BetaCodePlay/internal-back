@@ -39,9 +39,6 @@ $.extend(true, $.fn.dataTable.defaults, {
     language: {
         url: "/i18n/datatables/" + locale + ".lang"
     },
-    fnCreatedRow: function (nRow, aData, iDataIndex) {
-        $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
-    }
 });
 
 // Ucwords
