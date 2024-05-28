@@ -599,7 +599,6 @@ class Roles {
                     serverSide: true,
                     ajax: $route,
                     fixedHeader: true,
-                    responsive: true,
                     fnCreatedRow: function (nRow, aData, iDataIndex) {
                         let buttons = $('#user-buttons');
                         let modalLockTarget = '[data-target="#role-lock"]';

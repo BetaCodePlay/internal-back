@@ -2,6 +2,7 @@ import {activeMenu, getCookie, setCookie} from './commons.js';
 
 window.$ = window.jQuery = require('jquery');
 window.Popper = require('popper.js').default;
+require('jszip');
 require('pdfmake');
 require('bootstrap');
 require('jquery.cookie');
@@ -32,6 +33,7 @@ $.extend(true, $.fn.dataTable.defaults, {
     lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
     processing: true,
     deferRender: true,
+    responsive: true,
     searching: true,
     paging: true,
     buttons: ['copy', 'excel', 'pdf', 'print'],
