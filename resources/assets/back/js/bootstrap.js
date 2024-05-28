@@ -32,7 +32,6 @@ $.extend(true, $.fn.dataTable.defaults, {
     lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
     processing: true,
     deferRender: true,
-    responsive: true,
     searching: true,
     paging: true,
     buttons: ['copy', 'excel', 'pdf', 'print'],
