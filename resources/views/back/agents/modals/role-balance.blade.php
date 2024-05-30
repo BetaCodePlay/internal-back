@@ -17,7 +17,7 @@
                                     <label>{{ _i('Amount') }}</label>
                                     <input type="text" class="d-none" placeholder="" id="userBalanceAmount">
                                     <div class="wrap-input">
-                                        <input type="text" class="form-control" placeholder="" id="userBalanceAmountGet">
+                                        <input type="text" class="form-control" placeholder="" id="userBalanceAmountGet" value="0.00">
                                         <div class="wrap-element">
                                             <div class="wrap-element-text">{{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }}</div>
                                         </div>

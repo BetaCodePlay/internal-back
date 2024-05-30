@@ -753,17 +753,6 @@ class Roles {
     };
 
     static inputMoney($input, $post) {
-        /*function formatMoney(number, places, symbol, thousand, decimal) {
-            places = !isNaN(places = Math.abs(places)) ? places : 2;
-            symbol = symbol !== undefined ? symbol : "";
-            thousand = thousand || ",";
-            decimal = decimal || ".";
-            var negative = number < 0 ? "-" : "",
-                i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
-                j = (j = i.length) > 3 ? j % 3 : 0;
-            return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand);
-        }*/
-
         function formatMoney(number, places, symbol, thousand, decimal) {
             places = !isNaN(places = Math.abs(places)) ? places : 2;
             symbol = symbol !== undefined ? symbol : "";
@@ -776,11 +765,6 @@ class Roles {
         }
 
         $(document).on('input', $input, function () {
-            /*let $val = $($input).val();
-            if ($val === '') {
-                $($input).val('')
-            }
-            let $amount = parseInt($val.replace(/[^0-9]/g, ''));*/
             let $amount = parseInt($($input).val().replace(/[^0-9]/g, ''));
 
             if ($amount < 10) {
