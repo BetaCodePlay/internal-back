@@ -61,6 +61,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -4455,14 +4456,14 @@ class AgentsController extends Controller
         }
     }
 
+
     /**
      * Show role
-     *
      * @param string $username
-     * @return Application|Factory|View
+     * @return Application|Factory|\Illuminate\Contracts\View\View|RedirectResponse|void
      */
     public function role(string $username = '')
-    : Factory|View|Application {
+    {
         try {
             $authUser       = auth()->user();
             $authUserId     = $authUser->id;
@@ -4480,6 +4481,10 @@ class AgentsController extends Controller
                 $username,
                 $whitelabelId
             ) : $authUser;
+
+            if (empty($user)) {
+                return redirect()->back();
+            }
 
             $userId     = $user?->id;
             $percentage = null;
