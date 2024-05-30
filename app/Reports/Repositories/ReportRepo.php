@@ -41,18 +41,18 @@ class ReportRepo
         $whitelabelId           = Configurations::getWhitelabel();
         $timezone               = session('timezone');
         $authUserId             = auth()->id();
-        $authUserAndChildrenIds = $this->agentsRepo->getChildrenIdsWithParentAuth(
+        /*$authUserAndChildrenIds = $this->agentsRepo->getChildrenIdsWithParentAuth(
             $authUserId,
             $currency,
             $whitelabelId
-        );
+        );*/
         $transactions           = $this->transactionsRepo->getRecentTransactions(
             $currency,
             $whitelabelId,
             $timezone,
-            $authUserAndChildrenIds
+            $authUserId
         );
-        $audits                 = $this->auditsRepo->getRecentAudits($timezone);
+        $audits                 = $this->auditsRepo->getRecentAudits($timezone, $authUserId);
         $today                  = Carbon::now($timezone);
         $startDate              = Utils::startOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);
         $endDate                = Utils::endOfDayUtc($today->format('Y-m-d'), 'Y-m-d', 'Y-m-d H:i:s', $timezone);

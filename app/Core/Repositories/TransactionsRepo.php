@@ -1295,7 +1295,7 @@ class TransactionsRepo
         string $currency,
         int $whitelabelId,
         string $timezone,
-        array $authUserAndChildrenIds
+        int | string $authUserId
     )
     : Collection {
         return DB::table('transactions')
@@ -1310,7 +1310,8 @@ class TransactionsRepo
                     "TO_CHAR(transactions.created_at AT TIME ZONE 'UTC' AT TIME ZONE '$timezone', 'YYYY-MM-DD hh:MI:SS AM') AS date"
                 ),
             ])
-            ->whereIn('transactions.user_id', $authUserAndChildrenIds)
+            //->whereIn('transactions.user_id', $authUserAndChildrenIds)
+            ->where('transactions.user_id', $authUserId)
             ->where([
                 'transactions.currency_iso'  => $currency,
                 'transactions.whitelabel_id' => $whitelabelId,
