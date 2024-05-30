@@ -776,11 +776,20 @@ class Roles {
         }
 
         $(document).on('input', $input, function () {
-            let $val = $($input).val();
+            /*let $val = $($input).val();
             if ($val === '') {
                 $($input).val('')
             }
-            let $amount = parseInt($val.replace(/[^0-9]/g, ''));
+            let $amount = parseInt($val.replace(/[^0-9]/g, ''));*/
+            let $amount = parseInt($($input).val().replace(/[^0-9]/g, ''));
+
+            if ($amount < 10) {
+                $amount = '0.0' + $amount;
+            } else if ($amount < 100) {
+                $amount = '0.' + $amount;
+            } else {
+                $amount = $amount.toString().substr(0, $amount.toString().length - 2) + '.' + $amount.toString().substr(-2);
+            }
 
             $($input).val(formatMoney($amount));
             $($post).val($amount);
