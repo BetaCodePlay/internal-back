@@ -242,7 +242,8 @@ class BackOfficeServiceProvider extends ServiceProvider
             return [];
         }
 
-        $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
+        // $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
+        $domain         = Str::lower($hostHeader);
         $configurations = Configurations::getConfigurationsByURL($domain);
 
         if ($configurations->isEmpty()) {
