@@ -4502,12 +4502,16 @@ class AgentsController extends Controller
                 $balance       = ! is_array($wallet->data)
                     ? $wallet?->data?->wallet?->balance
                     : 0;
-                $usernameOwner = $agent->ownerAgent->username;
+                $usernameOwner = $agent?->ownerAgent?->username ?? '';
             } else {
                 $userOwner     = $this->usersRepo->getTokenByUser($agent->owner);
                 $percentage    = $agent->percentage;
-                $usernameOwner = $userOwner->username;
+                $usernameOwner = $userOwner->username ?? '';
                 $balance       = ($user->type_user == 'agent') ? $agent?->balance : $agent?->wallet?->balance;
+            }
+
+            if (empty($usernameOwner)) {
+                return redirect()->back();
             }
 
             $agentsCollection = new AgentsCollection();
