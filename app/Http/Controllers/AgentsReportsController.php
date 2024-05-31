@@ -119,6 +119,21 @@ class AgentsReportsController extends Controller
                 'provider'
             ) : null;
 
+            $child =  ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null;
+
+            $childIds = [];
+            if ($child) {
+                $searchChild = User::find($child);
+
+                if ($searchChild) {
+                    $childIds = $searchChild->type_user == TypeUser::$player
+                        ? [$searchChild?->id]
+                        : $this->reportAgentRepo->getIdsChildrenFromFather($child, $currency, $whitelabelId);
+                }
+            }
+
+            $text = ! is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null;
+
             $data = $this->reportAgentRepo->getFinancialState(
                 $startDate,
                 $endDate,
@@ -127,9 +142,8 @@ class AgentsReportsController extends Controller
                 $userIds,
                 $timezone,
                 $provider,
-                ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null,
-                ! is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null,
-
+                $childIds,
+                $text
             );
 
             $totalCommission = 0;

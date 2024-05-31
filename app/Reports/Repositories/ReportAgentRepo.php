@@ -147,7 +147,7 @@ class ReportAgentRepo
             $query->where('g.maker', $provider);
         }
 
-        if (! is_null($childs)) {
+        if (! empty($childs)) {
             $query->whereIn('cu.user_id', is_array($childs) ? $childs : [$childs]);
         }
 
