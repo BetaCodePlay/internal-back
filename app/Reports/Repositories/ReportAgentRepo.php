@@ -108,32 +108,34 @@ class ReportAgentRepo
         $currency,
         $whitelabel,
         $ownerIds,
-        $category,
         $timezone = null,
         $provider = null,
-        $childs = null
+        $childs = null,
+        $text = null
     ) {
         $query = DB::table('site.closures_users_totals_2023_hour as cu')
+            ->select([
+                    'g.category',
+                    DB::raw('SUM(cu.played) as played'),
+                    DB::raw('SUM(cu.won) as won'),
+                    DB::raw('SUM(cu.profit) as profit'),
+                    DB::raw(
+                        'CASE
+                    WHEN SUM(cu.profit * a.percentage / 100) < 0 OR SUM(cu.profit * a.percentage / 100) IS NULL THEN 0
+                    ELSE SUM(cu.profit * a.percentage / 100)
+                END as commission'
+                    )
+                ]
+            )
             ->join('site.games as g', 'cu.game_id', '=', 'g.id')
             ->join('site.providers as p', 'g.provider_id', '=', 'p.id')
             ->join('site.agent_user as au', 'cu.user_id', '=', 'au.user_id')
             ->join('site.agents as a', 'a.id', '=', 'au.agent_id')
-            ->where('cu.currency_iso', $currency)
             ->whereIn('a.user_id', is_array($ownerIds) ? $ownerIds : [$ownerIds])
-            ->where('cu.whitelabel_id', $whitelabel)
-            ->where('g.category', $category)
-            ->select(
-                'g.category',
-                DB::raw('SUM(cu.played) as played'),
-                DB::raw('SUM(cu.won) as won'),
-                DB::raw('SUM(cu.profit) as profit'),
-                DB::raw(
-                    'CASE
-                    WHEN SUM(cu.profit * a.percentage / 100) < 0 OR SUM(cu.profit * a.percentage / 100) IS NULL THEN 0
-                    ELSE SUM(cu.profit * a.percentage / 100)
-                END as commission'
-                )
-            );
+            ->where([
+                'cu.currency_iso' => $currency,
+                'cu.whitelabel_id' => $whitelabel,
+            ]);
 
         if (is_null($timezone)) {
             $query->whereBetween('cu.start_date', [$startDate, $endDate]);
@@ -147,6 +149,10 @@ class ReportAgentRepo
 
         if (! is_null($childs)) {
             $query->whereIn('cu.user_id', is_array($childs) ? $childs : [$childs]);
+        }
+
+        if (! is_null($text)) {
+            $query->whereRaw("LOWER(g.category) LIKE LOWER('%{$text}%'");
         }
 
         return $query
