@@ -123,8 +123,7 @@ class ReportAgentRepo
             ->where('cu.whitelabel_id', $whitelabel)
             ->where('g.category', $category)
             ->select(
-                'g.name',
-                'g.maker as provider',
+                'g.category',
                 DB::raw('SUM(cu.played) as played'),
                 DB::raw('SUM(cu.won) as won'),
                 DB::raw('SUM(cu.profit) as profit'),
@@ -134,9 +133,7 @@ class ReportAgentRepo
                     ELSE SUM(cu.profit * a.percentage / 100)
                 END as commission'
                 )
-            )
-            ->groupBy('g.category', 'g.name', 'g.maker')
-            ->orderBy('won');
+            );
 
         if (is_null($timezone)) {
             $query->whereBetween('cu.start_date', [$startDate, $endDate]);
@@ -152,7 +149,10 @@ class ReportAgentRepo
             $query->whereIn('cu.user_id', is_array($childs) ? $childs : [$childs]);
         }
 
-        return $query->get();
+        return $query
+            ->groupBy('g.category')
+            ->orderBy('won')
+            ->get();
     }
 
     /**
