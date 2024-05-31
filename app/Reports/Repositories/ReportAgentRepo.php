@@ -130,8 +130,8 @@ class ReportAgentRepo
                 DB::raw('SUM(cu.profit) as profit'),
                 DB::raw(
                     'CASE
-                    WHEN SUM(cu.profit * cu.percentage / 100) < 0 OR SUM(cu.profit * cu.percentage / 100) IS NULL THEN 0
-                    ELSE SUM(cu.profit * cu.percentage / 100)
+                    WHEN SUM(cu.profit * a.percentage / 100) < 0 OR SUM(cu.profit * a.percentage / 100) IS NULL THEN 0
+                    ELSE SUM(cu.profit * a.percentage / 100)
                 END as commission'
                 )
             )
