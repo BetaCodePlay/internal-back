@@ -4074,7 +4074,7 @@ class AgentsController extends Controller
                 'timezone'    => session('timezone'),
                 'level'       => 1
             ];
-            Log::info(__METHOD__, ['$userData, $profileData' => $userData, $profileData]);
+
             $user = $this->usersRepo->store($userData, $profileData);
             $this->generateReferenceCode->generateReferenceCode($user->id);
             $currencies  = [$currency];
@@ -5074,7 +5074,6 @@ class AgentsController extends Controller
             'user_id'    => ['required'],
         ]);
         try {
-            \Log::info(__METHOD__, ['type' => $request]);
             $type     = $request->input('type');
             $userId   = $request->input('user_id');
             $ownerId  = $request->input('dependence');
