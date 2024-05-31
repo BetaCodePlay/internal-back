@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Core\Collections\CoreCollection;
 use App\Reports\Repositories\ReportAgentRepo;
+use App\Users\Entities\User;
+use App\Users\Enums\TypeUser;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
@@ -88,27 +90,43 @@ class AgentsReportsController extends Controller
      */
     public function financialStateData(
         Request $request,
-        $user = null,
+        $userId = null,
         $startDate = null,
         $endDate = null
     ) {
         try {
-            if (is_null($user)) {
-                $user = Auth::id();
-            }
+            $currency     = session('currency');
+            $whitelabelId = Configurations::getWhitelabel();
+
+            $user = is_null($userId)
+                ? auth()->user()
+                : User::find($userId);
+
+            $userIds = $user->type_user == TypeUser::$player
+                ? [$user?->id]
+                : $this->reportAgentRepo->getIdsChildrenFromFather($user->id, $currency, $whitelabelId);
+
+            $startDate    = Utils::startOfDayUtc($startDate);
+            $endDate      = Utils::startOfDayUtc($endDate);
+            $currency     = session('currency');
+            $whitelabelId = Configurations::getWhitelabel();
+
+            $timezone = ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
+                'timezone'
+            ) : null;
+
+            $provider = ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
+                'provider'
+            ) : null;
 
             $data = $this->reportAgentRepo->getFinancialState(
-                Utils::startOfDayUtc($startDate),
-                Utils::endOfDayUtc($endDate),
-                session('currency'),
-                Configurations::getWhitelabel(),
-                $user,
-                ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
-                    'timezone'
-                ) : null,
-                ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
-                    'provider'
-                ) : null,
+                $startDate,
+                $endDate,
+                $currency,
+                $whitelabelId,
+                $userIds,
+                $timezone,
+                $provider,
                 ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null,
                 ! is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null,
 

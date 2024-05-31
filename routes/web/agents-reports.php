@@ -10,8 +10,8 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
-        // Get financial state data NEW 
-        Route::get('financial-state-data-v2/{user?}/{startDate?}/{endDate?}', [
+        // Get financial state data NEW
+        Route::get('financial-state-data-v2/{userId?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data-new',
             'uses' => 'AgentsReportsController@financialStateData'
         ]);
