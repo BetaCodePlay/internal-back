@@ -175,7 +175,7 @@ class AgentsReportsController extends Controller
                     :
                     null;
 
-                $financialData = $this->reportAgentRepo->getCommissionByGame(
+                $financialData = $this->reportAgentRepo->getCommissionByCategory(
                     $child ?: $user->id,
                     $currency,
                     $whitelabelId,

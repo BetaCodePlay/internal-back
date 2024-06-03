@@ -45,7 +45,7 @@ class ReportAgentRepo
      * @param string|null $provider
      * @return Collection
      */
-    public function getCommissionByGame(
+    public function getCommissionByCategory(
         int|string $userId,
         string $currency,
         int|string $whitelabelId,
@@ -56,7 +56,7 @@ class ReportAgentRepo
         ?string $provider = null
     )
     : Collection {
-        $query = "SELECT * FROM site.get_comission_by_game(?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = "SELECT * FROM site.get_comission_by_category(?, ?, ?, ?, ?, ?, ?, ?)";
 
         $results = DB::select($query, [
             $userId,
