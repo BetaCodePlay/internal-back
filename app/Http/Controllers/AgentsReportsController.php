@@ -119,7 +119,9 @@ class AgentsReportsController extends Controller
                 'provider'
             ) : null;
 
-            $child =  ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null;
+            $child = ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get(
+                'child'
+            ) : null;
 
             $childIds = [];
             if ($child) {
@@ -156,20 +158,46 @@ class AgentsReportsController extends Controller
             }
 
             if ($whitelabelId === 1) {
-                $data = $this->reportAgentRepo->getComissionByGame($user->id, $currency, $whitelabelId, $startDate, $endDate);
+                $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
+                    ? $request->get('timezone')
+                    : null;
 
-                foreach ($data as $item) {
-                    $totalCommission  += $item->commission;
-                    $item->played     = formatAmount($item->played);
-                    $item->won        = formatAmount($item->won);
-                    $item->profit     = formatAmount($item->profit);
-                    $item->commission = formatAmount($item->commission);
+                $category = $request->filled('text') && $request->get('text') !== 'null'
+                    ? $request->get('text')
+                    : null;
+
+                $provider = $request->filled('provider') && $request->get('provider') !== 'null'
+                    ? $request->get('provider')
+                    : null;
+
+                $child = $request->filled('child') && $request->get('child') !== 'null'
+                    ? $request->get('child')
+                    :
+                    null;
+
+                $financialData = $this->reportAgentRepo->getCommissionByGame(
+                    $child ?: $user->id,
+                    $currency,
+                    $whitelabelId,
+                    $startDate,
+                    $endDate,
+                    $timezone,
+                    $category,
+                    $provider
+                );
+
+                foreach ($financialData as $transaction) {
+                    $totalCommission         += $transaction->commission;
+                    $transaction->played     = formatAmount($transaction->played);
+                    $transaction->won        = formatAmount($transaction->won);
+                    $transaction->profit     = formatAmount($transaction->profit);
+                    $transaction->commission = formatAmount($transaction->commission);
                 }
 
                 return [
                     'status'          => Response::HTTP_OK,
                     'code'            => Codes::$ok,
-                    'data'            => $data,
+                    'data'            => $financialData,
                     'totalCommission' => formatAmount($totalCommission)
                 ];
             }

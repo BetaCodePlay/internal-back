@@ -45,7 +45,7 @@ class ReportAgentRepo
      * @param string|null $provider
      * @return Collection
      */
-    public function getComissionByGame(
+    public function getCommissionByGame(
         int|string $userId,
         string $currency,
         int|string $whitelabelId,
