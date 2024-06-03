@@ -245,6 +245,8 @@ class BackOfficeServiceProvider extends ServiceProvider
         // $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
         $domain         = Str::lower($hostHeader);
         $domainNew =  Str::lower($_SERVER['HTTP_HOST']);
+
+        $domainNew = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
         $configurations = Configurations::getConfigurationsByURL($domain);
 
         if ($configurations->isEmpty()) {
