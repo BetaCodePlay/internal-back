@@ -244,20 +244,13 @@ class BackOfficeServiceProvider extends ServiceProvider
 
         // $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
         $domain         = Str::lower($hostHeader);
-        $domainNew =  Str::lower($_SERVER['HTTP_HOST']);
-
-        $domainNew = $request->getHost();
-        $two = request()->root();
-
-        $two = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'];
-
-
         $configurations = Configurations::getConfigurationsByURL($domain);
 
         if ($configurations->isEmpty()) {
-            throw new InvalidArgumentException(
-                "Whitelabel configuration error detected. Please review the domain in the whitelabels table {$domain}-{$domainNew}-{$two}"
-            );
+            /*throw new InvalidArgumentException(
+                "Whitelabel configuration error detected. Please review the domain in the whitelabels table"
+            );*/
+            die;
         }
 
         if ($configurations->isNotEmpty()) {
