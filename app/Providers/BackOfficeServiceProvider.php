@@ -249,6 +249,9 @@ class BackOfficeServiceProvider extends ServiceProvider
         $domainNew = $request->getHost();
         $two = request()->root();
 
+        $two = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'];
+
+
         $configurations = Configurations::getConfigurationsByURL($domain);
 
         if ($configurations->isEmpty()) {
