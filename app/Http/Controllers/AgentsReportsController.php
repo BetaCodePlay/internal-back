@@ -156,9 +156,22 @@ class AgentsReportsController extends Controller
             }
 
             if ($whitelabelId === 1) {
-                $resp = $this->reportAgentRepo->getComissionByGame($user->id, $currency, $whitelabelId, $startDate, $endDate);
+                $data = $this->reportAgentRepo->getComissionByGame($user->id, $currency, $whitelabelId, $startDate, $endDate);
 
-                dd($resp);
+                foreach ($data as $item) {
+                    $totalCommission  += $item->commission;
+                    $item->played     = formatAmount($item->played);
+                    $item->won        = formatAmount($item->won);
+                    $item->profit     = formatAmount($item->profit);
+                    $item->commission = formatAmount($item->commission);
+                }
+
+                return [
+                    'status'          => Response::HTTP_OK,
+                    'code'            => Codes::$ok,
+                    'data'            => $data,
+                    'totalCommission' => formatAmount($totalCommission)
+                ];
             }
 
             return [
