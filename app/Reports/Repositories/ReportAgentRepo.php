@@ -3,6 +3,7 @@
 
 namespace App\Reports\Repositories;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -32,8 +33,46 @@ class ReportAgentRepo
         return array_column($getIdsChildren, 'id');
     }
 
-
     /**
+     *
+     * @param int|string $userId
+     * @param string $currency
+     * @param int|string $whitelabelId
+     * @param string $startDate
+     * @param string $endDate
+     * @param string|null $timezone
+     * @param string|null $category
+     * @param string|null $provider
+     * @return Collection
+     */
+    public function getComissionByGame(
+        int|string $userId,
+        string $currency,
+        int|string $whitelabelId,
+        string $startDate,
+        string $endDate,
+        ?string $timezone = null,
+        ?string $category = null,
+        ?string $provider = null
+    )
+    : Collection {
+        $query = "SELECT * FROM site.get_comission_by_game(?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $results = DB::select($query, [
+            $userId,
+            $currency,
+            $whitelabelId,
+            $startDate,
+            $endDate,
+            $timezone,
+            $category,
+            $provider
+        ]);
+
+        return collect($results);
+    }
+
+/**
      * Get Closure FinancialState
      *
      * @param int $whitelabel Whitelabel Id

@@ -155,6 +155,12 @@ class AgentsReportsController extends Controller
                 $item->commission = formatAmount($item->commission);
             }
 
+            if ($whitelabelId === 1) {
+                $resp = $this->reportAgentRepo->getComissionByGame($user->id, $currency, $whitelabelId, $startDate, $endDate);
+
+                dd($resp);
+            }
+
             return [
                 'status'          => Response::HTTP_OK,
                 'code'            => Codes::$ok,
