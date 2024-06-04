@@ -25,8 +25,8 @@
                 :key="`key-${col.field}-${force}`"
             >
                 <template #body="slotProps">
-                    <div class="text-center" v-if="col.field == 'usermame'">
-                        <strong>{{ slotProps.data.usermame }}</strong>
+                    <div class="text-center" v-if="col.field == 'username'">
+                        <strong>{{ slotProps.data.username }}</strong>
                     </div>
                     <div class="text-right" v-else-if="col.field == 'played'">
                         {{ slotProps.data.played }}
