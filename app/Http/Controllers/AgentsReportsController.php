@@ -214,6 +214,74 @@ class AgentsReportsController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $userId
+     * @param $startDate
+     * @param $endDate
+     * @return array|Response
+     */
+    public function userFinancialReport(
+        Request $request,
+        $userId = null,
+        $startDate = null,
+        $endDate = null
+    ) {
+        try {
+            $user         = is_null($userId) ? auth()->user() : User::find($userId);
+            $startDate    = Utils::startOfDayUtc($startDate);
+            $endDate      = Utils::startOfDayUtc($endDate);
+            $currency     = session('currency');
+            $whitelabelId = Configurations::getWhitelabel();
+
+            $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
+                ? $request->get('timezone')
+                : null;
+
+            $category = $request->filled('text') && $request->get('text') !== 'null'
+                ? $request->get('text')
+                : null;
+
+            $provider = $request->filled('provider') && $request->get('provider') !== 'null'
+                ? $request->get('provider')
+                : null;
+
+            $child = $request->filled('child') && $request->get('child') !== 'null'
+                ? $request->get('child')
+                :
+                null;
+
+            $financialData = $this->reportAgentRepo->getCommissionByCategory(
+                $child ?: $user->id,
+                $currency,
+                $whitelabelId,
+                $startDate,
+                $endDate,
+                $timezone,
+                $category,
+                $provider
+            );
+
+            $totalCommission = 0;
+            foreach ($financialData as $transaction) {
+                $totalCommission         += $transaction->commission;
+                $transaction->played     = formatAmount($transaction->played);
+                $transaction->won        = formatAmount($transaction->won);
+                $transaction->profit     = formatAmount($transaction->profit);
+                $transaction->commission = formatAmount($transaction->commission);
+            }
+
+            return [
+                'status'          => Response::HTTP_OK,
+                'code'            => Codes::$ok,
+                'data'            => $financialData,
+                'totalCommission' => formatAmount($totalCommission)
+            ];
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
 
     /**
      * Data Financial State New "for support"

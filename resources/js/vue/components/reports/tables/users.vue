@@ -144,57 +144,14 @@ export default {
             XLSX.writeFile(wb, filename);
         },
         exportData(type) {
-            console.log(type);
             switch (type) {
                 case "excel":
                     this.exportXLS();
                     break;
             }
         },
-        onRowExpand(event) {
-            //this.expandedRows = null;
-            this.expandedRows = [];
-            this.expandedRows.push(event.data);
-            this.getDetailsCategory(event.data.category);
-        },
-        onRowCollapse(event) {
-        },
         onChange() {
             this.fetchData();
-        },
-        getDetailsCategory(category) {
-            this.loading = true;
-
-            const {authUserId} = window;
-            const {daterange, selectedTimezone, selectedProvider, selectedUser, query} = this.filters;
-            const startDate = moment(daterange[0]).format("YYYY-MM-DD");
-            const endDate = moment(daterange[1]).format("YYYY-MM-DD");
-
-            const url = `/agents/reports/financial-state-data-v2-category/${authUserId}/${startDate}/${endDate}/${category}`;
-
-            const params = {
-                timezone: selectedTimezone,
-                provider: selectedProvider,
-                child: selectedUser,
-                text: query
-            };
-
-            axios.get(url, {params})
-                .then((resp) => {
-                    this.$nextTick(() => {
-                        const categoryItem = this.items.find((i) => i.category === category);
-                        if (categoryItem) {
-                            categoryItem.items = resp.data.data;
-                            this.force++;
-                        }
-                    });
-                })
-                .catch((error) => {
-                    console.error("Error fetching category details:", error);
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
         },
         fetchData() {
             if (this.filters.daterange[1]) {
@@ -205,7 +162,7 @@ export default {
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
-                const url = `/agents/reports/financial-state-data-v2/${authUserId}/${startDate}/${endDate}`;
+                const url = `/agents/reports/user-financial-report/${authUserId}/${startDate}/${endDate}`;
 
                 const params = {
                     timezone: selectedTimezone,

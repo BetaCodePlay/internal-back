@@ -20,6 +20,10 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
             'as' => 'agents.reports.financial-state-data-new-ctageory',
             'uses' => 'AgentsReportsController@financialStateByCategoryData'
         ]);
+        Route::get('user-financial-report/{user?}/{startDate?}/{endDate?}/{category}', [
+            'as' => 'agents.reports.user-financial-report',
+            'uses' => 'AgentsReportsController@userFinancialReport'
+        ]);
         // Get Childrens
         Route::get('get-childrens', [
             'as' => 'agents.reports.get.childrens',
