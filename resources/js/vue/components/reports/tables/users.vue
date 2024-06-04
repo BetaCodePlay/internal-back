@@ -128,8 +128,7 @@ export default {
                 {field: "category", header: "Categoría"},
                 {field: "played", header: "Jugado"},
                 {field: "won", header: "Ganado"},
-                {field: "profit", header: "NetWin"},
-                {field: "commission", header: "Comisión"},
+                {field: "profit", header: "NetWin"}
             ],
         };
     },
