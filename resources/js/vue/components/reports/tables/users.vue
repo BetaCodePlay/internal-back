@@ -28,13 +28,13 @@
                     <div class="text-center" v-if="col.field == 'username'">
                         <strong>{{ slotProps.data.username }}</strong>
                     </div>
-                    <div class="text-right" v-else-if="col.field == 'played'">
+                    <div class="text-center" v-else-if="col.field == 'played'">
                         {{ slotProps.data.played }}
                     </div>
-                    <div class="text-right" v-else-if="col.field == 'won'">
+                    <div class="text-center" v-else-if="col.field == 'won'">
                         {{ slotProps.data.won }}
                     </div>
-                    <div class="text-right" v-else-if="col.field == 'profit'">
+                    <div class="text-center" v-else-if="col.field == 'profit'">
                         {{ slotProps.data.profit }}
                     </div>
                     <div class="text-center" v-else>
@@ -63,12 +63,11 @@ export default {
                     new Date(),
                 ],
                 selectedUser: "",
-                selectedTimezone: window.timezone ?? "",
-                selectedProvider: "",
+                selectedTimezone: window.timezone ?? ""
             },
             items: [],
             columns: [
-                {field: "usermame", header: "Username"},
+                {field: "username", header: "Username"},
                 {field: "played", header: "Jugado"},
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
@@ -101,7 +100,7 @@ export default {
                 this.loading = true;
 
                 const {authUserId} = window;
-                const {daterange, selectedTimezone, selectedProvider, selectedUser, query} = this.filters;
+                const {daterange, selectedTimezone, selectedUser, query} = this.filters;
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
@@ -109,7 +108,6 @@ export default {
 
                 const params = {
                     timezone: selectedTimezone,
-                    provider: selectedProvider,
                     child: selectedUser,
                     text: query
                 };
@@ -117,7 +115,6 @@ export default {
                 axios.get(url, {params})
                     .then((resp) => {
                         this.items = resp.data.data;
-                        this.totalCommission = resp.data.totalCommission;
                     })
                     .catch((error) => {
                         console.error("Error fetching financial state data:", error);

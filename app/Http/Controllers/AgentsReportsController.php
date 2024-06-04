@@ -242,10 +242,6 @@ class AgentsReportsController extends Controller
                 ? $request->get('text')
                 : null;
 
-            $provider = $request->filled('provider') && $request->get('provider') !== 'null'
-                ? $request->get('provider')
-                : null;
-
             $child = $request->filled('child') && $request->get('child') !== 'null'
                 ? $request->get('child')
                 :
@@ -262,9 +258,7 @@ class AgentsReportsController extends Controller
                 $provider
             );
 
-            $totalCommission = 0;
             foreach ($financialData as $transaction) {
-                $totalCommission         += $transaction->commission;
                 $transaction->played     = formatAmount($transaction->played);
                 $transaction->won        = formatAmount($transaction->won);
                 $transaction->profit     = formatAmount($transaction->profit);
@@ -278,7 +272,6 @@ class AgentsReportsController extends Controller
                 'status'          => Response::HTTP_OK,
                 'code'            => Codes::$ok,
                 'data'            => $financialData,
-                'totalCommission' => formatAmount($totalCommission)
             ];
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
