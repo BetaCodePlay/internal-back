@@ -40,12 +40,6 @@
                     <div class="text-right" v-else-if="col.field == 'profit'">
                         {{ slotProps.data.profit }}
                     </div>
-                    <div
-                        class="text-right"
-                        v-else-if="col.field == 'commission'"
-                    >
-                        {{ slotProps.data.commission }}
-                    </div>
                     <div class="text-center" v-else>
                         {{ slotProps.data[col.field] }}
                     </div>
@@ -70,42 +64,28 @@
                                     {{ slotProps.data.provider }}
                                 </div>
                             </template>
-                        </Column
-                        >
+                        </Column>
                         <Column field="played" header="Jugado">
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{ slotProps.data.played }}
                                 </div>
                             </template>
-                        </Column
-                        >
+                        </Column>
                         <Column field="won" header="Ganado">
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{ slotProps.data.won }}
                                 </div>
                             </template>
-                        </Column
-                        >
+                        </Column>
                         <Column field="profit" header="Netwin">
                             <template #body="slotProps">
                                 <div class="text-center">
                                     {{ slotProps.data.profit }}
                                 </div>
                             </template>
-                        </Column
-                        >
-                        <Column field="commission" header="Comision">
-                            <template #body="slotProps">
-                                <div class="text-center">
-                                    {{
-                                        slotProps.data.commission
-                                    }}
-                                </div>
-                            </template>
-                        </Column
-                        >
+                        </Column>
                     </DataTable>
                 </div>
             </template>
@@ -189,8 +169,8 @@ export default {
         getDetailsCategory(category) {
             this.loading = true;
 
-            const { authUserId } = window;
-            const { daterange, selectedTimezone, selectedProvider, selectedUser, query } = this.filters;
+            const {authUserId} = window;
+            const {daterange, selectedTimezone, selectedProvider, selectedUser, query} = this.filters;
             const startDate = moment(daterange[0]).format("YYYY-MM-DD");
             const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
@@ -203,7 +183,7 @@ export default {
                 text: query
             };
 
-            axios.get(url, { params })
+            axios.get(url, {params})
                 .then((resp) => {
                     this.$nextTick(() => {
                         const categoryItem = this.items.find((i) => i.category === category);
@@ -224,8 +204,8 @@ export default {
             if (this.filters.daterange[1]) {
                 this.loading = true;
 
-                const { authUserId } = window;
-                const { daterange, selectedTimezone, selectedProvider, selectedUser, query } = this.filters;
+                const {authUserId} = window;
+                const {daterange, selectedTimezone, selectedProvider, selectedUser, query} = this.filters;
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
@@ -238,7 +218,7 @@ export default {
                     text: query
                 };
 
-                axios.get(url, { params })
+                axios.get(url, {params})
                     .then((resp) => {
                         this.items = resp.data.data;
                         this.totalCommission = resp.data.totalCommission;
