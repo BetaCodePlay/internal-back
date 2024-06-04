@@ -1,7 +1,7 @@
 <template>
     <div>
         <components-reports-filters
-            title="Reporte Financiero de Usuarios"
+            title="Reporte Financiero por Usuarios"
             v-model="filters"
             @change="onChange"
             @export="exportData"
@@ -17,9 +17,6 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
-            :expandedRows.sync="expandedRows"
-            @row-expand="onRowExpand"
-            @row-collapse="onRowCollapse"
         >
             <Column
                 v-for="col of columns"
@@ -168,7 +165,6 @@ export default {
             XLSX.writeFile(wb, filename);
         },
         exportData(type) {
-            console.log(type);
             switch (type) {
                 case "excel":
                     this.exportXLS();
