@@ -254,8 +254,7 @@ class AgentsReportsController extends Controller
                 $startDate,
                 $endDate,
                 $timezone,
-                $category,
-                $provider
+                $category
             );
 
             foreach ($financialData as $transaction) {
