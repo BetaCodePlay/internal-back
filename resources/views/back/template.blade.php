@@ -99,9 +99,5 @@
         @endif */
     Global.sidebar();
 </script>
-@if (auth()->check())
-    <liveconnect-widget canal-key="cnd27569a86f4d35ff15a5e0c795c1f25e"></liveconnect-widget>
-    <script type="text/javascript" src="https://liveconnect.chat/es/CDN/liveconnect/liveconnect-widget.js"></script>
-@endif
 </body>
 </html>
