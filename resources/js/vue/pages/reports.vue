@@ -8,6 +8,9 @@
                 <TabPanel header="Reporte Financiero">
                     <components-reports-tables-financial/>
                 </TabPanel>
+                <TabPanel header="Reporte Financiero de usuarios">
+                    <components-reports-tables-userFinancial/>
+                </TabPanel>
                 <TabPanel header="Reporte de transacciones">
                     <components-reports-tables-transactions/>
                 </TabPanel>
