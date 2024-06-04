@@ -90,7 +90,7 @@
                 <Row>
                     <Column
                         footer="Total a cobrar:"
-                        :colspan="4"
+                        :colspan="3"
                         :footerStyle="{ 'text-align': 'right' }"
                     />
                     <Column
