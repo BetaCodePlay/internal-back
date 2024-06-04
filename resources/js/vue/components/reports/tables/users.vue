@@ -25,8 +25,8 @@
                 :key="`key-${col.field}-${force}`"
             >
                 <template #body="slotProps">
-                    <div class="text-center" v-if="col.field == 'category'">
-                        <strong>{{ slotProps.data.category }}</strong>
+                    <div class="text-center" v-if="col.field == 'usermame'">
+                        <strong>{{ slotProps.data.usermame }}</strong>
                     </div>
                     <div class="text-right" v-else-if="col.field == 'played'">
                         {{ slotProps.data.played }}
@@ -42,63 +42,6 @@
                     </div>
                 </template>
             </Column>
-            <template #expansion="slotProps">
-                <div class="orders-subtable">
-                    <h4 class="ml-3">
-                        Detalle de: {{ slotProps.data.category }}
-                    </h4>
-                    <DataTable :value="slotProps.data.items">
-                        <Column field="name" header="Juego">
-                            <template #body="slotProps">
-                                <div class="text-center">
-                                    {{ slotProps.data.name }}
-                                </div>
-                            </template>
-                        </Column>
-                        <Column field="provider" header="Proveedor">
-                            <template #body="slotProps">
-                                <div class="text-center">
-                                    {{ slotProps.data.provider }}
-                                </div>
-                            </template>
-                        </Column>
-                        <Column field="played" header="Jugado">
-                            <template #body="slotProps">
-                                <div class="text-center">
-                                    {{ slotProps.data.played }}
-                                </div>
-                            </template>
-                        </Column>
-                        <Column field="won" header="Ganado">
-                            <template #body="slotProps">
-                                <div class="text-center">
-                                    {{ slotProps.data.won }}
-                                </div>
-                            </template>
-                        </Column>
-                        <Column field="profit" header="Netwin">
-                            <template #body="slotProps">
-                                <div class="text-center">
-                                    {{ slotProps.data.profit }}
-                                </div>
-                            </template>
-                        </Column>
-                    </DataTable>
-                </div>
-            </template>
-            <ColumnGroup type="footer">
-                <Row>
-                    <Column
-                        footer="Total a cobrar:"
-                        :colspan="3"
-                        :footerStyle="{ 'text-align': 'right' }"
-                    />
-                    <Column
-                        :footer="totalCommission"
-                        :footerStyle="{ 'text-align': 'right' }"
-                    />
-                </Row>
-            </ColumnGroup>
         </DataTable>
     </div>
 </template>
@@ -125,7 +68,7 @@ export default {
             },
             items: [],
             columns: [
-                {field: "category", header: "Categoría"},
+                {field: "usermame", header: "Username"},
                 {field: "played", header: "Jugado"},
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}

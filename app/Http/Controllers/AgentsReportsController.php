@@ -269,6 +269,9 @@ class AgentsReportsController extends Controller
                 $transaction->won        = formatAmount($transaction->won);
                 $transaction->profit     = formatAmount($transaction->profit);
                 $transaction->commission = formatAmount($transaction->commission);
+
+                // TODO: Quitar cuando cuando la profe magda mande el username.
+                $transaction->username = $transaction->category;
             }
 
             return [
