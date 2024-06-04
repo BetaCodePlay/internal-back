@@ -17,9 +17,6 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
-            :expandedRows.sync="expandedRows"
-            @row-expand="onRowExpand"
-            @row-collapse="onRowCollapse"
         >
             <Column
                 v-for="col of columns"
@@ -93,7 +90,7 @@
                 <Row>
                     <Column
                         footer="Total a cobrar:"
-                        :colspan="5"
+                        :colspan="4"
                         :footerStyle="{ 'text-align': 'right' }"
                     />
                     <Column
