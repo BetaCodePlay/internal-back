@@ -113,7 +113,7 @@
             <ColumnGroup type="footer">
                 <Row>
                     <Column
-                        footer="Total a cobrar:"
+                        footer="Total de la ganancia:"
                         :colspan="5"
                         :footerStyle="{ 'text-align': 'right' }"
                     />
