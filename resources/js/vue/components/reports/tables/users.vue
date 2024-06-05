@@ -6,7 +6,6 @@
             @change="onChange"
             @export="exportData"
             :showUser="true"
-            :showProvider="true"
             :showTimezone="true"
         />
         <DataTable
