@@ -90,9 +90,9 @@ class AgentsReportsController extends Controller
      */
     public function financialStateData(
         Request $request,
-        $userId = null,
-        $startDate = null,
-        $endDate = null
+                $userId = null,
+                $startDate = null,
+                $endDate = null
     ) {
         try {
             $currency     = session('currency');
@@ -101,7 +101,11 @@ class AgentsReportsController extends Controller
             $user = is_null($userId)
                 ? auth()->user()
                 : User::find($userId);
-            $totalCommissio=0;
+
+            $userIds = $user->type_user == TypeUser::$player
+                ? [$user?->id]
+                : $this->reportAgentRepo->getIdsChildrenFromFather($user->id, $currency, $whitelabelId);
+
             $startDate    = Utils::startOfDayUtc($startDate);
             $endDate      = Utils::startOfDayUtc($endDate);
             $currency     = session('currency');
@@ -119,7 +123,35 @@ class AgentsReportsController extends Controller
                 'child'
             ) : null;
 
-            $text = ! is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null;
+            $childIds = [];
+            if ($child) {
+                $searchChild = User::find($child);
+
+                if ($searchChild) {
+                    $childIds = $searchChild->type_user == TypeUser::$player
+                        ? [$searchChild?->id]
+                        : $this->reportAgentRepo->getIdsChildrenFromFather($child, $currency, $whitelabelId);
+                }
+            }
+
+            $totalCommission = 0;
+
+            $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
+                ? $request->get('timezone')
+                : null;
+
+            $category = $request->filled('text') && $request->get('text') !== 'null'
+                ? $request->get('text')
+                : null;
+
+            $provider = $request->filled('provider') && $request->get('provider') !== 'null'
+                ? $request->get('provider')
+                : null;
+
+            $child = $request->filled('child') && $request->get('child') !== 'null'
+                ? $request->get('child')
+                :
+                null;
 
             $financialData = $this->reportAgentRepo->getCommissionByCategory(
                 $child ?: $user->id,
@@ -128,7 +160,7 @@ class AgentsReportsController extends Controller
                 $startDate,
                 $endDate,
                 $timezone,
-                $text,
+                $category,
                 $provider
             );
 
@@ -146,8 +178,6 @@ class AgentsReportsController extends Controller
                 'data'            => $financialData,
                 'totalCommission' => formatAmount($totalCommission)
             ];
-
-
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
             return Utils::failedResponse();
