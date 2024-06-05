@@ -18,7 +18,7 @@
             :value="items"
             responsiveLayout="scroll"
             paginator
-            :rows="10"
+            :rows="1000"
         >
             <template #empty>{{ emptyMessage }}</template>
 
