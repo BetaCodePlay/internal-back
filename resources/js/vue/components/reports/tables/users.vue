@@ -28,6 +28,9 @@
                     <div class="text-center" v-if="col.field == 'username'">
                         <strong>{{ slotProps.data.username }}</strong>
                     </div>
+                    <div class="text-center" v-if="col.field == 'type_user'">
+                        <strong>{{ slotProps.data.type_user }}</strong>
+                    </div>
                     <div class="text-center" v-else-if="col.field == 'played'">
                         {{ slotProps.data.played }}
                     </div>
@@ -68,6 +71,7 @@ export default {
             items: [],
             columns: [
                 {field: "username", header: "Username"},
+                {field: "type_user", header: "Tipo"},
                 {field: "played", header: "Jugado"},
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
