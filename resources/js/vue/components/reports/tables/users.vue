@@ -25,6 +25,7 @@
                 :header="col.header"
                 :key="`key-${col.field}-${force}`"
             >
+                <template #empty>{{ emptyMessage }}</template>
                 <template #body="slotProps">
                     <div class="text-center" v-if="col.field === 'username'">
                         <strong>{{ slotProps.data.username }}</strong>
@@ -41,9 +42,6 @@
                     <div class="text-center" v-else-if="col.field === 'profit'">
                         {{ slotProps.data.profit }}
                     </div>
-<!--                    <div class="text-center" v-else>
-                        {{ slotProps.data[col.field] }}
-                    </div>-->
                 </template>
             </Column>
         </DataTable>
@@ -147,5 +145,10 @@ export default {
     border: 1px solid #8080800f;
     border-radius: 8px;
     padding: 10px;
+}
+.custom-empty-message {
+    text-align: center;
+    padding: 1em;
+    font-size: 1.2em;
 }
 </style>
