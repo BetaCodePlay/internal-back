@@ -229,6 +229,7 @@ class AgentsReportsController extends Controller
     ) {
         try {
             $user         = is_null($userId) ? auth()->user() : User::find($userId);
+
           //  $startDate    = Utils::startOfDayUtc($startDate);
           //  $endDate      = Utils::startOfDayUtc($endDate);
             $currency     = session('currency');
