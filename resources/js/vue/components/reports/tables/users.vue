@@ -19,13 +19,14 @@
             responsiveLayout="scroll"
             :emptyMessage="emptyMessage"
         >
+            <template #empty>{{ emptyMessage }}</template>
+
             <Column
                 v-for="col of columns"
                 :field="col.field"
                 :header="col.header"
                 :key="`key-${col.field}-${force}`"
             >
-                <template #empty>{{ emptyMessage }}</template>
                 <template #body="slotProps">
                     <div class="text-center" v-if="col.field === 'username'">
                         <strong>{{ slotProps.data.username }}</strong>
