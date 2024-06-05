@@ -41,9 +41,9 @@
                     <div class="text-center" v-else-if="col.field === 'profit'">
                         {{ slotProps.data.profit }}
                     </div>
-                    <div class="text-center" v-else>
+<!--                    <div class="text-center" v-else>
                         {{ slotProps.data[col.field] }}
-                    </div>
+                    </div>-->
                 </template>
             </Column>
         </DataTable>
