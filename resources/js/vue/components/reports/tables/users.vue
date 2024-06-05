@@ -17,7 +17,8 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
-            :emptyMessage="emptyMessage"
+            paginator
+            :rows="10"
         >
             <template #empty>{{ emptyMessage }}</template>
 
