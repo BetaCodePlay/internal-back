@@ -258,8 +258,6 @@ class AgentsReportsController extends Controller
                 $transaction->won        = formatAmount($transaction->won);
                 $transaction->profit     = formatAmount($transaction->profit);
                 $transaction->type_user  = $transaction->type_user == 5 ? 'Jugador' : 'Agente';
-                // TODO: Quitar cuando cuando la profe magda mande el username.
-                $transaction->username = $transaction->username;
             }
 
             return [
