@@ -72,6 +72,39 @@ class ReportAgentRepo
         return collect($results);
     }
 
+    /**
+     *
+     * @param int|string $userId
+     * @param string $currency
+     * @param int|string $whitelabelId
+     * @param string $startDate
+     * @param string $endDate
+     * @param string|null $timezone
+     * @return Collection
+     */
+    public function getTotalByUserFromAgent(
+        int|string $userId,
+        string $currency,
+        int|string $whitelabelId,
+        string $startDate,
+        string $endDate,
+        ?string $timezone = null,
+    )
+    : Collection {
+        $query = "SELECT * FROM site.total_by_user_from_agent(?, ?, ?, ?, ?, ?)";
+
+        $results = DB::select($query, [
+            $userId,
+            $currency,
+            $whitelabelId,
+            $startDate,
+            $endDate,
+            $timezone
+        ]);
+
+        return collect($results);
+    }
+
 /**
      * Get Closure FinancialState
      *

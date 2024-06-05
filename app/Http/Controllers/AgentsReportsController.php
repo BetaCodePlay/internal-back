@@ -238,33 +238,26 @@ class AgentsReportsController extends Controller
                 ? $request->get('timezone')
                 : null;
 
-            $category = $request->filled('text') && $request->get('text') !== 'null'
-                ? $request->get('text')
-                : null;
-
             $child = $request->filled('child') && $request->get('child') !== 'null'
                 ? $request->get('child')
                 :
                 null;
 
-            $financialData = $this->reportAgentRepo->getCommissionByCategory(
+            $financialData = $this->reportAgentRepo->getTotalByUserFromAgent(
                 $child ?: $user->id,
                 $currency,
                 $whitelabelId,
                 $startDate,
                 $endDate,
-                $timezone,
-                $category
+                $timezone
             );
-
+            Log::info(__METHOD__, ['$financialData' => $financialData]);
             foreach ($financialData as $transaction) {
                 $transaction->played     = formatAmount($transaction->played);
                 $transaction->won        = formatAmount($transaction->won);
                 $transaction->profit     = formatAmount($transaction->profit);
-                $transaction->commission = formatAmount($transaction->commission);
-
                 // TODO: Quitar cuando cuando la profe magda mande el username.
-                $transaction->username = $transaction->category;
+                $transaction->username = $transaction->user_id;
             }
 
             return [
