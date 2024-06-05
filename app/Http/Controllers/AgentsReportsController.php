@@ -252,7 +252,6 @@ class AgentsReportsController extends Controller
                 $endDate,
                 $timezone
             );
-            Log::info(__METHOD__, ['$financialData' => $financialData]);
             foreach ($financialData as $transaction) {
                 $transaction->played     = formatAmount($transaction->played);
                 $transaction->won        = formatAmount($transaction->won);

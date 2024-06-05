@@ -25,19 +25,19 @@
                 :key="`key-${col.field}-${force}`"
             >
                 <template #body="slotProps">
-                    <div class="text-center" v-if="col.field == 'username'">
+                    <div class="text-center" v-if="col.field === 'username'">
                         <strong>{{ slotProps.data.username }}</strong>
                     </div>
-                    <div class="text-center" v-if="col.field == 'type_user'">
+                    <div class="text-center" v-if="col.field === 'type_user'">
                         <strong>{{ slotProps.data.type_user }}</strong>
                     </div>
-                    <div class="text-center" v-else-if="col.field == 'played'">
+                    <div class="text-center" v-else-if="col.field === 'played'">
                         {{ slotProps.data.played }}
                     </div>
-                    <div class="text-center" v-else-if="col.field == 'won'">
+                    <div class="text-center" v-else-if="col.field === 'won'">
                         {{ slotProps.data.won }}
                     </div>
-                    <div class="text-center" v-else-if="col.field == 'profit'">
+                    <div class="text-center" v-else-if="col.field === 'profit'">
                         {{ slotProps.data.profit }}
                     </div>
                     <div class="text-center" v-else>
