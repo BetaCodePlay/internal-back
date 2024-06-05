@@ -17,6 +17,7 @@
             class="mt-3"
             :value="items"
             responsiveLayout="scroll"
+            :emptyMessage="emptyMessage"
         >
             <Column
                 v-for="col of columns"
@@ -59,6 +60,7 @@ export default {
             expandedRows: [],
             loading: false,
             totalCommission: 0,
+            emptyMessage: 'No hay datos disponibles.',
             filters: {
                 query: "",
                 daterange: [
