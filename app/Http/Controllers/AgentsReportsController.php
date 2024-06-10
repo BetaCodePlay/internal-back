@@ -222,6 +222,18 @@ class AgentsReportsController extends Controller
                 $endDate,
                 $timezone
             );
+
+            if ($whitelabelId === 1) {
+                Log::info('Info Magda', [
+                    $child ?: $user->id,
+                    $currency,
+                    $whitelabelId,
+                    $startDate,
+                    $endDate,
+                    $timezone
+                ]);
+            }
+
             foreach ($financialData as $transaction) {
                 $transaction->played     = formatAmount($transaction->played);
                 $transaction->won        = formatAmount($transaction->won);
