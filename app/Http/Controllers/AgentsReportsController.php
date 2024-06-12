@@ -225,9 +225,7 @@ class AgentsReportsController extends Controller
                     $whitelabelId,
                     $startDate,
                     $endDate,
-                    $timezone,
-                    "{$startDate}: {$startTime}",
-                    "{$startDate}: {$endTime}"
+                    $timezone
                 ]);
             }
 
