@@ -50,9 +50,7 @@
                                             <Card style="margin-top: 0px">
                                                 <template #content>
                                                     <div class="row">
-                                                        <div
-                                                            class="col-12 mb-3"
-                                                        >
+                                                        <div class="col-12 mb-3">
                                                             <label
                                                                 >Fechas</label
                                                             >
@@ -72,6 +70,15 @@
                                                             >
                                                             </el-date-picker>
                                                         </div>
+
+                                                        <div class="col-12 mb-3">
+                                                            <label
+                                                            >Fechas New</label
+                                                            >
+                                                            <Calendar v-model="date" :numberOfMonths="2" />
+                                                        </div>
+
+
                                                         <div
                                                             class="col-12 mb-3"
                                                             v-if="showTimezone"
