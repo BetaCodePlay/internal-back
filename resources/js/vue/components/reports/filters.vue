@@ -71,15 +71,25 @@
                                                             </el-date-picker>
                                                         </div>
 
-                                                        <div class="col-12 mb-3">
-                                                            <label >Fecha Inicial</label >
+                                                        <div class="col-6 mb-3">
+                                                            <label >Fecha Inicial</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeStart"
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
-                                                                placeholder="Select time">
+                                                                placeholder="Select time"
+                                                                value="00:00">
                                                             </el-time-select>
                                                         </div>
 
+                                                        <div class="col-6 mb-3">
+                                                            <label >Fecha Final</label><br>
+                                                            <el-time-select
+                                                                v-model="value.timeEnd"
+                                                                :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
+                                                                placeholder="Select time"
+                                                                value="00:00">
+                                                            </el-time-select>
+                                                        </div>
 
                                                         <div
                                                             class="col-12 mb-3"
