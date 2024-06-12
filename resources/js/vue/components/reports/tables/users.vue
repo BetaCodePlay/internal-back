@@ -152,4 +152,14 @@ export default {
     padding: 1em;
     font-size: 1.2em;
 }
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 100%;
+}
+
+.el-input__inner {
+    background: #474747;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
 </style>
