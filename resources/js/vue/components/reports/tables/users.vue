@@ -111,7 +111,7 @@ export default {
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
-                const url = `/agents/reports/user-financial-report/${authUserId}/${startDate}/${endDate}/${timeStart}/${timeEnd}`;
+                const url = `/agents/reports/user-financial-report/${authUserId}/${startDate}/${endDate}&timestart=${timeStart}&timeend=${timeEnd}`;
 
                 const params = {
                     timezone: selectedTimezone,
