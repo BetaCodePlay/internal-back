@@ -105,11 +105,11 @@ export default {
                 this.loading = true;
 
                 const {authUserId} = window;
-                const {daterange, selectedTimezone, selectedUser, query} = this.filters;
+                const {daterange, selectedTimezone, selectedUser, query, timeStart, timeEnd} = this.filters;
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
-                const url = `/agents/reports/user-financial-report/${authUserId}/${startDate}/${endDate}`;
+                const url = `/agents/reports/user-financial-report/${authUserId}/${startDate}/${endDate}/${timeStart}/${timeEnd}`;
 
                 const params = {
                     timezone: selectedTimezone,

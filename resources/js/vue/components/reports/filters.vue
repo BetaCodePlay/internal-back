@@ -72,7 +72,7 @@
                                                         </div>
 
                                                         <div class="col-6 mb-3">
-                                                            <label >Fecha Inicial</label><br>
+                                                            <label >Hora Inicial</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeStart"
                                                                 @change="
@@ -84,7 +84,7 @@
                                                         </div>
 
                                                         <div class="col-6 mb-3">
-                                                            <label >Fecha Final</label><br>
+                                                            <label >Hora Final</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeEnd"
                                                                 @change="
