@@ -213,8 +213,8 @@ class AgentsReportsController extends Controller
                 ? $request->get('child')
                 : null;
 
-            $startTime = $request->input('timeStart') ?: '00:00';
-            $endTime  = $request->input('timeEnd') ?: '23:59';
+            $startTime = $request->input('timeStart', '00:00');
+            $endTime  = $request->input('timeEnd', '23:59');
 
             $startDate = "{$startDate}: {$startTime}";
             $endDate = "{$startDate}: {$endTime}";
