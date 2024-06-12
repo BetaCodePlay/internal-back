@@ -104,6 +104,8 @@ export default {
             if (this.filters.daterange[1]) {
                 this.loading = true;
 
+                console.log(this.filters);
+
                 const {authUserId} = window;
                 const {daterange, selectedTimezone, selectedUser, query, timeStart, timeEnd} = this.filters;
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
