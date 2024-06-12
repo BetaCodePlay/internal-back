@@ -216,8 +216,22 @@ class AgentsReportsController extends Controller
             $startTime = $request->input('timeStart', '00:00');
             $endTime  = $request->input('timeEnd', '23:59');
 
-            $startDate = "{$startDate}: {$startTime}";
-            $endDate = "{$startDate}: {$endTime}";
+            if ($whitelabelId === 1) {
+                Log::info('Info Magda', [
+                    $child ?: $user->id,
+                    $currency,
+                    $whitelabelId,
+                    $startDate,
+                    $endDate,
+                    $timezone,
+                    "{$startDate}: {$startTime}",
+                    "{$startDate}: {$endTime}"
+                ]);
+            }
+
+
+            /*  $startDate = "{$startDate}: {$startTime}";
+              $endDate = "{$startDate}: {$endTime}";*/
 
             $financialData = $this->reportAgentRepo->getTotalByUserFromAgent(
                 $child ?: $user->id,
@@ -228,16 +242,6 @@ class AgentsReportsController extends Controller
                 $timezone
             );
 
-            if ($whitelabelId === 1) {
-                Log::info('Info Magda', [
-                    $child ?: $user->id,
-                    $currency,
-                    $whitelabelId,
-                    $startDate,
-                    $endDate,
-                    $timezone
-                ]);
-            }
 
             foreach ($financialData as $transaction) {
                 $transaction->played    = formatAmount($transaction->played);
