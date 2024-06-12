@@ -76,8 +76,7 @@
                                                             <el-time-select
                                                                 v-model="value.timeStart"
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
-                                                                placeholder="Select time"
-                                                                value="00:00">
+                                                                placeholder="Select time">
                                                             </el-time-select>
                                                         </div>
 
@@ -86,8 +85,7 @@
                                                             <el-time-select
                                                                 v-model="value.timeEnd"
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
-                                                                placeholder="Select time"
-                                                                value="00:00">
+                                                                placeholder="Select time">
                                                             </el-time-select>
                                                         </div>
 
@@ -295,8 +293,8 @@ export default {
             default: {
                 query: "",
                 daterange: [],
-                timeStart: "",
-                timeEnd: "",
+                timeStart: "00:00",
+                timeEnd: "00:00",
                 selectedUser: "",
                 selectedTimezone: "",
                 selectedProvider: "",
