@@ -508,8 +508,17 @@ export default {
     font-weight: 600;
 }
 
+.time-select-item {
+    font-weight: 500;
+    color: #fff;
+}
+
 .time-select-item:hover {
     background-color: rgba(255,255,255,0.1);
+}
+
+.time-select-item.selected:not(.disabled) {
+    color: #555;
 }
 
 @media screen and (max-width: 625px) {
