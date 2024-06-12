@@ -214,7 +214,9 @@ class AgentsReportsController extends Controller
                 : null;
 
             $startTime = $request->input('timeStart', '00:00');
-            $endTime  = $request->input('timeEnd', '23:59');
+            $endTime   = $request->input('timeEnd', '23:59');
+            $startDate = "{$startDate} {$startTime}";
+            $endDate   = "{$startDate} {$endTime}";
 
             if ($whitelabelId === 1) {
                 Log::info('Info Magda', [
@@ -228,10 +230,6 @@ class AgentsReportsController extends Controller
                     "{$startDate}: {$endTime}"
                 ]);
             }
-
-
-            /*  $startDate = "{$startDate}: {$startTime}";
-              $endDate = "{$startDate}: {$endTime}";*/
 
             $financialData = $this->reportAgentRepo->getTotalByUserFromAgent(
                 $child ?: $user->id,
