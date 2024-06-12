@@ -216,7 +216,7 @@ class AgentsReportsController extends Controller
             $startTime = $request->input('timeStart', '00:00');
             $endTime   = $request->input('timeEnd', '23:59');
             $startDate = "{$startDate} {$startTime}";
-            $endDate   = "{$startDate} {$endTime}";
+            $endDate   = "{$endDate} {$endTime}";
 
             if ($whitelabelId === 1) {
                 Log::info('Info Magda', [
