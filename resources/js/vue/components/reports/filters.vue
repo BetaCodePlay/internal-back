@@ -67,8 +67,8 @@
                                                                     updateFilters
                                                                 "
                                                                 range-separator="-"
-                                                                start-placeholder="Fecha Inicial"
-                                                                end-placeholder="Fecha Final"
+                                                                start-placeholder="Fecha Inicialsdaf"
+                                                                end-placeholder="Fecha Finalfsa"
                                                             >
                                                             </el-date-picker>
                                                         </div>
