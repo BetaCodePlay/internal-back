@@ -75,7 +75,7 @@
                                                             <label
                                                             >Fechas New</label
                                                             >
-                                                            <Calendar v-model="value.daterange" :numberOfMonths="2" />
+                                                            <Calendar v-model="value" :numberOfMonths="2" />
                                                         </div>
 
 
