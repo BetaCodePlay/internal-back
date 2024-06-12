@@ -72,10 +72,16 @@
                                                         </div>
 
                                                         <div class="col-12 mb-3">
-                                                            <label
-                                                            >Fechas New</label
-                                                            >
-                                                            <Calendar v-model="value" :numberOfMonths="2" />
+                                                            <label >Fechas New</label >
+                                                            <el-time-select
+                                                                v-model="value.daterange"
+                                                                :picker-options="{
+        start: '00:00',
+        step: '00:15',
+        end: '23:59'
+      }"
+                                                                placeholder="Select time">
+                                                            </el-time-select>
                                                         </div>
 
 
