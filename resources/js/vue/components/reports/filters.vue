@@ -293,8 +293,8 @@ export default {
             default: {
                 query: "",
                 daterange: [],
-                timeStart: "00:00",
-                timeEnd: "00:00",
+                timeStart: "",
+                timeEnd: "",
                 selectedUser: "",
                 selectedTimezone: "",
                 selectedProvider: "",
@@ -488,6 +488,22 @@ export default {
 }
 .custom-report-dropdown .dropdown-item {
     color: white;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 100%;
+}
+
+.el-input__inner {
+    background: #474747;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.time-select-item:hover {
+    background-color: rgba(255,255,255,0.1);
 }
 
 @media screen and (max-width: 625px) {
