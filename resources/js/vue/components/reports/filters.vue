@@ -60,7 +60,6 @@
                                                                 v-model="
                                                                     value.daterange
                                                                 "
-                                                                format = "yyyy-MM-dd HH: 00:00"
                                                                 type="daterange"
                                                                 align="right"
                                                                 size="large"
