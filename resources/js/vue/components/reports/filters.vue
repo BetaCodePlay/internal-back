@@ -75,6 +75,9 @@
                                                             <label >Fecha Inicial</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeStart"
+                                                                @change="
+                                                                    updateFilters
+                                                                "
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
                                                                 placeholder="Select time">
                                                             </el-time-select>
@@ -84,6 +87,9 @@
                                                             <label >Fecha Final</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeEnd"
+                                                                @change="
+                                                                    updateFilters
+                                                                "
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
                                                                 placeholder="Select time">
                                                             </el-time-select>
