@@ -90,9 +90,9 @@ class AgentsReportsController extends Controller
      */
     public function financialStateData(
         Request $request,
-                $userId = null,
-                $startDate = null,
-                $endDate = null
+        $userId = null,
+        $startDate = null,
+        $endDate = null
     ) {
         try {
             $currency     = session('currency');
@@ -198,10 +198,10 @@ class AgentsReportsController extends Controller
         $endDate = null
     ) {
         try {
-            $user         = is_null($userId) ? auth()->user() : User::find($userId);
+            $user = is_null($userId) ? auth()->user() : User::find($userId);
 
-          //  $startDate    = Utils::startOfDayUtc($startDate);
-          //  $endDate      = Utils::startOfDayUtc($endDate);
+            //  $startDate    = Utils::startOfDayUtc($startDate);
+            //  $endDate      = Utils::startOfDayUtc($endDate);
             $currency     = session('currency');
             $whitelabelId = Configurations::getWhitelabel();
 
@@ -211,8 +211,13 @@ class AgentsReportsController extends Controller
 
             $child = $request->filled('child') && $request->get('child') !== 'null'
                 ? $request->get('child')
-                :
-                null;
+                : null;
+
+            $startTime = $request->input('timeStart') ?: '00:00';
+            $endTime  = $request->input('timeEnd') ?: '23:59';
+
+            $startDate = "{$startDate}: {$startTime}";
+            $endDate = "{$startDate}: {$endTime}";
 
             $financialData = $this->reportAgentRepo->getTotalByUserFromAgent(
                 $child ?: $user->id,
@@ -235,16 +240,16 @@ class AgentsReportsController extends Controller
             }
 
             foreach ($financialData as $transaction) {
-                $transaction->played     = formatAmount($transaction->played);
-                $transaction->won        = formatAmount($transaction->won);
-                $transaction->profit     = formatAmount($transaction->profit);
-                $transaction->type_user  = $transaction->type_user == 5 ? 'Jugador' : 'Agente';
+                $transaction->played    = formatAmount($transaction->played);
+                $transaction->won       = formatAmount($transaction->won);
+                $transaction->profit    = formatAmount($transaction->profit);
+                $transaction->type_user = $transaction->type_user == 5 ? 'Jugador' : 'Agente';
             }
 
             return [
-                'status'          => Response::HTTP_OK,
-                'code'            => Codes::$ok,
-                'data'            => $financialData,
+                'status' => Response::HTTP_OK,
+                'code'   => Codes::$ok,
+                'data'   => $financialData,
             ];
         } catch (\Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
