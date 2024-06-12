@@ -111,12 +111,14 @@ export default {
                 const startDate = moment(daterange[0]).format("YYYY-MM-DD");
                 const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
-                const url = `/agents/reports/user-financial-report/${authUserId}/${startDate}/${endDate}&timestart=${timeStart}&timeend=${timeEnd}`;
+                const url = `/agents/reports/user-financial-report/${authUserId}/${startDate}/${endDate}`;
 
                 const params = {
                     timezone: selectedTimezone,
                     child: selectedUser,
-                    text: query
+                    text: query,
+                    timeStart,
+                    timeEnd
                 };
 
                 axios.get(url, {params})
