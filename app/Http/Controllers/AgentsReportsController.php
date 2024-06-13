@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Core\Collections\CoreCollection;
 use App\Reports\Repositories\ReportAgentRepo;
+use App\Users\Entities\User;
+use App\Users\Enums\TypeUser;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
 use Dotworkers\Configurations\Utils;
@@ -88,45 +90,92 @@ class AgentsReportsController extends Controller
      */
     public function financialStateData(
         Request $request,
-        $user = null,
+        $userId = null,
         $startDate = null,
         $endDate = null
     ) {
         try {
-            if (is_null($user)) {
-                $user = Auth::id();
+            $currency     = session('currency');
+            $whitelabelId = Configurations::getWhitelabel();
+
+            $user = is_null($userId)
+                ? auth()->user()
+                : User::find($userId);
+
+            $userIds = $user->type_user == TypeUser::$player
+                ? [$user?->id]
+                : $this->reportAgentRepo->getIdsChildrenFromFather($user->id, $currency, $whitelabelId);
+
+            $startDate    = Utils::startOfDayUtc($startDate);
+            $endDate      = Utils::startOfDayUtc($endDate);
+            $currency     = session('currency');
+            $whitelabelId = Configurations::getWhitelabel();
+
+            $timezone = ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
+                'timezone'
+            ) : null;
+
+            $provider = ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
+                'provider'
+            ) : null;
+
+            $child = ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get(
+                'child'
+            ) : null;
+
+            $childIds = [];
+            if ($child) {
+                $searchChild = User::find($child);
+
+                if ($searchChild) {
+                    $childIds = $searchChild->type_user == TypeUser::$player
+                        ? [$searchChild?->id]
+                        : $this->reportAgentRepo->getIdsChildrenFromFather($child, $currency, $whitelabelId);
+                }
             }
 
-            $data = $this->reportAgentRepo->getFinancialState(
-                Utils::startOfDayUtc($startDate),
-                Utils::endOfDayUtc($endDate),
-                session('currency'),
-                Configurations::getWhitelabel(),
-                $user,
-                ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
-                    'timezone'
-                ) : null,
-                ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
-                    'provider'
-                ) : null,
-                ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get('child') : null,
-                ! is_null($request->get('text')) && $request->get('text') !== 'null' ? $request->get('text') : null,
+            $totalCommission = 0;
 
+            $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
+                ? $request->get('timezone')
+                : null;
+
+            $category = $request->filled('text') && $request->get('text') !== 'null'
+                ? $request->get('text')
+                : null;
+
+            $provider = $request->filled('provider') && $request->get('provider') !== 'null'
+                ? $request->get('provider')
+                : null;
+
+            $child = $request->filled('child') && $request->get('child') !== 'null'
+                ? $request->get('child')
+                :
+                null;
+
+            $financialData = $this->reportAgentRepo->getCommissionByCategory(
+                $child ?: $user->id,
+                $currency,
+                $whitelabelId,
+                $startDate,
+                $endDate,
+                $timezone,
+                $category,
+                $provider
             );
 
-            $totalCommission = 0;
-            foreach ($data as $item) {
-                $totalCommission  += $item->commission;
-                $item->played     = formatAmount($item->played);
-                $item->won        = formatAmount($item->won);
-                $item->profit     = formatAmount($item->profit);
-                $item->commission = formatAmount($item->commission);
+            foreach ($financialData as $transaction) {
+                $totalCommission         += $transaction->commission;
+                $transaction->played     = formatAmount($transaction->played);
+                $transaction->won        = formatAmount($transaction->won);
+                $transaction->profit     = formatAmount($transaction->profit);
+                $transaction->commission = formatAmount($transaction->commission);
             }
 
             return [
                 'status'          => Response::HTTP_OK,
                 'code'            => Codes::$ok,
-                'data'            => $data,
+                'data'            => $financialData,
                 'totalCommission' => formatAmount($totalCommission)
             ];
         } catch (\Exception $ex) {
@@ -135,6 +184,79 @@ class AgentsReportsController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param $userId
+     * @param $startDate
+     * @param $endDate
+     * @return array|Response
+     */
+    public function userFinancialReport(
+        Request $request,
+        $userId = null,
+        $startDate = null,
+        $endDate = null
+    ) {
+        try {
+            $user = is_null($userId) ? auth()->user() : User::find($userId);
+
+            //  $startDate    = Utils::startOfDayUtc($startDate);
+            //  $endDate      = Utils::startOfDayUtc($endDate);
+            $currency     = session('currency');
+            $whitelabelId = Configurations::getWhitelabel();
+
+            $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
+                ? $request->get('timezone')
+                : null;
+
+            $child = $request->filled('child') && $request->get('child') !== 'null'
+                ? $request->get('child')
+                : null;
+
+            $startTime = $request->filled('timeStart') ? $request->input('timeStart') : '00:00';
+            $endTime = $request->filled('timeEnd') ? $request->input('timeEnd') : '23:59';
+
+            $startDate = "{$startDate} {$startTime}";
+            $endDate   = "{$endDate} {$endTime}";
+
+            if ($whitelabelId === 1) {
+                Log::info('Info Magda', [
+                    $child ?: $user->id,
+                    $currency,
+                    $whitelabelId,
+                    $startDate,
+                    $endDate,
+                    $timezone
+                ]);
+            }
+
+            $financialData = $this->reportAgentRepo->getTotalByUserFromAgent(
+                $child ?: $user->id,
+                $currency,
+                $whitelabelId,
+                $startDate,
+                $endDate,
+                $timezone
+            );
+
+
+            foreach ($financialData as $transaction) {
+                $transaction->played    = formatAmount($transaction->played);
+                $transaction->won       = formatAmount($transaction->won);
+                $transaction->profit    = formatAmount($transaction->profit);
+                $transaction->type_user = $transaction->type_user == 5 ? 'Jugador' : 'Agente';
+            }
+
+            return [
+                'status' => Response::HTTP_OK,
+                'code'   => Codes::$ok,
+                'data'   => $financialData,
+            ];
+        } catch (\Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'start_date' => $startDate, 'end_date' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
 
     /**
      * Data Financial State New "for support"

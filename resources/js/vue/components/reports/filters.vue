@@ -50,9 +50,7 @@
                                             <Card style="margin-top: 0px">
                                                 <template #content>
                                                     <div class="row">
-                                                        <div
-                                                            class="col-12 mb-3"
-                                                        >
+                                                        <div class="col-12 mb-3">
                                                             <label
                                                                 >Fechas</label
                                                             >
@@ -72,6 +70,31 @@
                                                             >
                                                             </el-date-picker>
                                                         </div>
+
+                                                        <div class="col-6 mb-3">
+                                                            <label >Hora Inicial</label><br>
+                                                            <el-time-select
+                                                                v-model="value.timeStart"
+                                                                @change="
+                                                                    updateFilters
+                                                                "
+                                                                :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
+                                                                placeholder="Select time">
+                                                            </el-time-select>
+                                                        </div>
+
+                                                        <div class="col-6 mb-3">
+                                                            <label >Hora Final</label><br>
+                                                            <el-time-select
+                                                                v-model="value.timeEnd"
+                                                                @change="
+                                                                    updateFilters
+                                                                "
+                                                                :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
+                                                                placeholder="Select time">
+                                                            </el-time-select>
+                                                        </div>
+
                                                         <div
                                                             class="col-12 mb-3"
                                                             v-if="showTimezone"
@@ -276,6 +299,8 @@ export default {
             default: {
                 query: "",
                 daterange: [],
+                timeStart: "",
+                timeEnd: "",
                 selectedUser: "",
                 selectedTimezone: "",
                 selectedProvider: "",
@@ -469,6 +494,31 @@ export default {
 }
 .custom-report-dropdown .dropdown-item {
     color: white;
+}
+
+.el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 100%;
+}
+
+.el-input__inner {
+    background: #474747;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.time-select-item {
+    font-weight: 500;
+    color: #fff;
+}
+
+.time-select-item:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.time-select-item.selected:not(.disabled) {
+    color: #555;
 }
 
 @media screen and (max-width: 625px) {

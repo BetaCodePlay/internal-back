@@ -76,6 +76,10 @@
 
 @yield('modals')
 
+@if (auth()->check())
+    <liveconnect-widget canal-key="cnd27569a86f4d35ff15a5e0c795c1f25e"></liveconnect-widget>
+    <script type="text/javascript" src="https://liveconnect.chat/es/CDN/liveconnect/liveconnect-widget.js"></script>
+@endif
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
@@ -100,5 +104,4 @@
     Global.sidebar();
 </script>
 </body>
-
 </html>

@@ -247,9 +247,10 @@ class BackOfficeServiceProvider extends ServiceProvider
         $configurations = Configurations::getConfigurationsByURL($domain);
 
         if ($configurations->isEmpty()) {
-            throw new InvalidArgumentException(
-                'Whitelabel configuration error detected. Please review the domain in the whitelabels table'
-            );
+            /*throw new InvalidArgumentException(
+                "Whitelabel configuration error detected. Please review the domain in the whitelabels table"
+            );*/
+            die;
         }
 
         if ($configurations->isNotEmpty()) {

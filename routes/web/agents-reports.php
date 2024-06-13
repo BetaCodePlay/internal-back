@@ -10,8 +10,8 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
 
     // Reports routes
     Route::group(['prefix' => 'reports'], function () {
-        // Get financial state data NEW 
-        Route::get('financial-state-data-v2/{user?}/{startDate?}/{endDate?}', [
+        // Get financial state data NEW
+        Route::get('financial-state-data-v2/{userId?}/{startDate?}/{endDate?}', [
             'as' => 'agents.reports.financial-state-data-new',
             'uses' => 'AgentsReportsController@financialStateData'
         ]);
@@ -19,6 +19,10 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         Route::get('financial-state-data-v2-category/{user?}/{startDate?}/{endDate?}/{category}', [
             'as' => 'agents.reports.financial-state-data-new-ctageory',
             'uses' => 'AgentsReportsController@financialStateByCategoryData'
+        ]);
+        Route::get('user-financial-report/{userId?}/{startDate?}/{endDate?}', [
+            'as' => 'agents.reports.user-financial-report',
+            'uses' => 'AgentsReportsController@userFinancialReport'
         ]);
         // Get Childrens
         Route::get('get-childrens', [
