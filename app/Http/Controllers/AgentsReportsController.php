@@ -219,7 +219,7 @@ class AgentsReportsController extends Controller
             $startDate = "{$startDate} {$startTime}";
             $endDate   = "{$endDate} {$endTime}";
 
-            if ($whitelabelId === 2) {
+            if ($whitelabelId === 1) {
                 Log::info('Info Magda', [
                     $child ?: $user->id,
                     $currency,
