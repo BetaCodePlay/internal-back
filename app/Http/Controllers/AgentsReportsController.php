@@ -221,7 +221,7 @@ class AgentsReportsController extends Controller
 
             if ($whitelabelId === 1) {
                 Log::info('Info Magda', [
-                    $child ?: $user->id,
+                    (int)$child ?: $user->id,
                     $currency,
                     $whitelabelId,
                     $startDate,
@@ -231,7 +231,7 @@ class AgentsReportsController extends Controller
             }
 
             $financialData = $this->reportAgentRepo->getTotalByUserFromAgent(
-                $child ?: $user->id,
+                (int)$child ?: $user->id,
                 $currency,
                 $whitelabelId,
                 $startDate,
