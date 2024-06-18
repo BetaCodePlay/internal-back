@@ -215,6 +215,7 @@ class AgentsReportsController extends Controller
 
             $startTime = $request->filled('timeStart') ? $request->input('timeStart') : '00:00';
             $endTime = $request->filled('timeEnd') ? $request->input('timeEnd') : '23:59';
+            $username = $request->input('text');
 
             $startDate = "{$startDate} {$startTime}";
             $endDate   = "{$endDate} {$endTime}";
@@ -226,7 +227,8 @@ class AgentsReportsController extends Controller
                     $whitelabelId,
                     $startDate,
                     $endDate,
-                    $timezone
+                    $timezone,
+                    $username
                 ]);
             }
 
@@ -236,9 +238,9 @@ class AgentsReportsController extends Controller
                 $whitelabelId,
                 $startDate,
                 $endDate,
-                $timezone
+                $timezone,
+                $username
             );
-
 
             foreach ($financialData as $transaction) {
                 $transaction->played    = formatAmount($transaction->played);

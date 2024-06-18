@@ -80,6 +80,7 @@ class ReportAgentRepo
      * @param string $startDate
      * @param string $endDate
      * @param string|null $timezone
+     * @param string|null $username
      * @return Collection
      */
     public function getTotalByUserFromAgent(
@@ -89,6 +90,7 @@ class ReportAgentRepo
         string $startDate,
         string $endDate,
         ?string $timezone = null,
+        ?string $username = null
     )
     : Collection {
         $query = "SELECT * FROM site.total_by_user_from_agent(?, ?, ?, ?, ?, ?)";
@@ -99,7 +101,8 @@ class ReportAgentRepo
             $whitelabelId,
             $startDate,
             $endDate,
-            $timezone
+            $timezone,
+            $username,
         ]);
 
         return collect($results);
