@@ -90,7 +90,7 @@ class ReportAgentRepo
         string $startDate,
         string $endDate,
         ?string $timezone = null,
-        ?string $username = null
+        ?string $username = ''
     )
     : Collection {
         $query = "SELECT * FROM site.total_by_user_from_agent(?, ?, ?, ?, ?, ?)";
