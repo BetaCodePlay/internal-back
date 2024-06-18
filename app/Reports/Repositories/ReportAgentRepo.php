@@ -93,7 +93,7 @@ class ReportAgentRepo
         ?string $username = ''
     )
     : Collection {
-        $query = "SELECT * FROM site.total_by_user_from_agent(?, ?, ?, ?, ?, ?)";
+        $query = "SELECT * FROM site.total_by_user_from_agent(?, ?, ?, ?, ?, ?, ?)";
 
         $results = DB::select($query, [
             $userId,
