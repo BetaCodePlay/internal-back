@@ -108,6 +108,7 @@ export default {
                 const {daterange, selectedTimezone, selectedUser, query, timeStart, timeEnd} = this.filters;
 
                 if (query && query.length < 3) {
+                    this.loading = false;
                     return;
                 }
 

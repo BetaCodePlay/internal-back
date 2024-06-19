@@ -5,14 +5,14 @@
             <components-reports-header class="mb-5"/>
             <div class="wrapper-title g-pb-30">Actividad general</div>
             <TabView>
-                <TabPanel header="Reporte Financiero">
-                    <components-reports-tables-financial/>
-                </TabPanel>
                 <TabPanel header="Reporte Financiero por Usuarios">
                     <components-reports-tables-users/>
                 </TabPanel>
                 <TabPanel header="Reporte de transacciones">
                     <components-reports-tables-transactions/>
+                </TabPanel>
+                <TabPanel header="Reporte Financiero">
+                    <components-reports-tables-financial/>
                 </TabPanel>
             </TabView>
         </div>
