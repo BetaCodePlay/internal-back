@@ -61,6 +61,7 @@ use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -4455,14 +4456,14 @@ class AgentsController extends Controller
         }
     }
 
+
     /**
      * Show role
-     *
      * @param string $username
-     * @return Application|Factory|View
+     * @return Application|Factory|\Illuminate\Contracts\View\View|RedirectResponse|void
      */
     public function role(string $username = '')
-    : Factory|View|Application {
+    {
         try {
             $authUser       = auth()->user();
             $authUserId     = $authUser->id;
@@ -4481,6 +4482,10 @@ class AgentsController extends Controller
                 $whitelabelId
             ) : $authUser;
 
+            if (empty($user)) {
+                return redirect()->back();
+            }
+
             $userId     = $user?->id;
             $percentage = null;
             $agentsRepo = new AgentsRepo();
@@ -4497,12 +4502,16 @@ class AgentsController extends Controller
                 $balance       = ! is_array($wallet->data)
                     ? $wallet?->data?->wallet?->balance
                     : 0;
-                $usernameOwner = $agent->ownerAgent->username;
+                $usernameOwner = $agent?->ownerAgent?->username ?? '';
             } else {
                 $userOwner     = $this->usersRepo->getTokenByUser($agent->owner);
                 $percentage    = $agent->percentage;
-                $usernameOwner = $userOwner->username;
+                $usernameOwner = $userOwner->username ?? '';
                 $balance       = ($user->type_user == 'agent') ? $agent?->balance : $agent?->wallet?->balance;
+            }
+
+            if (empty($usernameOwner)) {
+                return redirect()->back();
             }
 
             $agentsCollection = new AgentsCollection();

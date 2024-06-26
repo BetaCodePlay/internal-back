@@ -496,11 +496,10 @@ class UsersRepo
      */
     public function getByUsername($username, $whitelabel)
     {
-        $user = User::select('users.*', 'users.type_user AS type')
+        return User::select('users.*', 'users.type_user AS type')
             ->where('users.username', $username)
             ->where('users.whitelabel_id', $whitelabel)
             ->first();
-        return $user;
     }
 
     /**
