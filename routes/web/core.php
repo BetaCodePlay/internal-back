@@ -124,3 +124,7 @@ Route::get('elb-health-check', function () {
     $request = new \Illuminate\Http\Request();
     return response('');
 });
+
+Route::get('support/', function () {
+    return view('back.core.support');
+});
