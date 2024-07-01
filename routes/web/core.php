@@ -125,6 +125,6 @@ Route::get('elb-health-check', function () {
     return response('');
 });
 
-Route::get('support/', function () {
+Route::get('support', function () {
     return view('back.core.support');
 });
