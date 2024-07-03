@@ -87,7 +87,7 @@
                         <section data-scroll-body="#section-support-005">
                             <h4 class="mb-4 h-collapse">
                                 Sección Iniciar sesión
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-005" aria-expanded="true" aria-controls="section-support-005"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-005" aria-expanded="true" aria-controls="section-support-005"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
@@ -106,7 +106,7 @@
                         <section data-scroll-body="#section-support-006">
                             <h4 class="mb-4 h-collapse">
                                 Sección panel de inicio
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-006" aria-expanded="true" aria-controls="section-support-006"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-006" aria-expanded="true" aria-controls="section-support-006"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
@@ -132,7 +132,7 @@
                         <section data-scroll-body="#section-support-007">
                             <h4 class="mb-4 h-collapse">
                                 Sección Roles
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-007" aria-expanded="true" aria-controls="section-support-007"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-007" aria-expanded="true" aria-controls="section-support-007"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
@@ -158,7 +158,7 @@
                         <section data-scroll-body="#section-support-008">
                             <h4 class="mb-4 h-collapse">
                                 Sección Reportes
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-008" aria-expanded="true" aria-controls="section-support-008"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-008" aria-expanded="true" aria-controls="section-support-008"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
@@ -216,7 +216,7 @@
                         <section data-scroll-body="#section-support-001">
                             <h4 class="mb-4 h-collapse">
                                 Primer ingreso
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-001" aria-expanded="true" aria-controls="section-support-001"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-001" aria-expanded="true" aria-controls="section-support-001"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
@@ -246,7 +246,7 @@
                         <section data-scroll-body="#section-support-002">
                             <h4 class="mb-4 h-collapse">
                                 Sección Inicio
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-002" aria-expanded="true" aria-controls="section-support-002"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-002" aria-expanded="true" aria-controls="section-support-002"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
@@ -274,7 +274,7 @@
                         <section data-scroll-body="#section-support-003">
                             <h4 class="mb-4 h-collapse">
                                 Sección Lobby
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-003" aria-expanded="true" aria-controls="section-support-003"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-003" aria-expanded="true" aria-controls="section-support-003"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
@@ -330,7 +330,7 @@
                         <section data-scroll-body="#section-support-004">
                             <h4 class="mb-4 h-collapse">
                                 Sección de usuario
-                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-004" aria-expanded="true" aria-controls="section-support-004"><i class="mdi mdi-chevron-down"></i></button>
+                                <button class="btn btn-collapse" type="button" data-bs-toggle="collapse" data-bs-target="#section-support-004" aria-expanded="true" aria-controls="section-support-004"><i class="fa fa-chevron-down"></i></button>
                             </h4>
 
                             <div class="section-ex">
