@@ -16,25 +16,25 @@
                             <ul class="support-list mb-4">
                                 <li>
                                     <a href="#" class="active" data-scroll="#section-support-005">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Sección Iniciar sesión</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Sección Iniciar sesión</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#" data-scroll="#section-support-006">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Sección panel de inicio</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Sección panel de inicio</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#" data-scroll="#section-support-007">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Sección Roles</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Sección Roles</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#" data-scroll="#section-support-008">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Sección Reportes</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Sección Reportes</span>
                                     </a>
                                 </li>
                             </ul>
@@ -45,25 +45,25 @@
                             <ul class="support-list">
                                 <li>
                                     <a href="#" data-scroll="#section-support-001">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Primer ingreso</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Primer ingreso</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#" data-scroll="#section-support-002">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Sección Inicio</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Sección Inicio</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#" data-scroll="#section-support-003">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Sección Lobby</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Sección Lobby</span>
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="#" data-scroll="#section-support-004">
-                                        <span class="icon"> <i class="mdi mdi-plus"></i></span> <span class="text">Sección de usuario</span>
+                                        <span class="icon"> <i class="fa fa-plus"></i></span> <span class="text">Sección de usuario</span>
                                     </a>
                                 </li>
                             </ul>
@@ -76,7 +76,7 @@
                         <div class="import mb-5">
                             <div class="import-icon">
                                 <div class="icon">
-                                    <i class="mdi mdi-information-slab-circle-outline"></i>
+                                    <i class="fa fa-info-circle"></i>
                                 </div>
                             </div>
                             <div class="import-text">
@@ -205,7 +205,7 @@
                         <div class="import mb-5">
                             <div class="import-icon">
                                 <div class="icon">
-                                    <i class="mdi mdi-information-slab-circle-outline"></i>
+                                    <i class="fa fa-info-circle"></i>
                                 </div>
                             </div>
                             <div class="import-text">
@@ -226,7 +226,7 @@
                                     <div class="import mb-5">
                                         <div class="import-icon">
                                             <div class="icon">
-                                                <i class="mdi mdi-information-slab-circle-outline"></i>
+                                                <i class="fa fa-info-circle"></i>
                                             </div>
                                         </div>
                                         <div class="import-text">
