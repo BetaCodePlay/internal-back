@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="support-container-as">
-        <div class="support-container-as-bg" style="background-image: url('img/bg-support.png')"></div>
+        <div class="support-container-as-bg" style="background-image: url('https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/bg-support.png')"></div>
 
         <div class="container">
             <div class="support-container-as-body">
@@ -97,7 +97,7 @@
                                     <p class="mb-4">Una vez ingresado se te pedirá que escribas tu nueva contraseña</p>
                                     <div class="preview mb-4">
                                         <video controls>
-                                            <source src="support/primerregistro-back.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/primerregistro-back.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                     <p class="mb-4">Una vez ingresado se te pedirá que escribas tu nueva contraseña</p>
                                     <div class="preview mb-4">
                                         <video controls>
-                                            <source src="support/dashboard.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/dashboard.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                 </div>
@@ -149,7 +149,7 @@
                                     <p class="mb-4">En la sección general de “Roles” se encuentra en la esquina superior derecha un botón llamado “Crear rol”, para poder crear un rol deberás realizar click en él y completar los siguientes datos requeridos:</p>
                                     <div class="preview mb-4">
                                         <video controls>
-                                            <source src="support/roles.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/roles.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@
 
                                     <div class="preview mb-4">
                                         <video controls>
-                                            <source src="support/reportes.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/reportes.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                     <h5 class="mb-3">¿Cómo descargo los reportes de las tablas?</h5>
@@ -236,7 +236,7 @@
                                     </div>
                                     <div class="preview">
                                         <video controls>
-                                            <source src="support/primerregistrocrrregido_1.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/primerregistrocrrregido_1.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                 </div>
@@ -264,7 +264,7 @@
                                     <p class="mb-5">ara que un juego aparezca en tus favoritos debes seleccionar la figura de la estrella (ubicada en la esquina superior derecha del juego) y una vez seleccionada, esta se pintará de amarillo, y automáticamente el juego se mostrará en la sección de tus favoritos. </p>
                                     <div class="preview">
                                         <video controls>
-                                            <source src="support/agregar_a_favsV2.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/agregar_a_favsV2.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@
                                         <li class="mb-3"><strong>Lobby de Plataforma de casino:</strong> Es el acceso a todos los juegos de casino tradicionales, como tragamonedas.</li>
                                         <div class="preview mb-4">
                                             <video controls>
-                                                <source src="support/lobbycasinoV2.mp4" type="video/mp4">
+                                                <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/lobbycasinoV2.mp4" type="video/mp4">
                                             </video>
                                         </div>
                                     </ul>
@@ -296,7 +296,7 @@
                                         <li class="mb-3"><strong>Lobby de Casino en vivo:</strong> Ofrece experiencias interactivas en vivo, uniendo competidores de todas partes del mundo con juegos como el Blackjack, Póker, Baccarat, entre otros.</li>
                                         <div class="preview mb-4">
                                             <video controls>
-                                                <source src="support/lobbyenvivo.mp4" type="video/mp4">
+                                                <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/lobbyenvivo.mp4" type="video/mp4">
                                             </video>
                                         </div>
                                     </ul>
@@ -307,7 +307,7 @@
                                         </li>
                                         <div class="preview mb-4">
                                             <video controls>
-                                                <source src="support/lobbysportsV2.mp4" type="video/mp4">
+                                                <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/lobbysportsV2.mp4" type="video/mp4">
                                             </video>
                                         </div>
                                     </ul>
@@ -318,7 +318,7 @@
                                         </li>
                                         <div class="preview mb-4">
                                             <video controls>
-                                                <source src="support/esportV3.mp4" type="video/mp4">
+                                                <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/esportV3.mp4" type="video/mp4">
                                             </video>
                                         </div>
                                     </ul>
@@ -355,7 +355,7 @@
                                     </p>
                                     <div class="preview mb-4">
                                         <video controls>
-                                            <source src="support/billeteramp4.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/billeteramp4.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                     <ul class="mb-2">
@@ -369,14 +369,14 @@
                                     <p class="mb-4">Podrás editar la información básica de tu usuario como número de teléfono, país, provincia/estado y ciudad.</p>
                                     <div class="preview mb-4">
                                         <video controls>
-                                            <source src="support/cambiodedatosV2.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/cambiodedatosV2.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                     <h5 class="mb-3">¿Cómo cambio mi contraseña?</h5>
                                     <p class="mb-4">Si debes cambiar la contraseña de acceso a a cuenta escribe la contraseña actual y luego, tu contraseña nueva, es importante respetar los caracteres correspondientes a la contraseña. Es importante que sepas que tu agente no tendrá acceso a la misma.</p>
                                     <div class="preview mb-4">
                                         <video controls>
-                                            <source src="support/cambiodecontrasenaV2.mp4" type="video/mp4">
+                                            <source src="https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/planeta/support/cambiodecontrasenaV2.mp4" type="video/mp4">
                                         </video>
                                     </div>
                                     <h5 class="mb-3">¿Puedo cambiar mi información personal, como mi DNI, nombre, género, etc.?</h5>
