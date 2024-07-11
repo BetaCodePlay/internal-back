@@ -164,6 +164,13 @@
             <hr>
         </li>
 -->
+
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-logout">
+            <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="/support" target="_self">
+                <span class="g-pos-rel"><i class="fa-solid fa-headset"></i></span> <span class="media-body align-self-center">{{ _i('Support') }}</span>
+            </a>
+        </li>
+
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-logout">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="{{ route('auth.logout') }}" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-power-off"></i></span> <span class="media-body align-self-center">{{ _i('Logout') }}</span>
