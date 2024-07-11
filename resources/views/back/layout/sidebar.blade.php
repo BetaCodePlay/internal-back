@@ -165,7 +165,7 @@
         </li>
 -->
 
-        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active has-logout">
+        <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <a class="media u-side-nav--top-level-menu-link u-side-nav--hide-on-hidden" href="/support" target="_self">
                 <span class="g-pos-rel"><i class="fa-solid fa-headset"></i></span> <span class="media-body align-self-center">{{ _i('Support') }}</span>
             </a>
