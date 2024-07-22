@@ -1,0 +1,9 @@
+.btn {
+    &.btn-theme {
+        color: $theme-color;
+
+        &:hover, &:focus {
+            color: $theme-color;
+        }
+    }
+}
