@@ -19,3 +19,29 @@
         }
     }
 }
+
+body {
+    background: #000 !important;
+
+    .u-sidebar-navigation--dark {
+        background: #000;
+
+        .has-active {
+            > a {
+                &.active {
+                    background: rgba(149,60,60,.25);
+
+                    &:hover, &:focus {
+                        background: rgba(149,60,60,.35);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.u-header__section--admin-dark {
+    .u-header-logo-toggler {
+        background: #000;
+    }
+}
