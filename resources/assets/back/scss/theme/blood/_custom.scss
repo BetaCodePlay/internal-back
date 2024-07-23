@@ -9,6 +9,10 @@
 }
 
 .body-auth {
+    .wrap-login {
+        background: #000 !important;
+    }
+
     .btn-login {
         background: $theme;
         color: $theme-color;
