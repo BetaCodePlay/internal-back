@@ -36,6 +36,10 @@ body {
 
         .has-active {
             > a {
+                &:hover {
+                    background: rgba(149,60,60,.35);
+                }
+
                 &.active {
                     background: rgba(149,60,60,.25);
 
