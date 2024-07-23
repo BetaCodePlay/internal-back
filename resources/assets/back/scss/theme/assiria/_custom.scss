@@ -1,0 +1,11 @@
+.body-auth {
+    .btn-login {
+        background: $theme;
+        color: $theme-color;
+
+        &:hover, &:focus {
+            background: $theme-hover;
+            color: $theme-color;
+        }
+    }
+}
