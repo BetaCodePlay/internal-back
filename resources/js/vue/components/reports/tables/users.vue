@@ -77,6 +77,7 @@ export default {
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
             ],
+            ordering: true
         };
     },
     methods: {
