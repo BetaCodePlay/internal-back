@@ -15,6 +15,7 @@
             ref="financialTable"
             class="mt-3"
             :value="items"
+            :options="{ rowReorder: true }"
             responsiveLayout="scroll"
             paginator
             :rows="1000"
@@ -55,11 +56,6 @@ import moment from "moment";
 export default {
     data() {
         return {
-            order: [
-                [8, "desc"],
-                [7, "desc"],
-                [5, "desc"],
-            ],
             force: 0,
             expandedRows: [],
             loading: false,
