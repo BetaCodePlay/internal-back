@@ -69,8 +69,7 @@ export default {
                 selectedUser: "",
                 selectedTimezone: window.timezone ?? ""
             },
-            items: [],
-            order: [[3, 'desc']],
+            items: []
             columns: [
                 {field: "username", header: "Username"},
                 {field: "type_user", header: "Tipo"},
@@ -78,7 +77,7 @@ export default {
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
             ],
-            ordering: true
+            order: [[3, 'desc']],
         };
     },
     methods: {
