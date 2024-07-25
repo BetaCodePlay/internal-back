@@ -15,7 +15,6 @@
             ref="financialTable"
             class="mt-3"
             :value="items"
-            :options="{ rowReorder: true }"
             responsiveLayout="scroll"
             paginator
             :rows="1000"
@@ -77,8 +76,7 @@ export default {
                 {field: "played", header: "Jugado"},
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
-            ],
-            rowReorder: true
+            ]
         };
     },
     methods: {
