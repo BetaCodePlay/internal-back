@@ -28,7 +28,7 @@ locale = (locale === null || locale === '') ? 'en_US' : locale;
 $.fn.dataTable.ext.errMode = 'throw';
 
 $.extend(true, $.fn.dataTable.defaults, {
-    /*dom: '<"datatable-header"lBfr><"datatable-body"t><"datatable-footer"ip>',*/
+    dom: '<"datatable-header"lBfr><"datatable-body"t><"datatable-footer"ip>',
     lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
     processing: true,
     deferRender: true,
