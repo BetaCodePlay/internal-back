@@ -25,7 +25,7 @@
                 v-for="col of columns"
                 :field="col.field"
                 :header="col.header"
-                sortable
+                :sortable="true"
                 :key="`key-${col.field}-${force}`"
             >
                 <template #body="slotProps">
