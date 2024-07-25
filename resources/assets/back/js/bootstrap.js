@@ -35,6 +35,7 @@ $.extend(true, $.fn.dataTable.defaults, {
     responsive: true,
     searching: true,
     paging: true,
+    ordering: true,
     buttons: ['copy', 'excel', 'pdf', 'print'],
     language: {
         url: "/i18n/datatables/" + locale + ".lang"

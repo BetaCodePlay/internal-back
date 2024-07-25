@@ -55,12 +55,12 @@ import moment from "moment";
 export default {
     data() {
         return {
-            /*force: 0,
-            expandedRows: [],*/
+            force: 0,
+            expandedRows: [],
             loading: false,
             totalCommission: 0,
             emptyMessage: 'No hay datos disponibles.',
-            /*filters: {
+            filters: {
                 query: "",
                 daterange: [
                     new Date(new Date().setDate(new Date().getDate() - 30)),
@@ -69,7 +69,7 @@ export default {
                 selectedUser: "",
                 selectedTimezone: window.timezone ?? ""
             },
-            items: [],*/
+            items: [],
             columns: [
                 {field: "username", header: "Username"},
                 {field: "type_user", header: "Tipo"},
