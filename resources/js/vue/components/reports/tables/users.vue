@@ -70,7 +70,6 @@ export default {
                 selectedTimezone: window.timezone ?? ""
             },
             items: [],
-            order: [],
             columns: [
                 {field: "username", header: "Username"},
                 {field: "type_user", header: "Tipo"},
@@ -78,6 +77,10 @@ export default {
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
             ],
+            columnDefs:[{
+                targets: "_all",
+                sortable: true
+            }]
         };
     },
     methods: {
