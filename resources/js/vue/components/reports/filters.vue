@@ -52,7 +52,7 @@
                                                     <div class="row">
                                                         <div class="col-12 mb-3">
                                                             <label
-                                                                >Fechas</label
+                                                            >Fechas</label
                                                             >
                                                             <el-date-picker
                                                                 v-model="
@@ -72,7 +72,7 @@
                                                         </div>
 
                                                         <div class="col-6 mb-3">
-                                                            <label >Hora Inicial</label><br>
+                                                            <label>Hora Inicial</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeStart"
                                                                 @change="
@@ -84,7 +84,7 @@
                                                         </div>
 
                                                         <div class="col-6 mb-3">
-                                                            <label >Hora Final</label><br>
+                                                            <label>Hora Final</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeEnd"
                                                                 @change="
@@ -100,7 +100,7 @@
                                                             v-if="showTimezone"
                                                         >
                                                             <label
-                                                                >Zona
+                                                            >Zona
                                                                 Horaria</label
                                                             >
                                                             <Dropdown
@@ -130,7 +130,7 @@
                                                             v-if="showProvider"
                                                         >
                                                             <label
-                                                                >Proveedor</label
+                                                            >Proveedor</label
                                                             >
                                                             <Dropdown
                                                                 v-model="
@@ -159,7 +159,7 @@
                                                             v-if="showUser"
                                                         >
                                                             <label
-                                                                >Usuario</label
+                                                            >Usuario</label
                                                             >
                                                             <Dropdown
                                                                 v-model="
@@ -191,7 +191,7 @@
                                                             "
                                                         >
                                                             <label
-                                                                >Tipo de
+                                                            >Tipo de
                                                                 Transacción</label
                                                             >
                                                             <Dropdown
@@ -219,7 +219,7 @@
                                                             v-if="showTypeUser"
                                                         >
                                                             <label
-                                                                >Tipo de
+                                                            >Tipo de
                                                                 Usuario</label
                                                             >
                                                             <Dropdown
@@ -271,7 +271,7 @@
                                                 @click="exportData('excel')"
                                                 class="dropdown-item"
                                                 href="javascript:void(0)"
-                                                >Export Excel</a
+                                            >Export Excel</a
                                             >
                                         </li>
                                         <!--  <li>
@@ -334,13 +334,6 @@ export default {
             default: false,
         },
     },
-    mounted() {
-        document
-            .querySelector(".dp-link")
-            .addEventListener("click", function (event) {
-                event.preventDefault();
-            });
-    },
     data() {
         return {
             pickerOptions: {
@@ -382,14 +375,14 @@ export default {
             },
             childs: [],
             typeUsers: [
-                { label: "Todos", value: "all" },
-                { label: "Agente", value: "agent" },
-                { label: "Usuario", value: "user" },
+                {label: "Todos", value: "all"},
+                {label: "Agente", value: "agent"},
+                {label: "Usuario", value: "user"},
             ],
             typeTransactions: [
-                { label: "Todos", value: "all" },
-                { label: "Cargo", value: "credit" },
-                { label: "Descarga", value: "debit" },
+                {label: "Todos", value: "all"},
+                {label: "Cargo", value: "credit"},
+                {label: "Descarga", value: "debit"},
             ],
             providers: [],
             es: {
@@ -472,6 +465,10 @@ export default {
         },
     },
     mounted() {
+        document.querySelector(".dp-link").addEventListener("click", function (event) {
+                event.preventDefault();
+            });
+
         this.getProviders();
         this.getTimezones();
         this.getChilds();
@@ -482,6 +479,7 @@ export default {
 .p-calendar .p-datepicker {
     min-width: unset;
 }
+
 .custom-report-dropdown {
     min-width: unset;
     padding: 5px;
@@ -492,6 +490,7 @@ export default {
     -moz-box-shadow: 10px 10px 38px 22px rgba(0, 0, 0, 0.71);
     box-shadow: 10px 10px 38px 22px rgba(0, 0, 0, 0.71);
 }
+
 .custom-report-dropdown .dropdown-item {
     color: white;
 }
@@ -514,7 +513,7 @@ export default {
 }
 
 .time-select-item:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .time-select-item.selected:not(.disabled) {
@@ -525,12 +524,15 @@ export default {
     .el-date-range-picker .el-picker-panel__body {
         min-width: unset !important;
     }
+
     .el-picker-panel {
         width: 100% !important;
     }
+
     .el-date-table th {
         font-size: 10px !important;
     }
+
     .el-date-range-picker__content .el-date-range-picker__header div {
         font-size: 11px !important;
     }

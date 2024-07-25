@@ -77,7 +77,8 @@ export default {
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
             ],
-            order: [[3, 'desc']]
+            columnDefs: [{ orderable: true, targets: 0 }],
+            order: [[1, 'asc']]
         };
     },
     methods: {
