@@ -36,7 +36,7 @@
                         <strong>{{ slotProps.data.type_user }}</strong>
                     </div>
                     <div class="text-center" v-else-if="col.field === 'played'">
-                        {{ formatCurrency(slotProps.data.played) }}
+                        {{ slotProps.data.played }}
                     </div>
                     <div class="text-center" v-else-if="col.field === 'won'">
                         {{ slotProps.data.won }}
@@ -97,10 +97,6 @@ export default {
                     this.exportXLS();
                     break;
             }
-        },
-        formatCurrency(value) {
-            let val = value.replace("$ ", "");
-            return parseFloat(val).toFixed(2)
         },
         onChange() {
             this.fetchData();
