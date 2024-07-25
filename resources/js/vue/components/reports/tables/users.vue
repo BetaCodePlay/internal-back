@@ -99,8 +99,8 @@ export default {
             }
         },
         formatCurrency(value) {
-            let val = value.replace(/ /g, "");
-            return val.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
+            let val = value.replace("$ ", "");
+            return parseFloat(val).toFixed(2)
         },
         onChange() {
             this.fetchData();
