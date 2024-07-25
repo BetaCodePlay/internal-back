@@ -55,6 +55,11 @@ import moment from "moment";
 export default {
     data() {
         return {
+            order: [
+                [8, "desc"],
+                [7, "desc"],
+                [5, "desc"],
+            ],
             force: 0,
             expandedRows: [],
             loading: false,
@@ -77,6 +82,7 @@ export default {
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
             ],
+
         };
     },
     methods: {
