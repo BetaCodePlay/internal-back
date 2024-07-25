@@ -70,6 +70,7 @@ export default {
                 selectedTimezone: window.timezone ?? ""
             },
             items: [],
+            order: [[3, 'desc']],
             columns: [
                 {field: "username", header: "Username"},
                 {field: "type_user", header: "Tipo"},
