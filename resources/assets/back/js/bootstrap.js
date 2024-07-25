@@ -6,7 +6,6 @@ require('pdfmake');
 require('bootstrap');
 require('jquery.cookie');
 require('../../commons/plugins/bootstrap-button/js/bootstrap-button.min');
-require('datatables.net-vue3');
 require('datatables.net-dt');
 require('datatables.net-buttons-dt');
 require('datatables.net-buttons/js/buttons.html5.js');
