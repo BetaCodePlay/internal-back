@@ -15,7 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'auth') }} ">
     <link rel="stylesheet" href="{{ mix('css/custom.min.css', 'auth') }} ">
-    <link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.020">
+    <!--<link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.020">-->
+    <link rel="stylesheet" href="{{ asset("themes/casinozeuz/theme.min.css") }}?v=1.017">
     <!--===============================================================================================-->
 </head>
 <body class="body-auth">
