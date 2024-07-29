@@ -37,19 +37,27 @@ body {
         .has-active {
             > a {
                 &:hover {
-                    background: rgba(149,60,60,.35);
+                    background: #181818;
                 }
 
                 &.active {
-                    background: rgba(149,60,60,.25);
+                    background: #151515;
 
                     &:hover, &:focus {
-                        background: rgba(149,60,60,.35);
+                        background: #151515;
                     }
                 }
             }
         }
     }
+}
+
+body .u-sidebar-navigation--dark .has-active > a::before {
+    background: $theme02 !important;
+}
+
+header .img-avatar {
+    border-color: $theme02 !important;
 }
 
 .u-header__section--admin-dark {
