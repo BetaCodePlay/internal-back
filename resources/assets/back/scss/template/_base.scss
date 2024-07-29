@@ -297,3 +297,11 @@ body {
 .modal-content {
     color: #333;
 }
+
+.daterangepicker {
+    color: #111 !important;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link::before {
+    background: $theme !important;
+}
