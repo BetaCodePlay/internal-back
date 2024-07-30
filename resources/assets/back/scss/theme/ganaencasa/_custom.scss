@@ -37,14 +37,14 @@ body {
         .has-active {
             > a {
                 &:hover {
-                    background: #181818;
+                    background: rgba(89, 154, 183, 0.1);
                 }
 
                 &.active {
-                    background: #151515;
+                    background: #7DD3FC1A;
 
                     &:hover, &:focus {
-                        background: #151515;
+                        background: #7DD3FC1A;
                     }
                 }
             }
