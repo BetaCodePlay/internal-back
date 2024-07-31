@@ -114,9 +114,9 @@ header .img-avatar {
 }
 
 .p-card, .p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-tbody > tr > td, .p-paginator {
-    background: #252b2f;
+    background: #252b2f !important;
 }
 
 .dt-container .dataTable thead tr th {
-    background: lighten(#252b2f, 5%);
+    background: lighten(#252b2f, 5%) !important;
 }
