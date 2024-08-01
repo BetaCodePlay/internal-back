@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'auth') }} ">
     <link rel="stylesheet" href="{{ mix('css/custom.min.css', 'auth') }} ">
     <!--<link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.020">-->
-    <link rel="stylesheet" href="{{ asset("themes/casinozeta/theme.min.css") }}?v=1.031">
+    <link rel="stylesheet" href="{{ asset("themes/trebolbet/theme.min.css") }}?v=1.031">
     <!--===============================================================================================-->
 </head>
 <body class="body-auth">
