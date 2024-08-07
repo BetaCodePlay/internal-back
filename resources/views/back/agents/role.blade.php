@@ -296,9 +296,9 @@
                                    data-route="{{ $authUser->agentType === 5 ? route('transactions.players') : route('transactions.agents') }}">
                                 <thead>
                                 <tr>
-                                    <th>{{ _i('Date') }}</th>
-                                    <th data-priority="3">{{ _i('Origin') }}</th>
-                                    <th data-priority="1">{{ _i('Destination') }}</th>
+                                    <th data-priority="1">{{ _i('Date') }}</th>
+                                    <th>{{ _i('Origin') }}</th>
+                                    <th data-priority="3">{{ _i('Destination') }}</th>
                                     <th data-priority="2">{{ _i('Amount') }}</th>
                                     <th>{{ _i('Balance') }}</th>
                                 </tr>

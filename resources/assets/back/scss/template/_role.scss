@@ -501,38 +501,6 @@
             }
         }
 
-        &.collapsed {
-            tbody {
-                tr {
-                    td {
-                        &.dtr-control {
-                            cursor: pointer;
-
-                            .btn-tr-details {
-                                display: inline-block;
-                            }
-
-                            &:hover {
-                                .btn-tr-details {
-                                    color: #fff;
-                                }
-                            }
-                        }
-                    }
-
-                    &.dt-hasChild {
-                        td {
-                            &.dtr-control {
-                                .btn-tr-details {
-                                    color: #9a56ff;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         .i-status {
             font-size: 10px;
             vertical-align: middle;

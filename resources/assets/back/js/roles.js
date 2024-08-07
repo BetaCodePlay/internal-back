@@ -596,9 +596,17 @@ class Roles {
                 }
 
                 Roles.globaltable = tableRolesID.DataTable({
-                    serverSide: true,
                     ajax: $route,
+                    processing: true,
+                    serverSide: true,
+                    searching: true,
+                    paging: true,
+                    columnDefs: [{
+                        "defaultContent": "-",
+                        "targets": "_all"
+                    }],
                     fixedHeader: true,
+                    "responsive": true,
                     fnCreatedRow: function (nRow, aData, iDataIndex) {
                         let buttons = $('#user-buttons');
                         let modalLockTarget = '[data-target="#role-lock"]';
@@ -635,7 +643,7 @@ class Roles {
                         $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1][0] + '</span>');
                         $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
                         $('td:eq(4)', nRow).html(aData[4]);
-                        $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html(buttons.html());
+                        $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html('<span class="d-flex">'+ buttons.html() +'</span>');
                     },
                     initComplete: function () {
                         $('.page-role .page-body .table-load').addClass('table-complete');
@@ -679,7 +687,7 @@ class Roles {
                     fixedHeader: true,
                     "responsive": true,
                     fnCreatedRow: function (nRow, aData, iDataIndex) {
-
+                        $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                     },
                     initComplete: function () {
                         $($target).find('.tab-body').removeClass('d-none');
@@ -720,6 +728,7 @@ class Roles {
                 fixedHeader: true,
                 "responsive": true,
                 fnCreatedRow: function (nRow, aData, iDataIndex) {
+                    $('td:eq(0)', nRow).html('<span class="btn-tr-details"><i class="fa-regular fa-eye"></i></span> ' + aData[0]);
                     $('td:eq(3)', nRow).html((aData[3][1] === 1 ? '+ ' : '- ') + aData[3][0]);
                 },
                 initComplete: function () {
@@ -752,15 +761,19 @@ class Roles {
             var negative = number < 0 ? "-" : "",
                 i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
                 j = (j = i.length) > 3 ? j % 3 : 0;
-            return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand);
+            return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
         }
 
         $(document).on('input', $input, function () {
-            let $val = $($input).val();
-            if ($val === '') {
-                $($input).val('')
+            let $amount = parseInt($($input).val().replace(/[^0-9]/g, ''));
+
+            if ($amount < 10) {
+                $amount = '0.0' + $amount;
+            } else if ($amount < 100) {
+                $amount = '0.' + $amount;
+            } else {
+                $amount = $amount.toString().substr(0, $amount.toString().length - 2) + '.' + $amount.toString().substr(-2);
             }
-            let $amount = parseInt($val.replace(/[^0-9]/g, ''));
 
             $($input).val(formatMoney($amount));
             $($post).val($amount);

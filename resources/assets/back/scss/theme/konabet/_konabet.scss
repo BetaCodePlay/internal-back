@@ -1,0 +1,12 @@
+/*#############################################
+                    THEMES
+#############################################*/
+
+$theme-color: #fff;
+$theme: #9b0000;
+$theme-hover: lighten($theme, 10%);
+$theme02: #9b0000;
+$theme02-hover: lighten($theme02, 10%);
+
+@import "../../template";
+@import "./custom";
