@@ -37,14 +37,14 @@ body {
         .has-active {
             > a {
                 &:hover {
-                    background: darken(#36190a, 10%);
+                    background: darken(#313531, 10%);
                 }
 
                 &.active {
-                    background: #36190a;
+                    background: #313531;
 
                     &:hover, &:focus {
-                        background: #36190a;
+                        background: #313531;
                     }
                 }
             }
