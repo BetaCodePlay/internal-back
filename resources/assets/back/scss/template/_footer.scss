@@ -89,6 +89,37 @@
             }
         }
 
+        .dropdown-footer {
+            padding: 6px 12px;
+            font-size: 14px;
+            margin-right: 5px;
+            color: #fff;
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 6px;
+
+            .dropdown-toggle {
+                position: relative;
+
+                i {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: 10px;
+                }
+            }
+
+            .dropdown-menu {
+                padding: 10px 5px;
+                background: #1e1e1e;
+                border-radius: 8px;
+                box-shadow: 0 0 3px #222;
+            }
+        }
+
         a {
             color: #fff;
             transition: .3s;

@@ -44,15 +44,15 @@
                 <div class="footer-bottom-left">
                     <div class="opt-footer-form-group">
                         <div class="form-group">
-                            <div class="d-inline-block g-pos-rel dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownCurrency" data-toggle="dropdown" aria-expanded="false">
+                            <div class="dropdown-footer g-pos-rel dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownLanguage" data-toggle="dropdown" aria-expanded="false">
                                     {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <i class="fa-solid fa-angle-down"></i>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownCurrency">
+                                <ul class="dropdown-menu" aria-labelledby="dropdownLanguage">
                                     @foreach ($languages as $language)
                                         <li>
                                             <a class="dropdown-item" href="{{ route('core.change-language', [$language['iso']]) }}">
-                                                <img class="lang-flag" src="{{ $language['flag'] }}" alt="{{ $language['name'] }}"> <span class="mini-title">{{ $language['name'] }}</span>
+                                                <span class="mini-title">{{ $language['name'] }}</span>
                                             </a>
                                         </li>
                                     @endforeach

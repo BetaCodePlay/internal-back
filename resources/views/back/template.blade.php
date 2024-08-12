@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.43">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
     <!--<link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.016">-->
-    <link rel="stylesheet" href="{{ asset("themes/oasiscasino/theme.min.css") }}?v=1.032">
+    <link rel="stylesheet" href="{{ asset("themes/oasiscasino/theme.min.css") }}?v=1.033">
 
     <!--<link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">-->
 
