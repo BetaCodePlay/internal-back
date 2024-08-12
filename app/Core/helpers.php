@@ -7477,7 +7477,7 @@ if (! function_exists('imageUrlFormat')) {
             $image       = "https://24livewhitelabel.s3.amazonaws.com/$s3Directory/lobby/$imageLobby";
         }
 
-        return $image;
+        return $image ?: 'https://bestcasinos-llc.s3.us-east-2.amazonaws.com/casino/option-all.png';
     }
 }
 
