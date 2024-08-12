@@ -43,6 +43,7 @@
             <div class="footer-bottom">
                 <div class="footer-bottom-left">
                     <div class="opt-footer-form-group">
+                        <p>{{ _i('Language') }}</p>
                         <div class="form-group">
                             <div class="dropdown-footer g-pos-rel dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownLanguage" data-toggle="dropdown" aria-expanded="false">
@@ -52,7 +53,7 @@
                                     @foreach ($languages as $language)
                                         <li>
                                             <a class="dropdown-item" href="{{ route('core.change-language', [$language['iso']]) }}">
-                                                {{ $language['name'] }} <span class="mini-title">{{ $language['iso'] }}</span>
+                                                {{ $language['name'] }}
                                             </a>
                                         </li>
                                     @endforeach
