@@ -25,6 +25,7 @@
                 v-for="col of columns"
                 :field="col.field"
                 :header="col.header"
+                :sortable="true"
                 :key="`key-${col.field}-${force}`"
             >
                 <template #body="slotProps">
@@ -76,7 +77,7 @@ export default {
                 {field: "played", header: "Jugado"},
                 {field: "won", header: "Ganado"},
                 {field: "profit", header: "NetWin"}
-            ],
+            ]
         };
     },
     methods: {

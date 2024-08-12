@@ -497,7 +497,6 @@ class UsersController extends Controller
             }
 
             $ip = Utils::userIp($request);
-            \Log::info(__METHOD__, ['paso', 'request' => $request->all()]);
             $whitelabel = Configurations::getWhitelabel();
             $userData = [
                 'username' => $username,
