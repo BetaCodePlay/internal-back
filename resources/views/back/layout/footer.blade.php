@@ -46,7 +46,7 @@
                         <div class="form-group">
                             <div class="dropdown-footer g-pos-rel dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownLanguage" data-toggle="dropdown" aria-expanded="false">
-                                    {{ session('currency') == 'VEF' ? $free_currency->currency_name : session('currency') }} <i class="fa-solid fa-angle-down"></i>
+                                    {{ $selected_language['name'] }} <i class="fa-solid fa-angle-down"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownLanguage">
                                     @foreach ($languages as $language)
