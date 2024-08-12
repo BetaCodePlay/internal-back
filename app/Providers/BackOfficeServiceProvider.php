@@ -41,10 +41,30 @@ class BackOfficeServiceProvider extends ServiceProvider
         PushNotificationsCollection $pushNotificationsCollection,
         CurrenciesRepo $currenciesRepo,
         CurrenciesCollection $currenciesCollection,
-        Agent $agent
+        Agent $agent,
+        Request $request
     )
     : array {
         $pushNotifications = $pushNotificationsRepo->getUnread(Configurations::getWhitelabel());
+        $language = $request->cookie('language');
+        $languages = Configurations::getLanguages();
+        if (is_null($language)) {
+            foreach ($languages as $item) {
+                $shortItem = substr($item, 0, 2);
+                if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+                    $browserLanguage = str_replace('-', '_', substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2));
+
+                    if ($browserLanguage == $shortItem) {
+                        $language = $item;
+                    }
+                }
+            }
+
+            $language = is_null($language) ? Configurations::getDefaultLanguage() : $language;
+            cookie('language', $language, $minutes = 525600);
+            App::setLocale(substr($language, 0, 2));
+        }
+        LaravelGettext::setLocale($language);
 
         return [
             'push_notifications'          => $pushNotificationsCollection->formatAll(
@@ -55,7 +75,7 @@ class BackOfficeServiceProvider extends ServiceProvider
             'whitelabel_description'      => Configurations::getWhitelabelDescription(),
             'whitelabel_info'             => Configurations::getWhitelabelInfo(),
             'languages'                   => $coreCollection->formatLanguages(Configurations::getLanguages()),
-            'selected_language'           => $coreCollection->formatSelectedLanguage(LaravelGettext::getLocale()),
+            'selected_language'           => $coreCollection->formatSelectedLanguage($language),
             'currencies'                  => Configurations::getCurrencies(),
             'whitelabel_currencies'       => $currenciesCollection->formatWhitelabelCurrencies(
                 Configurations::getCurrencies(),
