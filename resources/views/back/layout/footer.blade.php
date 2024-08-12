@@ -52,7 +52,7 @@
                                     @foreach ($languages as $language)
                                         <li>
                                             <a class="dropdown-item" href="{{ route('core.change-language', [$language['iso']]) }}">
-                                                <span class="mini-title">{{ $language['name'] }}</span>
+                                                {{ $language['name'] }} <span class="mini-title">{{ $language['iso'] }}</span>
                                             </a>
                                         </li>
                                     @endforeach
