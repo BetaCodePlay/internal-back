@@ -285,7 +285,8 @@ class BackOfficeServiceProvider extends ServiceProvider
                 $pushNotificationsCollection,
                 $currenciesRepo,
                 $currenciesCollection,
-                $agent
+                $agent,
+                $request
             );
         }
 
