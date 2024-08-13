@@ -113,6 +113,10 @@ header .img-avatar {
 
 }
 
+.p-datatable .p-datatable-tfoot > tr > td {
+    background: #1f1315 !important;
+}
+
 .p-card, .p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-tbody > tr > td, .p-paginator {
     background: #1f1315 !important;
 }
