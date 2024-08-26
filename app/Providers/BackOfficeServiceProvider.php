@@ -64,6 +64,7 @@ class BackOfficeServiceProvider extends ServiceProvider
             cookie('language', $language, $minutes = 525600);
             App::setLocale(substr($language, 0, 2));
         }
+        dd(Configurations::getWhitelabel());
         LaravelGettext::setLocale($language);
         return [
             'push_notifications'          => $pushNotificationsCollection->formatAll(
