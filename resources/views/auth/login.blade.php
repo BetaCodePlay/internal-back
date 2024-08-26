@@ -18,8 +18,13 @@
                     <div class="bg-opacity"></div>
                     <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
                 </div>
+            @elseif (\Dotworkers\Configurations\Configurations::getWhitelabel() == 5)
+                <div class="login-preview-bg" style="background-image: url('https://bestcasinoswhitelabel.s3.amazonaws.com/trebolbet/section-images/portada-login-v1.png')">
+                    <div class="bg-opacity"></div>
+                    <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
+                </div>
             @else
-                <div class="login-preview-bg" style="background-image: url('https://bestcasinos-llc.s3.us-east-2.amazonaws.com/templates/bg-login-v2.jpg')">
+                <div class="login-preview-bg" style="background-image: url('https://bestcasinoswhitelabel.s3.amazonaws.com/bestcasinos/section-images/portada-login-v11723578339.jpg')">
                     <div class="bg-opacity"></div>
                     <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
                 </div>

@@ -230,7 +230,8 @@ class AuthController extends Controller
                         }
                     }
 
-                    $this->agentService->updateAgentQuantitiesFromTree();
+                    // TODO: Se comenta ya que los usuarios se quejan de lentitud.
+                    //$this->agentService->updateAgentQuantitiesFromTree();
 
                     $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
