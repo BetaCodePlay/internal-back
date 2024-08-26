@@ -41,41 +41,21 @@ class BackOfficeServiceProvider extends ServiceProvider
         PushNotificationsCollection $pushNotificationsCollection,
         CurrenciesRepo $currenciesRepo,
         CurrenciesCollection $currenciesCollection,
-        Agent $agent,
-        Request $request
+        Agent $agent
     )
     : array {
         $pushNotifications = $pushNotificationsRepo->getUnread(Configurations::getWhitelabel());
-        $language = $request->cookie('language');
-        $languages = Configurations::getLanguages();
-        if (is_null($language)) {
-            foreach ($languages as $item) {
-                $shortItem = substr($item, 0, 2);
-                if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-                    $browserLanguage = str_replace('-', '_', substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2));
-
-                    if ($browserLanguage == $shortItem) {
-                        $language = $item;
-                    }
-                }
-            }
-
-            $language = is_null($language) ? Configurations::getDefaultLanguage() : $language;
-            cookie('language', $language, $minutes = 525600);
-            App::setLocale(substr($language, 0, 2));
-        }
-        LaravelGettext::setLocale($language);
 
         return [
             'push_notifications'          => $pushNotificationsCollection->formatAll(
                 $pushNotificationsRepo->getUnread(Configurations::getWhitelabel())
             ),
             'push_notifications_quantity' => count($pushNotifications),
-            'favicon'                     => null,
+            'favicon'                     => Configurations::getFavicon(),
             'whitelabel_description'      => Configurations::getWhitelabelDescription(),
-            'whitelabel_info'             => null,
+            'whitelabel_info'             => Configurations::getWhitelabelInfo(),
             'languages'                   => $coreCollection->formatLanguages(Configurations::getLanguages()),
-            'selected_language'           => $coreCollection->formatSelectedLanguage($language),
+            'selected_language'           => $coreCollection->formatSelectedLanguage(LaravelGettext::getLocale()),
             'currencies'                  => Configurations::getCurrencies(),
             'whitelabel_currencies'       => $currenciesCollection->formatWhitelabelCurrencies(
                 Configurations::getCurrencies(),
@@ -127,10 +107,6 @@ class BackOfficeServiceProvider extends ServiceProvider
             throw new InvalidArgumentException('Wrong host');
         }
 
-        if ($this->app->environment() === 'local') {
-            $hostHeader = 'dev-back.bestcasinos.lat';
-        }
-
         $configuration = $this->setConfiguration(
             $request,
             $coreCollection,
@@ -152,7 +128,7 @@ class BackOfficeServiceProvider extends ServiceProvider
     private function configureEmail()
     : void
     {
-        if (($this->app->environment() != 'local') && ($this->app->environment() != 'develop')){
+        if ($this->app->environment() != 'local') {
             Configurations::setEmail();
         }
     }
@@ -258,19 +234,13 @@ class BackOfficeServiceProvider extends ServiceProvider
         Agent $agent,
         string $hostHeader
     ) {
-        if (app()->runningInConsole()) {
-            return [];
-        }
-
-        // $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
-        $domain         = Str::lower($hostHeader);
+        $domain         = Str::lower($this->validateDomainOrThrow($hostHeader));
         $configurations = Configurations::getConfigurationsByURL($domain);
 
         if ($configurations->isEmpty()) {
-            /*throw new InvalidArgumentException(
-                "Whitelabel configuration error detected. Please review the domain in the whitelabels table"
-            );*/
-            die;
+            throw new InvalidArgumentException(
+                'Whitelabel configuration error detected. Please review the domain in the whitelabels table'
+            );
         }
 
         if ($configurations->isNotEmpty()) {
@@ -285,8 +255,7 @@ class BackOfficeServiceProvider extends ServiceProvider
                 $pushNotificationsCollection,
                 $currenciesRepo,
                 $currenciesCollection,
-                $agent,
-                $request
+                $agent
             );
         }
 
@@ -315,4 +284,6 @@ class BackOfficeServiceProvider extends ServiceProvider
         return $domain;
     }
 }
+
+
 
