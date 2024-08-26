@@ -86,9 +86,9 @@ class BackOfficeServiceProvider extends ServiceProvider
             'free_currency'               => Configurations::getFreeCurrency(),
             'logo'                        => Configurations::getLogo(true),
             'iphone'                      => ($agent->browser() == 'Safari')
-                                             && ($agent->isMobile()
-                                                 || $agent->isPhone()
-                                                 || $agent->isTablet()) ? 1 : 0,
+            && ($agent->isMobile()
+                || $agent->isPhone()
+                || $agent->isTablet()) ? 1 : 0,
 
             'theme'                 => Configurations::getTheme(),
             'mailgun_notifications' => Configurations::getMailgunNotifications(),
@@ -315,3 +315,4 @@ class BackOfficeServiceProvider extends ServiceProvider
         return $domain;
     }
 }
+
