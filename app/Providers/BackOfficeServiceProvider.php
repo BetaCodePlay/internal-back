@@ -152,7 +152,7 @@ class BackOfficeServiceProvider extends ServiceProvider
     private function configureEmail()
     : void
     {
-        if ($this->app->environment() != 'local') {
+        if (($this->app->environment() != 'local') || ($this->app->environment() != 'develop')){
             Configurations::setEmail();
         }
     }
