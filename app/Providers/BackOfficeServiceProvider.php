@@ -70,7 +70,7 @@ class BackOfficeServiceProvider extends ServiceProvider
                 $pushNotificationsRepo->getUnread(Configurations::getWhitelabel())
             ),
             'push_notifications_quantity' => count($pushNotifications),
-            'favicon'                     => Configurations::getFavicon(),
+            'favicon'                     => null,
             'whitelabel_description'      => Configurations::getWhitelabelDescription(),
             'whitelabel_info'             => Configurations::getWhitelabelInfo(),
             'languages'                   => $coreCollection->formatLanguages(Configurations::getLanguages()),
