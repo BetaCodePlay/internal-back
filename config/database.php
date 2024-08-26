@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'pgsql'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,6 +77,7 @@ return [
             'search_path' => env('DB_SCHEMA'),
             'sslmode' => 'prefer',
         ],
+
         'replica' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
@@ -89,6 +90,36 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => env('DB_SCHEMA'),
+            'sslmode' => 'prefer',
+        ],
+
+        'wallet' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_WALLET_HOST', '127.0.0.1'),
+            'port' => env('DB_WALLET_PORT', '5432'),
+            'database' => env('DB_WALLET_DATABASE', 'forge'),
+            'username' => env('DB_WALLET_USERNAME', 'forge'),
+            'password' => env('DB_WALLET_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => env('DB_WALLET_SCHEMA'),
+            'sslmode' => 'prefer',
+        ],
+
+        'wallet_replica' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_WALLET_REPLICA_HOST', '127.0.0.1'),
+            'port' => env('DB_WALLET_PORT', '5432'),
+            'database' => env('DB_WALLET_DATABASE', 'forge'),
+            'username' => env('DB_WALLET_USERNAME', 'forge'),
+            'password' => env('DB_WALLET_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'schema' => env('DB_WALLET_SCHEMA'),
             'sslmode' => 'prefer',
         ],
 
