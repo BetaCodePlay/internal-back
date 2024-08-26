@@ -45,7 +45,7 @@ class BackOfficeServiceProvider extends ServiceProvider
     )
     : array {
         $pushNotifications = $pushNotificationsRepo->getUnread(Configurations::getWhitelabel());
-
+dd(Configurations::getWhitelabel());
         return [
             'push_notifications'          => $pushNotificationsCollection->formatAll(
                 $pushNotificationsRepo->getUnread(Configurations::getWhitelabel())
