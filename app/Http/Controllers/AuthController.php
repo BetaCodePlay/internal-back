@@ -22,6 +22,7 @@ use Dotworkers\Security\Enums\Permissions;
 use Dotworkers\Security\Enums\Roles;
 use Dotworkers\Security\Security;
 use Dotworkers\Wallet\Wallet;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -230,9 +231,6 @@ class AuthController extends Controller
                         }
                     }
 
-                    // TODO: Se comenta ya que los usuarios se quejan de lentitud.
-                    //$this->agentService->updateAgentQuantitiesFromTree();
-
                     $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
@@ -276,12 +274,20 @@ class AuthController extends Controller
             }
             return $response;
 
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->except(['password'])]);
             session()->flush();
             auth()->logout();
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function updateAgentQuantities(): array
+    {
+        return $this->agentService->updateAgentQuantitiesFromTree();
     }
 
     /**
@@ -331,7 +337,7 @@ class AuthController extends Controller
                 return Utils::errorResponse(Codes::$not_found, $data);
             }
 
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
@@ -403,7 +409,7 @@ class AuthController extends Controller
                 'close' => _i('Close')
             ]);
 
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->all()]);
             return Utils::failedResponse();
         }
@@ -426,7 +432,7 @@ class AuthController extends Controller
                 'title' => Configurations::getWhitelabelDescription(),
                 'logo'  => Configurations::getLogo(true),
             ]);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
             abort(500);
         }
@@ -466,7 +472,7 @@ class AuthController extends Controller
             $walletAccessToken = Wallet::clientAccessToken();
             $accessToken       = $walletAccessToken->access_token;
             session()->put('wallet_access_token', $accessToken);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
         }
     }
