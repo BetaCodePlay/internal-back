@@ -65,7 +65,7 @@ class BackOfficeServiceProvider extends ServiceProvider
             App::setLocale(substr($language, 0, 2));
         }
         LaravelGettext::setLocale($language);
-
+        dd(Configurations::getFavicon());
         return [
             'push_notifications'          => $pushNotificationsCollection->formatAll(
                 $pushNotificationsRepo->getUnread(Configurations::getWhitelabel())
