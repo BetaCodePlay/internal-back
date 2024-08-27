@@ -121,6 +121,7 @@ class AgentService extends BaseService
                 'totalMasterAgents' => $totalMasterAgents,
                 'totalCashierAgents' => $totalCashierAgents,
                 'totalPlayers' => $totalPlayers,
+                'tree' => $childrenTree,
             ];
         } catch (Exception $e) {
             Log::error('Error updating agent quantities', [
