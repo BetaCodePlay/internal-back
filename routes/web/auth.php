@@ -43,10 +43,6 @@ Route::group(['prefix' => 'auth', 'middleware' => ['guest']], function () {
         'as' => 'auth.change-password',
         'uses' => 'AuthController@changePassword'
     ]);
-    Route::get('update-quantities', [
-        'as' => 'auth.agent.update-quantities',
-        'uses' => 'AuthController@updateAgentQuantities'
-    ]);
 });
 
 /**
@@ -62,4 +58,9 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
 
     Route::post('request-password', [AuthController::class, 'requestReset'])
         ->name('request.password');
+
+    Route::get('update-quantities', [
+        'as' => 'auth.agent.update-quantities',
+        'uses' => 'AuthController@updateAgentQuantities'
+    ]);
 });
