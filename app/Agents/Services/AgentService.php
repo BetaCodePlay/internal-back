@@ -95,12 +95,20 @@ class AgentService extends BaseService
                 Configurations::getWhitelabel()
             );
 
+            $totalMasterAgents = 0;
+            $totalCashierAgents = 0;
+            $totalPlayers = 0;
+
             foreach ($agents as $agent) {
                 $childAgents = $childrenTree->where('owner_id', $agent->user_id);
 
                 $masterCount  = $childAgents->where('type_user', TypeUser::$agentMater)->count();
                 $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
                 $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
+
+                $totalMasterAgents += $masterCount;
+                $totalCashierAgents += $totalCashierAgents;
+                $totalPlayers += $playerCount;
 
                 $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($agent->user_id, $currency);
 
@@ -109,7 +117,11 @@ class AgentService extends BaseService
                 }
             }
 
-            return ['message' => 'Agent quantities updated successfully'];
+            return [
+                'totalMasterAgents' => $totalMasterAgents,
+                'totalCashierAgents' => $totalCashierAgents,
+                'totalPlayers' => $totalPlayers,
+            ];
         } catch (Exception $e) {
             Log::error('Error updating agent quantities', [
                 'user_id'   => $authUserId,
