@@ -107,7 +107,7 @@ class AgentService extends BaseService
                 $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
 
                 $totalMasterAgents += $masterCount;
-                $totalCashierAgents += $totalCashierAgents;
+                $totalCashierAgents += $cashierCount;
                 $totalPlayers += $playerCount;
 
                 $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($agent->user_id, $currency);
