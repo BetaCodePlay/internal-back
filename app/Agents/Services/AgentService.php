@@ -145,10 +145,6 @@ class AgentService extends BaseService
 
             $childAgents = $childrenTree->where('owner_id', $userId);
 
-            $totalMasterAgents = 0;
-            $totalCashierAgents = 0;
-            $totalPlayers = 0;
-
             if (! $agent) {
                 return response()->json(['message' => 'Agent not found'], 404);
             }
@@ -157,11 +153,13 @@ class AgentService extends BaseService
             $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
             $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
 
-            $totalMasterAgents += $masterCount;
-            $totalCashierAgents += $cashierCount;
-            $totalPlayers += $playerCount;
 
-            dd($totalMasterAgents, $totalCashierAgents, $totalPlayers);
+            return [
+                'childAgents' => $childAgents,
+                'masterCount' => $masterCount,
+                'cashierCount' => $cashierCount,
+                'playerCount' => $playerCount,
+            ];
 
         } catch (Exception $e) {
             Log::error('Error updating agent quantities for user', [
