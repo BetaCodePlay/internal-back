@@ -22,9 +22,11 @@
                                             <option value="">{{ _i('Select...') }}</option>
                                             <option value="{{ auth()->user()->id }}">{{ auth()->user()->username }}</option>
                                             @foreach ($dependencies as $dependece)
-                                                <option value="{{ $dependece['user_id'] }}">
-                                                    {{ $dependece['username'] }}
-                                                </option>
+                                                @if($authUser->id !== $dependece['user_id'])
+                                                    <option value="{{ $dependece['user_id'] }}">
+                                                        {{ $dependece['username'] }}
+                                                    </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
