@@ -140,19 +140,21 @@
                                         </div>
                                     </div>
                                     @if(auth()->user()->id !== $authUser->id)
-                                        <div class="tab-manager-data text-center">
-                                            <div class="data-title">{{ _i('Account') }}</div>
-                                            <div class="data-text">
+                                        @if ($agent?->master)
+                                            <div class="tab-manager-data text-center">
+                                                <div class="data-title">{{ _i('Account') }}</div>
+                                                <div class="data-text">
 
-                                                <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal"
-                                                        data-target="#role-modify"
-                                                        data-userid="{{ $authUser->id}}"
-                                                        data-username="{{ $authUser->username }}"
-                                                        data-rol="{{ $authUser->agentType }}"
-                                                        data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
-                                                </button>
+                                                    <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal"
+                                                            data-target="#role-modify"
+                                                            data-userid="{{ $authUser->id}}"
+                                                            data-username="{{ $authUser->username }}"
+                                                            data-rol="{{ $authUser->agentType }}"
+                                                            data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @endif
                                 @endif
 
