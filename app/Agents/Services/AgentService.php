@@ -138,6 +138,8 @@ class AgentService extends BaseService
     {
         $currency     = session('currency');
 
+        dd(auth()->id());
+
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($userId));
 
 
