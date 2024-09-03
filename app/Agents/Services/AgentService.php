@@ -140,6 +140,24 @@ class AgentService extends BaseService
 
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($userId));
 
+        try {
+            $agent = $this->agentsRepo->getAgentsAllByOwner($userId, $currency, Configurations::getWhitelabel());
+
+            dd($agent);
+
+            if (!$agent) {
+                return response()->json(['message' => 'Agent not found'], 404);
+            }
+        } catch (Exception $e) {
+            Log::error('Error updating agent quantities for user', [
+                'user_id'   => $userId,
+                'currency'  => $currency,
+                'exception' => $e->getMessage(),
+            ]);
+
+            return response()->json(['message' => 'An error occurred while updating agent quantities'], 500);
+        }
+
 
         return $childrenTree;
     }
