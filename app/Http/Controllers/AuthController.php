@@ -27,6 +27,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -285,10 +286,8 @@ class AuthController extends Controller
     /**
      * @throws Exception
      */
-    public function updateAgentQuantities(string | int $userId): array
+    public function updateAgentQuantities(string | int $userId): Collection
     {
-        //return $this->agentService->updateAgentQuantitiesFromTree();
-
         return $this->agentService->updateAgentQuantitiesForUser($userId);
     }
 

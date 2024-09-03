@@ -136,6 +136,11 @@ class AgentService extends BaseService
 
     public function updateAgentQuantitiesForUser(int $userId)
     {
-        dd('userId', $userId);
+        $currency     = session('currency');
+
+        $childrenTree = collect($this->agentsCollection->childrenTreeSql($userId));
+
+
+        return $childrenTree;
     }
 }
