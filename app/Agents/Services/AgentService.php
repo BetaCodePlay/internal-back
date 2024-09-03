@@ -143,11 +143,26 @@ class AgentService extends BaseService
         try {
             $agent = $this->agentsRepo->getAgentsAllByOwner($userId, $currency, Configurations::getWhitelabel());
 
-            dd($agent);
+            $childAgents = $childrenTree->where('owner_id', $userId);
 
-            if (!$agent) {
+            $totalMasterAgents = 0;
+            $totalCashierAgents = 0;
+            $totalPlayers = 0;
+
+            if (! $agent) {
                 return response()->json(['message' => 'Agent not found'], 404);
             }
+
+            $masterCount  = $childAgents->where('type_user', TypeUser::$agentMater)->count();
+            $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
+            $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
+
+            $totalMasterAgents += $masterCount;
+            $totalCashierAgents += $cashierCount;
+            $totalPlayers += $playerCount;
+
+            dd($totalMasterAgents, $totalCashierAgents, $totalPlayers);
+
         } catch (Exception $e) {
             Log::error('Error updating agent quantities for user', [
                 'user_id'   => $userId,
