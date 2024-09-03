@@ -141,21 +141,21 @@ class AgentService extends BaseService
         $childrenTree = collect($this->agentsCollection->childrenTreeSql($userId));
 
         try {
-            $agent = $this->agentsRepo->getAgentsAllByOwner($userId, $currency, Configurations::getWhitelabel());
-
             $childAgents = $childrenTree->where('owner_id', $userId);
-
-            if (! $agent) {
-                return response()->json(['message' => 'Agent not found'], 404);
-            }
-
             $masterCount  = $childAgents->where('type_user', TypeUser::$agentMater)->count();
             $cashierCount = $childAgents->where('type_user', TypeUser::$agentCajero)->count();
             $playerCount  = $childAgents->where('type_user', TypeUser::$player)->count();
 
+            $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($userId, $currency);
+
+            dd('agentInfo', $agentInfo);
+
+            if ($agentInfo) {
+                $this->agentsRepo->updateAgentQuantities($agentInfo, $masterCount, $cashierCount, $playerCount);
+            }
+
 
             return [
-                'childAgents' => $childAgents,
                 'masterCount' => $masterCount,
                 'cashierCount' => $cashierCount,
                 'playerCount' => $playerCount,
