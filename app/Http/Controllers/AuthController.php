@@ -287,8 +287,9 @@ class AuthController extends Controller
      */
     public function updateAgentQuantities(string | int $userId): array
     {
-        dd($userId);
         //return $this->agentService->updateAgentQuantitiesFromTree();
+
+        return $this->agentService->updateAgentQuantitiesForUser($userId);
     }
 
     /**

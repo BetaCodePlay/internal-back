@@ -133,4 +133,9 @@ class AgentService extends BaseService
             return ['message' => 'An error occurred while updating agent quantities'];
         }
     }
+
+    public function updateAgentQuantitiesForUser(int $userId)
+    {
+        dd('userId', $userId);
+    }
 }
