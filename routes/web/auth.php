@@ -63,4 +63,6 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
         'as' => 'auth.agent.update-quantities',
         'uses' => 'AuthController@updateAgentQuantities'
     ]);
+
+    Route::post('update-quantities/{userId}', [AuthController::class, 'updateAgentQuantities']);
 });
