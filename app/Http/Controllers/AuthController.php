@@ -286,7 +286,7 @@ class AuthController extends Controller
     /**
      * @throws Exception
      */
-    public function updateAgentQuantities(string | int $userId): Collection
+    public function updateAgentQuantities(string | int $userId)
     {
         return $this->agentService->updateAgentQuantitiesForUser($userId);
     }
