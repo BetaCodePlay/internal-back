@@ -140,11 +140,10 @@
                                         </div>
                                     </div>
                                     @if(auth()->user()->id !== $authUser->id)
-                                        @if ($agent?->master)
-                                            <div class="tab-manager-data text-center">
-                                                <div class="data-title">{{ _i('Account') }}</div>
-                                                <div class="data-text">
-
+                                        <div class="tab-manager-data text-center">
+                                            <div class="data-title">{{ _i('Account') }}</div>
+                                            <div class="data-text">
+                                                @if ($agent?->master)
                                                     <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal"
                                                             data-target="#role-modify"
                                                             data-userid="{{ $authUser->id}}"
@@ -152,9 +151,11 @@
                                                             data-rol="{{ $authUser->agentType }}"
                                                             data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
                                                     </button>
-                                                </div>
+                                                @else
+                                                    {{ _i('Cashier') }}
+                                                @endif
                                             </div>
-                                        @endif
+                                        </div>
                                     @endif
                                 @endif
 
