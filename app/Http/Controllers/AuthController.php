@@ -25,6 +25,7 @@ use Dotworkers\Wallet\Wallet;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -286,7 +287,7 @@ class AuthController extends Controller
     /**
      * @throws Exception
      */
-    public function updateAgentQuantities(string | int $userId)
+    public function updateAgentQuantities(string | int $userId): JsonResponse|array
     {
         return $this->agentService->updateAgentQuantitiesForUser($userId);
     }

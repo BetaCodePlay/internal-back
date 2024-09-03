@@ -11,6 +11,7 @@ use App\Users\Repositories\UsersRepo;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Utils;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -134,7 +135,7 @@ class AgentService extends BaseService
         }
     }
 
-    public function updateAgentQuantitiesForUser(int $userId)
+    public function updateAgentQuantitiesForUser(int $userId): JsonResponse|array
     {
         $currency     = session('currency');
 
@@ -148,12 +149,9 @@ class AgentService extends BaseService
 
             $agentInfo = $this->agentsRepo->getAgentInfoWithCurrency($userId, $currency);
 
-            dd('agentInfo', $agentInfo);
-
             if ($agentInfo) {
                 $this->agentsRepo->updateAgentQuantities($agentInfo, $masterCount, $cashierCount, $playerCount);
             }
-
 
             return [
                 'masterCount' => $masterCount,
@@ -170,8 +168,5 @@ class AgentService extends BaseService
 
             return response()->json(['message' => 'An error occurred while updating agent quantities'], 500);
         }
-
-
-        return $childrenTree;
     }
 }
