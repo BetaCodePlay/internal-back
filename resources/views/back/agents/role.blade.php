@@ -93,18 +93,22 @@
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Number of dependent agents') }}</div>
 
-                                    @if(auth()->user()->id === 3)
-                                        <div class="data-text-inline">
+                                    @if(auth()->user()->id === 4)
+                                        <div class="data-text-inline" style="display: none">
                                             <span class="name">{{ _i('Master') }}</span>
                                             <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span>
                                         </div>
-                                        <div class="data-text-inline">
+                                        <div class="data-text-inline" style="display: none">
                                             <span class="name">{{ _i('Support') }}</span>
                                             <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span>
                                         </div>
-                                        <div class="data-text-inline">
+                                        <div class="data-text-inline" style="display: none">
                                             <span class="name">{{ _i('Players') }}</span>
                                             <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span>
+                                        </div>
+
+                                        <div class="data-text-inline">
+                                            <button class="btn btn-theme">{{ _i('Show') }}</button>
                                         </div>
                                     @endif
                                 </div>
