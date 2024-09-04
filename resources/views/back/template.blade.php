@@ -77,6 +77,24 @@
 
 @yield('modals')
 
+<div class="modal fade" id="modal-alert-main">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                Mantenimiento programado
+            </div>
+            <div class="modal-body">
+                <p>ATENCION!! EL DIA 04-09-2024 desde 05:00 a 05:15 hs madrugada Argentina vamos realizar tareas de mantenimiento en los juegos para que tengas una mejor experiencia en la plataforma.</p>
+                <p>Te recomendamos por favor no realizar apuestas en el lapso de esos horarios.</p>
+                <p>Muchas gracias.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-theme02 close-modal-alert-main" data-bs-dismiss="modal">{{ __('Cerrar') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
