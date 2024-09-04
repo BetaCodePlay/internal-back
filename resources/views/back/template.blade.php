@@ -77,7 +77,7 @@
 
 @yield('modals')
 
-<div class="modal fade" id="modal-alert-main">
+<div class="modal modal-style fade" id="modal-alert-main">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,7 +89,7 @@
                 <p>Muchas gracias.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-theme02 close-modal-alert-main" data-dismiss="modal">{{ __('Cerrar') }}</button>
+                <button type="button" class="btn btn-theme close-modal-alert-main" data-dismiss="modal">{{ __('Cerrar') }}</button>
             </div>
         </div>
     </div>
@@ -99,6 +99,28 @@
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
 <script src="{{ asset('back/js/scripts.min.js') }}?v=24"></script>
+
+<script src=" https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
+<script>
+    $(function () {
+        if (Cookies.get('closeModalAlert') === undefined) {
+            var inFifteenMinutes = new Date(new Date().getTime() + 60 * 60 * 1000);
+            Cookies.set('closeModalAlert', true, {
+                expires: inFifteenMinutes
+            });
+        }
+
+        if (Cookies.get('closeModalAlert') === 'true') {
+            $('#modal-alert-main').modal('show');
+            $('.close-modal-alert-main').on('click', function () {
+                var inFifteenMinutes = new Date(new Date().getTime() + 60 * 60 * 1000);
+                Cookies.set('closeModalAlert', false, {
+                    expires: inFifteenMinutes
+                });
+            });
+        }
+    });
+</script>
 
 {{--TODO AGREGAR CDN PARA EXPORTAR PDF--}}
 {{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}
