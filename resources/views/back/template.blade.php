@@ -89,7 +89,7 @@
                 <p>Muchas gracias.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-theme02 close-modal-alert-main" data-bs-dismiss="modal">{{ __('Cerrar') }}</button>
+                <button type="button" class="btn btn-theme02 close-modal-alert-main" data-dismiss="modal">{{ __('Cerrar') }}</button>
             </div>
         </div>
     </div>
