@@ -76,7 +76,7 @@
 </div>
 
 @yield('modals')
-
+<!--
 <div class="modal modal-style fade" id="modal-alert-main">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -94,7 +94,7 @@
         </div>
     </div>
 </div>
-
+-->
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
