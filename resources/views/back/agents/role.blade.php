@@ -93,7 +93,7 @@
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Number of dependent agents') }}</div>
 
-                                    @if(auth()->user()->id === 4)
+                                    @if(auth()->user()->id === 3)
                                         <div class="data-text-inline">
                                             <span class="name">{{ _i('Master') }}</span>
                                             <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span>
