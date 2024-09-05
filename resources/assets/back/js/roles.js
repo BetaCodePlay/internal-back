@@ -133,28 +133,38 @@ class Roles {
         });
     };
 
-    userDependent() {
-        let $button = '#btn-show-dependent';
+     userDependent() {
+        const $button = $('#btn-show-dependent');
 
-        $(document).on('click', $button, function () {
-            let $this = $(this);
-            let $route = $this.data('route');
+        $button.on('click', function() {
+            const $this = $(this);
+            const route = $this.data('route');
 
-            console.log('hola como estas?', $route);
+            if (!route) {
+                console.error('La ruta no está definida');
+                return;
+            }
 
             $this.button('loading');
-
-            $.ajax({
-                url: $route,
-                method: 'get'
-            }).done(function (json) {
-                console.log(json)
-            }).fail(function (json) {
-                Roles.errorResponse(json);
-            }).always(function () {
-                $this.button('reset');
-            });
+            sendAjaxRequest(route, $this);
         });
+
+         function sendAjaxRequest(route, $button) {
+             $.ajax({
+                 url: route,
+                 method: 'GET',
+             })
+                 .done(function(response) {
+                     console.log('Respuesta exitosa:', response);
+                 })
+                 .fail(function(error) {
+                     console.error('Error en la solicitud:', error);
+                     alert('Error al obtener los datos.');
+                 })
+                 .always(function() {
+                     $button.button('reset');
+                 });
+         }
     }
 
     userLock() {
@@ -278,6 +288,23 @@ class Roles {
                         reject(error);
                     }
                 });
+            });
+        }
+
+        function sendAjaxRequest(route, $button) {
+            $.ajax({
+                url: route,
+                method: 'GET',
+            })
+            .done(function(response) {
+                console.log('Respuesta exitosa:', response);
+            })
+            .fail(function(error) {
+                console.error('Error en la solicitud:', error);
+                alert('Error al obtener los datos.');
+            })
+            .always(function() {
+                $button.button('reset');
             });
         }
 
