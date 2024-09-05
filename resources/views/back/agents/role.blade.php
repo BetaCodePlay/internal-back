@@ -400,6 +400,7 @@
             roles.userBalance();
             roles.userCreate();
             roles.userModify();
+            roles.userDependent();
             roles.userLock();
             roles.tabsTablesSection();
         });
