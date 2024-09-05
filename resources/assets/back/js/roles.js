@@ -138,7 +138,7 @@ class Roles {
 
         $button.on('click', function() {
             const $this = $(this);
-            const route = $this.data('route');
+            const route = $this.find('.btn').data('route');
 
             if (!route) {
                 console.error('La ruta no está definida');
@@ -155,7 +155,12 @@ class Roles {
                  method: 'GET',
              })
                  .done(function(response) {
-                     console.log('Respuesta exitosa:', response);
+                     $('#rol-data-master').html(response.masterCount);
+                     $('#rol-data-support').html(response.cashierCount);
+                     $('#rol-data-players').html(response.playerCount);
+
+                     $('.dependent-role-data').find('.data-text-inline').fadeIn();
+                     $button.hide();
                  })
                  .fail(function(error) {
                      console.error('Error en la solicitud:', error);
