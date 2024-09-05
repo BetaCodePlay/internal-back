@@ -699,6 +699,7 @@ class AgentsRepo
         ]);
 
         $orderColumn = ! is_null($orderColumn) ? $orderColumn: 0;
+        $orderDir = ! is_null($orderDir) ? $orderDir: 'asc';
 
         $agentQuery->orderBy(
             array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
