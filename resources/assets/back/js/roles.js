@@ -160,7 +160,7 @@ class Roles {
                      $('#rol-data-players').html(response.playerCount);
 
                      $('.dependent-role-data').find('.data-text-inline').fadeIn();
-                     $button.hide();
+                     $button.remove();
                  })
                  .fail(function(error) {
                      console.error('Error en la solicitud:', error);
