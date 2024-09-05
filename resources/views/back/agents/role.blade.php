@@ -92,12 +92,23 @@
                             <div class="tab-manager-bottom">
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-                                    <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span
-                                            class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
-                                    <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span
-                                            class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
-                                    <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span
-                                            class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
+
+                                    <div class="data-text-inline" style="display: none">
+                                        <span class="name">{{ _i('Master') }}</span>
+                                        <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span>
+                                    </div>
+                                    <div class="data-text-inline" style="display: none">
+                                        <span class="name">{{ _i('Support') }}</span>
+                                        <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span>
+                                    </div>
+                                    <div class="data-text-inline" style="display: none">
+                                        <span class="name">{{ _i('Players') }}</span>
+                                        <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span>
+                                    </div>
+
+                                    <div class="data-text-inline" id="btn-show-dependent">
+                                        <button class="btn btn-theme btn-xs" data-route="">{{ _i('Show') }}</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
