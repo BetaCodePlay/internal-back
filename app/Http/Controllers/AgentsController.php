@@ -666,7 +666,6 @@ class AgentsController extends Controller
     public function agentsTransactionsPaginate($agent, Request $request)
     {
         try {
-            //dd('here', $request->all());
             $offset = $request->has('start') ? $request->get('start') : 0;
             $limit  = $request->has('length') ? $request->get('length') : 2000;
 
@@ -679,9 +678,6 @@ class AgentsController extends Controller
             if (Gate::allows('access', Permissions::$users_search)) {
                 $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
             }
-
-            //$typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
-
             $orderCol = [
                 'column' => 'date',
                 'order'  => 'asc',
