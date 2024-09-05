@@ -92,25 +92,12 @@
                             <div class="tab-manager-bottom">
                                 <div class="tab-manager-data">
                                     <div class="data-title">{{ _i('Number of dependent agents') }}</div>
-
-                                    @if(auth()->user()->id === 4)
-                                        <div class="data-text-inline" style="display: none">
-                                            <span class="name">{{ _i('Master') }}</span>
-                                            <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span>
-                                        </div>
-                                        <div class="data-text-inline" style="display: none">
-                                            <span class="name">{{ _i('Support') }}</span>
-                                            <span class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span>
-                                        </div>
-                                        <div class="data-text-inline" style="display: none">
-                                            <span class="name">{{ _i('Players') }}</span>
-                                            <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span>
-                                        </div>
-
-                                        <div class="data-text-inline">
-                                            <button class="btn btn-theme btn-xs" id="btn-show-dependent" data-route="">{{ _i('Show') }}</button>
-                                        </div>
-                                    @endif
+                                    <div class="data-text-inline"><span class="name">{{ _i('Master') }}</span> <span
+                                            class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span></div>
+                                    <div class="data-text-inline"><span class="name">{{ _i('Support') }}</span> <span
+                                            class="number">{{ $agent?->cashierQuantity ?? '0.00' }}</span></div>
+                                    <div class="data-text-inline"><span class="name">{{ _i('Players') }}</span> <span
+                                            class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span></div>
                                 </div>
                             </div>
                         </div>
@@ -156,17 +143,14 @@
                                         <div class="tab-manager-data text-center">
                                             <div class="data-title">{{ _i('Account') }}</div>
                                             <div class="data-text">
-                                                @if ($agent?->master)
-                                                    <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal"
-                                                            data-target="#role-modify"
-                                                            data-userid="{{ $authUser->id}}"
-                                                            data-username="{{ $authUser->username }}"
-                                                            data-rol="{{ $authUser->agentType }}"
-                                                            data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
-                                                    </button>
-                                                @else
-                                                    {{ _i('Cashier') }}
-                                                @endif
+
+                                                <button class="btn btn-theme btn-xs currentDataRole" data-toggle="modal"
+                                                        data-target="#role-modify"
+                                                        data-userid="{{ $authUser->id}}"
+                                                        data-username="{{ $authUser->username }}"
+                                                        data-rol="{{ $authUser->agentType }}"
+                                                        data-route="{{ route('agents.role.user-find') }}">{{ _i('Modify') }}
+                                                </button>
                                             </div>
                                         </div>
                                     @endif
@@ -406,7 +390,6 @@
             roles.userCreate();
             roles.userModify();
             roles.userLock();
-            roles.userDependent();
             roles.tabsTablesSection();
         });
     </script>

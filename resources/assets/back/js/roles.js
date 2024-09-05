@@ -133,28 +133,6 @@ class Roles {
         });
     };
 
-    userDependent() {
-        let $button = '#btn-show-dependent';
-
-        $(document).on('click', $button, function () {
-            let $this = $(this);
-            let $route = $this.data('route');
-
-            $this.button('loading');
-
-            $.ajax({
-                url: $route,
-                method: 'get'
-            }).done(function (json) {
-                console.log(json)
-            }).fail(function (json) {
-                Roles.errorResponse(json);
-            }).always(function () {
-                $this.button('reset');
-            });
-        });
-    }
-
     userLock() {
         let $button = '.lockUser';
         let $targetModal = '[data-target="#role-lock"]';
