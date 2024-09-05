@@ -521,7 +521,7 @@ class TransactionsRepo
 
             $nameAffect = $from === $transaction->username ? $from : $to;
 
-            $condition = $transaction->transaction_type_id === 1 ? _i('Descarga') : _i('Carga');
+            $condition = $transaction->transaction_type_id === 1 ? _i('descarga') : _i('carga');
             $nameAffect = $from === $nameAffect ? $condition : $nameAffect;
 
             return [
