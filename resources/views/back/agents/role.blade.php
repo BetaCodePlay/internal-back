@@ -108,7 +108,7 @@
                                         </div>
 
                                         <div class="data-text-inline">
-                                            <button class="btn btn-theme">{{ _i('Show') }}</button>
+                                            <button class="btn btn-theme btn-xs" id="btn-show-dependent" data-route="{{ route('auth.update-quantities') }}/{{ $authUser->id }}">{{ _i('Show') }}</button>
                                         </div>
                                     @endif
                                 </div>
@@ -406,6 +406,7 @@
             roles.userCreate();
             roles.userModify();
             roles.userLock();
+            roles.userDependent();
             roles.tabsTablesSection();
         });
     </script>
