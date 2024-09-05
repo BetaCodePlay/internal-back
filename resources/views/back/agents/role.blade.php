@@ -106,8 +106,11 @@
                                         <span class="number">{{ $agent?->playerQuantity ?? '0.00' }}</span>
                                     </div>
 
-                                    <div class="data-text-inline" id="btn-show-dependent">
-                                        <button class="btn btn-theme btn-xs" data-route="{{ route('auth.update-quantities') }}?userId={{ $authUser->id}}">{{ _i('Show') }}</button>
+                                    <div class="data-text-inline">
+                                        <button id="btn-show-dependent" class="btn btn-theme btn-xs"
+                                                data-route="{{ route('auth.update-quantities', ['userId' => $authUser->id]) }}">
+                                            {{ __('Show') }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
