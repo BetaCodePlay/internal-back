@@ -140,6 +140,8 @@ class Roles {
             let $this = $(this);
             let $route = $this.data('route');
 
+            console.log('hola como estas?', $route);
+
             $this.button('loading');
 
             $.ajax({
