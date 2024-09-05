@@ -8,6 +8,10 @@
     }
 }
 
+.disabled {
+    pointer-events: none;
+}
+
 .body-auth {
     .container-login {
         background: #000 !important;
