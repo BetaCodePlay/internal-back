@@ -94,8 +94,8 @@
                                     <div class="data-title">{{ _i('Number of dependent agents') }}</div>
 
                                     <div class="data-text-inline" style="display: none">
-                                        <span class="name" id="rol-data-master">{{ _i('Master') }}</span>
-                                        <span class="number">{{ $agent?->masterQuantity ?? '0.00' }}</span>
+                                        <span class="name">{{ _i('Master') }}</span>
+                                        <span class="number" id="rol-data-master">{{ $agent?->masterQuantity ?? '0.00' }}</span>
                                     </div>
                                     <div class="data-text-inline" style="display: none">
                                         <span class="name">{{ _i('Support') }}</span>
