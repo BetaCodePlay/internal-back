@@ -691,6 +691,12 @@ class AgentsRepo
 
         $orderableColumns = OrderableColumns::getOrderableColumns();
 
+        Log::alert('orderableColumns', [
+            'orderColumn' => $orderColumn,
+            'condition1' => $orderColumn !== self::ORDER_COLUMN_ACTION,
+            'condition2' => $orderColumn !== self::ORDER_COLUMN_ACTION ? $orderDir : 'asc',
+        ]);
+
         $agentQuery->orderBy(
             array_key_exists($orderColumn, $orderableColumns) && $orderColumn !== self::ORDER_COLUMN_ACTION
                 ? $orderableColumns[$orderColumn]
