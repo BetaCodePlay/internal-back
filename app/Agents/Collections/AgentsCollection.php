@@ -3829,7 +3829,12 @@ class AgentsCollection
             $transaction->new_amount = $symbol . formatAmount($transaction->amount);
             $transaction->balance    = formatAmount($transaction->balance);
 
-            dd($transaction->data);
+            $from     = $transaction->data->from ?? null;
+            $to       = $transaction->data->to ?? null;
+            $nameAffect = $from === $transaction->username ? $from : $to;
+
+            $transaction->from = $from;
+            $transaction->to = $nameAffect;
         }
 
         return [
