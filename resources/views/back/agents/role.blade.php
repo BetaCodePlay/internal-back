@@ -109,7 +109,7 @@
                                     <div class="data-text-inline" id="btn-show-dependent">
                                         <button class="btn btn-theme btn-xs"
                                                 data-route="{{ route('auth.update-quantities', ['userId' => $authUser->id]) }}">
-                                            {{ __('Show') }}
+                                            {{ __('Ver') }}
                                         </button>
                                     </div>
                                 </div>

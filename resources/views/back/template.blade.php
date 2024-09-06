@@ -76,11 +76,51 @@
 </div>
 
 @yield('modals')
-
+<!--
+<div class="modal modal-style fade" id="modal-alert-main">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                Mantenimiento programado
+            </div>
+            <div class="modal-body">
+                <p>ATENCION!! EL DIA 04-09-2024 desde 05:00 a 05:15 hs madrugada Argentina vamos realizar tareas de mantenimiento en los juegos para que tengas una mejor experiencia en la plataforma.</p>
+                <p>Te recomendamos por favor no realizar apuestas en el lapso de esos horarios.</p>
+                <p>Muchas gracias.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-theme close-modal-alert-main" data-dismiss="modal">{{ __('Cerrar') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+-->
 <script src="{{ mix('js/manifest.js', 'back') }}"></script>
 <script src="{{ mix('js/vendor.js', 'back') }}"></script>
 <script src="{{ mix('js/custom.min.js', 'back') }}"></script>
 <script src="{{ asset('back/js/scripts.min.js') }}?v=24"></script>
+
+<script src=" https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
+<script>
+    $(function () {
+        if (Cookies.get('closeModalAlert') === undefined) {
+            var inFifteenMinutes = new Date(new Date().getTime() + 60 * 60 * 1000);
+            Cookies.set('closeModalAlert', true, {
+                expires: inFifteenMinutes
+            });
+        }
+
+        if (Cookies.get('closeModalAlert') === 'true') {
+            $('#modal-alert-main').modal('show');
+            $('.close-modal-alert-main').on('click', function () {
+                var inFifteenMinutes = new Date(new Date().getTime() + 60 * 60 * 1000);
+                Cookies.set('closeModalAlert', false, {
+                    expires: inFifteenMinutes
+                });
+            });
+        }
+    });
+</script>
 
 {{--TODO AGREGAR CDN PARA EXPORTAR PDF--}}
 {{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>--}}
