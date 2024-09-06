@@ -3833,6 +3833,9 @@ class AgentsCollection
             $to       = $transaction->data->to ?? null;
             $nameAffect = $from === $transaction->username ? $from : $to;
 
+            $condition = $transaction->transaction_type_id === 1 ? _i('Descarga') : _i('Carga');
+            $nameAffect = $from === $nameAffect ? $condition : $nameAffect;
+
             $transaction->from = $from;
             $transaction->to = $nameAffect;
         }
