@@ -138,7 +138,7 @@ class Roles {
 
         $button.on('click', function() {
             const $this = $(this);
-            const route = $this.data('route');
+            const route = $this.find('.btn').data('route');
 
             if (!route) {
                 console.error('La ruta no está definida');
@@ -155,7 +155,12 @@ class Roles {
                  method: 'GET',
              })
                  .done(function(response) {
-                     console.log('Respuesta exitosa:', response);
+                     $('#rol-data-master').html(response.masterCount);
+                     $('#rol-data-support').html(response.cashierCount);
+                     $('#rol-data-players').html(response.playerCount);
+
+                     $('.dependent-role-data').find('.data-text-inline').fadeIn();
+                     $button.remove();
                  })
                  .fail(function(error) {
                      console.error('Error en la solicitud:', error);
@@ -336,7 +341,7 @@ class Roles {
                     }
                 }
 
-                if(Roles.globaluseridcurrent === Roles.globaluseridLogin) {
+                if (Roles.globaluseridcurrent === Roles.globaluseridLogin) {
                     $('#role-balance-refresh').html(authBalance);
                 }
 
@@ -530,7 +535,7 @@ class Roles {
             $modal.find('.loading-style').show();
             $modal.find('.d-agent').removeClass('d-none');
 
-            if(Roles.globalrolid === 5) {
+            if (Roles.globalrolid === 5) {
                 $modal.find('.d-agent').addClass('d-none');
             }
 
@@ -694,7 +699,7 @@ class Roles {
                         $('td:eq(1)', nRow).html('<span class="deco-rol">' + aData[1][0] + '</span>');
                         $('td:eq(3)', nRow).html('<i class="fa-solid i-status fa-circle ' + (aData[3][1] ? 'green' : 'red') + '"></i> ' + aData[3][0]);
                         $('td:eq(4)', nRow).html(aData[4]);
-                        $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html('<span class="d-flex">'+ buttons.html() +'</span>');
+                        $('td:eq(5)', nRow).attr('data-id', aData[2]).addClass('text-right').html('<span class="d-flex">' + buttons.html() + '</span>');
                     },
                     initComplete: function () {
                         $('.page-role .page-body .table-load').addClass('table-complete');
@@ -702,7 +707,7 @@ class Roles {
                     },
                 });
 
-                 tableRoles = Roles.globaltable;
+                tableRoles = Roles.globaltable;
             }
 
             /*if ($target === tabTransaction) {
