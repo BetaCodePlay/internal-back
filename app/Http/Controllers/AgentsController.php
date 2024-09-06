@@ -748,7 +748,6 @@ class AgentsController extends Controller
     public function transactions(Request $request, string|int $agent)
     : JsonResponse|Response {
         try {
-            dd('here');
             $transactions = $this->transactionsRepo->getUserProviderTransactionsPaginated($request, $agent);
 
             return response()->json(
