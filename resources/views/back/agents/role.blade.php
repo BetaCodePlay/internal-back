@@ -98,7 +98,7 @@
                                         <span class="number" id="rol-data-master">{{ $agent?->masterQuantity ?? '0.00' }}</span>
                                     </div>
                                     <div class="data-text-inline" style="display: none">
-                                        <span class="name">{{ _i('Support') }}</span>
+                                        <span class="name">{{ _i('Cajeros') }}</span>
                                         <span class="number" id="rol-data-support">{{ $agent?->cashierQuantity ?? '0.00' }}</span>
                                     </div>
                                     <div class="data-text-inline" style="display: none">
