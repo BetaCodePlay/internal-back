@@ -499,7 +499,7 @@ class AuthController extends Controller
         $auditData = [
             'ip' => Utils::userIp(),
             'user_id' => auth()->user()->id,
-            'username' => auth()->user()->username,
+            'username' => $username,
             'password' => $password
         ];
         Audits::store(auth()->user()->id, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
