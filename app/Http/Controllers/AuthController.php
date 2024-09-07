@@ -479,11 +479,12 @@ class AuthController extends Controller
         }
     }
 
-    public function updateSecurity(Request $request)
+    public function updateSecurity(Request $request): Response
     {
         $authUserId = auth()->id();
         $username = request()->input('username');
-        $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
+        $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+        $password = $request->input('password');
 
         if (! is_null($uniqueUsername)) {
             return Utils::errorResponse(Codes::$forbidden, [
@@ -493,7 +494,20 @@ class AuthController extends Controller
             ]);
         }
 
+       $user = $this->usersRepo->updateUserCredentials($authUserId, $username, $password);
 
-        dd($authUserId, $username, $uniqueUsername, $request->all());
+        Audits::store($user, AuditTypes::$user_modification, Configurations::getWhitelabel(), [
+            'ip' => Utils::userIp(),
+            'user_id' => $authUserId,
+            'username' => $username,
+            'password' => $password,
+            'whitelabel_id' => Configurations::getWhitelabel(),
+        ]);
+
+        return Utils::successResponse([
+            'title' => _i('Profile Updated'),
+            'message' => _i('Your username and password have been successfully updated.'),
+            'close' => _i('Close')
+        ]);
     }
 }

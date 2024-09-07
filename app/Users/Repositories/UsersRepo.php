@@ -1636,6 +1636,17 @@ class UsersRepo
         return $user;
     }
 
+    public function updateUserCredentials(string|int $userId, string $username, string $password)
+    {
+        $user = User::find($userId);
+
+        $user->username = $username;
+        $user->password = Hash::make($password);
+        $user->save();
+
+        return $user;
+    }
+
     /**
      * Update exclude provider user
      *
