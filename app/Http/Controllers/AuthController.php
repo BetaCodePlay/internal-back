@@ -72,6 +72,7 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
+        dd('here Orlando');
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
