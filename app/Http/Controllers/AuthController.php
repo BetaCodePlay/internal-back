@@ -167,6 +167,7 @@ class AuthController extends Controller
                     $isDuplicatedUser = $usersRepo->checkForDuplicateUser($username, $whitelabel);
 
                     if ($isDuplicatedUser) {
+                        dd('test');
                        return redirect()->route('agents.security-alert');
                     }
 
