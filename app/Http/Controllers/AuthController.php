@@ -497,6 +497,8 @@ class AuthController extends Controller
         $user = $this->usersRepo->updateUserCredentials($authUserId, $username, $password);
         $whitelabelId = Configurations::getWhitelabel();
 
+        dd($whitelabelId);
+
         Audits::store($user, AuditTypes::$user_modification, Configurations::getWhitelabel(), [
             'ip' => Utils::userIp(),
             'user_id' => $authUserId,
