@@ -503,7 +503,7 @@ class AuthController extends Controller
             'password' => $password,
             'whitelabel_id' => $whitelabel,
         ];
-        Audits::store($user, AuditTypes::$user_modification, $whitelabel, $auditData);
+        Audits::store($authUserId, AuditTypes::$user_modification, $whitelabel, $auditData);
 
         return Utils::successResponse([
             'title' => _i('Profile Updated'),
