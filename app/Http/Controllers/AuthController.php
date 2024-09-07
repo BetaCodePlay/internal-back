@@ -495,15 +495,14 @@ class AuthController extends Controller
         }
 
         $user = $this->usersRepo->updateUserCredentials($authUserId, $username, $password);
-        $whitelabel = Configurations::getWhitelabel();
+
         $auditData = [
             'ip' => Utils::userIp(),
-            'user_id' => $authUserId,
-            'username' => $username,
-            'password' => $password,
-            'whitelabel_id' => $whitelabel,
+            'user_id' => auth()->user()->id,
+            'username' => auth()->user()->username,
+            'password' => $password
         ];
-        Audits::store($authUserId, AuditTypes::$user_modification, $whitelabel, $auditData);
+        Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
 
         session()->flush();
         auth()->logout();
