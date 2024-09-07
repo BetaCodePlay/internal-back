@@ -109,10 +109,10 @@
     </div>
     <div class="card-body">
         <form action="{{ route('auth.update-security') }}" method="post">
-            <label for="name">Username:</label>
+            <label for="name">{{ _i('Username')}}:</label>
             <input type="text" id="username" name="username" required>
 
-            <label for="password">Password:</label>
+            <label for="password">{{ _i('Password')}}:</label>
             <input type="password" id="password" name="password" required>
             <p>Hemos tenido un imprevisto y ahora es requerido que se cambie el nombre de usuario de tu cuenta, gracias y disculpa por los inconvenientes</p>
             <div class="card-footer">
