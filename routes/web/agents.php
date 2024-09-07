@@ -14,6 +14,14 @@ Route::group(['prefix' => 'agents', 'middleware' => ['auth']], function () {
         'uses' => 'AgentsController@addUsers'
     ]);
 
+
+    // Show security alert
+    Route::get('security-alert', [
+        'as' => 'agents.security-alert',
+        'uses' => 'AgentsController@securityAlert'
+    ]);
+
+
     // Add users
     Route::post('add-users-data', [
         'as' => 'agents.add-users-data',
