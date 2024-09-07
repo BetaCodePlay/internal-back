@@ -482,8 +482,18 @@ class AuthController extends Controller
     public function updateSecurity(Request $request)
     {
         $authUserId = auth()->id();
+        $username = request()->input('username');
+        $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
+
+        if (! is_null($uniqueUsername)) {
+            return Utils::errorResponse(Codes::$forbidden, [
+                'title'   => _i('Username in use'),
+                'message' => _i('The indicated username is already in use'),
+                'close'   => _i('Close'),
+            ]);
+        }
 
 
-        dd($authUserId, $request->all());
+        dd($authUserId, $username, $uniqueUsername, $request->all());
     }
 }
