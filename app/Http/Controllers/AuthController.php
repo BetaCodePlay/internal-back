@@ -167,7 +167,7 @@ class AuthController extends Controller
 
                     $isDuplicatedUser = $usersRepo->checkForDuplicateUser($username, $whitelabel);
 
-                    dd($isDuplicatedUser);
+                    //dd($isDuplicatedUser);
 
 
                     session()->put('currency', $defaultCurrency->currency_iso);
