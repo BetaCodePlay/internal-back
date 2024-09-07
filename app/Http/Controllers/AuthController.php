@@ -72,7 +72,6 @@ class AuthController extends Controller
      */
     public function authenticate(Request $request, ProfilesRepo $profilesRepo, UserCurrenciesRepo $userCurrenciesRepo, UsersRepo $usersRepo, Agent $agent, AgentsRepo $agentsRepo): Response
     {
-        dd('here Orlando');
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required'
@@ -164,6 +163,8 @@ class AuthController extends Controller
                         }
                     }*/
 
+                    dd('Hola Sr. Orlando');
+
 
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
@@ -244,12 +245,11 @@ class AuthController extends Controller
                 } else {
                     session()->flush();
                     auth()->logout();
-                    $data = [
+                    $response = Utils::errorResponse(Codes::$not_found, [
                         'title' => _i('Access denied!'),
                         'message' => _i('You do not have access to the system'),
                         'close' => _i('Close')
-                    ];
-                    $response = Utils::errorResponse(Codes::$not_found, $data);
+                    ]);
                 }
 
             } else {
@@ -268,12 +268,11 @@ class AuthController extends Controller
                     }
                 }
 
-                $data = [
+                $response = Utils::errorResponse(Codes::$not_found, [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
                     'close' => _i('Close')
-                ];
-                $response = Utils::errorResponse(Codes::$not_found, $data);
+                ]);
             }
             return $response;
 
