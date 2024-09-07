@@ -479,9 +479,11 @@ class AuthController extends Controller
         }
     }
 
-    public function updateSecurity()
+    public function updateSecurity(Request $request)
     {
         $authUserId = auth()->id();
-        dd($authUserId);
+
+
+        dd($authUserId, $request->all());
     }
 }
