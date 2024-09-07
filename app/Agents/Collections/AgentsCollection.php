@@ -3828,6 +3828,16 @@ class AgentsCollection
             $symbol                  = $transaction->transaction_type_id == TransactionTypes::$debit ? '-' : '+';
             $transaction->new_amount = $symbol . formatAmount($transaction->amount);
             $transaction->balance    = formatAmount($transaction->balance);
+
+            $from     = $transaction->data->from ?? null;
+            $to       = $transaction->data->to ?? null;
+            $nameAffect = $from === $transaction->username ? $from : $to;
+
+            $condition = $transaction->transaction_type_id === 1 ? _i('Descarga') : _i('Carga');
+            $nameAffect = $from === $nameAffect ? $condition : $nameAffect;
+
+            $transaction->data->from = $from;
+            $transaction->data->to = $nameAffect;
         }
 
         return [

@@ -4020,7 +4020,7 @@ class AgentsController extends Controller
             'master'     => 'required'
         ]);
         try {
-            $username           = $request->input('username');
+            $username           = Str::lower($request->input('username'));
             $password           = $request->input('password');
             $uniqueUsername     = $this->usersRepo->uniqueUsername($username);
             $uniqueTempUsername = $usersTempRepo->uniqueUsername($username);
