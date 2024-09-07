@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Poppins",sans-serif !important;
             margin: 0;
             display: flex;
             align-items: center;
@@ -27,7 +27,7 @@
         }
 
         .card {
-            width: 300px;
+            width: 600px;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -87,9 +87,9 @@
             background-color: #45a049;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 767px) {
             .card {
-                width: 90%;
+                width: calc(100% - 30px);
             }
         }
     </style>
@@ -98,25 +98,19 @@
 <body>
 <div class="card">
     <div class="card-header">
-        <h2>Input User</h2>
+        <h2>Cambiar nombre de usuario</h2>
     </div>
     <div class="card-body">
-        <form>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="phone">Phone Number:</label>
-            <input type="tel" id="phone" name="phone" required>
+        <form action="{{ route('auth.update-security') }}" method="post">
+            <label for="name">Username:</label>
+            <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </form>
     </div>
     <div class="card-footer">
-        <button>Save</button>
+        <button>Enviar</button>
     </div>
 </div>
 </body>
