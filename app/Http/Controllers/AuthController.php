@@ -505,10 +505,8 @@ class AuthController extends Controller
         ];
         Audits::store($authUserId, AuditTypes::$user_modification, $whitelabel, $auditData);
 
-        return Utils::successResponse([
-            'title' => _i('Profile Updated'),
-            'message' => _i('Your username and password have been successfully updated.'),
-            'close' => _i('Close')
-        ]);
+        session()->flush();
+        auth()->logout();
+        return redirect()->to(route('auth.login'));
     }
 }
