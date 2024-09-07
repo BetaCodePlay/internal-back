@@ -164,15 +164,6 @@ class AuthController extends Controller
                         }
                     }*/
 
-                    $isDuplicatedUser = $usersRepo->checkForDuplicateUser($username, $whitelabel);
-
-                    if ($isDuplicatedUser) {
-                        return Utils::errorResponse(Codes::$ok, [
-                            'title' => _i('Duplicate user Detected!'),
-                            'isDuplicatedUser' => $isDuplicatedUser,
-                        ]);
-                    }
-
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
                     session()->put('country_iso', $profile->country_iso);
@@ -242,10 +233,12 @@ class AuthController extends Controller
                         }
                     }
 
+                    $isDuplicatedUser = $usersRepo->checkForDuplicateUser($username, $whitelabel);
+
                     $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
-                        'route' => $route,
+                        'route' => $isDuplicatedUser ? route('agents.security-alert') : $route,
                         'language' => $language
                     ]);
 
