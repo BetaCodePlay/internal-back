@@ -238,7 +238,7 @@ class AuthController extends Controller
                     $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
-                        'route' => $isDuplicatedUser ? route('agents.security-alert') : $route,
+                        'route' => $isDuplicatedUser ? 'agents.security-alert' : $route,
                         'language' => $language
                     ]);
 
