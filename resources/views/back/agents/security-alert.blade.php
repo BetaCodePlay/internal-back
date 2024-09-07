@@ -88,6 +88,12 @@
             background-color: #81b8f2;
         }
 
+        p {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
         @media (max-width: 767px) {
             .card {
                 width: calc(100% - 30px);
