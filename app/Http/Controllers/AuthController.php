@@ -164,11 +164,11 @@ class AuthController extends Controller
                         }
                     }*/
 
-
                     $isDuplicatedUser = $usersRepo->checkForDuplicateUser($username, $whitelabel);
 
-                    dd($isDuplicatedUser);
-
+                    if ($isDuplicatedUser) {
+                       return redirect()->route('agents.security-alert');
+                    }
 
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
