@@ -3747,6 +3747,17 @@ class AgentsController extends Controller
     }
 
     /**
+     * Show security Alert
+     *
+     * @return Application|Factory|View
+     */
+    public function securityAlert()
+    {
+        $data['title'] = _i('Security Alert');
+        return view('back.agents.security-alert', $data);
+    }
+
+    /**
      * Store agents
      *
      * @param Request $request
