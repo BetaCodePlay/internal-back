@@ -502,6 +502,15 @@ class UsersRepo
             ->first();
     }
 
+    public function checkForDuplicateUser(string $username, string|int $whitelabel)
+    {
+        $duplicateUserCount = User::where('username', $username)
+            ->where('whitelabel_id', $whitelabel)
+            ->count();
+
+        return $duplicateUserCount > 1;
+    }
+
     /**
      * Get by whitelabel
      *
