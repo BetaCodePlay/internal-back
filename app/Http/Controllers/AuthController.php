@@ -478,4 +478,10 @@ class AuthController extends Controller
             Log::error(__METHOD__, ['exception' => $ex]);
         }
     }
+
+    public function updateSecurity()
+    {
+        $authUserId = auth()->id();
+        dd($authUserId);
+    }
 }
