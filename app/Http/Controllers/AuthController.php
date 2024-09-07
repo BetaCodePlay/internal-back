@@ -167,7 +167,11 @@ class AuthController extends Controller
                     $isDuplicatedUser = $usersRepo->checkForDuplicateUser($username, $whitelabel);
 
                     if ($isDuplicatedUser) {
-                       return redirect()->route( route('agents.security-alert'));
+                        return Utils::errorResponse(Codes::$duplicate_user, [
+                            'title' => _i('Duplicate Username Detected!'),
+                            'message' => _i('Your username is already in use. Please choose a different one.'),
+                            'close' => _i('Close')
+                        ]);
                     }
 
                     session()->put('currency', $defaultCurrency->currency_iso);
