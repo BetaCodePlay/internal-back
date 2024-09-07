@@ -502,7 +502,7 @@ class AuthController extends Controller
             'username' => auth()->user()->username,
             'password' => $password
         ];
-        Audits::store(auth()->user()->id,, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
+        Audits::store(auth()->user()->id, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
 
         session()->flush();
         auth()->logout();
