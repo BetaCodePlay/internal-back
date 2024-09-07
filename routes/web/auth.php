@@ -67,6 +67,6 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::get('update-quantities/{userId}', [AuthController::class, 'updateAgentQuantities'])
         ->name('auth.update-quantities');
 
-    Route::get('update-security/', [AuthController::class, 'updateSecurity'])
+    Route::post('update-security/', [AuthController::class, 'updateSecurity'])
         ->name('auth.update-security');
 });
