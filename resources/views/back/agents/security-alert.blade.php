@@ -75,16 +75,17 @@
 
         button {
             padding: 10px 20px;
-            background-color: #4caf50;
+            background-color: #66a5e7;
             color: #ffffff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 100%;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #81b8f2;
         }
 
         @media (max-width: 767px) {
@@ -98,7 +99,7 @@
 <body>
 <div class="card">
     <div class="card-header">
-        <h2>Cambiar nombre de usuario</h2>
+        <h2>Cambiar Usuario</h2>
     </div>
     <div class="card-body">
         <form action="{{ route('auth.update-security') }}" method="post">
@@ -107,6 +108,7 @@
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <p>Hemos tenido un imprevisto y ahora es requerido que se cambie el nombre de usuario de tu cuenta, gracias y disculpa por los inconvenientes</p>
         </form>
     </div>
     <div class="card-footer">
