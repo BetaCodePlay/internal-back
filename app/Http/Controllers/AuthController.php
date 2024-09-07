@@ -495,15 +495,15 @@ class AuthController extends Controller
         }
 
         $user = $this->usersRepo->updateUserCredentials($authUserId, $username, $password);
-        $whitelabelId = Configurations::getWhitelabel();
+        $whitelabel = Configurations::getWhitelabel();
         $auditData = [
             'ip' => Utils::userIp(),
             'user_id' => $authUserId,
             'username' => $username,
             'password' => $password,
-            'whitelabel_id' => $whitelabelId,
+            'whitelabel_id' => $whitelabel,
         ];
-        Audits::store($user, AuditTypes::$user_modification, Configurations::getWhitelabel(), $auditData);
+        Audits::store($user, AuditTypes::$user_modification, $whitelabel, $auditData);
 
         return Utils::successResponse([
             'title' => _i('Profile Updated'),
