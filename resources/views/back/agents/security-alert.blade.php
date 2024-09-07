@@ -115,10 +115,10 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <p>Hemos tenido un imprevisto y ahora es requerido que se cambie el nombre de usuario de tu cuenta, gracias y disculpa por los inconvenientes</p>
+            <div class="card-footer">
+                <button type="submit">Enviar</button>
+            </div>
         </form>
-    </div>
-    <div class="card-footer">
-        <button>Enviar</button>
     </div>
 </div>
 </body>
