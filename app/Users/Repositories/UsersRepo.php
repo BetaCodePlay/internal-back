@@ -1641,7 +1641,7 @@ class UsersRepo
         $user = User::find($userId);
 
         $user->username = $username;
-        $user->password = Hash::make($password);
+        $user->password = $password;
         $user->save();
 
         return $user;
