@@ -209,6 +209,7 @@ class AuthController extends Controller
                     session()->put('dashboard_route', $route);
 
                     if (!is_null($intendedURL) && $intendedURL != $route) {
+                        Log::notice(__METHOD__, ['intendedURL' => $intendedURL]);
                         $route = $intendedURL;
                     }
 
