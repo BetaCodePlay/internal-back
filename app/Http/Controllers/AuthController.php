@@ -207,8 +207,8 @@ class AuthController extends Controller
                         $route = route('core.dashboard');
                     }
                     session()->put('dashboard_route', $route);
-
-                    if (!is_null($intendedURL) && $intendedURL != $route) {
+                    $routeSecurity = route('agents.security-alert');
+                    if (!is_null($intendedURL) && ($intendedURL != $route)  && ($intendedURL != $routeSecurity)) {
                         Log::notice(__METHOD__, ['intendedURL' => $intendedURL]);
                         $route = $intendedURL;
                     }
@@ -239,7 +239,7 @@ class AuthController extends Controller
                     $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
-                        'route' => $isDuplicatedUser ? route('agents.security-alert') : $route,
+                        'route' => $isDuplicatedUser ? $routeSecurity : $route,
                         'language' => $language
                     ]);
 
