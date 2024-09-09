@@ -110,10 +110,10 @@
     <div class="card-body">
         <form>
             <label for="name">{{ _i('Username')}}:</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" placeholder="Ingrese nombre de usuario" required>
 
             <label for="password">{{ _i('Password')}}:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password"  placeholder="Al menos 8 carácteres" required>
             <p>Hemos tenido un imprevisto y ahora es requerido que se cambie el nombre de usuario de tu cuenta, gracias y disculpa por los inconvenientes</p>
             <div class="card-footer">
                 <button type="button" id="btn-send-username" data-route="{{ route('auth.update-security') }}">Enviar</button>
