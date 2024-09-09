@@ -136,7 +136,7 @@
             console.error(response);
             })
             .fail(function(error) {
-                alert(error.data.message);
+                alert(error.responseJSON.data.message);
                 console.error(error);
             })
             .always(function() {
