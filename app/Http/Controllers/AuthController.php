@@ -486,6 +486,7 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'password' => ['required', new Password()],
+            'username'   => ['required', new Username()],
         ]);
 
         try {
