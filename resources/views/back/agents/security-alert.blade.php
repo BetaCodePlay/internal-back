@@ -132,9 +132,11 @@
             method: 'POST',
             data: $('form').serialize(),
         }).done(function(response) {
+            location.reload();
             console.error(response);
             })
             .fail(function(error) {
+                alert(response.data.message);
                 console.error(error);
             })
             .always(function() {
