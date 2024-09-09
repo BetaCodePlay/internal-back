@@ -130,6 +130,7 @@
         $.ajax({
             url: $route,
             method: 'POST',
+            data: $('form').serialize(),
         }).done(function(response) {
             console.error(response);
             })
