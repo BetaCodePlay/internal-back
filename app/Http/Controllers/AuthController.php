@@ -297,7 +297,7 @@ class AuthController extends Controller
      */
     public function changePassword(Request $request, UsersRepo $usersRepo) {
         $this->validate($request, [
-            'newPassword' => ['required', new Password()],
+            'password' => ['required', new Password()],
         ]);
         try {
 
