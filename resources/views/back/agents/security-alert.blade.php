@@ -122,6 +122,7 @@
     </div>
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
     $(document).on('click', '#btn-send-username', function (){
         let $this = $(this);
@@ -134,25 +135,29 @@
             url: $route,
             method: 'POST',
             data: $('form').serialize(),
-        }).done(function(_) {
+        }).done(function() {
             location.reload();
         })
             .fail(function(error) {
                 if (error.responseJSON) {
                     let errors = error.responseJSON.errors;
 
-                    alert(error.responseJSON.message);
-
-                    $.each(errors, function(field, messages) {
-                        let inputField = $('#' + field);
-                        inputField.addClass('input-error');
-                        inputField.after('<span class="error-message" style="color: red;">' + messages[0] + '</span>');
-                    });
+                    if (errors && errors.password) {
+                        let passwordError = errors.password[0];
+                        let passwordInput = $('#password');
+                        passwordInput.addClass('input-error');
+                        passwordInput.after('<span class="error-message" style="color: red;">' + passwordError + '</span>');
+                    } else if (error.responseJSON.message) {
+                        let generalMessage = error.responseJSON.message;
+                        let passwordInput = $('#password');
+                        passwordInput.after('<span class="error-message" style="color: red;">' + generalMessage + '</span>');
+                    }
                 } else {
                     console.error(error);
                 }
             });
     });
 </script>
+
 </body>
 </html>
