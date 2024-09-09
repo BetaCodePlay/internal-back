@@ -479,33 +479,47 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function updateSecurity(Request $request): Response
     {
-        $authUserId = auth()->id();
-        $username = request()->input('username');
-        $uniqueUsername = $this->usersRepo->uniqueUsername($username);
-        $password = $request->input('password');
+        $this->validate($request, [
+            'newPassword' => ['required', new Password()],
+        ]);
 
-        if (! is_null($uniqueUsername)) {
-            return Utils::errorResponse(Codes::$forbidden, [
-                'title'   => _i('Username in use'),
-                'message' => _i('The indicated username is already in use'),
-                'close'   => _i('Close'),
-            ]);
+        try {
+            $authUserId = auth()->id();
+            $username = request()->input('username');
+            $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+            $password = $request->input('password');
+
+            if (! is_null($uniqueUsername)) {
+                return Utils::errorResponse(Codes::$forbidden, [
+                    'title'   => _i('Username in use'),
+                    'message' => _i('The indicated username is already in use'),
+                    'close'   => _i('Close'),
+                ]);
+            }
+
+           $this->usersRepo->updateUserCredentials($authUserId, $username, $password);
+
+            $auditData = [
+                'ip' => Utils::userIp(),
+                'user_id' => auth()->user()->id,
+                'username' => $username,
+                'password' => $password
+            ];
+            Audits::store(auth()->user()->id, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
+
+            session()->flush();
+            auth()->logout();
+            return redirect()->to(route('auth.login'));
+        } catch (Exception $ex) {
+            Log::error(__METHOD__, ['exception' => $ex, 'request' => $request->except(['password'])]);
+            session()->flush();
+            auth()->logout();
+            return Utils::failedResponse();
         }
-
-        $user = $this->usersRepo->updateUserCredentials($authUserId, $username, $password);
-
-        $auditData = [
-            'ip' => Utils::userIp(),
-            'user_id' => auth()->user()->id,
-            'username' => $username,
-            'password' => $password
-        ];
-        Audits::store(auth()->user()->id, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
-
-        session()->flush();
-        auth()->logout();
-        return redirect()->to(route('auth.login'));
     }
 }
