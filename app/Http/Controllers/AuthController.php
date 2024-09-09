@@ -297,7 +297,7 @@ class AuthController extends Controller
      */
     public function changePassword(Request $request, UsersRepo $usersRepo) {
         $this->validate($request, [
-            'password' => ['required', new Password()],
+            'newPassword' => ['required', new Password()],
         ]);
         try {
 
@@ -485,7 +485,7 @@ class AuthController extends Controller
     public function updateSecurity(Request $request): Response
     {
         $this->validate($request, [
-            'newPassword' => ['required', new Password()],
+            'password' => ['required', new Password()],
         ]);
 
         try {
