@@ -13,6 +13,7 @@ use App\Users\Repositories\ProfilesRepo;
 use App\Users\Repositories\UserCurrenciesRepo;
 use App\Users\Repositories\UsersRepo;
 use App\Users\Rules\Password;
+use App\Users\Rules\Username;
 use Dotworkers\Audits\Audits;
 use Dotworkers\Configurations\Configurations;
 use Dotworkers\Configurations\Enums\Codes;
