@@ -128,6 +128,7 @@
         let $this = $(this);
         let $route = $this.data('route');
 
+        // Limpiar mensajes de error previos y estilos
         $('.error-message').remove();
         $('input').removeClass('input-error');
 
@@ -135,22 +136,31 @@
             url: $route,
             method: 'POST',
             data: $('form').serialize(),
-        }).done(function() {
+        }).done(function(response) {
             location.reload();
         })
             .fail(function(error) {
                 if (error.responseJSON) {
                     let errors = error.responseJSON.errors;
 
+                    if (errors && errors.username) {
+                        let usernameError = errors.username[0];
+                        let usernameInput = $('#username');
+                        usernameInput.addClass('input-error');
+                        usernameInput.after('<span class="error-message" style="color: red;">' + usernameError + '</span>');
+                    }
+
                     if (errors && errors.password) {
                         let passwordError = errors.password[0];
                         let passwordInput = $('#password');
                         passwordInput.addClass('input-error');
                         passwordInput.after('<span class="error-message" style="color: red;">' + passwordError + '</span>');
-                    } else if (error.responseJSON.message) {
+                    }
+
+                    if (error.responseJSON.message) {
                         let generalMessage = error.responseJSON.message;
-                        let passwordInput = $('#password');
-                        passwordInput.after('<span class="error-message" style="color: red;">' + generalMessage + '</span>');
+                        let form = $('form');
+                        form.prepend('<span class="error-message" style="color: red; display: block; margin-bottom: 16px;">' + generalMessage + '</span>');
                     }
                 } else {
                     console.error(error);
