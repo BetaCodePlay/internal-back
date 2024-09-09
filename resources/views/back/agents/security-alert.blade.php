@@ -127,20 +127,30 @@
         let $this = $(this);
         let $route = $this.data('route');
 
+        $('.error-message').remove();
+        $('input').removeClass('input-error');
+
         $.ajax({
             url: $route,
             method: 'POST',
             data: $('form').serialize(),
-        }).done(function(response) {
+        }).done(function(_) {
             location.reload();
-            console.error(response);
-            })
+        })
             .fail(function(error) {
-                alert(error.responseJSON.data.message);
-                console.error(error);
-            })
-            .always(function() {
+                if (error.responseJSON) {
+                    let errors = error.responseJSON.errors;
 
+                    alert(error.responseJSON.message);
+
+                    $.each(errors, function(field, messages) {
+                        let inputField = $('#' + field);
+                        inputField.addClass('input-error');
+                        inputField.after('<span class="error-message" style="color: red;">' + messages[0] + '</span>');
+                    });
+                } else {
+                    console.error(error);
+                }
             });
     });
 </script>
