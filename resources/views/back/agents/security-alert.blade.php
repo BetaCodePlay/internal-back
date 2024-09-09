@@ -129,7 +129,7 @@
 
         $.ajax({
             url: $route,
-            method: 'GET',
+            method: 'POST',
         }).done(function(response) {
             console.error(response);
             })
