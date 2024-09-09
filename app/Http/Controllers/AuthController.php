@@ -209,7 +209,6 @@ class AuthController extends Controller
                     session()->put('dashboard_route', $route);
                     $routeSecurity = route('agents.security-alert');
                     if (!is_null($intendedURL) && ($intendedURL != $route)  && ($intendedURL != $routeSecurity)) {
-                        Log::notice(__METHOD__, ['intendedURL' => $intendedURL]);
                         $route = $intendedURL;
                     }
 
