@@ -502,6 +502,15 @@ class UsersRepo
             ->first();
     }
 
+    public function checkForDuplicateUser(string $username, string|int $whitelabel)
+    {
+        $duplicateUserCount = User::where('username', $username)
+            ->where('whitelabel_id', $whitelabel)
+            ->count();
+
+        return $duplicateUserCount > 1;
+    }
+
     /**
      * Get by whitelabel
      *
@@ -1624,6 +1633,17 @@ class UsersRepo
         $user = User::where('username', $username)
             ->whitelabel()
             ->first();
+        return $user;
+    }
+
+    public function updateUserCredentials(string|int $userId, string $username, string $password)
+    {
+        $user = User::find($userId);
+
+        $user->username = $username;
+        $user->password = $password;
+        $user->save();
+
         return $user;
     }
 

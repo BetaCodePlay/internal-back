@@ -28,11 +28,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Jenssegers\Agent\Agent;
@@ -78,9 +77,11 @@ class AuthController extends Controller
         ]);
 
         try {
+            $username = Str::lower($request->input('username'));
             $whitelabel = Configurations::getWhitelabel();
+
             $credentials = [
-                'username' => strtolower($request->username),
+                'username' => $username,
                 'password' => $request->password,
                 'whitelabel_id' => $whitelabel,
                 //'status' => true
@@ -163,7 +164,6 @@ class AuthController extends Controller
                         }
                     }*/
 
-
                     session()->put('currency', $defaultCurrency->currency_iso);
                     session()->put('timezone', $profile->timezone);
                     session()->put('country_iso', $profile->country_iso);
@@ -207,8 +207,8 @@ class AuthController extends Controller
                         $route = route('core.dashboard');
                     }
                     session()->put('dashboard_route', $route);
-
-                    if (!is_null($intendedURL) && $intendedURL != $route) {
+                    $routeSecurity = route('agents.security-alert');
+                    if (!is_null($intendedURL) && ($intendedURL != $route)  && ($intendedURL != $routeSecurity)) {
                         $route = $intendedURL;
                     }
 
@@ -233,22 +233,23 @@ class AuthController extends Controller
                         }
                     }
 
+                    $isDuplicatedUser = $usersRepo->checkForDuplicateUser($username, $whitelabel);
+
                     $response = Utils::successResponse([
                         'title' => _i('Welcome!'),
                         'message' => _i('We will shortly direct you to the control panel'),
-                        'route' => $route,
+                        'route' => $isDuplicatedUser ? $routeSecurity : $route,
                         'language' => $language
                     ]);
 
                 } else {
                     session()->flush();
                     auth()->logout();
-                    $data = [
+                    $response = Utils::errorResponse(Codes::$not_found, [
                         'title' => _i('Access denied!'),
                         'message' => _i('You do not have access to the system'),
                         'close' => _i('Close')
-                    ];
-                    $response = Utils::errorResponse(Codes::$not_found, $data);
+                    ]);
                 }
 
             } else {
@@ -267,12 +268,11 @@ class AuthController extends Controller
                     }
                 }
 
-                $data = [
+                $response = Utils::errorResponse(Codes::$not_found, [
                     'title' => _i('Invalid credentials!'),
                     'message' => _i('The username or password are incorrect'),
                     'close' => _i('Close')
-                ];
-                $response = Utils::errorResponse(Codes::$not_found, $data);
+                ]);
             }
             return $response;
 
@@ -477,5 +477,35 @@ class AuthController extends Controller
         } catch (Exception $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
         }
+    }
+
+    public function updateSecurity(Request $request): Response
+    {
+        $authUserId = auth()->id();
+        $username = request()->input('username');
+        $uniqueUsername = $this->usersRepo->uniqueUsername($username);
+        $password = $request->input('password');
+
+        if (! is_null($uniqueUsername)) {
+            return Utils::errorResponse(Codes::$forbidden, [
+                'title'   => _i('Username in use'),
+                'message' => _i('The indicated username is already in use'),
+                'close'   => _i('Close'),
+            ]);
+        }
+
+        $user = $this->usersRepo->updateUserCredentials($authUserId, $username, $password);
+
+        $auditData = [
+            'ip' => Utils::userIp(),
+            'user_id' => auth()->user()->id,
+            'username' => $username,
+            'password' => $password
+        ];
+        Audits::store(auth()->user()->id, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
+
+        session()->flush();
+        auth()->logout();
+        return redirect()->to(route('auth.login'));
     }
 }
