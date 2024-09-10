@@ -268,6 +268,7 @@ class Roles {
 
     userBalance() {
         let button = '.balanceUser';
+        let check = false;
 
         function getUserInformation() {
             return new Promise((resolve, reject) => {
@@ -349,6 +350,7 @@ class Roles {
                 $('#role-balance').modal('hide');
                 $('#userBalanceAmountGet').val('');
                 $('#userBalanceAmount').val('');
+
             }).fail(function (json) {
                 let data = json.responseJSON;
 
@@ -359,6 +361,7 @@ class Roles {
                 }
             }).always(function () {
                 $(button).button('reset');
+                check = false;
             });
         }
 
@@ -370,9 +373,12 @@ class Roles {
             const withdrawal = 2;
             let userId = Roles.globaluserid;
 
-            if ($this.hasClass('disabled')) {
+            if (check) {
+                console.log('stop')
                 return false
             }
+
+            check = true;
 
             const getTypeUser = (typeUser) => (
                 typeUser === 1 || typeUser === 2 ? 'agent' :
