@@ -14,7 +14,7 @@ body {
 }
 
 .disabled {
-    pointer-events: none;
+    pointer-events: none !important;
 }
 
 .col-general {
