@@ -361,7 +361,9 @@ class Roles {
                 }
             }).always(function () {
                 $(button).button('reset');
-                check = false;
+                setTimeout(function (){
+                    check = false;
+                }, 1000)
             });
         }
 
