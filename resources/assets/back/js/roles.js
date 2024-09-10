@@ -369,6 +369,11 @@ class Roles {
             const deposit = 1;
             const withdrawal = 2;
             let userId = Roles.globaluserid;
+
+            if ($this.hasClass('disabled')) {
+                return false
+            }
+
             const getTypeUser = (typeUser) => (
                 typeUser === 1 || typeUser === 2 ? 'agent' :
                     typeUser === 5 ? 'user' :
