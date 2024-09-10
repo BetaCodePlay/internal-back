@@ -108,18 +108,66 @@
         <h2>Cambiar Usuario</h2>
     </div>
     <div class="card-body">
-        <form action="{{ route('auth.update-security') }}" method="post">
+        <form>
             <label for="name">{{ _i('Username')}}:</label>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" placeholder="Ingrese nombre de usuario" required>
 
             <label for="password">{{ _i('Password')}}:</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password"  placeholder="Al menos 8 carácteres" required>
             <p>Hemos tenido un imprevisto y ahora es requerido que se cambie el nombre de usuario de tu cuenta, gracias y disculpa por los inconvenientes</p>
             <div class="card-footer">
-                <button type="submit">Enviar</button>
+                <button type="button" id="btn-send-username" data-route="{{ route('auth.update-security') }}">Enviar</button>
             </div>
         </form>
     </div>
 </div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).on('click', '#btn-send-username', function (){
+        let $this = $(this);
+        let $route = $this.data('route');
+
+        // Limpiar mensajes de error previos y estilos
+        $('.error-message').remove();
+        $('input').removeClass('input-error');
+
+        $.ajax({
+            url: $route,
+            method: 'POST',
+            data: $('form').serialize(),
+        }).done(function(response) {
+            location.reload();
+        })
+            .fail(function(error) {
+                if (error.responseJSON) {
+                    let errors = error.responseJSON.errors;
+
+                    if (errors && errors.username) {
+                        let usernameError = errors.username[0];
+                        let usernameInput = $('#username');
+                        usernameInput.addClass('input-error');
+                        usernameInput.after('<span class="error-message" style="color: red;">' + usernameError + '</span>');
+                    }
+
+                    if (errors && errors.password) {
+                        let passwordError = errors.password[0];
+                        let passwordInput = $('#password');
+                        passwordInput.addClass('input-error');
+                        passwordInput.after('<span class="error-message" style="color: red;">' + passwordError + '</span>');
+                    }
+
+                    if (error.responseJSON.message) {
+                        let generalMessage = error.responseJSON.message;
+                        let form = $('form');
+                        form.prepend('<span class="error-message" style="color: red; display: block; margin-bottom: 16px;">' + generalMessage + '</span>');
+                    }
+                } else {
+                    console.error(error);
+                }
+            });
+    });
+</script>
+
 </body>
 </html>
