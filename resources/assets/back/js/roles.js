@@ -360,8 +360,8 @@ class Roles {
                     Roles.errorResponse(json);
                 }
             }).always(function () {
-                $(button).button('reset');
                 setTimeout(function (){
+                    $(button).button('reset');
                     check = false;
                 }, 1000)
             });
