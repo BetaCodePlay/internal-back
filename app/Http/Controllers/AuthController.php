@@ -492,7 +492,7 @@ class AuthController extends Controller
 
         try {
             $authUserId = auth()->id();
-            $username = request()->input('username');
+            $username = Str::lower($request->input('username'));
             $uniqueUsername = $this->usersRepo->uniqueUsername($username);
             $password = $request->input('password');
 
