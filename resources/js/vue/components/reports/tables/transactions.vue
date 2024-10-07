@@ -180,7 +180,7 @@ export default {
 
                     this.items = data.data;
                     this.totalRecords = data.total;
-                    console.error(error);
+                    /*console.error(error);*/
                 } finally {
                     setTimeout(() => {
                         this.loading = false;
