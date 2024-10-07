@@ -21,6 +21,7 @@
         >
             <template #empty>{{ emptyMessage }}</template>
 
+
             <Column
                 v-for="col of columns"
                 :field="col.field"
