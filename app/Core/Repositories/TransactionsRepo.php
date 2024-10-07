@@ -691,7 +691,10 @@ class TransactionsRepo
      */
     public function getUserProviderTransactionsPaginated(Request $request, string|int $agent)
     : LengthAwarePaginator {
-        $timezone  = $request->input('timezone', session()->get('timezone'));
+        $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
+            ? $request->get('timezone')
+            : null;
+
         $startDate = Utils::startOfDayUtc(
             $request->has('startDate') ? $request->get('startDate') : date('Y-m-d'),
             'Y-m-d',
@@ -705,6 +708,11 @@ class TransactionsRepo
             $timezone
         );
         $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
+        $startTime = $request->filled('timeStart') ? $request->input('timeStart') : '00:00:00';
+        $endTime   = $request->filled('timeEnd') ? $request->input('timeEnd') : '23:59:59';
+
+        $startDate = "{$startDate} {$startTime}";
+        $endDate   = "{$endDate} {$endTime}";
 
         $typeTransaction = 'credit';
         if (Gate::allows('access', Permissions::$users_search)) {
