@@ -71,7 +71,7 @@
                                                             </el-date-picker>
                                                         </div>
 
-                                                        <div class="col-6 mb-3">
+                                                        <div class="col-6 mb-3" v-if="showTime">
                                                             <label >Hora Inicial</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeStart"
@@ -83,7 +83,7 @@
                                                             </el-time-select>
                                                         </div>
 
-                                                        <div class="col-6 mb-3">
+                                                        <div class="col-6 mb-3" v-if="showTime">
                                                             <label >Hora Final</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeEnd"
@@ -313,6 +313,10 @@ export default {
             default: "",
         },
         showProvider: {
+            type: Boolean,
+            default: false,
+        },
+        showTime: {
             type: Boolean,
             default: false,
         },
