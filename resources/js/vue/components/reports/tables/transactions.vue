@@ -150,6 +150,8 @@ export default {
                 typeUser,
                 typeTransaction,
                 selectedTimezone,
+                timeStart,
+                timeEnd
             } = this.filters;
 
             if (daterange[1]) {
@@ -170,6 +172,8 @@ export default {
                                 timezone: selectedTimezone,
                                 per_page: this.perPage,
                                 page: this.currentPage,
+                                timeStart,
+                                timeEnd
                             },
                         }
                     );
