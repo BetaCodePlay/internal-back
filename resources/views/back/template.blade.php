@@ -127,10 +127,10 @@
 {{--<script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>--}}
 
 @yield('scripts')
-@can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
+{{--@can('access', [\Dotworkers\Security\Enums\Permissions::$tawk_chat])
     @include('back.layout.tawk')
-@endif
-@include('back.layout.chat')
+@endif--}}
+{{--@include('back.layout.chat')--}}
 <script>
     /*  @if(env('APP_ENV') == 'testing')
     $(function() {
