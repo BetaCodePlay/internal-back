@@ -191,7 +191,7 @@ export default {
             this.loading = true;
 
             const { authUserId } = window;
-            const { daterange, selectedTimezone, selectedProvider, selectedUser, query } = this.filters;
+            const { daterange, selectedTimezone, selectedProvider, selectedUser, query, timeStart, timeEnd } = this.filters;
             const startDate = moment(daterange[0]).format("YYYY-MM-DD");
             const endDate = moment(daterange[1]).format("YYYY-MM-DD");
 
@@ -201,7 +201,9 @@ export default {
                 timezone: selectedTimezone,
                 provider: selectedProvider,
                 child: selectedUser,
-                text: query
+                text: query,
+                timeStart,
+                timeEnd
             };
 
             axios.get(url, { params })
