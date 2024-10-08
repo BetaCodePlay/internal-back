@@ -395,7 +395,18 @@ header {
     }
 
     .el-input__inner {
-        background: #fff;
+        background: #fff !important;
+
+        input {
+            background: transparent !important;
+            color: #111 !important;
+        }
+
+        .el-date-editor {
+            .el-range-separator {
+                color: #828282 !important;
+            }
+        }
     }
 
     .p-card {
