@@ -389,7 +389,12 @@ header {
                 REPORTS
 #######################################*/
 
-
+.page-reports {
+    .p-card {
+        color: #111 !important;
+        background: #f7f8fa !important;
+    }
+}
 
 
 @media screen and (max-width: 991px) {
