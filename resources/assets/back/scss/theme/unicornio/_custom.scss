@@ -433,11 +433,20 @@ header {
             .p-dropdown-empty-message {
                 color: #111;
             }
+
+            &:not(.p-highlight):not(.p-disabled):hover {
+                color: #111;
+                background: rgba(0, 0, 0, 0.04);
+            }
         }
     }
 
     .custom-report-dropdown {
         background-color: #d9d9d9 !important;
+
+        .dropdown-item {
+            color: #111;
+        }
     }
 
     .el-input__inner {
