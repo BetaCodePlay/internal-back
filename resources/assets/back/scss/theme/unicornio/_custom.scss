@@ -159,7 +159,7 @@ header {
         .footer-bottom-left {
             .select2-container--default {
                 .select2-selection--single {
-                    background: #f7f8fa;
+                    background: transparent;
                     border-color: #111;
 
                     .select2-selection__rendered {
@@ -173,7 +173,7 @@ header {
 
 .select2-container--default {
     .select2-dropdown {
-        background: transparent;
+        background: #f7f8fa;
     }
 
     .select2-search--dropdown {
