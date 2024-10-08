@@ -402,12 +402,36 @@ header {
                 .p-tabview-nav-link {
                     color: #111;
                 }
+
+                &.p-highlight {
+                    .p-tabview-nav-link {
+                        color: #111;
+                    }
+                }
             }
         }
     }
 
     .p-card, .p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-tbody > tr > td, .p-paginator {
         background: #f7f8fa !important;
+        color: #111 !important;
+    }
+
+    .p-datatable .p-datatable-tbody > tr {
+        background: #d9d9d9;
+
+        > td {
+            border-color: #d9d9d9;
+        }
+    }
+
+    .form-control {
+        background: #fff !important;
+        color: #111 !important;
+        border: 1px solid #d9d9d9 !important;
+    }
+
+    .btn {
         color: #111 !important;
     }
 }
