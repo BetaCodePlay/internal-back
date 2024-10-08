@@ -390,12 +390,12 @@ header {
 #######################################*/
 
 .page-reports {
-    .custom-report-dropdown {
-        background-color: #d9d9d9 !important;
+    .el-date-editor .el-range__icon {
+        color: #828282;
     }
 
-    .el-picker-panel__sidebar, .el-picker-panel__body {
-        background: #fff !important;
+    .custom-report-dropdown {
+        background-color: #d9d9d9 !important;
     }
 
     .el-input__inner {
@@ -435,6 +435,10 @@ header {
                 }
             }
         }
+    }
+
+    .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+        color: #111;
     }
 
     .p-card, .p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-tbody > tr > td, .p-paginator {
@@ -485,7 +489,9 @@ header {
     }
 }
 
-
+.el-picker-panel__sidebar, .el-picker-panel__body {
+    background: #fff !important;
+}
 
 .page-role .nav-roles .tab-content .tab-content-body, .page-role .nav-roles .tab-content .tab-content-body-simple, .dt-container .datatable-header, .dt-container .datatable-body, .dt-container .datatable-footer {
     background: #151517;
