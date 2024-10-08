@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="{{ asset('back/css/vendor.min.css') }}?v=6.33">
     <link rel="stylesheet" href="{{ asset('back/css/custom.min.css') }}?v=12.43">
     <link href="https://unpkg.com/primeicons/primeicons.css " rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.021">
-    <!--    <link rel="stylesheet" href="{{ asset("themes/space/theme.min.css") }}?v=1.034">-->
+    {{--<link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.021">--}}
+    <link rel="stylesheet" href="{{ asset("themes/unicornio/theme.min.css") }}?v=1.034">
 
     <!--<link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">-->
 
