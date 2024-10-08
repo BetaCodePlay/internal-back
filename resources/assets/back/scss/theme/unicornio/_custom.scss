@@ -211,7 +211,15 @@ header {
                     .top-ten-games-body-tr {
                         .top-ten-games-body-th {
                             figure {
-                                background: #FED7AA;
+                                background-color: #FED7AA;
+                            }
+
+                            .deco-text {
+                                background: transparent;
+                                color: #111;
+                                font-weight: 600;
+                                font-size: 14px;
+                                padding: 0;
                             }
                         }
                     }
@@ -234,11 +242,6 @@ header {
     body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a:hover, body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a:focus, body .u-sidebar-navigation--dark .has-active > a:hover, body .u-sidebar-navigation--dark .has-active > a:focus {
         background: #333;
     }
-}
-
-
-.page-dashboard .dashboard-content {
-    background: #151517;
 }
 
 .page-role .nav-roles .tab-content .tab-content-body, .page-role .nav-roles .tab-content .tab-content-body-simple, .dt-container .datatable-header, .dt-container .datatable-body, .dt-container .datatable-footer {
