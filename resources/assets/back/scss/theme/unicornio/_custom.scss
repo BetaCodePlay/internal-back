@@ -56,24 +56,34 @@
 }
 
 body {
-    background: #000 !important;
+    background: #fff !important;
 
     .u-sidebar-navigation--dark {
-        background: #090909;
-
+        background: #F7F8FA;
         .has-active {
             > a {
+                color: #111;
+
                 &:hover {
                     background: darken(#36190a, 10%);
                 }
 
                 &.active {
-                    background: #36190a;
+                    background: #FED7AA;
+                    color: #111;
 
                     &:hover, &:focus {
-                        background: #36190a;
+                        background: #FED7AA;
                     }
                 }
+
+                i {
+                    color: #111;
+                }
+            }
+
+            .u-sidebar-title {
+                color: #111;
             }
         }
     }
@@ -88,10 +98,10 @@ header .img-avatar {
 }
 
 .u-header__section--admin-dark {
-    background: #090909 !important;
+    background: #fff !important;
 
     .u-header-logo-toggler {
-        background: #090909 !important;
+        background: #F7F8FA !important;
     }
 }
 
