@@ -134,11 +134,20 @@ header {
     }
 
     .footer-bottom {
+        a {
+            color: #111;
+        }
+
         .dropdown-footer {
             .dropdown-toggle {
                 background: transparent;
-                border: #111;
+                border-color: #111;
                 color: #111;
+            }
+
+            .dropdown-menu {
+                background: #fff;
+                box-shadow: 0 0 3px #d9d9d9;
             }
         }
     }
