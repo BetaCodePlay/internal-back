@@ -57,6 +57,7 @@
 
 body {
     background: #fff !important;
+    color: #111;
 
     .u-sidebar-navigation--dark {
         background: #F7F8FA;
@@ -74,6 +75,10 @@ body {
 
                     &:hover, &:focus {
                         background: #FED7AA;
+                    }
+
+                    i {
+                        color: #111;
                     }
                 }
 
@@ -93,8 +98,20 @@ body .u-sidebar-navigation--dark .has-active > a::before {
     background: $theme02 !important;
 }
 
-header .img-avatar {
-    border-color: $theme02 !important;
+header {
+    .img-avatar {
+        border-color: $theme02 !important;
+    }
+
+    .g-pos-rel {
+        &.g-pos-rel-amount {
+            background: $theme;
+        }
+
+        &.dropdown .dropdown-toggle {
+            background: $theme;
+        }
+    }
 }
 
 .u-header__section--admin-dark {
@@ -118,6 +135,92 @@ header .img-avatar {
         }
     }
 }
+
+.wrapper-title {
+    color: #111;
+}
+
+.page-dashboard {
+    .dashboard-content {
+        background: #F7F8FA;
+
+        .dashboard-content-title {
+            color: #111;
+        }
+
+        .dash-balance {
+            .dash-balance-amount {
+                .dash-balance-amount-ex {
+                    .dash-balance-amount-item {
+                        .dash-balance-amount-name {
+                            .dash-balance-amount-icon {
+                                background: #FED7AA;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .dash-transactions {
+            .dash-transactions-ex {
+                .dash-transactions-item {
+                    .dash-transactions-item-text {
+                        color: #111;
+
+                        .dash-transactions-item-text-top {
+                            .icon {
+                                background: #FED7AA;
+                                color: #111;
+                            }
+                        }
+
+                        .dash-transactions-item-text-bottom {
+                            color: #828282;
+                        }
+                    }
+
+                    .dash-transactions-amount {
+                        color: #87AE12;
+
+                        &.transactions-send {
+                            color: #FF3B5D;
+                        }
+                    }
+                }
+            }
+        }
+
+        .dash-recent-activity {
+            .dash-recent-activity-ex {
+                .dash-recent-activity-item {
+                    .dash-recent-activity-item-text {
+                        color: #111;
+
+                        .dash-recent-activity-item-text-bottom {
+                            color: #828282;
+                        }
+                    }
+                }
+            }
+        }
+
+        .top-ten-games {
+            .top-ten-games-body {
+                .top-ten-games-body-ex {
+                    .top-ten-games-body-tr {
+                        .top-ten-games-body-th {
+                            figure {
+                                background: #FED7AA;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 @media screen and (max-width: 991px) {
     body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a, body .u-sidebar-navigation--dark .has-active > a {
