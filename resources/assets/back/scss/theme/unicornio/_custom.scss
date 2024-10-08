@@ -394,6 +394,14 @@ header {
         color: #828282;
     }
 
+    .p-dropdown .p-dropdown-label {
+        color: #111;
+    }
+
+    .p-dropdown .p-dropdown-label.p-placeholder {
+        color: #111;
+    }
+
     .custom-report-dropdown {
         background-color: #d9d9d9 !important;
     }
@@ -505,7 +513,11 @@ body {
     }
 
     .el-picker-panel {
-        color: #d9d9d9 !important;
+        color: #828282 !important;
+    }
+
+    .el-date-table td.available:hover {
+        color: #111 !important;
     }
 }
 
