@@ -14,7 +14,15 @@
     }
 
     .wrap-login {
-        background: #000 !important;
+        background: #fff !important;
+
+        .login-form {
+            .login-form-ex {
+                .wrap-input-title, .wrap-input-subtitle, .login-form-line label {
+                    color: #111;
+                }
+            }
+        }
     }
 
     .btn-login {
@@ -25,6 +33,11 @@
             background: $theme-hover;
             color: $theme-color;
         }
+    }
+
+    .input-login {
+        background: transparent;
+        border-color: #111;
     }
 }
 
