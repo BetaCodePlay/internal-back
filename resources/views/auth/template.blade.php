@@ -15,8 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'auth') }} ">
     <link rel="stylesheet" href="{{ mix('css/custom.min.css', 'auth') }} ">
-    <link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.017">
-    <!--    <link rel="stylesheet" href="{{ asset("themes/space/theme.min.css") }}?v=1.034">-->
+    {{--<link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.017">--}}
+    <link rel="stylesheet" href="{{ asset("themes/unicornio/theme.min.css") }}?v=1.034">
     <!--===============================================================================================-->
 </head>
 <body class="body-auth">
