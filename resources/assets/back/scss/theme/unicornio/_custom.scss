@@ -393,6 +393,22 @@ header {
     .p-card {
         color: #111 !important;
         background: #f7f8fa !important;
+        box-shadow: none;
+    }
+
+    .p-tabview {
+        .p-tabview-nav {
+            li {
+                .p-tabview-nav-link {
+                    color: #111;
+                }
+            }
+        }
+    }
+
+    .p-card, .p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-tbody > tr > td, .p-paginator {
+        background: #f7f8fa !important;
+        color: #111 !important;
     }
 }
 
@@ -432,10 +448,6 @@ header {
 
 .page-dashboard .dashboard-content .dash-balance .dash-balance-amount .dash-balance-amount-ex .dash-balance-amount-item .dash-balance-amount-name .dash-balance-amount-icon {
 
-}
-
-.p-card, .p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-tbody > tr > td, .p-paginator {
-    background: #151517 !important;
 }
 
 .dt-container .dataTable thead tr th {

@@ -32,13 +32,7 @@
                         </template>
                     </Card>
                 </div>
-                <div
-                    class="col-4 col-lg-2 mt-2"
-                    style="
-                        border-right: 0.5px solid #2d2d2d;
-                        border-left: 0.5px solid #2d2d2d;
-                    "
-                >
+                <div class="col-4 col-lg-2 mt-2">
                     <Card class="card-transparent">
                         <template #content>
                             <span
