@@ -489,8 +489,10 @@ header {
     }
 }
 
-.el-picker-panel__sidebar, .el-picker-panel__body {
-    background: #fff !important;
+body {
+    .el-picker-panel__sidebar, .el-picker-panel__body {
+        background: #fff !important;
+    }
 }
 
 .page-role .nav-roles .tab-content .tab-content-body, .page-role .nav-roles .tab-content .tab-content-body-simple, .dt-container .datatable-header, .dt-container .datatable-body, .dt-container .datatable-footer {
