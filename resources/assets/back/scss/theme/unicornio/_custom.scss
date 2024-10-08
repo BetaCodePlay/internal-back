@@ -493,6 +493,20 @@ body {
     .el-picker-panel__sidebar, .el-picker-panel__body {
         background: #fff !important;
     }
+
+    .el-date-table td.in-range div, .el-date-table td.in-range div:hover, .el-date-table.is-week-mode .el-date-table__row.current div, .el-date-table.is-week-mode .el-date-table__row:hover div {
+        background-color: #f7f8fa !important;
+        color: #111 !important;
+    }
+
+    .el-date-table td.end-date span, .el-date-table td.start-date span {
+        background: $theme !important;
+        color: $theme-color !important;
+    }
+
+    .el-picker-panel {
+        color: #d9d9d9 !important;
+    }
 }
 
 .page-role .nav-roles .tab-content .tab-content-body, .page-role .nav-roles .tab-content .tab-content-body-simple, .dt-container .datatable-header, .dt-container .datatable-body, .dt-container .datatable-footer {
