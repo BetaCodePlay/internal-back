@@ -37,7 +37,21 @@
 
     .input-login {
         background: transparent;
-        border-color: #111;
+        border-color: #828282;
+        color: #555;
+    }
+
+    .modal-reset-password {
+        .reset-password-content {
+            background: #fff;
+            color: #111;
+
+            .reset-password-content-ex {
+                .reset-password-close, .reset-password-title, .reset-password-subtitle {
+                    color: #111;
+                }
+            }
+        }
     }
 }
 
