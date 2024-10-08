@@ -428,15 +428,15 @@ header {
         .p-dropdown-items {
             .p-dropdown-item {
                 color: #111;
+
+                &:not(.p-highlight):not(.p-disabled):hover {
+                    color: #111;
+                    background: rgba(0, 0, 0, 0.04);
+                }
             }
 
             .p-dropdown-empty-message {
                 color: #111;
-            }
-
-            &:not(.p-highlight):not(.p-disabled):hover {
-                color: #111;
-                background: rgba(0, 0, 0, 0.04);
             }
         }
     }
