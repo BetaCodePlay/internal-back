@@ -746,7 +746,13 @@ body {
             background-color: #fff;
 
             .month-item-header {
-                color: #111;
+                color: #666;
+            }
+        }
+
+        .container__days {
+            .day-item {
+                color: #aaa;
             }
         }
     }
