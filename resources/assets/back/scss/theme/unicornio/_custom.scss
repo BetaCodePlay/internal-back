@@ -586,6 +586,25 @@ header {
                 }
             }
         }
+
+        .tab-form {
+            .select2-container--default {
+                .select2-selection--single {
+                    background: #fff;
+                    border-color: #ced4da;
+
+                    .select2-selection__rendered {
+                        color: #111;
+                    }
+                }
+            }
+
+            .form-control {
+                background: #fff;
+                border-color: #ced4da;
+                color: #111;
+            }
+        }
     }
 
     .dt-container {
@@ -650,6 +669,8 @@ header {
         }
     }
 }
+
+
 
 body {
     .el-loading-mask {
@@ -716,6 +737,18 @@ body {
         color: #111;
         background: rgba(0,0,0,.035);
         border-color: #111;
+    }
+}
+
+body {
+    .litepicker {
+        background-color: #fff;
+
+        .container__months {
+            .month-item-header {
+                color: #111;
+            }
+        }
     }
 }
 
