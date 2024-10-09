@@ -578,6 +578,11 @@ header {
                     &.text-id {
                         color: #111;
                     }
+
+                    .deco-role {
+                        color: #828282;
+                        border: 1px solid #111;
+                    }
                 }
             }
         }
@@ -596,6 +601,28 @@ header {
                     background: #fff;
                     color: #111;
                 }
+            }
+        }
+    }
+
+    table {
+        .dropdown {
+            .dropdown-toggle {
+                color: #111;
+                background: #f7f8fa;
+
+                &:hover, &:focus {
+                    background: #d9d9d9;
+                }
+            }
+        }
+
+        .btn-href {
+            color: #111;
+            background: #f7f8fa;
+
+            &:hover, &:focus {
+                background: #d9d9d9;
             }
         }
     }
