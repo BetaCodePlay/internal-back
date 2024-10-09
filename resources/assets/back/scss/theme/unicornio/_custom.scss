@@ -117,6 +117,10 @@ body {
                 color: #111;
             }
         }
+
+        @media screen and (max-width: 991px) {
+            background: #fff;
+        }
     }
 }
 
@@ -811,15 +815,15 @@ body {
 
 @media screen and (max-width: 991px) {
     body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a, body .u-sidebar-navigation--dark .has-active > a {
-        background: #d9d9d9;
-    }
-
-    body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a .g-pos-rel::before, body .u-sidebar-navigation--dark .has-active > a .g-pos-rel::before {
         background: #f7f8fa;
     }
 
+    body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a .g-pos-rel::before, body .u-sidebar-navigation--dark .has-active > a .g-pos-rel::before {
+        background: #fff;
+    }
+
     body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a:hover, body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a:focus, body .u-sidebar-navigation--dark .has-active > a:hover, body .u-sidebar-navigation--dark .has-active > a:focus {
-        background: #d9d9d9;
+        background: #f7f8fa;
         color: #111;
 
         i {
@@ -828,7 +832,7 @@ body {
     }
 
     body .u-sidebar-navigation--dark.u-side-nav--mini .has-active.has-logout a, body .u-sidebar-navigation--dark .has-active.has-logout a {
-        border: 1px solid #111;
+        border: 1px solid #828282;
     }
 }
 
