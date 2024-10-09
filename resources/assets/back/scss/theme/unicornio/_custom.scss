@@ -546,6 +546,38 @@ header {
     }
 }
 
+/*#######################################
+                ROLES
+#######################################*/
+
+.page-role {
+    .nav-roles {
+        .nav-tabs {
+            .nav-item {
+                .nav-link {
+                    color: #111;
+
+                    &.active {
+                        color: #111;
+                    }
+                }
+            }
+        }
+
+        .tab-content {
+            .tab-content-body, .tab-content-body-simple {
+                background: #f7f8fa;
+            }
+        }
+    }
+
+    .dt-container {
+        .datatable-header, .datatable-body, .datatable-footer {
+            background: #f7f8fa;
+        }
+    }
+}
+
 body {
     .el-loading-mask {
         background-color: rgba(210, 210, 210, 0.93) !important;
