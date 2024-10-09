@@ -862,9 +862,20 @@ body {
         .datatable-footer {
             .dt-paging {
                 .dt-paging-button {
-                    color: #111 !important;
+                    color: #828282 !important;
+
+                    &.disabled {
+                        color: #828282 !important;
+                    }
+
+                    &.current {
+                        color: #111 !important;
+                        background: #d9d9d9;
+                    }
                 }
             }
         }
     }
+
+    .dt-container .datatable-footer .dt-paging .dt-paging-button.disabled
 }
