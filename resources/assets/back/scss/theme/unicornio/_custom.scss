@@ -677,6 +677,10 @@ body {
                 }
             }
         }
+
+        .username-form {
+            background: #d9d9d9;
+        }
     }
 }
 
@@ -691,6 +695,12 @@ body {
     color: #111;
     background: rgba(0,0,0,0);
     border-color: #111;
+
+    &:hover, &:focus {
+        color: #111;
+        background: rgba(0,0,0,.035);
+        border-color: #111;
+    }
 }
 
 @media screen and (max-width: 991px) {
