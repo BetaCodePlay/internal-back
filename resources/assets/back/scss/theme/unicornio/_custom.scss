@@ -61,12 +61,13 @@ body {
 
     .u-sidebar-navigation--dark {
         background: #F7F8FA;
+
         .has-active {
             > a {
                 color: #111;
 
                 &:hover {
-                    background: rgba(0,0,0,.05);
+                    background: rgba(0, 0, 0, .05);
                     color: #111;
 
                     i {
@@ -646,7 +647,7 @@ header {
                         border-bottom: 1px solid #d9d9d9;
 
                         &:hover {
-                            background: rgba(0,0,0,0.035);
+                            background: rgba(0, 0, 0, 0.035);
                         }
                     }
                 }
@@ -669,7 +670,6 @@ header {
         }
     }
 }
-
 
 
 body {
@@ -720,7 +720,7 @@ body {
 .select2-container--default {
     .select2-results__option--highlighted[aria-selected] {
         color: #111;
-        background: rgba(0,0,0,.05);
+        background: rgba(0, 0, 0, .05);
     }
 
     .select2-results__option[aria-selected="true"] {
@@ -730,12 +730,12 @@ body {
 
 .btn.btn-transparent {
     color: #111;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     border-color: #111;
 
     &:hover, &:focus {
         color: #111;
-        background: rgba(0,0,0,.035);
+        background: rgba(0, 0, 0, .035);
         border-color: #111;
     }
 }
