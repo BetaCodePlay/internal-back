@@ -740,14 +740,12 @@ body {
     }
 }
 
-body {
-    .litepicker {
-        background-color: #fff;
+.litepicker {
+    background-color: #fff;
 
-        .container__months {
-            .month-item-header {
-                color: #111;
-            }
+    .container__months {
+        .month-item-header {
+            color: #111;
         }
     }
 }
