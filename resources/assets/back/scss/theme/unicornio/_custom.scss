@@ -583,6 +583,7 @@ header {
             .tab-manager-data {
                 .data-text {
                     color: #111;
+                    border-color: #828282;
 
                     &.text-id {
                         color: #111;
@@ -594,6 +595,8 @@ header {
                     }
                 }
             }
+
+
         }
 
         .tab-form {
@@ -622,6 +625,7 @@ header {
                 .select2-selection--single {
                     background: #fff;
                     color: #111;
+                    border-color: #ced4da;
                 }
             }
         }
@@ -891,5 +895,15 @@ body {
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .page-role .nav-roles .tab-manager {
+        background: transparent !important;
+    }
+
+    .page-role .nav-roles .tab-manager .tab-manager-bottom::before {
+        background: #d9d9d9;
     }
 }
