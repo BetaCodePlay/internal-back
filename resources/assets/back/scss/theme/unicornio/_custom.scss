@@ -37,7 +37,7 @@
 
     .input-login {
         background: transparent;
-        border-color: #828282;
+        border-color: #ced4da;
         color: #444;
     }
 
@@ -96,6 +96,20 @@ body {
             .u-sidebar-title {
                 color: #111;
             }
+        }
+
+        li.u-side-nav--second-level-menu-item a.u-side-nav--second-level-menu-link {
+            color: #111;
+        }
+
+        li.u-side-nav--second-level-menu-item.active a.u-side-nav--second-level-menu-link {
+            color: #111;
+            background: #fed7aa;
+        }
+
+        li.u-side-nav--second-level-menu-item a.u-side-nav--second-level-menu-link:hover {
+            color: #111;
+            background: rgba(0,0,0,0.035);
         }
 
         .has-active.has-menu {
@@ -581,6 +595,10 @@ header {
 
         .tab-manager {
             .tab-manager-data {
+                .data-text-inline {
+                    border-color: #828282;
+                }
+
                 .data-text {
                     color: #111;
                     border-color: #828282;
@@ -777,6 +795,16 @@ body {
                     color: $theme-color !important;
                 }
             }
+        }
+    }
+}
+
+body {
+    .u-header--search {
+        .form-control-sidebar {
+            background: #fff;
+            color: #111;
+            border-color: #ced4da;
         }
     }
 }
