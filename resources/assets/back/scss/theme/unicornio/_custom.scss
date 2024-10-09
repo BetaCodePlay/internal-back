@@ -643,6 +643,11 @@ header {
                 background: #d9d9d9;
             }
         }
+
+        .deco-rol {
+            color: #828282;
+            border: 1px solid #111;
+        }
     }
 }
 
@@ -671,6 +676,7 @@ body {
         .select2-container--default {
             .select2-selection--single {
                 background: #fff;
+                border-color: #ced4da;
 
                 .select2-selection__rendered {
                     color: #111;
