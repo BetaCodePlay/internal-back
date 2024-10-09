@@ -858,5 +858,13 @@ body {
                 }
             }
         }
+
+        .datatable-footer {
+            .dt-paging {
+                .dt-paging-button {
+                    color: #111 !important;
+                }
+            }
+        }
     }
 }
