@@ -701,6 +701,10 @@ body {
         color: #111;
         background: rgba(0,0,0,.05);
     }
+
+    .select2-results__option[aria-selected="true"] {
+        color: $theme-color !important;
+    }
 }
 
 .btn.btn-transparent {
