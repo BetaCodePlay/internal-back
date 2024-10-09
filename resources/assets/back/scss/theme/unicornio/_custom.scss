@@ -680,6 +680,13 @@ body {
     }
 }
 
+.select2-container--default {
+    .select2-results__option--highlighted[aria-selected] {
+        color: #111;
+        background: rgba(0,0,0,0.0.35);
+    }
+}
+
 .btn.btn-transparent {
     color: #111;
     background: rgba(0,0,0,0);
