@@ -24,7 +24,7 @@
             <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
                 <form id="header-search-form" class="u-header--search" action="{{ route('users.search') }}" method="get" autocomplete="destroy">
                     <div class="input-group">
-                        <input class="form-control form-control-sidebar" type="text" name="username" placeholder="{{ _i('Search user') }}" value="">
+                        <input class="form-control form-control-sidebar" type="text" name="username" placeholder="{{ _i('Search user') }}" autocomplete="destroy" value="">
                         <button type="submit" class="btn btn-search g-brd-none g-bg-transparent--hover g-pos-abs g-top-0 g-right-0 d-flex g-width-40 h-100 align-items-center justify-content-center g-font-size-18 g-z-index-2">
                             <i class="hs-admin-search"></i>
                         </button>
