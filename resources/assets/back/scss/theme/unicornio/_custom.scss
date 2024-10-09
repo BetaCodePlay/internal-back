@@ -608,12 +608,6 @@ header {
         }
     }
 
-    .dt-container {
-        .datatable-header, .datatable-body, .datatable-footer {
-            background: #f7f8fa;
-        }
-    }
-
     .page-top {
         .search-input {
             .select2-container--default {
@@ -825,6 +819,11 @@ body {
 body {
     .dt-container {
         color: #111;
+
+        .datatable-header, .datatable-body, .datatable-footer {
+            background: #f7f8fa;
+            border-color: #d9d9d9;
+        }
 
         .dataTable {
             color: #111;
