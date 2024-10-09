@@ -658,6 +658,28 @@ body {
     }
 }
 
+.modal.modal-style {
+    .modal-content {
+        color: #111;
+        background: #f7f8fa;
+
+        .form-control {
+            background: #fff;
+            color: #111;
+        }
+
+        .select2-container--default {
+            .select2-selection--single {
+                background: #fff;
+
+                .select2-selection__rendered {
+                    color: #111;
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 991px) {
     body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a, body .u-sidebar-navigation--dark .has-active > a {
         background: #d9d9d9;
