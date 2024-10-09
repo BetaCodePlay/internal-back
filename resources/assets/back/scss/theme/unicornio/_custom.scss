@@ -766,6 +766,10 @@ body {
                 &.is-locked {
                     color: #d9d9d9;
                 }
+
+                &.is-end-date {
+                    color: $theme-color !important;
+                }
             }
         }
     }
