@@ -554,6 +554,8 @@ header {
 .page-role {
     .nav-roles {
         .nav-tabs {
+            border-color: #828282;
+
             .nav-item {
                 .nav-link {
                     color: #111;
@@ -854,6 +856,7 @@ body {
                     background: #fff;
                     border: 1px solid #ced4da;
                     border-radius: 3px;
+                    color: #111;
                 }
             }
 
