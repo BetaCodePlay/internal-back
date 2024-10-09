@@ -104,12 +104,12 @@ body {
 
         li.u-side-nav--second-level-menu-item.active a.u-side-nav--second-level-menu-link {
             color: #111;
-            background: #fed7aa;
+            background: rgba(0,0,0,0.05);
         }
 
         li.u-side-nav--second-level-menu-item a.u-side-nav--second-level-menu-link:hover {
             color: #111;
-            background: rgba(0,0,0,0.035);
+            background: rgba(0,0,0,0.05);
         }
 
         .has-active.has-menu {
