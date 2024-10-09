@@ -10,7 +10,7 @@
                 <div class="col-lg-12 mt-2">
                     <Card class="card-parent" style="border-radius: 8px">
                         <template #content>
-                            <h4 class="text-center">Balance total</h4>
+                            <h5 class="text-center">Balance total</h5>
                             <h2 class="text-center">
                                 {{ window.userBalance }}
                             </h2>
