@@ -753,6 +753,15 @@ body {
         .container__days {
             .day-item {
                 color: #aaa;
+
+                &.is-in-range {
+                    background-color: #f7f8fa;
+                    color: #111;
+                }
+
+                &:hover {
+                    color: #111;
+                }
             }
         }
     }
