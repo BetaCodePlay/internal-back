@@ -569,11 +569,34 @@ header {
                 background: #f7f8fa;
             }
         }
+
+        .tab-manager {
+            .tab-manager-data {
+                .data-text {
+                    color: #111;
+
+                    &.text-id {
+                        color: #111;
+                    }
+                }
+            }
+        }
     }
 
     .dt-container {
         .datatable-header, .datatable-body, .datatable-footer {
             background: #f7f8fa;
+        }
+    }
+
+    .page-top {
+        .search-input {
+            .select2-container--default {
+                .select2-selection--single {
+                    background: #fff;
+                    color: #111;
+                }
+            }
         }
     }
 }
@@ -635,18 +658,6 @@ body {
     .el-date-table td.available:hover {
         color: #111 !important;
     }
-}
-
-.page-role .nav-roles .tab-content .tab-content-body, .page-role .nav-roles .tab-content .tab-content-body-simple, .dt-container .datatable-header, .dt-container .datatable-body, .dt-container .datatable-footer {
-    background: #151517;
-}
-
-.page-dashboard .dashboard-content .dash-transactions .dash-transactions-ex .dash-transactions-item .dash-transactions-item-text .dash-transactions-item-text-top .icon {
-
-}
-
-.page-dashboard .dashboard-content .dash-balance .dash-balance-amount .dash-balance-amount-ex .dash-balance-amount-item .dash-balance-amount-name .dash-balance-amount-icon {
-
 }
 
 .dt-container .dataTable thead tr th {
