@@ -668,6 +668,12 @@ body {
         color: #111;
         background: #f7f8fa;
 
+        .modal-header {
+            .close {
+                color: #111;
+            }
+        }
+
         .form-control {
             background: #fff;
             color: #111;
