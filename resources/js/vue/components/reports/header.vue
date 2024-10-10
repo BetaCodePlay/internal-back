@@ -11,9 +11,9 @@
                     <Card class="card-parent" style="border-radius: 8px">
                         <template #content>
                             <h6 class="text-center">Balance total</h6>
-                            <h3 class="text-center">
+                            <h4 class="text-center">
                                 {{ window.userBalance }}
-                            </h3>
+                            </h4>
                         </template>
                     </Card>
                 </div>
@@ -112,12 +112,12 @@ export default {
 }
 
 .page-reports .p-card.card-transparent {
-    padding: 5px;
+    padding: 0 5px;
     background: transparent !important;
     box-shadow: unset;
-    border-right: 2px solid #999;
+    border-right: 2px solid #666;
     border-radius: 0;
-    margin: 12px 0;
+    margin: 14px 0;
 }
 
 
