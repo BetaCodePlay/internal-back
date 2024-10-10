@@ -462,7 +462,7 @@ class CoreController extends Controller
             ];
             return Utils::successResponse($data);
         } catch (\Throwable $th) {
-            \Log::error(__METHOD__, ['exception' => $ex, 'startDate' => $startDate, 'endDate' => $endDate]);
+            \Log::error(__METHOD__, ['exception' => $th, 'startDate' => $startDate, 'endDate' => $endDate]);
             return Utils::failedResponse();
         }
     }
