@@ -7,18 +7,18 @@
     >
         <div class="col-lg-12 mb-2">
             <div class="row">
-                <div class="col-12 col-lg-3 mt-2">
+                <div class="col-12 col-xl-3 mt-2">
                     <Card class="card-parent" style="border-radius: 8px">
                         <template #content>
-                            <h5 class="text-center">Balance total</h5>
-                            <h2 class="text-center">
+                            <h6 class="text-center">Balance total</h6>
+                            <h3 class="text-center">
                                 {{ window.userBalance }}
-                            </h2>
+                            </h3>
                         </template>
                     </Card>
                 </div>
 
-                <div class="col-12 col-lg-3 mt-2">
+                <div class="col-12 col-xl-3 mt-2">
                     <Card class="card-transparent">
                         <template #content>
                             <span
@@ -32,7 +32,7 @@
                         </template>
                     </Card>
                 </div>
-                <div class="col-12 col-lg-3 mt-2">
+                <div class="col-12 col-xl-3 mt-2">
                     <Card class="card-transparent">
                         <template #content>
                             <span
@@ -46,7 +46,7 @@
                         </template>
                     </Card>
                 </div>
-                <div class="col-12 col-lg-3 mt-2">
+                <div class="col-12 col-xl-3 mt-2">
                     <Card class="card-transparent">
                         <template #content>
                             <span
@@ -115,6 +115,14 @@ export default {
     padding: 5px;
     background: transparent !important;
     box-shadow: unset;
+    border-right: 2px solid #999;
+    border-radius: 0;
+    margin: 12px 0;
+}
+
+
+.page-reports .p-card.card-transparent:last-child {
+    margin-right: 0;
 }
 
 @media screen and (max-width: 992px) {
