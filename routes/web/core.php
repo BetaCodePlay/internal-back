@@ -79,6 +79,11 @@ Route::group(['middleware' => ['auth']], function () {
         'as' => 'core.number-users-connected-by-device',
         'uses' => 'CoreController@numberConnectedDivice'
     ]);
+    // Total number of users by role connected
+    Route::get('total-users-connected-by-role/{start_date?}/{end_date?}',[
+        'as'=> 'core.total-users-connected-by-role',
+        'uses'=>'CoreController@getAmountUsersConnected'
+    ]);
     //Get providers by whitelabels
     Route::get('providers-by-whitelabel', [
         'as' => 'core.providers-by-whitelabel',
