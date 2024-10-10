@@ -2,10 +2,10 @@
                     THEMES
 #############################################*/
 
-$theme-color: #fff;
-$theme: #C8A926;
+$theme-color: #111;
+$theme: #fffa7a;
 $theme-hover: lighten($theme, 10%);
-$theme02: #C8A926;
+$theme02: #fffa7a;
 $theme02-hover: lighten($theme02, 10%);
 
 @import "../../template";

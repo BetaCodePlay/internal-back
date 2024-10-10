@@ -1,0 +1,122 @@
+.btn {
+    &.btn-theme {
+        color: $theme-color;
+
+        &:hover, &:focus {
+            color: $theme-color;
+        }
+    }
+}
+
+.body-auth {
+    .container-login {
+        background: #000 !important;
+    }
+
+    .wrap-login {
+        background: #000 !important;
+    }
+
+    .btn-login {
+        background: $theme;
+        color: $theme-color;
+
+        &:hover, &:focus {
+            background: $theme-hover;
+            color: $theme-color;
+        }
+    }
+}
+
+body {
+    background: #000 !important;
+
+    .u-sidebar-navigation--dark {
+        background: #090909;
+
+        .has-active {
+            > a {
+                &:hover {
+                    background: darken(#3a3a2b, 10%);
+                }
+
+                &.active {
+                    background: #3a3a2b;
+
+                    &:hover, &:focus {
+                        background: #3a3a2b;
+                    }
+                }
+            }
+        }
+    }
+}
+
+body .u-sidebar-navigation--dark .has-active > a::before {
+    background: $theme02 !important;
+}
+
+header .img-avatar {
+    border-color: $theme02 !important;
+}
+
+.u-header__section--admin-dark {
+    background: #090909 !important;
+
+    .u-header-logo-toggler {
+        background: #090909 !important;
+    }
+}
+
+.footer {
+    background: #000 !important;
+}
+
+.nav-mobile .nav-mobile-ex {
+    background: #161616 !important;
+
+    .nav-mobile-opt {
+        a.active i {
+            color: $theme !important;
+        }
+    }
+}
+
+@media screen and (max-width: 991px) {
+    body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a, body .u-sidebar-navigation--dark .has-active > a {
+        background: #161616;
+    }
+
+    body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a .g-pos-rel::before, body .u-sidebar-navigation--dark .has-active > a .g-pos-rel::before {
+        background: #222;
+    }
+
+    body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a:hover, body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a:focus, body .u-sidebar-navigation--dark .has-active > a:hover, body .u-sidebar-navigation--dark .has-active > a:focus {
+        background: #333;
+    }
+}
+
+
+.page-dashboard .dashboard-content {
+    background: #151517;
+}
+
+.page-role .nav-roles .tab-content .tab-content-body, .page-role .nav-roles .tab-content .tab-content-body-simple, .dt-container .datatable-header, .dt-container .datatable-body, .dt-container .datatable-footer {
+    background: #151517;
+}
+
+.page-dashboard .dashboard-content .dash-transactions .dash-transactions-ex .dash-transactions-item .dash-transactions-item-text .dash-transactions-item-text-top .icon {
+
+}
+
+.page-dashboard .dashboard-content .dash-balance .dash-balance-amount .dash-balance-amount-ex .dash-balance-amount-item .dash-balance-amount-name .dash-balance-amount-icon {
+
+}
+
+.p-card, .p-datatable .p-datatable-thead > tr > th, .p-datatable .p-datatable-tbody > tr > td, .p-paginator {
+    background: #151517 !important;
+}
+
+.dt-container .dataTable thead tr th {
+    background: lighten(#151517, 2%) !important;
+}
