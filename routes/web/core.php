@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => 'CoreController@numberConnectedDivice'
     ]);
     // Total number of users by role connected
-    Route::get('total-users-connected-by-role/start_date?}/{end_date?}',[
+    Route::get('total-users-connected-by-role/{start_date?}/{end_date?}',[
         'as'=> 'core.total-users-connected-by-role',
         'uses'=>'CoreController@getAmountUsersConnected'
     ]);
