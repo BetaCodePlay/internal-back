@@ -111,9 +111,9 @@ export default {
     background-color: magenta;
 }
 
-.card-transparent {
+.page-reports .p-card.card-transparent {
     padding: 5px;
-    background: transparent;
+    background: transparent !important;
     box-shadow: unset;
 }
 
