@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ mix('css/vendor.min.css', 'auth') }} ">
     <link rel="stylesheet" href="{{ mix('css/custom.min.css', 'auth') }} ">
     {{--<link rel="stylesheet" href="{{ asset("themes/$theme") }}?v=1.017">--}}
-    <link rel="stylesheet" href="{{ asset("themes/unicornio/theme.min.css") }}?v=1.113">
+    <link rel="stylesheet" href="{{ asset("themes/unicornio-dark/theme.min.css") }}?v=1.113">
     <!--===============================================================================================-->
 </head>
 <body class="body-auth">
