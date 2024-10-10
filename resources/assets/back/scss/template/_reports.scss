@@ -1,0 +1,18 @@
+.page-reports {
+    .p-card.card-transparent {
+        padding: 0 5px;
+        background: transparent !important;
+        box-shadow: unset;
+        border-right: 2px solid #d9d9d9;
+        border-radius: 0;
+        margin: 14px 0;
+
+        &.card-transparent-last {
+            border-right: 0;
+        }
+
+        @media screen and (max-width: 1199px) {
+            border-right: 0;
+        }
+    }
+}

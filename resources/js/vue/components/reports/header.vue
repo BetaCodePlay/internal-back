@@ -111,26 +111,6 @@ export default {
     background-color: magenta;
 }
 
-.page-reports .p-card.card-transparent {
-    padding: 0 5px;
-    background: transparent !important;
-    box-shadow: unset;
-    border-right: 2px solid #666;
-    border-radius: 0;
-    margin: 14px 0;
-}
-
-
-.page-reports .p-card.card-transparent.card-transparent-last {
-    border-right: 0;
-}
-
-@media screen and (max-width: 1199px) {
-    .page-reports .p-card.card-transparent {
-        border-right: 0;
-    }
-}
-
 @media screen and (max-width: 992px) {
     .card-parent {
         background-color: transparent;
