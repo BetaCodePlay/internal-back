@@ -14,7 +14,7 @@
                     <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
                 </div>
             @elseif (\Dotworkers\Configurations\Configurations::getWhitelabel() == 4)
-                <div class="login-preview-bg" style="background-image: url('https://bestcasinoswhitelabel.s3.amazonaws.com/unicornio/section-images/portada-login-v11723148406.png')">
+                <div class="login-preview-bg" style="background-image: url('https://bestcasinoswhitelabel.s3.us-east-2.amazonaws.com/unicornio/section-images/portada-login-v11723148405.png')">
                     <div class="bg-opacity"></div>
                     <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
                 </div>
