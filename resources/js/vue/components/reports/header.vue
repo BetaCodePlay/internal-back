@@ -47,7 +47,7 @@
                     </Card>
                 </div>
                 <div class="col-12 col-xl-3 mt-2">
-                    <Card class="card-transparent">
+                    <Card class="card-transparent card-transparent-last">
                         <template #content>
                             <span
                                 class="text-center mt-2"
@@ -121,8 +121,8 @@ export default {
 }
 
 
-.page-reports .p-card.card-transparent:last-child {
-    margin-right: 0;
+.page-reports .p-card.card-transparent.card-transparent-last {
+    border-right: 0;
 }
 
 @media screen and (max-width: 1199px) {
