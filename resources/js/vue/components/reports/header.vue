@@ -125,6 +125,12 @@ export default {
     margin-right: 0;
 }
 
+@media screen and (max-width: 1199px) {
+    .page-reports .p-card.card-transparent {
+        border-right: 0;
+    }
+}
+
 @media screen and (max-width: 992px) {
     .card-parent {
         background-color: transparent;
