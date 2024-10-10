@@ -434,7 +434,38 @@ class CoreController extends Controller
             return Utils::failedResponse();
         }
     }
+      /**
+     * Amount of users Connected
+     * @param string $startDate Start date to filter
+     * @param string $endDate End date to filter
+     * @return Response
+     */
+    public function getAmountUsersConnected($startDate = null, $endDate = null){
+        try {
+            if(!is_null($startDate) || !is_null($endDate)){
+                $whitelabel = Configurations::getWhitelabel();
+                $startDate = Utils::startOfDayUtc($startDate);
+                $endDate = Utils::endOfDayUtc($endDate);
+                $auditsData = $this->usersRepo->getTotalAmountUsersLogin($startDate, $endDate, $whitelabel);
 
+            } else {
+                $data = [
+                    'total' => 0,
+                    'agents' => 0,
+                    'players'=> 0,
+                ];
+            }
+            $data = [
+                'total' => $auditsData['total'],
+                'agents' => $auditsData['agents'],
+                'players'=> $auditsData['players']
+            ];
+            return Utils::successResponse($data);
+        } catch (\Throwable $th) {
+            \Log::error(__METHOD__, ['exception' => $ex, 'startDate' => $startDate, 'endDate' => $endDate]);
+            return Utils::failedResponse();
+        }
+    }
     /**
      * Upload makers
      *

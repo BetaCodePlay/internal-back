@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use App\Users\Enums\TypeUser;
 /**
  * Class UsersRepo
  *
@@ -1045,7 +1045,29 @@ class UsersRepo
             ->get();
         return $audits;
     }
+    public function getTotalAmountUsersLogin($startDate, $endDate, $whitelabel){
 
+        $totalUsersCollection = Audit::select('users.id as user', 'data')
+        ->join('users', 'audits.user_id', '=', 'users.id')
+        ->where('users.whitelabel_id', $whitelabel)
+        ->whereBetween('audits.created_at', [$startDate, $endDate])
+        ->distinct('users.id')
+        ->get();
+
+        $totalUsers=$totalUsersCollection->count();
+        $totalAgents = $totalUsersCollection->filter(function ($user) {
+            return $user->type_user === TypeUser::$agentMater;
+        })->count();
+        $totalPlayers= $totalUsersCollection->filter(function ($user) {
+            return $user->type_user === TypeUser::$player;
+        })->count();
+
+        return [
+            'total'=>count($totalUsers),
+            'agents'=>count($totalAgents),
+            'players'=>count($totalPlayers)
+        ];
+    }
     /**
      * get total gender
      *
