@@ -1399,6 +1399,16 @@ if (! function_exists('menu')) {
             //               ]
             //            ],
 
+            'FinancialReport' => [
+                'text'        => _i('Financial Report'),
+                'level_class' => 'top',
+                'route'       => 'financial-report.index',
+                'params'      => [],
+                'icon'        => 'hs-admin-stats-up',
+                'permission'  => Permissions::$report_financial_by_special_user,
+                'submenu'     => []
+            ],
+
             'Sliders' => [
                 'text'        => _i('Sliders'),
                 'level_class' => 'top',
