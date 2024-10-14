@@ -86,9 +86,9 @@
                                                                 v-model="value.timeStart"
                                                                 @change="updateFilters"
                                                                 arrow-control
-                                                                value="00:00:00"
                                                                 format="hh:mm:ss"
                                                                 value-format="hh:mm:ss"
+                                                                :picker-options = "{selectableRange: '00:00:01 - 23:59:59'}"
                                                                 placeholder="Select time"
                                                             />
                                                         </div>
