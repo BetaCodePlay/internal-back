@@ -750,6 +750,8 @@ class AgentsController extends Controller
         try {
             $transactions = $this->transactionsRepo->getUserProviderTransactionsPaginated($request, $agent);
 
+            dd('transactions', $transactions);
+
             return response()->json(
                 $this->agentsCollection->formatAgentTransactionsPaginated($transactions, $request->input('timezone'))
             );

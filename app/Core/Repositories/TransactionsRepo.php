@@ -714,8 +714,6 @@ class TransactionsRepo
         $startDate = "{$startDate} {$startTime}";
         $endDate   = "{$endDate} {$endTime}";
 
-        dd($startDate, $endDate);
-
         $typeTransaction = 'credit';
         if (Gate::allows('access', Permissions::$users_search)) {
             $typeTransaction = $request->has('typeTransaction') ? $request->get('typeTransaction') : 'all';
