@@ -318,7 +318,7 @@ export default {
             default: {
                 query: "",
                 daterange: [],
-                timeStart: "00:00:00",
+                timeStart: {HH: '08', mm: '00', ss: '00'},
                 timeEnd: "",
                 selectedUser: "",
                 selectedTimezone: "",
@@ -489,8 +489,6 @@ export default {
         },
         updateFilters() {
             this.$emit("change", this.value);
-            const value1 = ref(new Date(2016, 9, 10, 18, 30))
-            console.log(value1);
         },
         exportData(type) {
             this.$emit("export", type);
