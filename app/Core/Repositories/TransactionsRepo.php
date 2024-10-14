@@ -748,8 +748,6 @@ class TransactionsRepo
             ->where('transactions.currency_iso', $currency)
             ->whereIn('transactions.provider_id', $providers);
 
-        dd($transactions->get());
-
         if ($typeUser === 'agent') {
             $transactions->whereNull('data->provider_transaction');
         } elseif ($typeUser === 'provider') {
