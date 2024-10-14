@@ -52,7 +52,7 @@
                                                     <div class="row">
                                                         <div class="col-12 mb-3">
                                                             <label
-                                                                >Fechas</label
+                                                            >Fechas</label
                                                             >
                                                             <el-date-picker
                                                                 v-model="
@@ -72,35 +72,44 @@
                                                         </div>
 
                                                         <div class="col-6 mb-3" v-if="showTime">
-                                                            <label >Hora Inicial</label><br>
+                                                            <label>Hora Inicial</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeStart"
                                                                 @change="
                                                                     updateFilters
                                                                 "
-                                                                :picker-options="{start: '00:00:00', end: '23:59:59'}"
+                                                                :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
                                                                 placeholder="Select time">
                                                             </el-time-select>
                                                         </div>
 
                                                         <div class="col-6 mb-3" v-if="showTime">
-                                                            <label >Hora Final</label><br>
+                                                            <label>Hora Final</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeEnd"
                                                                 @change="
                                                                     updateFilters
                                                                 "
-                                                                :picker-options="{start: '00:00:00', end: '23:59:00'}"
+                                                                :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
                                                                 placeholder="Select time">
                                                             </el-time-select>
                                                         </div>
-
+                                                        <div class="col-12 mb-3" v-if="showTime">
+                                                            <el-time-picker
+                                                                v-model="value.timeStart"
+                                                                is-range
+                                                                arrow-control
+                                                                range-separator="To"
+                                                                start-placeholder="Start time"
+                                                                end-placeholder="End time"
+                                                            />
+                                                        </div>
                                                         <div
                                                             class="col-12 mb-3"
                                                             v-if="showTimezone"
                                                         >
                                                             <label
-                                                                >Zona
+                                                            >Zona
                                                                 Horaria</label
                                                             >
                                                             <Dropdown
@@ -130,7 +139,7 @@
                                                             v-if="showProvider"
                                                         >
                                                             <label
-                                                                >Proveedor</label
+                                                            >Proveedor</label
                                                             >
                                                             <Dropdown
                                                                 v-model="
@@ -159,7 +168,7 @@
                                                             v-if="showUser"
                                                         >
                                                             <label
-                                                                >Usuario</label
+                                                            >Usuario</label
                                                             >
                                                             <Dropdown
                                                                 v-model="
@@ -191,7 +200,7 @@
                                                             "
                                                         >
                                                             <label
-                                                                >Tipo de
+                                                            >Tipo de
                                                                 Transacción</label
                                                             >
                                                             <Dropdown
@@ -219,7 +228,7 @@
                                                             v-if="showTypeUser"
                                                         >
                                                             <label
-                                                                >Tipo de
+                                                            >Tipo de
                                                                 Usuario</label
                                                             >
                                                             <Dropdown
@@ -271,7 +280,7 @@
                                                 @click="exportData('excel')"
                                                 class="dropdown-item"
                                                 href="javascript:void(0)"
-                                                >Export Excel</a
+                                            >Export Excel</a
                                             >
                                         </li>
                                         <!--  <li>
@@ -386,14 +395,14 @@ export default {
             },
             childs: [],
             typeUsers: [
-                { label: "Todos", value: "all" },
-                { label: "Agente", value: "agent" },
-                { label: "Usuario", value: "user" },
+                {label: "Todos", value: "all"},
+                {label: "Agente", value: "agent"},
+                {label: "Usuario", value: "user"},
             ],
             typeTransactions: [
-                { label: "Todos", value: "all" },
-                { label: "Cargo", value: "credit" },
-                { label: "Descarga", value: "debit" },
+                {label: "Todos", value: "all"},
+                {label: "Cargo", value: "credit"},
+                {label: "Descarga", value: "debit"},
             ],
             providers: [],
             es: {
@@ -486,6 +495,7 @@ export default {
 .p-calendar .p-datepicker {
     min-width: unset;
 }
+
 .custom-report-dropdown {
     min-width: unset;
     padding: 5px;
@@ -496,6 +506,7 @@ export default {
     -moz-box-shadow: 10px 10px 38px 22px rgba(0, 0, 0, 0.71);
     box-shadow: 10px 10px 38px 22px rgba(0, 0, 0, 0.71);
 }
+
 .custom-report-dropdown .dropdown-item {
     color: white;
 }
@@ -518,7 +529,7 @@ export default {
 }
 
 .time-select-item:hover {
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .time-select-item.selected:not(.disabled) {
@@ -529,12 +540,15 @@ export default {
     .el-date-range-picker .el-picker-panel__body {
         min-width: unset !important;
     }
+
     .el-picker-panel {
         width: 100% !important;
     }
+
     .el-date-table th {
         font-size: 10px !important;
     }
+
     .el-date-range-picker__content .el-date-range-picker__header div {
         font-size: 11px !important;
     }
