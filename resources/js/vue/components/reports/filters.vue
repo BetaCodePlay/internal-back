@@ -73,23 +73,24 @@
 
                                                         <div class="col-6 mb-3" v-if="showTime">
                                                             <label>Hora Inicial</label><br>
-                                                            <el-time-select
+<!--                                                            <el-time-select
                                                                 v-model="value.timeStart"
                                                                 @change="
                                                                     updateFilters
                                                                 "
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
                                                                 placeholder="Select time">
-                                                            </el-time-select>
+                                                            </el-time-select>-->
 
-<!--                                                            <el-time-picker
+                                                            <el-time-picker
                                                                 v-model="value.timeStart"
                                                                 @change="updateFilters"
                                                                 arrow-control
-                                                                format="hh:mm:ss"
-                                                                value-format="hh:mm:ss"
+                                                                default-value="00:00:00"
+                                                                format="hh:mm:ss A"
+                                                                value-format="hh:mm:ss A"
                                                                 placeholder="Select time"
-                                                            />-->
+                                                            />
                                                         </div>
 
                                                         <div class="col-6 mb-3" v-if="showTime">
