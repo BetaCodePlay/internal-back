@@ -78,7 +78,7 @@
                                                                 @change="
                                                                     updateFilters
                                                                 "
-                                                                :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
+                                                                :picker-options="{start: '00:00:00', end: '23:59:59'}"
                                                                 placeholder="Select time">
                                                             </el-time-select>
                                                         </div>
@@ -90,7 +90,7 @@
                                                                 @change="
                                                                     updateFilters
                                                                 "
-                                                                :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
+                                                                :picker-options="{start: '00:00:00', end: '23:59:00'}"
                                                                 placeholder="Select time">
                                                             </el-time-select>
                                                         </div>
