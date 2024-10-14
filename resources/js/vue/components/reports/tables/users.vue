@@ -107,7 +107,7 @@ export default {
                 this.loading = true;
 
                 const {authUserId} = window;
-                const {daterange, selectedTimezone, selectedUser, query, timeStart, timeEnd, timeDual} = this.filters;
+                const {daterange, selectedTimezone, selectedUser, query, timeStart, timeEnd} = this.filters;
 
                 if (query && query.length < 3) {
                     this.loading = false;
@@ -124,8 +124,7 @@ export default {
                     child: selectedUser,
                     text: query,
                     timeStart,
-                    timeEnd,
-                    timeDual
+                    timeEnd
                 };
 
                 axios.get(url, {params})
