@@ -84,6 +84,13 @@
                                                         </div>
 
                                                         <div class="col-6 mb-3" v-if="showTime">
+                                                            <el-time-picker
+                                                                v-model="value.timeStart"
+                                                                placeholder="Select time"
+                                                            />
+                                                        </div>
+
+                                                        <div class="col-6 mb-3" v-if="showTime">
                                                             <label>Hora Final</label><br>
                                                             <el-time-select
                                                                 v-model="value.timeEnd"
