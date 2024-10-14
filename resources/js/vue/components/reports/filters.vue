@@ -84,6 +84,7 @@
 
                                                             <el-time-picker
                                                                 v-model="value.timeStart"
+                                                                @change="updateFilters"
                                                                 arrow-control
                                                                 placeholder="Select time"
                                                             />
@@ -102,6 +103,7 @@
 
                                                             <el-time-picker
                                                                 v-model="value.timeEnd"
+                                                                @change="updateFilters"
                                                                 arrow-control
                                                                 placeholder="Select time"
                                                             />
