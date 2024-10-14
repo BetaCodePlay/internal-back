@@ -317,7 +317,7 @@ export default {
             default: {
                 query: "",
                 daterange: [],
-                timeStart: "",
+                timeStart: "00:00:00",
                 timeEnd: "",
                 selectedUser: "",
                 selectedTimezone: "",
