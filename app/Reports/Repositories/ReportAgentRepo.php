@@ -95,6 +95,16 @@ class ReportAgentRepo
     : Collection {
         $query = "SELECT * FROM site.total_by_user_from_agent(?, ?, ?, ?, ?, ?, ?)";
 
+        dd([
+            $userId,
+            $currency,
+            $whitelabelId,
+            $startDate,
+            $endDate,
+            $timezone,
+            $username,
+        ]);
+
         $results = DB::select($query, [
             $userId,
             $currency,
