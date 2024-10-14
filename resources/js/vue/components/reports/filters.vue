@@ -88,7 +88,7 @@
                                                                 arrow-control
                                                                 format="hh:mm:ss"
                                                                 value-format="hh:mm:ss"
-                                                                :picker-options = "{selectableRange: '00:00:01 - 23:59:59'}"
+                                                                :picker-options = "{start: '00:00:00'}"
                                                                 placeholder="Select time"
                                                             />
                                                         </div>
