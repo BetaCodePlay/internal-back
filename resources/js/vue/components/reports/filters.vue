@@ -86,8 +86,8 @@
                                                                 v-model="value.timeStart"
                                                                 @change="updateFilters"
                                                                 arrow-control
-                                                                format="hh:mm:ss A"
-                                                                value-format="hh:mm:ss A"
+                                                                format="hh:mm:ss"
+                                                                value-format="hh:mm:ss"
                                                                 placeholder="Select time"
                                                             />
                                                         </div>
