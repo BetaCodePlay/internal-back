@@ -707,6 +707,7 @@ class TransactionsRepo
             'Y-m-d',
             $timezone
         );
+
         $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
         $startTime = $request->filled('timeStart') ? $request->input('timeStart') : '00:00:00';
         $endTime   = $request->filled('timeEnd') ? $request->input('timeEnd') : '23:59:59';
