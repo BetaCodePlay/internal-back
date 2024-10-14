@@ -96,7 +96,7 @@
                                                         </div>
                                                         <div class="col-12 mb-3" v-if="showTime">
                                                             <el-time-picker
-                                                                v-model="value.timeStart"
+                                                                v-model="value.timeDual"
                                                                 is-range
                                                                 range-separator="To"
                                                                 start-placeholder="Start time"
@@ -309,6 +309,7 @@ export default {
                 daterange: [],
                 timeStart: "",
                 timeEnd: "",
+                timeDual: "",
                 selectedUser: "",
                 selectedTimezone: "",
                 selectedProvider: "",
