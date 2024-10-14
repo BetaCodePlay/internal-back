@@ -728,8 +728,6 @@ class TransactionsRepo
             Configurations::getWhitelabel()
         );
 
-        dd('arraySonIds', $arraySonIds);
-
         $transactions = Transaction::select(
             'users.username',
             'users.id as userId',
@@ -773,6 +771,8 @@ class TransactionsRepo
         if ($typeTransaction === 'debit') {
             $typeTransactionId = 2;
         }
+
+        dd($transactions->get());
 
         if (! is_null($typeTransactionId)) {
             $transactions = $transactions->where('transactions.transaction_type_id', $typeTransactionId);
