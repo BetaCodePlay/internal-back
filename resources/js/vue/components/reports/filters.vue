@@ -73,17 +73,15 @@
 
                                                         <div class="col-6 mb-3" v-if="showTime">
                                                             <label>Hora Inicial</label><br>
-                                                            <el-time-select
+<!--                                                            <el-time-select
                                                                 v-model="value.timeStart"
                                                                 @change="
                                                                     updateFilters
                                                                 "
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
                                                                 placeholder="Select time">
-                                                            </el-time-select>
-                                                        </div>
+                                                            </el-time-select>-->
 
-                                                        <div class="col-6 mb-3" v-if="showTime">
                                                             <el-time-picker
                                                                 v-model="value.timeStart"
                                                                 arrow-control
@@ -93,14 +91,20 @@
 
                                                         <div class="col-6 mb-3" v-if="showTime">
                                                             <label>Hora Final</label><br>
-                                                            <el-time-select
+<!--                                                            <el-time-select
                                                                 v-model="value.timeEnd"
                                                                 @change="
                                                                     updateFilters
                                                                 "
                                                                 :picker-options="{start: '00:00', step: '00:15', end: '23:59'}"
                                                                 placeholder="Select time">
-                                                            </el-time-select>
+                                                            </el-time-select>-->
+
+                                                            <el-time-picker
+                                                                v-model="value.timeEnd"
+                                                                arrow-control
+                                                                placeholder="Select time"
+                                                            />
                                                         </div>
                                                         <div class="col-12 mb-3" v-if="showTime">
                                                             <el-time-picker
