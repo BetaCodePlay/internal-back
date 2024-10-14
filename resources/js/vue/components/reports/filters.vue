@@ -318,7 +318,7 @@ export default {
         },
         showTime: {
             type: Boolean,
-            default: false,
+            default: true,
         },
         showUser: {
             type: Boolean,
