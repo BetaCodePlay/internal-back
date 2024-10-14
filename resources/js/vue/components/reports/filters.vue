@@ -86,6 +86,7 @@
                                                                 v-model="value.timeStart"
                                                                 @change="updateFilters"
                                                                 arrow-control
+                                                                :picker-options="{start: '00:00:00'}"
                                                                 placeholder="Select time"
                                                             />
                                                         </div>
