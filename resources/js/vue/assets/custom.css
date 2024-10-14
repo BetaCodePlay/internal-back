@@ -277,6 +277,7 @@ tfoot {
 }
 .el-time-spinner__arrow {
     color: #fff;
+    font-size: 14px;
 }
 .el-time-spinner__arrow:hover {
     color: #fff;
