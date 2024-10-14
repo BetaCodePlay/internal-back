@@ -98,7 +98,6 @@
                                                             <el-time-picker
                                                                 v-model="value.timeStart"
                                                                 is-range
-                                                                arrow-control
                                                                 range-separator="To"
                                                                 start-placeholder="Start time"
                                                                 end-placeholder="End time"
