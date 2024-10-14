@@ -755,8 +755,6 @@ class AgentsController extends Controller
             );
         } catch (Exception|NotFoundExceptionInterface|ContainerExceptionInterface $ex) {
             Log::error(__METHOD__, ['exception' => $ex]);
-
-            dd('exception', $ex);
             return Utils::failedResponse();
         }
     }
