@@ -86,6 +86,7 @@
                                                         <div class="col-6 mb-3" v-if="showTime">
                                                             <el-time-picker
                                                                 v-model="value.timeStart"
+                                                                arrow-control
                                                                 placeholder="Select time"
                                                             />
                                                         </div>
