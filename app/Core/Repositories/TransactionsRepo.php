@@ -722,6 +722,8 @@ class TransactionsRepo
         $currency  = session('currency');
         $providers = [Providers::$agents, Providers::$agents_users];
 
+        dd('here');
+
         $arraySonIds  = $this->reportAgentRepo->getIdsChildrenFromFather(
             $agent,
             session('currency'),
