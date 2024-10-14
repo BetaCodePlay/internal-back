@@ -1047,13 +1047,12 @@ class UsersRepo
     }
     public function getTotalAmountUsersLogin($startDate, $endDate, $whitelabel){
 
-        $totalUsersCollection = Audit::select('users.id as user', 'data')
+        $totalUsersCollection = Audit::select('users.id as user', 'users.type_user', 'data')
         ->join('users', 'audits.user_id', '=', 'users.id')
         ->where('users.whitelabel_id', $whitelabel)
         ->whereBetween('audits.created_at', [$startDate, $endDate])
         ->distinct('users.id')
         ->get();
-
         $totalUsers=$totalUsersCollection->count();
         $totalAgents = $totalUsersCollection->filter(function ($user) {
             return $user->type_user === TypeUser::$agentMater;
@@ -1063,9 +1062,9 @@ class UsersRepo
         })->count();
 
         return [
-            'total'=>count($totalUsers),
-            'agents'=>count($totalAgents),
-            'players'=>count($totalPlayers)
+            'total'=>$totalUsers,
+            'agents'=>$totalAgents,
+            'players'=>$totalPlayers
         ];
     }
     /**
