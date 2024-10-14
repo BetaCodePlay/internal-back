@@ -230,6 +230,12 @@ tfoot {
     border: none !important;
     border-radius: 8px !important;
 }
+.el-popper[x-placement^="bottom"] .popper__arrow {
+    border-bottom-color: #1e1e1e;
+}
+.el-popper[x-placement^="bottom"] .popper__arrow::after {
+    border-bottom-color: #1e1e1e;
+}
 .is-left, .is-right {
     border: none !important;
     border-radius: 8px !important;
@@ -255,4 +261,33 @@ tfoot {
 }
 .el-loading-mask {
     background-color: rgb(9 9 9 / 93%) !important;
+}
+.el-time-panel {
+    border: 1px solid #282828;
+    background-color: #1e1e1e;
+}
+.el-time-panel__footer {
+    border-color: #282828;
+}
+.el-time-spinner__item {
+    color: #777;
+}
+.el-time-spinner__item.active:not(.disabled) {
+    color: #fff;
+}
+.el-time-spinner__arrow {
+    color: #fff;
+}
+.el-time-spinner__arrow:hover {
+    color: #fff;
+    text-shadow: 0 0 3px #fff;
+}
+.el-time-panel__btn {
+    color: #777;
+}
+.el-time-panel__btn.confirm {
+    color: #fff;
+}
+.el-time-spinner__wrapper.is-arrow .el-time-spinner__item:hover:not(.disabled):not(.active) {
+    background: transparent;
 }
