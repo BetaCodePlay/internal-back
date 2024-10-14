@@ -88,7 +88,7 @@
                                                                 arrow-control
                                                                 format="hh:mm:ss"
                                                                 value-format="hh:mm:ss"
-                                                                :picker-options = "{start: '00:00:00'}"
+                                                                starOfDay
                                                                 placeholder="Select time"
                                                             />
                                                         </div>
@@ -318,7 +318,7 @@ export default {
             default: {
                 query: "",
                 daterange: [],
-                timeStart: {hh: '08', mm: '00', ss: '00'},
+                timeStart: "",
                 timeEnd: "",
                 selectedUser: "",
                 selectedTimezone: "",
