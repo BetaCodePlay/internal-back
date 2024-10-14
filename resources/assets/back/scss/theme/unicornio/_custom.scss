@@ -823,6 +823,33 @@ body {
     }
 }
 
+/*#######################################
+                TIME
+#######################################*/
+
+body {
+    .el-time-panel {
+        border: 1px solid #d9d9d9 !important;
+        background-color: #fff !important;
+    }
+
+    .el-popper[x-placement^="bottom"] .popper__arrow {
+        border-bottom-color: #fff !important;
+    }
+
+    .el-popper[x-placement^="bottom"] .popper__arrow::after {
+        border-bottom-color: #fff !important;
+    }
+
+    .el-time-spinner__item.active:not(.disabled) {
+        color: #111 !important;
+    }
+
+    .el-time-panel__btn.confirm {
+        color: #111 !important;
+    }
+}
+
 @media screen and (max-width: 991px) {
     body .u-sidebar-navigation--dark.u-side-nav--mini .has-active > a, body .u-sidebar-navigation--dark .has-active > a {
         background: #f7f8fa;
