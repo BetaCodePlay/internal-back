@@ -698,13 +698,13 @@ class TransactionsRepo
         $startDate = Utils::startOfDayUtc(
             $request->has('startDate') ? $request->get('startDate') : date('Y-m-d'),
             'Y-m-d',
-            'Y-m-d H:i:s',
+            'Y-m-d',
             $timezone
         );
         $endDate   = Utils::endOfDayUtc(
             $request->has('endDate') ? $request->get('endDate') : date('Y-m-d'),
             'Y-m-d',
-            'Y-m-d H:i:s',
+            'Y-m-d',
             $timezone
         );
         $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
