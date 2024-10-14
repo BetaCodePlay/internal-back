@@ -88,7 +88,6 @@
                                                                 arrow-control
                                                                 format="hh:mm:ss"
                                                                 value-format="hh:mm:ss"
-                                                                starOfDay
                                                                 placeholder="Select time"
                                                             />
                                                         </div>
