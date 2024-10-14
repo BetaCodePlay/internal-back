@@ -358,8 +358,6 @@ export default {
         },
     },
     mounted() {
-        const value1 = ref(new Date(2016, 9, 10, 18, 30))
-        console.log(value1);
         document
             .querySelector(".dp-link")
             .addEventListener("click", function (event) {
@@ -491,6 +489,8 @@ export default {
         },
         updateFilters() {
             this.$emit("change", this.value);
+            const value1 = ref(new Date(2016, 9, 10, 18, 30))
+            console.log(value1);
         },
         exportData(type) {
             this.$emit("export", type);
