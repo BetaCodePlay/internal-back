@@ -318,7 +318,7 @@ export default {
             default: {
                 query: "",
                 daterange: [],
-                timeStart: {HH: '08', mm: '00', ss: '00'},
+                timeStart: {hh: '08', mm: '00', ss: '00'},
                 timeEnd: "",
                 selectedUser: "",
                 selectedTimezone: "",
