@@ -50,11 +50,10 @@
                                     <input type="number" name="load_amount" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="start_date">{{ _i('Load date') }}</label>
-                                    <input type="text" name="load_date" id="start_date"
-                                           class="form-control datetimepicker" autocomplete="off">
+                                    <input type="text" name="start_date" id="start_date" class="form-control datetimepicker input_placeholder" placeholder="Ej. 07-07-2023 01:15 pm" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-3">
