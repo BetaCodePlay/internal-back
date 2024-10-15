@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Dotworkers\Configurations\Configurations;
 use App\Core\Repositories\CredentialsRepo;
 use App\Core\Repositories\GamesRepo;
+use App\FinancialReport\Collections\FinancialReportCollection;
 use Dotworkers\Configurations\Utils;
 use Illuminate\Http\Request;
 
@@ -23,12 +24,14 @@ class FinancialReportController
      *
      * @param CredentialsRepo $credentialsRepo
      * @param GamesRepo $gamesRepo
+     * @param FinancialReportCollection $financialReportCollection
      *
      */
-    public function __construct(CredentialsRepo $credentialsRepo, GamesRepo $gamesRepo)
+    public function __construct(CredentialsRepo $credentialsRepo, GamesRepo $gamesRepo, FinancialReportCollection $financialReportCollection)
     {
         $this->credentialsRepo = $credentialsRepo;
         $this->gamesRepo = $gamesRepo;
+        $this->financialReportCollection = $financialReportCollection;
     }
 
     /**
@@ -71,7 +74,6 @@ class FinancialReportController
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
-            \Log::info(__METHOD__, ['$provider' => $provider]);
             $data['title'] = _i('Create');
             $data['providers'] = $provider;
             return view('back.financial-report.index', $data);
@@ -94,7 +96,7 @@ class FinancialReportController
             $maker = [];
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
-                \Log::info(__METHOD__, ['$maker' => $maker]);
+                $this->financialReportCollection->formatAll($maker);
             }
             $data = [
                 'maker' => $maker
