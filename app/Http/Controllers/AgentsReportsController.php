@@ -95,51 +95,6 @@ class AgentsReportsController extends Controller
         $endDate = null
     ) {
         try {
-            $currency     = session('currency');
-            $whitelabelId = Configurations::getWhitelabel();
-
-            $user = is_null($userId)
-                ? auth()->user()
-                : User::find($userId);
-
-            $userIds = $user->type_user == TypeUser::$player
-                ? [$user?->id]
-                : $this->reportAgentRepo->getIdsChildrenFromFather($user->id, $currency, $whitelabelId);
-
-            $startDate    = Utils::startOfDayUtc($startDate);
-            $endDate      = Utils::startOfDayUtc($endDate);
-            $currency     = session('currency');
-            $whitelabelId = Configurations::getWhitelabel();
-
-            $timezone = ! is_null($request->get('timezone')) && $request->get('timezone') !== 'null' ? $request->get(
-                'timezone'
-            ) : null;
-
-            $provider = ! is_null($request->get('provider')) && $request->get('provider') !== 'null' ? $request->get(
-                'provider'
-            ) : null;
-
-            $child = ! is_null($request->get('child')) && $request->get('child') !== 'null' ? $request->get(
-                'child'
-            ) : null;
-
-            $childIds = [];
-            if ($child) {
-                $searchChild = User::find($child);
-
-                if ($searchChild) {
-                    $childIds = $searchChild->type_user == TypeUser::$player
-                        ? [$searchChild?->id]
-                        : $this->reportAgentRepo->getIdsChildrenFromFather($child, $currency, $whitelabelId);
-                }
-            }
-
-            $totalCommission = 0;
-
-            $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
-                ? $request->get('timezone')
-                : null;
-
             $category = $request->filled('text') && $request->get('text') !== 'null'
                 ? $request->get('text')
                 : null;
@@ -148,10 +103,25 @@ class AgentsReportsController extends Controller
                 ? $request->get('provider')
                 : null;
 
+            $user = is_null($userId) ? auth()->user() : User::find($userId);
+            $currency     = session('currency');
+            $whitelabelId = Configurations::getWhitelabel();
+
+            $timezone = $request->filled('timezone') && $request->get('timezone') !== 'null'
+                ? $request->get('timezone')
+                : null;
+
             $child = $request->filled('child') && $request->get('child') !== 'null'
                 ? $request->get('child')
-                :
-                null;
+                : null;
+
+            $startTime = $request->filled('timeStart') ? $request->input('timeStart') : '00:00:00';
+            $endTime   = $request->filled('timeEnd') ? $request->input('timeEnd') : '23:59:59';
+
+            $startDate = "{$startDate} {$startTime}";
+            $endDate   = "{$endDate} {$endTime}";
+
+            dd($startDate, $endDate);
 
             $financialData = $this->reportAgentRepo->getCommissionByCategory(
                 $child ?: $user->id,
@@ -164,6 +134,7 @@ class AgentsReportsController extends Controller
                 $provider
             );
 
+            $totalCommission = 0;
             foreach ($financialData as $transaction) {
                 $totalCommission         += $transaction->commission;
                 $transaction->played     = formatAmount($transaction->played);
