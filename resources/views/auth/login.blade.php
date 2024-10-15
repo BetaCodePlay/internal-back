@@ -18,7 +18,7 @@
                     <div class="bg-opacity"></div>
                     <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
                 </div>
-            @elseif (\Dotworkers\Configurations\Configurations::getWhitelabel() == 5)
+            @elseif (\Dotworkers\Configurations\Configurations::getWhitelabel() == 7)
                 <div class="login-preview-bg" style="background-image: url('https://bestcasinoswhitelabel.s3.amazonaws.com/trebolbet/section-images/portada-login-v1.png')">
                     <div class="bg-opacity"></div>
                     <img class="login-logo" src="{{  $logo->img_dark }}" alt="{{ $whitelabel_description }}" width="350">
