@@ -20,6 +20,7 @@ class FinancialReportCollection
     public function formatAll($maker)
     {
         foreach ($maker as $makers) {
+            \Log::info(__METHOD__, ['maker' => $makers]);
             $makers->maker = $makers->name;
         }
     }
