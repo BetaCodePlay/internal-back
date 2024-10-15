@@ -97,9 +97,9 @@ class FinancialReportController
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
                 foreach ($maker as $item) {
-                    $item->maker = $provider;
+                    $makers = $item->maker;
                 }
-                \Log::info(__METHOD__, ['$maker' => $provider]);
+                \Log::info(__METHOD__, ['$maker' => $makers]);
             }
             $data = [
                 'maker' => $maker
