@@ -88,7 +88,7 @@ class FinancialReportController
                 $this->financialReportCollection->formatAll($maker);
             }
             $data = [
-                'maker' => $maker->name
+                'maker' => $maker->maker
             ];
             return Utils::successResponse($data);
 
