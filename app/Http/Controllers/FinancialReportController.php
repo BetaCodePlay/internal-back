@@ -87,9 +87,8 @@ class FinancialReportController
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
                 $this->financialReportCollection->formatAll($maker);
             }
-            \Log::info(__METHOD__, ['maker' => $maker]);
             $data = [
-                'maker' => $maker
+                'maker' => $maker->name
             ];
             return Utils::successResponse($data);
 
