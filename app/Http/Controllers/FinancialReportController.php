@@ -43,18 +43,7 @@ class FinancialReportController
     public function all(Request $request)
     {
         try {
-            $provider = $request->provider;
-            $amount = $request->amount;
-            $load_amount = $request->load_amount;
-            $load_date = $request->load_date;
-            $limit = $request->limit;
-            $data = [
-                'amount' => $amount,
-                'load_amount' => $load_amount,
-                'load_date' => $load_date,
-                'limit' => $limit
-            ];
-            return Utils::successResponse($data);
+
 
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
@@ -96,11 +85,9 @@ class FinancialReportController
             $maker = [];
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
-                foreach ($maker as $item) {
-                    $makers = $item->maker;
-                }
-                \Log::info(__METHOD__, ['$maker' => $makers]);
+                $this->financialReportCollection->formatAll($maker);
             }
+            \Log::info(__METHOD__, ['maker' => $maker]);
             $data = [
                 'maker' => $maker
             ];
