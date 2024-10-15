@@ -698,15 +698,16 @@ class TransactionsRepo
         $startDate = Utils::startOfDayUtc(
             $request->has('startDate') ? $request->get('startDate') : date('Y-m-d'),
             'Y-m-d',
-            'Y-m-d H:i:s',
+            'Y-m-d',
             $timezone
         );
         $endDate   = Utils::endOfDayUtc(
             $request->has('endDate') ? $request->get('endDate') : date('Y-m-d'),
             'Y-m-d',
-            'Y-m-d H:i:s',
+            'Y-m-d',
             $timezone
         );
+
         $typeUser  = $request->has('typeUser') ? $request->get('typeUser') : 'all';
         $startTime = $request->filled('timeStart') ? $request->input('timeStart') : '00:00:00';
         $endTime   = $request->filled('timeEnd') ? $request->input('timeEnd') : '23:59:59';
@@ -727,6 +728,7 @@ class TransactionsRepo
             session('currency'),
             Configurations::getWhitelabel()
         );
+
         $transactions = Transaction::select(
             'users.username',
             'users.id as userId',
