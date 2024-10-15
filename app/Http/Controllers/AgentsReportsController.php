@@ -121,8 +121,6 @@ class AgentsReportsController extends Controller
             $startDate = "{$startDate} {$startTime}";
             $endDate   = "{$endDate} {$endTime}";
 
-            dd($startDate, $endDate);
-
             $financialData = $this->reportAgentRepo->getCommissionByCategory(
                 $child ?: $user->id,
                 $currency,
