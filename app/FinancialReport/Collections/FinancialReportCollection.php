@@ -20,7 +20,7 @@ class FinancialReportCollection
     public function formatAll($maker)
     {
         foreach ($maker as $makers) {
-            $makers->name = $makers->maker;
+            $makers->description = $makers->maker;
         }
     }
 

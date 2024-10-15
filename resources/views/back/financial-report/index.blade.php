@@ -33,8 +33,7 @@
                                 <div class="form-group">
                                     <label for="maker">{{ _i('Maker') }}</label>
                                     <select name="maker[]" id="maker" class="form-control"
-                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
-                                            multiple>
+                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}">
                                         <option value="">{{ _i('Select...') }}</option>
                                     </select>
                                 </div>
@@ -51,10 +50,10 @@
                                     <input type="number" name="load_amount" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="load_date">{{ _i('Load date') }}</label>
-                                    <input type="text" name="load_date" id="load_date"
+                                    <label for="start_date">{{ _i('Load date') }}</label>
+                                    <input type="text" name="load_date" id="start_date"
                                            class="form-control datetimepicker" autocomplete="off">
                                 </div>
                             </div>
@@ -64,8 +63,16 @@
                                     <input type="number" name="limit" class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="total_played">{{ _i('Total played') }}</label>
+                                    <input type="number" name="total_played" class="form-control">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <input type="hidden" name="user" value="{{ $user }}">
+                                    <input type="hidden" name="currency" value="{{ $currency }}">
                                     <button type="button" class="btn u-btn-3d u-btn-primary" id="store"
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                         <i class="hs-admin-save"></i>

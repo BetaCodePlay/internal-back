@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Dotworkers\Configurations\Configurations;
 use App\Core\Repositories\CredentialsRepo;
 use App\Core\Repositories\GamesRepo;
+use App\FinancialReport\Repositories\FinancialReportRepo;
 use App\FinancialReport\Collections\FinancialReportCollection;
 use Dotworkers\Configurations\Utils;
 use Illuminate\Http\Request;
@@ -25,13 +26,15 @@ class FinancialReportController
      * @param CredentialsRepo $credentialsRepo
      * @param GamesRepo $gamesRepo
      * @param FinancialReportCollection $financialReportCollection
+     * @param FinancialReportRepo $financialReportRepo
      *
      */
-    public function __construct(CredentialsRepo $credentialsRepo, GamesRepo $gamesRepo, FinancialReportCollection $financialReportCollection)
+    public function __construct(CredentialsRepo $credentialsRepo, GamesRepo $gamesRepo, FinancialReportCollection $financialReportCollection, FinancialReportRepo $financialReportRepo)
     {
         $this->credentialsRepo = $credentialsRepo;
         $this->gamesRepo = $gamesRepo;
         $this->financialReportCollection = $financialReportCollection;
+        $this->financialReportRepo = $financialReportRepo;
     }
 
     /**
@@ -43,6 +46,7 @@ class FinancialReportController
     public function all(Request $request)
     {
         try {
+            $provider = $request->provider;
 
 
         } catch (\Exception $ex) {
@@ -62,8 +66,11 @@ class FinancialReportController
         try {
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
+            $user = auth()->user()->id;
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $data['title'] = _i('Create');
+            $data['user'] = $user;
+            $data['currency'] = $currency;
             $data['providers'] = $provider;
             return view('back.financial-report.index', $data);
         } catch (\Exception $e) {
@@ -88,7 +95,7 @@ class FinancialReportController
                 $this->financialReportCollection->formatAll($maker);
             }
             $data = [
-                'maker' => $maker->maker
+                'maker' => $maker
             ];
             return Utils::successResponse($data);
 
@@ -108,11 +115,33 @@ class FinancialReportController
     public function store(Request $request)
     {
         try {
+            $provider = $request->change_provider;
+            $maker = $request->maker;
+            $amount = $request->amount;
+            $load_amount = $request->load_amount;
+            $load_date = $request->start_date;
+            $limit = $request->limit;
+            $user = $request->user;
+            $currency = $request->currency;
+            $total_played = $request->total_played;
+
+            $financialData = [
+                'provider_id' => $provider,
+                'maker' => $maker,
+                'amount' => $amount,
+                'load_amount' => $load_amount,
+                'load_date' => $load_date,
+                'limit' => $limit,
+                'user_id' => $user,
+                'currency_iso' => $currency,
+                'total_played' => $total_played
+            ];
+            $this->financialReportRepo->store($financialData);
 
 
             $data = [
-                'title' => _i('Saved game'),
-                'message' => _i('The game was assigned to the category selected successfully'),
+                'title' => _i('Saved'),
+                'message' => _i('The data was saved successfully'),
                 'close' => _i('Close'),
                 'route' => route('financial-report.index')
             ];
