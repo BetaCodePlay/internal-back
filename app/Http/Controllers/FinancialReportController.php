@@ -136,6 +136,7 @@ class FinancialReportController
                 'currency_iso' => $currency,
                 'total_played' => $total_played
             ];
+            \Log::info(__METHOD__, ['data' => $financialData]);
             $this->financialReportRepo->store($financialData);
 
 
