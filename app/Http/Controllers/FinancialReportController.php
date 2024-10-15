@@ -96,8 +96,10 @@ class FinancialReportController
             $maker = [];
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
-                $this->financialReportCollection->formatAll($maker);
-                \Log::info(__METHOD__, ['$maker' => $maker]);
+                foreach ($maker as $item) {
+                    $item->maker = $provider;
+                }
+                \Log::info(__METHOD__, ['$maker' => $provider]);
             }
             $data = [
                 'maker' => $maker
