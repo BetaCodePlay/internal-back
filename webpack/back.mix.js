@@ -57,6 +57,7 @@ mix.autoload({
             "resources/assets/back/js/marketing-campaigns.js",
             "resources/assets/back/js/segments.js",
             "resources/assets/back/js/whitelabels-games.js",
+            "resources/assets/back/js/financial-report.js",
             "resources/assets/back/js/dotsuite.js",
             "resources/assets/back/js/referrals.js",
             "resources/assets/back/js/invoices.js",
