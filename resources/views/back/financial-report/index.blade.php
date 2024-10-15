@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label for="maker">{{ _i('Maker') }}</label>
                                     <select name="maker[]" id="maker" class="form-control"
-                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}">
+                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}" multiple>
                                         <option value="">{{ _i('Select...') }}</option>
                                     </select>
                                 </div>
