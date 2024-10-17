@@ -19,6 +19,7 @@ class FinancialReportCollection
      */
     public function formatAllReport($reports)
     {
+        \Log::info(__METHOD__, ['report' => $reports]);
         foreach ($reports as $report) {
             $report->makers = $report->maker;
             $report->provider = $report->provider_id;

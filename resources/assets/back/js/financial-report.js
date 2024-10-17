@@ -18,12 +18,13 @@ class FinancialReport {
             "order": [[0, "asc"]],
             "columns": [
                 {"data": "provider"},
-                {"data": "makers"}
-                /*{"data": "currency"},
+                {"data": "makers"},
+                {"data": "currency"},
                 {"data": "amount"},
                 {"data": "load_amount"},
                 {"data": "load_date"},
-                {"data": "limit"}*/
+                {"data": "limit"},
+                {"data": "actions", "className": "text-right"}
             ],
             "initComplete": function () {
                 api = this.api()
