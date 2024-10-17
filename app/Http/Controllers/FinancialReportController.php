@@ -70,7 +70,7 @@ class FinancialReportController
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $data['title'] = _i('Create');
             $data['user'] = $user;
-            $data['currency'] = $currency;
+            $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
             return view('back.financial-report.index', $data);
         } catch (\Exception $e) {
@@ -89,10 +89,9 @@ class FinancialReportController
     {
         try {
             $provider = $request->change_provider;
-            $maker = [];
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
-                $this->financialReportCollection->formatAll($maker);
+                \Log::info(__METHOD__, ['maker' => $maker]);
             }
             $data = [
                 'maker' => $maker

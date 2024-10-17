@@ -40,6 +40,20 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
+                                    <label for="currency">{{ _i('Currency') }}</label>
+                                    <select name="currency" id="currency" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($whitelabel_currencies as $currency)
+                                            <option
+                                                value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
+                                                {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
                                     <label for="amount">{{ _i('Amount') }}</label>
                                     <input type="number" name="amount" class="form-control">
                                 </div>
@@ -52,8 +66,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="start_date">{{ _i('Load date') }}</label>
-                                    <input type="text" name="start_date" id="start_date" class="form-control datetimepicker input_placeholder" placeholder="Ej. 07-07-2023 01:15 pm" autocomplete="off">
+                                    <label for="load_date">{{ _i('Load date') }}</label>
+                                    <input type="text" name="load_date" id="load_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -62,16 +76,10 @@
                                     <input type="number" name="limit" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="total_played">{{ _i('Total played') }}</label>
-                                    <input type="number" name="total_played" class="form-control">
-                                </div>
-                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="hidden" name="user" value="{{ $user }}">
-                                    <input type="hidden" name="currency" value="{{ $currency }}">
+                                    <input type="hidden" name="total_played" value="">
                                     <button type="button" class="btn u-btn-3d u-btn-primary" id="store"
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                         <i class="hs-admin-save"></i>
