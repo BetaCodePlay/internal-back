@@ -48,6 +48,8 @@ class FinancialReportController
     {
         try {
             $provider = $request->provider;
+            $report = $this->financialReportRepo->all($provider);
+            \Log::info(__METHOD__, ['report' => $report]);
 
 
         } catch (\Exception $ex) {
@@ -94,7 +96,6 @@ class FinancialReportController
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
                 $this->financialReportCollection->formatAll($maker);
             }
-            \Log::info(__METHOD__, ['maker' => $maker]);
             $data = [
                 'maker' => $maker
             ];

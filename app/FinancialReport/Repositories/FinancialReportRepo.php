@@ -5,6 +5,19 @@ use App\FinancialReport\Entities\FinancialReport;
 
 class FinancialReportRepo
 {
+
+    /**
+     * Get all
+     *
+     * @param array $provider Financial provider
+     * @return static
+     */
+    public function all($provider)
+    {
+        $financial = FinancialReport::where('provider_id', $provider)
+            ->get();
+        return $financial;
+    }
     /**
      * Store financial
      *
