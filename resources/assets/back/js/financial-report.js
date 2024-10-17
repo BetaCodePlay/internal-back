@@ -8,9 +8,10 @@ class FinancialReport {
         let $table = $('#special-table');
         let $button = $('#search');
         let api;
-
+        console.log($table)
         $table.DataTable({
             "ajax": {
+
                 "url": $table.data('route'),
                 "dataSrc": "data"
             },
@@ -67,7 +68,6 @@ class FinancialReport {
                     maker.html('loading');
                     maker.html(json.data.maker);
                     $(json.data.maker).each(function(key, element){
-                        console.log(element)
                         maker.append("<option value=" + element.maker + ">" + element.description + "</option>");
                     })
                     maker.prop('disabled', false);
