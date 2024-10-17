@@ -5,7 +5,7 @@ class FinancialReport {
 
     // All dates of financial report
     all(){
-        let $table = $('#financial-table');
+        let $table = $('#financial-report-table');
         let $button = $('#search');
         let api;
 
@@ -86,7 +86,7 @@ class FinancialReport {
         initDateTimePicker();
         let $form = $('#store-form');
         let $button = $('#store');
-        let $table = $('#financial-table');
+        let $table = $('#financial-report-table');
 
         $button.click(function () {
             $button.button('loading');

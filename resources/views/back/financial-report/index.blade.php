@@ -108,7 +108,7 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <table class="table table-bordered table-responsive-sm w-100" id="financial-table"
+                    <table class="table table-bordered table-responsive-sm w-100" id="financial-report-table"
                            data-route="{{ route('financial-report.all') }}">
                         <thead>
                         <tr>
