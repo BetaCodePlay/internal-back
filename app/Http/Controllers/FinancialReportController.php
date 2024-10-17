@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Dotworkers\Configurations\Configurations;
 use App\Core\Repositories\CredentialsRepo;
 use App\Core\Repositories\GamesRepo;
@@ -93,6 +94,7 @@ class FinancialReportController
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
                 $this->financialReportCollection->formatAll($maker);
             }
+            \Log::info(__METHOD__, ['maker' => $maker]);
             $data = [
                 'maker' => $maker
             ];
@@ -118,7 +120,8 @@ class FinancialReportController
             $maker = $request->maker;
             $amount = $request->amount;
             $load_amount = $request->load_amount;
-            $load_date = $request->load_date;
+            $timezone = session('timezone');
+            $load_date = !is_null($request->load_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->load_date, $timezone)->setTimezone('UTC') : null;
             $limit = $request->limit;
             $user = $request->user;
             $currency = $request->currency;
