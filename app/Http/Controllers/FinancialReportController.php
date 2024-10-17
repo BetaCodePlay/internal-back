@@ -48,8 +48,8 @@ class FinancialReportController
     {
         try {
             $report = $this->financialReportRepo->all();
-            $this->financialReportCollection->formatAllReport($report);
-            \Log::info(__METHOD__, ['report' => $report]);
+            $reportCollect = $this->financialReportCollection->formatAllReport($report);
+            \Log::info(__METHOD__, ['$reportCollect' => $reportCollect]);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
