@@ -23,8 +23,8 @@ class FinancialReport {
                 {"data": "amount"},
                 {"data": "load_amount"},
                 {"data": "load_date"},
-                {"data": "limit"},
-                {"data": "actions", "className": "text-right"}
+                {"data": "limit"}
+                /*{"data": "actions", "className": "text-right"}*/
             ],
             "initComplete": function () {
                 api = this.api()
