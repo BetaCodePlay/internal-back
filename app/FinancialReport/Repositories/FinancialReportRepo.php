@@ -12,10 +12,9 @@ class FinancialReportRepo
      * @param array $provider Financial provider
      * @return static
      */
-    public function all($provider)
+    public function all()
     {
-        $financial = FinancialReport::where('provider_id', $provider)
-            ->get();
+        $financial = FinancialReport::get();
         return $financial;
     }
     /**

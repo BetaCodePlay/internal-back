@@ -48,7 +48,7 @@ class FinancialReportController
     {
         try {
             $provider = $request->provider;
-            $report = $this->financialReportRepo->all($provider);
+            $report = $this->financialReportRepo->all();
             \Log::info(__METHOD__, ['report' => $report]);
 
 
