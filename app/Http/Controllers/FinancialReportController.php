@@ -91,7 +91,7 @@ class FinancialReportController
             $provider = $request->change_provider;
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
-                \Log::info(__METHOD__, ['maker' => $maker]);
+                $this->financialReportCollection->formatAll($maker);
             }
             $data = [
                 'maker' => $maker
