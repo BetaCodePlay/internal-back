@@ -18,6 +18,7 @@ class FinancialReport {
             "columns": [
                 {"data": "provider"},
                 {"data": "maker"},
+                {"data": "currency"},
                 {"data": "amount"},
                 {"data": "load_amount"},
                 {"data": "load_date"},

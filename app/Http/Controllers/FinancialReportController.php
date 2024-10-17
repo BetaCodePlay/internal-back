@@ -47,11 +47,9 @@ class FinancialReportController
     public function all(Request $request)
     {
         try {
-            $provider = $request->provider;
             $report = $this->financialReportRepo->all();
+            $this->financialReportCollection->formatAllReport($report);
             \Log::info(__METHOD__, ['report' => $report]);
-
-
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
