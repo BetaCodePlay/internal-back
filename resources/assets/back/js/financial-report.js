@@ -55,7 +55,7 @@ class FinancialReport {
             let provider = $('#change_provider').val();
             let route = $(this).data('route');
             let maker = $('#maker');
-
+            console.log(maker)
             if(provider !== '') {
                 $.ajax({
                     url: route,
