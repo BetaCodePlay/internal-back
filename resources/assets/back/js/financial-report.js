@@ -5,7 +5,7 @@ class FinancialReport {
 
     // All dates of financial report
     all(){
-        let $table = $('#financial-report-table');
+        let $table = $('#special-table');
         let $button = $('#search');
         let api;
 
@@ -55,7 +55,6 @@ class FinancialReport {
             let provider = $('#change_provider').val();
             let route = $(this).data('route');
             let maker = $('#maker');
-            console.log(maker)
             if(provider !== '') {
                 $.ajax({
                     url: route,
@@ -68,6 +67,7 @@ class FinancialReport {
                     maker.html('loading');
                     maker.html(json.data.maker);
                     $(json.data.maker).each(function(key, element){
+                        console.log(element)
                         maker.append("<option value=" + element.id + ">" + element.description + "</option>");
                     })
                     maker.prop('disabled', false);
@@ -85,9 +85,8 @@ class FinancialReport {
         initSelect2();
         initDateTimePicker();
         let $form = $('#store-form');
-        console.log($form)
         let $button = $('#store');
-        let $table = $('#financial-report-table');
+        let $table = $('#special-table');
 
         $button.click(function () {
             $button.button('loading');
