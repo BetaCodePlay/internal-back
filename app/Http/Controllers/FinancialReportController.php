@@ -115,6 +115,7 @@ class FinancialReportController
     public function store(Request $request)
     {
         try {
+            \Log::info(__METHOD__, ['request' => $request->all()]);
             $provider = $request->change_provider;
             $maker = $request->maker;
             $amount = $request->amount;
