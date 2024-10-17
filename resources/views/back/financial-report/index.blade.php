@@ -118,7 +118,7 @@
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Maker') }}
                             </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                            {{--<th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Amount') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -129,7 +129,7 @@
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Limit') }}
-                            </th>
+                            </th>--}}
                         </tr>
                         </thead>
                         <tbody></tbody>
