@@ -67,7 +67,7 @@ class FinancialReport {
                     maker.html('loading');
                     maker.html(json.data.maker);
                     $(json.data.maker).each(function(key, element){
-                        console.log(element)
+                        console.log(element.id)
                         maker.append("<option value=" + element.id + ">" + element.description + "</option>");
                     })
                     maker.prop('disabled', false);
