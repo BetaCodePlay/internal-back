@@ -12,7 +12,7 @@ class FinancialReport {
         $table.DataTable({
             "ajax": {
                 "url": $table.data('route'),
-                "dataSrc": "data.financial"
+                "dataSrc": "data"
             },
             "order": [[0, "asc"]],
             "columns": [
@@ -85,6 +85,7 @@ class FinancialReport {
         initSelect2();
         initDateTimePicker();
         let $form = $('#store-form');
+        console.log($form)
         let $button = $('#store');
         let $table = $('#financial-report-table');
 
