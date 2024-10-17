@@ -8,12 +8,12 @@ class FinancialReport {
         let $table = $('#special-table');
         let $button = $('#search');
         let api;
-        console.log($table)
+
         $table.DataTable({
             "ajax": {
 
                 "url": $table.data('route'),
-                "dataSrc": "data"
+                "dataSrc": "data.financial"
             },
             "order": [[0, "asc"]],
             "columns": [

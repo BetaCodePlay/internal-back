@@ -49,7 +49,10 @@ class FinancialReportController
         try {
             $report = $this->financialReportRepo->all();
             $this->financialReportCollection->formatAllReport($report);
-            \Log::info(__METHOD__, ['$report' => $report]);
+            $data = [
+                'financial' => $report
+            ];
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
@@ -115,7 +118,6 @@ class FinancialReportController
     public function store(Request $request)
     {
         try {
-            \Log::info(__METHOD__, ['request' => $request->all()]);
             $provider = $request->change_provider;
             $maker = $request->maker;
             $amount = $request->amount;
@@ -138,7 +140,6 @@ class FinancialReportController
                 'currency_iso' => $currency,
                 'total_played' => $total_played
             ];
-            \Log::info(__METHOD__, ['data' => $financialData]);
             $this->financialReportRepo->store($financialData);
 
 
