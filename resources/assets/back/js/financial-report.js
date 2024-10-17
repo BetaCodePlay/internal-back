@@ -1,5 +1,5 @@
 import {swalConfirm, swalError, swalSuccessNoButton} from "../../commons/js/core";
-import {initSelect2} from "./commons";
+import {initDateTimePicker, initSelect2} from "./commons";
 
 class FinancialReport {
 
@@ -82,6 +82,7 @@ class FinancialReport {
     //store
     store() {
         initSelect2();
+        initDateTimePicker();
         let $form = $('#store-form');
         let $button = $('#store');
         let $table = $('#financial-table');
