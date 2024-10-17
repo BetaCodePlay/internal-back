@@ -68,10 +68,12 @@ class FinancialReportController
             $currency = session('currency');
             $user = auth()->user()->id;
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
+            $maker = $this->gamesRepo->getMakersByProvider($provider);
             $data['title'] = _i('Create');
             $data['user'] = $user;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
+            $data['maker'] = $maker;
             return view('back.financial-report.index', $data);
         } catch (\Exception $e) {
             \Log::error(__METHOD__, ['exception' => $e]);
@@ -118,7 +120,7 @@ class FinancialReportController
             $maker = $request->maker;
             $amount = $request->amount;
             $load_amount = $request->load_amount;
-            $load_date = $request->start_date;
+            $load_date = $request->load_date;
             $limit = $request->limit;
             $user = $request->user;
             $currency = $request->currency;
