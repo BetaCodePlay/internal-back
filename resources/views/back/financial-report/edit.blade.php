@@ -81,6 +81,7 @@
                                     <div class="form-group">
                                         <input type="hidden" name="user" value="{{ $user }}">
                                         <input type="hidden" name="total_played" value="">
+                                        <input type="hidden" name="id" value="">
                                         <button type="button" class="btn u-btn-3d u-btn-primary" id="store"
                                                 data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                             <i class="hs-admin-save"></i>

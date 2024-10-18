@@ -14,7 +14,7 @@ class FinancialReportRepo
      */
     public function all()
     {
-        $financial = FinancialReport::select('providers.name', 'financial_report.currency_iso', 'financial_report.amount', 'financial_report.provider_id',
+        $financial = FinancialReport::select('providers.name', 'financial_report.id', 'financial_report.currency_iso', 'financial_report.amount', 'financial_report.provider_id',
             'financial_report.load_amount', 'financial_report.maker', 'financial_report.total_played', 'financial_report.load_date', 'financial_report.limit')
             ->join('providers', 'financial_report.provider_id', '=', 'providers.id')
             ->get();

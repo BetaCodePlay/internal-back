@@ -41,10 +41,9 @@ class FinancialReportController
     /**
      * Get all
      *
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function all(Request $request)
+    public function all()
     {
         try {
             $report = $this->financialReportRepo->all();
@@ -64,9 +63,11 @@ class FinancialReportController
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit()
+    public function edit(Request $request)
     {
         try {
+            $id= $request->id;
+            \Log::ind(__METHOD__, ['id' => $id]);
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $user = auth()->user()->id;
