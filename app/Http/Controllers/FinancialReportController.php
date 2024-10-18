@@ -60,6 +60,7 @@ class FinancialReportController
 
     /**
      * Edit view
+     * @param Request $request
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
