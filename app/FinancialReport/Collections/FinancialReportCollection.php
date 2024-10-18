@@ -29,7 +29,7 @@ class FinancialReportCollection
             $report->limits = $report->limit;
             $report->actions = sprintf(
                 '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
-                route('financial-report.edit'),
+                route('financial-report.edit', [$report->id]),
                 _i('Edit')
             );
         }
