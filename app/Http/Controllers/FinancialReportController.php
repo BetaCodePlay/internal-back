@@ -68,7 +68,7 @@ class FinancialReportController
     {
         try {
             $id= $request->id;
-            \Log::ind(__METHOD__, ['id' => $id]);
+            \Log::info(__METHOD__, ['id' => $id]);
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $user = auth()->user()->id;
