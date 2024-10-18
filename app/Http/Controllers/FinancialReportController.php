@@ -71,7 +71,7 @@ class FinancialReportController
             $currency = session('currency');
             $user = auth()->user()->id;
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
-            $data['title'] = _i('Edit');
+            $data['title'] = _i('Edit transactions');
             $data['user'] = $user;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
