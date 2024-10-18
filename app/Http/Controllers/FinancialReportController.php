@@ -75,7 +75,6 @@ class FinancialReportController
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $data['title'] = _i('Edit transactions');
             $data['user'] = $user;
-            $data['id'] = $reportId->id;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
             return view('back.financial-report.edit', $data);
