@@ -16,6 +16,12 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
         'uses' => 'FinancialReportController@all'
     ]);
 
+    // edit financial report
+    Route::get('edit', [
+        'as' => 'financial-report.edit',
+        'uses' => 'FinancialReportController@edit'
+    ]);
+
     //  all providers makers
     Route::get('makers/provider', [
         'as' => 'financial-report.maker',

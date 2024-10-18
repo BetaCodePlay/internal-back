@@ -19,7 +19,6 @@ class FinancialReportCollection
      */
     public function formatAllReport($reports)
     {
-        \Log::info(__METHOD__, ['report' => $reports]);
         foreach ($reports as $report) {
             $report->makers = $report->maker;
             $report->provider = $report->name;
@@ -28,11 +27,11 @@ class FinancialReportCollection
             $report->amount_load = $report->load_amount;
             $report->date_load = $report->load_date;
             $report->limits = $report->limit;
-            /*$game->actions .= sprintf(
-                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
-                route('whitelabels-games.delete', [$game->game_id, $game->whitelabel_game_category_id]),
-                _i('Delete')
-            );*/
+            $report->actions = sprintf(
+                '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
+                route('financial-report.edit'),
+                _i('Edit')
+            );
         }
     }
 
