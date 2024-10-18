@@ -69,7 +69,7 @@ class FinancialReportController
         try {
             $id= 8;
             $reportId = $this->financialReportRepo->findById($id);
-            \Log::info(__METHOD__, ['id' => $id]);
+            \Log::info(__METHOD__, ['$reportId' => $reportId]);
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $user = auth()->user()->id;
