@@ -67,7 +67,8 @@ class FinancialReportController
     public function edit(Request $request)
     {
         try {
-            $id= $request->id;
+            $id= 8;
+            $reportId = $this->financialReportRepo->findById($id);
             \Log::info(__METHOD__, ['id' => $id]);
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
@@ -75,6 +76,7 @@ class FinancialReportController
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $data['title'] = _i('Edit transactions');
             $data['user'] = $user;
+            $data['id'] = $reportId;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
             return view('back.financial-report.edit', $data);

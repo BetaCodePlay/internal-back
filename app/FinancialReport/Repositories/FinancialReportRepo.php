@@ -5,6 +5,16 @@ use App\FinancialReport\Entities\FinancialReport;
 
 class FinancialReportRepo
 {
+    /**
+     * Find by id
+     *
+     * @return static
+     */
+    public function findById($id)
+    {
+        return FinancialReport::where('id', $id)
+            ->first();
+    }
 
     /**
      * Get all
@@ -20,6 +30,7 @@ class FinancialReportRepo
             ->get();
         return $financial;
     }
+
     /**
      * Store financial
      *
