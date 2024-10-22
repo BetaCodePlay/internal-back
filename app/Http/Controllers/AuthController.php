@@ -331,7 +331,7 @@ class AuthController extends Controller
                     'user_id' => auth()->user()->id,
                     'username' => auth()->user()->username
                 ];
-                Audits::store($user, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
+                Audits::store($user->id, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
                 //Cerramos la sesión del usuario para que ingrese con el nuevo password
                 session()->flush();
                 auth()->logout();
