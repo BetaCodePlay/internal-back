@@ -168,9 +168,6 @@ class AgentsReportsController extends Controller
     ) {
         try {
             $user = is_null($userId) ? auth()->user() : User::find($userId);
-
-            //  $startDate    = Utils::startOfDayUtc($startDate);
-            //  $endDate      = Utils::startOfDayUtc($endDate);
             $currency     = session('currency');
             $whitelabelId = Configurations::getWhitelabel();
 
@@ -188,18 +185,6 @@ class AgentsReportsController extends Controller
 
             $startDate = "{$startDate} {$startTime}";
             $endDate   = "{$endDate} {$endTime}";
-
-            if ($whitelabelId === 1) {
-                Log::info('Info Magda', [
-                    (int)$child ?: $user->id,
-                    $currency,
-                    $whitelabelId,
-                    $startDate,
-                    $endDate,
-                    $timezone,
-                    $username
-                ]);
-            }
 
             $financialData = $this->reportAgentRepo->getTotalByUserFromAgent(
                 (int)$child ?: $user->id,
