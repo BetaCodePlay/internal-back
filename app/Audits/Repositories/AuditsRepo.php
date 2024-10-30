@@ -202,6 +202,8 @@ class AuditsRepo
                     AuditTypes::$user_status,
                     AuditTypes::$user_password,
                     AuditTypes::$user_modification,
+                    AuditTypes::$login,
+                    AuditTypes::$dotpanel_login,
                     AuditTypes::$manual_transactions,
                     AuditTypes::$points_transactions,
                     AuditTypes::$manual_adjustments,
