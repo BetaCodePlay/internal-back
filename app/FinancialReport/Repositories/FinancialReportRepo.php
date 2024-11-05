@@ -2,6 +2,7 @@
 
 namespace App\FinancialReport\Repositories;
 use App\FinancialReport\Entities\FinancialReport;
+use Illuminate\Support\Facades\DB;
 
 class FinancialReportRepo
 {
