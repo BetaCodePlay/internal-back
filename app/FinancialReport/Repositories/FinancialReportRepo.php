@@ -42,4 +42,15 @@ class FinancialReportRepo
         $financial = FinancialReport::create($data);
         return $financial;
     }
+
+    /**
+     * @param $provider
+     * @param $maker
+     * @param $currency
+     * @return mixed
+     */
+    public function updateTotalPlayed($provider, $maker, $currency)
+    {
+        return DB::select('Select * from site.update_totalplayed(?,?)',[$provider, $maker, $currency]);
+    }
 }

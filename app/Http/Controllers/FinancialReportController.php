@@ -116,11 +116,14 @@ class FinancialReportController
     public function maker(Request $request)
     {
         try {
+            $currency = session('currency');
             $provider = $request->change_provider;
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
                 $this->financialReportCollection->formatAll($maker);
             }
+            $totalPlayed= $this->financialReportRepo->updateTotalPlayed($provider, $maker, $currency);
+            \Log::info(__METHOD__, ['$totalPlayed' => $totalPlayed]);
             $data = [
                 'maker' => $maker
             ];
