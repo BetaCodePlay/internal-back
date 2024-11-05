@@ -51,6 +51,6 @@ class FinancialReportRepo
      */
     public function updateTotalPlayed($provider, $maker, $currency)
     {
-        return DB::select('Select * from site.update_totalplayed(?,?)',[$provider, $maker, $currency]);
+        return DB::select('Select * from site.update_totalplayed(?,?,?)',[$provider, $maker, $currency]);
     }
 }
