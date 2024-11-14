@@ -123,7 +123,6 @@ class FinancialReportController
                 $this->financialReportCollection->formatAll($maker);
             }
             $totalPlayed= $this->financialReportRepo->updateTotalPlayed($provider, $maker, $currency);
-            \Log::info(__METHOD__, ['$totalPlayed' => $totalPlayed]);
             $data = [
                 'maker' => $maker
             ];

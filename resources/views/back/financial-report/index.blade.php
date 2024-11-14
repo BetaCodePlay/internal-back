@@ -128,6 +128,9 @@
                                 {{ _i('Load amount') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Total amount played') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Load date') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\FinancialReport\Collections;
+use App\FinancialReport\Repositories\FinancialReportRepo;
 
 /**
  * Class FinancialReportCollection
@@ -19,6 +20,7 @@ class FinancialReportCollection
      */
     public function formatAllReport($reports)
     {
+        $reportsRepo = new FinancialReportRepo();
         foreach ($reports as $report) {
             $report->makers = $report->maker;
             $report->provider = $report->name;
@@ -32,6 +34,8 @@ class FinancialReportCollection
                 route('financial-report.edit', [$report->id]),
                 _i('Edit')
             );
+            $totalPlayed= $reportsRepo->updateTotalPlayed($report->name, $report->maker, $report->currency_iso);
+            \Log::info(__METHOD__, ['$totalPlayed' => $totalPlayed]);
         }
     }
 
