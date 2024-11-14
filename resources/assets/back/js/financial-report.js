@@ -22,6 +22,7 @@ class FinancialReport {
                 {"data": "currency"},
                 {"data": "amount"},
                 {"data": "load_amount"},
+                {"data": "totalPlayed"},
                 {"data": "load_date"},
                 {"data": "limit"},
                 {"data": "actions", "className": "text-right"}

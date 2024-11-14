@@ -1,6 +1,7 @@
 <?php
 
 namespace App\FinancialReport\Collections;
+
 use App\FinancialReport\Repositories\FinancialReportRepo;
 
 /**
@@ -22,10 +23,15 @@ class FinancialReportCollection
     {
         $reportsRepo = new FinancialReportRepo();
         foreach ($reports as $report) {
-            \Log::info(__METHOD__, ['$report' => $report]);
             $report->makers = $report->maker;
             $report->provider = $report->name;
             $report->currency = $report->currency_iso;
+            $totalPlayed = $reportsRepo->updateTotalPlayed($report->provider_id, $report->maker, $report->currency_iso);
+            if ($totalPlayed == true) {
+                $report->totalPlayed = $report->total_played;
+            } else {
+                $report->totalPlayed = 0;
+            }
             $report->amount_real = $report->amount;
             $report->amount_load = $report->load_amount;
             $report->date_load = $report->load_date;
@@ -35,8 +41,6 @@ class FinancialReportCollection
                 route('financial-report.edit', [$report->id]),
                 _i('Edit')
             );
-            $totalPlayed= $reportsRepo->updateTotalPlayed($report->provider_id, $report->maker, $report->currency_iso);
-            \Log::debug(__METHOD__, ['$totalPlayed' => $totalPlayed]);
         }
     }
 
