@@ -211,15 +211,12 @@ class FinancialReportController
                 'user_id' => $user,
                 'currency_iso' => $currency
             ];
-            \Log::info(__METHOD__, ['$financialData' => $financialData, 'id' => $id]);
+
             $this->financialReportRepo->update($id, $financialData);
-
-
             $data = [
                 'title' => _i('Saved'),
-                'message' => _i('The data was saved successfully'),
-                'close' => _i('Close'),
-                'route' => route('financial-report.index')
+                'message' => _i('The data was edited successfully'),
+                'close' => _i('Close')
             ];
             return Utils::successResponse($data);
 
