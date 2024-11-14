@@ -34,7 +34,7 @@ class FinancialReportCollection
                 route('financial-report.edit', [$report->id]),
                 _i('Edit')
             );
-            $totalPlayed= $reportsRepo->updateTotalPlayed($report->name, $report->maker, $report->currency_iso);
+            $totalPlayed= $reportsRepo->updateTotalPlayed($report->provider, $report->maker, $report->currency_iso);
             \Log::info(__METHOD__, ['$totalPlayed' => $totalPlayed]);
         }
     }
