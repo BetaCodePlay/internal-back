@@ -14,6 +14,7 @@ class FinancialReportRepo
     public function findById($id)
     {
         return FinancialReport::where('id', $id)
+            ->whitelabel()
             ->first();
     }
 
