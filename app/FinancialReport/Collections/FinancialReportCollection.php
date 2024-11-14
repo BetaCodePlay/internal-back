@@ -22,6 +22,7 @@ class FinancialReportCollection
     {
         $reportsRepo = new FinancialReportRepo();
         foreach ($reports as $report) {
+            \Log::info(__METHOD__, ['$report' => $report]);
             $report->makers = $report->maker;
             $report->provider = $report->name;
             $report->currency = $report->currency_iso;
@@ -34,8 +35,7 @@ class FinancialReportCollection
                 route('financial-report.edit', [$report->id]),
                 _i('Edit')
             );
-            $totalPlayed= $reportsRepo->updateTotalPlayed($report->provider, $report->maker, $report->currency_iso);
-            \Log::info(__METHOD__, ['$totalPlayed' => $totalPlayed]);
+            /*$totalPlayed= $reportsRepo->updateTotalPlayed($report->provider, $report->maker, $report->currency_iso);*/
         }
     }
 

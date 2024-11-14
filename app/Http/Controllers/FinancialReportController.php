@@ -122,6 +122,7 @@ class FinancialReportController
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
                 $this->financialReportCollection->formatAll($maker);
             }
+            \Log::info(__METHOD__, ['provider' => $provider]);
             $totalPlayed= $this->financialReportRepo->updateTotalPlayed($provider, $maker, $currency);
             $data = [
                 'maker' => $maker
