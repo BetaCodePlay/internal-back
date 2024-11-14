@@ -64,7 +64,7 @@ class FinancialReportRepo
      */
     public function update($id, $data)
     {
-        $financial = FinancialReport::findById($id);
+        $financial = FinancialReport::find($id);
         $financial->fill($data);
         $financial->save();
         return $financial;
