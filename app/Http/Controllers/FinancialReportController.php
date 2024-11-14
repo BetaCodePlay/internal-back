@@ -211,7 +211,7 @@ class FinancialReportController
                 'user_id' => $user,
                 'currency_iso' => $currency
             ];
-            \Log::info(__METHOD__, ['$financialData' => $financialData]);
+            \Log::info(__METHOD__, ['$financialData' => $financialData, 'id' => $id]);
             $this->financialReportRepo->update($id, $financialData);
 
 
