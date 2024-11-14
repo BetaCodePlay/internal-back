@@ -77,7 +77,6 @@ class FinancialReportController
             $data['id'] = $financial->id;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
-            \Log::info(__METHOD__, ['data' => $data]);
             return view('back.financial-report.edit', $data);
         } catch (\Exception $e) {
             \Log::error(__METHOD__, ['exception' => $e]);

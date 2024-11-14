@@ -88,7 +88,7 @@
                                     <div class="form-group">
                                         <input type="hidden" name="user" value="{{ $user }}">
                                         <input type="hidden" name="id" value="{{ $id }}">
-                                        <button type="button" class="btn u-btn-3d u-btn-primary" id="update"
+                                        <button type="submit" class="btn u-btn-3d u-btn-primary" id="update"
                                                 data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                             <i class="hs-admin-save"></i>
                                             {{ _i('Save') }}
