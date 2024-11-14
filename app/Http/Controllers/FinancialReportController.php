@@ -68,15 +68,16 @@ class FinancialReportController
     {
         try {
             $financial = $this->financialReportRepo->findById($id);
-            \Log::info(__METHOD__, ['financial' => $financial]);
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $user = auth()->user()->id;
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $data['title'] = _i('Edit transactions');
             $data['user'] = $user;
+            $data['id'] = $financial->id;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
+            \Log::info(__METHOD__, ['data' => $data]);
             return view('back.financial-report.edit', $data);
         } catch (\Exception $e) {
             \Log::error(__METHOD__, ['exception' => $e]);
@@ -210,6 +211,7 @@ class FinancialReportController
                 'user_id' => $user,
                 'currency_iso' => $currency
             ];
+            \Log::info(__METHOD__, ['$financialData' => $financialData]);
             $this->financialReportRepo->update($id, $financialData);
 
 
