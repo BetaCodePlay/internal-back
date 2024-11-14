@@ -216,7 +216,7 @@ class FinancialReportController
                 'title' => _i('Saved'),
                 'message' => _i('The data was edited successfully'),
                 'close' => _i('Close'),
-                'route' => route('financial-report.edit')
+                'route' => route('financial-report.index')
             ];
             return Utils::successResponse($data);
 
