@@ -123,15 +123,19 @@ class FinancialReport {
         let $form = $('#update-form');
 
         $button.click(function () {
+            $button.button('loading');
 
             $.ajax({
                 url: $form.attr('action'),
                 method: 'post',
-                data: $form.serialize()
+                dataType: 'json',
+                data:  $form .serialize()
 
             }).done(function (json) {
-                $form.trigger('reset');
-                swalSuccessWithButton(json);
+                $('update-form').trigger('reset');
+                $('form select').val(null).trigger('change');
+                swalSuccessNoButton(json);
+                setTimeout(() => window.location.href = json.data.route, 1000);
 
             }).fail(function (json) {
                 swalError(json);
