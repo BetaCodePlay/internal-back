@@ -11,6 +11,13 @@
                             <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 mb-0">
                                 {{ $title }}
                             </h3>
+                            <div class="media-body d-flex justify-content-end">
+                                <a href="{{ route('financial-report.index') }}"
+                                   class="btn u-btn-3d u-btn-primary float-right">
+                                    <i class="hs-admin-layout-list-thumb"></i>
+                                    {{ _i('Go to list') }}
+                                </a>
+                            </div>
                         </div>
                     </header>
                     <div class="card-block g-pa-15">
