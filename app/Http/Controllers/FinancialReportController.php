@@ -60,15 +60,15 @@ class FinancialReportController
 
     /**
      * Edit view
-     * @param Request $request
+     * @param Request $id
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
         try {
-            $id= $request->id;
-            $reportId = $this->financialReportRepo->findById($id);
+            $financial = $this->financialReportRepo->findById($id);
+            \Log::info(__METHOD__, ['financial' => $financial]);
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $user = auth()->user()->id;
@@ -116,14 +116,11 @@ class FinancialReportController
     public function maker(Request $request)
     {
         try {
-            $currency = session('currency');
             $provider = $request->change_provider;
             if (!is_null($provider)) {
                 $maker = $this->gamesRepo->getMakersByProvider($provider);
                 $this->financialReportCollection->formatAll($maker);
             }
-            \Log::info(__METHOD__, ['provider' => $provider]);
-            $totalPlayed= $this->financialReportRepo->updateTotalPlayed($provider, $maker, $currency);
             $data = [
                 'maker' => $maker
             ];
@@ -154,7 +151,6 @@ class FinancialReportController
             $limit = $request->limit;
             $user = $request->user;
             $currency = $request->currency;
-            $total_played = $request->total_played;
 
             $financialData = [
                 'provider_id' => $provider,
@@ -164,10 +160,57 @@ class FinancialReportController
                 'load_date' => $load_date,
                 'limit' => $limit,
                 'user_id' => $user,
-                'currency_iso' => $currency,
-                'total_played' => $total_played
+                'currency_iso' => $currency
             ];
             $this->financialReportRepo->store($financialData);
+
+
+            $data = [
+                'title' => _i('Saved'),
+                'message' => _i('The data was saved successfully'),
+                'close' => _i('Close'),
+                'route' => route('financial-report.index')
+            ];
+            return Utils::successResponse($data);
+
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
+     * Update
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $provider = $request->change_provider;
+            $maker = $request->maker;
+            $amount = $request->amount;
+            $load_amount = $request->load_amount;
+            $timezone = session('timezone');
+            $load_date = !is_null($request->load_date) ? Carbon::createFromFormat('d-m-Y h:i a', $request->load_date, $timezone)->setTimezone('UTC') : null;
+            $limit = $request->limit;
+            $user = $request->user;
+            $currency = $request->currency;
+
+            $financialData = [
+                'provider_id' => $provider,
+                'maker' => $maker,
+                'amount' => $amount,
+                'load_amount' => $load_amount,
+                'load_date' => $load_date,
+                'limit' => $limit,
+                'user_id' => $user,
+                'currency_iso' => $currency
+            ];
+            $this->financialReportRepo->update($id, $financialData);
 
 
             $data = [

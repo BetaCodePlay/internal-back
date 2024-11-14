@@ -54,4 +54,19 @@ class FinancialReportRepo
     {
         return DB::select('Select * from site.update_totalplayed(?,?,?)',[$provider, $maker, $currency]);
     }
+
+    /**
+     * Update
+     *
+     * @param int $id Slider ID
+     * @param array $data Slider data
+     * @return mixed
+     */
+    public function update($id, $data)
+    {
+        $financial = FinancialReport::findById($id);
+        $financial->fill($data);
+        $financial->save();
+        return $financial;
+    }
 }

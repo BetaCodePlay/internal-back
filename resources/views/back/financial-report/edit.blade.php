@@ -1,7 +1,7 @@
 @extends('back.template')
 
 @section('content')
-    <form action="" id="financial-form" method="post" enctype="multipart/form-data">
+    <form action="{{ route('financial-report.update') }}" id="update-form" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-12">
                 <div class="card g-brd-gray-light-v7 g-rounded-4 g-mb-30">
@@ -82,7 +82,7 @@
                                         <input type="hidden" name="user" value="{{ $user }}">
                                         <input type="hidden" name="total_played" value="">
                                         <input type="hidden" name="id" value="">
-                                        <button type="button" class="btn u-btn-3d u-btn-primary" id="store"
+                                        <button type="button" class="btn u-btn-3d u-btn-primary" id="update"
                                                 data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                             <i class="hs-admin-save"></i>
                                             {{ _i('Save') }}
@@ -103,6 +103,8 @@
         $(function () {
             let financialReport = new FinancialReport()
             financialReport.maker();
+            financialReport.store();
+            financialReport.update();
         });
     </script>
 @endsection

@@ -115,6 +115,33 @@ class FinancialReport {
         });
     }
 
+    // Update
+    update() {
+        initSelect2();
+        initDateTimePicker();
+        let $button = $('#update');
+        let $form = $('#update-form');
+
+        $button.click(function () {
+
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                data: $form.serialize()
+
+            }).done(function (json) {
+                $form.trigger('reset');
+                swalSuccessWithButton(json);
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+    };
+
 }
 
 window.FinancialReport = FinancialReport;

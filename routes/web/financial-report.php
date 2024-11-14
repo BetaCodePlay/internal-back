@@ -17,7 +17,7 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
     ]);
 
     // edit financial report
-    Route::get('edit', [
+    Route::get('edit/{id}', [
         'as' => 'financial-report.edit',
         'uses' => 'FinancialReportController@edit'
     ]);
@@ -32,6 +32,12 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
     Route::post('store', [
         'as' => 'financial-report.store',
         'uses' => 'FinancialReportController@store'
+    ]);
+
+    // Store financial report
+    Route::post('update', [
+        'as' => 'financial-report.update',
+        'uses' => 'FinancialReportController@update'
     ]);
 
 });
