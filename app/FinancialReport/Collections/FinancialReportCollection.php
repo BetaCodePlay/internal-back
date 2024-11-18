@@ -41,6 +41,11 @@ class FinancialReportCollection
                 route('financial-report.edit', [$report->id]),
                 _i('Edit')
             );
+            $report->actions .= sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('financial-report.delete', [$report->id]),
+                _i('Delete')
+            );
         }
     }
 

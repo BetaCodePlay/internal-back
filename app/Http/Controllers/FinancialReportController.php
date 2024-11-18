@@ -85,6 +85,27 @@ class FinancialReportController
     }
 
     /**
+     * Delete
+     * @param int $id ID
+     * * @return \Symfony\Component\HttpFoundation\Response
+ */
+    public function delete($id)
+    {
+        try {
+            $this->financialReportRepo->delete($id);
+            $data = [
+                'title' => _i('Data removed'),
+                'message' => _i('The data was successfully removed'),
+                'close' => _i('Close')
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $e) {
+            \Log::error(__METHOD__, ['exception' => $e]);
+            abort(500);
+        }
+    }
+
+    /**
      * Index view
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View

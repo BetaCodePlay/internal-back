@@ -7,6 +7,20 @@ use Illuminate\Support\Facades\DB;
 class FinancialReportRepo
 {
     /**
+     * Delete
+     *
+     * @param int $id ID
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $financial =FinancialReport::where('id', $id)
+            ->first();
+        $financial->delete();
+        return $financial;
+    }
+
+    /**
      * Find by id
      *
      * @return static

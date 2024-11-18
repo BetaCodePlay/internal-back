@@ -16,6 +16,12 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
         'uses' => 'FinancialReportController@all'
     ]);
 
+    // Delete sliders
+    Route::get('delete/{id}', [
+        'as' => 'financial-report.delete',
+        'uses' => 'FinancialReportController@delete'
+    ]);
+
     // edit financial report
     Route::get('edit/{id}', [
         'as' => 'financial-report.edit',
