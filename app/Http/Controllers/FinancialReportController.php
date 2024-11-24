@@ -59,6 +59,25 @@ class FinancialReportController
     }
 
     /**
+     * Get all report provider
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function allReportProvider()
+    {
+        try {
+            $report = $this->financialReportRepo->all();
+            $data = [
+                'financial' => $report
+            ];
+            return Utils::successResponse($data);
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+    }
+
+    /**
      * Edit view
      * @param Request $id
      *
@@ -122,6 +141,29 @@ class FinancialReportController
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
             return view('back.financial-report.index', $data);
+        } catch (\Exception $e) {
+            \Log::error(__METHOD__, ['exception' => $e]);
+            abort(500);
+        }
+    }
+
+    /**
+     * Index report providerview
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function indexReportProvider()
+    {
+        try {
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = session('currency');
+            $user = auth()->user()->id;
+            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
+            $data['title'] = _i('Create');
+            $data['user'] = $user;
+            $data['currencies'] = Configurations::getCurrencies();
+            $data['providers'] = $provider;
+            return view('back.financial-report.providers-amount.index', $data);
         } catch (\Exception $e) {
             \Log::error(__METHOD__, ['exception' => $e]);
             abort(500);
@@ -201,6 +243,18 @@ class FinancialReportController
     }
 
     /**
+     * Store report provider
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function storeReportProvider(Request $request)
+    {
+
+    }
+
+    /**
      * Update
      *
      * @param Request $request
@@ -245,6 +299,18 @@ class FinancialReportController
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
+    }
+
+    /**
+     * Update report provider
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updateReportProvider(Request $request)
+    {
+
     }
 
 }

@@ -51,6 +51,54 @@ class FinancialReport {
         });
     };
 
+    // All dates of financial report
+    allReportProvider(){
+        let $table = $('#provider-table');
+        let $button = $('#search');
+        let api;
+
+        $table.DataTable({
+            "ajax": {
+
+                "url": $table.data('route'),
+                "dataSrc": "data.financial"
+            },
+            "order": [[0, "asc"]],
+            "columns": [
+                {"data": "provider"},
+                {"data": "makers"},
+                {"data": "chips"},
+                {"data": "percentage"},
+                {"data": "benefit"},
+                {"data": "balance"},
+                {"data": "consumed"},
+                {"data": "date"},
+                {"data": "actions", "className": "text-right"}
+            ],
+            "initComplete": function () {
+                api = this.api()
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+                $(document).on('click', '.delete', function () {
+                    let $button = $(this);
+                    swalConfirm($button.data('route'), function () {
+                        $table.DataTable().ajax.url($table.data('route')).load();
+                    });
+                });
+            }
+        });
+
+        $button.click(function () {
+            $button.button('loading');
+            let provider = $('#provider').val();
+            let route = `${$table.data('route')}?provider=${provider}`;
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
+                $button.button('reset');
+            });
+        });
+    };
+
     // Maker
     maker() {
         initSelect2();

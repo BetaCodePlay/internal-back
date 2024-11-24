@@ -46,4 +46,47 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
         'uses' => 'FinancialReportController@update'
     ]);
 
+    /**
+     * Financial report providers routes
+     */
+    Route::group(['prefix' => 'providers', 'middleware' => ['auth']], function () {
+
+        // Index
+        Route::get('', [
+            'as' => 'financial-report.providers.index',
+            'uses' => 'FinancialReportController@indexReportProvider'
+        ]);
+
+        // Get all financial report
+        Route::get('all', [
+            'as' => 'financial-report.providers.all',
+            'uses' => 'FinancialReportController@allReportProvider'
+        ]);
+
+        // Delete sliders
+        Route::get('delete/{id}', [
+            'as' => 'financial-report.providers.delete',
+            'uses' => 'FinancialReportController@deleteReportProvider'
+        ]);
+
+        // edit financial report
+        Route::get('edit/{id}', [
+            'as' => 'financial-report.providers.edit',
+            'uses' => 'FinancialReportController@editReportProvider'
+        ]);
+
+        // Store financial report
+        Route::post('store', [
+            'as' => 'financial-report.providers.store',
+            'uses' => 'FinancialReportController@storeReportProvider'
+        ]);
+
+        // Store financial report
+        Route::post('update', [
+            'as' => 'financial-report.providers.update',
+            'uses' => 'FinancialReportController@updateReportProvider'
+        ]);
+
+    });
 });
+
