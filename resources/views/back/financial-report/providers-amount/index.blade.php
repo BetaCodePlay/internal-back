@@ -54,32 +54,20 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="amount">{{ _i('Amount') }}</label>
-                                    <input type="number" name="amount" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
                                     <label for="chips">{{ _i('Chips') }}</label>
                                     <input type="number" name="chips" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="load_date">{{ _i('Load date') }}</label>
-                                    <input type="text" name="load_date" id="load_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
+                                    <label for="load_date">{{ _i('From') }}</label>
+                                    <input type="text" name="from_date" id="from_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="limit">{{ _i('Limit') }}</label>
-                                    <input type="number" name="limit" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="benefit">{{ _i('Benefit') }}</label>
-                                    <input type="number" name="benefit" class="form-control">
+                                    <label for="load_date">{{ _i('Until') }}</label>
+                                    <input type="text" name="until_date" id="until_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -91,10 +79,10 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="hidden" name="user" value="{{ $user }}">
-                                    <button type="button" class="btn u-btn-3d u-btn-primary" id="store"
+                                    <button type="button" class="btn u-btn-3d u-btn-primary" id=""
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                         <i class="hs-admin-save"></i>
-                                        {{ _i('Save') }}
+                                        {{ _i('Search') }}
                                     </button>
                                 </div>
                             </div>
