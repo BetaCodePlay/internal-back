@@ -60,13 +60,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="load_date">{{ _i('From') }}</label>
+                                    <label for="from_date">{{ _i('From') }}</label>
                                     <input type="text" name="from_date" id="from_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="load_date">{{ _i('Until') }}</label>
+                                    <label for="until_date">{{ _i('Until') }}</label>
                                     <input type="text" name="until_date" id="until_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
