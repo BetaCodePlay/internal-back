@@ -131,6 +131,39 @@ class FinancialReport {
     }
 
     //store
+    storeReportProvider() {
+        initSelect2();
+        initDateTimePicker();
+        let $form = $('#provider-form');
+        let $button = $('#search');
+        let $table = $('#provider-table');
+
+        $button.click(function () {
+            $button.button('loading');
+
+            $.ajax({
+                url: $form.attr('action'),
+                method: 'post',
+                dataType: 'json',
+                data:  $form .serialize()
+
+            }).done(function (json) {
+                $('provider-form').trigger('reset');
+                $('form select').val(null).trigger('change');
+                $table.DataTable().ajax.url($table.data('route')).load();
+                swalSuccessNoButton(json);
+                setTimeout(() => window.location.href = json.data.route, 1000);
+
+            }).fail(function (json) {
+                swalError(json);
+
+            }).always(function () {
+                $button.button('reset');
+            });
+        });
+    }
+
+    //store
     store() {
         initSelect2();
         initDateTimePicker();

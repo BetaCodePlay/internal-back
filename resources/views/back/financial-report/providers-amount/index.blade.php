@@ -13,7 +13,7 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <form action="{{ route('financial-report.providers.store') }}" id="store-form" method="post">
+                    <form action="{{ route('financial-report.providers.store') }}" id="provider-form" method="post">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -60,14 +60,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="from_date">{{ _i('From') }}</label>
-                                    <input type="text" name="from_date" id="from_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
+                                    <label for="start_date">{{ _i('From') }}</label>
+                                    <input type="text" name="start_date" id="start_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="until_date">{{ _i('Until') }}</label>
-                                    <input type="text" name="until_date" id="until_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
+                                    <label for="end_date">{{ _i('Until') }}</label>
+                                    <input type="text" name="end_date" id="end_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -79,9 +79,9 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="hidden" name="user" value="{{ $user }}">
-                                    <button type="button" class="btn u-btn-3d u-btn-primary" id=""
-                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
-                                        <i class="hs-admin-save"></i>
+                                    <button type="button" class="btn u-btn-3d u-btn-primary" id="search"
+                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Searching...') }}">
+                                        <i class="hs-admin-search"></i>
                                         {{ _i('Search') }}
                                     </button>
                                 </div>
@@ -155,6 +155,7 @@
             let financialReport = new FinancialReport()
             financialReport.allReportProvider();
             financialReport.maker();
+            financialReport.storeReportProvider();
         });
     </script>
 @endsection
