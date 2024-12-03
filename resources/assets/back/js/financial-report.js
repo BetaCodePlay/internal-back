@@ -94,7 +94,7 @@ class FinancialReport {
         $table.DataTable({
             "ajax": {
                 "url": $table.data('route'),
-                "dataSrc": "data",
+                "dataSrc": "data.report",
             },
             "order": [],
             "columns": [

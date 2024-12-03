@@ -235,8 +235,19 @@ class FinancialReportController
     public function search(Request $request, $startDate = null, $endDate = null)
     {
         try {
-            \Log::info(__METHOD__, ['$request' => $request->all()]);
+            $provider = $request->change_provider;
+            $maker = $request->maker;
+            $currency = $request->currency;
+            $percentage = $request->percentage;
+            $chips = $request->chips;
+            $timezone = session('timezone');
+            $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+            \Log::info(__METHOD__, ['$report' => $report]);
 
+            $data = [
+                'report' => $report
+            ];
+            return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
