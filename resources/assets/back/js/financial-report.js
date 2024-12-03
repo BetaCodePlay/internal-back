@@ -112,22 +112,23 @@ class FinancialReport {
                 api = this.api();
                 api.buttons().container()
                     .appendTo($('#table-buttons'));
-                $button.click(function () {
-                    $button.button('loading');
-                    let provider = $('#change_provider').val();
-                    let maker = $('#maker').val();
-                    let currency = $('#currency').val();
-                    let chips = $('#chips').val();
-                    let startDate = $('#start_date').val();
-                    let endDate = $('#end_date').val();
-                    let percentage = $('#percentage').val();
-                    let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&percentage=${percentage}`;
-                    api.ajax.url(route).load();
-                    $table.on('draw.dt', function () {
-                        $button.button('reset');
-                    });
-                });
             }
+        });
+        $button.click(function () {
+            $button.button('loading');
+            let provider = $('#change_provider').val();
+            let maker = $('#maker').val();
+            let currency = $('#currency').val();
+            let chips = $('#chips').val();
+            let startDate = $('#start_date').val();
+            let endDate = $('#end_date').val();
+            let percentage = $('#percentage').val();
+            let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&percentage=${percentage}`;
+            console.log(route)
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
+                $button.button('reset');
+            });
         });
     }
 
