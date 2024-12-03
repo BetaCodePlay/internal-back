@@ -13,7 +13,7 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <form action="{{ route('financial-report.providers.store') }}" id="provider-form" method="post">
+                    <form action="{{ route('financial-report.providers.search') }}" id="provider-form" method="post">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -79,6 +79,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <input type="hidden" name="user" value="{{ $user }}">
+                                    <input type="hidden" name="timezone" value="{{ $timezone }}">
                                     <button type="button" class="btn u-btn-3d u-btn-primary" id="search"
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Searching...') }}">
                                         <i class="hs-admin-search"></i>
@@ -107,8 +108,7 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <table class="table table-bordered table-responsive-sm w-100" id="provider-table"
-                           data-route="{{ route('financial-report.providers.all') }}">
+                    <table class="table table-bordered table-responsive-sm w-100" id="provider-table">
                         <thead>
                         <tr>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -127,10 +127,10 @@
                                 {{ _i('Benefit') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Balance') }}
+                                {{ _i('Consumed') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Consumed') }}
+                                {{ _i('Balance') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Date') }}
@@ -153,9 +153,8 @@
     <script>
         $(function () {
             let financialReport = new FinancialReport()
-            financialReport.allReportProvider();
             financialReport.maker();
-            financialReport.storeReportProvider();
+            financialReport.search();
         });
     </script>
 @endsection

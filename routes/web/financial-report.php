@@ -57,12 +57,6 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
             'uses' => 'FinancialReportController@indexReportProvider'
         ]);
 
-        // Get all financial report
-        Route::get('all', [
-            'as' => 'financial-report.providers.all',
-            'uses' => 'FinancialReportController@allReportProvider'
-        ]);
-
         // Delete sliders
         Route::get('delete/{id}', [
             'as' => 'financial-report.providers.delete',
@@ -76,15 +70,9 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
         ]);
 
         // Store financial report
-        Route::post('store', [
-            'as' => 'financial-report.providers.store',
-            'uses' => 'FinancialReportController@storeReportProvider'
-        ]);
-
-        // Store financial report
-        Route::post('update', [
-            'as' => 'financial-report.providers.update',
-            'uses' => 'FinancialReportController@updateReportProvider'
+        Route::post('search', [
+            'as' => 'financial-report.providers.search',
+            'uses' => 'FinancialReportController@search'
         ]);
 
     });

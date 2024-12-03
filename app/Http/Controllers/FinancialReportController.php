@@ -59,25 +59,6 @@ class FinancialReportController
     }
 
     /**
-     * Get all report provider
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function allReportProvider()
-    {
-        try {
-            $report = $this->financialReportRepo->all();
-            $data = [
-                'financial' => $report
-            ];
-            return Utils::successResponse($data);
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-    }
-
-    /**
      * Edit view
      * @param Request $id
      *
@@ -158,9 +139,11 @@ class FinancialReportController
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $user = auth()->user()->id;
+            $timezone = session('timezone');
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $data['title'] = _i('Create');
             $data['user'] = $user;
+            $data['timezone'] = $timezone;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
             return view('back.financial-report.providers-amount.index', $data);
@@ -243,13 +226,13 @@ class FinancialReportController
     }
 
     /**
-     * Store report provider
+     * Search
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function storeReportProvider(Request $request)
+    public function search(Request $request)
     {
 
     }
@@ -299,18 +282,6 @@ class FinancialReportController
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
         }
-    }
-
-    /**
-     * Update report provider
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function updateReportProvider(Request $request)
-    {
-
     }
 
 }

@@ -1,5 +1,5 @@
 import {swalConfirm, swalError, swalSuccessNoButton} from "../../commons/js/core";
-import {initDateTimePicker, initSelect2} from "./commons";
+import {clearForm, initDateTimePicker, initSelect2} from "./commons";
 
 class FinancialReport {
 
@@ -51,53 +51,6 @@ class FinancialReport {
         });
     };
 
-    // All dates of financial report
-    allReportProvider(){
-        let $table = $('#provider-table');
-        let $button = $('#search');
-        let api;
-
-        $table.DataTable({
-            "ajax": {
-
-                "url": $table.data('route'),
-                "dataSrc": "data.financial"
-            },
-            "order": [[0, "asc"]],
-            "columns": [
-                {"data": "provider"},
-                {"data": "makers"},
-                {"data": "chips"},
-                {"data": "percentage"},
-                {"data": "benefit"},
-                {"data": "balance"},
-                {"data": "consumed"},
-                {"data": "date"},
-                {"data": "actions", "className": "text-right"}
-            ],
-            "initComplete": function () {
-                api = this.api()
-                api.buttons().container()
-                    .appendTo($('#table-buttons'));
-                $(document).on('click', '.delete', function () {
-                    let $button = $(this);
-                    swalConfirm($button.data('route'), function () {
-                        $table.DataTable().ajax.url($table.data('route')).load();
-                    });
-                });
-            }
-        });
-
-        $button.click(function () {
-            $button.button('loading');
-            let provider = $('#provider').val();
-            let route = `${$table.data('route')}?provider=${provider}`;
-            api.ajax.url(route).load();
-            $table.on('draw.dt', function () {
-                $button.button('reset');
-            });
-        });
-    };
 
     // Maker
     maker() {
@@ -130,36 +83,58 @@ class FinancialReport {
         });
     }
 
-    //store
-    storeReportProvider() {
+    // Advanced search
+    search() {
         initSelect2();
-        initDateTimePicker();
-        let $form = $('#provider-form');
+        let api;
+        let $table = $('#provider_table');
         let $button = $('#search');
-        let $table = $('#provider-table');
+        let $form = $('#provider-form');
 
-        $button.click(function () {
-            $button.button('loading');
+        $table.DataTable({
+            "ajax": {
+                "url": $form.attr('action'),
+                "dataSrc": "data.financial",
+            },
+            "order": [],
+            "columns": [
+                {"data": "provider"},
+                {"data": "makers"},
+                {"data": "chips"},
+                {"data": "percentage"},
+                {"data": "benefit"},
+                {"data": "consumed"},
+                {"data": "balance"},
+                {"data": "date"},
+                {"data": "actions", "className": "text-right"}
+            ],
+            "initComplete": function () {
+                api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
 
-            $.ajax({
-                url: $form.attr('action'),
-                method: 'post',
-                dataType: 'json',
-                data:  $form .serialize()
+                $button.click(function () {
+                    $button.button('loading');
+                    let route = $form.attr('action') + '?' + $form.serialize();
+                    api.ajax.url(route).load();
+                    $table.on('draw.dt', function () {
+                        $button.button('reset');
+                    });
+                });
 
-            }).done(function (json) {
-                $('provider-form').trigger('reset');
-                $('form select').val(null).trigger('change');
-                $table.DataTable().ajax.url($table.data('route')).load();
-                swalSuccessNoButton(json);
-                setTimeout(() => window.location.href = json.data.route, 1000);
-
-            }).fail(function (json) {
-                swalError(json);
-
-            }).always(function () {
+                $form.keypress(function (event) {
+                    if (event.keyCode === 13) {
+                        $button.click();
+                    }
+                });
+            }
+        });
+        clearForm($form);
+        $table.on('xhr.dt', function (event, settings, json, xhr) {
+            if (xhr.status === 500 || xhr.status === 422) {
+                swalError(xhr);
                 $button.button('reset');
-            });
+            }
         });
     }
 

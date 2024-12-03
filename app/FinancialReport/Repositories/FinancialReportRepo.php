@@ -69,6 +69,18 @@ class FinancialReportRepo
         return DB::select('Select * from site.update_totalplayed(?,?,?)',[$provider, $maker, $currency]);
     }
 
+
+    /**
+     * @param $provider
+     * @param $maker
+     * @param $currency
+     * @return mixed
+     */
+    public function reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips)
+    {
+        return DB::select('Select * from site.report_benefit(?,?,?,?,?,?,?,?,?)',[$provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips]);
+    }
+
     /**
      * Update
      *
