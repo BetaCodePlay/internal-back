@@ -4,7 +4,7 @@ import {clearForm, initDateTimePicker, initSelect2} from "./commons";
 class FinancialReport {
 
     // All dates of financial report
-    all(){
+    all() {
         let $table = $('#special-table');
         let $button = $('#search');
         let api;
@@ -55,11 +55,11 @@ class FinancialReport {
     // Maker
     maker() {
         initSelect2();
-        $('#change_provider').on('change', function(){
+        $('#change_provider').on('change', function () {
             let provider = $('#change_provider').val();
             let route = $(this).data('route');
             let maker = $('#maker');
-            if(provider !== '') {
+            if (provider !== '') {
                 $.ajax({
                     url: route,
                     type: 'get',
@@ -70,14 +70,14 @@ class FinancialReport {
                 }).done(function (json) {
                     maker.html('loading');
                     maker.html(json.data.maker);
-                    $(json.data.maker).each(function(key, element){
+                    $(json.data.maker).each(function (key, element) {
                         maker.append("<option value=" + element.maker + ">" + element.description + "</option>");
                     })
                     maker.prop('disabled', false);
                 }).fail(function (json) {
 
                 });
-            }else{
+            } else {
                 maker.val('');
             }
         });
@@ -87,14 +87,13 @@ class FinancialReport {
     search() {
         initSelect2();
         initDateTimePicker();
-        let api;
         let $table = $('#provider_table');
         let $button = $('#search');
-        let $form = $('#provider-form');
+        let api;
 
         $table.DataTable({
             "ajax": {
-                "url": $form.attr('action'),
+                "url": $table.attr('action'),
                 "dataSrc": "data.financial",
             },
             "order": [],
@@ -114,28 +113,22 @@ class FinancialReport {
                 api.buttons().container()
                     .appendTo($('#table-buttons'));
 
-                $button.click(function () {
-                    $button.button('loading');
-                    let route = $form.attr('action') + '?' + $form.serialize();
-                    api.ajax.url(route).load();
-                    $table.on('draw.dt', function () {
-                        $button.button('reset');
-                    });
-                });
-
-                $form.keypress(function (event) {
-                    if (event.keyCode === 13) {
-                        $button.click();
-                    }
-                });
             }
         });
-        clearForm($form);
-        $table.on('xhr.dt', function (event, settings, json, xhr) {
-            if (xhr.status === 500 || xhr.status === 422) {
-                swalError(xhr);
+        $button.click(function () {
+            $button.button('loading');
+            let provider = $('#change_provider').val();
+            let maker = $('#maker').val();
+            let currency = $('#currency').val();
+            let chips = $('#chips').val();
+            let from = $('#start_date').val();
+            let until = $('#end_date').val();
+            let percentage = $('#percentage').val();
+            let route = `${$table.data('route')}/?provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&from=${from}&until=${until}&percentage=${percentage}`;
+            api.ajax.url(route).load();
+            $table.on('draw.dt', function () {
                 $button.button('reset');
-            }
+            });
         });
     }
 
@@ -154,7 +147,7 @@ class FinancialReport {
                 url: $form.attr('action'),
                 method: 'post',
                 dataType: 'json',
-                data:  $form .serialize()
+                data: $form.serialize()
 
             }).done(function (json) {
                 $('store-form').trigger('reset');
@@ -186,7 +179,7 @@ class FinancialReport {
                 url: $form.attr('action'),
                 method: 'post',
                 dataType: 'json',
-                data:  $form .serialize()
+                data: $form.serialize()
 
             }).done(function (json) {
                 $('update-form').trigger('reset');
