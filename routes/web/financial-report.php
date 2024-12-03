@@ -52,7 +52,7 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
     Route::group(['prefix' => 'providers', 'middleware' => ['auth']], function () {
 
         // Index
-        Route::get('', [
+        Route::get('search', [
             'as' => 'financial-report.providers.index',
             'uses' => 'FinancialReportController@indexReportProvider'
         ]);
@@ -70,7 +70,7 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
         ]);
 
         // Store financial report
-        Route::get('search/{start_date?}/{end_date?}', [
+        Route::get('search-data/{start_date?}/{end_date?}', [
             'as' => 'financial-report.providers.search',
             'uses' => 'FinancialReportController@search'
         ]);
