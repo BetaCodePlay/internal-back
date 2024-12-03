@@ -87,7 +87,7 @@ class FinancialReport {
     search() {
         initSelect2();
         initDateTimePicker();
-        let $table = $('#provider_table');
+        let $table = $('#provider-table');
         let $button = $('#search');
         let api;
 
