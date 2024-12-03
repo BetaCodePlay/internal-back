@@ -232,7 +232,7 @@ class FinancialReportController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function search(Request $request)
+    public function search(Request $request, $startDate = null, $endDate = null)
     {
         try {
             \Log::info(__METHOD__, ['$request' => $request->all()]);
