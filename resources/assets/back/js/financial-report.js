@@ -1,5 +1,5 @@
 import {swalConfirm, swalError, swalSuccessNoButton} from "../../commons/js/core";
-import {clearForm, initDateTimePicker, initSelect2} from "./commons";
+import {clearForm, initDateRangePickerEndToday, initDateTimePicker, initSelect2} from "./commons";
 
 class FinancialReport {
 
@@ -86,7 +86,7 @@ class FinancialReport {
     // Advanced search
     search() {
         initSelect2();
-        initDateTimePicker();
+        initDateRangePickerEndToday(open = 'right');
         let $table = $('#provider-table');
         let $button = $('#search');
         let api;
@@ -94,7 +94,7 @@ class FinancialReport {
         $table.DataTable({
             "ajax": {
                 "url": $table.data('route'),
-                "dataSrc": "data.financial",
+                "dataSrc": "data",
             },
             "order": [],
             "columns": [
