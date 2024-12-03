@@ -73,7 +73,6 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="hidden" name="user" value="{{ $user }}">
                                 <input type="hidden" name="timezone" value="{{ $timezone }}">
                                 <button type="button" class="btn u-btn-3d u-btn-primary" id="search"
                                         data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Searching...') }}">
