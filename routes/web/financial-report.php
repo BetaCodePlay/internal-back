@@ -70,7 +70,7 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
         ]);
 
         // Store financial report
-        Route::post('search', [
+        Route::get('search', [
             'as' => 'financial-report.providers.search',
             'uses' => 'FinancialReportController@search'
         ]);
