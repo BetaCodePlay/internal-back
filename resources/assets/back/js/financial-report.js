@@ -125,6 +125,7 @@ class FinancialReport {
             let until = $('#end_date').val();
             let percentage = $('#percentage').val();
             let route = `${$table.data('route')}/?provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&from=${from}&until=${until}&percentage=${percentage}`;
+            console.log(route)
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
