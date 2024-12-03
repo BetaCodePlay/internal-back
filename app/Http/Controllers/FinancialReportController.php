@@ -235,6 +235,7 @@ class FinancialReportController
     public function search(Request $request)
     {
 
+        \Log::info(__METHOD__, ['$request' => $request]);
     }
 
     /**
