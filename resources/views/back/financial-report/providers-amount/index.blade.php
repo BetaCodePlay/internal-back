@@ -13,7 +13,7 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <form action="{{ route('financial-report.providers.search') }}" id="provider-form" method="post">
+                    <form action="" method="post">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -108,7 +108,8 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <table class="table table-bordered table-responsive-sm w-100" id="provider-table">
+                    <table class="table table-bordered table-responsive-sm w-100" id="provider-table"
+                           data-route="{{ route('financial-report.providers.search') }}">
                         <thead>
                         <tr>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
