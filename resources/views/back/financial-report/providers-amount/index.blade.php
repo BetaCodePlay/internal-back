@@ -54,7 +54,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="chips">{{ _i('Chips') }}</label>
-                                <input type="text" name="chips" class="form-control">
+                                <input type="text" name="chips" id="chips" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -74,7 +74,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="percentage">{{ _i('Percentage') }}</label>
-                                <input type="text" name="percentage" class="form-control">
+                                <input type="text" name="percentage" id="percentage" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">

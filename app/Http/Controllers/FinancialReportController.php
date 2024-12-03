@@ -235,7 +235,7 @@ class FinancialReportController
     public function search(Request $request)
     {
         try {
-            \Log::info(__METHOD__, ['$request' => $request]);
+            \Log::info(__METHOD__, ['$request' => $request->all()]);
 
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
