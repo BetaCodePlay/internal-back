@@ -86,6 +86,7 @@ class FinancialReport {
     // Advanced search
     search() {
         initSelect2();
+        initDateTimePicker();
         let api;
         let $table = $('#provider_table');
         let $button = $('#search');
