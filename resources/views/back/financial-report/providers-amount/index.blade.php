@@ -57,18 +57,12 @@
                                 <input type="number" name="chips" id="chips" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="start_date">{{ _i('From') }}</label>
-                                <input type="text" name="start_date" id="start_date"
-                                       class="form-control datetimepicker input_placeholder" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="end_date">{{ _i('Until') }}</label>
-                                <input type="text" name="end_date" id="end_date"
-                                       class="form-control datetimepicker input_placeholder" autocomplete="off">
+                                <label for="date_range">{{ _i('Date range') }}</label>
+                                <input type="text" id="daterange" class="form-control daterange" autocomplete="off" placeholder="{{ _i('Date range') }}">
+                                <input type="hidden" id="start_date" name="start_date">
+                                <input type="hidden" id="end_date" name="end_date">
                             </div>
                         </div>
                         <div class="col-md-3">
