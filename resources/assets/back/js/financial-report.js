@@ -1,5 +1,12 @@
 import {swalConfirm, swalError, swalSuccessNoButton} from "../../commons/js/core";
-import {clearForm, initDateRangePickerEndToday, initDateTimePicker, initSelect2} from "./commons";
+import {
+    clearForm,
+    initDateRangePickerEndToday,
+    initDateTimePicker,
+    initLitepickerEndToday,
+    initSelect2
+} from "./commons";
+import moment from "moment/moment";
 
 class FinancialReport {
 
@@ -85,8 +92,6 @@ class FinancialReport {
 
     // Advanced search
     search() {
-        initSelect2();
-        initDateRangePickerEndToday(open = 'right');
         let $table = $('#provider-table');
         let $button = $('#search');
         let api;
@@ -94,19 +99,22 @@ class FinancialReport {
         $table.DataTable({
             "ajax": {
                 "url": $table.data('route'),
-                "dataSrc": "data.report",
+                "dataSrc": "data.transactions"
             },
-            "order": [],
+            "order": [[3, 'desc']],
             "columns": [
+                {"data": "user"},
+                {"data": "username"},
+                {"data": "wallet"},
+                {"data": "amount", "className": "text-right", "type": "num-fmt"},
+                {"data": "created", "className": "text-right", "type": "date"},
+                {"data": "updated", "className": "text-right", "type": "date"},
+                {"data": "operator"},
+                {"data": "description"},
+                {"data": "currency"},
+                {"data": "info"},
                 {"data": "provider"},
-                {"data": "makers"},
-                {"data": "chips"},
-                {"data": "percentage"},
-                {"data": "benefit"},
-                {"data": "consumed"},
-                {"data": "balance"},
-                {"data": "date"},
-                {"data": "actions", "className": "text-right"}
+                {"data": "status", "className": "text-right"},
             ],
             "initComplete": function () {
                 api = this.api();
@@ -114,21 +122,23 @@ class FinancialReport {
                     .appendTo($('#table-buttons'));
             }
         });
+
         $button.click(function () {
             $button.button('loading');
-            let provider = $('#change_provider').val();
-            let maker = $('#maker').val();
-            let currency = $('#currency').val();
-            let chips = $('#chips').val();
             let startDate = $('#start_date').val();
             let endDate = $('#end_date').val();
-            let percentage = $('#percentage').val();
-            let route = `${$table.data('route')}/?startDate=${startDate}&endDate=${endDate}&provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&percentage=${percentage}`;
-            console.log(route)
+            let route = `${$table.data('route')}/${startDate}/${endDate}`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
             });
+        });
+
+        $table.on('xhr.dt', function (event, settings, json, xhr) {
+            $('#total').text(json.data.total)
+            if (xhr.status === 500) {
+                swalError(xhr);
+            }
         });
     }
 
