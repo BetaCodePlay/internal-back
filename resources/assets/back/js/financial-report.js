@@ -1,12 +1,11 @@
 import {swalConfirm, swalError, swalSuccessNoButton} from "../../commons/js/core";
 import {
     clearForm,
+    initDatepickerStartToday,
     initDateRangePickerEndToday,
     initDateTimePicker,
-    initLitepickerEndToday,
     initSelect2
 } from "./commons";
-import moment from "moment/moment";
 
 class FinancialReport {
 
@@ -92,6 +91,8 @@ class FinancialReport {
 
     // Advanced search
     search() {
+        initDatepickerStartToday();
+        initSelect2();
         let $table = $('#provider-table');
         let $button = $('#search');
         let api;
@@ -99,22 +100,19 @@ class FinancialReport {
         $table.DataTable({
             "ajax": {
                 "url": $table.data('route'),
-                "dataSrc": "data.transactions"
+                "dataSrc": "data"
             },
-            "order": [[3, 'desc']],
+            "order": [],
             "columns": [
-                {"data": "user"},
-                {"data": "username"},
-                {"data": "wallet"},
-                {"data": "amount", "className": "text-right", "type": "num-fmt"},
-                {"data": "created", "className": "text-right", "type": "date"},
-                {"data": "updated", "className": "text-right", "type": "date"},
-                {"data": "operator"},
-                {"data": "description"},
-                {"data": "currency"},
-                {"data": "info"},
                 {"data": "provider"},
-                {"data": "status", "className": "text-right"},
+                {"data": "makers"},
+                {"data": "chips"},
+                {"data": "percentage"},
+                {"data": "benefit"},
+                {"data": "consumed"},
+                {"data": "balance"},
+                {"data": "date"},
+                {"data": "actions", "className": "text-right"}
             ],
             "initComplete": function () {
                 api = this.api();
@@ -125,20 +123,18 @@ class FinancialReport {
 
         $button.click(function () {
             $button.button('loading');
+            let provider = $('#change_provider').val();
+            let maker = $('#maker').val();
+            let currency = $('#currency').val();
+            let chips = $('#chips').val();
             let startDate = $('#start_date').val();
             let endDate = $('#end_date').val();
-            let route = `${$table.data('route')}/${startDate}/${endDate}`;
+            let percentage = $('#percentage').val();
+            let route = `${$table.data('route')}/${startDate}/${endDate}/${provider}/${maker}/${currency}/${chips}/${percentage}/`;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
             });
-        });
-
-        $table.on('xhr.dt', function (event, settings, json, xhr) {
-            $('#total').text(json.data.total)
-            if (xhr.status === 500) {
-                swalError(xhr);
-            }
         });
     }
 
