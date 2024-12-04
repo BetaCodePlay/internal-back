@@ -117,7 +117,7 @@ class FinancialReport {
             "initComplete": function () {
                 api = this.api();
                 api.buttons().container()
-                    .appendTo($('#table-buttons'));
+                    .appendTo($('#provider-table-buttons'));
             }
         });
 
