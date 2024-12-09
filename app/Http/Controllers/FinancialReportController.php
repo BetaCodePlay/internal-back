@@ -272,7 +272,7 @@ class FinancialReportController
             ];*/
             /*return Utils::successResponse($data);*/
 
-            return Utils::successResponse(['users' => []]);
+            return Utils::successResponse(['report' => []]);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
