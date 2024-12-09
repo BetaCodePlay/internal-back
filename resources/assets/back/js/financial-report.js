@@ -158,7 +158,7 @@ class FinancialReport {
         //initDateRangePickerEndToday();
         initSelect2();
 
-        console.log('initSelect2', search())
+        console.log('initSelect2 search()')
 
         return '';
 
