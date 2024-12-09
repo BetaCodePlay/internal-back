@@ -130,7 +130,7 @@ class FinancialReport {
             let startDate = $('#start_date').val();
             let endDate = $('#end_date').val();
             let percentage = $('#percentage').val();
-            let route = `${$table.data('route')}/${startDate}/${endDate}/${provider}/${maker}/${currency}/${chips}/${percentage}`;
+            let route = `${$table.data('route')}/${startDate}/${endDate}`;
             console.log(route)
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {

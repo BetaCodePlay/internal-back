@@ -242,11 +242,11 @@ class FinancialReportController
             $chips = $request->chips;
             $timezone = session('timezone');
             /*$report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);*/
-            \Log::info(__METHOD__, ['request' => $request]);
+            \Log::info(__METHOD__, ['request' => $request->all(), 'starDate' =>$starDate, 'endDate' => $endDate]);
 
-            $data = [
+            /*$data = [
                 'report' => $report
-            ];
+            ];*/
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
