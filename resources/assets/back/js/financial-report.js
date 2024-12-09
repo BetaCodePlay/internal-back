@@ -156,9 +156,12 @@ class FinancialReport {
      // Advanced search
      search() {
         //initDateRangePickerEndToday();
-         console.log('search funca!!!!')
-         return '';
         initSelect2();
+
+        console.log('initSelect2', search())
+
+        return '';
+
         let $table = $('#provider-table');
         let $button = $('#update');
         let api;
