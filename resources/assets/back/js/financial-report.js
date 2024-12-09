@@ -158,12 +158,8 @@ class FinancialReport {
         initDateRangePickerEndToday();
         initSelect2();
 
-        console.log('initSelect2 initDateRangePickerEndToday initSelect2');
-
-        return '';
-
         let $table = $('#provider-table');
-        let $button = $('#update');
+        let $button = $('#search');
         let api;
 
         $table.DataTable({
