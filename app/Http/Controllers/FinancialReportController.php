@@ -202,64 +202,6 @@ class FinancialReportController
     }
 
     /**
-     * Search
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function search(Request $request)
-    {
-        try {
-            \Log::info(__METHOD__, ['request' => $request->all()]);
-            $provider = $request->change_provider;
-            $maker = $request->maker;
-            $currency = $request->currency;
-            $percentage = $request->percentage;
-            $chips = $request->chips;
-            $timezone = session('timezone');
-            $startDate = $request->start_date;
-            $endDate = $request->end_date;
-            $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
-            \Log::info(__METHOD__, ['request' => $report]);
-            /*$data = [
-                'report' => $report
-            ];*/
-            /*return Utils::successResponse($data);*/
-        } catch (\Exception $ex) {
-            \Log::error(__METHOD__, ['exception' => $ex]);
-            return Utils::failedResponse();
-        }
-
-    }
-
-    /**
-     * Index report providerview
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function indexReportProvider()
-    {
-        try {
-            $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $user = auth()->user()->id;
-            $timezone = session('timezone');
-            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
-            $data['title'] = _i('Create');
-            $data['user'] = $user;
-            $data['timezone'] = $timezone;
-            $data['currencies'] = Configurations::getCurrencies();
-            $data['providers'] = $provider;
-            return view('back.financial-report.providers-amount.index', $data);
-        } catch (\Exception $e) {
-            \Log::error(__METHOD__, ['exception' => $e]);
-            abort(500);
-        }
-    }
-
-
-    /**
      * Update
      *
      * @param Request $request
@@ -305,5 +247,62 @@ class FinancialReportController
             return Utils::failedResponse();
         }
     }
+
+
+    /**
+     * Search
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function search(Request $request, $startDate = null, $endDate = null)
+    {
+        try {
+            \Log::info(__METHOD__, ['request' => $request->all()]);
+            $provider = $request->change_provider;
+            $maker = $request->maker;
+            $currency = $request->currency;
+            $percentage = $request->percentage;
+            $chips = $request->chips;
+            $timezone = session('timezone');
+            $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+            \Log::info(__METHOD__, ['request' => $report]);
+            /*$data = [
+                'report' => $report
+            ];*/
+            /*return Utils::successResponse($data);*/
+        } catch (\Exception $ex) {
+            \Log::error(__METHOD__, ['exception' => $ex]);
+            return Utils::failedResponse();
+        }
+
+    }
+
+    /**
+     * Index report providerview
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function indexReportProvider()
+    {
+        try {
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = session('currency');
+            $user = auth()->user()->id;
+            $timezone = session('timezone');
+            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
+            $data['title'] = _i('Create');
+            $data['user'] = $user;
+            $data['timezone'] = $timezone;
+            $data['currencies'] = Configurations::getCurrencies();
+            $data['providers'] = $provider;
+            return view('back.financial-report.providers-amount.index', $data);
+        } catch (\Exception $e) {
+            \Log::error(__METHOD__, ['exception' => $e]);
+            abort(500);
+        }
+    }
+
 
 }
