@@ -173,14 +173,14 @@ class FinancialReport {
              "order": [],
              "columns": [
                  {"data": "provider"},
-                 {"data": "makers"},
+/*                 {"data": "makers"},
                  {"data": "chips"},
                  {"data": "percentage"},
                  {"data": "benefit"},
                  {"data": "consumed"},
                  {"data": "balance"},
                  {"data": "date"},
-                 {"data": "actions", "className": "text-right"}
+                 {"data": "actions", "className": "text-right"}*/
              ]
          });
 

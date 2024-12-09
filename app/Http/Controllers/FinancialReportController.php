@@ -272,37 +272,7 @@ class FinancialReportController
             ];*/
             /*return Utils::successResponse($data);*/
 
-
-            $response = [
-                "data" => [
-                    "report" => [
-                        [
-                            "provider" => "Proveedor 1",
-                            "makers" => "Fabricante A",
-                            "chips" => 500,
-                            "percentage" => 20,
-                            "benefit" => 1000,
-                            "consumed" => 250,
-                            "balance" => 1250,
-                            "date" => "2024-12-09",
-                            "actions" => "<button class='btn btn-primary'>Acción</button>"
-                        ],
-                        [
-                            "provider" => "Proveedor 2",
-                            "makers" => "Fabricante B",
-                            "chips" => 300,
-                            "percentage" => 15,
-                            "benefit" => 450,
-                            "consumed" => 150,
-                            "balance" => 600,
-                            "date" => "2024-12-08",
-                            "actions" => "<button class='btn btn-warning'>Acción</button>"
-                        ]
-                    ]
-                ]
-            ];
-
-            return Utils::successResponse($response);
+            return Utils::successResponse(['users' => []]);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
