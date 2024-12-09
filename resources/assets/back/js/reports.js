@@ -176,6 +176,9 @@ class Reports {
             let provider = $('#provider').val();
             let type = $('#type').val();
             let route = `${$table.data('route')}/${provider}/${type}/${startDate}/${endDate}`;
+
+            console.log('api', api);
+            return;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
