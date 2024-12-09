@@ -128,7 +128,7 @@ class FinancialReportController
         }
     }
 
-    
+
     /**
      * Provider maker
      *
@@ -271,6 +271,12 @@ class FinancialReportController
                 'report' => $report
             ];*/
             /*return Utils::successResponse($data);*/
+
+            return Utils::successResponse([
+                'data' => [
+                    'provider' => 'my-provider',
+                ]
+            ]);
         } catch (\Exception $ex) {
             \Log::error(__METHOD__, ['exception' => $ex]);
             return Utils::failedResponse();
