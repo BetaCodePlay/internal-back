@@ -128,31 +128,7 @@ class FinancialReportController
         }
     }
 
-    /**
-     * Index report providerview
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function indexReportProvider()
-    {
-        try {
-            $whitelabel = Configurations::getWhitelabel();
-            $currency = session('currency');
-            $user = auth()->user()->id;
-            $timezone = session('timezone');
-            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
-            $data['title'] = _i('Create');
-            $data['user'] = $user;
-            $data['timezone'] = $timezone;
-            $data['currencies'] = Configurations::getCurrencies();
-            $data['providers'] = $provider;
-            return view('back.financial-report.providers-amount.index', $data);
-        } catch (\Exception $e) {
-            \Log::error(__METHOD__, ['exception' => $e]);
-            abort(500);
-        }
-    }
-
+    
     /**
      * Provider maker
      *
@@ -254,6 +230,32 @@ class FinancialReportController
         }
 
     }
+
+    /**
+     * Index report providerview
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function indexReportProvider()
+    {
+        try {
+            $whitelabel = Configurations::getWhitelabel();
+            $currency = session('currency');
+            $user = auth()->user()->id;
+            $timezone = session('timezone');
+            $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
+            $data['title'] = _i('Create');
+            $data['user'] = $user;
+            $data['timezone'] = $timezone;
+            $data['currencies'] = Configurations::getCurrencies();
+            $data['providers'] = $provider;
+            return view('back.financial-report.providers-amount.index', $data);
+        } catch (\Exception $e) {
+            \Log::error(__METHOD__, ['exception' => $e]);
+            abort(500);
+        }
+    }
+
 
     /**
      * Update
