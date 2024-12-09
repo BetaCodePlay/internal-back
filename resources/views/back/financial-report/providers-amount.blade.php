@@ -14,6 +14,26 @@
                 </header>
                 <div class="card-block g-pa-15">
                     <div class="row">
+                    <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="currency">{{ _i('Currency') }}</label>
+                                <select name="currency" id="currency" class="form-control">
+                                    <option value="">{{ _i('Select...') }}</option>
+                                    @foreach ($whitelabel_currencies as $currency)
+                                        <option
+                                            value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
+                                            {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="chips">{{ _i('Chips') }}</label>
+                                <input type="number" name="chips" id="chips" class="form-control">
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="date_range">{{ _i('Date range') }}</label>
@@ -24,38 +44,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="status">{{ _i('User status') }}</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option value="">{{ _i('All status') }}</option>
-                                    <option value="true">{{ _i('Active') }}</option>
-                                    <option value="false">{{ _i('Blocked') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="web_register">{{ _i('Registration way') }}</label>
-                                <select name="web_register" id="web_register" class="form-control">
-                                    <option value="">{{ _i('All ways') }}</option>
-                                    <option value="true">{{ _i('Web') }}</option>
-                                    <option value="false">{{ _i('Dotpanel') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="options">{{ _i('Deposit options') }}</label>
-                                <select name="options" id="options" class="form-control">
-                                    <option value="<=">{{ _i('Less than or equal to') }}</option>
-                                    <option value=">=">{{ _i('Greater than or equal to') }}</option>
-                                    <option value="==">{{ _i('Same to') }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="deposits">{{ _i('Deposits') }}</label>
-                                <input type="number" class="form-control" name="deposits" id="deposits" autocomplete="off">
+                                <label for="percentage">{{ _i('Percentage') }}</label>
+                                <input type="number" name="percentage" id="percentage" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">
