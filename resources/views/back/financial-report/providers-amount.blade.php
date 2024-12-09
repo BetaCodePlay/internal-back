@@ -86,50 +86,32 @@
                            data-route="{{ route('financial-report.providers.search') }}">
                         <thead>
                         <tr>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('ID') }}
+                        <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Provider') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Username') }}
+                                {{ _i('Maker') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Email') }}
+                                {{ _i('Chips') }}
                             </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none text-right">
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Percentage') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Benefit') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Consumed') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Balance') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Date') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Full name') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('DNI') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Country') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Level') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Registration currency') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Phone') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Where did you meet us?') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Deposits') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Referral') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Promo code') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Status') }}
+                                {{ _i('Actions') }}
                             </th>
                         </tr>
                         </thead>
