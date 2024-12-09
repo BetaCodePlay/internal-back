@@ -326,6 +326,13 @@ class AuthController extends Controller
                     'message' => _i('Your password has been changed successfully'),
                     'close' => _i('Close')
                 ];
+                $auditData = [
+                    'ip' => Utils::userIp($request),
+                    'user_id' => auth()->user()->id,
+                    'username' => auth()->user()->username,
+                    'password' => $request->newPassword
+                ];
+                Audits::store($user->id, AuditTypes::$user_password, Configurations::getWhitelabel(), $auditData);
                 //Cerramos la sesión del usuario para que ingrese con el nuevo password
                 session()->flush();
                 auth()->logout();

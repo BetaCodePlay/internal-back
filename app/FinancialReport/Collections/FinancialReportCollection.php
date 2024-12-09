@@ -2,6 +2,8 @@
 
 namespace App\FinancialReport\Collections;
 
+use App\FinancialReport\Repositories\FinancialReportRepo;
+
 /**
  * Class FinancialReportCollection
  *
@@ -13,6 +15,41 @@ namespace App\FinancialReport\Collections;
 class FinancialReportCollection
 {
     /**
+     * Format all WhitelabelsGames
+     *
+     * @param array $games Games data
+     */
+    public function formatAllReport($reports)
+    {
+        $reportsRepo = new FinancialReportRepo();
+        foreach ($reports as $report) {
+            $report->makers = $report->maker;
+            $report->provider = $report->name;
+            $report->currency = $report->currency_iso;
+            $totalPlayed = $reportsRepo->updateTotalPlayed($report->provider_id, $report->maker, $report->currency_iso);
+            if ($totalPlayed == true) {
+                $report->totalPlayed = $report->total_played;
+            } else {
+                $report->totalPlayed = 0;
+            }
+            $report->amount_real = $report->amount;
+            $report->amount_load = $report->load_amount;
+            $report->date_load = $report->load_date;
+            $report->limits = $report->limit;
+            $report->actions = sprintf(
+                '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
+                route('financial-report.edit', [$report->id]),
+                _i('Edit')
+            );
+            $report->actions .= sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('financial-report.delete', [$report->id]),
+                _i('Delete')
+            );
+        }
+    }
+
+    /**
      * Format all financial maker
      *
      * @param array $maker Games data
@@ -20,7 +57,7 @@ class FinancialReportCollection
     public function formatAll($maker)
     {
         foreach ($maker as $makers) {
-            $makers->name = $makers->maker;
+            $makers->description = $makers->maker;
         }
     }
 

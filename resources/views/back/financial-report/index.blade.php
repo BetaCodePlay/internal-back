@@ -32,10 +32,23 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="maker">{{ _i('Maker') }}</label>
-                                    <select name="maker[]" id="maker" class="form-control"
-                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}"
-                                            multiple>
+                                    <select name="maker" id="maker" class="form-control"
+                                            data-loading-text="<i class='fa fa-spin fa-spinner'></i>  {{ _i('Loading...') }}">
                                         <option value="">{{ _i('Select...') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="currency">{{ _i('Currency') }}</label>
+                                    <select name="currency" id="currency" class="form-control">
+                                        <option value="">{{ _i('Select...') }}</option>
+                                        @foreach ($whitelabel_currencies as $currency)
+                                            <option
+                                                value="{{ $currency->iso }}" {{ $currency->iso == session('currency') ? 'selected' : '' }}>
+                                                {{ $currency->iso == 'VEF' ? $free_currency->currency_name : $currency->iso . " ({$currency->name})" }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -51,11 +64,10 @@
                                     <input type="number" name="load_amount" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="load_date">{{ _i('Load date') }}</label>
-                                    <input type="text" name="load_date" id="load_date"
-                                           class="form-control datetimepicker" autocomplete="off">
+                                    <input type="text" name="load_date" id="load_date" class="form-control datetimepicker input_placeholder" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -66,6 +78,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <input type="hidden" name="user" value="{{ $user }}">
                                     <button type="button" class="btn u-btn-3d u-btn-primary" id="store"
                                             data-loading-text="<i class='fa fa-spin fa-spinner'></i> {{ _i('Saving...') }}">
                                         <i class="hs-admin-save"></i>
@@ -94,7 +107,7 @@
                     </div>
                 </header>
                 <div class="card-block g-pa-15">
-                    <table class="table table-bordered table-responsive-sm w-100" id="financial-table"
+                    <table class="table table-bordered table-responsive-sm w-100" id="special-table"
                            data-route="{{ route('financial-report.all') }}">
                         <thead>
                         <tr>
@@ -105,16 +118,25 @@
                                 {{ _i('Maker') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Currency') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Amount') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Load amount') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Total played amount') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Load date') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Limit') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Actions') }}
                             </th>
                         </tr>
                         </thead>
