@@ -158,7 +158,7 @@ class FinancialReport {
         initDateRangePickerEndToday();
         initSelect2();
         let $table = $('#provider-table');
-        let $button = $('#search');
+        let $button = $('#update');
         let api;
 
         $table.DataTable({
@@ -181,7 +181,7 @@ class FinancialReport {
             "initComplete": function () {
                 api = this.api();
                 api.buttons().container()
-                    .appendTo($('#provider-table-buttons'));
+                    .appendTo($('#table-buttons'));
             }
         });
 

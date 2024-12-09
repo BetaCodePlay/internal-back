@@ -82,8 +82,8 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                    <table class="table table-bordered w-100" id="registered-users-table"
-                           data-route="{{ route('reports.users.registered-users-data') }}">
+                    <table class="table table-bordered w-100" id="provider-table"
+                           data-route="{{ route('financial-report.providers.search') }}">
                         <thead>
                         <tr>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -146,8 +146,8 @@
 @section('scripts')
     <script>
         $(function () {
-            let reports = new Reports();
-            reports.webRegisteredUsers();
+            let financialReport = new FinancialReport()
+            financialReport.search();
         });
     </script>
 @endsection
