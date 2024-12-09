@@ -218,6 +218,8 @@ class FinancialReportController
             $percentage = $request->percentage;
             $chips = $request->chips;
             $timezone = session('timezone');
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
             $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
             \Log::info(__METHOD__, ['request' => $report]);
             /*$data = [
