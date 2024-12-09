@@ -155,10 +155,10 @@ class FinancialReport {
 
      // Advanced search
      search() {
-        //initDateRangePickerEndToday();
+        initDateRangePickerEndToday();
         initSelect2();
 
-        console.log('initSelect2 search()')
+        console.log('initSelect2 initDateRangePickerEndToday initSelect2');
 
         return '';
 
