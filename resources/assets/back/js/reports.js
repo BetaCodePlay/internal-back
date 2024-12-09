@@ -2047,7 +2047,10 @@ class Reports {
             let web_register = $('#web_register').val();
             let level = $('#level').val();
             let route = `${$table.data('route')}/${startDate}/${endDate}?country=${country}&deposits=${deposits}&options=${options}&status=${status}&web_register=${web_register}&level=${level}`;
-            console.log(route)
+
+            console.log('api', api)
+
+            return;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
