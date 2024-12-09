@@ -24,19 +24,6 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="country">{{ _i('Country') }}</label>
-                                <select name="country" id="country" class="form-control">
-                                    <option value="">{{ _i('All countries') }}</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->iso }}">
-                                            {{ $country->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
                                 <label for="status">{{ _i('User status') }}</label>
                                 <select name="status" id="status" class="form-control">
                                     <option value="">{{ _i('All status') }}</option>
