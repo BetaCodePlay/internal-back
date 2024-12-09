@@ -294,7 +294,7 @@ class FinancialReportController
             $data['user'] = $user;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
-            return view('back.financial-report.providers-amount.index', $data);
+            return view('back.financial-report.providers-amount', $data);
         } catch (\Exception $e) {
             \Log::error(__METHOD__, ['exception' => $e]);
             abort(500);
