@@ -197,8 +197,10 @@ class FinancialReport {
             let percentage = $('#percentage').val();
             let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&percentage=${percentage}`;
 
-            console.log('route', route);
-            api.ajax.url(route).load();
+            console.log('this.api()', this.api());
+            console.log('api', api);
+
+            //api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
             });
