@@ -9,10 +9,6 @@ import {
 
 class FinancialReport {
 
-    constructor() {
-        this.api = null;
-    }
-
     // All dates of financial report
     all() {
         let $table = $('#special-table');
@@ -159,45 +155,38 @@ class FinancialReport {
 
      // Advanced search
      search() {
-         initDateRangePickerEndToday();
-         initSelect2();
+        initDateRangePickerEndToday();
+        initSelect2();
 
-         let $table = $('#provider-table');
-         let $button = $('#search');
+        let $table = $('#provider-table');
+        let $button = $('#search');
+        let api;
 
-         $table.DataTable({
-             "ajax": {
-                 "url": $table.data('route'),
-                 "dataSrc": "data.report"
-             },
-             "order": [],
-             "columns": [
-                 {"data": "provider"},
-/*                 {"data": "makers"},
-                 {"data": "chips"},
-                 {"data": "percentage"},
-                 {"data": "benefit"},
-                 {"data": "consumed"},
-                 {"data": "balance"},
-                 {"data": "date"},
-                 {"data": "actions", "className": "text-right"}*/
-             ]
-         });
+        $table.DataTable({
+            "ajax": {
+                "url": $table.data('route'),
+                "dataSrc": "data.report"
+            },
+            "order": [],
+            "columns": [
+                {"data": "provider"},
+                {"data": "makers"},
+                {"data": "chips"},
+                {"data": "percentage"},
+                {"data": "benefit"},
+                {"data": "consumed"},
+                {"data": "balance"},
+                {"data": "date"},
+                {"data": "actions", "className": "text-right"}
+            ],
+            "initComplete": function () {
+                api = this.api();
+                api.buttons().container()
+                    .appendTo($('#table-buttons'));
+            }
+        });
 
-         $table.on('init.dt', (e, settings) => {
-             this.api = new $.fn.dataTable.Api(settings);
-             console.log('init.dt', this.api);
-
-             this.api.buttons().container()
-                 .appendTo($('#table-buttons'));
-         });
-
-         $button.click(function () {
-             if (!this.api) {
-                 console.error('DataTable no está completamente inicializado.');
-                 return;
-             }
-
+        $button.click(function () {
             $button.button('loading');
             let provider = $('#change_provider').val();
             let maker = $('#maker').val();
@@ -208,9 +197,7 @@ class FinancialReport {
             let percentage = $('#percentage').val();
             let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&percentage=${percentage}`;
 
-            console.log('api', api);
-
-            //api.ajax.url(route).load();
+            api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
             });
