@@ -235,6 +235,7 @@ class FinancialReportController
     public function search(Request $request)
     {
         try {
+            \Log::info(__METHOD__, ['request' => $request->all()]);
             $provider = $request->change_provider;
             $maker = $request->maker;
             $currency = $request->currency;
@@ -242,7 +243,6 @@ class FinancialReportController
             $chips = $request->chips;
             $timezone = session('timezone');
             /*$report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);*/
-            \Log::info(__METHOD__, ['request' => $request->all()]);
 
             /*$data = [
                 'report' => $report
