@@ -181,6 +181,7 @@ class FinancialReport {
             ],
             "initComplete": function () {
                 api = this.api();
+                console.log('initComplete', this.api())
                 api.buttons().container()
                     .appendTo($('#table-buttons'));
             }
