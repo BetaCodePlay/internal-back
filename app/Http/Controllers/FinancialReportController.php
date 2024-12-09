@@ -265,9 +265,8 @@ class FinancialReportController
             $currency = $request->currency;
             $percentage = $request->percentage;
             $chips = $request->chips;
-            $timezone = session('timezone');
-            $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
-            \Log::info(__METHOD__, ['request' => $report]);
+            /*$report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+            \Log::info(__METHOD__, ['request' => $report]);*/
             /*$data = [
                 'report' => $report
             ];*/
@@ -290,11 +289,9 @@ class FinancialReportController
             $whitelabel = Configurations::getWhitelabel();
             $currency = session('currency');
             $user = auth()->user()->id;
-            $timezone = session('timezone');
             $provider = $this->credentialsRepo->searchByWhitelabel($whitelabel, $currency);
             $data['title'] = _i('Create');
             $data['user'] = $user;
-            $data['timezone'] = $timezone;
             $data['currencies'] = Configurations::getCurrencies();
             $data['providers'] = $provider;
             return view('back.financial-report.providers-amount.index', $data);
