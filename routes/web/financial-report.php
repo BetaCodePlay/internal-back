@@ -70,7 +70,7 @@ Route::group(['prefix' => 'financial-report', 'middleware' => ['auth']], functio
         ]);
 
         // Store financial report
-        Route::get('search-data/{start_date?}/{end_date?}', [
+        Route::get('search-data', [
             'as' => 'financial-report.providers.search',
             'uses' => 'FinancialReportController@search'
         ]);

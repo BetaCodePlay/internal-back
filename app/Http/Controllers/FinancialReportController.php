@@ -232,7 +232,7 @@ class FinancialReportController
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function search(Request $request, $startDate = null, $endDate = null)
+    public function search(Request $request)
     {
         try {
             $provider = $request->change_provider;
@@ -242,7 +242,7 @@ class FinancialReportController
             $chips = $request->chips;
             $timezone = session('timezone');
             /*$report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);*/
-            \Log::info(__METHOD__, ['request' => $request->all(), 'startDate' =>$startDate, 'endDate' => $endDate]);
+            \Log::info(__METHOD__, ['request' => $request->all()]);
 
             /*$data = [
                 'report' => $report
