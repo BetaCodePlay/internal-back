@@ -155,7 +155,7 @@ class FinancialReport {
 
      // Advanced search
      search() {
-        initDateRangePickerEndToday();
+        //initDateRangePickerEndToday();
         initSelect2();
         let $table = $('#provider-table');
         let $button = $('#update');
