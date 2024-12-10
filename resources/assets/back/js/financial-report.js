@@ -169,7 +169,6 @@ class FinancialReport {
             },
             "order": [],
             "columns": [
-                {"data": "provider"},
                 {"data": "makers"},
                 {"data": "chip"},
                 {"data": "percentages"},
