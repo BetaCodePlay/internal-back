@@ -71,7 +71,7 @@ class FinancialReportCollection
     public function formatAllReportProvider($reports, $provider, $maker, $startDate, $percentage, $chips)
     {
         foreach ($reports as $report) {
-            $report->providers = $report->name;
+            $report->providers = $provider;
             if(is_null($report->name)){
                 $report->providers = $provider;
             }
