@@ -103,7 +103,6 @@ class FinancialReportCollection
             if(is_null($startDate)){
                 $report->dates = _i('Without date');;
             }
-            $report->actions = _i('Edit');
         }
     }
 
