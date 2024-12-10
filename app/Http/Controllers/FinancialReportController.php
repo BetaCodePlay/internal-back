@@ -266,8 +266,8 @@ class FinancialReportController
             $currency = $request->currency;
             $percentage = $request->percentage;
             $chips = $request->chips;
-            $prueba = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
-            \Log::info(__METHOD__, ['$prueba' => $prueba]);
+            /*$prueba = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+            \Log::info(__METHOD__, ['$prueba' => $prueba]);*/
             /*$data = [
                 'report' => $report
             ];*/
