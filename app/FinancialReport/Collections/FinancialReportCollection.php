@@ -74,37 +74,37 @@ class FinancialReportCollection
         $reports = $reportsRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
         \Log::info(__METHOD__, ['$reports' => $reports]);
         foreach ($reports as $report) {
-            $report->makers = $maker;
-            if(is_null($report->makers)){
-                $report->makers = _i('Sin Maker');
-            }
             $report->providers = $report->name;
-            if(is_null($report->providers)){
-                $report->providers = _i('Sin Proveedor');
+            if(is_null($report->name)){
+                $report->providers = $provider;
+            }
+            $report->makers = $maker;
+            if(is_null($maker)){
+                $report->makers = _i('Without maker');
             }
             $report->benefits= $report->benefit;
-            if(is_null($report->benefits)){
+            if(is_null($report->benefit)){
                 $report->benefits = 0;
             }
             $report->chip = $chips;
-            if(is_null($report->chip)){
+            if(is_null($chips)){
                 $report->chip = 0;
             }
             $report->consumeds= $report->consumed;
-            if(is_null($report->consumeds)){
+            if(is_null($report->consumed)){
                 $report->consumeds = 0;
             }
             $report->balances = $report->balance;
-            if(is_null($report->balances)){
+            if(is_null($report->balance)){
                 $report->balances = 0;
             }
             $report->percentages = $percentage;
-            if(is_null($report->percentages)){
+            if(is_null($percentage)){
                 $report->percentages = 0;
             }
             $report->dates = $startDate;
-            if(is_null($report->dates)){
-                $report->dates = 0;
+            if(is_null($startDate)){
+                $report->dates = _i('Without date');;
             }
             $report->actions = _i('Edit');
         }
