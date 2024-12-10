@@ -169,14 +169,14 @@ class FinancialReport {
             },
             "order": [],
             "columns": [
+                {"data": "provider"},
                 {"data": "makers"},
                 {"data": "chip"},
                 {"data": "percentages"},
                 {"data": "benefits"},
                 {"data": "consumeds"},
                 {"data": "balances"},
-                {"data": "dates"},
-                {"data": "actions", "className": "text-right"}
+                {"data": "dates"}
             ],
             "initComplete": function () {
                 api = this.api();

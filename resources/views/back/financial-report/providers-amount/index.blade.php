@@ -105,6 +105,9 @@
                         <thead>
                         <tr>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
+                                {{ _i('Provider') }}
+                            </th>
+                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Maker') }}
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
@@ -124,9 +127,6 @@
                             </th>
                             <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
                                 {{ _i('Date') }}
-                            </th>
-                            <th class="g-font-weight-600 g-color-gray-dark-v6 g-brd-top-none">
-                                {{ _i('Actions') }}
                             </th>
                         </tr>
                         </thead>
