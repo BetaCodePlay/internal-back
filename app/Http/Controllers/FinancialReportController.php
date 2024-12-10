@@ -261,12 +261,13 @@ class FinancialReportController
         try {
             \Log::info(__METHOD__, ['request' => $request->all()]);
             $provider = $request->change_provider;
+            $timezone = session('timezone');
             $maker = $request->maker;
             $currency = $request->currency;
             $percentage = $request->percentage;
             $chips = $request->chips;
-            /*$report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
-            \Log::info(__METHOD__, ['request' => $report]);*/
+            $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+            \Log::info(__METHOD__, ['request' => $report]);
             /*$data = [
                 'report' => $report
             ];*/
