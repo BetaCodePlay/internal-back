@@ -269,7 +269,7 @@ class FinancialReportController
             $this->financialReportCollection->formatAllReportProvider($report, $provider, $maker, $startDate, $percentage, $chips);
             \Log::info(__METHOD__, ['$report' => $report]);
             $data = [
-                'report' => []
+                'report' => $report
             ];
             return Utils::successResponse($data);
         } catch (\Exception $ex) {
