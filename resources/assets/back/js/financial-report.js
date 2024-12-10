@@ -169,14 +169,14 @@ class FinancialReport {
             },
             "order": [],
             "columns": [
-                {"data": "provider"},
+                {"data": "providers"},
                 {"data": "makers"},
-                {"data": "chips"},
-                {"data": "percentage"},
-                {"data": "benefit"},
-                {"data": "consumed"},
-                {"data": "balance"},
-                {"data": "date"},
+                {"data": "chip"},
+                {"data": "percentages"},
+                {"data": "benefits"},
+                {"data": "consumeds"},
+                {"data": "balances"},
+                {"data": "dates"},
                 {"data": "actions", "className": "text-right"}
             ],
             "initComplete": function () {

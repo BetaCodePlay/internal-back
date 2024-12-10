@@ -15,9 +15,9 @@ use App\FinancialReport\Repositories\FinancialReportRepo;
 class FinancialReportCollection
 {
     /**
-     * Format all WhitelabelsGames
+     * Format all Report
      *
-     * @param array $games Games data
+     * @param array $report Report data
      */
     public function formatAllReport($reports)
     {
@@ -58,6 +58,37 @@ class FinancialReportCollection
     {
         foreach ($maker as $makers) {
             $makers->description = $makers->maker;
+        }
+    }
+
+
+
+    /**
+     * Format all report provider
+     *
+     * @param array $reports Games data
+     */
+    public function formatAllReportProvider($reports, $chips, $percentage, $startDate, $endDate)
+    {
+        foreach ($reports as $report) {
+            $report->makers = $report->maker;
+            $report->providers = $report->name;
+            $report->benefits= $report->benefit;
+            $report->chip = $chips;
+            $report->consumeds= $report->consumed;
+            $report->balances = $report->balance;
+            $report->percentages = $percentage;
+            $report->dates = $startDate;
+            $report->actions = sprintf(
+                '<a href="%s" class="btn u-btn-3d btn-sm u-btn-bluegray mr-2"><i class="hs-admin-pencil"></i> %s</a>',
+                route('financial-report.edit'/*, [$report->id]*/),
+                _i('Edit')
+            );
+            $report->actions .= sprintf(
+                '<button type="button" class="btn u-btn-3d btn-sm u-btn-primary mr-2 delete" data-route="%s"><i class="hs-admin-trash"></i> %s</button>',
+                route('financial-report.delete'/*, [$report->id]*/),
+                _i('Delete')
+            );
         }
     }
 
