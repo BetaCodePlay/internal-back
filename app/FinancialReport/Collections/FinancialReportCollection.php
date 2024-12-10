@@ -68,10 +68,10 @@ class FinancialReportCollection
      *
      * @param array $reports Games data
      */
-    public function formatAllReportProvider($reports, $chips, $percentage, $startDate, $endDate)
+    public function formatAllReportProvider($reports, $chips, $percentage, $startDate, $endDate, $maker)
     {
         foreach ($reports as $report) {
-            $report->makers = $report->maker;
+            $report->makers = $maker;
             $report->providers = $report->name;
             $report->benefits= $report->benefit;
             $report->chip = $chips;
