@@ -267,10 +267,10 @@ class FinancialReportController
                 $percentage = $request->percentage;
                 $chips = $request->chips;
                 $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+                $this->financialReportCollection->formatAllReportProvider($report, $provider, $maker, $startDate, $percentage, $chips);
             } else {
                 $report = [];
             }
-            $this->financialReportCollection->formatAllReportProvider($report, $provider, $maker, $startDate, $percentage, $chips);
             $data = [
                 'report' => $report
             ];
