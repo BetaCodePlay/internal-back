@@ -260,14 +260,13 @@ class FinancialReportController
     {
         try {
             if (!is_null($startDate) && !is_null($endDate)) {
-                $provider = $request->provider;
+                $provider = 'dark';
                 $timezone = session('timezone');
                 $maker = $request->maker;
                 $currency = $request->currency;
                 $percentage = $request->percentage;
                 $chips = $request->chips;
                 $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
-                \Log::info(__METHOD__, ['$report' => $report]);
                 $this->financialReportCollection->formatAllReportProvider($report, $request->provider, $maker, $startDate, $percentage, $chips);
             } else {
                 $report = [];
