@@ -72,7 +72,6 @@ class FinancialReportCollection
     {
         $reportsRepo = new FinancialReportRepo();
         $reports = $reportsRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
-        \Log::info(__METHOD__, ['$reports' => $reports]);
         foreach ($reports as $report) {
             $report->providers = $report->name;
             if(is_null($report->name)){
