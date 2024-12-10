@@ -72,13 +72,37 @@ class FinancialReportCollection
     {
         foreach ($reports as $report) {
             $report->makers = $maker;
+            if(is_null($report->makers)){
+                $report->makers = _i('Sin Maker');
+            }
             $report->providers = $report->name;
+            if(is_null($report->providers)){
+                $report->providers = _i('Sin Proveedor');
+            }
             $report->benefits= $report->benefit;
+            if(is_null($report->benefits)){
+                $report->benefits = 0;
+            }
             $report->chip = $chips;
+            if(is_null($report->chip)){
+                $report->chip = 0;
+            }
             $report->consumeds= $report->consumed;
+            if(is_null($report->consumeds)){
+                $report->consumeds = 0;
+            }
             $report->balances = $report->balance;
+            if(is_null($report->balances)){
+                $report->balances = 0;
+            }
             $report->percentages = $percentage;
+            if(is_null($report->percentages)){
+                $report->percentages = 0;
+            }
             $report->dates = $startDate;
+            if(is_null($report->dates)){
+                $report->dates = 0;
+            }
             $report->actions = _i('Edit');
         }
     }
