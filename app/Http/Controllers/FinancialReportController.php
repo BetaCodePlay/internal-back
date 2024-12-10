@@ -259,7 +259,7 @@ class FinancialReportController
     public function search(Request $request, $startDate = null, $endDate = null)
     {
         try {
-            \Log::info(__METHOD__, ['request' => $request->all()]);
+            \Log::info(__METHOD__, ['request' => $request->all(), 'startDate'=> $startDate, 'endDate' => $endDate]);
             $provider = $request->change_provider;
             $timezone = session('timezone');
             $maker = $request->maker;
