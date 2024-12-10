@@ -68,10 +68,8 @@ class FinancialReportCollection
      *
      * @param array $reports Games data
      */
-    public function formatAllReportProvider($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips)
+    public function formatAllReportProvider($reports, $provider, $maker, $startDate, $percentage, $chips)
     {
-        $reportsRepo = new FinancialReportRepo();
-        $reports = $reportsRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
         foreach ($reports as $report) {
             $report->providers = $report->name;
             if(is_null($report->name)){
