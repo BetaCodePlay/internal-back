@@ -153,8 +153,8 @@ class FinancialReport {
         });
     };
 
-     // Advanced search
-     search() {
+    // Advanced search
+    search() {
         initDateRangePickerEndToday();
         initSelect2();
 
@@ -195,7 +195,7 @@ class FinancialReport {
             let endDate = $('#end_date').val();
             let percentage = $('#percentage').val();
             let route = `${$table.data('route')}/${startDate}/${endDate}?provider=${provider}&maker=${maker}&currency=${currency}&chips=${chips}&percentage=${percentage}`;
-
+            console.log(route)
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');

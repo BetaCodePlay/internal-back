@@ -265,10 +265,8 @@ class FinancialReportController
             $currency = $request->currency;
             $percentage = $request->percentage;
             $chips = $request->chips;
-            \Log::info(__METHOD__, ['$provider' => $provider]);
             $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
             $this->financialReportCollection->formatAllReportProvider($report, $provider, $maker, $startDate, $percentage, $chips);
-            \Log::info(__METHOD__, ['$report' => $report]);
             $data = [
                 'report' => $report
             ];
