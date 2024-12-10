@@ -88,7 +88,7 @@ class FinancialReportController
      * Delete
      * @param int $id ID
      * * @return \Symfony\Component\HttpFoundation\Response
- */
+     */
     public function delete($id)
     {
         try {
@@ -259,13 +259,17 @@ class FinancialReportController
     public function search(Request $request, $startDate = null, $endDate = null)
     {
         try {
-            $provider = $request->change_provider;
-            $timezone = session('timezone');
-            $maker = $request->maker;
-            $currency = $request->currency;
-            $percentage = $request->percentage;
-            $chips = $request->chips;
-            $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+            if (!is_null($startDate) && !is_null($endDate)) {
+                $provider = $request->change_provider;
+                $timezone = session('timezone');
+                $maker = $request->maker;
+                $currency = $request->currency;
+                $percentage = $request->percentage;
+                $chips = $request->chips;
+                $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+            } else {
+                $report = [];
+            }
             $this->financialReportCollection->formatAllReportProvider($report, $provider, $maker, $startDate, $percentage, $chips);
             $data = [
                 'report' => $report
