@@ -260,7 +260,7 @@ class FinancialReportController
     {
         try {
             if (!is_null($startDate) && !is_null($endDate)) {
-                $provider = $request->change_provider;
+                $provider = $request->provider_id;
                 $timezone = session('timezone');
                 $maker = $request->maker;
                 $currency = $request->currency;
