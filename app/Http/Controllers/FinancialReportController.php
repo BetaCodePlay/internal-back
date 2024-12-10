@@ -258,7 +258,6 @@ class FinancialReportController
      */
     public function search(Request $request, $startDate = null, $endDate = null)
     {
-        \Log::info(__METHOD__, ['request' => $request->all()]);
         try {
             if (!is_null($startDate) && !is_null($endDate)) {
                 $provider = $request->provider;
@@ -268,6 +267,7 @@ class FinancialReportController
                 $percentage = $request->percentage;
                 $chips = $request->chips;
                 $report = $this->financialReportRepo->reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips);
+                \Log::info(__METHOD__, ['$report' => $report]);
                 $this->financialReportCollection->formatAllReportProvider($report, $request->provider, $maker, $startDate, $percentage, $chips);
             } else {
                 $report = [];
