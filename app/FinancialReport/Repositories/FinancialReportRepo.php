@@ -78,7 +78,7 @@ class FinancialReportRepo
      */
     public function reportBenefit($provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips)
     {
-        return DB::select('Select * from site.report_benefit(?,?,?,?,?,?,?,?,?)',[$provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips]);
+        return DB::select('Select * from site.report_benefit(?,?,?,?,?,?,?,?)',[$provider, $maker, $currency, $startDate, $endDate, $timezone, $percentage, $chips]);
     }
 
     /**
