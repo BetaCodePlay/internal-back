@@ -92,7 +92,7 @@
                         <h3 class="d-flex text-uppercase g-font-size-12 g-font-size-default--md g-color-black g-mr-10 mb-0 title">
                             {{ _i('Transactions') }}
                         </h3>
-                        <div class="media-body d-flex justify-content-end" id="provider-table-buttons">
+                        <div class="media-body d-flex justify-content-end" id="table-buttons">
 
                         </div>
                         <div class="justify-content-end g-ml-10" style="padding-left: 10px">
