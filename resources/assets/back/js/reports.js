@@ -176,6 +176,9 @@ class Reports {
             let provider = $('#provider').val();
             let type = $('#type').val();
             let route = `${$table.data('route')}/${provider}/${type}/${startDate}/${endDate}`;
+
+            console.log('api', api);
+            return;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');
@@ -2044,6 +2047,10 @@ class Reports {
             let web_register = $('#web_register').val();
             let level = $('#level').val();
             let route = `${$table.data('route')}/${startDate}/${endDate}?country=${country}&deposits=${deposits}&options=${options}&status=${status}&web_register=${web_register}&level=${level}`;
+
+            console.log('api', api)
+
+            return;
             api.ajax.url(route).load();
             $table.on('draw.dt', function () {
                 $button.button('reset');

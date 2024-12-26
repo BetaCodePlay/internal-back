@@ -136,6 +136,12 @@
         @can('access', [$permissions::$betpay_menu])
             @include('back.partials.sidebar.store', ['permissions' => $permissions])
         @endif
+        @can('access', [$permissions::$report_financial_by_special_user])
+            @include('back.partials.sidebar.financialReport', ['permissions' => $permissions])
+        @endif
+    @can('access', [$permissions::$report_financial_by_special_user])
+        @include('back.partials.sidebar.financialReportProvider', ['permissions' => $permissions])
+    @endif
         <!--
         <li class="u-sidebar-navigation-v1-menu-item u-side-nav--top-level-menu-item has-active">
             <hr>
