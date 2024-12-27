@@ -49,13 +49,8 @@ class UserPlayerTransactionService extends BaseTransactionService
 
         $currency             = session('currency');
         $bonus                = Configurations::getBonus(Configurations::getWhitelabel());
-        $startTime = microtime(true);
+
         $walletDetail         = Wallet::getByClient($playerDetails->id, $currency, $bonus);
-        $endTime = microtime(true);
-        $executionTime = $endTime - $startTime;
-        \Log::info('$walletDetail', [
-            'executionTime' =>$executionTime
-        ]);
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail);
 
         if ($walletHandlingResult instanceof Response) {
@@ -162,14 +157,25 @@ class UserPlayerTransactionService extends BaseTransactionService
         $bonus             = Configurations::getBonus($whitelabel);
         $transactionAmount = $request->get('amount');
         $userAuthId        = $request->user()->id;
+        $startTime = microtime(true);
         $ownerAgent        = $this->agentsRepo->findByUserIdAndCurrency($userAuthId, $currency);
-
+        $endTime = microtime(true);
+        $executionTime = $endTime - $startTime;
+        \Log::info('$ownerAgent', [
+            'executionTime' =>$executionTime
+        ]);
+        $startTime = microtime(true);
         $transactionResult = Wallet::creditManualTransactions(
             $transactionAmount,
             Providers::$agents_users,
             $this->generateAdditionalTransactionData($ownerAgent, $playerDetails),
             $request->get('wallet'),
         );
+        $endTime = microtime(true);
+        $executionTime = $endTime - $startTime;
+        \Log::info('$transactionResult', [
+            'executionTime' =>$executionTime
+        ]);
         if (($walletDetail && isset($walletDetail->data->bonus))) {
             $balanceBonus = $this->processBonus(
                 TransactionTypes::$credit,
