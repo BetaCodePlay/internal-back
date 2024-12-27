@@ -49,7 +49,13 @@ class UserPlayerTransactionService extends BaseTransactionService
 
         $currency             = session('currency');
         $bonus                = Configurations::getBonus(Configurations::getWhitelabel());
+        $startTime = microtime(true);
         $walletDetail         = Wallet::getByClient($playerDetails->id, $currency, $bonus);
+        $endTime = microtime(true);
+        $executionTime = $endTime - $startTime;
+        \Log::info('$walletDetail', [
+            'executionTime' =>$executionTime
+        ]);
         $walletHandlingResult = $this->handleEmptyTransactionObject($request, $walletDetail);
 
         if ($walletHandlingResult instanceof Response) {
@@ -57,8 +63,13 @@ class UserPlayerTransactionService extends BaseTransactionService
         }
 
         if ($request->get('transaction_type') == TransactionTypes::$credit) {
+            $startTime = microtime(true);
             $creditTransactionResult = $this->processCreditTransaction($request, $playerDetails, $walletDetail);
-
+            $endTime = microtime(true);
+            $executionTime = $endTime - $startTime;
+            \Log::info('$creditTransactionResult', [
+                'executionTime' =>$executionTime
+            ]);
             return $this->processAndStoreTransaction($request, $creditTransactionResult, Providers::$agents_users);
         }
 
@@ -67,9 +78,13 @@ class UserPlayerTransactionService extends BaseTransactionService
         if ($isAmountGreaterThanBalance instanceof Response) {
             return $isAmountGreaterThanBalance;
         }
-
+        $startTime = microtime(true);
         $debitTransactionResult = $this->processDebitTransaction($request, $playerDetails, $walletDetail);
-
+        $endTime = microtime(true);
+        $executionTime = $endTime - $startTime;
+        \Log::info('$debitTransactionResult', [
+            'executionTime' =>$executionTime
+        ]);
         return $this->processAndStoreTransaction($request, $debitTransactionResult, Providers::$agents_users);
     }
 
