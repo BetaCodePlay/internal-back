@@ -76,6 +76,7 @@ return [
             'prefix_indexes' => true,
             'search_path' => env('DB_SCHEMA'),
             'sslmode' => 'prefer',
+            'application_name' => 'backoffice_pgsql',
         ],
 
         'replica' => [
@@ -91,6 +92,7 @@ return [
             'prefix_indexes' => true,
             'search_path' => env('DB_SCHEMA'),
             'sslmode' => 'prefer',
+            'application_name' => 'backoffice_replica',
         ],
 
         'wallet' => [
@@ -106,6 +108,7 @@ return [
             'prefix_indexes' => true,
             'schema' => env('DB_WALLET_SCHEMA'),
             'sslmode' => 'prefer',
+            'application_name' => 'backoffice_wallet',
         ],
 
         'wallet_replica' => [
@@ -121,6 +124,7 @@ return [
             'prefix_indexes' => true,
             'schema' => env('DB_WALLET_SCHEMA'),
             'sslmode' => 'prefer',
+            'application_name' => 'backoffice_wallet_replica',
         ],
 
         'sqlsrv' => [
