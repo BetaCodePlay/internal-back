@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_WHITELABELS_CONNECTION', 'pgsql'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,16 +65,16 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'url' => env('DB_WHITELABELS_HOST'),
-            'host' => env('DB_WHITELABELS_HOST', '127.0.0.1'),
-            'port' => env('DB_WHITELABELS_PORT', '5432'),
-            'database' => env('DB_WHITELABELS_DATABASE', 'forge'),
-            'username' => env('DB_WHITELABELS_USERNAME', 'forge'),
-            'password' => env('DB_WHITELABELS_PASSWORD', ''),
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'search_path' => env('DB_WHITELABELS_SCHEMA'),
+            'search_path' => env('DB_SCHEMA'),
             'sslmode' => 'prefer',
             'application_name' => 'backoffice_pgsql',
         ],
@@ -82,17 +82,17 @@ return [
         'replica' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_WHITELABELS_HOST', '127.0.0.1'),
-            'port' => env('DB_WHITELABELS_PORT', '5432'),
-            'database' => env('DB_WHITELABELS_DATABASE', 'forge'),
-            'username' => env('DB_WHITELABELS_USERNAME', 'forge'),
-            'password' => env('DB_WHITELABELS_PASSWORD', ''),
+            'host' => env('DB_REPLICA_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'forge'),
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'search_path' => env('DB_WHITELABELS_SCHEMA'),
+            'search_path' => env('DB_SCHEMA'),
             'sslmode' => 'prefer',
-            'application_name' => 'backoffice_pgsql',
+            'application_name' => 'backoffice_replica',
         ],
 
         'wallet' => [
