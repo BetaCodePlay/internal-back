@@ -1691,9 +1691,10 @@ class UsersController extends Controller
                 'description' => $description,
                 'operator' => $operator
             ];
-
+            \Log::debug(__METHOD__, ['request' => $request->all()]);
             if ($transactionType == TransactionTypes::$credit) {
                 $transaction = Wallet::creditManualTransactions($amount, Providers::$manual_adjustments, $additionalData, $wallet);
+                \Log::debug(__METHOD__, ['$transaction' => $transaction]);
                 //new TransactionNotAllowed($amount, $user, Providers::$manual_adjustments, $transactionType);
                 // dd($transaction);
             } else {
